@@ -722,13 +722,13 @@ h3 {
    DASHBOARD (iOS Control Center style)
    ========================================== */
 /* ==========================================
-   DASHBOARD (Krypton/PulseClient Yellow Theme)
+   DASHBOARD (iOS 26 Purple Theme)
    ========================================== */
 :root {
-    --krypton-yellow: #facc15; /* yellow-400 */
-    --krypton-yellow-glow: rgba(250, 204, 21, 0.3);
-    --krypton-bg-card: #18181b; /* zinc-900 */
-    --krypton-border: #27272a; /* zinc-800 */
+    --krypton-yellow: #6366f1; /* iOS Purple/Indigo */
+    --krypton-yellow-glow: rgba(99, 102, 241, 0.45);
+    --krypton-bg-card: rgba(255, 255, 255, 0.03);
+    --krypton-border: rgba(255, 255, 255, 0.08);
 }
 
 .dashboard {
@@ -751,7 +751,7 @@ h3 {
 }
 
 .logo-red {
-    color: #ef4444; /* red-500 */
+    color: #6366f1; /* purple/indigo */
 }
 
 .logo-white {
@@ -760,8 +760,10 @@ h3 {
 
 /* Device Status Card */
 .device-status-card {
-    background-color: var(--krypton-bg-card);
+    background: var(--krypton-bg-card);
     border: 1px solid var(--krypton-border);
+    backdrop-filter: var(--ios-blur);
+    -webkit-backdrop-filter: var(--ios-blur);
     padding: 18px;
     border-radius: 14px;
     margin-bottom: 24px;
@@ -769,6 +771,11 @@ h3 {
     flex-direction: column;
     gap: 14px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    transition: var(--transition);
+}
+
+.device-status-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
 }
 
 .device-info {
@@ -792,7 +799,7 @@ h3 {
 
 .device-count {
     margin-left: auto;
-    background-color: rgba(250, 204, 21, 0.1);
+    background-color: rgba(99, 102, 241, 0.1);
     color: var(--krypton-yellow);
     padding: 2px 10px;
     border-radius: 99px;
@@ -856,13 +863,13 @@ h3 {
 
 .menu-item.active {
     background-color: var(--krypton-yellow);
-    color: #000;
+    color: #fff;
     border-color: var(--krypton-yellow);
-    box-shadow: 0 4px 15px rgba(250, 204, 21, 0.25);
+    box-shadow: 0 4px 15px var(--krypton-yellow-glow);
 }
 
 .menu-item.active svg {
-    color: #000;
+    color: #fff;
     opacity: 1;
 }
 
@@ -928,8 +935,10 @@ h3 {
 
 /* Main Download Card */
 .krypton-download-card {
-    background-color: var(--krypton-bg-card);
+    background: var(--krypton-bg-card);
     border: 1px solid var(--krypton-border);
+    backdrop-filter: var(--ios-blur);
+    -webkit-backdrop-filter: var(--ios-blur);
     padding: 24px;
     border-radius: 16px;
     display: flex;
@@ -937,6 +946,11 @@ h3 {
     align-items: center;
     margin-bottom: 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: var(--transition);
+}
+
+.krypton-download-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
 }
 
 .card-left {
@@ -949,12 +963,12 @@ h3 {
     width: 52px;
     height: 52px;
     border-radius: 12px;
-    background-color: rgba(250, 204, 21, 0.08);
+    background-color: rgba(99, 102, 241, 0.08);
     color: var(--krypton-yellow);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: inset 0 0 12px rgba(250, 204, 21, 0.05);
+    box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.05);
 }
 
 .icon-download-large svg {
@@ -1000,7 +1014,7 @@ h3 {
 
 .btn-krypton-download {
     background-color: var(--krypton-yellow);
-    color: #000;
+    color: #fff;
     font-weight: 700;
     font-size: 14px;
     border-radius: 10px;
@@ -1008,26 +1022,33 @@ h3 {
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    box-shadow: 0 4px 20px rgba(250, 204, 21, 0.3);
+    box-shadow: 0 4px 20px var(--krypton-yellow-glow);
     transition: var(--transition);
     border: none;
     cursor: pointer;
 }
 
 .btn-krypton-download:hover {
-    background-color: #e2b807;
+    background-color: #4f46e5;
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(250, 204, 21, 0.45);
+    box-shadow: 0 6px 25px var(--krypton-yellow-glow);
 }
 
 /* Sections */
 .quick-start-section, .launchers-section {
-    background-color: var(--krypton-bg-card);
+    background: var(--krypton-bg-card);
     border: 1px solid var(--krypton-border);
+    backdrop-filter: var(--ios-blur);
+    -webkit-backdrop-filter: var(--ios-blur);
     padding: 28px;
     border-radius: 16px;
     margin-bottom: 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: var(--transition);
+}
+
+.quick-start-section:hover, .launchers-section:hover {
+    border-color: rgba(255, 255, 255, 0.16);
 }
 
 .section-title {
@@ -1058,7 +1079,7 @@ h3 {
 }
 
 .step-card:hover {
-    border-color: rgba(250, 204, 21, 0.15);
+    border-color: rgba(99, 102, 241, 0.25);
     background-color: rgba(255,255,255,0.02);
 }
 
@@ -1066,7 +1087,7 @@ h3 {
     width: 38px;
     height: 38px;
     border-radius: 8px;
-    background-color: rgba(250, 204, 21, 0.08);
+    background-color: rgba(99, 102, 241, 0.08);
     color: var(--krypton-yellow);
     display: flex;
     align-items: center;
@@ -1089,7 +1110,7 @@ h3 {
 /* Launcher cards */
 .launchers-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
 }
 
@@ -1105,7 +1126,7 @@ h3 {
 }
 
 .launcher-card:hover {
-    border-color: rgba(250, 204, 21, 0.15);
+    border-color: rgba(99, 102, 241, 0.25);
     background-color: rgba(255,255,255,0.02);
 }
 
@@ -1271,39 +1292,8 @@ h3 {
 }
 
 .bind-form button:hover {
-    background-color: #e2b807 !important;
+    background-color: #4f46e5 !important;
     transform: translateY(-1px);
-}
-    margin-bottom: 6px;
-}
-
-.bind-card .desc {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-}
-
-.bind-form {
-    display: flex;
-    gap: 12px;
-}
-
-.bind-form input {
-    flex: 1;
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--card-border);
-    padding: 12px 20px;
-    border-radius: 99px;
-    color: #fff;
-    font-family: monospace;
-    font-size: 14px;
-    outline: none;
-    transition: var(--transition);
-}
-
-.bind-form input:focus {
-    border-color: rgba(255, 255, 255, 0.25);
-    background-color: rgba(0, 0, 0, 0.35);
 }
 
 /* Responsive */
