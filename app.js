@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    const userSelectionModal = document.getElementById('user-selection-modal');
+    if (userSelectionModal) {
+        userSelectionModal.addEventListener('click', (e) => {
+            if (e.target === userSelectionModal) closeUserSelectionModal();
+        });
+    }
+
 
 
     if (currentUser) {
@@ -915,8 +922,7 @@ function selectDropdownUser(username) {
 }
 
 function filterDropdownUsers() {
-    // Find the active search input
-    const searchInput = document.querySelector('.modal-search');
+    const searchInput = document.getElementById('admin-modal-user-search');
     const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
     const filtered = allUserProfiles.filter(p => 
         p.username.toLowerCase().includes(query) ||
@@ -925,24 +931,31 @@ function filterDropdownUsers() {
     renderDropdownUsers(filtered);
 }
 
-function openUserSelectionModal(e) {
+async function openUserSelectionModal(e) {
     if (e) e.preventDefault();
     const modal = document.getElementById('user-selection-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        const searchInput = document.getElementById('admin-modal-user-search');
-        if (searchInput) {
-            searchInput.value = '';
-            searchInput.focus();
-        }
-        renderDropdownUsers(allUserProfiles);
+    if (!modal) return;
+
+    if (allUserProfiles.length === 0) {
+        await fetchProfilesForAdmin();
     }
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const searchInput = document.getElementById('admin-modal-user-search');
+    if (searchInput) {
+        searchInput.value = '';
+        setTimeout(() => searchInput.focus(), 100);
+    }
+    renderDropdownUsers(allUserProfiles);
 }
 
 function closeUserSelectionModal() {
     const modal = document.getElementById('user-selection-modal');
     if (modal) {
         modal.classList.add('hidden');
+        document.body.style.overflow = '';
     }
 }
 
