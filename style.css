@@ -1164,10 +1164,55 @@ h3 {
 }
 
 /* Licenses List & Bind Form adjustments */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .panel-header h3 {
     font-size: 18px;
     font-weight: 700;
     color: #fff;
+    margin: 0;
+}
+
+.btn-refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    outline: none;
+}
+
+.btn-refresh svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    transition: transform 0.4s ease;
+}
+
+.btn-refresh:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(99, 102, 241, 0.35);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+}
+
+.btn-refresh:hover svg {
+    transform: rotate(180deg);
+}
+
+.btn-refresh:active {
+    transform: scale(0.95);
 }
 
 .licenses-list {
