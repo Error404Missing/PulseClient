@@ -721,203 +721,434 @@ h3 {
 /* ==========================================
    DASHBOARD (iOS Control Center style)
    ========================================== */
+/* ==========================================
+   DASHBOARD (Krypton/PulseClient Yellow Theme)
+   ========================================== */
+:root {
+    --krypton-yellow: #facc15; /* yellow-400 */
+    --krypton-yellow-glow: rgba(250, 204, 21, 0.3);
+    --krypton-bg-card: #18181b; /* zinc-900 */
+    --krypton-border: #27272a; /* zinc-800 */
+}
+
 .dashboard {
     padding-top: 40px;
 }
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 290px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 28px;
 }
 
-/* Profile Sidebar */
-.dashboard-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+/* Sidebar Logo */
+.sidebar-logo {
+    font-size: 22px;
+    font-weight: 900;
+    padding: 10px 16px 20px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-.profile-card {
-    text-align: center;
-    border-radius: 28px;
+.logo-red {
+    color: #ef4444; /* red-500 */
 }
 
-.avatar-large {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin-bottom: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+.logo-white {
+    color: #ffffff;
 }
 
-.role-badge {
-    display: inline-block;
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--card-border);
-    color: var(--text-secondary);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 99px;
-    margin-top: 8px;
-}
-
-.divider {
-    border: 0;
-    height: 1px;
-    background: var(--card-border);
-    margin: 24px 0;
-}
-
-.quick-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-align: left;
+/* Device Status Card */
+.device-status-card {
+    background-color: var(--krypton-bg-card);
+    border: 1px solid var(--krypton-border);
+    padding: 18px;
+    border-radius: 14px;
     margin-bottom: 24px;
-}
-
-.qs-item {
     display: flex;
-    justify-content: space-between;
-    font-size: 13px;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
-.qs-label {
-    color: var(--text-secondary);
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
 }
 
-.qs-val {
+.device-icon {
+    color: var(--krypton-yellow);
+    display: flex;
+    align-items: center;
+    text-shadow: 0 0 8px var(--krypton-yellow-glow);
+}
+
+.device-title {
     font-weight: 600;
     color: #fff;
 }
 
-/* Main Dashboard Panel */
-.dashboard-main {
+.device-count {
+    margin-left: auto;
+    background-color: rgba(250, 204, 21, 0.1);
+    color: var(--krypton-yellow);
+    padding: 2px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.btn-device-slot {
+    background-color: transparent;
+    border: 1px dashed #3f3f46; /* zinc-700 */
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-device-slot:hover {
+    border-color: var(--krypton-yellow);
+    color: #fff;
+    background-color: rgba(255,255,255,0.02);
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 8px;
 }
 
-/* Banner alert */
-.alert-banner {
-    background-color: var(--warning-bg);
-    border: 1px solid var(--warning-border);
-    color: var(--warning);
-    padding: 14px 20px;
-    border-radius: 20px;
-    font-size: 13px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.alert-banner.error {
-    background-color: var(--danger-bg);
-    border: 1px solid var(--danger-border);
-    color: var(--danger);
-}
-
-.alert-banner.success {
-    background-color: var(--success-bg);
-    border: 1px solid var(--success-border);
-    color: var(--success);
-}
-
-.close-banner {
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
+.menu-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 12px;
+    padding: 13px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
     transition: var(--transition);
-    opacity: 0.6;
+    border: 1px solid transparent;
 }
 
-.close-banner:hover {
+.menu-item svg {
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.menu-item:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255,255,255,0.05);
+}
+
+.menu-item:hover svg {
     opacity: 1;
 }
 
-/* Action panel - mod download */
-.action-card {
-    border-radius: 28px;
+.menu-item.active {
+    background-color: var(--krypton-yellow);
+    color: #000;
+    border-color: var(--krypton-yellow);
+    box-shadow: 0 4px 15px rgba(250, 204, 21, 0.25);
 }
 
-.action-card h2 {
-    font-size: 22px;
-    margin-bottom: 8px;
+.menu-item.active svg {
+    color: #000;
+    opacity: 1;
 }
 
-.action-card p {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-}
-
-.download-section {
+.sidebar-user-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.01);
-    border: 1px solid var(--card-border);
-    padding: 18px 24px;
-    border-radius: 20px;
+    gap: 12px;
+    padding: 20px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 32px;
 }
 
-.dl-info {
-    font-size: 13px;
-    color: var(--text-secondary);
+.avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.08);
 }
 
-/* Panel Header utilities */
-.panel-header {
+.user-details {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.btn-refresh {
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
+.username-text {
+    font-size: 13.5px;
     font-weight: 600;
-    font-size: 13px;
+    color: #fff;
+}
+
+.role-text {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.role-text span {
+    color: var(--krypton-yellow);
+    font-weight: 700;
+}
+
+.menu-item.logout-item {
+    color: var(--danger);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-radius: 0;
+    margin-top: 12px;
+    padding-top: 20px;
+}
+
+.menu-item.logout-item:hover {
+    background-color: rgba(239, 68, 68, 0.05);
+    color: #ff8888;
+}
+
+/* Tabs */
+.tab-pane {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.tab-pane.hidden {
+    display: none !important;
+}
+
+/* Main Download Card */
+.krypton-download-card {
+    background-color: var(--krypton-bg-card);
+    border: 1px solid var(--krypton-border);
+    padding: 24px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-left {
     display: flex;
     align-items: center;
+    gap: 20px;
+}
+
+.icon-download-large {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background-color: rgba(250, 204, 21, 0.08);
+    color: var(--krypton-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 12px rgba(250, 204, 21, 0.05);
+}
+
+.icon-download-large svg {
+    width: 24px;
+    height: 24px;
+}
+
+.download-meta {
+    display: flex;
+    flex-direction: column;
     gap: 6px;
+}
+
+.download-meta h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+}
+
+.version-label {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.badge-jar {
+    background-color: #27272a;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.updated-date {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.btn-krypton-download {
+    background-color: var(--krypton-yellow);
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 13px 28px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(250, 204, 21, 0.3);
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-krypton-download:hover {
+    background-color: #e2b807;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(250, 204, 21, 0.45);
+}
+
+/* Sections */
+.quick-start-section, .launchers-section {
+    background-color: var(--krypton-bg-card);
+    border: 1px solid var(--krypton-border);
+    padding: 28px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Quick start step cards */
+.quick-start-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.step-card {
+    background-color: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 24px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     transition: var(--transition);
 }
 
-.btn-refresh:hover {
+.step-card:hover {
+    border-color: rgba(250, 204, 21, 0.15);
+    background-color: rgba(255,255,255,0.02);
+}
+
+.step-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background-color: rgba(250, 204, 21, 0.08);
+    color: var(--krypton-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 4px;
+}
+
+.step-card p {
+    font-size: 12.5px;
     color: var(--text-secondary);
+    line-height: 1.5;
 }
 
-.btn-refresh svg {
-    width: 14px;
-    height: 14px;
+/* Launcher cards */
+.launchers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
 }
 
-/* Loading & empty states */
-.loading-state, .empty-state {
-    text-align: center;
-    padding: 48px 20px;
-    color: var(--text-secondary);
-    font-size: 14px;
+.launcher-card {
+    background-color: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: var(--transition);
 }
 
-.empty-state .sub {
+.launcher-card:hover {
+    border-color: rgba(250, 204, 21, 0.15);
+    background-color: rgba(255,255,255,0.02);
+}
+
+.launcher-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.launcher-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.launcher-meta h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.launcher-meta span {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.launcher-footer-note {
     font-size: 12px;
     color: var(--text-muted);
-    margin-top: 6px;
+    margin-top: 20px;
+    font-style: italic;
 }
 
-/* Licenses list rendering */
+/* Licenses List & Bind Form adjustments */
+.panel-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
 .licenses-list {
     display: flex;
     flex-direction: column;
@@ -925,9 +1156,9 @@ h3 {
 }
 
 .license-item {
-    background-color: rgba(255, 255, 255, 0.01);
+    background-color: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--card-border);
-    border-radius: 20px;
+    border-radius: 14px;
     padding: 20px;
     display: grid;
     grid-template-columns: 1.4fr 0.8fr 1fr;
@@ -938,8 +1169,9 @@ h3 {
 .lic-key-info h4 {
     font-size: 11px;
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 6px;
+    text-transform: uppercase;
     letter-spacing: 0.03em;
 }
 
@@ -947,17 +1179,17 @@ h3 {
     font-family: monospace;
     font-size: 14px;
     color: #fff;
-    background-color: rgba(0, 0, 0, 0.35);
-    padding: 6px 12px;
+    background-color: #0b0b0c;
+    padding: 6px 14px;
     border-radius: 8px;
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--krypton-border);
 }
 
 .lic-status-badge {
     justify-self: start;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 6px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 6px 16px;
     border-radius: 99px;
 }
 
@@ -979,25 +1211,69 @@ h3 {
 
 .lic-expiry-info .label {
     display: block;
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 4px;
-    letter-spacing: 0.02em;
 }
 
 .lic-expiry-info .val {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
+    color: #fff;
 }
 
-/* Bind license form */
 .bind-card {
-    border-radius: 28px;
+    border-radius: 16px;
 }
 
 .bind-card h3 {
     font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.bind-card .desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.bind-form {
+    display: flex;
+    gap: 12px;
+}
+
+.bind-form input {
+    flex: 1;
+    background-color: #0b0b0c;
+    border: 1px solid var(--krypton-border);
+    padding: 14px 22px;
+    border-radius: 99px;
+    color: #fff;
+    font-family: monospace;
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.bind-form input:focus {
+    border-color: var(--krypton-yellow);
+}
+
+.bind-form button {
+    border: none;
+    padding: 0 28px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.bind-form button:hover {
+    background-color: #e2b807 !important;
+    transform: translateY(-1px);
+}
     margin-bottom: 6px;
 }
 

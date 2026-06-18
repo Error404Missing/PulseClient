@@ -285,3 +285,38 @@ function scrollToAuth() {
     }
 }
 window.scrollToAuth = scrollToAuth;
+
+// Sidebar Dashboard Tab Switcher
+function switchDashTab(event, tabId) {
+    if (event) event.preventDefault();
+    
+    // Hide all tabs
+    document.getElementById('tab-content-downloads').classList.add('hidden');
+    document.getElementById('tab-content-redeem').classList.add('hidden');
+    
+    // Show active tab
+    if (tabId === 'tab-downloads') {
+        document.getElementById('tab-content-downloads').classList.remove('hidden');
+    } else if (tabId === 'tab-redeem') {
+        document.getElementById('tab-content-redeem').classList.remove('hidden');
+    }
+    
+    // Deactivate all menu items
+    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    menuItems.forEach(item => item.classList.remove('active'));
+    
+    // Activate clicked menu item
+    if (event) {
+        event.currentTarget.classList.add('active');
+    }
+}
+window.switchDashTab = switchDashTab;
+
+// Scroll to specific section
+function scrollToElement(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+window.scrollToElement = scrollToElement;
