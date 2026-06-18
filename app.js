@@ -891,8 +891,10 @@ function renderDropdownUsers(profiles) {
         option.className = 'user-option';
         option.innerHTML = `
             <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" alt="Avatar">
-            <span class="user-name">${profile.username}</span>
-            <span class="user-discord-id">@${profile.username}</span>
+            <div class="user-option-text">
+                <span class="user-name">${profile.username}</span>
+                <span class="user-discord-id">@${profile.username}</span>
+            </div>
         `;
         option.addEventListener('click', (e) => {
             e.stopPropagation();

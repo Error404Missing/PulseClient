@@ -2125,42 +2125,78 @@ h3 {
 
 /* User Selector Modal Styles */
 .user-selector-modal-content {
-    max-width: 780px !important;
-    width: 90% !important;
-    max-height: 85vh !important;
-    height: 85vh !important;
-    overflow: visible !important;
+    max-width: 640px !important;
+    width: 92% !important;
+    max-height: 80vh !important;
+    height: auto !important;
+    overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
 }
 
 .modal-search {
-    margin-bottom: 20px !important;
-    padding: 12px 18px !important;
+    margin-bottom: 16px !important;
+    padding: 10px 14px !important;
     font-size: 14px !important;
-    border-radius: 12px !important;
+    border-radius: 10px !important;
     flex-shrink: 0;
 }
 
 .user-selector-modal-content h3 {
     flex-shrink: 0;
+    margin-bottom: 16px !important;
 }
 
 .modal-user-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-    gap: 12px !important;
-    flex: 1 1 0 !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+    grid-auto-rows: min-content !important;
+    align-content: start !important;
+    gap: 8px !important;
+    flex: 0 1 auto !important;
+    max-height: min(420px, 55vh) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding-right: 8px;
+    padding-right: 6px;
     min-height: 0 !important;
 }
 
 .modal-user-grid .user-option {
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(255, 255, 255, 0.02);
-    padding: 12px;
+    align-self: start;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+
+.modal-user-grid .user-option img {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.modal-user-grid .user-option .user-name {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modal-user-grid .user-option .user-discord-id {
+    font-size: 11px;
+    margin-left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modal-user-grid .user-option .user-option-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
 }
 
 .modal-user-grid .user-option:hover {
