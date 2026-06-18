@@ -22,21 +22,23 @@
 
     <!-- Navbar -->
     <header class="navbar">
-        <div class="logo">
+        <div class="logo" style="cursor: pointer;" onclick="navigateToLandingSection(event, 'landing-page')">
             <!-- Sleek Image Logo -->
             <img src="logo.jpg" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
             <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
         </div>
         <nav class="nav-links">
-            <a href="#features">მახასიათებლები</a>
-            <a href="#pricing">ფასები</a>
-            <a href="#faq">კითხვები</a>
+            <a href="#features" onclick="navigateToLandingSection(event, 'features')">მახასიათებლები</a>
+            <a href="#pricing" onclick="navigateToLandingSection(event, 'pricing')">ფასები</a>
+            <a href="#faq" onclick="navigateToLandingSection(event, 'faq')">კითხვები</a>
         </nav>
         <div class="nav-auth">
             <button id="nav-login-btn" class="btn btn-secondary">შესვლა</button>
-            <div id="nav-user-profile" class="user-pill hidden">
-                <img id="nav-avatar" src="" alt="Avatar">
-                <span id="nav-username">მომხმარებელი</span>
+            <div id="nav-user-profile" class="user-pill hidden" style="cursor: pointer;" onclick="showDashboard()">
+                <div class="user-info-wrapper" style="display: flex; align-items: center; gap: 8px;">
+                    <img id="nav-avatar" src="" alt="Avatar">
+                    <span id="nav-username">მომხმარებელი</span>
+                </div>
                 <button id="nav-logout-btn" class="btn-logout">
                     <!-- Clean Close X Icon SVG -->
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
@@ -234,7 +236,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- Dashboard Page Content (Auth Guarded) -->
@@ -274,7 +275,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
                             ლიცენზიები & გასაღები
                         </a>
-                        <a href="#faq" class="menu-item" onclick="scrollToElement('faq')">
+                        <a href="#tab-faq" class="menu-item" onclick="switchDashTab(event, 'tab-faq')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             კითხვები
                         </a>
@@ -364,21 +365,13 @@
                             <div class="launchers-grid">
                                 <!-- Launcher 1 -->
                                 <div class="launcher-card">
-                                    <img src="https://raw.githubusercontent.com/Fabulously-Optimized/fabulously-optimized/main/assets/images/minecraft.png" alt="Minecraft Launcher" class="launcher-logo">
-                                    <div class="launcher-meta">
-                                        <h4>Minecraft Launcher</h4>
-                                        <span>ოფიციალური</span>
-                                    </div>
-                                </div>
-                                <!-- Launcher 2 -->
-                                <div class="launcher-card">
                                     <img src="https://github.com/modrinth.png" alt="Modrinth App" class="launcher-logo">
                                     <div class="launcher-meta">
                                         <h4>Modrinth App</h4>
                                         <span>თავსებადი</span>
                                     </div>
                                 </div>
-                                <!-- Launcher 3 -->
+                                <!-- Launcher 2 -->
                                 <div class="launcher-card">
                                     <img src="https://github.com/FeatherMC.png" alt="Feather Client" class="launcher-logo">
                                     <div class="launcher-meta">
@@ -386,7 +379,7 @@
                                         <span>თავსებადი</span>
                                     </div>
                                 </div>
-                                <!-- Launcher 4 -->
+                                <!-- Launcher 3 -->
                                 <div class="launcher-card">
                                     <img src="https://github.com/PrismLauncher.png" alt="Prism Launcher" class="launcher-logo">
                                     <div class="launcher-meta">
@@ -394,7 +387,7 @@
                                         <span>თავსებადი</span>
                                     </div>
                                 </div>
-                                <!-- Launcher 5 -->
+                                <!-- Launcher 4 -->
                                 <div class="launcher-card">
                                     <img src="https://raw.githubusercontent.com/DUB1401/TLauncher-Flatpak/master/org.tlauncher.TLauncher.png" alt="TLauncher" class="launcher-logo">
                                     <div class="launcher-meta">
@@ -413,8 +406,8 @@
                         <div class="glass-panel licenses-card" style="margin-bottom: 28px;">
                             <div class="panel-header">
                                 <h3>თქვენი აქტიური ლიცენზიები</h3>
-                                <button id="refresh-licenses-btn" class="btn-refresh">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <button id="refresh-licenses-btn" class="btn btn-secondary btn-refresh">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
                                     </svg>
                                     განახლება
@@ -445,27 +438,48 @@
                             </form>
                         </div>
                     </div>
+
+                    <!-- TAB: FAQ -->
+                    <div id="tab-content-faq" class="tab-pane hidden">
+                        <div class="glass-panel" style="margin-bottom: 28px;">
+                            <h3 class="section-title" style="margin-bottom: 20px;">ხშირად დასმული კითხვები (FAQ)</h3>
+                            <div class="faq-list">
+                                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                                    <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები? <span class="faq-toggle-icon">+</span></h4>
+                                    <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშირეთ ის აქ, დეშბორდზე.</p>
+                                </div>
+                                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                                    <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ? <span class="faq-toggle-icon">+</span></h4>
+                                    <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
+                                </div>
+                                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                                    <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო? <span class="faq-toggle-icon">+</span></h4>
+                                    <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section (Landing Page Only) -->
     <section id="faq" class="faq view">
         <div class="section-header">
             <h2>ხშირად დასმული კითხვები</h2>
         </div>
         <div class="faq-list">
-            <div class="glass-panel faq-item">
-                <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები?</h4>
-                <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშიროთ ის აქ, დეშბორდზე.</p>
+            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები? <span class="faq-toggle-icon">+</span></h4>
+                <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშირეთ ის აქ, დეშბორდზე.</p>
             </div>
-            <div class="glass-panel faq-item">
-                <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ?</h4>
+            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ? <span class="faq-toggle-icon">+</span></h4>
                 <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
             </div>
-            <div class="glass-panel faq-item">
-                <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო?</h4>
+            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო? <span class="faq-toggle-icon">+</span></h4>
                 <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
             </div>
         </div>

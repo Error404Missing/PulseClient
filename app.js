@@ -55,7 +55,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Event Listeners
     navLoginBtn.addEventListener('click', signInWithDiscord);
-    navLogoutBtn.addEventListener('click', signOut);
+    navLogoutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        signOut();
+    });
     dashLogoutBtn.addEventListener('click', signOut);
     refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
     bindLicenseForm.addEventListener('submit', bindLicenseKey);
@@ -293,12 +296,15 @@ function switchDashTab(event, tabId) {
     // Hide all tabs
     document.getElementById('tab-content-downloads').classList.add('hidden');
     document.getElementById('tab-content-redeem').classList.add('hidden');
+    document.getElementById('tab-content-faq').classList.add('hidden');
     
     // Show active tab
     if (tabId === 'tab-downloads') {
         document.getElementById('tab-content-downloads').classList.remove('hidden');
     } else if (tabId === 'tab-redeem') {
         document.getElementById('tab-content-redeem').classList.remove('hidden');
+    } else if (tabId === 'tab-faq') {
+        document.getElementById('tab-content-faq').classList.remove('hidden');
     }
     
     // Deactivate all menu items
@@ -308,6 +314,12 @@ function switchDashTab(event, tabId) {
     // Activate clicked menu item
     if (event) {
         event.currentTarget.classList.add('active');
+    }
+
+    // Scroll smoothly to dashboard top
+    const dbPage = document.getElementById('dashboard-page');
+    if (dbPage) {
+        dbPage.scrollIntoView({ behavior: 'smooth' });
     }
 }
 window.switchDashTab = switchDashTab;
@@ -320,3 +332,49 @@ function scrollToElement(id) {
     }
 }
 window.scrollToElement = scrollToElement;
+
+// Toggle FAQ item expansion
+function toggleFaq(event) {
+    const item = event.currentTarget;
+    item.classList.toggle('active');
+    
+    const p = item.querySelector('p');
+    if (p) {
+        if (item.classList.contains('active')) {
+            p.style.maxHeight = p.scrollHeight + 'px';
+            p.style.marginTop = '12px';
+            p.style.opacity = '1';
+        } else {
+            p.style.maxHeight = '0';
+            p.style.marginTop = '0';
+            p.style.opacity = '0';
+        }
+    }
+}
+window.toggleFaq = toggleFaq;
+
+// Navigate to landing page sections from navbar/logo
+function navigateToLandingSection(event, sectionId) {
+    if (event) event.preventDefault();
+    
+    // Switch views to show landing page
+    landingPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+    
+    // Scroll to section
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+window.navigateToLandingSection = navigateToLandingSection;
+
+// Show dashboard view
+function showDashboard() {
+    landingPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
+    // Default to downloads tab
+    switchDashTab(null, 'tab-downloads');
+}
+window.showDashboard = showDashboard;
+
