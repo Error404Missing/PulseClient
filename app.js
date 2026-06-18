@@ -476,12 +476,16 @@ async function fetchAllLicenses() {
     adminLicensesTableBody.innerHTML = '';
 
     try {
-        const { data, error } = await supabaseClient
-            .from('licenses')
-            .select('*')
-            .order('created_at', { ascending: false });
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?select=*&order=created_at.desc`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
 
         adminLicenses = data || [];
         renderAdminLicenses(adminLicenses);
@@ -606,16 +610,23 @@ async function createLicenseFromAdmin(e) {
     const note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
 
     try {
-        const { data, error } = await supabaseClient
-            .from('licenses')
-            .insert([{
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses`, {
+            method: "POST",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json",
+                "Prefer": "return=representation"
+            },
+            body: JSON.stringify({
                 license_key: key,
                 expires_at: expiresAt,
                 is_active: true,
                 note: note
-            }]);
+            })
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(await res.text());
 
         // Show result card
         adminGeneratedKey.textContent = key;
@@ -650,12 +661,17 @@ async function revokeLicense(key) {
     if (!confirm(`ნამდვილად გსურთ გასაღების გაუქმება?\n${key}`)) return;
 
     try {
-        const { error } = await supabaseClient
-            .from('licenses')
-            .update({ is_active: false })
-            .eq('license_key', key);
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
+            method: "PATCH",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ is_active: false })
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(await res.text());
 
         showBanner("ლიცენზია გაუქმდა წარმატებით", "success");
         fetchAllLicenses();
@@ -670,12 +686,17 @@ async function resetLicenseHwid(key) {
     if (!confirm(`ნამდვილად გსურთ მოწყობილობის (HWID) განულება?\n${key}`)) return;
 
     try {
-        const { error } = await supabaseClient
-            .from('licenses')
-            .update({ hwid: null })
-            .eq('license_key', key);
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
+            method: "PATCH",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ hwid: null })
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(await res.text());
 
         showBanner("მოწყობილობა (HWID) განულდა წარმატებით", "success");
         fetchAllLicenses();
