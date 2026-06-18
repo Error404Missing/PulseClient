@@ -279,6 +279,11 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             კითხვები
                         </a>
+                        <a href="#tab-admin" id="admin-menu-item" class="menu-item hidden" onclick="switchDashTab(event, 'tab-admin')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            ადმინ პანელი
+                            <span class="admin-badge">Admin</span>
+                        </a>
                         
                         <div class="sidebar-user-info">
                             <img id="dash-avatar" src="" alt="Avatar" class="avatar-small">
@@ -459,6 +464,93 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- TAB: Admin Panel -->
+                    <div id="tab-content-admin" class="tab-pane hidden">
+                        <!-- Create License Key Form -->
+                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
+                            <h3>ლიცენზიის გასაღების გენერირება</h3>
+                            <form id="admin-create-form" class="admin-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="admin-buyer-input">მყიდველის Discord User</label>
+                                        <input type="text" id="admin-buyer-input" placeholder="მაგ: user123" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="admin-product-select">პროდუქტი</label>
+                                        <select id="admin-product-select" required>
+                                            <option value="PulseClient">PulseClient</option>
+                                            <option value="MotionBlur">MotionBlur</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="admin-duration-select">ხანგრძლივობა</label>
+                                        <select id="admin-duration-select" required>
+                                            <option value="7">7 დღე</option>
+                                            <option value="30">30 დღე</option>
+                                            <option value="90">90 დღე</option>
+                                            <option value="lifetime">სამუდამო (Lifetime)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" id="admin-create-btn" class="btn btn-glow btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    გასაღების შექმნა
+                                </button>
+                            </form>
+                            
+                            <!-- Success Key Result -->
+                            <div id="admin-key-result" class="admin-key-result hidden">
+                                <div>
+                                    <span style="font-size: 12px; display: block; color: var(--text-muted); margin-bottom: 4px;">შექმნილი გასაღები:</span>
+                                    <span class="key-display" id="admin-generated-key">XXXX-XXXX-XXXX-XXXX</span>
+                                </div>
+                                <button class="copy-btn" id="admin-copy-key-btn">კოპირება</button>
+                            </div>
+                        </div>
+
+                        <!-- All Licenses List -->
+                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
+                            <div class="admin-header">
+                                <h3>ყველა ლიცენზიის მართვა</h3>
+                                <div class="admin-controls">
+                                    <input type="text" id="admin-search-input" placeholder="ძებნა (key, buyer...)">
+                                    <select id="admin-filter-select">
+                                        <option value="all">ყველა სტატუსი</option>
+                                        <option value="active">აქტიური</option>
+                                        <option value="revoked">გაუქმებული</option>
+                                        <option value="expired">ვადაგასული</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="admin-licenses-loading" class="loading-state">
+                                <span class="spinner"></span> მონაცემები იტვირთება...
+                            </div>
+
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>პროდუქტი</th>
+                                            <th>მფლობელი</th>
+                                            <th>ლიცენზიის გასაღები</th>
+                                            <th>სტატუსი</th>
+                                            <th>მოქმედების ვადა</th>
+                                            <th>ქმედებები</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-licenses-table-body">
+                                        <!-- Table rows rendered dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="admin-count">
+                                სულ ნაპოვნია: <span id="admin-total-count">0</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -489,6 +581,49 @@
     <footer class="footer">
         <p>&copy; 2026 PulseClient. ყველა უფლება დაცულია. არ არის აფილირებული Mojang AB-თან.</p>
     </footer>
+
+    <!-- Info Modal -->
+    <div id="license-info-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h3>ლიცენზიის დეტალური ინფორმაცია</h3>
+            <div class="modal-info-grid">
+                <div class="modal-info-item full-width">
+                    <span class="info-label">ლიცენზიის გასაღები</span>
+                    <span class="info-value mono" id="modal-key">XXXX-XXXX-XXXX-XXXX</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">მფლობელი</span>
+                    <span class="info-value" id="modal-buyer">-</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">სტატუსი</span>
+                    <span class="info-value" id="modal-status">-</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">შექმნის თარიღი</span>
+                    <span class="info-value" id="modal-created">-</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">ვადამდე დარჩა</span>
+                    <span class="info-value" id="modal-expires">-</span>
+                </div>
+                <div class="modal-info-item full-width">
+                    <span class="info-label">HWID (მოწყობილობის კოდი)</span>
+                    <span class="info-value mono" id="modal-hwid">გააქტიურებული არ არის</span>
+                </div>
+                <div class="modal-info-item full-width">
+                    <span class="info-label">შენიშვნა</span>
+                    <span class="info-value" id="modal-note">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- App Configuration and Logic script -->
     <script src="app.js"></script>

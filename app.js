@@ -32,7 +32,35 @@ const bindKeyInput = document.getElementById('bind-key-input');
 const bindSubmitBtn = document.getElementById('bind-submit-btn');
 const downloadModBtn = document.getElementById('download-mod-btn');
 
+// Admin DOM Elements
+const adminMenuItem = document.getElementById('admin-menu-item');
+const tabContentAdmin = document.getElementById('tab-content-admin');
+const adminCreateForm = document.getElementById('admin-create-form');
+const adminBuyerInput = document.getElementById('admin-buyer-input');
+const adminProductSelect = document.getElementById('admin-product-select');
+const adminDurationSelect = document.getElementById('admin-duration-select');
+const adminKeyResult = document.getElementById('admin-key-result');
+const adminGeneratedKey = document.getElementById('admin-generated-key');
+const adminCopyKeyBtn = document.getElementById('admin-copy-key-btn');
+const adminSearchInput = document.getElementById('admin-search-input');
+const adminFilterSelect = document.getElementById('admin-filter-select');
+const adminLicensesLoading = document.getElementById('admin-licenses-loading');
+const adminLicensesTableBody = document.getElementById('admin-licenses-table-body');
+const adminTotalCount = document.getElementById('admin-total-count');
+
+const licenseInfoModal = document.getElementById('license-info-modal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalKey = document.getElementById('modal-key');
+const modalBuyer = document.getElementById('modal-buyer');
+const modalStatus = document.getElementById('modal-status');
+const modalCreated = document.getElementById('modal-created');
+const modalExpires = document.getElementById('modal-expires');
+const modalHwid = document.getElementById('modal-hwid');
+const modalNote = document.getElementById('modal-note');
+
+const ADMIN_DISCORD_IDS = ["1475396409246089367"];
 let currentUser = null;
+let adminLicenses = [];
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
@@ -62,6 +90,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     dashLogoutBtn.addEventListener('click', signOut);
     refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
     bindLicenseForm.addEventListener('submit', bindLicenseKey);
+
+    // Admin Event Listeners
+    if (adminCreateForm) adminCreateForm.addEventListener('submit', createLicenseFromAdmin);
+    if (adminCopyKeyBtn) adminCopyKeyBtn.addEventListener('click', copyCreatedKey);
+    if (adminSearchInput) adminSearchInput.addEventListener('input', filterAdminLicenses);
+    if (adminFilterSelect) adminFilterSelect.addEventListener('change', filterAdminLicenses);
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLicenseModal);
+    if (licenseInfoModal) {
+        licenseInfoModal.addEventListener('click', (e) => {
+            if (e.target === licenseInfoModal) closeLicenseModal();
+        });
+    }
 
     // Set default mock download file link
     downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
@@ -109,6 +149,13 @@ function handleUserSignIn(user) {
     landingPage.classList.add('hidden');
     dashboardPage.classList.remove('hidden');
 
+    // Show/Hide Admin menu item
+    if (isAdmin()) {
+        if (adminMenuItem) adminMenuItem.classList.remove('hidden');
+    } else {
+        if (adminMenuItem) adminMenuItem.classList.add('hidden');
+    }
+
     // Fetch Licenses
     fetchUserLicenses();
 }
@@ -123,6 +170,11 @@ function handleUserSignOut() {
     // Switch Views
     landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
+
+    // Hide Admin menu item
+    if (adminMenuItem) {
+        adminMenuItem.classList.add('hidden');
+    }
 }
 
 // Database / Licenses Functions
@@ -297,6 +349,9 @@ function switchDashTab(event, tabId) {
     document.getElementById('tab-content-downloads').classList.add('hidden');
     document.getElementById('tab-content-redeem').classList.add('hidden');
     document.getElementById('tab-content-faq').classList.add('hidden');
+    if (document.getElementById('tab-content-admin')) {
+        document.getElementById('tab-content-admin').classList.add('hidden');
+    }
     
     // Show active tab
     if (tabId === 'tab-downloads') {
@@ -305,6 +360,11 @@ function switchDashTab(event, tabId) {
         document.getElementById('tab-content-redeem').classList.remove('hidden');
     } else if (tabId === 'tab-faq') {
         document.getElementById('tab-content-faq').classList.remove('hidden');
+    } else if (tabId === 'tab-admin') {
+        if (document.getElementById('tab-content-admin')) {
+            document.getElementById('tab-content-admin').classList.remove('hidden');
+        }
+        fetchAllLicenses();
     }
     
     // Deactivate all menu items
@@ -377,4 +437,300 @@ function showDashboard() {
     switchDashTab(null, 'tab-downloads');
 }
 window.showDashboard = showDashboard;
+
+// ==========================================
+// ADMIN PANEL FUNCTIONS
+// ==========================================
+
+function isAdmin() {
+    if (!currentUser) return false;
+    const providerId = currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+    return ADMIN_DISCORD_IDS.includes(String(providerId));
+}
+
+function parseLicenseNote(note) {
+    let product = "PulseClient";
+    let buyer = "Unknown";
+    
+    if (note) {
+        const prodMatch = note.match(/Product:\s*([^|]+)/i);
+        if (prodMatch) product = prodMatch[1].trim();
+        
+        const buyerMatch = note.match(/Buyer:\s*([^|()]+)/i);
+        if (buyerMatch) buyer = buyerMatch[1].trim();
+    }
+    
+    return { product, buyer };
+}
+
+function generateLicenseKey() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const segment = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    return `${segment()}-${segment()}-${segment()}-${segment()}`;
+}
+
+async function fetchAllLicenses() {
+    if (!isAdmin()) return;
+
+    adminLicensesLoading.classList.remove('hidden');
+    adminLicensesTableBody.innerHTML = '';
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        adminLicenses = data || [];
+        renderAdminLicenses(adminLicenses);
+    } catch (err) {
+        console.error("Error fetching all licenses:", err.message);
+        showBanner("მონაცემების ჩატვირთვა ვერ მოხერხდა: " + err.message, "error");
+    } finally {
+        adminLicensesLoading.classList.add('hidden');
+    }
+}
+
+function renderAdminLicenses(licenses) {
+    adminLicensesTableBody.innerHTML = '';
+    adminTotalCount.textContent = licenses.length;
+
+    if (licenses.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">ლიცენზიები არ მოიძებნა</td>`;
+        adminLicensesTableBody.appendChild(row);
+        return;
+    }
+
+    licenses.forEach(lic => {
+        const { product, buyer } = parseLicenseNote(lic.note);
+        
+        let status = 'active';
+        let statusText = 'აქტიური';
+        
+        if (!lic.is_active) {
+            status = 'revoked';
+            statusText = 'გაუქმებული';
+        } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
+            status = 'expired';
+            statusText = 'ვადაგასული';
+        }
+
+        let expiryDisplay = "სამუდამო";
+        if (lic.expires_at) {
+            const expDate = new Date(lic.expires_at);
+            expiryDisplay = expDate.toLocaleDateString('ka-GE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="product-cell">${product}</td>
+            <td class="buyer-cell">${buyer}</td>
+            <td><span class="key-cell">${lic.license_key}</span></td>
+            <td><span class="admin-status ${status}">${statusText}</span></td>
+            <td>${expiryDisplay}</td>
+            <td>
+                <div class="admin-actions">
+                    <button class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        ინფო
+                    </button>
+                    <button class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" ${lic.hwid ? '' : 'disabled'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                        HWID
+                    </button>
+                    <button class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" ${lic.is_active ? '' : 'disabled'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        გაუქმება
+                    </button>
+                </div>
+            </td>
+        `;
+        adminLicensesTableBody.appendChild(tr);
+    });
+}
+
+function filterAdminLicenses() {
+    const query = adminSearchInput.value.toLowerCase().trim();
+    const filter = adminFilterSelect.value;
+
+    const filtered = adminLicenses.filter(lic => {
+        const { product, buyer } = parseLicenseNote(lic.note);
+        const matchesQuery = 
+            lic.license_key.toLowerCase().includes(query) ||
+            buyer.toLowerCase().includes(query) ||
+            product.toLowerCase().includes(query) ||
+            (lic.note && lic.note.toLowerCase().includes(query));
+
+        let matchesFilter = true;
+        if (filter === 'active') {
+            matchesFilter = lic.is_active && (!lic.expires_at || new Date(lic.expires_at) >= new Date());
+        } else if (filter === 'revoked') {
+            matchesFilter = !lic.is_active;
+        } else if (filter === 'expired') {
+            matchesFilter = lic.is_active && lic.expires_at && new Date(lic.expires_at) < new Date();
+        }
+
+        return matchesQuery && matchesFilter;
+    });
+
+    renderAdminLicenses(filtered);
+}
+
+async function createLicenseFromAdmin(e) {
+    e.preventDefault();
+    if (!isAdmin()) return;
+
+    const buyer = adminBuyerInput.value.trim();
+    const product = adminProductSelect.value;
+    const duration = adminDurationSelect.value;
+
+    if (!buyer) return;
+
+    const createBtn = document.getElementById('admin-create-btn');
+    createBtn.disabled = true;
+    createBtn.textContent = "მიმდინარეობს შექმნა...";
+
+    const key = generateLicenseKey();
+    
+    let expiresAt = null;
+    if (duration !== 'lifetime') {
+        const days = parseInt(duration);
+        expiresAt = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+    }
+
+    const adminMetadata = currentUser.user_metadata;
+    const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
+    const note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('licenses')
+            .insert([{
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            }]);
+
+        if (error) throw error;
+
+        // Show result card
+        adminGeneratedKey.textContent = key;
+        adminKeyResult.classList.remove('hidden');
+
+        // Reset input
+        adminBuyerInput.value = '';
+
+        showBanner("ლიცენზიის გასაღები წარმატებით შეიქმნა!", "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error creating license:", err.message);
+        showBanner("გასაღების შექმნა ვერ მოხერხდა: " + err.message, "error");
+    } finally {
+        createBtn.disabled = false;
+        createBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> გასაღების შექმნა`;
+    }
+}
+
+function copyCreatedKey() {
+    const keyText = adminGeneratedKey.textContent;
+    navigator.clipboard.writeText(keyText).then(() => {
+        const copyBtn = document.getElementById('admin-copy-key-btn');
+        const origText = copyBtn.textContent;
+        copyBtn.textContent = "კოპირებულია!";
+        setTimeout(() => { copyBtn.textContent = origText; }, 2000);
+    });
+}
+
+async function revokeLicense(key) {
+    if (!isAdmin()) return;
+    if (!confirm(`ნამდვილად გსურთ გასაღების გაუქმება?\n${key}`)) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('licenses')
+            .update({ is_active: false })
+            .eq('license_key', key);
+
+        if (error) throw error;
+
+        showBanner("ლიცენზია გაუქმდა წარმატებით", "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error revoking license:", err.message);
+        showBanner("გაუქმება ვერ მოხერხდა: " + err.message, "error");
+    }
+}
+
+async function resetLicenseHwid(key) {
+    if (!isAdmin()) return;
+    if (!confirm(`ნამდვილად გსურთ მოწყობილობის (HWID) განულება?\n${key}`)) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('licenses')
+            .update({ hwid: null })
+            .eq('license_key', key);
+
+        if (error) throw error;
+
+        showBanner("მოწყობილობა (HWID) განულდა წარმატებით", "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error resetting HWID:", err.message);
+        showBanner("განულება ვერ მოხერხდა: " + err.message, "error");
+    }
+}
+
+function showLicenseDetails(key) {
+    const lic = adminLicenses.find(l => l.license_key === key);
+    if (!lic) return;
+
+    const { product, buyer } = parseLicenseNote(lic.note);
+
+    let statusText = "აქტიური";
+    if (!lic.is_active) {
+        statusText = "გაუქმებული";
+    } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
+        statusText = "ვადაგასული";
+    }
+
+    modalKey.textContent = lic.license_key;
+    modalBuyer.textContent = buyer;
+    modalStatus.textContent = statusText;
+    modalCreated.textContent = new Date(lic.created_at).toLocaleString('ka-GE');
+    
+    let expiryDisplay = "სამუდამო";
+    if (lic.expires_at) {
+        const expDate = new Date(lic.expires_at);
+        const now = new Date();
+        if (expDate < now) {
+            expiryDisplay = "ვადა გასულია";
+        } else {
+            const diffTime = Math.abs(expDate - now);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            expiryDisplay = `${diffDays} დღე`;
+        }
+    }
+    modalExpires.textContent = expiryDisplay;
+    modalHwid.textContent = lic.hwid || "გააქტიურებული არ არის";
+    modalNote.textContent = lic.note || "-";
+
+    licenseInfoModal.classList.remove('hidden');
+}
+
+function closeLicenseModal() {
+    licenseInfoModal.classList.add('hidden');
+}
+
+// Attach functions to window scope for onclick handlers in dynamically generated HTML
+window.showLicenseDetails = showLicenseDetails;
+window.resetLicenseHwid = resetLicenseHwid;
+window.revokeLicense = revokeLicense;
+window.closeLicenseModal = closeLicenseModal;
+window.copyCreatedKey = copyCreatedKey;
+window.filterAdminLicenses = filterAdminLicenses;
 
