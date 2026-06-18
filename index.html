@@ -313,6 +313,33 @@
                         </button>
                     </div>
 
+                    <!-- Update Notification Banner -->
+                    <div id="update-notification" class="update-notification hidden">
+                        <div class="update-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                        <div class="update-text">
+                            <strong>🎉 ხელმისაწვდომია ახალი განახლება!</strong>
+                            <span id="update-date-text">PulseClient-ის ახალი ვერსია გამოვიდა. გადმოიწერეთ ბოლო ვერსია.</span>
+                        </div>
+                        <div class="update-actions">
+                            <a id="update-download-btn" href="MotionBlur1.031.1.21.11.jar" download class="btn btn-glow btn-primary update-dl-btn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                განახლება
+                            </a>
+                            <button id="update-dismiss-btn" class="btn-update-dismiss">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- TAB: Downloads (Default) -->
                     <div id="tab-content-downloads" class="tab-pane">
                         <!-- Main Download Card -->
@@ -475,15 +502,9 @@
                                     <div class="form-group" style="position: relative;">
                                         <label>მყიდველის Discord User</label>
                                         <div class="custom-select-wrapper" id="admin-user-select-wrapper">
-                                            <div class="custom-select-trigger" id="admin-user-select-trigger">
+                                            <div class="custom-select-trigger" id="admin-user-select-trigger" onclick="openUserSelectionModal(event)">
                                                 <span>აირჩიეთ მომხმარებელი...</span>
                                                 <div class="arrow"></div>
-                                            </div>
-                                            <div class="custom-select-options hidden" id="admin-user-select-options">
-                                                <input type="text" class="user-search-box" id="admin-user-search" placeholder="ძებნა...">
-                                                <div class="options-list" id="admin-user-options-list">
-                                                    <!-- User options rendered here -->
-                                                </div>
                                             </div>
                                         </div>
                                         <input type="hidden" id="admin-buyer-input" required>
@@ -633,6 +654,21 @@
                     <span class="info-label">შენიშვნა</span>
                     <span class="info-value" id="modal-note">-</span>
                 </div>
+            </div>
+        </div>
+    <!-- User Selection Modal (Full Screen Grid) -->
+    <div id="user-selection-modal" class="modal-overlay hidden">
+        <div class="modal-content user-selector-modal-content">
+            <button class="modal-close" onclick="closeUserSelectionModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h3>აირჩიეთ მომხმარებელი</h3>
+            <input type="text" class="user-search-box modal-search" id="admin-modal-user-search" placeholder="მოძებნე სახელით ან Discord ID-ით..." oninput="filterDropdownUsers()">
+            <div class="options-list modal-user-grid" id="admin-modal-user-options-list">
+                <!-- User options rendered here -->
             </div>
         </div>
     </div>

@@ -139,7 +139,6 @@ body {
 /* iOS glass panel */
 .glass-panel {
     position: relative;
-    overflow: hidden;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     backdrop-filter: var(--ios-blur);
@@ -1760,6 +1759,10 @@ h3 {
     padding: 32px;
     width: 90%;
     max-width: 520px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     backdrop-filter: var(--ios-blur);
     -webkit-backdrop-filter: var(--ios-blur);
     animation: modalSlideUp 0.3s ease;
@@ -1797,6 +1800,90 @@ h3 {
 }
 
 .modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Update Notification Banner Style */
+.update-notification {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.08));
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.update-notification.hidden {
+    display: none !important;
+}
+
+.update-notification .update-icon {
+    background: rgba(99, 102, 241, 0.2);
+    color: #a78bfa;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.update-notification .update-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.update-notification .update-text strong {
+    font-size: 14px;
+    color: #fff;
+}
+
+.update-notification .update-text span {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+}
+
+.update-notification .update-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.update-notification .update-dl-btn {
+    font-size: 12.5px !important;
+    padding: 8px 18px !important;
+    border-radius: 10px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.update-notification .btn-update-dismiss {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.update-notification .btn-update-dismiss:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
@@ -1925,6 +2012,7 @@ h3 {
 .custom-select-wrapper {
     position: relative;
     user-select: none;
+    z-index: 99999;
 }
 
 .custom-select-trigger {
@@ -1958,20 +2046,20 @@ h3 {
     transform: rotate(180deg);
 }
 
-.custom-select-options {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    width: 100%;
-    background: rgba(15, 15, 20, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+/* Custom Select Dropdown for Admin Panel */
+.custom-select-wrapper.static-select {
+    position: relative;
+    user-select: none;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    z-index: 100;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    padding: 8px;
+    padding: 12px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
 }
 
 .user-search-box {
@@ -1982,14 +2070,17 @@ h3 {
     padding: 8px 12px !important;
     color: #fff !important;
     font-size: 13px !important;
-    margin-bottom: 8px;
     outline: none;
     box-sizing: border-box;
 }
 
-.options-list {
-    max-height: 180px;
-    overflow-y: auto;
+.options-list.static-list {
+    max-height: 250px;
+    overflow-y: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 4px;
 }
 
 .user-option {
@@ -2004,6 +2095,12 @@ h3 {
 
 .user-option:hover {
     background-color: rgba(99, 102, 241, 0.15);
+}
+
+.user-option.selected {
+    background-color: rgba(99, 102, 241, 0.3) !important;
+    border: 1px solid rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
 }
 
 .user-option img {
@@ -2026,3 +2123,66 @@ h3 {
     margin-left: auto;
 }
 
+/* User Selector Modal Styles */
+.user-selector-modal-content {
+    max-width: 780px !important;
+    width: 90% !important;
+    max-height: 85vh !important;
+    height: 85vh !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.modal-search {
+    margin-bottom: 20px !important;
+    padding: 12px 18px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    flex-shrink: 0;
+}
+
+.user-selector-modal-content h3 {
+    flex-shrink: 0;
+}
+
+.modal-user-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    gap: 12px !important;
+    flex: 1 1 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-right: 8px;
+    min-height: 0 !important;
+}
+
+.modal-user-grid .user-option {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 12px;
+}
+
+.modal-user-grid .user-option:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    background-color: rgba(99, 102, 241, 0.08);
+}
+
+/* Custom scrollbar for user grid */
+.modal-user-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-user-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 3px;
+}
+
+.modal-user-grid::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 3px;
+}
+
+.modal-user-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
+}

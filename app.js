@@ -60,11 +60,10 @@ const modalNote = document.getElementById('modal-note');
 
 const adminUserSelectWrapper = document.getElementById('admin-user-select-wrapper');
 const adminUserSelectTrigger = document.getElementById('admin-user-select-trigger');
-const adminUserSelectOptions = document.getElementById('admin-user-select-options');
-const adminUserSearch = document.getElementById('admin-user-search');
-const adminUserOptionsList = document.getElementById('admin-user-options-list');
+const adminUserSearch = document.getElementById('admin-modal-user-search');
+const adminUserOptionsList = document.getElementById('admin-modal-user-options-list');
 
-const ADMIN_DISCORD_IDS = ["1475396409246089367"];
+const ADMIN_DISCORD_IDS = ["1475396409246089367", "1350538035342737441", "1158855771031867432"];
 let currentUser = null;
 let adminLicenses = [];
 let allUserProfiles = [];
@@ -110,33 +109,63 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // User select dropdown listeners
-    if (adminUserSelectTrigger) {
-        adminUserSelectTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            adminUserSelectWrapper.classList.toggle('open');
-            adminUserSelectOptions.classList.toggle('hidden');
-            if (adminUserSelectWrapper.classList.contains('open')) {
-                adminUserSearch.focus();
-            }
-        });
-    }
 
-    if (adminUserSearch) {
-        adminUserSearch.addEventListener('input', filterDropdownUsers);
-    }
 
-    // Close select dropdown when clicking outside
-    document.addEventListener('click', () => {
-        if (adminUserSelectWrapper) {
-            adminUserSelectWrapper.classList.remove('open');
-            adminUserSelectOptions.classList.add('hidden');
-        }
-    });
+    if (currentUser) {
+        checkForUpdates();
+    }
 
     // Set default mock download file link
     downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
 });
+
+// Update Notification DOM Elements
+const updateNotification = document.getElementById('update-notification');
+const updateDateText = document.getElementById('update-date-text');
+const updateDownloadBtn = document.getElementById('update-download-btn');
+const updateDismissBtn = document.getElementById('update-dismiss-btn');
+
+// GitHub update check
+async function checkForUpdates() {
+    try {
+        // Fetch commits for the jar file to know the last update time
+        const res = await fetch("https://api.github.com/repos/Error404Missing/PulseClient/commits?path=MotionBlur1.031.1.21.11.jar&page=1&per_page=1");
+        if (!res.ok) throw new Error("GitHub API rate limit or error");
+        const commits = await res.json();
+        if (commits && commits.length > 0) {
+            const latestCommitSha = commits[0].sha;
+            const latestCommitDate = commits[0].commit.committer.date;
+            const latestDateObj = new Date(latestCommitDate);
+            
+            // Update local download link date display on downloads tab if needed
+            const updatedDateEl = document.querySelector('.updated-date');
+            if (updatedDateEl) {
+                updatedDateEl.textContent = `ბოლოს განახლდა: ${latestDateObj.toLocaleDateString('ka-GE')} ${latestDateObj.toLocaleTimeString('ka-GE', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+
+            // Check if user dismissed this update
+            const dismissedSha = localStorage.getItem('pulse_dismissed_update_sha');
+            if (dismissedSha !== latestCommitSha) {
+                // Show update notification
+                if (updateNotification) {
+                    updateNotification.classList.remove('hidden');
+                    if (updateDateText) {
+                        updateDateText.textContent = `გამოვიდა ახალი ვერსია (${latestDateObj.toLocaleDateString('ka-GE')}). გთხოვთ გადმოწეროთ განახლებული ფაილი!`;
+                    }
+                }
+
+                if (updateDismissBtn) {
+                    updateDismissBtn.onclick = () => {
+                        localStorage.setItem('pulse_dismissed_update_sha', latestCommitSha);
+                        updateNotification.classList.add('hidden');
+                    };
+                }
+            }
+        }
+    } catch (err) {
+        console.warn("Could not check for updates via GitHub:", err.message);
+    }
+}
 
 // Auth Functions
 async function signInWithDiscord() {
@@ -192,6 +221,9 @@ function handleUserSignIn(user) {
 
     // Fetch Licenses
     fetchUserLicenses();
+
+    // Check for mod updates
+    checkForUpdates();
 }
 
 function handleUserSignOut() {
@@ -669,9 +701,8 @@ async function createLicenseFromAdmin(e) {
 
         // Reset input
         adminBuyerInput.value = '';
-        if (adminUserSelectTrigger) {
-            adminUserSelectTrigger.querySelector('span').textContent = 'აირჩიეთ მომხმარებელი...';
-        }
+        const options = adminUserOptionsList.querySelectorAll('.user-option');
+        options.forEach(opt => opt.classList.remove('selected'));
 
         showBanner("ლიცენზიის გასაღები წარმატებით შეიქმნა!", "success");
         fetchAllLicenses();
@@ -869,19 +900,24 @@ function selectDropdownUser(username) {
     if (!profile) return;
 
     adminBuyerInput.value = profile.username;
-    adminUserSelectTrigger.querySelector('span').innerHTML = `
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" style="width: 20px; height: 20px; border-radius: 50%;">
-            <span>${profile.username}</span>
-        </div>
-    `;
     
-    adminUserSelectWrapper.classList.remove('open');
-    adminUserSelectOptions.classList.add('hidden');
+    // Update trigger UI text
+    if (adminUserSelectTrigger) {
+        adminUserSelectTrigger.querySelector('span').innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" style="width: 20px; height: 20px; border-radius: 50%;">
+                <span>${profile.username}</span>
+            </div>
+        `;
+    }
+    
+    closeUserSelectionModal();
 }
 
 function filterDropdownUsers() {
-    const query = adminUserSearch.value.toLowerCase().trim();
+    // Find the active search input
+    const searchInput = document.querySelector('.modal-search');
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
     const filtered = allUserProfiles.filter(p => 
         p.username.toLowerCase().includes(query) ||
         (p.discord_id && p.discord_id.toLowerCase().includes(query))
@@ -889,5 +925,28 @@ function filterDropdownUsers() {
     renderDropdownUsers(filtered);
 }
 
+function openUserSelectionModal(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('user-selection-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        const searchInput = document.getElementById('admin-modal-user-search');
+        if (searchInput) {
+            searchInput.value = '';
+            searchInput.focus();
+        }
+        renderDropdownUsers(allUserProfiles);
+    }
+}
+
+function closeUserSelectionModal() {
+    const modal = document.getElementById('user-selection-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
 window.filterDropdownUsers = filterDropdownUsers;
+window.openUserSelectionModal = openUserSelectionModal;
+window.closeUserSelectionModal = closeUserSelectionModal;
 
