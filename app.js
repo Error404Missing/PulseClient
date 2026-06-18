@@ -2,7 +2,7 @@
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // DOM Elements
 const navLoginBtn = document.getElementById('nav-login-btn');
@@ -37,7 +37,7 @@ let currentUser = null;
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     // Check active session
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (session) {
         handleUserSignIn(session.user);
     } else {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Set up OAuth redirect listener
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_IN' && session) {
             handleUserSignIn(session.user);
         } else if (event === 'SIGNED_OUT') {
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Auth Functions
 async function signInWithDiscord() {
     try {
-        const { error } = await supabase.auth.signInWithOAuth({
+        const { error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'discord',
             options: {
                 redirectTo: window.location.origin + window.location.pathname
@@ -81,7 +81,7 @@ async function signInWithDiscord() {
 }
 
 async function signOut() {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 }
 
 function handleUserSignIn(user) {
@@ -135,7 +135,7 @@ async function fetchUserLicenses() {
 
     try {
         // Query licenses matching "Buyer: <username>" in the note column
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('licenses')
             .select('*')
             .like('note', `%Buyer: ${username}%`);
@@ -218,7 +218,7 @@ async function bindLicenseKey(e) {
 
     try {
         // 1. Check if the key exists in database
-        const { data: license, error: fetchError } = await supabase
+        const { data: license, error: fetchError } = await supabaseClient
             .from('licenses')
             .select('*')
             .eq('license_key', key)
@@ -244,7 +244,7 @@ async function bindLicenseKey(e) {
 
         // 3. Update the note column to associate with current user
         const newNote = `Product: PulseClient | Buyer: ${username} (Linked via Dashboard)`;
-        const { error: updateError } = await supabase
+        const { error: updateError } = await supabaseClient
             .from('licenses')
             .update({ note: newNote })
             .eq('license_key', key);
