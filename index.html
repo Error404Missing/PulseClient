@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseClient - პრემიუმ Minecraft საბრძოლო და სტელს უპირატესობა</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Animated iOS Background Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <!-- Sleek Image Logo -->
+            <img src="logo.jpg" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#features">მახასიათებლები</a>
+            <a href="#pricing">ფასები</a>
+            <a href="#faq">კითხვები</a>
+        </nav>
+        <div class="nav-auth">
+            <button id="nav-login-btn" class="btn btn-secondary">შესვლა</button>
+            <div id="nav-user-profile" class="user-pill hidden">
+                <img id="nav-avatar" src="" alt="Avatar">
+                <span id="nav-username">მომხმარებელი</span>
+                <button id="nav-logout-btn" class="btn-logout">
+                    <!-- Clean Close X Icon SVG -->
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Landing Page Content -->
+    <main id="landing-page" class="view">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="badge">V1.03 ახალი ვერსია</div>
+                <h1>დომინირება Minecraft <br><span class="highlight">საბრძოლო & მოძრაობა</span></h1>
+                <p class="hero-desc">მოიპოვეთ უპირატესობა თამაშში სრულად კონფიგურირებადი Combat მოდიფიკაციებით, პრემიუმ ვიზუალური ESP-ებით და ანტი-ჩითის ძლიერი შემოვლის სისტემით. შექმნილია მაღალი დონის მოთამაშეებისთვის.</p>
+                <div class="hero-actions">
+                    <a href="#pricing" class="btn btn-glow btn-primary">შეიძინე PulseClient</a>
+                    <a href="#features" class="btn btn-secondary">გაეცანი ფუნქციებს</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Visual glass card container -->
+                <div class="glass-panel main-preview" style="text-align: center;">
+                    <div class="preview-header" style="margin-bottom: 16px;">
+                        <div class="preview-dots">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="preview-content">
+                        <img src="logo.jpg" alt="Pulse Client Logo" style="width: 140px; height: 140px; border-radius: 20px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <h3 style="margin-bottom: 12px;">PulseClient დაცვა</h3>
+                        <div class="status-indicator" style="justify-content: center;">
+                            <span class="pulse-dot"></span>
+                            <span class="status-text">სრულად დაცული და ამოუცნობი</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="section-header">
+                <h2>რატომ უნდა აირჩიოთ PulseClient?</h2>
+                <p>შექმნილია ნულიდან მაქსიმალური საბრძოლო ეფექტურობისთვის, სუფთა ვიზუალისთვის და სტაბილური შემოვლებისთვის.</p>
+            </div>
+            <div class="features-grid">
+                <!-- Card 1 -->
+                <div class="glass-panel feature-card">
+                    <div class="icon-wrapper">
+                        <!-- Swords SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
+                            <line x1="13" y1="19" x2="19" y2="13"></line>
+                            <line x1="16" y1="16" x2="20" y2="20"></line>
+                            <line x1="19" y1="21" x2="21" y2="19"></line>
+                        </svg>
+                    </div>
+                    <h3>Combat მოდიფიკაციები</h3>
+                    <p>სრულად კონფიგურირებადი AutoClicker, Reach, Velocity/Knockback შემცირება და AimAssist, რომელიც მუშაობს სრულიად ლეგიტიმურად.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-panel feature-card">
+                    <div class="icon-wrapper">
+                        <!-- Eye SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>ვიზუალური ფუნქციები</h3>
+                    <p>სუფთა Player Chams, Chest ESP, დეტალური HUD ოვერლეი და Tracers, რომელიც არ ჩანს ეკრანის ჩაწერის პროგრამებში.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass-panel feature-card">
+                    <div class="icon-wrapper">
+                        <!-- Shield Lock SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <rect x="9" y="11" width="6" height="5" rx="1"></rect>
+                            <path d="M11 11V9a1 1 0 0 1 2 0v2"></path>
+                        </svg>
+                    </div>
+                    <h3>გაფართოებული შემოვლები</h3>
+                    <p>ფარული პაკეტების მანიპულაცია Matrix, GrimAC, Vulcan და სხვა თანამედროვე ანტი-ჩითების გვერდის ასავლელად.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="glass-panel feature-card">
+                    <div class="icon-wrapper">
+                        <!-- Discord Icon SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 9a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v5a5 5 0 0 0 5 5h1a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3h1a5 5 0 0 0 5-5V9z"></path>
+                            <circle cx="6" cy="11" r="1"></circle>
+                            <circle cx="12" cy="11" r="1"></circle>
+                        </svg>
+                    </div>
+                    <h3>Discord ინტეგრაცია</h3>
+                    <p>გაააქტიურეთ გასაღებები, ნახეთ დეტალები და მართეთ როლები მარტივად ჩვენი ავტომატიზებული Discord ბოტის მეშვეობით.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing">
+            <div class="section-header">
+                <h2>მარტივი და გამჭვირვალე ფასები</h2>
+                <p>აირჩიეთ ტარიფი, რომელიც საუკეთესოდ შეესაბამება თქვენს სათამაშო გრაფიკს.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- Weekly -->
+                <div class="glass-panel pricing-card">
+                    <h3>ყოველკვირეული ტარიფი</h3>
+                    <div class="price">$1.99<span>/ 7 დღე</span></div>
+                    <p class="desc">იდეალურია კლიენტის შესაძლებლობების გასატესტად და ყოველკვირეული ტურნირებისთვის.</p>
+                    <ul class="perks">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            კლიენტის სრული წვდომა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ყველა Anti-Cheat შემოვლა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Discord როლი და მხარდაჭერა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            მუდმივი ფუნქციების განახლება
+                        </li>
+                    </ul>
+                    <button class="btn btn-secondary buy-btn" onclick="scrollToAuth()">ყიდვა</button>
+                </div>
+                <!-- Lifetime (Recommended) -->
+                <div class="glass-panel pricing-card popular">
+                    <div class="popular-badge">რეკომენდებული</div>
+                    <h3>სამუდამო ტარიფი</h3>
+                    <div class="price">$14.99<span>/ ერთჯერადი</span></div>
+                    <p class="desc">გადაიხადე ერთხელ, ითამაშე სამუდამოდ. მიიღე პრიორიტეტული წვდომა ყველა სამომავლო განახლებაზე.</p>
+                    <ul class="perks">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            კლიენტის მუდმივი წვდომა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ყველა Anti-Cheat შემოვლა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            პრიორიტეტული Discord მხარდაჭერა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ექსკლუზიური ბეტა ვერსიები
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            სამუდამო წვდომა განახლებებზე
+                        </li>
+                    </ul>
+                    <button class="btn btn-glow btn-primary buy-btn" onclick="scrollToAuth()">სამუდამოს შეძენა</button>
+                </div>
+                <!-- Monthly -->
+                <div class="glass-panel pricing-card">
+                    <h3>ყოველთვიური ტარიფი</h3>
+                    <div class="price">$4.99<span>/ 30 დღე</span></div>
+                    <p class="desc">სტანდარტული არჩევანი აქტიური და კონკურენტუნარიანი Minecraft მოთამაშეებისთვის.</p>
+                    <ul class="perks">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            კლიენტის სრული წვდომა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ყველა Anti-Cheat შემოვლა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Discord როლი და მხარდაჭერა
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            მუდმივი ფუნქციების განახლება
+                        </li>
+                    </ul>
+                    <button class="btn btn-secondary buy-btn" onclick="scrollToAuth()">ყიდვა</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq">
+            <div class="section-header">
+                <h2>ხშირად დასმული კითხვები</h2>
+            </div>
+            <div class="faq-list">
+                <div class="glass-panel faq-item">
+                    <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები?</h4>
+                    <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშიროთ ის აქ, დეშბორდზე.</p>
+                </div>
+                <div class="glass-panel faq-item">
+                    <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ?</h4>
+                    <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
+                </div>
+                <div class="glass-panel faq-item">
+                    <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო?</h4>
+                    <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dashboard Page Content (Auth Guarded) -->
+    <main id="dashboard-page" class="view hidden">
+        <section class="dashboard">
+            <div class="dashboard-grid">
+                <!-- User Profile & Navigation -->
+                <div class="dashboard-sidebar">
+                    <div class="glass-panel profile-card">
+                        <img id="dash-avatar" src="" alt="Avatar" class="avatar-large">
+                        <h3 id="dash-username">Discord მომხმარებელი</h3>
+                        <p class="role-badge">ვერიფიცირებული მომხმარებელი</p>
+                        <hr class="divider">
+                        <div class="quick-stats">
+                            <div class="qs-item">
+                                <span class="qs-label">სულ ლიცენზიები</span>
+                                <span id="dash-license-count" class="qs-val">0</span>
+                            </div>
+                        </div>
+                        <button id="dash-logout-btn" class="btn btn-secondary btn-full">გამოსვლა</button>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="dashboard-main">
+                    <!-- Alert Banner -->
+                    <div id="dash-message-banner" class="alert-banner hidden">
+                        <span id="banner-text">შეტყობინება</span>
+                        <button onclick="hideBanner()" class="close-banner">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Welcome & Downloads -->
+                    <div class="glass-panel action-card">
+                        <h2>მოგესალმებით PulseClient-ის მართვის პანელში</h2>
+                        <p>მართეთ თქვენი ლიცენზიის გასაღებები, შეამოწმეთ HWID კავშირი და ჩამოტვირთეთ კლიენტის ბოლო ვერსია პირდაპირ საიტიდან.</p>
+                        <div class="download-section">
+                            <div class="dl-info">
+                                <strong>ბოლო ვერსია:</strong> v1.031.1.21.11 (Fabric)
+                            </div>
+                            <a id="download-mod-btn" href="#" class="btn btn-glow btn-primary" download>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                მოდის ჩამოტვირთვა
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Licenses Panel -->
+                    <div class="glass-panel licenses-card">
+                        <div class="panel-header">
+                            <h3>თქვენი აქტიური ლიცენზიები</h3>
+                            <button id="refresh-licenses-btn" class="btn-refresh">
+                                <!-- Refresh Icon SVG -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                                </svg>
+                                განახლება
+                            </button>
+                        </div>
+                        
+                        <div id="licenses-loading" class="loading-state">
+                            <span class="spinner"></span> ლიცენზიები იტვირთება...
+                        </div>
+
+                        <div id="no-licenses-view" class="empty-state hidden">
+                            <p>თქვენს Discord ანგარიშზე ჯერ არცერთი ლიცენზია არ არის მიბმული.</p>
+                            <p class="sub">შეიძინეთ გასაღები ან დააკავშირეთ არსებული ქვემოთ!</p>
+                        </div>
+
+                        <div id="licenses-list" class="licenses-list hidden">
+                            <!-- Licenses will be rendered dynamically here -->
+                        </div>
+                    </div>
+
+                    <!-- Bind License Form -->
+                    <div class="glass-panel bind-card">
+                        <h3>არსებული ლიცენზიის გასაღების დაკავშირება</h3>
+                        <p class="desc">თუ გაქვთ Discord ბოტიდან გენერირებული გასაღები, რომელიც ჯერ არ არის დაკავშირებული საიტთან, ჩაწერეთ ის ქვემოთ თქვენს Discord პროფილზე მისაბმელად.</p>
+                        <form id="bind-license-form" class="bind-form">
+                            <input type="text" id="bind-key-input" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                            <button type="submit" id="bind-submit-btn" class="btn btn-primary">დაკავშირება</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 PulseClient. ყველა უფლება დაცულია. არ არის აფილირებული Mojang AB-თან.</p>
+    </footer>
+
+    <!-- App Configuration and Logic script -->
+    <script src="app.js"></script>
+</body>
+</html>
