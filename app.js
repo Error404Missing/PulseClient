@@ -58,9 +58,16 @@ const modalExpires = document.getElementById('modal-expires');
 const modalHwid = document.getElementById('modal-hwid');
 const modalNote = document.getElementById('modal-note');
 
+const adminUserSelectWrapper = document.getElementById('admin-user-select-wrapper');
+const adminUserSelectTrigger = document.getElementById('admin-user-select-trigger');
+const adminUserSelectOptions = document.getElementById('admin-user-select-options');
+const adminUserSearch = document.getElementById('admin-user-search');
+const adminUserOptionsList = document.getElementById('admin-user-options-list');
+
 const ADMIN_DISCORD_IDS = ["1475396409246089367"];
 let currentUser = null;
 let adminLicenses = [];
+let allUserProfiles = [];
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
@@ -102,6 +109,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.target === licenseInfoModal) closeLicenseModal();
         });
     }
+
+    // User select dropdown listeners
+    if (adminUserSelectTrigger) {
+        adminUserSelectTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            adminUserSelectWrapper.classList.toggle('open');
+            adminUserSelectOptions.classList.toggle('hidden');
+            if (adminUserSelectWrapper.classList.contains('open')) {
+                adminUserSearch.focus();
+            }
+        });
+    }
+
+    if (adminUserSearch) {
+        adminUserSearch.addEventListener('input', filterDropdownUsers);
+    }
+
+    // Close select dropdown when clicking outside
+    document.addEventListener('click', () => {
+        if (adminUserSelectWrapper) {
+            adminUserSelectWrapper.classList.remove('open');
+            adminUserSelectOptions.classList.add('hidden');
+        }
+    });
 
     // Set default mock download file link
     downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
@@ -155,6 +186,9 @@ function handleUserSignIn(user) {
     } else {
         if (adminMenuItem) adminMenuItem.classList.add('hidden');
     }
+
+    // Save/Update user profile
+    saveUserProfile(user);
 
     // Fetch Licenses
     fetchUserLicenses();
@@ -365,6 +399,7 @@ function switchDashTab(event, tabId) {
             document.getElementById('tab-content-admin').classList.remove('hidden');
         }
         fetchAllLicenses();
+        fetchProfilesForAdmin();
     }
     
     // Deactivate all menu items
@@ -634,6 +669,9 @@ async function createLicenseFromAdmin(e) {
 
         // Reset input
         adminBuyerInput.value = '';
+        if (adminUserSelectTrigger) {
+            adminUserSelectTrigger.querySelector('span').textContent = 'აირჩიეთ მომხმარებელი...';
+        }
 
         showBanner("ლიცენზიის გასაღები წარმატებით შეიქმნა!", "success");
         fetchAllLicenses();
@@ -754,4 +792,102 @@ window.revokeLicense = revokeLicense;
 window.closeLicenseModal = closeLicenseModal;
 window.copyCreatedKey = copyCreatedKey;
 window.filterAdminLicenses = filterAdminLicenses;
+
+// User Profiles sync and dropdown logic
+async function saveUserProfile(user) {
+    const metadata = user.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const avatar = metadata.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
+
+    if (!username) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('profiles')
+            .upsert({
+                id: user.id,
+                discord_id: String(discordId),
+                username: username,
+                avatar_url: avatar,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'id' });
+
+        if (error) throw error;
+    } catch (err) {
+        console.warn("Failed to upsert user profile (table might not exist yet):", err.message);
+    }
+}
+
+async function fetchProfilesForAdmin() {
+    if (!isAdmin()) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/profiles?select=*&order=username.asc`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        allUserProfiles = await res.json();
+        renderDropdownUsers(allUserProfiles);
+    } catch (err) {
+        console.error("Error fetching profiles:", err.message);
+    }
+}
+
+function renderDropdownUsers(profiles) {
+    if (!adminUserOptionsList) return;
+    adminUserOptionsList.innerHTML = '';
+    
+    if (profiles.length === 0) {
+        adminUserOptionsList.innerHTML = `<div style="padding: 10px; text-align: center; color: var(--text-muted); font-size: 13px;">მომხმარებლები ვერ მოიძებნა</div>`;
+        return;
+    }
+
+    profiles.forEach(profile => {
+        const option = document.createElement('div');
+        option.className = 'user-option';
+        option.innerHTML = `
+            <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" alt="Avatar">
+            <span class="user-name">${profile.username}</span>
+            <span class="user-discord-id">@${profile.username}</span>
+        `;
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectDropdownUser(profile.username);
+        });
+        adminUserOptionsList.appendChild(option);
+    });
+}
+
+function selectDropdownUser(username) {
+    const profile = allUserProfiles.find(p => p.username === username);
+    if (!profile) return;
+
+    adminBuyerInput.value = profile.username;
+    adminUserSelectTrigger.querySelector('span').innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" style="width: 20px; height: 20px; border-radius: 50%;">
+            <span>${profile.username}</span>
+        </div>
+    `;
+    
+    adminUserSelectWrapper.classList.remove('open');
+    adminUserSelectOptions.classList.add('hidden');
+}
+
+function filterDropdownUsers() {
+    const query = adminUserSearch.value.toLowerCase().trim();
+    const filtered = allUserProfiles.filter(p => 
+        p.username.toLowerCase().includes(query) ||
+        (p.discord_id && p.discord_id.toLowerCase().includes(query))
+    );
+    renderDropdownUsers(filtered);
+}
+
+window.filterDropdownUsers = filterDropdownUsers;
 

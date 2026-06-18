@@ -1920,3 +1920,109 @@ h3 {
         grid-template-columns: 1fr;
     }
 }
+
+/* Custom Select Dropdown for Admin Panel */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+}
+
+.custom-select-trigger {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--card-border);
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.custom-select-trigger:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.custom-select-trigger .arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #888;
+    transition: transform 0.3s ease;
+}
+
+.custom-select-wrapper.open .custom-select-trigger .arrow {
+    transform: rotate(180deg);
+}
+
+.custom-select-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.user-search-box {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    color: #fff !important;
+    font-size: 13px !important;
+    margin-bottom: 8px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.options-list {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.user-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.user-option:hover {
+    background-color: rgba(99, 102, 241, 0.15);
+}
+
+.user-option img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+}
+
+.user-option .user-name {
+    font-size: 13.5px;
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.user-option .user-discord-id {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
