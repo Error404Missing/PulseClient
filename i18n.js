@@ -567,11 +567,6 @@ function applyAdminStatic() {
     if (discordFloat) discordFloat.setAttribute("aria-label", t("discord.aria"));
 }
 
-let adminBuyerInput;
-document.addEventListener("DOMContentLoaded", () => {
-    adminBuyerInput = document.getElementById("admin-buyer-input");
-});
-
 function t(key, vars = {}) {
     const str = TRANSLATIONS[currentLang]?.[key] ?? TRANSLATIONS.ka[key] ?? key;
     return Object.entries(vars).reduce((acc, [k, v]) => acc.replace(`{${k}}`, v), str);
