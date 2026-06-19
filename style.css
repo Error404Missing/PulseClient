@@ -42,6 +42,30 @@ input, button, select, textarea {
     color: inherit;
 }
 
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a.btn-primary,
+a.btn-primary:visited {
+    color: #000;
+}
+
+a.btn-glow,
+a.btn-glow:visited {
+    color: #fff;
+}
+
+a.btn-secondary,
+a.btn-secondary:visited {
+    color: var(--text-primary);
+}
+
 body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
@@ -281,19 +305,27 @@ h3 {
     color: var(--text-secondary);
 }
 
-.nav-links a {
+.nav-links button {
     position: relative;
     padding: 6px 16px;
     border-radius: 99px;
-    transition: var(--transition);
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.25s ease, background-color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.nav-links a:hover {
+.nav-links button:hover {
     color: #fff;
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-.nav-links a::after {
+.nav-links button::after {
     content: '';
     position: absolute;
     bottom: 0px;
@@ -303,11 +335,20 @@ h3 {
     height: 2px;
     background-color: var(--accent);
     border-radius: 99px;
-    transition: var(--transition);
+    transition: transform 0.25s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links button:hover::after {
     transform: translateX(-50%) scaleX(1);
+}
+
+.nav-links button:focus {
+    outline: none;
+}
+
+.nav-links button:focus-visible {
+    outline: 2px solid rgba(99, 102, 241, 0.45);
+    outline-offset: 2px;
 }
 
 .user-pill {
@@ -857,6 +898,14 @@ h3 {
     text-decoration: none;
     transition: var(--transition);
     border: 1px solid transparent;
+}
+
+.menu-item:visited {
+    color: var(--text-secondary);
+}
+
+.menu-item.active:visited {
+    color: #fff;
 }
 
 .menu-item svg {

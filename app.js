@@ -502,6 +502,10 @@ function navigateToLandingSection(event, sectionId) {
     if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
     }
+
+    if (window.history.replaceState) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
 }
 window.navigateToLandingSection = navigateToLandingSection;
 
