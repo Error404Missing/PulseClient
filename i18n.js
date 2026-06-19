@@ -442,12 +442,6 @@ const PRICING_PERKS = [
     ["#pricing .pricing-card:nth-child(3) li", ["pricing.perk1", "pricing.perk2", "pricing.perk3", "pricing.perk4"]]
 ];
 
-const PRICING_BTNS = [
-    ["#pricing .pricing-card:nth-child(1) .buy-btn", "pricing.buy"],
-    ["#pricing .pricing-card:nth-child(2) .buy-btn", "pricing.buyLifetime"],
-    ["#pricing .pricing-card:nth-child(3) .buy-btn", "pricing.buy"]
-];
-
 const ADMIN_TABLE_HEADERS = [
     "admin.colProduct", "admin.colOwner", "admin.colCreator",
     "admin.colKey", "admin.colStatus", "admin.colExpiry", "admin.colActions"
@@ -526,7 +520,6 @@ function applyPricingPerks() {
             li.append(" " + t(key));
         });
     });
-    PRICING_BTNS.forEach(([sel, key]) => setElementText(document.querySelector(sel), key));
 }
 
 function applyAdminStatic() {
@@ -553,9 +546,9 @@ function applyAdminStatic() {
         if (k) opt.textContent = t(k);
     });
 
-    if (adminDurationCustomEl) adminDurationCustomEl.placeholder = t("admin.customPh");
     const adminSearch = document.getElementById("admin-search-input");
     const adminDurationCustomEl = document.getElementById("admin-duration-custom");
+    if (adminDurationCustomEl) adminDurationCustomEl.placeholder = t("admin.customPh");
     if (adminSearch) adminSearch.placeholder = t("admin.searchPh");
     const userSearch = document.getElementById("admin-modal-user-search");
     if (userSearch) userSearch.placeholder = t("admin.userSearchPh");
@@ -593,33 +586,37 @@ function applyLanguage(lang) {
     localStorage.setItem("pulse_lang", currentLang);
     document.documentElement.lang = currentLang;
 
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-        el.textContent = t(el.getAttribute("data-i18n"));
-    });
+    try {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+            el.textContent = t(el.getAttribute("data-i18n"));
+        });
 
-    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
-        el.innerHTML = t(el.getAttribute("data-i18n-html"));
-    });
+        document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+            el.innerHTML = t(el.getAttribute("data-i18n-html"));
+        });
 
-    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-        el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
-    });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+            el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
+        });
 
-    document.querySelectorAll("[data-i18n-title]").forEach((el) => {
-        el.title = t(el.getAttribute("data-i18n-title"));
-    });
+        document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+            el.title = t(el.getAttribute("data-i18n-title"));
+        });
 
-    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
-        el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
-    });
+        document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+            el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+        });
 
-    SELECTOR_BINDINGS.forEach(([selector, key, mode]) => {
-        document.querySelectorAll(selector).forEach((el) => setElementText(el, key, mode || "text"));
-    });
+        SELECTOR_BINDINGS.forEach(([selector, key, mode]) => {
+            document.querySelectorAll(selector).forEach((el) => setElementText(el, key, mode || "text"));
+        });
 
-    applyFaqItems();
-    applyPricingPerks();
-    applyAdminStatic();
+        applyFaqItems();
+        applyPricingPerks();
+        applyAdminStatic();
+    } catch (err) {
+        console.error("Language apply error:", err);
+    }
 
     document.title = t("meta.title");
     updateLangSwitcherUI();
@@ -655,4 +652,4 @@ window.applyLanguage = applyLanguage;
 window.toggleLanguage = toggleLanguage;
 window.initLanguage = initLanguage;
 
-document.addEventListener("DOMContentLoaded", initLanguage);
+// Language init is called from app.js after event listeners are ready

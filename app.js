@@ -90,14 +90,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Event Listeners
-    navLoginBtn.addEventListener('click', signInWithDiscord);
-    navLogoutBtn.addEventListener('click', (e) => {
+    if (navLoginBtn) navLoginBtn.addEventListener('click', signInWithDiscord);
+    if (navLogoutBtn) navLogoutBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         signOut();
     });
-    dashLogoutBtn.addEventListener('click', signOut);
-    refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
-    bindLicenseForm.addEventListener('submit', bindLicenseKey);
+    if (dashLogoutBtn) dashLogoutBtn.addEventListener('click', signOut);
+    if (refreshLicensesBtn) refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
+    if (bindLicenseForm) bindLicenseForm.addEventListener('submit', bindLicenseKey);
 
     // Admin Event Listeners
     if (adminCreateForm) adminCreateForm.addEventListener('submit', createLicenseFromAdmin);
@@ -126,7 +126,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Set default mock download file link
-    downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
+    if (downloadModBtn) downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
+
+    // Apply saved language after all listeners are attached
+    if (typeof initLanguage === "function") initLanguage();
 });
 
 // Update Notification DOM Elements
