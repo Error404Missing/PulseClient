@@ -53,6 +53,7 @@ const licenseInfoModal = document.getElementById('license-info-modal');
 const modalCloseBtn = document.getElementById('modal-close-btn');
 const modalKey = document.getElementById('modal-key');
 const modalBuyer = document.getElementById('modal-buyer');
+const modalCreator = document.getElementById('modal-creator');
 const modalStatus = document.getElementById('modal-status');
 const modalCreated = document.getElementById('modal-created');
 const modalExpires = document.getElementById('modal-expires');
@@ -531,16 +532,24 @@ function isAdmin() {
 function parseLicenseNote(note) {
     let product = "PulseClient";
     let buyer = "Unknown";
+    let createdBy = "—";
     
     if (note) {
         const prodMatch = note.match(/Product:\s*([^|]+)/i);
         if (prodMatch) product = prodMatch[1].trim();
         
-        const buyerMatch = note.match(/Buyer:\s*([^|()]+)/i);
+        const buyerMatch = note.match(/Buyer:\s*([^|(]+)/i);
         if (buyerMatch) buyer = buyerMatch[1].trim();
+
+        const byMatch = note.match(/\(by\s+([^)]+)\)/i);
+        if (byMatch) {
+            createdBy = byMatch[1].trim();
+        } else if (/Linked via Dashboard/i.test(note)) {
+            createdBy = "მომხმარებელი (Dashboard)";
+        }
     }
     
-    return { product, buyer };
+    return { product, buyer, createdBy };
 }
 
 function generateLicenseKey() {
@@ -583,14 +592,14 @@ function renderAdminLicenses(licenses) {
 
     if (licenses.length === 0) {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">ლიცენზიები არ მოიძებნა</td>`;
+        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">ლიცენზიები არ მოიძებნა</td>`;
         adminLicensesTableBody.appendChild(row);
         return;
     }
 
     licenses.forEach(lic => {
-        const { product, buyer } = parseLicenseNote(lic.note);
-        
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+
         let status = 'active';
         let statusText = 'აქტიური';
         
@@ -612,6 +621,7 @@ function renderAdminLicenses(licenses) {
         tr.innerHTML = `
             <td class="product-cell">${product}</td>
             <td class="buyer-cell">${buyer}</td>
+            <td class="creator-cell">${createdBy}</td>
             <td><span class="key-cell">${lic.license_key}</span></td>
             <td><span class="admin-status ${status}">${statusText}</span></td>
             <td>${expiryDisplay}</td>
@@ -641,10 +651,11 @@ function filterAdminLicenses() {
     const filter = adminFilterSelect.value;
 
     const filtered = adminLicenses.filter(lic => {
-        const { product, buyer } = parseLicenseNote(lic.note);
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
         const matchesQuery = 
             lic.license_key.toLowerCase().includes(query) ||
             buyer.toLowerCase().includes(query) ||
+            createdBy.toLowerCase().includes(query) ||
             product.toLowerCase().includes(query) ||
             (lic.note && lic.note.toLowerCase().includes(query));
 
@@ -819,7 +830,7 @@ function showLicenseDetails(key) {
     const lic = adminLicenses.find(l => l.license_key === key);
     if (!lic) return;
 
-    const { product, buyer } = parseLicenseNote(lic.note);
+    const { product, buyer, createdBy } = parseLicenseNote(lic.note);
 
     let statusText = "აქტიური";
     if (!lic.is_active) {
@@ -830,6 +841,7 @@ function showLicenseDetails(key) {
 
     modalKey.textContent = lic.license_key;
     modalBuyer.textContent = buyer;
+    if (modalCreator) modalCreator.textContent = createdBy;
     modalStatus.textContent = statusText;
     modalCreated.textContent = new Date(lic.created_at).toLocaleString('ka-GE');
     

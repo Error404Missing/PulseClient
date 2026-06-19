@@ -602,7 +602,7 @@
                             <div class="admin-header">
                                 <h3>ყველა ლიცენზიის მართვა</h3>
                                 <div class="admin-controls">
-                                    <input type="text" id="admin-search-input" placeholder="ძებნა (key, buyer...)">
+                                    <input type="text" id="admin-search-input" placeholder="ძებნა (key, buyer, admin...)">
                                     <select id="admin-filter-select">
                                         <option value="all">ყველა სტატუსი</option>
                                         <option value="active">აქტიური</option>
@@ -622,6 +622,7 @@
                                         <tr>
                                             <th>პროდუქტი</th>
                                             <th>მფლობელი</th>
+                                            <th>შემქმნელი</th>
                                             <th>ლიცენზიის გასაღები</th>
                                             <th>სტატუსი</th>
                                             <th>მოქმედების ვადა</th>
@@ -695,6 +696,10 @@
                 <div class="modal-info-item">
                     <span class="info-label">მფლობელი</span>
                     <span class="info-value" id="modal-buyer">-</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">შემქმნელი (ადმინი)</span>
+                    <span class="info-value" id="modal-creator">-</span>
                 </div>
                 <div class="modal-info-item">
                     <span class="info-label">სტატუსი</span>

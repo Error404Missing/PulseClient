@@ -1794,6 +1794,13 @@ h3 {
     color: #c4b5fd;
 }
 
+.admin-table .creator-cell {
+    font-size: 13px;
+    color: #a78bfa;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 .admin-table .product-cell {
     font-weight: 500;
 }
