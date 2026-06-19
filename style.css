@@ -432,6 +432,178 @@ h3 {
     gap: 16px;
 }
 
+/* Quick Setup Tutorial */
+.setup-tutorial {
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+}
+
+.setup-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 28px 28px 24px;
+    border-radius: 24px;
+}
+
+.setup-header {
+    margin-bottom: 20px;
+}
+
+.setup-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.setup-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.setup-steps-box {
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    padding: 22px 20px 20px;
+    margin-bottom: 18px;
+}
+
+.setup-steps-label {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.setup-steps-label h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.setup-steps-label span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.setup-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.setup-flow-item {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.setup-flow-item svg {
+    width: 34px;
+    height: 34px;
+}
+
+.setup-flow-item:hover {
+    transform: translateY(-3px);
+}
+
+.setup-discord {
+    background: linear-gradient(145deg, #7289da 0%, #5865f2 100%);
+    color: #fff;
+    box-shadow: 0 10px 28px rgba(88, 101, 242, 0.35);
+}
+
+.setup-discord:hover {
+    box-shadow: 0 14px 32px rgba(88, 101, 242, 0.45);
+}
+
+.setup-windows {
+    background: linear-gradient(145deg, #4da3ff 0%, #0078d4 100%);
+    color: #fff;
+    box-shadow: 0 10px 28px rgba(0, 120, 212, 0.3);
+}
+
+.setup-windows:hover {
+    box-shadow: 0 14px 32px rgba(0, 120, 212, 0.4);
+}
+
+.setup-minecraft {
+    background: linear-gradient(145deg, #7bc74d 0%, #3d9b2f 100%);
+    color: #1a1a1a;
+    box-shadow: 0 10px 28px rgba(61, 155, 47, 0.3);
+}
+
+.setup-minecraft:hover {
+    box-shadow: 0 14px 32px rgba(61, 155, 47, 0.4);
+}
+
+.setup-chevron {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    opacity: 0.45;
+    flex-shrink: 0;
+}
+
+.setup-chevron svg {
+    width: 16px;
+    height: 16px;
+}
+
+.setup-footer {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.setup-footer strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* Floating Discord Button */
+.discord-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #7289da 0%, #5865f2 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 36px rgba(88, 101, 242, 0.45);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+}
+
+.discord-float svg {
+    width: 30px;
+    height: 30px;
+}
+
+.discord-float:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 16px 44px rgba(88, 101, 242, 0.55);
+    color: #fff;
+}
+
+.discord-float:active {
+    transform: translateY(-1px) scale(1.01);
+}
+
 /* Hero Widget Preview */
 .hero-visual {
     display: flex;
@@ -1986,6 +2158,34 @@ h3 {
     
     .hero-content {
         align-items: center;
+    }
+
+    .setup-flow-item {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+    }
+
+    .setup-flow-item svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .setup-flow {
+        gap: 6px;
+    }
+
+    .discord-float {
+        bottom: 20px;
+        right: 20px;
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+    }
+
+    .discord-float svg {
+        width: 26px;
+        height: 26px;
     }
     
     .dashboard-grid {
