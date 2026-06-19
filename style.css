@@ -357,6 +357,47 @@ h3 {
     outline-offset: 2px;
 }
 
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--card-border);
+    gap: 2px;
+}
+
+.lang-switcher .lang-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 5px 10px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+    line-height: 1;
+}
+
+.lang-switcher .lang-btn:hover {
+    color: #fff;
+}
+
+.lang-switcher .lang-btn.active {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(129, 140, 248, 0.2));
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.25);
+}
+
 .user-pill {
     display: flex;
     align-items: center;

@@ -150,7 +150,7 @@ async function checkForUpdates() {
             // Update local download link date display on downloads tab if needed
             const updatedDateEl = document.querySelector('.updated-date');
             if (updatedDateEl) {
-                updatedDateEl.textContent = `ბოლოს განახლდა: ${latestDateObj.toLocaleDateString('ka-GE')} ${latestDateObj.toLocaleTimeString('ka-GE', { hour: '2-digit', minute: '2-digit' })}`;
+                updatedDateEl.textContent = t("msg.lastUpdated") + latestDateObj.toLocaleDateString(getLocale()) + " " + latestDateObj.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit' });
             }
 
             // Check if user dismissed this update
@@ -160,7 +160,7 @@ async function checkForUpdates() {
                 if (updateNotification) {
                     updateNotification.classList.remove('hidden');
                     if (updateDateText) {
-                        updateDateText.textContent = `გამოვიდა ახალი ვერსია (${latestDateObj.toLocaleDateString('ka-GE')}). გთხოვთ გადმოწეროთ განახლებული ფაილი!`;
+                        updateDateText.textContent = t("msg.updateAvailable", { date: latestDateObj.toLocaleDateString(getLocale()) });
                     }
                 }
 
@@ -189,7 +189,7 @@ async function signInWithDiscord() {
         if (error) throw error;
     } catch (err) {
         console.error("Login failed:", err.message);
-        alert("შესვლა ვერ მოხერხდა: " + err.message);
+        alert(t("msg.loginFail") + err.message);
     }
 }
 
@@ -283,7 +283,7 @@ async function fetchUserLicenses() {
         }
     } catch (err) {
         console.error("Error fetching licenses:", err.message);
-        showBanner("ლიცენზიების ჩატვირთვის შეცდომა: " + err.message, "error");
+        showBanner(t("msg.licLoadFail") + err.message, "error");
         licensesLoading.classList.add('hidden');
     }
 }
@@ -296,36 +296,36 @@ function renderLicenses(licenses) {
         item.className = 'license-item';
 
         // Format expiry date
-        let expiryDisplay = "უვადოდ";
+        let expiryDisplay = t("status.lifetime");
         if (lic.expires_at) {
             const expDate = new Date(lic.expires_at);
             const now = new Date();
             if (expDate < now) {
-                expiryDisplay = "ვადა გასულია";
+                expiryDisplay = t("status.expiredShort");
             } else {
                 const diffTime = Math.abs(expDate - now);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 if (diffDays > 365 * 10) {
-                    expiryDisplay = "სამუდამო";
+                    expiryDisplay = t("status.lifetime");
                 } else {
-                    expiryDisplay = `${diffDays} დღე დარჩა`;
+                    expiryDisplay = t("status.daysLeft", { n: diffDays });
                 }
             }
         }
 
         const statusClass = lic.is_active ? 'active' : 'revoked';
-        const statusText = lic.is_active ? 'აქტიური' : 'გაუქმებული';
+        const statusText = lic.is_active ? t('status.active') : t('status.revoked');
 
         item.innerHTML = `
             <div class="lic-key-info">
-                <h4>ლიცენზიის გასაღები</h4>
+                <h4>${t('lic.keyLabel')}</h4>
                 <code>${lic.license_key}</code>
             </div>
             <div class="lic-status-badge ${statusClass}">
                 ${statusText}
             </div>
             <div class="lic-expiry-info">
-                <span class="label">ვადა</span>
+                <span class="label">${t('lic.expiryLabel')}</span>
                 <span class="val">${expiryDisplay}</span>
             </div>
         `;
@@ -342,7 +342,7 @@ async function bindLicenseKey(e) {
     if (!key) return;
 
     bindSubmitBtn.disabled = true;
-    bindSubmitBtn.textContent = "მიმდინარეობს დაკავშირება...";
+    bindSubmitBtn.textContent = t("msg.bindLoading");
 
     const metadata = currentUser.user_metadata;
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
@@ -358,18 +358,18 @@ async function bindLicenseKey(e) {
         if (fetchError) throw fetchError;
 
         if (!license) {
-            showBanner("ლიცენზიის გასაღები ვერ მოიძებნა. გადაამოწმეთ და სცადეთ თავიდან.", "error");
+            showBanner(t("msg.keyNotFound"), "error");
             bindSubmitBtn.disabled = false;
-            bindSubmitBtn.textContent = "დაკავშირება";
+            bindSubmitBtn.textContent = t("dash.bindBtn");
             return;
         }
 
         // 2. Check if key is already linked to someone else
         if (license.note && license.note.includes("Buyer:") && !license.note.includes(username)) {
             // Note contains another buyer name
-            showBanner("ეს გასაღები უკვე სხვა Discord მომხმარებელზეა მიბმული.", "error");
+            showBanner(t("msg.keyTaken"), "error");
             bindSubmitBtn.disabled = false;
-            bindSubmitBtn.textContent = "დაკავშირება";
+            bindSubmitBtn.textContent = t("dash.bindBtn");
             return;
         }
 
@@ -382,15 +382,15 @@ async function bindLicenseKey(e) {
 
         if (updateError) throw updateError;
 
-        showBanner("ლიცენზიის გასაღები წარმატებით დაუკავშირდა თქვენს Discord ანგარიშს!", "success");
+        showBanner(t("msg.bindSuccess"), "success");
         bindKeyInput.value = '';
         fetchUserLicenses();
     } catch (err) {
         console.error("Binding failed:", err.message);
-        showBanner("გასაღების დაკავშირება ვერ მოხერხდა: " + err.message, "error");
+        showBanner(t("msg.bindFail") + err.message, "error");
     } finally {
         bindSubmitBtn.disabled = false;
-        bindSubmitBtn.textContent = "დაკავშირება";
+        bindSubmitBtn.textContent = t("dash.bindBtn");
     }
 }
 
@@ -545,7 +545,7 @@ function parseLicenseNote(note) {
         if (byMatch) {
             createdBy = byMatch[1].trim();
         } else if (/Linked via Dashboard/i.test(note)) {
-            createdBy = "მომხმარებელი (Dashboard)";
+            createdBy = t("creator.dashboard");
         }
     }
     
@@ -580,7 +580,7 @@ async function fetchAllLicenses() {
         renderAdminLicenses(adminLicenses);
     } catch (err) {
         console.error("Error fetching all licenses:", err.message);
-        showBanner("მონაცემების ჩატვირთვა ვერ მოხერხდა: " + err.message, "error");
+        showBanner(t("msg.dataLoadFail") + err.message, "error");
     } finally {
         adminLicensesLoading.classList.add('hidden');
     }
@@ -592,7 +592,7 @@ function renderAdminLicenses(licenses) {
 
     if (licenses.length === 0) {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">ლიცენზიები არ მოიძებნა</td>`;
+        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">${t("msg.noLicenses")}</td>`;
         adminLicensesTableBody.appendChild(row);
         return;
     }
@@ -601,20 +601,20 @@ function renderAdminLicenses(licenses) {
         const { product, buyer, createdBy } = parseLicenseNote(lic.note);
 
         let status = 'active';
-        let statusText = 'აქტიური';
+        let statusText = t('status.active');
         
         if (!lic.is_active) {
             status = 'revoked';
-            statusText = 'გაუქმებული';
+            statusText = t('status.revoked');
         } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
             status = 'expired';
-            statusText = 'ვადაგასული';
+            statusText = t('status.expired');
         }
 
-        let expiryDisplay = "სამუდამო";
+        let expiryDisplay = t("status.lifetime");
         if (lic.expires_at) {
             const expDate = new Date(lic.expires_at);
-            expiryDisplay = expDate.toLocaleDateString('ka-GE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+            expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
         }
 
         const tr = document.createElement('tr');
@@ -627,13 +627,13 @@ function renderAdminLicenses(licenses) {
             <td>${expiryDisplay}</td>
             <td>
                 <div class="admin-actions">
-                    <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="ინფო" aria-label="ინფო">
+                    <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="${t('admin.actionInfo')}" aria-label="${t('admin.actionInfo')}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                     </button>
-                    <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" title="HWID განულება" aria-label="HWID განულება" ${lic.hwid ? '' : 'disabled'}>
+                    <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" title="${t('admin.actionHwid')}" aria-label="${t('admin.actionHwid')}" ${lic.hwid ? '' : 'disabled'}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
                     </button>
-                    <button type="button" class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" title="გაუქმება" aria-label="გაუქმება" ${lic.is_active ? '' : 'disabled'}>
+                    <button type="button" class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" title="${t('admin.actionRevoke')}" aria-label="${t('admin.actionRevoke')}" ${lic.is_active ? '' : 'disabled'}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </button>
                 </div>
@@ -705,13 +705,13 @@ async function createLicenseFromAdmin(e) {
     if (!buyer) return;
 
     if (Number.isNaN(durationDays)) {
-        showBanner("შეიყვანეთ ვალიდური დღეების რაოდენობა (1 და მეტი).", "error");
+        showBanner(t("msg.invalidDays"), "error");
         return;
     }
 
     const createBtn = document.getElementById('admin-create-btn');
     createBtn.disabled = true;
-    createBtn.textContent = "მიმდინარეობს შექმნა...";
+    createBtn.textContent = t("msg.creating");
 
     const key = generateLicenseKey();
     
@@ -752,14 +752,14 @@ async function createLicenseFromAdmin(e) {
         const options = adminUserOptionsList.querySelectorAll('.user-option');
         options.forEach(opt => opt.classList.remove('selected'));
 
-        showBanner("ლიცენზიის გასაღები წარმატებით შეიქმნა!", "success");
+        showBanner(t("msg.keyCreated"), "success");
         fetchAllLicenses();
     } catch (err) {
         console.error("Error creating license:", err.message);
-        showBanner("გასაღების შექმნა ვერ მოხერხდა: " + err.message, "error");
+        showBanner(t("msg.keyCreateFail") + err.message, "error");
     } finally {
         createBtn.disabled = false;
-        createBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> გასაღების შექმნა`;
+        createBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> ${t("admin.createBtn")}`;
     }
 }
 
@@ -768,14 +768,14 @@ function copyCreatedKey() {
     navigator.clipboard.writeText(keyText).then(() => {
         const copyBtn = document.getElementById('admin-copy-key-btn');
         const origText = copyBtn.textContent;
-        copyBtn.textContent = "კოპირებულია!";
+        copyBtn.textContent = t("msg.copied");
         setTimeout(() => { copyBtn.textContent = origText; }, 2000);
     });
 }
 
 async function revokeLicense(key) {
     if (!isAdmin()) return;
-    if (!confirm(`ნამდვილად გსურთ გასაღების გაუქმება?\n${key}`)) return;
+    if (!confirm(t("msg.revokeConfirm") + key)) return;
 
     try {
         const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
@@ -790,17 +790,17 @@ async function revokeLicense(key) {
 
         if (!res.ok) throw new Error(await res.text());
 
-        showBanner("ლიცენზია გაუქმდა წარმატებით", "success");
+        showBanner(t("msg.revokeSuccess"), "success");
         fetchAllLicenses();
     } catch (err) {
         console.error("Error revoking license:", err.message);
-        showBanner("გაუქმება ვერ მოხერხდა: " + err.message, "error");
+        showBanner(t("msg.revokeFail") + err.message, "error");
     }
 }
 
 async function resetLicenseHwid(key) {
     if (!isAdmin()) return;
-    if (!confirm(`ნამდვილად გსურთ მოწყობილობის (HWID) განულება?\n${key}`)) return;
+    if (!confirm(t("msg.hwidConfirm") + key)) return;
 
     try {
         const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
@@ -815,11 +815,11 @@ async function resetLicenseHwid(key) {
 
         if (!res.ok) throw new Error(await res.text());
 
-        showBanner("მოწყობილობა (HWID) განულდა წარმატებით", "success");
+        showBanner(t("msg.hwidSuccess"), "success");
         fetchAllLicenses();
     } catch (err) {
         console.error("Error resetting HWID:", err.message);
-        showBanner("განულება ვერ მოხერხდა: " + err.message, "error");
+        showBanner(t("msg.hwidFail") + err.message, "error");
     }
 }
 
@@ -829,33 +829,33 @@ function showLicenseDetails(key) {
 
     const { product, buyer, createdBy } = parseLicenseNote(lic.note);
 
-    let statusText = "აქტიური";
+    let statusText = t("status.active");
     if (!lic.is_active) {
-        statusText = "გაუქმებული";
+        statusText = t("status.revoked");
     } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
-        statusText = "ვადაგასული";
+        statusText = t("status.expired");
     }
 
     modalKey.textContent = lic.license_key;
     modalBuyer.textContent = buyer;
     if (modalCreator) modalCreator.textContent = createdBy;
     modalStatus.textContent = statusText;
-    modalCreated.textContent = new Date(lic.created_at).toLocaleString('ka-GE');
+    modalCreated.textContent = new Date(lic.created_at).toLocaleString(getLocale());
     
-    let expiryDisplay = "სამუდამო";
+    let expiryDisplay = t("status.lifetime");
     if (lic.expires_at) {
         const expDate = new Date(lic.expires_at);
         const now = new Date();
         if (expDate < now) {
-            expiryDisplay = "ვადა გასულია";
+            expiryDisplay = t("status.expiredShort");
         } else {
             const diffTime = Math.abs(expDate - now);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            expiryDisplay = `${diffDays} დღე`;
+            expiryDisplay = t("status.days", { n: diffDays });
         }
     }
     modalExpires.textContent = expiryDisplay;
-    modalHwid.textContent = lic.hwid || "გააქტიურებული არ არის";
+    modalHwid.textContent = lic.hwid || t("status.notActivated");
     modalNote.textContent = lic.note || "-";
 
     licenseInfoModal.classList.remove('hidden');
@@ -924,7 +924,7 @@ function renderDropdownUsers(profiles) {
     adminUserOptionsList.innerHTML = '';
     
     if (profiles.length === 0) {
-        adminUserOptionsList.innerHTML = `<div style="padding: 10px; text-align: center; color: var(--text-muted); font-size: 13px;">მომხმარებლები ვერ მოიძებნა</div>`;
+        adminUserOptionsList.innerHTML = `<div style="padding: 10px; text-align: center; color: var(--text-muted); font-size: 13px;">${t("msg.noUsers")}</div>`;
         return;
     }
 
@@ -1006,4 +1006,17 @@ function closeUserSelectionModal() {
 window.filterDropdownUsers = filterDropdownUsers;
 window.openUserSelectionModal = openUserSelectionModal;
 window.closeUserSelectionModal = closeUserSelectionModal;
+
+function onLanguageChanged() {
+    if (currentUser) {
+        fetchUserLicenses();
+        if (isAdmin() && tabContentAdmin && !tabContentAdmin.classList.contains('hidden')) {
+            renderAdminLicenses(adminLicenses);
+        }
+    }
+    if (bindSubmitBtn && !bindSubmitBtn.disabled) {
+        bindSubmitBtn.textContent = t("dash.bindBtn");
+    }
+}
+window.onLanguageChanged = onLanguageChanged;
 
