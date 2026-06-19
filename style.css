@@ -1438,6 +1438,10 @@ h3 {
     opacity: 0.5;
 }
 
+.admin-form .form-group #admin-duration-custom {
+    margin-top: 4px;
+}
+
 .admin-form #admin-create-btn {
     display: inline-flex;
     align-items: center;

@@ -39,6 +39,7 @@ const adminCreateForm = document.getElementById('admin-create-form');
 const adminBuyerInput = document.getElementById('admin-buyer-input');
 const adminProductSelect = document.getElementById('admin-product-select');
 const adminDurationSelect = document.getElementById('admin-duration-select');
+const adminDurationCustom = document.getElementById('admin-duration-custom');
 const adminKeyResult = document.getElementById('admin-key-result');
 const adminGeneratedKey = document.getElementById('admin-generated-key');
 const adminCopyKeyBtn = document.getElementById('admin-copy-key-btn');
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (adminCopyKeyBtn) adminCopyKeyBtn.addEventListener('click', copyCreatedKey);
     if (adminSearchInput) adminSearchInput.addEventListener('input', filterAdminLicenses);
     if (adminFilterSelect) adminFilterSelect.addEventListener('change', filterAdminLicenses);
+    if (adminDurationSelect) adminDurationSelect.addEventListener('change', toggleCustomDurationInput);
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLicenseModal);
     if (licenseInfoModal) {
         licenseInfoModal.addEventListener('click', (e) => {
@@ -657,15 +659,43 @@ function filterAdminLicenses() {
     renderAdminLicenses(filtered);
 }
 
+function toggleCustomDurationInput() {
+    if (!adminDurationCustom || !adminDurationSelect) return;
+    const isCustom = adminDurationSelect.value === 'custom';
+    adminDurationCustom.classList.toggle('hidden', !isCustom);
+    adminDurationCustom.required = isCustom;
+    if (isCustom) {
+        adminDurationCustom.focus();
+    } else {
+        adminDurationCustom.value = '';
+    }
+}
+
+function getSelectedDurationDays() {
+    const duration = adminDurationSelect.value;
+    if (duration === 'lifetime') return null;
+    if (duration === 'custom') {
+        const days = parseInt(adminDurationCustom?.value, 10);
+        if (!days || days < 1) return NaN;
+        return days;
+    }
+    return parseInt(duration, 10);
+}
+
 async function createLicenseFromAdmin(e) {
     e.preventDefault();
     if (!isAdmin()) return;
 
     const buyer = adminBuyerInput.value.trim();
     const product = adminProductSelect.value;
-    const duration = adminDurationSelect.value;
+    const durationDays = getSelectedDurationDays();
 
     if (!buyer) return;
+
+    if (Number.isNaN(durationDays)) {
+        showBanner("შეიყვანეთ ვალიდური დღეების რაოდენობა (1 და მეტი).", "error");
+        return;
+    }
 
     const createBtn = document.getElementById('admin-create-btn');
     createBtn.disabled = true;
@@ -674,9 +704,8 @@ async function createLicenseFromAdmin(e) {
     const key = generateLicenseKey();
     
     let expiresAt = null;
-    if (duration !== 'lifetime') {
-        const days = parseInt(duration);
-        expiresAt = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+    if (durationDays !== null) {
+        expiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
     }
 
     const adminMetadata = currentUser.user_metadata;
