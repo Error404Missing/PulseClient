@@ -376,8 +376,10 @@ async function bindLicenseKey(e) {
             return;
         }
 
-        // 3. Update the note column to associate with current user
-        const newNote = `Product: PulseClient | Buyer: ${username} (Linked via Dashboard)`;
+        // 3. Update the note column to associate with current user, preserving original creator info
+        const byMatch = license.note ? license.note.match(/\(by\s+([^)]+)\)/i) : null;
+        const creatorSuffix = byMatch ? `(by ${byMatch[1].trim()})` : "(Linked via Dashboard)";
+        const newNote = `Product: PulseClient | Buyer: ${username} ${creatorSuffix}`;
         const { error: updateError } = await supabaseClient
             .from('licenses')
             .update({ note: newNote })
