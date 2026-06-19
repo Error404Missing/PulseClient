@@ -622,22 +622,19 @@ function renderAdminLicenses(licenses) {
             <td class="product-cell">${product}</td>
             <td class="buyer-cell">${buyer}</td>
             <td class="creator-cell">${createdBy}</td>
-            <td><span class="key-cell">${lic.license_key}</span></td>
+            <td><span class="key-cell" title="${lic.license_key}">${lic.license_key}</span></td>
             <td><span class="admin-status ${status}">${statusText}</span></td>
             <td>${expiryDisplay}</td>
             <td>
                 <div class="admin-actions">
-                    <button class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')">
+                    <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="ინფო" aria-label="ინფო">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                        ინფო
                     </button>
-                    <button class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" ${lic.hwid ? '' : 'disabled'}>
+                    <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" title="HWID განულება" aria-label="HWID განულება" ${lic.hwid ? '' : 'disabled'}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-                        HWID
                     </button>
-                    <button class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" ${lic.is_active ? '' : 'disabled'}>
+                    <button type="button" class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" title="გაუქმება" aria-label="გაუქმება" ${lic.is_active ? '' : 'disabled'}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        გაუქმება
                     </button>
                 </div>
             </td>
