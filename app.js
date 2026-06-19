@@ -1022,4 +1022,3 @@ function onLanguageChanged() {
     }
 }
 window.onLanguageChanged = onLanguageChanged;
-
