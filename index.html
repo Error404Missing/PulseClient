@@ -524,6 +524,15 @@
                                 <button type="submit" id="bind-submit-btn" class="btn btn-glow" style="border-radius: 99px;">დაკავშირება</button>
                             </form>
                         </div>
+
+                        <!-- Free Trial Card -->
+                        <div class="glass-panel trial-card" style="margin-top: 28px;">
+                            <h3>უფასო 3-დღიანი საცდელი პერიოდი</h3>
+                            <p class="desc">თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ სრულიად უფასოდ აიღოთ 3-დღიანი საცდელი ლიცენზია. (შენიშვნა: ახალ Discord ანგარიშებზე მოქმედებს შეზღუდვა ბოროტად გამოყენების თავიდან ასაცილებლად).</p>
+                            <div class="trial-action-wrapper" style="margin-top: 16px; display: flex; justify-content: center;">
+                                <button type="button" id="claim-trial-btn" class="btn btn-glow" style="border-radius: 99px; width: 100%; max-width: 320px;">უფასო გასაღების აღება</button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- TAB: FAQ -->
@@ -742,6 +751,18 @@
             <input type="text" class="user-search-box modal-search" id="admin-modal-user-search" placeholder="მოძებნე სახელით ან Discord ID-ით..." oninput="filterDropdownUsers()">
             <div class="options-list modal-user-grid" id="admin-modal-user-options-list">
                 <!-- User options rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="custom-confirm-modal" class="modal-overlay hidden">
+        <div class="modal-content confirm-modal-content" style="max-width: 400px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <h3 id="confirm-title" style="margin-bottom: 12px; font-size: 20px; font-weight: 700; color: #fff;">დადასტურება</h3>
+            <p id="confirm-message" style="margin-bottom: 24px; font-size: 14px; color: var(--text-secondary); line-height: 1.5;"></p>
+            <div class="confirm-actions" style="display: flex; gap: 12px; justify-content: center; width: 100%;">
+                <button id="confirm-cancel-btn" class="btn btn-secondary" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1;">არა</button>
+                <button id="confirm-ok-btn" class="btn btn-glow" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1; background: linear-gradient(135deg, #ff4d4d 0%, #cc0000 100%); box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3); border: none;">კი</button>
             </div>
         </div>
     </div>

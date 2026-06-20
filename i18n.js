@@ -176,7 +176,16 @@ const TRANSLATIONS = {
         "msg.lastUpdated": "ბოლოს განახლდა: ",
         "admin.actionInfo": "ინფო",
         "admin.actionHwid": "HWID განულება",
-        "admin.actionRevoke": "გაუქმება"
+        "admin.actionRevoke": "გაუქმება",
+        "dash.trialTitle": "უფასო 3-დღიანი საცდელი პერიოდი",
+        "dash.trialDesc": "თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ სრულიად უფასოდ აიღოთ 3-დღიანი საცდელი ლიცენზია. (შენიშვნა: ახალ Discord ანგარიშებზე მოქმედებს შეზღუდვა ბოროტად გამოყენების თავიდან ასაცილებლად).",
+        "dash.trialBtn": "უფასო გასაღების აღება",
+        "msg.trialSuccess": "საცდელი გასაღები წარმატებით გენერირდა და დაემატა თქვენს ანგარიშს!",
+        "msg.trialAlreadyClaimed": "თქვენ უკვე გაქვთ აქტიური ან ძველი ლიცენზია, ან საცდელი პერიოდი უკვე გამოყენებული გაქვთ.",
+        "msg.trialAccountTooNew": "თქვენი Discord ანგარიში ძალიან ახალია. საცდელი გასაღების ასაღებად საჭიროა, რომ ანგარიში იყოს მინიმუმ 30 დღის.",
+        "confirm.title": "დადასტურება",
+        "confirm.yes": "დიახ",
+        "confirm.no": "არა"
     },
     en: {
         "meta.title": "PulseClient - Premium Minecraft Combat & Stealth Advantage",
@@ -355,7 +364,16 @@ const TRANSLATIONS = {
         "msg.lastUpdated": "Last updated: ",
         "admin.actionInfo": "Info",
         "admin.actionHwid": "Reset HWID",
-        "admin.actionRevoke": "Revoke"
+        "admin.actionRevoke": "Revoke",
+        "dash.trialTitle": "Free 3-Day Trial Period",
+        "dash.trialDesc": "If you are a new user and do not own any licenses yet, you can claim a free 3-day trial license key. (Note: Restrictions apply to newly created Discord accounts to prevent abuse).",
+        "dash.trialBtn": "Claim Free Trial Key",
+        "msg.trialSuccess": "Trial key successfully generated and added to your account!",
+        "msg.trialAlreadyClaimed": "You already own a license or have already claimed your free trial.",
+        "msg.trialAccountTooNew": "Your Discord account is too new. To claim a trial key, your account must be at least 30 days old.",
+        "confirm.title": "Confirmation",
+        "confirm.yes": "Yes",
+        "confirm.no": "No"
     }
 };
 
@@ -414,6 +432,9 @@ const SELECTOR_BINDINGS = [
     [".bind-card h3", "dash.bindTitle"],
     [".bind-card .desc", "dash.bindDesc"],
     ["#bind-submit-btn", "dash.bindBtn"],
+    [".trial-card h3", "dash.trialTitle"],
+    [".trial-card .desc", "dash.trialDesc"],
+    ["#claim-trial-btn", "dash.trialBtn"],
     ["#tab-content-faq .section-title", "dash.faqTitle"],
     ["#faq .section-header h2", "faq.title"],
     [".admin-create-card > h3", "admin.genTitle"],

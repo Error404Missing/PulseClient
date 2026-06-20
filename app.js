@@ -98,6 +98,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (dashLogoutBtn) dashLogoutBtn.addEventListener('click', signOut);
     if (refreshLicensesBtn) refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
     if (bindLicenseForm) bindLicenseForm.addEventListener('submit', bindLicenseKey);
+    const claimTrialBtn = document.getElementById('claim-trial-btn');
+    if (claimTrialBtn) claimTrialBtn.addEventListener('click', claimFreeTrial);
 
     // Admin Event Listeners
     if (adminCreateForm) adminCreateForm.addEventListener('submit', createLicenseFromAdmin);
@@ -377,9 +379,16 @@ async function bindLicenseKey(e) {
         }
 
         // 3. Update the note column to associate with current user, preserving original creator info
-        const byMatch = license.note ? license.note.match(/\(by\s+([^)]+)\)/i) : null;
-        const creatorSuffix = byMatch ? `(by ${byMatch[1].trim()})` : "(Linked via Dashboard)";
-        const newNote = `Product: PulseClient | Buyer: ${username} ${creatorSuffix}`;
+        const originalNote = license.note || "";
+        const byMatch = originalNote.match(/\(by\s+([^)]+)\)/i);
+        const originalCreator = byMatch ? byMatch[1].trim() : null;
+
+        let newNote = `Product: PulseClient | Buyer: ${username}`;
+        if (originalCreator) {
+            newNote += ` (by ${originalCreator})`;
+        }
+        newNote += ` (Linked via Dashboard)`;
+
         const { error: updateError } = await supabaseClient
             .from('licenses')
             .update({ note: newNote })
@@ -780,7 +789,8 @@ function copyCreatedKey() {
 
 async function revokeLicense(key) {
     if (!isAdmin()) return;
-    if (!confirm(t("msg.revokeConfirm") + key)) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.revokeConfirm") + key);
+    if (!confirmed) return;
 
     try {
         const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
@@ -805,7 +815,8 @@ async function revokeLicense(key) {
 
 async function resetLicenseHwid(key) {
     if (!isAdmin()) return;
-    if (!confirm(t("msg.hwidConfirm") + key)) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.hwidConfirm") + key);
+    if (!confirmed) return;
 
     try {
         const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
@@ -825,6 +836,137 @@ async function resetLicenseHwid(key) {
     } catch (err) {
         console.error("Error resetting HWID:", err.message);
         showBanner(t("msg.hwidFail") + err.message, "error");
+    }
+}
+
+// Custom Confirmation Modal Helper using Promises
+function showCustomConfirm(title, message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-confirm-modal');
+        const titleEl = document.getElementById('confirm-title');
+        const messageEl = document.getElementById('confirm-message');
+        const cancelBtn = document.getElementById('confirm-cancel-btn');
+        const okBtn = document.getElementById('confirm-ok-btn');
+
+        if (!modal || !titleEl || !messageEl || !cancelBtn || !okBtn) {
+            resolve(confirm(message));
+            return;
+        }
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        cancelBtn.textContent = t("confirm.no");
+        okBtn.textContent = t("confirm.yes");
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        const onCancel = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const onConfirm = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const cleanup = () => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            cancelBtn.removeEventListener('click', onCancel);
+            okBtn.removeEventListener('click', onConfirm);
+            modal.removeEventListener('click', onOverlayClick);
+        };
+
+        const onOverlayClick = (e) => {
+            if (e.target === modal) {
+                onCancel();
+            }
+        };
+
+        cancelBtn.addEventListener('click', onCancel);
+        okBtn.addEventListener('click', onConfirm);
+        modal.addEventListener('click', onOverlayClick);
+    });
+}
+
+// Free Trial Claiming Logic
+async function claimFreeTrial() {
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") + "Please log in first", "error");
+        return;
+    }
+
+    const claimTrialBtn = document.getElementById('claim-trial-btn');
+    if (claimTrialBtn) {
+        claimTrialBtn.disabled = true;
+        claimTrialBtn.textContent = t("msg.creating");
+    }
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+
+    try {
+        // 1. Age check on Discord account using snowflake creation date
+        if (discordId) {
+            try {
+                const snowflake = BigInt(discordId);
+                const createdAtMs = Number((snowflake >> 22n) + 1420070400000n);
+                const diffDays = (Date.now() - createdAtMs) / (1000 * 60 * 60 * 24);
+                if (diffDays < 30) {
+                    showBanner(t("msg.trialAccountTooNew"), "error");
+                    return;
+                }
+            } catch (err) {
+                console.error("Failed to parse discord account age:", err);
+            }
+        }
+
+        // 2. Check if user already has a key associated with their DiscordID or username in the licenses table
+        const queryDiscordId = `%DiscordID: ${discordId}%`;
+        const queryUsername = `%Buyer: ${username}%`;
+        
+        const { data: existingLicenses, error: queryError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .or(`note.like.${queryDiscordId},note.like.${queryUsername}`);
+
+        if (queryError) throw queryError;
+
+        if (existingLicenses && existingLicenses.length > 0) {
+            showBanner(t("msg.trialAlreadyClaimed"), "error");
+            return;
+        }
+
+        // 3. Generate a key and save it (3 days expiry)
+        const key = generateLicenseKey();
+        const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+        const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
+
+        const { error: insertError } = await supabaseClient
+            .from('licenses')
+            .insert({
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            });
+
+        if (insertError) throw insertError;
+
+        showBanner(t("msg.trialSuccess"), "success");
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Error claiming trial key:", err.message);
+        showBanner(t("msg.keyCreateFail") + err.message, "error");
+    } finally {
+        if (claimTrialBtn) {
+            claimTrialBtn.disabled = false;
+            claimTrialBtn.textContent = t("dash.trialBtn");
+        }
     }
 }
 
