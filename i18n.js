@@ -181,6 +181,7 @@ const TRANSLATIONS = {
         "dash.trialDesc": "თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ სრულიად უფასოდ აიღოთ 3-დღიანი საცდელი ლიცენზია. (შენიშვნა: ახალ Discord ანგარიშებზე მოქმედებს შეზღუდვა ბოროტად გამოყენების თავიდან ასაცილებლად).",
         "dash.trialBtn": "უფასო გასაღების აღება",
         "msg.trialSuccess": "საცდელი გასაღები წარმატებით გენერირდა და დაემატა თქვენს ანგარიშს!",
+        "msg.referredSuccessNotice": "გილოცავთ! თქვენ წარმატებით დარეგისტრირდით {ref}-ის მოწვევით. საცდელი 3-დღიანი გასაღები დაგერიცხათ და თქვენს მეგობარსაც დაემატა 3 დღე!",
         "msg.trialAlreadyClaimed": "თქვენ უკვე გაქვთ აქტიური ან ძველი ლიცენზია, ან საცდელი პერიოდი უკვე გამოყენებული გაქვთ.",
         "msg.trialAccountTooNew": "თქვენი Discord ანგარიში ძალიან ახალია. საცდელი გასაღების ასაღებად საჭიროა, რომ ანგარიში იყოს მინიმუმ 30 დღის.",
         "confirm.title": "დადასტურება",
@@ -188,7 +189,7 @@ const TRANSLATIONS = {
         "confirm.no": "არა",
         "dash.referral": "რეფერალები",
         "dash.referralTitle": "მოიწვიე მეგობარი",
-        "dash.referralDesc": "გაუზიარე შენი რეფერალური ლინკი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!",
+        "dash.referralDesc": "გაუზიარე რეფერალური ლინკი მეგობარს. როგორც კი ის გაივლის რეგისტრაციას, მას ავტომატურად დაერიცხება 3-დღიანი უფასო საცდელი პერიოდი (Trial), ხოლო შენს აქტიურ ლიცენზიას დაუყოვნებლივ დაემატება 3 დღე! სიახლე და დარიცხული ბონუსები შეგიძლიათ იხილოთ 'ლიცენზიები & გასაღები' ჩანართში.",
         "dash.referralCopyBtn": "ლინკის კოპირება"
     },
     en: {
@@ -373,6 +374,7 @@ const TRANSLATIONS = {
         "dash.trialDesc": "If you are a new user and do not own any licenses yet, you can claim a free 3-day trial license key. (Note: Restrictions apply to newly created Discord accounts to prevent abuse).",
         "dash.trialBtn": "Claim Free Trial Key",
         "msg.trialSuccess": "Trial key successfully generated and added to your account!",
+        "msg.referredSuccessNotice": "Congratulations! You have successfully registered via invitation from {ref}. Your free 3-day trial key has been added, and 3 days have been added to your friend's active license!",
         "msg.trialAlreadyClaimed": "You already own a license or have already claimed your free trial.",
         "msg.trialAccountTooNew": "Your Discord account is too new. To claim a trial key, your account must be at least 30 days old.",
         "confirm.title": "Confirmation",
@@ -380,7 +382,7 @@ const TRANSLATIONS = {
         "confirm.no": "No",
         "dash.referral": "Referrals",
         "dash.referralTitle": "Invite a Friend",
-        "dash.referralDesc": "Share your referral link with a friend. When they register and activate their first key (or claim a trial), 3 days will be automatically added to your active license!",
+        "dash.referralDesc": "Share your referral link with a friend. As soon as they register, they will automatically receive a 3-day free trial, and 3 days will be immediately added to your active license! You can view the new updates and active bonuses in the 'Licenses & Keys' tab.",
         "dash.referralCopyBtn": "Copy Link"
     }
 };
