@@ -314,7 +314,8 @@ async function autoClaimTrialForNewUser(user) {
 
             // Create key
             const key = generateLicenseKey();
-            const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            const trialDays = referrerName ? 6 : 3; // 6 days (3 trial + 3 bonus) if referred, otherwise 3 days
+            const expiresAt = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000).toISOString();
             let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
             if (referrerName) {
                 note += ` | Referred by: ${referrerName}`;
@@ -1070,9 +1071,10 @@ async function claimFreeTrial() {
             referrerName = await processReferralBonus(username);
         }
 
-        // 4. Generate a key and save it (3 days expiry)
+        // 4. Generate a key and save it (6 days if referred, 3 days standard)
         const key = generateLicenseKey();
-        const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+        const trialDays = referrerName ? 6 : 3;
+        const expiresAt = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000).toISOString();
         let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
         if (referrerName) {
             note += ` | Referred by: ${referrerName}`;
