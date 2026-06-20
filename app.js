@@ -268,84 +268,11 @@ function handleUserSignIn(user) {
         };
     }
 
-    // Auto claim free trial for new users on login (and trigger referral instantly)
-    autoClaimTrialForNewUser(user);
+    // Fetch Licenses
+    fetchUserLicenses();
 
     // Check for mod updates
     checkForUpdates();
-}
-
-async function autoClaimTrialForNewUser(user) {
-    const metadata = user.user_metadata;
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
-
-    try {
-        const queryDiscordId = `%DiscordID: ${discordId}%`;
-        const queryUsername = `%Buyer: ${username}%`;
-        
-        const { data: existingLicenses, error: queryError } = await supabaseClient
-            .from('licenses')
-            .select('*')
-            .or(`note.like.${queryDiscordId},note.like.${queryUsername}`);
-
-        if (queryError) throw queryError;
-
-        if (!existingLicenses || existingLicenses.length === 0) {
-            // New user, let's auto-claim trial
-            // Age check
-            if (discordId) {
-                try {
-                    const snowflake = BigInt(discordId);
-                    const createdAtMs = Number((snowflake >> 22n) + 1420070400000n);
-                    const diffDays = (Date.now() - createdAtMs) / (1000 * 60 * 60 * 24);
-                    if (diffDays < 30) {
-                        fetchUserLicenses();
-                        return;
-                    }
-                } catch (err) {
-                    console.error("Failed to parse discord account age:", err);
-                }
-            }
-
-            // Check referral
-            const refDiscordId = localStorage.getItem('pulse_referral_discord_id');
-            let referrerName = null;
-            if (refDiscordId) {
-                referrerName = await processReferralBonus(username);
-            }
-
-            // Create key
-            const key = generateLicenseKey();
-            const trialDays = referrerName ? 6 : 3; // 6 days (3 trial + 3 bonus) if referred, otherwise 3 days
-            const expiresAt = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000).toISOString();
-            let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
-            if (referrerName) {
-                note += ` | Referred by: ${referrerName}`;
-            }
-
-            const { error: insertError } = await supabaseClient
-                .from('licenses')
-                .insert({
-                    license_key: key,
-                    expires_at: expiresAt,
-                    is_active: true,
-                    note: note
-                });
-
-            if (insertError) throw insertError;
-
-            if (referrerName) {
-                showBanner(t("msg.referredSuccessNotice", { ref: referrerName }), "success");
-            } else {
-                showBanner(t("msg.trialSuccess"), "success");
-            }
-        }
-    } catch (err) {
-        console.error("Auto claim trial error:", err.message);
-    } finally {
-        fetchUserLicenses();
-    }
 }
 
 function handleUserSignOut() {
