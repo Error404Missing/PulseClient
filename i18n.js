@@ -185,7 +185,10 @@ const TRANSLATIONS = {
         "msg.trialAccountTooNew": "თქვენი Discord ანგარიში ძალიან ახალია. საცდელი გასაღების ასაღებად საჭიროა, რომ ანგარიში იყოს მინიმუმ 30 დღის.",
         "confirm.title": "დადასტურება",
         "confirm.yes": "დიახ",
-        "confirm.no": "არა"
+        "confirm.no": "არა",
+        "dash.referralTitle": "მოიწვიე მეგობარი",
+        "dash.referralDesc": "გაუზიარე შენი რეფერალური ლინკი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!",
+        "dash.referralCopyBtn": "ლინკის კოპირება"
     },
     en: {
         "meta.title": "PulseClient - Premium Minecraft Combat & Stealth Advantage",
@@ -373,7 +376,10 @@ const TRANSLATIONS = {
         "msg.trialAccountTooNew": "Your Discord account is too new. To claim a trial key, your account must be at least 30 days old.",
         "confirm.title": "Confirmation",
         "confirm.yes": "Yes",
-        "confirm.no": "No"
+        "confirm.no": "No",
+        "dash.referralTitle": "Invite a Friend",
+        "dash.referralDesc": "Share your referral link with a friend. When they register and activate their first key (or claim a trial), 3 days will be automatically added to your active license!",
+        "dash.referralCopyBtn": "Copy Link"
     }
 };
 
@@ -435,6 +441,9 @@ const SELECTOR_BINDINGS = [
     [".trial-card h3", "dash.trialTitle"],
     [".trial-card .desc", "dash.trialDesc"],
     ["#claim-trial-btn", "dash.trialBtn"],
+    [".referral-card h3", "dash.referralTitle"],
+    [".referral-card .desc", "dash.referralDesc"],
+    ["#copy-referral-btn", "dash.referralCopyBtn"],
     ["#tab-content-faq .section-title", "dash.faqTitle"],
     ["#faq .section-header h2", "faq.title"],
     [".admin-create-card > h3", "admin.genTitle"],

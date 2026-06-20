@@ -72,6 +72,18 @@ let allUserProfiles = [];
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
+    // Capture referral ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const refId = urlParams.get('ref');
+    if (refId && refId.trim() !== "") {
+        localStorage.setItem('pulse_referral_discord_id', refId.trim());
+        // Clean URL to keep it neat
+        if (window.history.replaceState) {
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        }
+    }
+
     // Check active session
     const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (session) {
@@ -230,9 +242,28 @@ function handleUserSignIn(user) {
     } else {
         if (adminMenuItem) adminMenuItem.classList.add('hidden');
     }
-
     // Save/Update user profile
     saveUserProfile(user);
+
+    // Asynchronously fetch latest profile from DB in case it was synced by bot
+    fetchLatestProfile(user.id);
+
+    // Set up referral link for the logged in user
+    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
+    const refLinkInput = document.getElementById('referral-link-input');
+    if (refLinkInput && discordId) {
+        refLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${discordId}`;
+    }
+    const copyRefBtn = document.getElementById('copy-referral-btn');
+    if (copyRefBtn && refLinkInput) {
+        copyRefBtn.onclick = () => {
+            navigator.clipboard.writeText(refLinkInput.value).then(() => {
+                const origText = copyRefBtn.textContent;
+                copyRefBtn.textContent = t("msg.copied");
+                setTimeout(() => { copyRefBtn.textContent = origText; }, 2000);
+            });
+        };
+    }
 
     // Fetch Licenses
     fetchUserLicenses();
@@ -378,7 +409,19 @@ async function bindLicenseKey(e) {
             return;
         }
 
-        // 3. Update the note column to associate with current user, preserving original creator info
+        // 3. Check if user has already triggered a referral
+        const { data: userLicenses } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+        const hasTriggeredRef = userLicenses && userLicenses.some(l => l.note && l.note.includes("Referred by:"));
+
+        let referrerName = null;
+        if (!hasTriggeredRef) {
+            referrerName = await processReferralBonus(username);
+        }
+
+        // 4. Update the note column to associate with current user, preserving original creator info
         const originalNote = license.note || "";
         const byMatch = originalNote.match(/\(by\s+([^)]+)\)/i);
         const originalCreator = byMatch ? byMatch[1].trim() : null;
@@ -388,6 +431,9 @@ async function bindLicenseKey(e) {
             newNote += ` (by ${originalCreator})`;
         }
         newNote += ` (Linked via Dashboard)`;
+        if (referrerName) {
+            newNote += ` | Referred by: ${referrerName}`;
+        }
 
         const { error: updateError } = await supabaseClient
             .from('licenses')
@@ -941,10 +987,20 @@ async function claimFreeTrial() {
             return;
         }
 
-        // 3. Generate a key and save it (3 days expiry)
+        // 3. Process referral bonus if this is their first license
+        const hasTriggeredRef = existingLicenses && existingLicenses.some(l => l.note && l.note.includes("Referred by:"));
+        let referrerName = null;
+        if (!hasTriggeredRef) {
+            referrerName = await processReferralBonus(username);
+        }
+
+        // 4. Generate a key and save it (3 days expiry)
         const key = generateLicenseKey();
         const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
-        const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
+        let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
+        if (referrerName) {
+            note += ` | Referred by: ${referrerName}`;
+        }
 
         const { error: insertError } = await supabaseClient
             .from('licenses')
@@ -967,6 +1023,77 @@ async function claimFreeTrial() {
             claimTrialBtn.disabled = false;
             claimTrialBtn.textContent = t("dash.trialBtn");
         }
+    }
+}
+
+// Process referral bonus if applicable
+async function processReferralBonus(referredUsername) {
+    const refDiscordId = localStorage.getItem('pulse_referral_discord_id');
+    if (!refDiscordId) return null;
+
+    try {
+        // Find referrer's profile using discord_id
+        const { data: referrerProfile, error: profileError } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('discord_id', refDiscordId)
+            .maybeSingle();
+
+        if (profileError || !referrerProfile) {
+            console.warn("Referrer profile not found or error:", profileError);
+            return null;
+        }
+
+        const referrerUsername = referrerProfile.username;
+
+        // Fetch referrer's licenses
+        const { data: licenses, error: licError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${referrerUsername}%`);
+
+        if (licError) throw licError;
+
+        // Find an active license to extend
+        const activeLicense = licenses.find(l => l.is_active && (!l.expires_at || new Date(l.expires_at) > new Date()));
+        
+        if (activeLicense && activeLicense.expires_at) {
+            // Extend by 3 days
+            const currentExpiry = new Date(activeLicense.expires_at);
+            const newExpiry = new Date(currentExpiry.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            
+            const { error: updateError } = await supabaseClient
+                .from('licenses')
+                .update({ expires_at: newExpiry })
+                .eq('id', activeLicense.id);
+                
+            if (updateError) throw updateError;
+            console.log(`Extended active license for referrer ${referrerUsername} by 3 days.`);
+        } else {
+            // Create a new 3-day license for referrer
+            const newKey = generateLicenseKey();
+            const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            const note = `Product: PulseClient | Buyer: ${referrerUsername} (by Referral Bonus for inviting ${referredUsername})`;
+            
+            const { error: insertError } = await supabaseClient
+                .from('licenses')
+                .insert({
+                    license_key: newKey,
+                    expires_at: expiresAt,
+                    is_active: true,
+                    note: note
+                });
+                
+            if (insertError) throw insertError;
+            console.log(`Created new 3-day referral license key for referrer ${referrerUsername}.`);
+        }
+
+        // Clean up localStorage after successful processing
+        localStorage.removeItem('pulse_referral_discord_id');
+        return referrerUsername;
+    } catch (err) {
+        console.error("Error processing referral bonus:", err.message);
+        return null;
     }
 }
 
