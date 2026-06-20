@@ -681,6 +681,8 @@ function parseLicenseNote(note) {
         const byMatch = note.match(/\(by\s+([^)]+)\)/i);
         if (byMatch) {
             createdBy = byMatch[1].trim();
+        } else if (/Free Trial/i.test(note)) {
+            createdBy = "Free Trial";
         } else if (/Linked via Dashboard/i.test(note)) {
             createdBy = t("creator.dashboard");
         }
