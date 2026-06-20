@@ -669,6 +669,31 @@
                                 სულ ნაპოვნია: <span id="admin-total-count">0</span>
                             </div>
                         </div>
+
+                        <!-- Admin Activity Log Panel -->
+                        <div class="glass-panel admin-logs-card" style="margin-bottom: 28px;">
+                            <div class="admin-header">
+                                <h3>მოქმედებების ჟურნალი (Activity Log)</h3>
+                                <div class="admin-controls">
+                                    <input type="text" id="admin-logs-search-input" placeholder="მოძებნე მოქმედება, მომხმარებელი...">
+                                </div>
+                            </div>
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>თარიღი</th>
+                                            <th>მომხმარებელი / ადმინი</th>
+                                            <th>მოქმედება</th>
+                                            <th>დეტალები</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-logs-table-body">
+                                        <!-- Log rows rendered dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

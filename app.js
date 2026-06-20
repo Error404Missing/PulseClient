@@ -48,6 +48,8 @@ const adminFilterSelect = document.getElementById('admin-filter-select');
 const adminLicensesLoading = document.getElementById('admin-licenses-loading');
 const adminLicensesTableBody = document.getElementById('admin-licenses-table-body');
 const adminTotalCount = document.getElementById('admin-total-count');
+const adminLogsTableBody = document.getElementById('admin-logs-table-body');
+const adminLogsSearchInput = document.getElementById('admin-logs-search-input');
 
 const licenseInfoModal = document.getElementById('license-info-modal');
 const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -118,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (adminCopyKeyBtn) adminCopyKeyBtn.addEventListener('click', copyCreatedKey);
     if (adminSearchInput) adminSearchInput.addEventListener('input', filterAdminLicenses);
     if (adminFilterSelect) adminFilterSelect.addEventListener('change', filterAdminLicenses);
+    if (adminLogsSearchInput) adminLogsSearchInput.addEventListener('input', filterAdminLogs);
     if (adminDurationSelect) adminDurationSelect.addEventListener('change', toggleCustomDurationInput);
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLicenseModal);
     if (licenseInfoModal) {
@@ -718,6 +721,7 @@ async function fetchAllLicenses() {
 
         adminLicenses = data || [];
         renderAdminLicenses(adminLicenses);
+        renderAdminLogs(adminLicenses);
     } catch (err) {
         console.error("Error fetching all licenses:", err.message);
         showBanner(t("msg.dataLoadFail") + err.message, "error");
@@ -810,6 +814,111 @@ function filterAdminLicenses() {
 
     renderAdminLicenses(filtered);
 }
+
+function renderAdminLogs(licenses) {
+    if (!adminLogsTableBody) return;
+    adminLogsTableBody.innerHTML = '';
+
+    // Transform licenses data into individual activities/events
+    const logs = [];
+
+    licenses.forEach(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        const timestamp = new Date(lic.created_at).toLocaleString(getLocale());
+
+        // 1. Generation event
+        let action = "გასაღების შექმნა";
+        let details = `შეიქმნა <strong>${product}</strong> გასაღები მომხმარებლისთვის: <strong>${buyer}</strong>. გასაღები: <code>${lic.license_key}</code>`;
+        
+        if (lic.note && lic.note.includes("Free Trial")) {
+            action = "საცდელი ვერსიის აღება";
+            details = `მომხმარებელმა აიღო 3-დღიანი უფასო საცდელი გასაღები: <code>${lic.license_key}</code>`;
+        }
+
+        logs.push({
+            dateObj: new Date(lic.created_at),
+            date: timestamp,
+            user: createdBy || "სისტემა",
+            action: action,
+            details: details
+        });
+
+        // 2. Referral event if present in note
+        if (lic.note && lic.note.includes("Referred by:")) {
+            const refMatch = lic.note.match(/Referred by:\s*([^|]+)/i);
+            const referrer = refMatch ? refMatch[1].trim() : "უცნობი";
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: buyer,
+                action: "რეფერალის გამოყენება",
+                details: `დარეგისტრირდა რეფერალური ლინკით. მომწვევი: <strong>${referrer}</strong>`
+            });
+        }
+
+        // 3. Referral Bonus event
+        if (lic.note && lic.note.includes("Referral Bonus for inviting")) {
+            const invitedMatch = lic.note.match(/inviting\s+([^)]+)/i);
+            const invited = invitedMatch ? invitedMatch[1].trim() : "მეგობარი";
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: buyer,
+                action: "რეფერალ ბონუსი (+3 დღე)",
+                details: `დაერიცხა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
+            });
+        }
+
+        // 4. Revocation event if inactive
+        if (!lic.is_active) {
+            // Estimate revocation time as a bit after creation or use updated_at if we had one, but we'll use created_at as reference
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: "ადმინისტრატორი",
+                action: "ლიცენზიის გაუქმება",
+                details: `გაუქმდა გასაღები: <code>${lic.license_key}</code>`
+            });
+        }
+    });
+
+    // Sort logs descending by timestamp
+    logs.sort((a, b) => b.dateObj - a.dateObj);
+
+    if (logs.length === 0) {
+        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტივობები არ მოიძებნა</td></tr>`;
+        return;
+    }
+
+    logs.forEach(log => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="white-space: nowrap; color: var(--text-muted);">${log.date}</td>
+            <td style="font-weight: 600;">${log.user}</td>
+            <td><span class="admin-status info" style="background: rgba(124, 77, 255, 0.1); color: #7C4DFF;">${log.action}</span></td>
+            <td>${log.details}</td>
+        `;
+        adminLogsTableBody.appendChild(tr);
+    });
+}
+
+function filterAdminLogs() {
+    if (!adminLogsSearchInput) return;
+    const query = adminLogsSearchInput.value.toLowerCase().trim();
+
+    const filteredLicenses = adminLicenses.filter(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        return lic.license_key.toLowerCase().includes(query) ||
+               buyer.toLowerCase().includes(query) ||
+               createdBy.toLowerCase().includes(query) ||
+               (lic.note && lic.note.toLowerCase().includes(query));
+    });
+
+    renderAdminLogs(filteredLicenses);
+}
+
+window.filterAdminLogs = filterAdminLogs;
+window.renderAdminLogs = renderAdminLogs;
 
 function toggleCustomDurationInput() {
     if (!adminDurationCustom || !adminDurationSelect) return;
