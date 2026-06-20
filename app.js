@@ -1153,6 +1153,23 @@ window.copyCreatedKey = copyCreatedKey;
 window.filterAdminLicenses = filterAdminLicenses;
 
 // User Profiles sync and dropdown logic
+async function fetchLatestProfile(userId) {
+    try {
+        const { data, error } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .maybeSingle();
+        if (error) throw error;
+        if (data) {
+            console.log("Latest profile fetched:", data);
+        }
+    } catch (err) {
+        console.warn("Failed to fetch latest profile:", err.message);
+    }
+}
+
+// User Profiles sync and dropdown logic
 async function saveUserProfile(user) {
     const metadata = user.user_metadata;
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
