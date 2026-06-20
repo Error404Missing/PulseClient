@@ -343,6 +343,7 @@ async function autoClaimTrialForNewUser(user) {
     } finally {
         fetchUserLicenses();
     }
+}
 
 function handleUserSignOut() {
     currentUser = null;
