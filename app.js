@@ -476,7 +476,6 @@ function scrollToAuth() {
     }
 }
 window.scrollToAuth = scrollToAuth;
-
 // Sidebar Dashboard Tab Switcher
 function switchDashTab(event, tabId) {
     if (event) event.preventDefault();
@@ -485,6 +484,9 @@ function switchDashTab(event, tabId) {
     document.getElementById('tab-content-downloads').classList.add('hidden');
     document.getElementById('tab-content-redeem').classList.add('hidden');
     document.getElementById('tab-content-faq').classList.add('hidden');
+    if (document.getElementById('tab-content-referral')) {
+        document.getElementById('tab-content-referral').classList.add('hidden');
+    }
     if (document.getElementById('tab-content-admin')) {
         document.getElementById('tab-content-admin').classList.add('hidden');
     }
@@ -494,6 +496,10 @@ function switchDashTab(event, tabId) {
         document.getElementById('tab-content-downloads').classList.remove('hidden');
     } else if (tabId === 'tab-redeem') {
         document.getElementById('tab-content-redeem').classList.remove('hidden');
+    } else if (tabId === 'tab-referral') {
+        if (document.getElementById('tab-content-referral')) {
+            document.getElementById('tab-content-referral').classList.remove('hidden');
+        }
     } else if (tabId === 'tab-faq') {
         document.getElementById('tab-content-faq').classList.remove('hidden');
     } else if (tabId === 'tab-admin') {
@@ -502,8 +508,7 @@ function switchDashTab(event, tabId) {
         }
         fetchAllLicenses();
         fetchProfilesForAdmin();
-    }
-    
+    }    
     // Deactivate all menu items
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
     menuItems.forEach(item => item.classList.remove('active'));

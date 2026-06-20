@@ -186,6 +186,7 @@ const TRANSLATIONS = {
         "confirm.title": "დადასტურება",
         "confirm.yes": "დიახ",
         "confirm.no": "არა",
+        "dash.referral": "რეფერალები",
         "dash.referralTitle": "მოიწვიე მეგობარი",
         "dash.referralDesc": "გაუზიარე შენი რეფერალური ლინკი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!",
         "dash.referralCopyBtn": "ლინკის კოპირება"
@@ -377,6 +378,7 @@ const TRANSLATIONS = {
         "confirm.title": "Confirmation",
         "confirm.yes": "Yes",
         "confirm.no": "No",
+        "dash.referral": "Referrals",
         "dash.referralTitle": "Invite a Friend",
         "dash.referralDesc": "Share your referral link with a friend. When they register and activate their first key (or claim a trial), 3 days will be automatically added to your active license!",
         "dash.referralCopyBtn": "Copy Link"
@@ -410,7 +412,8 @@ const SELECTOR_BINDINGS = [
     [".btn-device-slot", "dash.deviceSlot"],
     ["#dashboard-page .sidebar-menu .menu-item:nth-child(1)", "dash.downloads", "text"],
     ["#dashboard-page .sidebar-menu .menu-item:nth-child(2)", "dash.licenses", "text"],
-    ["#dashboard-page .sidebar-menu .menu-item:nth-child(3)", "dash.faq", "text"],
+    ["#dashboard-page .sidebar-menu .menu-item:nth-child(3)", "dash.referral", "text"],
+    ["#dashboard-page .sidebar-menu .menu-item:nth-child(4)", "dash.faq", "text"],
     ["#admin-menu-item", "dash.admin", "menuText"],
     [".role-text", "dash.licensesLabel", "prefix"],
     ["#dash-logout-btn", "dash.logout", "text"],
