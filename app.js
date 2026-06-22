@@ -1805,7 +1805,7 @@ function renderAdminPromocodes(promocodes, redemptions) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><span class="promo-code-badge">${p.code}</span></td>
-                    <td>${p.duration_days} ${t("status.days", { n: p.duration_days })}</td>
+                    <td>${t("status.days", { n: p.duration_days })}</td>
                     <td>${count} / ${limitDisplay}</td>
                     <td>${p.created_by || "Admin"}</td>
                     <td>
