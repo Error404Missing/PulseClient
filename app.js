@@ -895,14 +895,31 @@ function renderAdminLogs(licenses) {
 
         // 3. Referral Bonus event
         if (lic.note && lic.note.includes("Referral Bonus for inviting")) {
-            const invitedMatch = lic.note.match(/inviting\s+([^)]+)/i);
-            const invited = invitedMatch ? invitedMatch[1].trim() : "მეგობარი";
-            logs.push({
-                dateObj: new Date(lic.created_at),
-                date: timestamp,
-                user: buyer,
-                action: "რეფერალ ბონუსი (+3 დღე)",
-                details: `დაემატა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
+            const matches = [...lic.note.matchAll(/Referral Bonus for inviting\s+([^|)]+)/gi)];
+            matches.forEach(match => {
+                const invited = match[1].trim();
+                logs.push({
+                    dateObj: new Date(lic.created_at),
+                    date: timestamp,
+                    user: buyer,
+                    action: "რეფერალ ბონუსი (+3 დღე)",
+                    details: `დაემატა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
+                });
+            });
+        }
+
+        // 3.5 Promocode redemption event
+        if (lic.note && lic.note.includes("Promocode:")) {
+            const promoMatches = [...lic.note.matchAll(/Promocode:\s*([^|)]+)/gi)];
+            promoMatches.forEach(match => {
+                const pCode = match[1].trim();
+                logs.push({
+                    dateObj: new Date(lic.created_at),
+                    date: timestamp,
+                    user: buyer,
+                    action: "პრომო კოდის გამოყენება",
+                    details: `გამოყენებულ იქნა პრომო კოდი: <strong>${pCode}</strong> ლიცენზიაზე: <code>${lic.license_key}</code>`
+                });
             });
         }
 
@@ -1288,10 +1305,15 @@ async function processReferralBonus(referredUsername) {
             // Extend by 3 days
             const currentExpiry = new Date(activeLicense.expires_at);
             const newExpiry = new Date(currentExpiry.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            const currentNote = activeLicense.note || "";
+            const newNote = currentNote + ` | Referral Bonus for inviting ${referredUsername}`;
             
             const { error: updateError } = await supabaseClient
                 .from('licenses')
-                .update({ expires_at: newExpiry })
+                .update({ 
+                    expires_at: newExpiry,
+                    note: newNote
+                })
                 .eq('id', activeLicense.id);
                 
             if (updateError) throw updateError;
@@ -1614,21 +1636,54 @@ async function redeemPromoCode(e) {
             }
         }
 
-        // 4. Create license key
-        const key = generateLicenseKey();
-        const expiresAt = new Date(Date.now() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
-        const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Promocode: ${code})`;
-
-        const { error: insertLicError } = await supabaseClient
+        // 4. Check if user already has an active license to extend
+        const { data: userLicenses, error: licFetchError } = await supabaseClient
             .from('licenses')
-            .insert({
-                license_key: key,
-                expires_at: expiresAt,
-                is_active: true,
-                note: note
-            });
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
 
-        if (insertLicError) throw insertLicError;
+        if (licFetchError) throw licFetchError;
+
+        const activeLicense = userLicenses ? userLicenses.find(l => l.is_active && (!l.expires_at || new Date(l.expires_at) > new Date())) : null;
+
+        if (activeLicense) {
+            // Extend active license
+            let newExpiry = null;
+            if (activeLicense.expires_at) {
+                const currentExpiry = new Date(activeLicense.expires_at);
+                const baseDate = currentExpiry > new Date() ? currentExpiry : new Date();
+                newExpiry = new Date(baseDate.getTime() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
+            }
+
+            const currentNote = activeLicense.note || "";
+            const newNote = currentNote + ` | Promocode: ${code}`;
+
+            const { error: updateLicError } = await supabaseClient
+                .from('licenses')
+                .update({
+                    expires_at: newExpiry,
+                    note: newNote
+                })
+                .eq('id', activeLicense.id);
+
+            if (updateLicError) throw updateLicError;
+        } else {
+            // Create a new license key
+            const key = generateLicenseKey();
+            const expiresAt = new Date(Date.now() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
+            const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} | Promocode: ${code}`;
+
+            const { error: insertLicError } = await supabaseClient
+                .from('licenses')
+                .insert({
+                    license_key: key,
+                    expires_at: expiresAt,
+                    is_active: true,
+                    note: note
+                });
+
+            if (insertLicError) throw insertLicError;
+        }
 
         // 5. Save redemption
         const { error: insertRedError } = await supabaseClient
