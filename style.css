@@ -2592,6 +2592,40 @@ h3 {
     transform: translateY(-2px);
 }
 
+.trial-card-highlight {
+    animation: trialCardPulse 2s ease;
+}
+
+@keyframes trialCardPulse {
+    0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6); border-color: rgba(99, 102, 241, 0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(99, 102, 241, 0); border-color: rgba(99, 102, 241, 0.3); }
+    100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+/* Free trial pricing card on landing page */
+.trial-pricing-card {
+    border: 1px solid rgba(16, 185, 129, 0.25) !important;
+}
+
+.trial-pricing-card:hover {
+    border-color: rgba(16, 185, 129, 0.4) !important;
+    box-shadow: 0 24px 48px rgba(16, 185, 129, 0.12) !important;
+}
+
+.trial-badge {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 99px;
+    letter-spacing: 0.05em;
+}
+
 /* Custom Confirm Modal styles & animations */
 .confirm-modal-content {
     background: rgba(15, 15, 20, 0.7) !important;
