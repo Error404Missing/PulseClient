@@ -2812,3 +2812,71 @@ h3 {
         width: 100%;
     }
 }
+
+/* Promocode Card Styling & Glow Effects */
+#tab-content-promo .bind-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#tab-content-promo .bind-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+}
+
+#tab-content-promo .bind-card:hover {
+    border-color: rgba(139, 92, 246, 0.3) !important;
+    box-shadow: 0 16px 36px rgba(139, 92, 246, 0.08) !important;
+    transform: translateY(-2px);
+}
+
+/* Premium input glow for promo codes */
+#promo-code-input {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+#promo-code-input:focus {
+    border-color: rgba(139, 92, 246, 0.6) !important;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.25) !important;
+    transform: scale(1.01);
+}
+
+/* Admin Promo Creation Form Input Effects */
+#admin-promo-code-input {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+#admin-promo-code-input:focus {
+    border-color: rgba(16, 185, 129, 0.6) !important;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Glowing green badge for promo codes inside tables */
+.promo-code-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.promo-code-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}

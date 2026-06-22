@@ -686,6 +686,31 @@
                             </div>
                         </div>
 
+                        <!-- Admin Create Promocode Card -->
+                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
+                            <h3 data-i18n="admin.promoTitle">პრომო კოდების შექმნა</h3>
+                            <form id="admin-promo-create-form" class="admin-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label data-i18n="admin.colPromoCode">პრომო კოდი</label>
+                                        <input type="text" id="admin-promo-code-input" data-i18n-placeholder="admin.promoCodePh" placeholder="მაგ: PULSE100" required style="text-transform: uppercase;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="admin.colPromoDays">დღეები</label>
+                                        <input type="number" id="admin-promo-days-input" data-i18n-placeholder="admin.promoDaysPh" placeholder="დღეების რაოდენობა" min="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="admin.colPromoUses">ლიმიტი</label>
+                                        <input type="number" id="admin-promo-uses-input" data-i18n-placeholder="admin.promoUsesPh" placeholder="ლიმიტი (ცარიელი = ულიმიტო)" min="1">
+                                    </div>
+                                </div>
+                                <button type="submit" id="admin-promo-create-btn" class="btn btn-glow btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span data-i18n="admin.promoCreateBtn">კოდის შექმნა</span>
+                                </button>
+                            </form>
+                        </div>
+
                         <!-- All Licenses List -->
                         <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
@@ -729,6 +754,27 @@
                             </div>
                         </div>
 
+                        <!-- Admin Promocodes List Card -->
+                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
+                            <h3 data-i18n="admin.promoList">პრომო კოდების მართვა</h3>
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th data-i18n="admin.colPromoCode">პრომო კოდი</th>
+                                            <th data-i18n="admin.colPromoDays">დღეები</th>
+                                            <th data-i18n="admin.colPromoUses">გამოყენება (ლიმიტი)</th>
+                                            <th data-i18n="admin.colPromoCreator">შემქმნელი</th>
+                                            <th data-i18n="admin.colPromoActions">ქმედებები</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-promos-table-body">
+                                        <!-- Promo codes rendered dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <!-- Admin Activity Log Panel -->
                         <div class="glass-panel admin-logs-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
@@ -749,52 +795,6 @@
                                     </thead>
                                     <tbody id="admin-logs-table-body">
                                         <!-- Log rows rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Admin Create Promocode Card -->
-                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
-                            <h3 data-i18n="admin.promoTitle">პრომო კოდების შექმნა</h3>
-                            <form id="admin-promo-create-form" class="admin-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoCode">პრომო კოდი</label>
-                                        <input type="text" id="admin-promo-code-input" data-i18n-placeholder="admin.promoCodePh" placeholder="მაგ: PULSE100" required style="text-transform: uppercase;">
-                                    </div>
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoDays">დღეები</label>
-                                        <input type="number" id="admin-promo-days-input" data-i18n-placeholder="admin.promoDaysPh" placeholder="დღეების რაოდენობა" min="1" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoUses">ლიმიტი</label>
-                                        <input type="number" id="admin-promo-uses-input" data-i18n-placeholder="admin.promoUsesPh" placeholder="ლიმიტი (ცარიელი = ულიმიტო)" min="1">
-                                    </div>
-                                </div>
-                                <button type="submit" id="admin-promo-create-btn" class="btn btn-glow btn-primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    <span data-i18n="admin.promoCreateBtn">კოდის შექმნა</span>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Admin Promocodes List Card -->
-                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
-                            <h3 data-i18n="admin.promoList">პრომო კოდების მართვა</h3>
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="admin.colPromoCode">პრომო კოდი</th>
-                                            <th data-i18n="admin.colPromoDays">დღეები</th>
-                                            <th data-i18n="admin.colPromoUses">გამოყენება (ლიმიტი)</th>
-                                            <th data-i18n="admin.colPromoCreator">შემქმნელი</th>
-                                            <th data-i18n="admin.colPromoActions">ქმედებები</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-promos-table-body">
-                                        <!-- Promo codes rendered dynamically -->
                                     </tbody>
                                 </table>
                             </div>

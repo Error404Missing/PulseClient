@@ -1749,7 +1749,7 @@ function renderAdminPromocodes(promocodes, redemptions) {
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-weight: 700; color: #10b981;">${p.code}</td>
+                    <td><span class="promo-code-badge">${p.code}</span></td>
                     <td>${p.duration_days} ${t("status.days", { n: p.duration_days })}</td>
                     <td>${count} / ${limitDisplay}</td>
                     <td>${p.created_by || "Admin"}</td>
@@ -1775,7 +1775,7 @@ function renderAdminPromocodes(promocodes, redemptions) {
                 const tr = document.createElement('tr');
                 const timestamp = new Date(r.redeemed_at).toLocaleString(getLocale());
                 tr.innerHTML = `
-                    <td style="font-weight: 700; color: #10b981;">${r.code}</td>
+                    <td><span class="promo-code-badge">${r.code}</span></td>
                     <td><strong>${r.username}</strong></td>
                     <td style="color: var(--text-muted);">${timestamp}</td>
                 `;
