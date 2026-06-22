@@ -1,79 +1,10 @@
-// app.js - safe, copy-paste ready version with fallbacks and pricing + i18n integration
-// Replace your project's app.js with this file and hard-refresh (Ctrl+F5).
-
-// -----------------------------
-// FALLBACKS (prevent ReferenceError crashes)
-// -----------------------------
-(function () {
-  // navigateToLandingSection: scroll to a section by id
-  if (typeof window.navigateToLandingSection !== 'function') {
-    window.navigateToLandingSection = function (event, sectionId) {
-      try { if (event && event.preventDefault) event.preventDefault(); } catch (e) {}
-      try {
-        const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        else console.warn('navigateToLandingSection: element not found', sectionId);
-      } catch (err) { console.warn('navigateToLandingSection error', err); }
-    };
-  }
-
-  // basic showDashboard: hide landing, show dashboard
-  if (typeof window.showDashboard !== 'function') {
-    window.showDashboard = function () {
-      try {
-        const landing = document.getElementById('landing-page');
-        const dashboard = document.getElementById('dashboard-page');
-        if (landing) landing.classList.add('hidden');
-        if (dashboard) dashboard.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (typeof window.onDashboardShown === 'function') {
-          try { window.onDashboardShown(); } catch (e) { console.warn(e); }
-        }
-      } catch (err) { console.warn('showDashboard fallback error', err); }
-    };
-  }
-
-  // handleUserSignIn fallback (will be wrapped if real implementation exists)
-  if (typeof window.handleUserSignIn !== 'function') {
-    window.handleUserSignIn = function (user) {
-      try {
-        window.currentUser = user || null;
-        const navLoginBtn = document.getElementById('nav-login-btn');
-        const navUserProfile = document.getElementById('nav-user-profile');
-        const navUsername = document.getElementById('nav-username');
-        const navAvatar = document.getElementById('nav-avatar');
-        if (navLoginBtn) navLoginBtn.classList.add('hidden');
-        if (navUserProfile) navUserProfile.classList.remove('hidden');
-        if (navUsername) navUsername.textContent = (user && (user.user_metadata?.full_name || user.email)) || (window.t ? window.t('nav.user') : 'User');
-        if (navAvatar && user?.user_metadata?.avatar_url) navAvatar.src = user.user_metadata.avatar_url;
-        try { window.showDashboard(); } catch (e) {}
-      } catch (err) { console.warn('handleUserSignIn fallback error', err); }
-    };
-  } else {
-    // keep original but ensure it shows dashboard afterwards
-    const _originalHandleUserSignIn = window.handleUserSignIn;
-    window.handleUserSignIn = function (user) {
-      try { _originalHandleUserSignIn(user); } catch (e) { console.warn('original handleUserSignIn threw', e); }
-      try { window.showDashboard(); } catch (e) {}
-    };
-  }
-})();
-
-// -----------------------------
-// Supabase client (use your real keys)
-// -----------------------------
+﻿// Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2pqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8[...]";
-let supabaseClient = null;
-try {
-  supabaseClient = window.supabase?.createClient ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
-} catch (e) {
-  console.warn('Supabase init failed', e);
-}
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
 
-// -----------------------------
-// DOM elements (safe queries)
-// -----------------------------
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// DOM Elements
 const navLoginBtn = document.getElementById('nav-login-btn');
 const navUserProfile = document.getElementById('nav-user-profile');
 const navAvatar = document.getElementById('nav-avatar');
@@ -101,6 +32,7 @@ const bindKeyInput = document.getElementById('bind-key-input');
 const bindSubmitBtn = document.getElementById('bind-submit-btn');
 const downloadModBtn = document.getElementById('download-mod-btn');
 
+// Admin DOM Elements
 const adminMenuItem = document.getElementById('admin-menu-item');
 const tabContentAdmin = document.getElementById('tab-content-admin');
 const adminCreateForm = document.getElementById('admin-create-form');
@@ -135,14 +67,6 @@ const adminUserSelectTrigger = document.getElementById('admin-user-select-trigge
 const adminUserSearch = document.getElementById('admin-modal-user-search');
 const adminUserOptionsList = document.getElementById('admin-modal-user-options-list');
 
-const updateNotification = document.getElementById('update-notification');
-const updateDateText = document.getElementById('update-date-text');
-const updateDownloadBtn = document.getElementById('update-download-btn');
-const updateDismissBtn = document.getElementById('update-dismiss-btn');
-
-// -----------------------------
-// App state
-// -----------------------------
 const ADMIN_DISCORD_IDS = ["1475396409246089367", "1350538035342737441", "1158855771031867432"];
 let currentUser = null;
 let adminLicenses = [];
@@ -182,234 +106,1425 @@ function applyPricingNumbers() {
 }
 window.applyPricingNumbers = applyPricingNumbers;
 
-// -----------------------------
-// Utility & small safe implementations (non-fatal stubs)
-// -----------------------------
-function showBanner(message, type = "info") {
-  if (!dashMessageBanner || !bannerText) return;
-  bannerText.textContent = message;
-  dashMessageBanner.classList.remove('hidden');
-  dashMessageBanner.dataset.type = type;
-}
-function hideBanner() {
-  if (dashMessageBanner) dashMessageBanner.classList.add('hidden');
-}
-
-function isAdmin() {
-  try {
-    return currentUser && ADMIN_DISCORD_IDS.includes(String(currentUser?.id ?? currentUser?.user?.id ?? ''));
-  } catch (e) { return false; }
-}
-
-// Minimal sign-in / sign-out helpers (non-blocking)
-// They try to use Supabase auth if available, otherwise open a notice.
-async function signInWithDiscord() {
-  if (supabaseClient && supabaseClient.auth && supabaseClient.auth.signInWithOAuth) {
-    try {
-      await supabaseClient.auth.signInWithOAuth({ provider: 'discord' });
-    } catch (e) { console.warn('Supabase signIn failed', e); showBanner('Login failed', 'error'); }
-  } else {
-    showBanner('Login is not available in this environment.', 'info');
-  }
-}
-async function signOut() {
-  try {
-    if (supabaseClient && supabaseClient.auth && supabaseClient.auth.signOut) {
-      await supabaseClient.auth.signOut();
-    }
-  } catch (e) { console.warn('signOut failed', e); }
-  // fallback UI changes
-  try {
-    const navLoginBtn = document.getElementById('nav-login-btn');
-    const navUserProfile = document.getElementById('nav-user-profile');
-    if (navLoginBtn) navLoginBtn.classList.remove('hidden');
-    if (navUserProfile) navUserProfile.classList.add('hidden');
-    window.currentUser = null;
-  } catch (e) {}
-}
-
-// handleUserSignOut safe stub (if real implementation not present)
-function handleUserSignOut() {
-  try { if (navLoginBtn) navLoginBtn.classList.remove('hidden'); if (navUserProfile) navUserProfile.classList.add('hidden'); } catch (e) {}
-  currentUser = null;
-  if (landingPage) landingPage.classList.remove('hidden');
-  if (dashboardPage) dashboardPage.classList.add('hidden');
-}
-
-// Minimal licenses fetch/render stubs (non-fatal)
-async function fetchUserLicenses() {
-  // If you have API, implement actual fetch here. For now, show placeholder behavior.
-  try {
-    if (licensesList) licensesList.innerHTML = '<div class="placeholder">No licenses loaded.</div>';
-    if (dashLicenseCount) dashLicenseCount.textContent = '0';
-  } catch (e) {}
-}
-function renderLicenses(licenses) {
-  try {
-    if (!licensesList) return;
-    licensesList.innerHTML = '';
-    (licenses || []).forEach(l => {
-      const div = document.createElement('div');
-      div.className = 'license-item';
-      div.textContent = l.key || JSON.stringify(l);
-      licensesList.appendChild(div);
-    });
-    if (dashLicenseCount) dashLicenseCount.textContent = String((licenses || []).length);
-  } catch (e) {}
-}
-
-// Bind license key (simple UI-only)
-async function bindLicenseKey(e) {
-  try {
-    if (e && e.preventDefault) e.preventDefault();
-    const key = bindKeyInput?.value?.trim();
-    if (!key) { showBanner('Please enter a key', 'warning'); return; }
-    showBanner('Binding key...', 'info');
-    // TODO: call backend to bind
-    setTimeout(() => { showBanner('Key bound (simulated)', 'success'); }, 800);
-  } catch (err) { console.warn(err); showBanner('Bind failed', 'error'); }
-}
-
-// Purchase modal / free trial helpers (stubs)
 function showPurchaseModal(event) {
-  try { event?.preventDefault(); showBanner('Open Discord to purchase', 'info'); } catch (e) {}
+    if (event) event.preventDefault();
+    const purchaseInfoModal = document.getElementById('purchase-info-modal');
+    if (purchaseInfoModal) {
+        purchaseInfoModal.classList.remove('hidden');
+    }
 }
 window.showPurchaseModal = showPurchaseModal;
 
 function goToFreeTrial(event) {
-  try { event?.preventDefault(); claimFreeTrial(); } catch (e) {}
-}
-
-async function claimFreeTrial() {
-  // Simulated: in production this should call server to generate and attach a trial license
-  try {
-    showBanner('Claiming free trial...', 'info');
-    setTimeout(() => { showBanner('Trial granted (simulated)', 'success'); }, 900);
-  } catch (e) { console.warn(e); showBanner('Trial claim failed', 'error'); }
-}
-
-// Navigation & dashboard tab switching (minimal)
-function switchDashTab(event, tabId) {
-  try {
-    event?.preventDefault();
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
-    const el = document.getElementById('tab-content-' + tabId.replace(/^tab-/, ''));
-    if (el) el.classList.remove('hidden');
-  } catch (e) { console.warn(e); }
-}
-function scrollToElement(id) {
-  try { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); } catch (e) {}
-}
-function toggleFaq(event) {
-  try {
-    const item = event?.currentTarget?.closest('.faq-item') || event?.currentTarget;
-    if (!item) return;
-    item.classList.toggle('active');
-    const p = item.querySelector('p');
-    if (p) {
-      if (item.classList.contains('active')) { p.style.maxHeight = p.scrollHeight + 'px'; p.style.opacity = '1'; }
-      else { p.style.maxHeight = '0'; p.style.opacity = '0'; }
+    if (event) event.preventDefault();
+    if (!currentUser) {
+        signInWithDiscord();
+    } else {
+        showDashboard();
+        switchDashTab(null, 'tab-redeem');
+        const trialCard = document.querySelector('.trial-card');
+        if (trialCard) {
+            trialCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            trialCard.classList.remove('trial-card-highlight');
+            void trialCard.offsetWidth; // trigger reflow
+            trialCard.classList.add('trial-card-highlight');
+        }
     }
-  } catch (e) {}
 }
+window.goToFreeTrial = goToFreeTrial;
 
-// Admin / license helpers minimal stubs
-function generateLicenseKey() {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const segment = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  return `${segment()}-${segment()}-${segment()}-${segment()}`;
-}
 
-// -----------------------------
-// Event wiring & initialization
-// -----------------------------
+// App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
-  // Apply saved language if initLanguage exists (i18n.js exposes initLanguage)
-  try { if (typeof window.initLanguage === 'function') window.initLanguage(); } catch (e) {}
+    // Capture referral ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const refId = urlParams.get('ref');
+    if (refId && refId.trim() !== "") {
+        localStorage.setItem('pulse_referral_discord_id', refId.trim());
+        // Clean URL to keep it neat
+        if (window.history.replaceState) {
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        }
+    }
 
-  // Attach UI listeners safely
-  try {
+    // Check active session
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+    if (session) {
+        handleUserSignIn(session.user);
+    } else {
+        handleUserSignOut();
+    }
+
+    // Set up OAuth redirect listener
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+            handleUserSignIn(session.user);
+        } else if (event === 'SIGNED_OUT') {
+            handleUserSignOut();
+        }
+    });
+
+    // Event Listeners
     if (navLoginBtn) navLoginBtn.addEventListener('click', signInWithDiscord);
-    if (navLogoutBtn) navLogoutBtn.addEventListener('click', (e) => { e.stopPropagation(); signOut(); });
+    if (navLogoutBtn) navLogoutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        signOut();
+    });
     if (dashLogoutBtn) dashLogoutBtn.addEventListener('click', signOut);
     if (refreshLicensesBtn) refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
     if (bindLicenseForm) bindLicenseForm.addEventListener('submit', bindLicenseKey);
     const claimTrialBtn = document.getElementById('claim-trial-btn');
-    if (claimTrialBtn) claimTrialBtn.addEventListener('click', goToFreeTrial);
-    if (adminCreateForm) adminCreateForm.addEventListener('submit', (e) => { e.preventDefault(); showBanner('Create license: not implemented', 'info'); });
-    if (adminCopyKeyBtn) adminCopyKeyBtn.addEventListener('click', () => { try { navigator.clipboard?.writeText(adminGeneratedKey?.textContent || ''); showBanner('Copied', 'success'); } catch (e) {} });
-    if (modalCloseBtn) modalCloseBtn.addEventListener('click', () => { try { if (licenseInfoModal) licenseInfoModal.classList.add('hidden'); } catch (e) {} });
-    if (licenseInfoModal) licenseInfoModal.addEventListener('click', (e) => { if (e.target === licenseInfoModal) licenseInfoModal.classList.add('hidden'); });
-  } catch (e) { console.warn('Event wiring failed', e); }
+    if (claimTrialBtn) claimTrialBtn.addEventListener('click', claimFreeTrial);
 
-  // Apply pricing numbers after i18n initialization
-  try { applyPricingNumbers(); } catch (e) {}
-  // Also ensure pricing updates on language change
-  try {
-    if (typeof window.onLanguageChanged === 'function') {
-      const prevOnLang = window.onLanguageChanged;
-      window.onLanguageChanged = function () {
-        try { prevOnLang(); } catch (e) {}
-        try { applyPricingNumbers(); } catch (e) {}
-      };
-    } else {
-      window.onLanguageChanged = function () { try { applyPricingNumbers(); } catch (e) {} };
-    }
-  } catch (e) {}
-
-  // Minimal Supabase auth listener wiring (if supabase loaded)
-  try {
-    if (supabaseClient && supabaseClient.auth && typeof supabaseClient.auth.getSession === 'function') {
-      const { data: { session } = {} } = await supabaseClient.auth.getSession().catch(() => ({ data: {} }));
-      if (session?.user) {
-        try { handleUserSignIn(session.user); } catch (e) {}
-      } else {
-        try { handleUserSignOut(); } catch (e) {}
-      }
-      // Listen to auth state changes
-      try {
-        supabaseClient.auth.onAuthStateChange((event, session) => {
-          if (event === 'SIGNED_IN' && session?.user) handleUserSignIn(session.user);
-          else if (event === 'SIGNED_OUT') handleUserSignOut();
+    // Admin Event Listeners
+    if (adminCreateForm) adminCreateForm.addEventListener('submit', createLicenseFromAdmin);
+    if (adminCopyKeyBtn) adminCopyKeyBtn.addEventListener('click', copyCreatedKey);
+    if (adminSearchInput) adminSearchInput.addEventListener('input', filterAdminLicenses);
+    if (adminFilterSelect) adminFilterSelect.addEventListener('change', filterAdminLicenses);
+    if (adminLogsSearchInput) adminLogsSearchInput.addEventListener('input', filterAdminLogs);
+    if (adminDurationSelect) adminDurationSelect.addEventListener('change', toggleCustomDurationInput);
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLicenseModal);
+    if (licenseInfoModal) {
+        licenseInfoModal.addEventListener('click', (e) => {
+            if (e.target === licenseInfoModal) closeLicenseModal();
         });
-      } catch (e) {}
     }
-  } catch (e) { console.warn('Supabase auth init failed', e); }
 
-  // tidy: attach click handlers for sidebar menu items if present
-  try {
-    document.querySelectorAll('.sidebar-menu .menu-item').forEach((el) => {
-      el.addEventListener('click', (ev) => {
-        // ensure correct tab switching by id if present
-        const href = el.getAttribute('href') || '';
-        if (href.startsWith('#tab-')) {
-          ev.preventDefault();
-          const target = href.replace('#', '');
-          switchDashTab(ev, target);
-        }
-      });
-    });
-  } catch (e) {}
+    const userSelectionModal = document.getElementById('user-selection-modal');
+    if (userSelectionModal) {
+        userSelectionModal.addEventListener('click', (e) => {
+            if (e.target === userSelectionModal) closeUserSelectionModal();
+        });
+    }
+
+
+
+    if (currentUser) {
+        checkForUpdates();
+    }
+
+    // Set default mock download file link
+    if (downloadModBtn) downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
+
+    // Apply saved language after all listeners are attached
+    if (typeof initLanguage === "function") initLanguage();
+
+    // Purchase Modal Event Listeners
+    const purchaseInfoModal = document.getElementById('purchase-info-modal');
+    const purchaseModalCloseBtn = document.getElementById('purchase-modal-close-btn');
+    if (purchaseModalCloseBtn && purchaseInfoModal) {
+        purchaseModalCloseBtn.addEventListener('click', () => {
+            purchaseInfoModal.classList.add('hidden');
+        });
+    }
+    if (purchaseInfoModal) {
+        purchaseInfoModal.addEventListener('click', (e) => {
+            if (e.target === purchaseInfoModal) {
+                purchaseInfoModal.classList.add('hidden');
+            }
+        });
+    }
+
+    // Apply pricing numbers after i18n initialization
+    try { applyPricingNumbers(); } catch (e) {}
+
+    // Ensure correct sidebar tab switching handlers are registered
+    try {
+        document.querySelectorAll('.sidebar-menu .menu-item').forEach((el) => {
+            el.addEventListener('click', (ev) => {
+                const href = el.getAttribute('href') || '';
+                if (href.startsWith('#tab-')) {
+                    ev.preventDefault();
+                    const target = href.replace('#', '');
+                    switchDashTab(ev, target);
+                }
+            });
+        });
+    } catch (e) {}
+
 });
 
-// expose some methods for debugging
-window.applyPricingNumbers = applyPricingNumbers;
-window.fetchUserLicenses = fetchUserLicenses;
-window.signInWithDiscord = signInWithDiscord;
-window.signOut = signOut;
-window.showPurchaseModal = showPurchaseModal;
-window.goToFreeTrial = goToFreeTrial;
-window.handleUserSignIn = window.handleUserSignIn || function (u) { currentUser = u; };
-window.handleUserSignOut = handleUserSignOut;
-window.generateLicenseKey = generateLicenseKey;
+// Update Notification DOM Elements
+const updateNotification = document.getElementById('update-notification');
+const updateDateText = document.getElementById('update-date-text');
+const updateDownloadBtn = document.getElementById('update-download-btn');
+const updateDismissBtn = document.getElementById('update-dismiss-btn');
 
-// Keep rest of app-specific functions as no-op safe stubs if not defined elsewhere
-if (typeof window.showCustomConfirm !== 'function') {
-  window.showCustomConfirm = async function (title, message) {
-    // fallback confirm using native confirm (synchronous) wrapped in Promise
-    return Promise.resolve(confirm(title + '\n\n' + message));
-  };
+// GitHub update check
+async function checkForUpdates() {
+    try {
+        // Fetch commits for the jar file to know the last update time
+        const res = await fetch("https://api.github.com/repos/Error404Missing/PulseClient/commits?path=MotionBlur1.031.1.21.11.jar&page=1&per_page=1");
+        if (!res.ok) throw new Error("GitHub API rate limit or error");
+        const commits = await res.json();
+        if (commits && commits.length > 0) {
+            const latestCommitSha = commits[0].sha;
+            const latestCommitDate = commits[0].commit.committer.date;
+            const latestDateObj = new Date(latestCommitDate);
+            
+            // Update local download link date display on downloads tab if needed
+            const updatedDateEl = document.querySelector('.updated-date');
+            if (updatedDateEl) {
+                updatedDateEl.textContent = t("msg.lastUpdated") + latestDateObj.toLocaleDateString(getLocale()) + " " + latestDateObj.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit' });
+            }
+
+            // Check if user dismissed this update
+            const dismissedSha = localStorage.getItem('pulse_dismissed_update_sha');
+            if (dismissedSha !== latestCommitSha) {
+                // Show update notification
+                if (updateNotification) {
+                    updateNotification.classList.remove('hidden');
+                    if (updateDateText) {
+                        updateDateText.textContent = t("msg.updateAvailable", { date: latestDateObj.toLocaleDateString(getLocale()) });
+                    }
+                }
+
+                if (updateDismissBtn) {
+                    updateDismissBtn.onclick = () => {
+                        localStorage.setItem('pulse_dismissed_update_sha', latestCommitSha);
+                        updateNotification.classList.add('hidden');
+                    };
+                }
+            }
+        }
+    } catch (err) {
+        console.warn("Could not check for updates via GitHub:", err.message);
+    }
 }
-if (typeof window.openUserSelectionModal !== 'function') {
-  window.openUserSelectionModal = function () { showBanner('User selection not implemented here', 'info'); };
+
+// Auth Functions
+async function signInWithDiscord() {
+    try {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'discord',
+            options: {
+                redirectTo: window.location.origin + window.location.pathname
+            }
+        });
+        if (error) throw error;
+    } catch (err) {
+        console.error("Login failed:", err.message);
+        alert(t("msg.loginFail") + err.message);
+    }
 }
+
+async function signOut() {
+    await supabaseClient.auth.signOut();
+}
+
+function handleUserSignIn(user) {
+    currentUser = user;
+    
+    // Get Discord Profile Details
+    const metadata = user.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "ßâ¢ßâ¥ßâ¢ßâ«ßâ¢ßâÉßâáßâößâæßâößâÜßâÿ";
+    const avatar = metadata.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+
+    // Update Nav
+    navLoginBtn.classList.add('hidden');
+    navUserProfile.classList.remove('hidden');
+    navAvatar.src = avatar;
+    navUsername.textContent = username;
+
+    // Update Dashboard Profile
+    dashAvatar.src = avatar;
+    dashUsername.textContent = username;
+
+    // Switch Views
+    landingPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
+
+    // Show/Hide Admin menu item
+    if (isAdmin()) {
+        if (adminMenuItem) adminMenuItem.classList.remove('hidden');
+    } else {
+        if (adminMenuItem) adminMenuItem.classList.add('hidden');
+    }
+    // Save/Update user profile
+    saveUserProfile(user);
+
+    // Asynchronously fetch latest profile from DB in case it was synced by bot
+    fetchLatestProfile(user.id);
+
+    // Set up referral link for the logged in user
+    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
+    const refLinkInput = document.getElementById('referral-link-input');
+    if (refLinkInput && discordId) {
+        refLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${discordId}`;
+    }
+    const copyRefBtn = document.getElementById('copy-referral-btn');
+    if (copyRefBtn && refLinkInput) {
+        copyRefBtn.onclick = () => {
+            navigator.clipboard.writeText(refLinkInput.value).then(() => {
+                const origText = copyRefBtn.textContent;
+                copyRefBtn.textContent = t("msg.copied");
+                setTimeout(() => { copyRefBtn.textContent = origText; }, 2000);
+            });
+        };
+    }
+
+    // Fetch Licenses
+    fetchUserLicenses();
+
+    // Check for mod updates
+    checkForUpdates();
+}
+
+function handleUserSignOut() {
+    currentUser = null;
+
+    // Update Nav
+    navLoginBtn.classList.remove('hidden');
+    navUserProfile.classList.add('hidden');
+
+    // Switch Views
+    landingPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+
+    // Hide Admin menu item
+    if (adminMenuItem) {
+        adminMenuItem.classList.add('hidden');
+    }
+}
+
+// Database / Licenses Functions
+async function fetchUserLicenses() {
+    if (!currentUser) return;
+
+    licensesLoading.classList.remove('hidden');
+    noLicensesView.classList.add('hidden');
+    licensesList.classList.add('hidden');
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+
+    try {
+        // Query licenses matching "Buyer: <username>" in the note column
+        const { data, error } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+
+        if (error) throw error;
+
+        licensesLoading.classList.add('hidden');
+        dashLicenseCount.textContent = data.length;
+
+        if (data.length === 0) {
+            noLicensesView.classList.remove('hidden');
+        } else {
+            renderLicenses(data);
+        }
+    } catch (err) {
+        console.error("Error fetching licenses:", err.message);
+        showBanner(t("msg.licLoadFail") + err.message, "error");
+        licensesLoading.classList.add('hidden');
+    }
+}
+
+function renderLicenses(licenses) {
+    licensesList.innerHTML = '';
+    
+    licenses.forEach(lic => {
+        const item = document.createElement('div');
+        item.className = 'license-item';
+
+        // Format expiry date
+        let expiryDisplay = t("status.lifetime");
+        if (lic.expires_at) {
+            const expDate = new Date(lic.expires_at);
+            const now = new Date();
+            if (expDate < now) {
+                expiryDisplay = t("status.expiredShort");
+            } else {
+                const diffTime = Math.abs(expDate - now);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (diffDays > 365 * 10) {
+                    expiryDisplay = t("status.lifetime");
+                } else {
+                    expiryDisplay = t("status.daysLeft", { n: diffDays });
+                }
+            }
+        }
+
+        const statusClass = lic.is_active ? 'active' : 'revoked';
+        const statusText = lic.is_active ? t('status.active') : t('status.revoked');
+
+        item.innerHTML = `
+            <div class="lic-key-info">
+                <h4>${t('lic.keyLabel')}</h4>
+                <code>${lic.license_key}</code>
+            </div>
+            <div class="lic-status-badge ${statusClass}">
+                ${statusText}
+            </div>
+            <div class="lic-expiry-info">
+                <span class="label">${t('lic.expiryLabel')}</span>
+                <span class="val">${expiryDisplay}</span>
+            </div>
+        `;
+        licensesList.appendChild(item);
+    });
+
+    licensesList.classList.remove('hidden');
+}
+
+// Bind License Key to User
+async function bindLicenseKey(e) {
+    e.preventDefault();
+    const key = bindKeyInput.value.trim();
+    if (!key) return;
+
+    bindSubmitBtn.disabled = true;
+    bindSubmitBtn.textContent = t("msg.bindLoading");
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+
+    try {
+        // 1. Check if the key exists in database
+        const { data: license, error: fetchError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .eq('license_key', key)
+            .maybeSingle();
+
+        if (fetchError) throw fetchError;
+
+        if (!license) {
+            showBanner(t("msg.keyNotFound"), "error");
+            bindSubmitBtn.disabled = false;
+            bindSubmitBtn.textContent = t("dash.bindBtn");
+            return;
+        }
+
+        // 2. Check if key is already linked to someone else
+        if (license.note && license.note.includes("Buyer:") && !license.note.includes(username)) {
+            // Note contains another buyer name
+            showBanner(t("msg.keyTaken"), "error");
+            bindSubmitBtn.disabled = false;
+            bindSubmitBtn.textContent = t("dash.bindBtn");
+            return;
+        }
+
+        // 3. Check if user has already triggered a referral
+        const { data: userLicenses } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+        const hasTriggeredRef = userLicenses && userLicenses.some(l => l.note && l.note.includes("Referred by:"));
+
+        let referrerName = null;
+        if (!hasTriggeredRef) {
+            referrerName = await processReferralBonus(username);
+        }
+
+        // 4. Update the note column to associate with current user, preserving original creator info
+        const originalNote = license.note || "";
+        const byMatch = originalNote.match(/\(by\s+([^)]+)\)/i);
+        const originalCreator = byMatch ? byMatch[1].trim() : null;
+
+        let newNote = `Product: PulseClient | Buyer: ${username}`;
+        if (originalCreator) {
+            newNote += ` (by ${originalCreator})`;
+        }
+        newNote += ` (Linked via Dashboard)`;
+        if (referrerName) {
+            newNote += ` | Referred by: ${referrerName}`;
+        }
+
+        const { error: updateError } = await supabaseClient
+            .from('licenses')
+            .update({ note: newNote })
+            .eq('license_key', key);
+
+        if (updateError) throw updateError;
+
+        showBanner(t("msg.bindSuccess"), "success");
+        bindKeyInput.value = '';
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Binding failed:", err.message);
+        showBanner(t("msg.bindFail") + err.message, "error");
+    } finally {
+        bindSubmitBtn.disabled = false;
+        bindSubmitBtn.textContent = t("dash.bindBtn");
+    }
+}
+
+// Alert Banner helper functions
+function showBanner(message, type = "info") {
+    bannerText.textContent = message;
+    dashMessageBanner.className = `alert-banner ${type}`;
+    dashMessageBanner.classList.remove('hidden');
+    // Auto hide after 5 seconds
+    setTimeout(hideBanner, 5000);
+}
+
+function hideBanner() {
+    dashMessageBanner.classList.add('hidden');
+}
+
+// Utility smooth scroll
+function scrollToAuth() {
+    if (currentUser) {
+        document.getElementById('dashboard-page').scrollIntoView();
+    } else {
+        signInWithDiscord();
+    }
+}
+window.scrollToAuth = scrollToAuth;
+// Sidebar Dashboard Tab Switcher
+function switchDashTab(event, tabId) {
+    if (event) event.preventDefault();
+    
+    // Hide all tabs
+    document.getElementById('tab-content-downloads').classList.add('hidden');
+    document.getElementById('tab-content-redeem').classList.add('hidden');
+    document.getElementById('tab-content-faq').classList.add('hidden');
+    if (document.getElementById('tab-content-referral')) {
+        document.getElementById('tab-content-referral').classList.add('hidden');
+    }
+    if (document.getElementById('tab-content-admin')) {
+        document.getElementById('tab-content-admin').classList.add('hidden');
+    }
+    
+    // Show active tab
+    if (tabId === 'tab-downloads') {
+        document.getElementById('tab-content-downloads').classList.remove('hidden');
+    } else if (tabId === 'tab-redeem') {
+        document.getElementById('tab-content-redeem').classList.remove('hidden');
+    } else if (tabId === 'tab-referral') {
+        if (document.getElementById('tab-content-referral')) {
+            document.getElementById('tab-content-referral').classList.remove('hidden');
+        }
+    } else if (tabId === 'tab-faq') {
+        document.getElementById('tab-content-faq').classList.remove('hidden');
+    } else if (tabId === 'tab-admin') {
+        if (document.getElementById('tab-content-admin')) {
+            document.getElementById('tab-content-admin').classList.remove('hidden');
+        }
+        fetchAllLicenses();
+        fetchProfilesForAdmin();
+    }    
+    // Deactivate all menu items
+    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    menuItems.forEach(item => item.classList.remove('active'));
+    
+    // Activate clicked menu item
+    if (event) {
+        event.currentTarget.classList.add('active');
+    }
+
+    // Scroll smoothly to dashboard top
+    const dbPage = document.getElementById('dashboard-page');
+    if (dbPage) {
+        dbPage.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+window.switchDashTab = switchDashTab;
+
+// Scroll to specific section
+function scrollToElement(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+window.scrollToElement = scrollToElement;
+
+// Toggle FAQ item expansion
+function toggleFaq(event) {
+    const item = event.currentTarget;
+    item.classList.toggle('active');
+    
+    const p = item.querySelector('p');
+    if (p) {
+        if (item.classList.contains('active')) {
+            p.style.maxHeight = p.scrollHeight + 'px';
+            p.style.marginTop = '12px';
+            p.style.opacity = '1';
+        } else {
+            p.style.maxHeight = '0';
+            p.style.marginTop = '0';
+            p.style.opacity = '0';
+        }
+    }
+}
+window.toggleFaq = toggleFaq;
+
+// Navigate to landing page sections from navbar/logo
+function navigateToLandingSection(event, sectionId) {
+    if (event) event.preventDefault();
+    
+    // Switch views to show landing page
+    landingPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+    
+    // Scroll to section
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if (window.history.replaceState) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+}
+window.navigateToLandingSection = navigateToLandingSection;
+
+// Show dashboard view
+function showDashboard() {
+    landingPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
+    // Default to downloads tab
+    switchDashTab(null, 'tab-downloads');
+}
+window.showDashboard = showDashboard;
+
+// ==========================================
+// ADMIN PANEL FUNCTIONS
+// ==========================================
+
+function isAdmin() {
+    if (!currentUser) return false;
+    const providerId = currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+    return ADMIN_DISCORD_IDS.includes(String(providerId));
+}
+
+function parseLicenseNote(note) {
+    let product = "PulseClient";
+    let buyer = "Unknown";
+    let createdBy = "ΓÇö";
+    
+    if (note) {
+        const prodMatch = note.match(/Product:\s*([^|]+)/i);
+        if (prodMatch) product = prodMatch[1].trim();
+        
+        const buyerMatch = note.match(/Buyer:\s*([^|(]+)/i);
+        if (buyerMatch) buyer = buyerMatch[1].trim();
+
+        const byMatch = note.match(/\(by\s+([^)]+)\)/i);
+        if (byMatch) {
+            createdBy = byMatch[1].trim();
+        } else if (/Free Trial/i.test(note)) {
+            createdBy = "Free Trial";
+        } else if (/Linked via Dashboard/i.test(note)) {
+            createdBy = t("creator.dashboard");
+        }
+    }
+    
+    return { product, buyer, createdBy };
+}
+
+function generateLicenseKey() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const segment = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    return `${segment()}-${segment()}-${segment()}-${segment()}`;
+}
+
+async function fetchAllLicenses() {
+    if (!isAdmin()) return;
+
+    adminLicensesLoading.classList.remove('hidden');
+    adminLicensesTableBody.innerHTML = '';
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?select=*&order=created_at.desc`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+
+        adminLicenses = data || [];
+        renderAdminLicenses(adminLicenses);
+        renderAdminLogs(adminLicenses);
+    } catch (err) {
+        console.error("Error fetching all licenses:", err.message);
+        showBanner(t("msg.dataLoadFail") + err.message, "error");
+    } finally {
+        adminLicensesLoading.classList.add('hidden');
+    }
+}
+
+function renderAdminLicenses(licenses) {
+    adminLicensesTableBody.innerHTML = '';
+    adminTotalCount.textContent = licenses.length;
+
+    if (licenses.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">${t("msg.noLicenses")}</td>`;
+        adminLicensesTableBody.appendChild(row);
+        return;
+    }
+
+    licenses.forEach(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+
+        let status = 'active';
+        let statusText = t('status.active');
+        
+        if (!lic.is_active) {
+            status = 'revoked';
+            statusText = t('status.revoked');
+        } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
+            status = 'expired';
+            statusText = t('status.expired');
+        }
+
+        let expiryDisplay = t("status.lifetime");
+        if (lic.expires_at) {
+            const expDate = new Date(lic.expires_at);
+            expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="product-cell">${product}</td>
+            <td class="buyer-cell">${buyer}</td>
+            <td class="creator-cell">${createdBy}</td>
+            <td><span class="key-cell" title="${lic.license_key}">${lic.license_key}</span></td>
+            <td><span class="admin-status ${status}">${statusText}</span></td>
+            <td>${expiryDisplay}</td>
+            <td>
+                <div class="admin-actions">
+                    <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="${t('admin.actionInfo')}" aria-label="${t('admin.actionInfo')}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </button>
+                    <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" title="${t('admin.actionHwid')}" aria-label="${t('admin.actionHwid')}" ${lic.hwid ? '' : 'disabled'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                    </button>
+                    <button type="button" class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" title="${t('admin.actionRevoke')}" aria-label="${t('admin.actionRevoke')}" ${lic.is_active ? '' : 'disabled'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                    </button>
+                </div>
+            </td>
+        `;
+        adminLicensesTableBody.appendChild(tr);
+    });
+}
+
+function filterAdminLicenses() {
+    const query = adminSearchInput.value.toLowerCase().trim();
+    const filter = adminFilterSelect.value;
+
+    const filtered = adminLicenses.filter(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        const matchesQuery = 
+            lic.license_key.toLowerCase().includes(query) ||
+            buyer.toLowerCase().includes(query) ||
+            createdBy.toLowerCase().includes(query) ||
+            product.toLowerCase().includes(query) ||
+            (lic.note && lic.note.toLowerCase().includes(query));
+
+        let matchesFilter = true;
+        if (filter === 'active') {
+            matchesFilter = lic.is_active && (!lic.expires_at || new Date(lic.expires_at) >= new Date());
+        } else if (filter === 'revoked') {
+            matchesFilter = !lic.is_active;
+        } else if (filter === 'expired') {
+            matchesFilter = lic.is_active && lic.expires_at && new Date(lic.expires_at) < new Date();
+        }
+
+        return matchesQuery && matchesFilter;
+    });
+
+    renderAdminLicenses(filtered);
+}
+
+function renderAdminLogs(licenses) {
+    if (!adminLogsTableBody) return;
+    adminLogsTableBody.innerHTML = '';
+
+    // Transform licenses data into individual activities/events
+    const logs = [];
+
+    licenses.forEach(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        const timestamp = new Date(lic.created_at).toLocaleString(getLocale());
+
+        // 1. Generation event
+        let action = "ßâÆßâÉßâíßâÉßâªßâößâæßâÿßâí ßâ¿ßâößâÑßâ¢ßâ£ßâÉ";
+        let details = `ßâ¿ßâößâÿßâÑßâ¢ßâ£ßâÉ <strong>${product}</strong> ßâÆßâÉßâíßâÉßâªßâößâæßâÿ ßâ¢ßâ¥ßâ¢ßâ«ßâ¢ßâÉßâáßâößâæßâÜßâÿßâíßâùßâòßâÿßâí: <strong>${buyer}</strong>. ßâÆßâÉßâíßâÉßâªßâößâæßâÿ: <code>${lic.license_key}</code>`;
+        
+        if (lic.note && lic.note.includes("Free Trial")) {
+            action = "ßâíßâÉßâ¬ßâôßâößâÜßâÿ ßâòßâößâáßâíßâÿßâÿßâí ßâÉßâªßâößâæßâÉ";
+            details = `ßâ¢ßâ¥ßâ¢ßâ«ßâ¢ßâÉßâáßâößâæßâößâÜßâ¢ßâÉ ßâÉßâÿßâªßâ¥ 3-ßâôßâªßâÿßâÉßâ£ßâÿ ßâúßâñßâÉßâíßâ¥ ßâíßâÉßâ¬ßâôßâößâÜßâÿ ßâÆßâÉßâíßâÉßâªßâößâæßâÿ: <code>${lic.license_key}</code>`;
+        }
+
+        logs.push({
+            dateObj: new Date(lic.created_at),
+            date: timestamp,
+            user: createdBy || "ßâíßâÿßâíßâóßâößâ¢ßâÉ",
+            action: action,
+            details: details
+        });
+
+        // 2. Referral event if present in note
+        if (lic.note && lic.note.includes("Referred by:")) {
+            const refMatch = lic.note.match(/Referred by:\s*([^|]+)/i);
+            const referrer = refMatch ? refMatch[1].trim() : "ßâúßâ¬ßâ£ßâ¥ßâæßâÿ";
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: buyer,
+                action: "ßâáßâößâñßâößâáßâÉßâÜßâÿßâí ßâÆßâÉßâ¢ßâ¥ßâºßâößâ£ßâößâæßâÉ",
+                details: `ßâôßâÉßâáßâößâÆßâÿßâíßâóßâáßâÿßâáßâôßâÉ ßâáßâößâñßâößâáßâÉßâÜßâúßâáßâÿ ßâÜßâÿßâ£ßâÖßâÿßâù. ßâ¢ßâ¥ßâ¢ßâ¼ßâòßâößâòßâÿ: <strong>${referrer}</strong>`
+            });
+        }
+
+        // 3. Referral Bonus event
+        if (lic.note && lic.note.includes("Referral Bonus for inviting")) {
+            const invitedMatch = lic.note.match(/inviting\s+([^)]+)/i);
+            const invited = invitedMatch ? invitedMatch[1].trim() : "ßâ¢ßâößâÆßâ¥ßâæßâÉßâáßâÿ";
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: buyer,
+                action: "ßâáßâößâñßâößâáßâÉßâÜ ßâæßâ¥ßâ£ßâúßâíßâÿ (+3 ßâôßâªßâö)",
+                details: `ßâôßâÉßâößâáßâÿßâ¬ßâ«ßâÉ 3 ßâôßâªßâö ßâ¢ßâößâÆßâ¥ßâæßâáßâÿßâí (<strong>${invited}</strong>) ßâ¢ßâ¥ßâ¼ßâòßâößâòßâÿßâíßâùßâòßâÿßâí.`
+            });
+        }
+
+        // 4. Revocation event if inactive
+        if (!lic.is_active) {
+            // Estimate revocation time as a bit after creation or use updated_at if we had one, but we'll use created_at as reference
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: "ßâÉßâôßâ¢ßâÿßâ£ßâÿßâíßâóßâáßâÉßâóßâ¥ßâáßâÿ",
+                action: "ßâÜßâÿßâ¬ßâößâ£ßâûßâÿßâÿßâí ßâÆßâÉßâúßâÑßâ¢ßâößâæßâÉ",
+                details: `ßâÆßâÉßâúßâÑßâ¢ßâôßâÉ ßâÆßâÉßâíßâÉßâªßâößâæßâÿ: <code>${lic.license_key}</code>`
+            });
+        }
+    });
+
+    // Sort logs descending by timestamp
+    logs.sort((a, b) => b.dateObj - a.dateObj);
+
+    if (logs.length === 0) {
+        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">ßâÉßâÑßâóßâÿßâòßâ¥ßâæßâößâæßâÿ ßâÉßâá ßâ¢ßâ¥ßâÿßâ½ßâößâæßâ£ßâÉ</td></tr>`;
+        return;
+    }
+
+    logs.forEach(log => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="white-space: nowrap; color: var(--text-muted);">${log.date}</td>
+            <td style="font-weight: 600;">${log.user}</td>
+            <td><span class="admin-status info" style="background: rgba(124, 77, 255, 0.1); color: #7C4DFF;">${log.action}</span></td>
+            <td>${log.details}</td>
+        `;
+        adminLogsTableBody.appendChild(tr);
+    });
+}
+
+function filterAdminLogs() {
+    if (!adminLogsSearchInput) return;
+    const query = adminLogsSearchInput.value.toLowerCase().trim();
+
+    const filteredLicenses = adminLicenses.filter(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        return lic.license_key.toLowerCase().includes(query) ||
+               buyer.toLowerCase().includes(query) ||
+               createdBy.toLowerCase().includes(query) ||
+               (lic.note && lic.note.toLowerCase().includes(query));
+    });
+
+    renderAdminLogs(filteredLicenses);
+}
+
+window.filterAdminLogs = filterAdminLogs;
+window.renderAdminLogs = renderAdminLogs;
+
+function toggleCustomDurationInput() {
+    if (!adminDurationCustom || !adminDurationSelect) return;
+    const isCustom = adminDurationSelect.value === 'custom';
+    adminDurationCustom.classList.toggle('hidden', !isCustom);
+    adminDurationCustom.required = isCustom;
+    if (isCustom) {
+        adminDurationCustom.focus();
+    } else {
+        adminDurationCustom.value = '';
+    }
+}
+
+function getSelectedDurationDays() {
+    const duration = adminDurationSelect.value;
+    if (duration === 'lifetime') return null;
+    if (duration === 'custom') {
+        const days = parseInt(adminDurationCustom?.value, 10);
+        if (!days || days < 1) return NaN;
+        return days;
+    }
+    return parseInt(duration, 10);
+}
+
+async function createLicenseFromAdmin(e) {
+    e.preventDefault();
+    if (!isAdmin()) return;
+
+    const buyer = adminBuyerInput.value.trim();
+    const product = adminProductSelect.value;
+    const durationDays = getSelectedDurationDays();
+
+    if (!buyer) return;
+
+    if (Number.isNaN(durationDays)) {
+        showBanner(t("msg.invalidDays"), "error");
+        return;
+    }
+
+    const createBtn = document.getElementById('admin-create-btn');
+    createBtn.disabled = true;
+    createBtn.textContent = t("msg.creating");
+
+    const key = generateLicenseKey();
+    
+    let expiresAt = null;
+    if (durationDays !== null) {
+        expiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
+    }
+
+    const adminMetadata = currentUser.user_metadata;
+    const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
+    const note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses`, {
+            method: "POST",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json",
+                "Prefer": "return=representation"
+            },
+            body: JSON.stringify({
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        // Show result card
+        adminGeneratedKey.textContent = key;
+        adminKeyResult.classList.remove('hidden');
+
+        // Reset input
+        adminBuyerInput.value = '';
+        const options = adminUserOptionsList.querySelectorAll('.user-option');
+        options.forEach(opt => opt.classList.remove('selected'));
+
+        showBanner(t("msg.keyCreated"), "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error creating license:", err.message);
+        showBanner(t("msg.keyCreateFail") + err.message, "error");
+    } finally {
+        createBtn.disabled = false;
+        createBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> ${t("admin.createBtn")}`;
+    }
+}
+
+function copyCreatedKey() {
+    const keyText = adminGeneratedKey.textContent;
+    navigator.clipboard.writeText(keyText).then(() => {
+        const copyBtn = document.getElementById('admin-copy-key-btn');
+        const origText = copyBtn.textContent;
+        copyBtn.textContent = t("msg.copied");
+        setTimeout(() => { copyBtn.textContent = origText; }, 2000);
+    });
+}
+
+async function revokeLicense(key) {
+    if (!isAdmin()) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.revokeConfirm") + key);
+    if (!confirmed) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
+            method: "PATCH",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ is_active: false })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        showBanner(t("msg.revokeSuccess"), "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error revoking license:", err.message);
+        showBanner(t("msg.revokeFail") + err.message, "error");
+    }
+}
+
+async function resetLicenseHwid(key) {
+    if (!isAdmin()) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.hwidConfirm") + key);
+    if (!confirmed) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
+            method: "PATCH",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ hwid: null })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        showBanner(t("msg.hwidSuccess"), "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error resetting HWID:", err.message);
+        showBanner(t("msg.hwidFail") + err.message, "error");
+    }
+}
+
+// Custom Confirmation Modal Helper using Promises
+function showCustomConfirm(title, message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-confirm-modal');
+        const titleEl = document.getElementById('confirm-title');
+        const messageEl = document.getElementById('confirm-message');
+        const cancelBtn = document.getElementById('confirm-cancel-btn');
+        const okBtn = document.getElementById('confirm-ok-btn');
+
+        if (!modal || !titleEl || !messageEl || !cancelBtn || !okBtn) {
+            resolve(confirm(message));
+            return;
+        }
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        cancelBtn.textContent = t("confirm.no");
+        okBtn.textContent = t("confirm.yes");
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        const onCancel = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const onConfirm = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const cleanup = () => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            cancelBtn.removeEventListener('click', onCancel);
+            okBtn.removeEventListener('click', onConfirm);
+            modal.removeEventListener('click', onOverlayClick);
+        };
+
+        const onOverlayClick = (e) => {
+            if (e.target === modal) {
+                onCancel();
+            }
+        };
+
+        cancelBtn.addEventListener('click', onCancel);
+        okBtn.addEventListener('click', onConfirm);
+        modal.addEventListener('click', onOverlayClick);
+    });
+}
+
+// Free Trial Claiming Logic
+async function claimFreeTrial() {
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") + "Please log in first", "error");
+        return;
+    }
+
+    const claimTrialBtn = document.getElementById('claim-trial-btn');
+    if (claimTrialBtn) {
+        claimTrialBtn.disabled = true;
+        claimTrialBtn.textContent = t("msg.creating");
+    }
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+
+    try {
+        // 1. Age check on Discord account using snowflake creation date
+        if (discordId) {
+            try {
+                const snowflake = BigInt(discordId);
+                const createdAtMs = Number((snowflake >> 22n) + 1420070400000n);
+                const diffDays = (Date.now() - createdAtMs) / (1000 * 60 * 60 * 24);
+                if (diffDays < 30) {
+                    showBanner(t("msg.trialAccountTooNew"), "error");
+                    return;
+                }
+            } catch (err) {
+                console.error("Failed to parse discord account age:", err);
+            }
+        }
+
+        // 2. Check if user already has a key associated with their DiscordID or username in the licenses table
+        const queryDiscordId = `%DiscordID: ${discordId}%`;
+        const queryUsername = `%Buyer: ${username}%`;
+        
+        const { data: existingLicenses, error: queryError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .or(`note.like.${queryDiscordId},note.like.${queryUsername}`);
+
+        if (queryError) throw queryError;
+
+        if (existingLicenses && existingLicenses.length > 0) {
+            showBanner(t("msg.trialAlreadyClaimed"), "error");
+            return;
+        }
+
+        // 3. Process referral bonus if this is their first license
+        const hasTriggeredRef = existingLicenses && existingLicenses.some(l => l.note && l.note.includes("Referred by:"));
+        let referrerName = null;
+        if (!hasTriggeredRef) {
+            referrerName = await processReferralBonus(username);
+        }
+
+        // 4. Generate a key and save it (6 days if referred, 3 days standard)
+        const key = generateLicenseKey();
+        const trialDays = referrerName ? 6 : 3;
+        const expiresAt = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000).toISOString();
+        let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
+        if (referrerName) {
+            note += ` | Referred by: ${referrerName}`;
+        }
+
+        const { error: insertError } = await supabaseClient
+            .from('licenses')
+            .insert({
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            });
+
+        if (insertError) throw insertError;
+
+        showBanner(t("msg.trialSuccess"), "success");
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Error claiming trial key:", err.message);
+        showBanner(t("msg.keyCreateFail") + err.message, "error");
+    } finally {
+        if (claimTrialBtn) {
+            claimTrialBtn.disabled = false;
+            claimTrialBtn.textContent = t("dash.trialBtn");
+        }
+    }
+}
+
+// Process referral bonus if applicable
+async function processReferralBonus(referredUsername) {
+    const refDiscordId = localStorage.getItem('pulse_referral_discord_id');
+    if (!refDiscordId) return null;
+
+    try {
+        // Find referrer's profile using discord_id
+        const { data: referrerProfile, error: profileError } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('discord_id', refDiscordId)
+            .maybeSingle();
+
+        if (profileError || !referrerProfile) {
+            console.warn("Referrer profile not found or error:", profileError);
+            return null;
+        }
+
+        const referrerUsername = referrerProfile.username;
+
+        // Fetch referrer's licenses
+        const { data: licenses, error: licError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${referrerUsername}%`);
+
+        if (licError) throw licError;
+
+        // Find an active license to extend
+        const activeLicense = licenses.find(l => l.is_active && (!l.expires_at || new Date(l.expires_at) > new Date()));
+        
+        if (activeLicense && activeLicense.expires_at) {
+            // Extend by 3 days
+            const currentExpiry = new Date(activeLicense.expires_at);
+            const newExpiry = new Date(currentExpiry.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            
+            const { error: updateError } = await supabaseClient
+                .from('licenses')
+                .update({ expires_at: newExpiry })
+                .eq('id', activeLicense.id);
+                
+            if (updateError) throw updateError;
+            console.log(`Extended active license for referrer ${referrerUsername} by 3 days.`);
+        } else {
+            // Create a new 3-day license for referrer
+            const newKey = generateLicenseKey();
+            const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            const note = `Product: PulseClient | Buyer: ${referrerUsername} (by Referral Bonus for inviting ${referredUsername})`;
+            
+            const { error: insertError } = await supabaseClient
+                .from('licenses')
+                .insert({
+                    license_key: newKey,
+                    expires_at: expiresAt,
+                    is_active: true,
+                    note: note
+                });
+                
+            if (insertError) throw insertError;
+            console.log(`Created new 3-day referral license key for referrer ${referrerUsername}.`);
+        }
+
+        // Clean up localStorage after successful processing
+        localStorage.removeItem('pulse_referral_discord_id');
+        return referrerUsername;
+    } catch (err) {
+        console.error("Error processing referral bonus:", err.message);
+        return null;
+    }
+}
+
+function showLicenseDetails(key) {
+    const lic = adminLicenses.find(l => l.license_key === key);
+    if (!lic) return;
+
+    const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+
+    let statusText = t("status.active");
+    if (!lic.is_active) {
+        statusText = t("status.revoked");
+    } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
+        statusText = t("status.expired");
+    }
+
+    modalKey.textContent = lic.license_key;
+    modalBuyer.textContent = buyer;
+    if (modalCreator) modalCreator.textContent = createdBy;
+    modalStatus.textContent = statusText;
+    modalCreated.textContent = new Date(lic.created_at).toLocaleString(getLocale());
+    
+    let expiryDisplay = t("status.lifetime");
+    if (lic.expires_at) {
+        const expDate = new Date(lic.expires_at);
+        const now = new Date();
+        if (expDate < now) {
+            expiryDisplay = t("status.expiredShort");
+        } else {
+            const diffTime = Math.abs(expDate - now);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            expiryDisplay = t("status.days", { n: diffDays });
+        }
+    }
+    modalExpires.textContent = expiryDisplay;
+    modalHwid.textContent = lic.hwid || t("status.notActivated");
+    modalNote.textContent = lic.note || "-";
+
+    licenseInfoModal.classList.remove('hidden');
+}
+
+function closeLicenseModal() {
+    licenseInfoModal.classList.add('hidden');
+}
+
+// Attach functions to window scope for onclick handlers in dynamically generated HTML
+window.showLicenseDetails = showLicenseDetails;
+window.resetLicenseHwid = resetLicenseHwid;
+window.revokeLicense = revokeLicense;
+window.closeLicenseModal = closeLicenseModal;
+window.copyCreatedKey = copyCreatedKey;
+window.filterAdminLicenses = filterAdminLicenses;
+
+// User Profiles sync and dropdown logic
+async function fetchLatestProfile(userId) {
+    try {
+        const { data, error } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .maybeSingle();
+        if (error) throw error;
+        if (data) {
+            console.log("Latest profile fetched:", data);
+        }
+    } catch (err) {
+        console.warn("Failed to fetch latest profile:", err.message);
+    }
+}
+
+// User Profiles sync and dropdown logic
+async function saveUserProfile(user) {
+    const metadata = user.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const avatar = metadata.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
+
+    if (!username) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('profiles')
+            .upsert({
+                id: user.id,
+                discord_id: String(discordId),
+                username: username,
+                avatar_url: avatar,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'id' });
+
+        if (error) throw error;
+    } catch (err) {
+        console.warn("Failed to upsert user profile (table might not exist yet):", err.message);
+    }
+}
+
+async function fetchProfilesForAdmin() {
+    if (!isAdmin()) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/profiles?select=*&order=username.asc`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        allUserProfiles = await res.json();
+        renderDropdownUsers(allUserProfiles);
+    } catch (err) {
+        console.error("Error fetching profiles:", err.message);
+    }
+}
+
+function renderDropdownUsers(profiles) {
+    if (!adminUserOptionsList) return;
+    adminUserOptionsList.innerHTML = '';
+    
+    if (profiles.length === 0) {
+        adminUserOptionsList.innerHTML = `<div style="padding: 10px; text-align: center; color: var(--text-muted); font-size: 13px;">${t("msg.noUsers")}</div>`;
+        return;
+    }
+
+    profiles.forEach(profile => {
+        const option = document.createElement('div');
+        option.className = 'user-option';
+        option.innerHTML = `
+            <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" alt="Avatar">
+            <div class="user-option-text">
+                <span class="user-name">${profile.username}</span>
+                <span class="user-discord-id">@${profile.username}</span>
+            </div>
+        `;
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectDropdownUser(profile.username);
+        });
+        adminUserOptionsList.appendChild(option);
+    });
+}
+
+function selectDropdownUser(username) {
+    const profile = allUserProfiles.find(p => p.username === username);
+    if (!profile) return;
+
+    adminBuyerInput.value = profile.username;
+    
+    // Update trigger UI text
+    if (adminUserSelectTrigger) {
+        adminUserSelectTrigger.querySelector('span').innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" style="width: 20px; height: 20px; border-radius: 50%;">
+                <span>${profile.username}</span>
+            </div>
+        `;
+    }
+    
+    closeUserSelectionModal();
+}
+
+function filterDropdownUsers() {
+    const searchInput = document.getElementById('admin-modal-user-search');
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const filtered = allUserProfiles.filter(p => 
+        p.username.toLowerCase().includes(query) ||
+        (p.discord_id && p.discord_id.toLowerCase().includes(query))
+    );
+    renderDropdownUsers(filtered);
+}
+
+async function openUserSelectionModal(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('user-selection-modal');
+    if (!modal) return;
+
+    if (allUserProfiles.length === 0) {
+        await fetchProfilesForAdmin();
+    }
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const searchInput = document.getElementById('admin-modal-user-search');
+    if (searchInput) {
+        searchInput.value = '';
+        setTimeout(() => searchInput.focus(), 100);
+    }
+    renderDropdownUsers(allUserProfiles);
+}
+
+function closeUserSelectionModal() {
+    const modal = document.getElementById('user-selection-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+window.filterDropdownUsers = filterDropdownUsers;
+window.openUserSelectionModal = openUserSelectionModal;
+window.closeUserSelectionModal = closeUserSelectionModal;
+
+function onLanguageChanged() {
+    if (currentUser) {
+        fetchUserLicenses();
+        if (isAdmin() && tabContentAdmin && !tabContentAdmin.classList.contains('hidden')) {
+            renderAdminLicenses(adminLicenses);
+        }
+    }
+    if (bindSubmitBtn && !bindSubmitBtn.disabled) {
+        bindSubmitBtn.textContent = t("dash.bindBtn");
+    }
+    try {
+        if (typeof applyPricingNumbers === "function") applyPricingNumbers();
+    } catch (err) {
+        console.warn("applyPricingNumbers failed:", err);
+    }
+}
+window.onLanguageChanged = onLanguageChanged;
