@@ -502,6 +502,38 @@ function closePurchaseModal() {
 }
 window.closePurchaseModal = closePurchaseModal;
 
+// "Try Free" - logs in if needed, then jumps straight to the trial card in the dashboard
+function goToFreeTrial(event) {
+    if (event) event.preventDefault();
+
+    if (!currentUser) {
+        signInWithDiscord();
+        return;
+    }
+
+    // Reveal dashboard and switch to the licenses/redeem tab
+    landingPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
+
+    const redeemMenuItem = document.querySelector('.sidebar-menu .menu-item[href="#tab-redeem"]');
+    if (redeemMenuItem) {
+        redeemMenuItem.click();
+    } else {
+        switchDashTab(null, 'tab-redeem');
+    }
+
+    // Scroll to the trial card and draw a brief attention highlight
+    setTimeout(() => {
+        const trialCard = document.querySelector('#tab-content-redeem .trial-card');
+        if (trialCard) {
+            trialCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            trialCard.classList.add('trial-card-highlight');
+            setTimeout(() => trialCard.classList.remove('trial-card-highlight'), 2000);
+        }
+    }, 150);
+}
+window.goToFreeTrial = goToFreeTrial;
+
 // Wire up close interactions once DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     const purchaseModal = document.getElementById('purchase-info-modal');
