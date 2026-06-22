@@ -479,6 +479,45 @@ function scrollToAuth() {
     }
 }
 window.scrollToAuth = scrollToAuth;
+
+// Purchase Modal - directs buyers to open a Discord support ticket
+function showPurchaseModal(event) {
+    if (event) event.preventDefault();
+    const modal = document.getElementById('purchase-info-modal');
+    if (!modal) {
+        // Fallback in case modal markup is missing
+        scrollToAuth();
+        return;
+    }
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+window.showPurchaseModal = showPurchaseModal;
+
+function closePurchaseModal() {
+    const modal = document.getElementById('purchase-info-modal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+window.closePurchaseModal = closePurchaseModal;
+
+// Wire up close interactions once DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    const purchaseModal = document.getElementById('purchase-info-modal');
+    const purchaseCloseBtn = document.getElementById('purchase-modal-close-btn');
+    if (purchaseCloseBtn) {
+        purchaseCloseBtn.addEventListener('click', closePurchaseModal);
+    }
+    if (purchaseModal) {
+        purchaseModal.addEventListener('click', (e) => {
+            if (e.target === purchaseModal) closePurchaseModal();
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePurchaseModal();
+    });
+});
 // Sidebar Dashboard Tab Switcher
 function switchDashTab(event, tabId) {
     if (event) event.preventDefault();
