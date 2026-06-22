@@ -1,3 +1,52 @@
+// --- quick fallbacks: define missing globals to avoid ReferenceError crashes ---
+// Paste this at the very top of app.js (before any code that calls these functions).
+(function () {
+  // navigateToLandingSection: scrolls to sectionId if present
+  if (typeof window.navigateToLandingSection !== 'function') {
+    window.navigateToLandingSection = function (event, sectionId) {
+      try { if (event && event.preventDefault) event.preventDefault(); } catch (e) {}
+      try {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else console.warn('navigateToLandingSection: element not found', sectionId);
+      } catch (err) {
+        console.warn('navigateToLandingSection error', err);
+      }
+    };
+  }
+
+  // handleUserSignIn: basic UI update so app doesn't crash if real function is missing
+  if (typeof window.handleUserSignIn !== 'function') {
+    window.handleUserSignIn = function (user) {
+      try {
+        window.currentUser = user || null;
+        const navLoginBtn = document.getElementById('nav-login-btn');
+        const navUserProfile = document.getElementById('nav-user-profile');
+        const navUsername = document.getElementById('nav-username');
+        const navAvatar = document.getElementById('nav-avatar');
+        // hide login button, show user pill
+        if (navLoginBtn) navLoginBtn.classList.add('hidden');
+        if (navUserProfile) navUserProfile.classList.remove('hidden');
+        // set simple user info if available
+        if (navUsername && (user?.user_metadata?.full_name || user?.email)) {
+          navUsername.textContent = user.user_metadata?.full_name || user.email;
+        }
+        if (navAvatar && user?.user_metadata?.avatar_url) {
+          navAvatar.src = user.user_metadata.avatar_url;
+        }
+        // try to call any real implementation if defined later
+        if (typeof window._real_handleUserSignIn === 'function') {
+          try { window._real_handleUserSignIn(user); } catch (e) {}
+        }
+      } catch (err) {
+        console.warn('handleUserSignIn fallback error', err);
+      }
+    };
+  }
+
+  // If your real handleUserSignIn is defined *later* as a function expression, store it as _real_handleUserSignIn
+  // (optional) If you later add the real implementation as: window._real_handleUserSignIn = function(user){...}
+})();
 // Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2pqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8[...]";
