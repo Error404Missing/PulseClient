@@ -561,15 +561,45 @@ async function bindLicenseKey(e) {
 
 // Alert Banner helper functions
 function showBanner(message, type = "info") {
-    bannerText.textContent = message;
+    // Select icon based on type
+    let iconSvg = '';
+    if (type === 'success') {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    } else if (type === 'error') {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+    } else {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+    }
+
+    // Set structure
+    dashMessageBanner.innerHTML = `
+        <div class="alert-banner-content">
+            <div class="alert-banner-icon">${iconSvg}</div>
+            <span id="banner-text">${message}</span>
+        </div>
+        <button onclick="hideBanner()" class="close-banner" aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    `;
+
     dashMessageBanner.className = `alert-banner ${type}`;
-    dashMessageBanner.classList.remove('hidden');
+    dashMessageBanner.classList.remove('hidden', 'banner-hide');
+
     // Auto hide after 5 seconds
-    setTimeout(hideBanner, 5000);
+    if (window.bannerTimeout) clearTimeout(window.bannerTimeout);
+    window.bannerTimeout = setTimeout(hideBanner, 5000);
 }
 
 function hideBanner() {
-    dashMessageBanner.classList.add('hidden');
+    if (dashMessageBanner.classList.contains('hidden')) return;
+    dashMessageBanner.classList.add('banner-hide');
+    setTimeout(() => {
+        dashMessageBanner.classList.add('hidden');
+        dashMessageBanner.classList.remove('banner-hide');
+    }, 300);
 }
 
 // Utility smooth scroll

@@ -2880,3 +2880,154 @@ h3 {
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
 }
+
+/* Premium Glassmorphic Alert Banner */
+.alert-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: bannerSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bannerSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.98);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.alert-banner.hidden {
+    display: none !important;
+}
+
+/* Success Alert (Green theme) */
+.alert-banner.success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.05));
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.08), inset 0 0 12px rgba(16, 185, 129, 0.05);
+}
+
+.alert-banner.success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+}
+
+/* Error Alert (Red theme) */
+.alert-banner.error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.05));
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.08), inset 0 0 12px rgba(239, 68, 68, 0.05);
+}
+
+.alert-banner.error::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+}
+
+/* Info Alert (Blue/Purple theme) */
+.alert-banner.info {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.05));
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #818cf8;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08), inset 0 0 12px rgba(99, 102, 241, 0.05);
+}
+
+.alert-banner.info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #6366f1;
+    box-shadow: 0 0 10px #6366f1;
+}
+
+/* Alert Content Elements */
+.alert-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.alert-banner-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.alert-banner #banner-text {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.close-banner {
+    background: none;
+    border: none;
+    color: currentColor;
+    cursor: pointer;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.close-banner:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Animation classes */
+.alert-banner.banner-hide {
+    opacity: 0 !important;
+    transform: translateY(-15px) scale(0.97) !important;
+    filter: blur(4px) !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 0 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
