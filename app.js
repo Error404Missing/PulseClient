@@ -144,8 +144,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Set default mock download file link
     if (downloadModBtn) downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
-    const downloadOpsecBtn = document.getElementById('download-opsec-btn');
-    if (downloadOpsecBtn) downloadOpsecBtn.href = "EssentialOpSec.jar";
 
     // Apply saved language after all listeners are attached
     if (typeof initLanguage === "function") initLanguage();
