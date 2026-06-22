@@ -1,4 +1,4 @@
-﻿// Initialize Supabase Client
+// Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
 
@@ -176,6 +176,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (bindLicenseForm) bindLicenseForm.addEventListener('submit', bindLicenseKey);
     const claimTrialBtn = document.getElementById('claim-trial-btn');
     if (claimTrialBtn) claimTrialBtn.addEventListener('click', claimFreeTrial);
+
+    const redeemPromoForm = document.getElementById('redeem-promo-form');
+    if (redeemPromoForm) redeemPromoForm.addEventListener('submit', redeemPromoCode);
+
+    const adminPromoCreateForm = document.getElementById('admin-promo-create-form');
+    if (adminPromoCreateForm) adminPromoCreateForm.addEventListener('submit', createPromoCodeFromAdmin);
 
     // Admin Event Listeners
     if (adminCreateForm) adminCreateForm.addEventListener('submit', createLicenseFromAdmin);
@@ -586,6 +592,9 @@ function switchDashTab(event, tabId) {
     if (document.getElementById('tab-content-referral')) {
         document.getElementById('tab-content-referral').classList.add('hidden');
     }
+    if (document.getElementById('tab-content-promo')) {
+        document.getElementById('tab-content-promo').classList.add('hidden');
+    }
     if (document.getElementById('tab-content-admin')) {
         document.getElementById('tab-content-admin').classList.add('hidden');
     }
@@ -599,6 +608,10 @@ function switchDashTab(event, tabId) {
         if (document.getElementById('tab-content-referral')) {
             document.getElementById('tab-content-referral').classList.remove('hidden');
         }
+    } else if (tabId === 'tab-promo') {
+        if (document.getElementById('tab-content-promo')) {
+            document.getElementById('tab-content-promo').classList.remove('hidden');
+        }
     } else if (tabId === 'tab-faq') {
         document.getElementById('tab-content-faq').classList.remove('hidden');
     } else if (tabId === 'tab-admin') {
@@ -607,6 +620,7 @@ function switchDashTab(event, tabId) {
         }
         fetchAllLicenses();
         fetchProfilesForAdmin();
+        fetchAdminPromocodes();
     }    
     // Deactivate all menu items
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
@@ -1528,3 +1542,268 @@ function onLanguageChanged() {
     }
 }
 window.onLanguageChanged = onLanguageChanged;
+
+// ==========================================
+// PROMOCODE FUNCTIONS
+// ==========================================
+
+async function redeemPromoCode(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") + "Please log in first", "error");
+        return;
+    }
+
+    const promoInput = document.getElementById('promo-code-input');
+    const submitBtn = document.getElementById('promo-submit-btn');
+    const code = promoInput.value.trim().toUpperCase();
+
+    if (!code) return;
+
+    submitBtn.disabled = true;
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = t("msg.bindLoading");
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+
+    try {
+        // 1. Fetch promocode details
+        const { data: promo, error: promoError } = await supabaseClient
+            .from('promocodes')
+            .select('*')
+            .eq('code', code)
+            .eq('is_active', true)
+            .maybeSingle();
+
+        if (promoError) throw promoError;
+
+        if (!promo) {
+            showBanner(t("msg.promoNotFound"), "error");
+            return;
+        }
+
+        // 2. Check if user already redeemed this code
+        const { data: existingRedemption, error: redError } = await supabaseClient
+            .from('promocode_redemptions')
+            .select('*')
+            .eq('code', code)
+            .eq('user_id', currentUser.id)
+            .maybeSingle();
+
+        if (redError) throw redError;
+
+        if (existingRedemption) {
+            showBanner(t("msg.promoAlreadyUsed"), "error");
+            return;
+        }
+
+        // 3. Check usage limit
+        if (promo.max_uses !== null) {
+            const { count, error: countError } = await supabaseClient
+                .from('promocode_redemptions')
+                .select('*', { count: 'exact', head: true })
+                .eq('code', code);
+
+            if (countError) throw countError;
+
+            if (count >= promo.max_uses) {
+                showBanner(t("msg.promoExpired"), "error");
+                return;
+            }
+        }
+
+        // 4. Create license key
+        const key = generateLicenseKey();
+        const expiresAt = new Date(Date.now() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
+        const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Promocode: ${code})`;
+
+        const { error: insertLicError } = await supabaseClient
+            .from('licenses')
+            .insert({
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            });
+
+        if (insertLicError) throw insertLicError;
+
+        // 5. Save redemption
+        const { error: insertRedError } = await supabaseClient
+            .from('promocode_redemptions')
+            .insert({
+                code: code,
+                user_id: currentUser.id,
+                username: username
+            });
+
+        if (insertRedError) throw insertRedError;
+
+        showBanner(t("msg.promoRedeemed", { n: promo.duration_days }), "success");
+        promoInput.value = '';
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Promocode redemption failed:", err.message);
+        showBanner(t("msg.promoRedeemFail") + err.message, "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+    }
+}
+window.redeemPromoCode = redeemPromoCode;
+
+async function createPromoCodeFromAdmin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!isAdmin()) return;
+
+    const codeInput = document.getElementById('admin-promo-code-input');
+    const daysInput = document.getElementById('admin-promo-days-input');
+    const usesInput = document.getElementById('admin-promo-uses-input');
+    const createBtn = document.getElementById('admin-promo-create-btn');
+
+    const code = codeInput.value.trim().toUpperCase();
+    const durationDays = parseInt(daysInput.value, 10);
+    const maxUsesVal = usesInput.value.trim();
+    const maxUses = maxUsesVal !== "" ? parseInt(maxUsesVal, 10) : null;
+
+    if (!code || isNaN(durationDays) || durationDays < 1) return;
+
+    createBtn.disabled = true;
+    const origBtnText = createBtn.textContent;
+    createBtn.textContent = t("msg.creating");
+
+    const adminMetadata = currentUser.user_metadata;
+    const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
+
+    try {
+        const { error } = await supabaseClient
+            .from('promocodes')
+            .insert({
+                code: code,
+                duration_days: durationDays,
+                max_uses: maxUses,
+                is_active: true,
+                created_by: adminName
+            });
+
+        if (error) throw error;
+
+        showBanner(t("msg.promoCreated"), "success");
+        codeInput.value = '';
+        daysInput.value = '';
+        usesInput.value = '';
+
+        fetchAdminPromocodes();
+    } catch (err) {
+        console.error("Error creating promocode:", err.message);
+        showBanner(t("msg.promoCreateFail") + err.message, "error");
+    } finally {
+        createBtn.disabled = false;
+        createBtn.textContent = origBtnText;
+    }
+}
+window.createPromoCodeFromAdmin = createPromoCodeFromAdmin;
+
+async function fetchAdminPromocodes() {
+    if (!isAdmin()) return;
+
+    try {
+        // 1. Fetch promocodes
+        const { data: promocodes, error: promoError } = await supabaseClient
+            .from('promocodes')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (promoError) throw promoError;
+
+        // 2. Fetch redemptions
+        const { data: redemptions, error: redError } = await supabaseClient
+            .from('promocode_redemptions')
+            .select('*')
+            .order('redeemed_at', { ascending: false });
+
+        if (redError) throw redError;
+
+        renderAdminPromocodes(promocodes || [], redemptions || []);
+    } catch (err) {
+        console.error("Error fetching admin promocode data:", err.message);
+    }
+}
+window.fetchAdminPromocodes = fetchAdminPromocodes;
+
+function renderAdminPromocodes(promocodes, redemptions) {
+    const promosBody = document.getElementById('admin-promos-table-body');
+    const redemptionsBody = document.getElementById('admin-promo-redemptions-table-body');
+
+    if (promosBody) {
+        promosBody.innerHTML = '';
+        if (promocodes.length === 0) {
+            promosBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">No promocodes found</td></tr>`;
+        } else {
+            promocodes.forEach(p => {
+                const codeRedemptions = redemptions.filter(r => r.code === p.code);
+                const count = codeRedemptions.length;
+                const limitDisplay = p.max_uses !== null ? p.max_uses : '∞';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 700; color: #10b981;">${p.code}</td>
+                    <td>${p.duration_days} ${t("status.days", { n: p.duration_days })}</td>
+                    <td>${count} / ${limitDisplay}</td>
+                    <td>${p.created_by || "Admin"}</td>
+                    <td>
+                        <div class="admin-actions">
+                            <button type="button" class="btn-action btn-revoke" onclick="deletePromocode('${p.code}')" title="${t('admin.actionRevoke')}" aria-label="${t('admin.actionRevoke')}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                promosBody.appendChild(tr);
+            });
+        }
+    }
+
+    if (redemptionsBody) {
+        redemptionsBody.innerHTML = '';
+        if (redemptions.length === 0) {
+            redemptionsBody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 24px;">No redemptions found</td></tr>`;
+        } else {
+            redemptions.forEach(r => {
+                const tr = document.createElement('tr');
+                const timestamp = new Date(r.redeemed_at).toLocaleString(getLocale());
+                tr.innerHTML = `
+                    <td style="font-weight: 700; color: #10b981;">${r.code}</td>
+                    <td><strong>${r.username}</strong></td>
+                    <td style="color: var(--text-muted);">${timestamp}</td>
+                `;
+                redemptionsBody.appendChild(tr);
+            });
+        }
+    }
+}
+window.renderAdminPromocodes = renderAdminPromocodes;
+
+async function deletePromocode(code) {
+    if (!isAdmin()) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), "Delete promocode " + code + "?");
+    if (!confirmed) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('promocodes')
+            .delete()
+            .eq('code', code);
+
+        if (error) throw error;
+
+        showBanner("Promocode deleted successfully", "success");
+        fetchAdminPromocodes();
+    } catch (err) {
+        console.error("Error deleting promocode:", err.message);
+        showBanner("Delete failed: " + err.message, "error");
+    }
+}
+window.deletePromocode = deletePromocode;
