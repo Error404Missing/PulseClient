@@ -864,18 +864,18 @@ function renderAdminLogs(licenses) {
         const timestamp = new Date(lic.created_at).toLocaleString(getLocale());
 
         // 1. Generation event
-        let action = "ßâÆßâÉßâíßâÉßâªßâößâæßâÿßâí ßâ¿ßâößâÑßâ¢ßâ£ßâÉ";
-        let details = `ßâ¿ßâößâÿßâÑßâ¢ßâ£ßâÉ <strong>${product}</strong> ßâÆßâÉßâíßâÉßâªßâößâæßâÿ ßâ¢ßâ¥ßâ¢ßâ«ßâ¢ßâÉßâáßâößâæßâÜßâÿßâíßâùßâòßâÿßâí: <strong>${buyer}</strong>. ßâÆßâÉßâíßâÉßâªßâößâæßâÿ: <code>${lic.license_key}</code>`;
+        let action = "ლიცენზიის შექმნა";
+        let details = `შეიქმნა <strong>${product}</strong> ლიცენზია მომხმარებლისთვის: <strong>${buyer}</strong>. ლიცენზია: <code>${lic.license_key}</code>`;
         
         if (lic.note && lic.note.includes("Free Trial")) {
-            action = "ßâíßâÉßâ¬ßâôßâößâÜßâÿ ßâòßâößâáßâíßâÿßâÿßâí ßâÉßâªßâößâæßâÉ";
-            details = `ßâ¢ßâ¥ßâ¢ßâ«ßâ¢ßâÉßâáßâößâæßâößâÜßâ¢ßâÉ ßâÉßâÿßâªßâ¥ 3-ßâôßâªßâÿßâÉßâ£ßâÿ ßâúßâñßâÉßâíßâ¥ ßâíßâÉßâ¬ßâôßâößâÜßâÿ ßâÆßâÉßâíßâÉßâªßâößâæßâÿ: <code>${lic.license_key}</code>`;
+            action = "საცდელი ვერსიის აღება";
+            details = `მომხმარებელმა აიღო 3-დღიანი უფასო საცდელი ლიცენზია: <code>${lic.license_key}</code>`;
         }
 
         logs.push({
             dateObj: new Date(lic.created_at),
             date: timestamp,
-            user: createdBy || "ßâíßâÿßâíßâóßâößâ¢ßâÉ",
+            user: createdBy || "სისტემა",
             action: action,
             details: details
         });
@@ -883,26 +883,26 @@ function renderAdminLogs(licenses) {
         // 2. Referral event if present in note
         if (lic.note && lic.note.includes("Referred by:")) {
             const refMatch = lic.note.match(/Referred by:\s*([^|]+)/i);
-            const referrer = refMatch ? refMatch[1].trim() : "ßâúßâ¬ßâ£ßâ¥ßâæßâÿ";
+            const referrer = refMatch ? refMatch[1].trim() : "უცნობი";
             logs.push({
                 dateObj: new Date(lic.created_at),
                 date: timestamp,
                 user: buyer,
-                action: "ßâáßâößâñßâößâáßâÉßâÜßâÿßâí ßâÆßâÉßâ¢ßâ¥ßâºßâößâ£ßâößâæßâÉ",
-                details: `ßâôßâÉßâáßâößâÆßâÿßâíßâóßâáßâÿßâáßâôßâÉ ßâáßâößâñßâößâáßâÉßâÜßâúßâáßâÿ ßâÜßâÿßâ£ßâÖßâÿßâù. ßâ¢ßâ¥ßâ¢ßâ¼ßâòßâößâòßâÿ: <strong>${referrer}</strong>`
+                action: "რეფერალის გამოყენება",
+                details: `დარეგისტრირდა რეფერალური ბმულით. მოწვევა: <strong>${referrer}</strong>`
             });
         }
 
         // 3. Referral Bonus event
         if (lic.note && lic.note.includes("Referral Bonus for inviting")) {
             const invitedMatch = lic.note.match(/inviting\s+([^)]+)/i);
-            const invited = invitedMatch ? invitedMatch[1].trim() : "ßâ¢ßâößâÆßâ¥ßâæßâÉßâáßâÿ";
+            const invited = invitedMatch ? invitedMatch[1].trim() : "მეგობარი";
             logs.push({
                 dateObj: new Date(lic.created_at),
                 date: timestamp,
                 user: buyer,
-                action: "ßâáßâößâñßâößâáßâÉßâÜ ßâæßâ¥ßâ£ßâúßâíßâÿ (+3 ßâôßâªßâö)",
-                details: `ßâôßâÉßâößâáßâÿßâ¬ßâ«ßâÉ 3 ßâôßâªßâö ßâ¢ßâößâÆßâ¥ßâæßâáßâÿßâí (<strong>${invited}</strong>) ßâ¢ßâ¥ßâ¼ßâòßâößâòßâÿßâíßâùßâòßâÿßâí.`
+                action: "რეფერალ ბონუსი (+3 დღე)",
+                details: `დაემატა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
             });
         }
 
@@ -912,9 +912,9 @@ function renderAdminLogs(licenses) {
             logs.push({
                 dateObj: new Date(lic.created_at),
                 date: timestamp,
-                user: "ßâÉßâôßâ¢ßâÿßâ£ßâÿßâíßâóßâáßâÉßâóßâ¥ßâáßâÿ",
-                action: "ßâÜßâÿßâ¬ßâößâ£ßâûßâÿßâÿßâí ßâÆßâÉßâúßâÑßâ¢ßâößâæßâÉ",
-                details: `ßâÆßâÉßâúßâÑßâ¢ßâôßâÉ ßâÆßâÉßâíßâÉßâªßâößâæßâÿ: <code>${lic.license_key}</code>`
+                user: "ადმინისტრატორი",
+                action: "ლიცენზიის გაუქმება",
+                details: `გაუქმდა ლიცენზია: <code>${lic.license_key}</code>`
             });
         }
     });
@@ -923,7 +923,7 @@ function renderAdminLogs(licenses) {
     logs.sort((a, b) => b.dateObj - a.dateObj);
 
     if (logs.length === 0) {
-        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">ßâÉßâÑßâóßâÿßâòßâ¥ßâæßâößâæßâÿ ßâÉßâá ßâ¢ßâ¥ßâÿßâ½ßâößâæßâ£ßâÉ</td></tr>`;
+        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტივობები არ მოიძებნა</td></tr>`;
         return;
     }
 
