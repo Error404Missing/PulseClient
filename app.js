@@ -526,17 +526,23 @@ async function bindLicenseKey(e) {
             referrerName = await processReferralBonus(username);
         }
 
-        // 4. Update the note column to associate with current user, preserving original creator info
+        // 4. Update the note column to associate with current user, preserving original creator/metadata info
         const originalNote = license.note || "";
-        const byMatch = originalNote.match(/\(by\s+([^)]+)\)/i);
-        const originalCreator = byMatch ? byMatch[1].trim() : null;
+        let newNote = originalNote;
 
-        let newNote = `Product: PulseClient | Buyer: ${username}`;
-        if (originalCreator) {
-            newNote += ` (by ${originalCreator})`;
+        // Replace or add Buyer in the note dynamically while keeping other metadata intact
+        if (/Buyer:\s*([^|()]+)/i.test(newNote)) {
+            newNote = newNote.replace(/Buyer:\s*([^|()]+)/i, `Buyer: ${username} `);
+        } else {
+            newNote = `Product: PulseClient | Buyer: ${username} | ${newNote}`;
         }
-        newNote += ` (Linked via Dashboard)`;
-        if (referrerName) {
+
+        // Append Linked via Dashboard if not already present
+        if (!newNote.includes("Linked via Dashboard")) {
+            newNote += ` (Linked via Dashboard)`;
+        }
+
+        if (referrerName && !newNote.includes("Referred by:")) {
             newNote += ` | Referred by: ${referrerName}`;
         }
 
@@ -750,8 +756,12 @@ function parseLicenseNote(note) {
         if (buyerMatch) buyer = buyerMatch[1].trim();
 
         const byMatch = note.match(/\(by\s+([^)]+)\)/i);
+        const promoMatch = note.match(/Promocode:\s*([^|)]+)/i);
+        
         if (byMatch) {
             createdBy = byMatch[1].trim();
+        } else if (promoMatch) {
+            createdBy = `Promocode: ${promoMatch[1].trim()}`;
         } else if (/Free Trial/i.test(note)) {
             createdBy = "Free Trial";
         } else if (/Linked via Dashboard/i.test(note)) {
@@ -1701,7 +1711,7 @@ async function redeemPromoCode(e) {
             // Create a new license key
             const key = generateLicenseKey();
             const expiresAt = new Date(Date.now() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
-            const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} | Promocode: ${code}`;
+            const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (by Promocode: ${code})`;
 
             const { error: insertLicError } = await supabaseClient
                 .from('licenses')
