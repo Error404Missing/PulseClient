@@ -78,7 +78,7 @@ let allUserProfiles = [];
 const PRICING_PLANS = [
   // cardIndex corresponds to DOM nth-child() inside #pricing .pricing-grid
   { cardIndex: 2, planId: 'weekly', price_cents: 199, currency: 'USD', periodKey: 'pricing.per7' },
-  { cardIndex: 3, planId: 'lifetime', price_cents: 999, currency: 'GEL', periodKey: 'pricing.once' },
+  { cardIndex: 3, planId: 'lifetime', price_cents: 999, currency: 'USD', periodKey: 'pricing.once' },
   { cardIndex: 4, planId: 'monthly', price_cents: 499, currency: 'USD', periodKey: 'pricing.per30' }
 ];
 
