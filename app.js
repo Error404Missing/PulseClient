@@ -34,9 +34,8 @@ const downloadModBtn = document.getElementById('download-mod-btn');
 
 const GITHUB_REPO_OWNER = 'Error404Missing';
 const GITHUB_REPO_NAME = 'PulseClient';
-const GITHUB_JAR_FILE = 'PulseClient.jar';
-const GITHUB_JAR_BLOB_URL = `https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/blob/main/${GITHUB_JAR_FILE}`;
-const GITHUB_JAR_DOWNLOAD_URL = GITHUB_JAR_BLOB_URL.replace('/blob/', '/raw/');
+const GITHUB_JAR_FILE = 'pulse-b1.1.jar';
+const GITHUB_JAR_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_JAR_FILE}`;
 
 // Admin DOM Elements
 const adminMenuItem = document.getElementById('admin-menu-item');
