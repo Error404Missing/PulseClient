@@ -78,7 +78,7 @@ let allUserProfiles = [];
 const PRICING_PLANS = [
   // cardIndex corresponds to DOM nth-child() inside #pricing .pricing-grid
   { cardIndex: 2, planId: 'weekly', price_cents: 199, periodKey: 'pricing.per7' },   // $1.99 / 7 days
-  { cardIndex: 3, planId: 'lifetime', price_cents: 1499, periodKey: 'pricing.once' }, // $14.99 one-time
+  { cardIndex: 3, planId: 'lifetime', price_cents: 1499, periodKey: 'pricing.once' }, // $9.99 one-time
   { cardIndex: 4, planId: 'monthly', price_cents: 499, periodKey: 'pricing.per30' }   // $4.99 / 30 days
 ];
 
