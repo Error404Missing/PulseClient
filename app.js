@@ -1902,3 +1902,202 @@ async function deletePromocode(code) {
     }
 }
 window.deletePromocode = deletePromocode;
+
+// ==========================================
+// MODULES LIST DATASET AND LOGIC
+// ==========================================
+const MODULES_DATA = [
+  // Combat (21)
+  { name: "Aim Assist", category: "combat", status: "undetected" },
+  { name: "Anchor Macro", category: "combat", status: "undetected" },
+  { name: "Auto Double Hand", category: "combat", status: "undetected" },
+  { name: "Auto Crystal", category: "combat", status: "undetected" },
+  { name: "Auto Hit Crystal", category: "combat", status: "undetected" },
+  { name: "Auto Inv Totem", category: "combat", status: "detected" },
+  { name: "Auto Jump Reset", category: "combat", status: "undetected" },
+  { name: "Auto Totem", category: "combat", status: "detected" },
+  { name: "Crystal Optimizer", category: "combat", status: "undetected" },
+  { name: "Double Anchor", category: "combat", status: "undetected" },
+  { name: "Elytra Swap", category: "combat", status: "undetected" },
+  { name: "HitBox", category: "combat", status: "detected" },
+  { name: "Hover Totem", category: "combat", status: "risk" },
+  { name: "Totem Offhand", category: "combat", status: "undetected" },
+  { name: "Mace Swap", category: "combat", status: "undetected" },
+  { name: "Spear Swap", category: "combat", status: "undetected" },
+  { name: "No Hit Delay", category: "combat", status: "undetected" },
+  { name: "Shield Breaker", category: "combat", status: "undetected" },
+  { name: "Static HitBoxes", category: "combat", status: "risk" },
+  { name: "Trigger Bot", category: "combat", status: "undetected" },
+  { name: "Mace Bomber", category: "combat", status: "undetected" },
+
+  // Misc (20)
+  { name: "Auto Clicker", category: "misc", status: "undetected" },
+  { name: "Auto Walk", category: "misc", status: "undetected" },
+  { name: "Auto Eat", category: "misc", status: "undetected" },
+  { name: "Auto Firework", category: "misc", status: "undetected" },
+  { name: "Auto Log", category: "misc", status: "undetected" },
+  { name: "Auto Loot", category: "misc", status: "undetected" },
+  { name: "Auto Mine", category: "misc", status: "undetected" },
+  { name: "Auto Tool", category: "misc", status: "undetected" },
+  { name: "Auto TPA", category: "misc", status: "undetected" },
+  { name: "Cord Snapper", category: "misc", status: "undetected" },
+  { name: "Elytra Glide", category: "misc", status: "undetected" },
+  { name: "Fast Place", category: "misc", status: "undetected" },
+  { name: "Freecam", category: "misc", status: "undetected" },
+  { name: "Key Pearl", category: "misc", status: "undetected" },
+  { name: "Key Wind Charge", category: "misc", status: "undetected" },
+  { name: "Name Protect", category: "misc", status: "undetected" },
+  { name: "Sprint", category: "misc", status: "undetected" },
+  { name: "Skin Protect", category: "misc", status: "undetected" },
+  { name: "Auto Reconnect", category: "misc", status: "undetected" },
+  { name: "Weather Notifier", category: "misc", status: "undetected" },
+
+  // Donut (17)
+  { name: "Anti Trap", category: "donut", status: "undetected" },
+  { name: "Auction Sniper", category: "donut", status: "undetected" },
+  { name: "Auto Sell", category: "donut", status: "undetected" },
+  { name: "Auto Spawner Sell", category: "donut", status: "undetected" },
+  { name: "Fake Pay", category: "donut", status: "undetected" },
+  { name: "Item Dropper", category: "donut", status: "undetected" },
+  { name: "Netherite Finder", category: "donut", status: "undetected" },
+  { name: "RTP Base Finder", category: "donut", status: "risk" },
+  { name: "Auto Shulker Buy", category: "donut", status: "undetected" },
+  { name: "Auto Shop", category: "donut", status: "undetected" },
+  { name: "Tunnel Base Finder", category: "donut", status: "detected" },
+  { name: "Fake Stats", category: "donut", status: "undetected" },
+  { name: "Spawner Protect", category: "donut", status: "undetected" },
+  { name: "Chunk Finder", category: "donut", status: "undetected" },
+  { name: "Prime Chunk Finder", category: "donut", status: "undetected" },
+  { name: "Block Entity Debug", category: "donut", status: "undetected" },
+  { name: "Player Chunks", category: "donut", status: "undetected" },
+
+  // BaseFinding (5)
+  { name: "Seed Chunk Finder", category: "basefinding", status: "undetected" },
+  { name: "Hole ESP", category: "basefinding", status: "undetected" },
+  { name: "Light Finder", category: "basefinding", status: "undetected" },
+  { name: "Sus Chunk Finder", category: "basefinding", status: "undetected" },
+  { name: "Suspicious ESP", category: "basefinding", status: "undetected" },
+
+  // Render (15)
+  { name: "Name Tags", category: "render", status: "undetected" },
+  { name: "Ore Sim", category: "render", status: "undetected" },
+  { name: "Fullbright", category: "render", status: "undetected" },
+  { name: "SwingSpeed", category: "render", status: "undetected" },
+  { name: "Jump Circles", category: "render", status: "undetected" },
+  { name: "HUD", category: "render", status: "undetected" },
+  { name: "Player ESP", category: "render", status: "undetected" },
+  { name: "Storage ESP", category: "render", status: "undetected" },
+  { name: "Block ESP", category: "render", status: "undetected" },
+  { name: "Target HUD", category: "render", status: "undetected" },
+  { name: "RealHitBox", category: "render", status: "undetected" },
+  { name: "Free Look", category: "render", status: "undetected" },
+  { name: "SpotifyHUD", category: "render", status: "undetected" },
+  { name: "Pearl Trajectory", category: "render", status: "undetected" },
+  { name: "Mob ESP", category: "render", status: "undetected" },
+
+  // Client (5)
+  { name: "Brand Spoofer", category: "client", status: "undetected" },
+  { name: "Discord RPC", category: "client", status: "undetected" },
+  { name: "Capes", category: "client", status: "undetected" },
+  { name: "Custom Font", category: "client", status: "undetected" },
+  { name: "Arraylist", category: "client", status: "undetected" }
+];
+
+let activeModulesCategory = "all";
+let modulesSearchQuery = "";
+
+function renderModules() {
+    const container = document.getElementById("modules-grid-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const query = modulesSearchQuery.toLowerCase().trim();
+
+    const filtered = MODULES_DATA.filter(mod => {
+        const matchesCategory = activeModulesCategory === "all" || mod.category === activeModulesCategory;
+        const matchesSearch = mod.name.toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+        const noResults = document.createElement("div");
+        noResults.style.gridColumn = "1 / -1";
+        noResults.style.textAlign = "center";
+        noResults.style.color = "var(--text-muted)";
+        noResults.style.padding = "40px";
+        noResults.style.fontSize = "14px";
+        noResults.textContent = "No modules found / მოდულები ვერ მოიძებნა";
+        container.appendChild(noResults);
+        return;
+    }
+
+    filtered.forEach(mod => {
+        const card = document.createElement("div");
+        card.className = "module-card";
+
+        let statusClass = "undetected";
+        let statusKey = "modules.status.undetected";
+        if (mod.status === "risk") {
+            statusClass = "risk";
+            statusKey = "modules.status.useAtRisk";
+        } else if (mod.status === "detected") {
+            statusClass = "detected";
+            statusKey = "modules.status.detected";
+        }
+
+        const catNameKey = "modules.category." + mod.category;
+
+        card.innerHTML = `
+            <div class="module-info">
+                <span class="module-category" data-i18n="${catNameKey}">${t(catNameKey)}</span>
+                <h4 class="module-name">${mod.name}</h4>
+            </div>
+            <span class="status-badge ${statusClass}" data-i18n="${statusKey}">${t(statusKey)}</span>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function filterModulesByCategory(cat) {
+    activeModulesCategory = cat;
+    
+    // Update tabs active state
+    const tabs = document.querySelectorAll("#modules-category-tabs .tab-btn");
+    tabs.forEach(btn => {
+        if (btn.getAttribute("data-category") === cat) {
+            btn.classList.add("active");
+        } else {
+            btn.classList.remove("active");
+        }
+    });
+
+    renderModules();
+}
+
+function handleModulesSearch() {
+    const input = document.getElementById("modules-search");
+    if (input) {
+        modulesSearchQuery = input.value;
+        renderModules();
+    }
+}
+
+// Expose globally
+window.filterModulesByCategory = filterModulesByCategory;
+window.handleModulesSearch = handleModulesSearch;
+window.renderModules = renderModules;
+
+// Set up language change hook for i18n
+const existingLangChanged = window.onLanguageChanged;
+window.onLanguageChanged = () => {
+    if (typeof existingLangChanged === "function") {
+        try { existingLangChanged(); } catch (e) {}
+    }
+    renderModules();
+};
+
+// Initial rendering on DOM load
+document.addEventListener("DOMContentLoaded", () => {
+    renderModules();
+});
