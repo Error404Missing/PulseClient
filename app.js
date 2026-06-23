@@ -32,6 +32,12 @@ const bindKeyInput = document.getElementById('bind-key-input');
 const bindSubmitBtn = document.getElementById('bind-submit-btn');
 const downloadModBtn = document.getElementById('download-mod-btn');
 
+const GITHUB_REPO_OWNER = 'Error404Missing';
+const GITHUB_REPO_NAME = 'PulseClient';
+const GITHUB_JAR_FILE = 'PulseClient.jar';
+const GITHUB_JAR_BLOB_URL = `https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/blob/main/${GITHUB_JAR_FILE}`;
+const GITHUB_JAR_DOWNLOAD_URL = GITHUB_JAR_BLOB_URL.replace('/blob/', '/raw/');
+
 // Admin DOM Elements
 const adminMenuItem = document.getElementById('admin-menu-item');
 const tabContentAdmin = document.getElementById('tab-content-admin');
@@ -211,8 +217,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkForUpdates();
     }
 
-    // Set default mock download file link
-    if (downloadModBtn) downloadModBtn.href = "MotionBlur1.031.1.21.11.jar";
+    // Set default download link to the GitHub jar
+    if (downloadModBtn) {
+        downloadModBtn.href = GITHUB_JAR_DOWNLOAD_URL;
+        downloadModBtn.setAttribute('download', GITHUB_JAR_FILE);
+    }
+    if (updateDownloadBtn) {
+        updateDownloadBtn.href = GITHUB_JAR_DOWNLOAD_URL;
+        updateDownloadBtn.setAttribute('download', GITHUB_JAR_FILE);
+    }
 
     // Apply saved language after all listeners are attached
     if (typeof initLanguage === "function") initLanguage();
@@ -261,8 +274,8 @@ const updateDismissBtn = document.getElementById('update-dismiss-btn');
 // GitHub update check
 async function checkForUpdates() {
     try {
-        // Fetch commits for the jar file to know the last update time
-        const res = await fetch("https://api.github.com/repos/Error404Missing/PulseClient/commits?path=MotionBlur1.031.1.21.11.jar&page=1&per_page=1");
+        // Fetch commits for the current jar file to know the last update time
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/commits?path=${encodeURIComponent(GITHUB_JAR_FILE)}&page=1&per_page=1`);
         if (!res.ok) throw new Error("GitHub API rate limit or error");
         const commits = await res.json();
         if (commits && commits.length > 0) {
