@@ -1,4 +1,4 @@
-// Initialize Supabase Client
+﻿// Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
 
@@ -77,17 +77,18 @@ let allUserProfiles = [];
 // -----------------------------
 const PRICING_PLANS = [
   // cardIndex corresponds to DOM nth-child() inside #pricing .pricing-grid
-  { cardIndex: 2, planId: 'weekly', price_cents: 199, periodKey: 'pricing.per7' },   // $1.99 / 7 days
-  { cardIndex: 3, planId: 'lifetime', price_cents: 1499, periodKey: 'pricing.once' }, // $9.99 one-time
-  { cardIndex: 4, planId: 'monthly', price_cents: 499, periodKey: 'pricing.per30' }   // $4.99 / 30 days
+  { cardIndex: 2, planId: 'weekly', price_cents: 199, currency: 'USD', periodKey: 'pricing.per7' },
+  { cardIndex: 3, planId: 'lifetime', price_cents: 999, currency: 'GEL', periodKey: 'pricing.once' },
+  { cardIndex: 4, planId: 'monthly', price_cents: 499, currency: 'USD', periodKey: 'pricing.per30' }
 ];
 
-function formatCurrency(cents) {
+function formatCurrency(cents, currency = 'USD') {
   if (cents === 0) return window.t ? window.t("pricing.free") : "Free";
   const locale = (typeof window.getLocale === "function") ? window.getLocale() : "en-US";
   try {
-    return new Intl.NumberFormat(locale, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(cents / 100);
+    return new Intl.NumberFormat(locale, { style: 'currency', currency, maximumFractionDigits: 2 }).format(cents / 100);
   } catch (err) {
+    if (currency === 'GEL') return `${(cents / 100).toFixed(2)} â‚¾`;
     return `$${(cents / 100).toFixed(2)}`;
   }
 }
@@ -98,7 +99,7 @@ function applyPricingNumbers() {
       const priceEl = document.querySelector(`#pricing .pricing-card:nth-child(${p.cardIndex}) .price`);
       if (!priceEl) return;
       const periodText = (typeof window.t === "function") ? window.t(p.periodKey) : "";
-      priceEl.innerHTML = `${formatCurrency(p.price_cents)}<span>${periodText}</span>`;
+      priceEl.innerHTML = `${formatCurrency(p.price_cents, p.currency)}<span>${periodText}</span>`;
     } catch (e) {
       // non-fatal
     }
@@ -324,7 +325,7 @@ function handleUserSignIn(user) {
     
     // Get Discord Profile Details
     const metadata = user.user_metadata;
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "ßâ¢ßâ¥ßâ¢ßâ«ßâ¢ßâÉßâáßâößâæßâößâÜßâÿ";
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "ÃŸÃ¢Â¢ÃŸÃ¢Â¥ÃŸÃ¢Â¢ÃŸÃ¢Â«ÃŸÃ¢Â¢ÃŸÃ¢Ã‰ÃŸÃ¢Ã¡ÃŸÃ¢Ã¶ÃŸÃ¢Ã¦ÃŸÃ¢Ã¶ÃŸÃ¢ÃœÃŸÃ¢Ã¿";
     const avatar = metadata.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
 
     // Update Nav
@@ -746,7 +747,7 @@ function isAdmin() {
 function parseLicenseNote(note) {
     let product = "PulseClient";
     let buyer = "Unknown";
-    let createdBy = "ΓÇö";
+    let createdBy = "Î“Ã‡Ã¶";
     
     if (note) {
         const prodMatch = note.match(/Product:\s*([^|]+)/i);
@@ -904,18 +905,18 @@ function renderAdminLogs(licenses) {
         const timestamp = new Date(lic.created_at).toLocaleString(getLocale());
 
         // 1. Generation event
-        let action = "ლიცენზიის შექმნა";
-        let details = `შეიქმნა <strong>${product}</strong> ლიცენზია მომხმარებლისთვის: <strong>${buyer}</strong>. ლიცენზია: <code>${lic.license_key}</code>`;
+        let action = "áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒ˜áƒ¡ áƒ¨áƒ”áƒ¥áƒ›áƒœáƒ";
+        let details = `áƒ¨áƒ”áƒ˜áƒ¥áƒ›áƒœáƒ <strong>${product}</strong> áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒ áƒ›áƒáƒ›áƒ®áƒ›áƒáƒ áƒ”áƒ‘áƒšáƒ˜áƒ¡áƒ—áƒ•áƒ˜áƒ¡: <strong>${buyer}</strong>. áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒ: <code>${lic.license_key}</code>`;
         
         if (lic.note && lic.note.includes("Free Trial")) {
-            action = "საცდელი ვერსიის აღება";
-            details = `მომხმარებელმა აიღო 3-დღიანი უფასო საცდელი ლიცენზია: <code>${lic.license_key}</code>`;
+            action = "áƒ¡áƒáƒªáƒ“áƒ”áƒšáƒ˜ áƒ•áƒ”áƒ áƒ¡áƒ˜áƒ˜áƒ¡ áƒáƒ¦áƒ”áƒ‘áƒ";
+            details = `áƒ›áƒáƒ›áƒ®áƒ›áƒáƒ áƒ”áƒ‘áƒ”áƒšáƒ›áƒ áƒáƒ˜áƒ¦áƒ 3-áƒ“áƒ¦áƒ˜áƒáƒœáƒ˜ áƒ£áƒ¤áƒáƒ¡áƒ áƒ¡áƒáƒªáƒ“áƒ”áƒšáƒ˜ áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒ: <code>${lic.license_key}</code>`;
         }
 
         logs.push({
             dateObj: new Date(lic.created_at),
             date: timestamp,
-            user: createdBy || "სისტემა",
+            user: createdBy || "áƒ¡áƒ˜áƒ¡áƒ¢áƒ”áƒ›áƒ",
             action: action,
             details: details
         });
@@ -923,13 +924,13 @@ function renderAdminLogs(licenses) {
         // 2. Referral event if present in note
         if (lic.note && lic.note.includes("Referred by:")) {
             const refMatch = lic.note.match(/Referred by:\s*([^|]+)/i);
-            const referrer = refMatch ? refMatch[1].trim() : "უცნობი";
+            const referrer = refMatch ? refMatch[1].trim() : "áƒ£áƒªáƒœáƒáƒ‘áƒ˜";
             logs.push({
                 dateObj: new Date(lic.created_at),
                 date: timestamp,
                 user: buyer,
-                action: "რეფერალის გამოყენება",
-                details: `დარეგისტრირდა რეფერალური ბმულით. მოწვევა: <strong>${referrer}</strong>`
+                action: "áƒ áƒ”áƒ¤áƒ”áƒ áƒáƒšáƒ˜áƒ¡ áƒ’áƒáƒ›áƒáƒ§áƒ”áƒœáƒ”áƒ‘áƒ",
+                details: `áƒ“áƒáƒ áƒ”áƒ’áƒ˜áƒ¡áƒ¢áƒ áƒ˜áƒ áƒ“áƒ áƒ áƒ”áƒ¤áƒ”áƒ áƒáƒšáƒ£áƒ áƒ˜ áƒ‘áƒ›áƒ£áƒšáƒ˜áƒ—. áƒ›áƒáƒ¬áƒ•áƒ”áƒ•áƒ: <strong>${referrer}</strong>`
             });
         }
 
@@ -942,8 +943,8 @@ function renderAdminLogs(licenses) {
                     dateObj: new Date(lic.created_at),
                     date: timestamp,
                     user: buyer,
-                    action: "რეფერალ ბონუსი (+3 დღე)",
-                    details: `დაემატა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
+                    action: "áƒ áƒ”áƒ¤áƒ”áƒ áƒáƒš áƒ‘áƒáƒœáƒ£áƒ¡áƒ˜ (+3 áƒ“áƒ¦áƒ”)",
+                    details: `áƒ“áƒáƒ”áƒ›áƒáƒ¢áƒ 3 áƒ“áƒ¦áƒ” áƒ›áƒ”áƒ’áƒáƒ‘áƒ áƒ˜áƒ¡ (<strong>${invited}</strong>) áƒ›áƒáƒ¬áƒ•áƒ”áƒ•áƒ˜áƒ¡áƒ—áƒ•áƒ˜áƒ¡.`
                 });
             });
         }
@@ -957,8 +958,8 @@ function renderAdminLogs(licenses) {
                     dateObj: new Date(lic.created_at),
                     date: timestamp,
                     user: buyer,
-                    action: "პრომო კოდის გამოყენება",
-                    details: `გამოყენებულ იქნა პრომო კოდი: <strong>${pCode}</strong> ლიცენზიაზე: <code>${lic.license_key}</code>`
+                    action: "áƒžáƒ áƒáƒ›áƒ áƒ™áƒáƒ“áƒ˜áƒ¡ áƒ’áƒáƒ›áƒáƒ§áƒ”áƒœáƒ”áƒ‘áƒ",
+                    details: `áƒ’áƒáƒ›áƒáƒ§áƒ”áƒœáƒ”áƒ‘áƒ£áƒš áƒ˜áƒ¥áƒœáƒ áƒžáƒ áƒáƒ›áƒ áƒ™áƒáƒ“áƒ˜: <strong>${pCode}</strong> áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒáƒ–áƒ”: <code>${lic.license_key}</code>`
                 });
             });
         }
@@ -969,9 +970,9 @@ function renderAdminLogs(licenses) {
             logs.push({
                 dateObj: new Date(lic.created_at),
                 date: timestamp,
-                user: "ადმინისტრატორი",
-                action: "ლიცენზიის გაუქმება",
-                details: `გაუქმდა ლიცენზია: <code>${lic.license_key}</code>`
+                user: "áƒáƒ“áƒ›áƒ˜áƒœáƒ˜áƒ¡áƒ¢áƒ áƒáƒ¢áƒáƒ áƒ˜",
+                action: "áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒ˜áƒ¡ áƒ’áƒáƒ£áƒ¥áƒ›áƒ”áƒ‘áƒ",
+                details: `áƒ’áƒáƒ£áƒ¥áƒ›áƒ“áƒ áƒšáƒ˜áƒªáƒ”áƒœáƒ–áƒ˜áƒ: <code>${lic.license_key}</code>`
             });
         }
     });
@@ -980,7 +981,7 @@ function renderAdminLogs(licenses) {
     logs.sort((a, b) => b.dateObj - a.dateObj);
 
     if (logs.length === 0) {
-        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტივობები არ მოიძებნა</td></tr>`;
+        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">áƒáƒ¥áƒ¢áƒ˜áƒ•áƒáƒ‘áƒ”áƒ‘áƒ˜ áƒáƒ  áƒ›áƒáƒ˜áƒ«áƒ”áƒ‘áƒœáƒ</td></tr>`;
         return;
     }
 
@@ -1840,7 +1841,7 @@ function renderAdminPromocodes(promocodes, redemptions) {
             promocodes.forEach(p => {
                 const codeRedemptions = redemptions.filter(r => r.code === p.code);
                 const count = codeRedemptions.length;
-                const limitDisplay = p.max_uses !== null ? p.max_uses : '∞';
+                const limitDisplay = p.max_uses !== null ? p.max_uses : 'âˆž';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1902,210 +1903,3 @@ async function deletePromocode(code) {
     }
 }
 window.deletePromocode = deletePromocode;
-
-// ==========================================
-// MODULES LIST DATASET AND LOGIC
-// ==========================================
-const MODULES_DATA = [
-  // Combat (20)
-  { name: "Anti Miss", category: "combat", status: "undetected" },
-  { name: "Criticals", category: "combat", status: "undetected" },
-  { name: "Aim Assist", category: "combat", status: "undetected" },
-  { name: "Breach Swap", category: "combat", status: "undetected" },
-  { name: "Trigger Bot", category: "combat", status: "undetected" },
-  { name: "Hitboxes", category: "combat", status: "detected" },
-  { name: "Velocity", category: "combat", status: "undetected" },
-  { name: "Pearl Grapple", category: "combat", status: "undetected" },
-  { name: "WTap", category: "combat", status: "undetected" },
-  { name: "Elytra HotSwap", category: "combat", status: "undetected" },
-  { name: "Sword HotSwap", category: "combat", status: "undetected" },
-  { name: "Auto Pot", category: "combat", status: "undetected" },
-  { name: "Sword Swap", category: "combat", status: "undetected" },
-  { name: "Shield Breaker", category: "combat", status: "undetected" },
-  { name: "Auto Cart", category: "combat", status: "undetected" },
-  { name: "Auto Mace", category: "combat", status: "undetected" },
-  { name: "Xbow Cart", category: "combat", status: "undetected" },
-  { name: "Throw Pot", category: "combat", status: "undetected" },
-  { name: "STap", category: "combat", status: "undetected" },
-  { name: "Totem Hit", category: "combat", status: "undetected" },
-
-  // Crystal (8)
-  { name: "Double Anchor", category: "crystal", status: "undetected" },
-  { name: "Anchor Macro", category: "crystal", status: "undetected" },
-  { name: "Auto Totem", category: "crystal", status: "detected" },
-  { name: "Mover Totem", category: "crystal", status: "risk" },
-  { name: "Auto Hit Crystal", category: "crystal", status: "undetected" },
-  { name: "Auto Crystal", category: "crystal", status: "undetected" },
-  { name: "Auto Inventory Totem", category: "crystal", status: "detected" },
-  { name: "Stun Web", category: "crystal", status: "undetected" },
-
-  // Player (13)
-  { name: "Auto Crafter", category: "player", status: "undetected" },
-  { name: "Auto Extinguish", category: "player", status: "undetected" },
-  { name: "Auto Tool", category: "player", status: "undetected" },
-  { name: "Fast Exp", category: "player", status: "undetected" },
-  { name: "Auto Web", category: "player", status: "undetected" },
-  { name: "Auto Drain", category: "player", status: "undetected" },
-  { name: "Auto MLG", category: "player", status: "undetected" },
-  { name: "Auto Double Hand", category: "player", status: "undetected" },
-  { name: "Fast Mine", category: "player", status: "undetected" },
-  { name: "Auto Mine", category: "player", status: "undetected" },
-  { name: "Fast Place", category: "player", status: "undetected" },
-  { name: "Auto Refill", category: "player", status: "undetected" },
-  { name: "ReBuff Notifier", category: "player", status: "undetected" },
-
-  // Movement (5)
-  { name: "Keep Sprint", category: "movement", status: "undetected" },
-  { name: "Spear Lunge", category: "movement", status: "undetected" },
-  { name: "Sprint", category: "movement", status: "undetected" },
-  { name: "Auto Firework", category: "movement", status: "undetected" },
-  { name: "Key Lava", category: "movement", status: "undetected" },
-
-  // Render (10)
-  { name: "Visuals", category: "render", status: "undetected" },
-  { name: "Notifications", category: "render", status: "undetected" },
-  { name: "FullBright", category: "render", status: "undetected" },
-  { name: "Anti Invis", category: "render", status: "undetected" },
-  { name: "Player ESP", category: "render", status: "undetected" },
-  { name: "Nametags", category: "render", status: "undetected" },
-  { name: "ArrayList", category: "render", status: "undetected" },
-  { name: "XCarry", category: "render", status: "undetected" },
-  { name: "Animations", category: "render", status: "undetected" },
-  { name: "TargetHUD", category: "render", status: "undetected" },
-
-  // Donut (14)
-  { name: "Tunnel Base Finder", category: "donut", status: "detected" },
-  { name: "Trap Save", category: "donut", status: "undetected" },
-  { name: "Light Debug", category: "donut", status: "undetected" },
-  { name: "Growth Finder", category: "donut", status: "undetected" },
-  { name: "Rtp Base Finder", category: "donut", status: "risk" },
-  { name: "Region Map", category: "donut", status: "undetected" },
-  { name: "Suspicious ESP", category: "donut", status: "undetected" },
-  { name: "Chunk Finder", category: "donut", status: "undetected" },
-  { name: "Silent Home", category: "donut", status: "undetected" },
-  { name: "Media Spoof", category: "donut", status: "undetected" },
-  { name: "Warning", category: "donut", status: "undetected" },
-  { name: "Storage ESP", category: "donut", status: "undetected" },
-  { name: "BlockESP", category: "donut", status: "undetected" },
-  { name: "Fake Stats", category: "donut", status: "undetected" },
-
-  // Misc (11)
-  { name: "Friends", category: "misc", status: "undetected" },
-  { name: "Cart Key", category: "misc", status: "undetected" },
-  { name: "Gamble Rigger", category: "misc", status: "undetected" },
-  { name: "Fake Player", category: "misc", status: "undetected" },
-  { name: "Macro", category: "misc", status: "undetected" },
-  { name: "Freecam", category: "misc", status: "undetected" },
-  { name: "Auto Trident", category: "misc", status: "undetected" },
-  { name: "HUD", category: "misc", status: "undetected" },
-  { name: "Wind Charge Key", category: "misc", status: "undetected" },
-  { name: "Prevent", category: "misc", status: "undetected" },
-  { name: "Pearl Catch", category: "misc", status: "undetected" },
-
-  // Client (6)
-  { name: "ClientSettings", category: "client", status: "undetected" },
-  { name: "Name Protect", category: "client", status: "undetected" },
-  { name: "Client", category: "client", status: "undetected" },
-  { name: "Macro", category: "client", status: "undetected" },
-  { name: "Keybinds", category: "client", status: "undetected" },
-  { name: "Scoreboard Hider", category: "client", status: "undetected" }
-];
-
-let activeModulesCategory = "all";
-let modulesSearchQuery = "";
-
-function renderModules() {
-    const container = document.getElementById("modules-grid-container");
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    const query = modulesSearchQuery.toLowerCase().trim();
-
-    const filtered = MODULES_DATA.filter(mod => {
-        const matchesCategory = activeModulesCategory === "all" || mod.category === activeModulesCategory;
-        const matchesSearch = mod.name.toLowerCase().includes(query);
-        return matchesCategory && matchesSearch;
-    });
-
-    if (filtered.length === 0) {
-        const noResults = document.createElement("div");
-        noResults.style.gridColumn = "1 / -1";
-        noResults.style.textAlign = "center";
-        noResults.style.color = "var(--text-muted)";
-        noResults.style.padding = "40px";
-        noResults.style.fontSize = "14px";
-        noResults.textContent = "No modules found / მოდულები ვერ მოიძებნა";
-        container.appendChild(noResults);
-        return;
-    }
-
-    filtered.forEach(mod => {
-        const card = document.createElement("div");
-        card.className = "module-card";
-
-        let statusClass = "undetected";
-        let statusKey = "modules.status.undetected";
-        if (mod.status === "risk") {
-            statusClass = "risk";
-            statusKey = "modules.status.useAtRisk";
-        } else if (mod.status === "detected") {
-            statusClass = "detected";
-            statusKey = "modules.status.detected";
-        }
-
-        const catNameKey = "modules.category." + mod.category;
-
-        card.innerHTML = `
-            <div class="module-info">
-                <span class="module-category" data-i18n="${catNameKey}">${t(catNameKey)}</span>
-                <h4 class="module-name">${mod.name}</h4>
-            </div>
-            <span class="status-badge ${statusClass}" data-i18n="${statusKey}">${t(statusKey)}</span>
-        `;
-        container.appendChild(card);
-    });
-}
-
-function filterModulesByCategory(cat) {
-    activeModulesCategory = cat;
-    
-    // Update tabs active state
-    const tabs = document.querySelectorAll("#modules-category-tabs .tab-btn");
-    tabs.forEach(btn => {
-        if (btn.getAttribute("data-category") === cat) {
-            btn.classList.add("active");
-        } else {
-            btn.classList.remove("active");
-        }
-    });
-
-    renderModules();
-}
-
-function handleModulesSearch() {
-    const input = document.getElementById("modules-search");
-    if (input) {
-        modulesSearchQuery = input.value;
-        renderModules();
-    }
-}
-
-// Expose globally
-window.filterModulesByCategory = filterModulesByCategory;
-window.handleModulesSearch = handleModulesSearch;
-window.renderModules = renderModules;
-
-// Set up language change hook for i18n
-const existingLangChanged = window.onLanguageChanged;
-window.onLanguageChanged = () => {
-    if (typeof existingLangChanged === "function") {
-        try { existingLangChanged(); } catch (e) {}
-    }
-    renderModules();
-};
-
-// Initial rendering on DOM load
-document.addEventListener("DOMContentLoaded", () => {
-    renderModules();
-});
