@@ -1,4 +1,4 @@
-﻿// Initialize Supabase Client
+// Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
 
@@ -332,13 +332,21 @@ async function signOut() {
     await supabaseClient.auth.signOut();
 }
 
+function cleanAvatarUrl(url) {
+    if (!url) return "https://cdn.discordapp.com/embed/avatars/0.png";
+    if (url.includes('?')) {
+        return url.split('?')[0];
+    }
+    return url;
+}
+
 function handleUserSignIn(user) {
     currentUser = user;
     
     // Get Discord Profile Details
     const metadata = user.user_metadata;
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "ÃŸÃ¢Â¢ÃŸÃ¢Â¥ÃŸÃ¢Â¢ÃŸÃ¢Â«ÃŸÃ¢Â¢ÃŸÃ¢Ã‰ÃŸÃ¢Ã¡ÃŸÃ¢Ã¶ÃŸÃ¢Ã¦ÃŸÃ¢Ã¶ÃŸÃ¢ÃœÃŸÃ¢Ã¿";
-    const avatar = metadata.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+    const avatar = cleanAvatarUrl(metadata.avatar_url);
 
     // Update Nav
     navLoginBtn.classList.add('hidden');
@@ -1460,6 +1468,9 @@ async function fetchLatestProfile(userId) {
         if (error) throw error;
         if (data) {
             console.log("Latest profile fetched:", data);
+            const cleanedAvatar = cleanAvatarUrl(data.avatar_url);
+            if (navAvatar) navAvatar.src = cleanedAvatar;
+            if (dashAvatar) dashAvatar.src = cleanedAvatar;
         }
     } catch (err) {
         console.warn("Failed to fetch latest profile:", err.message);
@@ -1470,7 +1481,7 @@ async function fetchLatestProfile(userId) {
 async function saveUserProfile(user) {
     const metadata = user.user_metadata;
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-    const avatar = metadata.avatar_url || "https://cdn.discordapp.com/embed/avatars/0.png";
+    const avatar = cleanAvatarUrl(metadata.avatar_url);
     const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
 
     if (!username) return;
@@ -1524,8 +1535,9 @@ function renderDropdownUsers(profiles) {
     profiles.forEach(profile => {
         const option = document.createElement('div');
         option.className = 'user-option';
+        const cleanedAvatar = cleanAvatarUrl(profile.avatar_url);
         option.innerHTML = `
-            <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" alt="Avatar">
+            <img src="${cleanedAvatar}" alt="Avatar" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
             <div class="user-option-text">
                 <span class="user-name">${profile.username}</span>
                 <span class="user-discord-id">@${profile.username}</span>
@@ -1547,9 +1559,10 @@ function selectDropdownUser(username) {
     
     // Update trigger UI text
     if (adminUserSelectTrigger) {
+        const cleanedAvatar = cleanAvatarUrl(profile.avatar_url);
         adminUserSelectTrigger.querySelector('span').innerHTML = `
             <div style="display: flex; align-items: center; gap: 8px;">
-                <img src="${profile.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png'}" style="width: 20px; height: 20px; border-radius: 50%;">
+                <img src="${cleanedAvatar}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
                 <span>${profile.username}</span>
             </div>
         `;
