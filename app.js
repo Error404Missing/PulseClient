@@ -550,6 +550,16 @@ async function bindLicenseKey(e) {
         // 4. Update the note column to associate with current user, preserving original creator/metadata info
         const originalNote = license.note || "";
         let newNote = originalNote;
+        let expiresAtUpdate = license.expires_at;
+
+        // If the license has not been activated/timed yet, and has a Duration: X in its note:
+        if (!license.expires_at && /Duration:\s*(\d+)/i.test(originalNote)) {
+            const durationMatch = originalNote.match(/Duration:\s*(\d+)/i);
+            if (durationMatch) {
+                const days = parseInt(durationMatch[1], 10);
+                expiresAtUpdate = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+            }
+        }
 
         // Replace or add Buyer in the note dynamically while keeping other metadata intact
         if (/Buyer:\s*([^|()]+)/i.test(newNote)) {
@@ -569,7 +579,7 @@ async function bindLicenseKey(e) {
 
         const { error: updateError } = await supabaseClient
             .from('licenses')
-            .update({ note: newNote })
+            .update({ note: newNote, expires_at: expiresAtUpdate })
             .eq('license_key', key);
 
         if (updateError) throw updateError;
@@ -1079,14 +1089,13 @@ async function createLicenseFromAdmin(e) {
 
     const key = generateLicenseKey();
     
-    let expiresAt = null;
-    if (durationDays !== null) {
-        expiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
-    }
-
+    let expiresAt = null; // Stays null until bound or first verify (activated)
     const adminMetadata = currentUser.user_metadata;
     const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
-    const note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
+    let note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
+    if (durationDays !== null) {
+        note += ` | Duration: ${durationDays}`;
+    }
 
     try {
         const res = await fetch(`${supabaseUrl}/rest/v1/licenses`, {
