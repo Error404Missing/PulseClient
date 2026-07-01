@@ -460,11 +460,14 @@ function renderLicenses(licenses) {
         // Format expiry date
         let expiryDisplay = t("status.lifetime");
         if (lic.expires_at) {
-            const expDate = new Date(lic.expires_at);
-            const now = new Date();
-            if (expDate < now) {
-                expiryDisplay = t("status.expiredShort");
+            if (lic.expires_at.startsWith("2000-01-01")) {
+                expiryDisplay = t("status.notActivated");
             } else {
+                const expDate = new Date(lic.expires_at);
+                const now = new Date();
+                if (expDate < now) {
+                    expiryDisplay = t("status.expiredShort");
+                } else {
                 const diffTime = Math.abs(expDate - now);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 if (diffDays > 365 * 10) {
@@ -553,7 +556,7 @@ async function bindLicenseKey(e) {
         let expiresAtUpdate = license.expires_at;
 
         // If the license has not been activated/timed yet, and has a Duration: X in its note:
-        if (!license.expires_at && /Duration:\s*(\d+)/i.test(originalNote)) {
+        if ((!license.expires_at || license.expires_at.startsWith("2000-01-01")) && /Duration:\s*(\d+)/i.test(originalNote)) {
             const durationMatch = originalNote.match(/Duration:\s*(\d+)/i);
             if (durationMatch) {
                 const days = parseInt(durationMatch[1], 10);
@@ -858,15 +861,19 @@ function renderAdminLicenses(licenses) {
         if (!lic.is_active) {
             status = 'revoked';
             statusText = t('status.revoked');
-        } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
+        } else if (lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) < new Date()) {
             status = 'expired';
             statusText = t('status.expired');
         }
 
         let expiryDisplay = t("status.lifetime");
         if (lic.expires_at) {
-            const expDate = new Date(lic.expires_at);
-            expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
+            if (lic.expires_at.startsWith("2000-01-01")) {
+                expiryDisplay = t("status.notActivated");
+            } else {
+                const expDate = new Date(lic.expires_at);
+                expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
+            }
         }
 
         const tr = document.createElement('tr');
@@ -910,11 +917,11 @@ function filterAdminLicenses() {
 
         let matchesFilter = true;
         if (filter === 'active') {
-            matchesFilter = lic.is_active && (!lic.expires_at || new Date(lic.expires_at) >= new Date());
+            matchesFilter = lic.is_active && (!lic.expires_at || lic.expires_at.startsWith("2000-01-01") || new Date(lic.expires_at) >= new Date());
         } else if (filter === 'revoked') {
             matchesFilter = !lic.is_active;
         } else if (filter === 'expired') {
-            matchesFilter = lic.is_active && lic.expires_at && new Date(lic.expires_at) < new Date();
+            matchesFilter = lic.is_active && lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) < new Date();
         }
 
         return matchesQuery && matchesFilter;
@@ -1089,7 +1096,10 @@ async function createLicenseFromAdmin(e) {
 
     const key = generateLicenseKey();
     
-    let expiresAt = null; // Stays null until bound or first verify (activated)
+    let expiresAt = "2000-01-01T00:00:00.000Z"; // Default placeholder meaning "Not Activated" (bypasses DB NOT NULL constraint)
+    if (durationDays === null) {
+        expiresAt = "2099-12-31T23:59:59.000Z"; // Lifetime indicator
+    }
     const adminMetadata = currentUser.user_metadata;
     const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
     let note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
