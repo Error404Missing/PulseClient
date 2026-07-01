@@ -72,22 +72,73 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <!-- Visual glass card container -->
-                <div class="glass-panel main-preview" style="text-align: center;">
-                    <div class="preview-header" style="margin-bottom: 16px;">
+                <!-- Interactive ClickGUI Preview Widget -->
+                <div class="glass-panel main-preview interactive-gui-widget">
+                    <div class="preview-header">
                         <div class="preview-dots">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
+                            <span class="dot" style="background-color: #ff5f56; width: 8px; height: 8px; border-radius: 50%;"></span>
+                            <span class="dot" style="background-color: #ffbd2e; width: 8px; height: 8px; border-radius: 50%;"></span>
+                            <span class="dot" style="background-color: #27c93f; width: 8px; height: 8px; border-radius: 50%;"></span>
+                        </div>
+                        <span class="widget-title" style="font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em;">PULSE CLICKGUI</span>
+                    </div>
+                    
+                    <div class="widget-modules-list" style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px; text-align: left;">
+                        <!-- Module Row 1 -->
+                        <div class="widget-module-row" onclick="toggleWidgetModule(event, this)">
+                            <div class="module-info">
+                                <span class="module-icon">💎</span>
+                                <span class="module-name" style="font-weight: 500;">AutoCrystal</span>
+                            </div>
+                            <div class="ios-switch">
+                                <input type="checkbox" id="switch-autocrystal" checked>
+                                <span class="ios-slider"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Module Row 2 -->
+                        <div class="widget-module-row" onclick="toggleWidgetModule(event, this)">
+                            <div class="module-info">
+                                <span class="module-icon">🛡️</span>
+                                <span class="module-name" style="font-weight: 500;">HoverTotem</span>
+                            </div>
+                            <div class="ios-switch">
+                                <input type="checkbox" id="switch-hovertotem" checked>
+                                <span class="ios-slider"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Module Row 3 -->
+                        <div class="widget-module-row" onclick="toggleWidgetModule(event, this)">
+                            <div class="module-info">
+                                <span class="module-icon">🌐</span>
+                                <span class="module-name" style="font-weight: 500;">FakeLag</span>
+                            </div>
+                            <div class="ios-switch">
+                                <input type="checkbox" id="switch-fakelag">
+                                <span class="ios-slider"></span>
+                            </div>
+                        </div>
+
+                        <!-- Module Row 4 -->
+                        <div class="widget-module-row" onclick="toggleWidgetModule(event, this)">
+                            <div class="module-info">
+                                <span class="module-icon">⚡</span>
+                                <span class="module-name" style="font-weight: 500;">Velocity</span>
+                            </div>
+                            <div class="ios-switch">
+                                <input type="checkbox" id="switch-velocity" checked>
+                                <span class="ios-slider"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="preview-content">
-                        <img src="logo.jpg" alt="Pulse Client Logo" style="width: 140px; height: 140px; border-radius: 20px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <h3 style="margin-bottom: 12px;" data-i18n="hero.protection">PulseClient დაცვა</h3>
-                        <div class="status-indicator" style="justify-content: center;">
+                    
+                    <!-- Widget Footer/Status -->
+                    <div class="widget-status-bar" style="margin-top: 18px; display: flex; justify-content: center;">
+                        <span class="status-indicator">
                             <span class="pulse-dot"></span>
-                            <span class="status-text" data-i18n="hero.status">სრულად დაცული და ამოუცნობი</span>
-                        </div>
+                            <span class="status-text" id="widget-status-info" style="font-size: 12px; font-weight: 500;">Active Modules: 3</span>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -1928,3 +1928,30 @@ async function deletePromocode(code) {
     }
 }
 window.deletePromocode = deletePromocode;
+
+// Interactive ClickGUI Preview Widget Controller
+function toggleWidgetModule(event, rowElement) {
+    if (event.target.tagName === 'INPUT' || event.target.classList.contains('ios-slider')) {
+        updateWidgetActiveCount();
+        return;
+    }
+    const checkbox = rowElement.querySelector('input[type="checkbox"]');
+    if (checkbox) {
+        checkbox.checked = !checkbox.checked;
+    }
+    updateWidgetActiveCount();
+}
+
+function updateWidgetActiveCount() {
+    const checkboxes = document.querySelectorAll('.widget-module-row input[type="checkbox"]');
+    let activeCount = 0;
+    checkboxes.forEach(cb => {
+        if (cb.checked) activeCount++;
+    });
+    const countLabel = document.getElementById('widget-status-info');
+    if (countLabel) {
+        countLabel.textContent = `Active Modules: ${activeCount}`;
+    }
+}
+window.toggleWidgetModule = toggleWidgetModule;
+

@@ -748,6 +748,103 @@ h3 {
     animation: pulse 1.8s infinite;
 }
 
+.interactive-gui-widget {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: var(--ios-blur);
+    -webkit-backdrop-filter: var(--ios-blur);
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.interactive-gui-widget:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.15);
+    border-color: var(--card-hover-border);
+}
+
+.widget-module-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.widget-module-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: scale(1.02);
+}
+
+.widget-module-row:active {
+    transform: scale(0.98);
+}
+
+.module-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.module-icon {
+    font-size: 16px;
+}
+
+/* iOS Toggle Switch */
+.ios-switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+.ios-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.ios-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ios-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.ios-switch input:checked + .ios-slider {
+    background-color: #30d158; /* iOS 16/18 active green */
+    box-shadow: 0 0 10px rgba(48, 209, 88, 0.4);
+}
+
+.ios-switch input:checked + .ios-slider:before {
+    transform: translateX(18px);
+}
+
 /* Sections */
 .section-header {
     text-align: center;
