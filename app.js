@@ -475,6 +475,7 @@ function renderLicenses(licenses) {
                 } else {
                     expiryDisplay = t("status.daysLeft", { n: diffDays });
                 }
+                }
             }
         }
 
