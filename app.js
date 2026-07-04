@@ -55,6 +55,9 @@ const adminLicensesTableBody = document.getElementById('admin-licenses-table-bod
 const adminTotalCount = document.getElementById('admin-total-count');
 const adminLogsTableBody = document.getElementById('admin-logs-table-body');
 const adminLogsSearchInput = document.getElementById('admin-logs-search-input');
+const adminSessionsTableBody = document.getElementById('admin-sessions-table-body');
+const adminSessionsLoading = document.getElementById('admin-sessions-loading');
+const adminSessionsCount = document.getElementById('admin-sessions-count');
 
 const licenseInfoModal = document.getElementById('license-info-modal');
 const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -692,6 +695,7 @@ function switchDashTab(event, tabId) {
         fetchAllLicenses();
         fetchProfilesForAdmin();
         fetchAdminPromocodes();
+        fetchActiveSessions();
     }    
     // Deactivate all menu items
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
@@ -840,6 +844,108 @@ async function fetchAllLicenses() {
     } finally {
         adminLicensesLoading.classList.add('hidden');
     }
+}
+
+// ========== Active Sessions Telemetry ==========
+
+async function fetchActiveSessions() {
+    if (!isAdmin()) return;
+
+    if (adminSessionsLoading) adminSessionsLoading.classList.remove('hidden');
+    if (adminSessionsTableBody) adminSessionsTableBody.innerHTML = '';
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+        renderActiveSessions(data || []);
+    } catch (err) {
+        console.error("Error fetching active sessions:", err.message);
+    } finally {
+        if (adminSessionsLoading) adminSessionsLoading.classList.add('hidden');
+    }
+}
+
+function renderActiveSessions(sessions) {
+    if (!adminSessionsTableBody) return;
+    adminSessionsTableBody.innerHTML = '';
+
+    const now = Date.now();
+    // Count online users (heartbeat within last 15 minutes)
+    let onlineCount = 0;
+
+    if (sessions.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td>`;
+        adminSessionsTableBody.appendChild(row);
+        if (adminSessionsCount) adminSessionsCount.textContent = '0';
+        return;
+    }
+
+    sessions.forEach(session => {
+        const lastHb = new Date(session.last_heartbeat);
+        const diffMs = now - lastHb.getTime();
+        const isOnline = diffMs < 15 * 60 * 1000; // 15 minutes
+        if (isOnline) onlineCount++;
+
+        // Format duration
+        const totalMinutes = session.duration_minutes || 0;
+        let durationStr;
+        if (totalMinutes < 60) {
+            durationStr = `${totalMinutes} წთ`;
+        } else {
+            const hours = Math.floor(totalMinutes / 60);
+            const mins = totalMinutes % 60;
+            durationStr = `${hours} სთ ${mins} წთ`;
+        }
+
+        // Format last active time
+        const timeStr = lastHb.toLocaleString('ka-GE', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
+
+        // Status dot
+        const statusDot = isOnline
+            ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;box-shadow:0 0 6px #22c55e;"></span>'
+            : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6b7280;margin-right:6px;"></span>';
+
+        // Mask license key (show first 4 chars)
+        const maskedKey = session.license_key
+            ? session.license_key.substring(0, 4) + '-****-****-****'
+            : 'N/A';
+
+        // Country flag emoji
+        const countryCode = session.country && session.country !== 'Unknown' ? session.country : null;
+        let countryDisplay = session.country || 'N/A';
+        if (countryCode && countryCode.length === 2) {
+            const flag = String.fromCodePoint(
+                ...countryCode.toUpperCase().split('').map(c => 0x1F1E6 + c.charCodeAt(0) - 65)
+            );
+            countryDisplay = `${flag} ${countryCode}`;
+        }
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
+            <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
+            <td><code style="font-size: 11px;">${session.ip_address || 'N/A'}</code></td>
+            <td>${session.os_name || 'N/A'}</td>
+            <td>${countryDisplay}</td>
+            <td>${durationStr}</td>
+            <td style="font-size: 12px; color: var(--text-muted);">${timeStr}</td>
+        `;
+        adminSessionsTableBody.appendChild(row);
+    });
+
+    if (adminSessionsCount) adminSessionsCount.textContent = onlineCount.toString();
 }
 
 function renderAdminLicenses(licenses) {

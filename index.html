@@ -715,6 +715,42 @@
                             </form>
                         </div>
 
+                        <!-- Active Client Sessions -->
+                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
+                            <div class="admin-header">
+                                <h3>აქტიური სესიები (Active Telemetry)</h3>
+                                <div class="admin-controls">
+                                    <button type="button" class="btn btn-secondary" onclick="fetchActiveSessions()" style="padding: 8px 16px; font-size: 13px;">
+                                        განახლება
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="admin-sessions-loading" class="loading-state">
+                                <span class="spinner"></span> მონაცემები იტვირთება...
+                            </div>
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Minecraft იუზერი</th>
+                                            <th>გასაღები</th>
+                                            <th>IP მისამართი</th>
+                                            <th>OS</th>
+                                            <th>ქვეყანა</th>
+                                            <th>ხანგრძლივობა</th>
+                                            <th>ბოლო აქტიურობა</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-sessions-table-body">
+                                        <!-- Active sessions rendered dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="admin-count">
+                                სულ ონლაინშია: <span id="admin-sessions-count">0</span>
+                            </div>
+                        </div>
+
                         <!-- All Licenses List -->
                         <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
