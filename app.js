@@ -878,21 +878,29 @@ function renderActiveSessions(sessions) {
     adminSessionsTableBody.innerHTML = '';
 
     const now = Date.now();
-    // Count online users (heartbeat within last 15 minutes)
     let onlineCount = 0;
 
     if (sessions.length === 0) {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td>`;
+        row.innerHTML = `<td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td>`;
         adminSessionsTableBody.appendChild(row);
         if (adminSessionsCount) adminSessionsCount.textContent = '0';
         return;
     }
 
+    const formatTime = (dateStr) => {
+        if (!dateStr) return 'N/A';
+        const d = new Date(dateStr);
+        return d.toLocaleString('ka-GE', {
+            day: '2-digit', month: '2-digit',
+            hour: '2-digit', minute: '2-digit'
+        });
+    };
+
     sessions.forEach(session => {
         const lastHb = new Date(session.last_heartbeat);
         const diffMs = now - lastHb.getTime();
-        const isOnline = diffMs < 15 * 60 * 1000; // 15 minutes
+        const isOnline = diffMs < 15 * 60 * 1000;
         if (isOnline) onlineCount++;
 
         // Format duration
@@ -906,18 +914,12 @@ function renderActiveSessions(sessions) {
             durationStr = `${hours} სთ ${mins} წთ`;
         }
 
-        // Format last active time
-        const timeStr = lastHb.toLocaleString('ka-GE', {
-            day: '2-digit', month: '2-digit', year: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
-
         // Status dot
         const statusDot = isOnline
             ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;box-shadow:0 0 6px #22c55e;"></span>'
             : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6b7280;margin-right:6px;"></span>';
 
-        // Mask license key (show first 4 chars)
+        // Mask license key
         const maskedKey = session.license_key
             ? session.license_key.substring(0, 4) + '-****-****-****'
             : 'N/A';
@@ -932,6 +934,13 @@ function renderActiveSessions(sessions) {
             countryDisplay = `${flag} ${countryCode}`;
         }
 
+        // Started at
+        const startedStr = formatTime(session.started_at);
+        // Finished at (last heartbeat) — if online, show "ახლა ონლაინშია"
+        const finishedStr = isOnline
+            ? '<span style="color: #22c55e; font-weight: 600;">ონლაინშია ⚡</span>'
+            : formatTime(session.last_heartbeat);
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
@@ -939,8 +948,9 @@ function renderActiveSessions(sessions) {
             <td><code style="font-size: 11px;">${session.ip_address || 'N/A'}</code></td>
             <td>${session.os_name || 'N/A'}</td>
             <td>${countryDisplay}</td>
-            <td>${durationStr}</td>
-            <td style="font-size: 12px; color: var(--text-muted);">${timeStr}</td>
+            <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
+            <td style="font-weight: 600;">${durationStr}</td>
+            <td style="font-size: 12px;">${finishedStr}</td>
         `;
         adminSessionsTableBody.appendChild(row);
     });
