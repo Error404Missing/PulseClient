@@ -30,12 +30,16 @@ const refreshLicensesBtn = document.getElementById('refresh-licenses-btn');
 const bindLicenseForm = document.getElementById('bind-license-form');
 const bindKeyInput = document.getElementById('bind-key-input');
 const bindSubmitBtn = document.getElementById('bind-submit-btn');
-const downloadModBtn = document.getElementById('download-mod-btn');
+const downloadPvpBtn = document.getElementById('download-pvp-btn');
+const downloadBasefindBtn = document.getElementById('download-basefind-btn');
 
 const GITHUB_REPO_OWNER = 'Error404Missing';
 const GITHUB_REPO_NAME = 'PulseClient';
-const GITHUB_JAR_FILE = 'pulse-b1.1.jar';
-const GITHUB_JAR_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_JAR_FILE}`;
+const GITHUB_PVP_JAR_FILE = 'pulse-b1.1.jar';
+const GITHUB_BASEFIND_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
+
+const GITHUB_PVP_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_PVP_JAR_FILE}`;
+const GITHUB_BASEFIND_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_BASEFIND_JAR_FILE}`;
 
 // Admin DOM Elements
 const adminMenuItem = document.getElementById('admin-menu-item');
@@ -219,14 +223,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         checkForUpdates();
     }
 
-    // Set default download link to the GitHub jar
-    if (downloadModBtn) {
-        downloadModBtn.href = GITHUB_JAR_DOWNLOAD_URL;
-        downloadModBtn.setAttribute('download', GITHUB_JAR_FILE);
+    // Set default download links
+    if (downloadPvpBtn) {
+        downloadPvpBtn.href = GITHUB_PVP_DOWNLOAD_URL;
+        downloadPvpBtn.setAttribute('download', GITHUB_PVP_JAR_FILE);
+    }
+    if (downloadBasefindBtn) {
+        downloadBasefindBtn.href = GITHUB_BASEFIND_DOWNLOAD_URL;
+        downloadBasefindBtn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
     }
     if (updateDownloadBtn) {
-        updateDownloadBtn.href = GITHUB_JAR_DOWNLOAD_URL;
-        updateDownloadBtn.setAttribute('download', GITHUB_JAR_FILE);
+        updateDownloadBtn.href = GITHUB_PVP_DOWNLOAD_URL;
+        updateDownloadBtn.setAttribute('download', GITHUB_PVP_JAR_FILE);
     }
 
     // Apply saved language after all listeners are attached

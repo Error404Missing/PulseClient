@@ -432,21 +432,45 @@
 
                     <!-- TAB: Downloads (Default) -->
                     <div id="tab-content-downloads" class="tab-pane">
-                        <!-- Main Download Card -->
+                        <!-- PvP Download Card -->
                         <div class="krypton-download-card">
                             <div class="card-left">
-                                <div class="icon-download-large">
+                                <div class="icon-download-large" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </div>
                                 <div class="download-meta">
-                                    <h3>PulseClient - ბოლო ვერსია</h3>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <h3 data-i18n="dash.pvpVersion">Pulse PvP Client</h3>
+                                        <span class="badge-jar" style="background: #6366f1; color: #fff;">PVP</span>
+                                    </div>
                                     <span class="version-label">pulse-b1.1 <span class="badge-jar">.jar</span></span>
-                                    <span class="updated-date">ბოლოს განახლდა: დღეს</span>
+                                    <span class="updated-date" data-i18n="dash.updatedToday">ბოლოს განახლდა: დღეს</span>
                                 </div>
                             </div>
-                            <a id="download-mod-btn" href="#" class="btn-krypton-download" download>
+                            <a id="download-pvp-btn" href="#" class="btn-krypton-download" download>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                ჩამოტვირთვა
+                                <span data-i18n="dash.download">ჩამოტვირთვა</span>
+                            </a>
+                        </div>
+
+                        <!-- Base Find Download Card -->
+                        <div class="krypton-download-card" style="margin-top: 20px;">
+                            <div class="card-left">
+                                <div class="icon-download-large" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                </div>
+                                <div class="download-meta">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <h3 data-i18n="dash.basefindVersion">Pulse Base Find Client</h3>
+                                        <span class="badge-jar" style="background: #a855f7; color: #fff;">BASE FIND</span>
+                                    </div>
+                                    <span class="version-label">PulseClient-Fabric-1.21.11 <span class="badge-jar">.jar</span></span>
+                                    <span class="updated-date" data-i18n="dash.updatedToday">ბოლოს განახლდა: დღეს</span>
+                                </div>
+                            </div>
+                            <a id="download-basefind-btn" href="#" class="btn-krypton-download" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);" download>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span data-i18n="dash.download">ჩამოტვირთვა</span>
                             </a>
                         </div>
 
