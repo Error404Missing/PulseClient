@@ -513,8 +513,7 @@
     ["#dash-logout-btn", "dash.logout", "text"],
     ["#update-notification .update-text strong", "dash.updateTitle"],
     ["#update-download-btn", "dash.updateBtn", "text"],
-    ["#download-pvp-btn", "dash.download", "textLast"],
-    ["#download-basefind-btn", "dash.download", "textLast"],
+
     [".quick-start-section .section-title", "dash.quickStart"],
     [".quick-start-grid .step-card:nth-child(1) h4", "dash.step1.title"],
     [".quick-start-grid .step-card:nth-child(1) p", "dash.step1.desc"],
