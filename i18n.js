@@ -240,7 +240,27 @@
       "msg.promoExpired": "ეს პრომო კოდი არააქტიურია ან ამოეწურა გამოყენების ლიმიტი.",
       "msg.promoNotFound": "პრომო კოდი ვერ მოიძებნა.",
       "msg.promoCreated": "პრომო კოდი წარმატებით შეიქმნა!",
-      "msg.promoRedeemFail": "პრომო კოდის გააქტიურება ვერ მოხერხდა: "
+      "msg.promoRedeemFail": "პრომო კოდის გააქტიურება ვერ მოხერხდა: ",
+      "dash.resetHwidBtn": "HWID განულება",
+      "lic.hwidLabel": "მოწყობილობა (HWID)",
+      "msg.hwidResetConfirm": "ნამდვილად გსურთ მოწყობილობის (HWID) განულება ამ ლიცენზიისთვის?",
+      "admin.telemetryTitle": "აქტიური სესიები (Active Telemetry)",
+      "telemetry.mcUser": "Minecraft იუზერი",
+      "telemetry.key": "გასაღები",
+      "telemetry.ip": "IP მისამართი",
+      "telemetry.os": "OS",
+      "telemetry.country": "ქვეყანა",
+      "telemetry.started": "ჩაირთო",
+      "telemetry.duration": "ხანგრძლივობა",
+      "telemetry.ended": "დასრულდა",
+      "admin.totalOnlineHtml": "სულ ონლაინშია: <span id=\"admin-sessions-count\">0</span>",
+      "admin.totalFoundHtml": "სულ ნაპოვნია: <span id=\"admin-total-count\">0</span>",
+      "admin.logTitle": "მოქმედებების ჟურნალი (Activity Log)",
+      "admin.logSearchPh": "მოძებნე მოქმედება, მომხმარებელი...",
+      "log.date": "თარიღი",
+      "log.user": "მომხმარებელი / ადმინი",
+      "log.action": "მოქმედება",
+      "log.details": "დეტალები"
     },
     en: {
       "meta.title": "PulseClient - Premium Minecraft Combat & Stealth Advantage",
@@ -423,7 +443,27 @@
       "msg.promoNotFound": "Promo code not found.",
       "msg.promoCreated": "Promo code created successfully!",
       "msg.promoRedeemFail": "Failed to redeem promo code: ",
-      "footer.text": "© 2026 PulseClient. All rights reserved."
+      "footer.text": "© 2026 PulseClient. All rights reserved.",
+      "dash.resetHwidBtn": "Reset HWID",
+      "lic.hwidLabel": "Device (HWID)",
+      "msg.hwidResetConfirm": "Are you sure you want to reset the device (HWID) for this license?",
+      "admin.telemetryTitle": "Active Telemetry",
+      "telemetry.mcUser": "Minecraft User",
+      "telemetry.key": "Key",
+      "telemetry.ip": "IP Address",
+      "telemetry.os": "OS",
+      "telemetry.country": "Country",
+      "telemetry.started": "Started",
+      "telemetry.duration": "Duration",
+      "telemetry.ended": "Ended",
+      "admin.totalOnlineHtml": "Total Online: <span id=\"admin-sessions-count\">0</span>",
+      "admin.totalFoundHtml": "Total Found: <span id=\"admin-total-count\">0</span>",
+      "admin.logTitle": "Activity Log",
+      "admin.logSearchPh": "Search action, user...",
+      "log.date": "Date",
+      "log.user": "User / Admin",
+      "log.action": "Action",
+      "log.details": "Details"
     }
   };
 
@@ -439,6 +479,109 @@
 
   // Local alias
   const TRANSLATIONS = window.TRANSLATIONS;
+
+  const SELECTOR_BINDINGS = [
+    ["#features .section-header h2", "features.title"],
+    ["#features .section-header p", "features.subtitle"],
+    ["#features .feature-card:nth-child(1) h3", "features.f1.title"],
+    ["#features .feature-card:nth-child(1) p", "features.f1.desc"],
+    ["#features .feature-card:nth-child(2) h3", "features.f2.title"],
+    ["#features .feature-card:nth-child(2) p", "features.f2.desc"],
+    ["#features .feature-card:nth-child(3) h3", "features.f3.title"],
+    ["#features .feature-card:nth-child(3) p", "features.f3.desc"],
+    ["#features .feature-card:nth-child(4) h3", "features.f4.title"],
+    ["#features .feature-card:nth-child(4) p", "features.f4.desc"],
+    ["#pricing .section-header h2", "pricing.title"],
+    ["#pricing .section-header p", "pricing.subtitle"],
+    ["#pricing .pricing-card:nth-child(1) h3", "pricing.weekly"],
+    ["#pricing .pricing-card:nth-child(1) .desc", "pricing.weeklyDesc"],
+    ["#pricing .pricing-card:nth-child(1) .price span", "pricing.per7"],
+    ["#pricing .pricing-card:nth-child(2) .popular-badge", "pricing.popular"],
+    ["#pricing .pricing-card:nth-child(2) h3", "pricing.lifetime"],
+    ["#pricing .pricing-card:nth-child(2) .desc", "pricing.lifetimeDesc"],
+    ["#pricing .pricing-card:nth-child(2) .price span", "pricing.once"],
+    ["#pricing .pricing-card:nth-child(3) h3", "pricing.monthly"],
+    ["#pricing .pricing-card:nth-child(3) .desc", "pricing.monthlyDesc"],
+    ["#pricing .pricing-card:nth-child(3) .price span", "pricing.per30"],
+    [".device-title", "dash.devices"],
+    [".btn-device-slot", "dash.deviceSlot"],
+    ["#dashboard-page .sidebar-menu .menu-item:nth-child(1)", "dash.downloads", "text"],
+    ["#dashboard-page .sidebar-menu .menu-item:nth-child(2)", "dash.licenses", "text"],
+    ["#dashboard-page .sidebar-menu .menu-item:nth-child(3)", "dash.faq", "text"],
+    ["#admin-menu-item", "dash.admin", "menuText"],
+    [".role-text", "dash.licensesLabel", "prefix"],
+    ["#dash-logout-btn", "dash.logout", "text"],
+    ["#update-notification .update-text strong", "dash.updateTitle"],
+    ["#update-download-btn", "dash.updateBtn", "text"],
+    [".download-meta h3", "dash.latestVersion"],
+    [".version-label", "dash.versionLabelHtml", "html"],
+    [".updated-date", "dash.updatedToday"],
+    ["#download-pvp-btn", "dash.download", "textLast"],
+    ["#download-basefind-btn", "dash.download", "textLast"],
+    [".quick-start-section .section-title", "dash.quickStart"],
+    [".quick-start-grid .step-card:nth-child(1) h4", "dash.step1.title"],
+    [".quick-start-grid .step-card:nth-child(1) p", "dash.step1.desc"],
+    [".quick-start-grid .step-card:nth-child(2) h4", "dash.step2.title"],
+    [".quick-start-grid .step-card:nth-child(2) p", "dash.step2.desc"],
+    [".quick-start-grid .step-card:nth-child(3) h4", "dash.step3.title"],
+    [".quick-start-grid .step-card:nth-child(3) p", "dash.step3.desc"],
+    [".launchers-section .section-title", "dash.launchers"],
+    [".launcher-card .launcher-meta span", "dash.compatible"],
+    [".launcher-footer-note", "dash.launchersNote"],
+    [".licenses-card .panel-header h3", "dash.myLicenses"],
+    ["#refresh-licenses-btn", "dash.refresh", "textLast"],
+    ["#licenses-loading", "dash.licensesLoading", "textLast"],
+    ["#no-licenses-view p:first-child", "dash.noLicenses"],
+    ["#no-licenses-view p.sub", "dash.noLicensesSub"],
+    [".bind-card h3", "dash.bindTitle"],
+    [".bind-card .desc", "dash.bindDesc"],
+    ["#bind-submit-btn", "dash.bindBtn"],
+    ["#tab-content-faq .section-title", "dash.faqTitle"],
+    ["#faq .section-header h2", "faq.title"],
+    [".admin-create-card > h3", "admin.genTitle"],
+    ["label[for='admin-product-select']", "admin.product"],
+    ["label[for='admin-duration-select']", "admin.duration"],
+    ["#admin-create-btn", "admin.createBtn", "textLast"],
+    ["#admin-key-result > div > span:first-child", "admin.createdKey"],
+    ["#admin-copy-key-btn", "admin.copy"],
+    [".admin-licenses-card .admin-header h3", "admin.manageTitle"],
+    ["#admin-licenses-loading", "admin.loading", "textLast"],
+    [".admin-count", "admin.totalFound", "prefix"],
+    ["#license-info-modal h3", "admin.modalTitle"],
+    ["#user-selection-modal h3", "admin.userModalTitle"],
+    [".footer p", "footer.text"]
+  ];
+
+  const FAQ_BINDINGS = [
+    ["faq.q1", "faq.a1"],
+    ["faq.q2", "faq.a2"],
+    ["faq.q3", "faq.a3"]
+  ];
+
+  const PRICING_PERKS = [
+    ["#pricing .pricing-card:nth-child(1) li", ["pricing.perk1", "pricing.perk2", "pricing.perk3", "pricing.perk4"]],
+    ["#pricing .pricing-card:nth-child(2) li", ["pricing.perk5", "pricing.perk1", "pricing.perk2", "pricing.perk6", "pricing.perk7", "pricing.perk8"]],
+    ["#pricing .pricing-card:nth-child(3) li", ["pricing.perk1", "pricing.perk2", "pricing.perk3", "pricing.perk4"]]
+  ];
+
+  const PRICING_BTNS = [
+    ["#pricing .pricing-card:nth-child(1) .buy-btn", "pricing.buy"],
+    ["#pricing .pricing-card:nth-child(2) .buy-btn", "pricing.buyLifetime"],
+    ["#pricing .pricing-card:nth-child(3) .buy-btn", "pricing.buy"]
+  ];
+
+
+
+  const MODAL_LABELS = [
+    ["admin.modalKey", "modal-key"],
+    ["admin.modalOwner", "modal-buyer"],
+    ["admin.modalCreator", "modal-creator"],
+    ["admin.modalStatus", "modal-status"],
+    ["admin.modalCreated", "modal-created"],
+    ["admin.modalExpires", "modal-expires"],
+    ["admin.modalHwid", "modal-hwid"],
+    ["admin.modalNote", "modal-note"]
+  ];
 
   // Language state
   let currentLang = window.currentLang || localStorage.getItem("pulse_lang") || "ka";
@@ -549,9 +692,6 @@
     if (adminSearch) adminSearch.placeholder = t("admin.searchPh");
     const userSearch = document.getElementById("admin-modal-user-search");
     if (userSearch) userSearch.placeholder = t("admin.userSearchPh");
-    document.querySelectorAll(".admin-table thead th").forEach((th, i) => {
-      if (ADMIN_TABLE_HEADERS[i]) th.textContent = t(ADMIN_TABLE_HEADERS[i]);
-    });
     MODAL_LABELS.forEach(([key, valueId]) => {
       const valEl = document.getElementById(valueId);
       const label = valEl?.closest(".modal-info-item")?.querySelector(".info-label");

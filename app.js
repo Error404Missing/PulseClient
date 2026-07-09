@@ -493,6 +493,10 @@ function renderLicenses(licenses) {
         const statusClass = lic.is_active ? 'active' : 'revoked';
         const statusText = lic.is_active ? t('status.active') : t('status.revoked');
 
+        const hwidText = lic.hwid && lic.hwid !== 'null' ? (lic.hwid.length > 14 ? lic.hwid.substring(0, 14) + '...' : lic.hwid) : t('status.notActivated');
+        const hwidTooltip = lic.hwid && lic.hwid !== 'null' ? lic.hwid : '';
+        const hasHwid = lic.hwid && lic.hwid !== 'null';
+
         item.innerHTML = `
             <div class="lic-key-info">
                 <h4>${t('lic.keyLabel')}</h4>
@@ -504,6 +508,16 @@ function renderLicenses(licenses) {
             <div class="lic-expiry-info">
                 <span class="label">${t('lic.expiryLabel')}</span>
                 <span class="val">${expiryDisplay}</span>
+            </div>
+            <div class="lic-hwid-info">
+                <span class="label">${t('lic.hwidLabel')}</span>
+                <span class="val mono" title="${hwidTooltip}">${hwidText}</span>
+            </div>
+            <div class="lic-actions-info">
+                <button class="reset-hwid-btn" onclick="resetUserHwid('${lic.license_key}')" ${hasHwid && lic.is_active ? '' : 'disabled'}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                    ${t('dash.resetHwidBtn')}
+                </button>
             </div>
         `;
         licensesList.appendChild(item);
@@ -1333,6 +1347,27 @@ async function resetLicenseHwid(key) {
     }
 }
 
+async function resetUserHwid(key) {
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.hwidResetConfirm") || "ნამდვილად გსურთ მოწყობილობის (HWID) განულება ამ ლიცენზიისთვის?");
+    if (!confirmed) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('licenses')
+            .update({ hwid: null })
+            .eq('license_key', key);
+
+        if (error) throw error;
+
+        showBanner(t("msg.hwidSuccess"), "success");
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Error resetting HWID:", err.message);
+        showBanner(t("msg.hwidFail") + err.message, "error");
+    }
+}
+
+
 // Custom Confirmation Modal Helper using Promises
 function showCustomConfirm(title, message) {
     return new Promise((resolve) => {
@@ -1596,6 +1631,7 @@ function closeLicenseModal() {
 // Attach functions to window scope for onclick handlers in dynamically generated HTML
 window.showLicenseDetails = showLicenseDetails;
 window.resetLicenseHwid = resetLicenseHwid;
+window.resetUserHwid = resetUserHwid;
 window.revokeLicense = revokeLicense;
 window.closeLicenseModal = closeLicenseModal;
 window.copyCreatedKey = copyCreatedKey;

@@ -742,28 +742,28 @@
                         <!-- Active Client Sessions -->
                         <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
-                                <h3>აქტიური სესიები (Active Telemetry)</h3>
+                                <h3 data-i18n="admin.telemetryTitle">აქტიური სესიები (Active Telemetry)</h3>
                                 <div class="admin-controls">
-                                    <button type="button" class="btn btn-secondary" onclick="fetchActiveSessions()" style="padding: 8px 16px; font-size: 13px;">
+                                    <button type="button" class="btn btn-secondary" onclick="fetchActiveSessions()" style="padding: 8px 16px; font-size: 13px;" data-i18n="dash.refresh">
                                         განახლება
                                     </button>
                                 </div>
                             </div>
-                            <div id="admin-sessions-loading" class="loading-state">
-                                <span class="spinner"></span> მონაცემები იტვირთება...
+                            <div id="admin-sessions-loading" class="loading-state" data-i18n="admin.loading">
+                                მონაცემები იტვირთება...
                             </div>
                             <div class="admin-table-wrapper">
                                 <table class="admin-table">
                                     <thead>
                                         <tr>
-                                            <th>Minecraft იუზერი</th>
-                                            <th>გასაღები</th>
-                                            <th>IP მისამართი</th>
-                                            <th>OS</th>
-                                            <th>ქვეყანა</th>
-                                            <th>ჩაირთო</th>
-                                            <th>ხანგრძლივობა</th>
-                                            <th>დასრულდა</th>
+                                            <th data-i18n="telemetry.mcUser">Minecraft იუზერი</th>
+                                            <th data-i18n="telemetry.key">გასაღები</th>
+                                            <th data-i18n="telemetry.ip">IP მისამართი</th>
+                                            <th data-i18n="telemetry.os">OS</th>
+                                            <th data-i18n="telemetry.country">ქვეყანა</th>
+                                            <th data-i18n="telemetry.started">ჩაირთო</th>
+                                            <th data-i18n="telemetry.duration">ხანგრძლივობა</th>
+                                            <th data-i18n="telemetry.ended">დასრულდა</th>
                                         </tr>
                                     </thead>
                                     <tbody id="admin-sessions-table-body">
@@ -771,7 +771,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="admin-count">
+                            <div class="admin-count" data-i18n-html="admin.totalOnlineHtml">
                                 სულ ონლაინშია: <span id="admin-sessions-count">0</span>
                             </div>
                         </div>
@@ -779,9 +779,9 @@
                         <!-- All Licenses List -->
                         <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
-                                <h3>ყველა ლიცენზიის მართვა</h3>
+                                <h3 data-i18n="admin.manageTitle">ყველა ლიცენზიის მართვა</h3>
                                 <div class="admin-controls">
-                                    <input type="text" id="admin-search-input" placeholder="ძებნა (key, buyer, admin...)">
+                                    <input type="text" id="admin-search-input" placeholder="ძებნა (key, buyer, admin...)" data-i18n-placeholder="admin.searchPh">
                                     <select id="admin-filter-select">
                                         <option value="all">ყველა სტატუსი</option>
                                         <option value="active">აქტიური</option>
@@ -791,21 +791,21 @@
                                 </div>
                             </div>
 
-                            <div id="admin-licenses-loading" class="loading-state">
-                                <span class="spinner"></span> მონაცემები იტვირთება...
+                            <div id="admin-licenses-loading" class="loading-state" data-i18n="admin.loading">
+                                მონაცემები იტვირთება...
                             </div>
 
                             <div class="admin-table-wrapper">
                                 <table class="admin-table">
                                     <thead>
                                         <tr>
-                                            <th>პროდუქტი</th>
-                                            <th>მფლობელი</th>
-                                            <th>შემქმნელი</th>
-                                            <th>ლიცენზიის გასაღები</th>
-                                            <th>სტატუსი</th>
-                                            <th>მოქმედების ვადა</th>
-                                            <th>ქმედებები</th>
+                                            <th data-i18n="admin.colProduct">პროდუქტი</th>
+                                            <th data-i18n="admin.colOwner">მფლობელი</th>
+                                            <th data-i18n="admin.colCreator">შემქმნელი</th>
+                                            <th data-i18n="admin.colKey">ლიცენზიის გასაღები</th>
+                                            <th data-i18n="admin.colStatus">სტატუსი</th>
+                                            <th data-i18n="admin.colExpiry">მოქმედების ვადა</th>
+                                            <th data-i18n="admin.colActions">ქმედებები</th>
                                         </tr>
                                     </thead>
                                     <tbody id="admin-licenses-table-body">
@@ -814,7 +814,7 @@
                                 </table>
                             </div>
 
-                            <div class="admin-count">
+                            <div class="admin-count" data-i18n-html="admin.totalFoundHtml">
                                 სულ ნაპოვნია: <span id="admin-total-count">0</span>
                             </div>
                         </div>
@@ -843,19 +843,19 @@
                         <!-- Admin Activity Log Panel -->
                         <div class="glass-panel admin-logs-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
-                                <h3>მოქმედებების ჟურნალი (Activity Log)</h3>
+                                <h3 data-i18n="admin.logTitle">მოქმედებების ჟურნალი (Activity Log)</h3>
                                 <div class="admin-controls">
-                                    <input type="text" id="admin-logs-search-input" placeholder="მოძებნე მოქმედება, მომხმარებელი...">
+                                    <input type="text" id="admin-logs-search-input" placeholder="მოძებნე მოქმედება, მომხმარებელი..." data-i18n-placeholder="admin.logSearchPh">
                                 </div>
                             </div>
                             <div class="admin-table-wrapper">
                                 <table class="admin-table">
                                     <thead>
                                         <tr>
-                                            <th>თარიღი</th>
-                                            <th>მომხმარებელი / ადმინი</th>
-                                            <th>მოქმედება</th>
-                                            <th>დეტალები</th>
+                                            <th data-i18n="log.date">თარიღი</th>
+                                            <th data-i18n="log.user">მომხმარებელი / ადმინი</th>
+                                            <th data-i18n="log.action">მოქმედება</th>
+                                            <th data-i18n="log.details">დეტალები</th>
                                         </tr>
                                     </thead>
                                     <tbody id="admin-logs-table-body">

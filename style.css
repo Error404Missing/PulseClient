@@ -1520,7 +1520,7 @@ h3 {
     border-radius: 14px;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1.4fr 0.8fr 1fr;
+    grid-template-columns: 1.2fr 0.6fr 0.8fr 0.8fr 1fr;
     align-items: center;
     gap: 16px;
 }
@@ -3048,4 +3048,62 @@ h3 {
     height: 0 !important;
     border-color: transparent !important;
     box-shadow: none !important;
+}
+
+/* User HWID reset button style */
+.reset-hwid-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 99px;
+    background-color: rgba(251, 191, 36, 0.05);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-left: auto;
+    font-family: inherit;
+}
+
+.reset-hwid-btn:hover:not(:disabled) {
+    background-color: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.5);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
+}
+
+.reset-hwid-btn:disabled {
+    background-color: rgba(255, 255, 255, 0.01);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.lic-hwid-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.lic-hwid-info .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.lic-hwid-info .val {
+    font-size: 13px;
+    color: #fff;
+    background-color: #0b0b0c;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--krypton-border);
+    display: inline-block;
+    max-width: fit-content;
 }
