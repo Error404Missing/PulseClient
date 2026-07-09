@@ -967,7 +967,6 @@ function renderActiveSessions(sessions) {
         row.innerHTML = `
             <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
             <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
-            <td><code style="font-size: 11px;">${session.ip_address || 'N/A'}</code></td>
             <td>${session.os_name || 'N/A'}</td>
             <td>${countryDisplay}</td>
             <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
