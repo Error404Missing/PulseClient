@@ -514,7 +514,7 @@ function renderLicenses(licenses) {
                 <span class="val mono" title="${hwidTooltip}">${hwidText}</span>
             </div>
             <div class="lic-actions-info">
-                <button class="reset-hwid-btn" onclick="resetUserHwid('${lic.license_key}')" ${hasHwid && lic.is_active ? '' : 'disabled'}>
+                <button class="btn reset-hwid-btn" onclick="resetUserHwid('${lic.license_key}')" ${hasHwid && lic.is_active ? '' : 'disabled'}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
                     ${t('dash.resetHwidBtn')}
                 </button>
