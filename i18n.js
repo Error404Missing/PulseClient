@@ -507,7 +507,7 @@
     [".btn-device-slot", "dash.deviceSlot"],
     ["#dashboard-page .sidebar-menu .menu-item:nth-child(1)", "dash.downloads", "text"],
     ["#dashboard-page .sidebar-menu .menu-item:nth-child(2)", "dash.licenses", "text"],
-    ["#dashboard-page .sidebar-menu .menu-item:nth-child(3)", "dash.faq", "text"],
+    ["#dashboard-page .sidebar-menu .menu-item:nth-child(3)", "dash.referral", "text"],
     ["#admin-menu-item", "dash.admin", "menuText"],
     [".role-text", "dash.licensesLabel", "prefix"],
     ["#dash-logout-btn", "dash.logout", "text"],
