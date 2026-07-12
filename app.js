@@ -404,8 +404,8 @@ function handleUserSignIn(user) {
 
     // Set up referral code display for the logged in user
     const refCodeDisplay = document.getElementById('referral-code-display');
-    if (refCodeDisplay && username) {
-        refCodeDisplay.value = `PULSE-${username.toUpperCase()}`;
+    if (refCodeDisplay && discordId) {
+        refCodeDisplay.value = generateReferralCodeFromDiscordId(String(discordId));
     }
     const copyRefCodeBtn = document.getElementById('copy-referral-code-btn');
     if (copyRefCodeBtn && refCodeDisplay) {
@@ -1610,7 +1610,29 @@ async function processReferralBonus(referredUsername) {
     }
 }
 
-// Redeem a referral code (PULSE-USERNAME format)
+// Generate a deterministic referral code from discordId
+function generateReferralCodeFromDiscordId(discordId) {
+    if (!discordId) return '';
+    let hash = 0;
+    for (let i = 0; i < discordId.length; i++) {
+        const char = discordId.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    hash = Math.abs(hash);
+    
+    // Map to 7 characters using a 32-character alphabet (excludes confusing 0, O, 1, I)
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    let temp = hash;
+    for (let i = 0; i < 7; i++) {
+        code += alphabet.charAt(temp % alphabet.length);
+        temp = Math.floor(temp / alphabet.length);
+    }
+    return code;
+}
+
+// Redeem a referral code (7-character random format)
 async function redeemReferralCode() {
     const codeInput = document.getElementById('referral-code-input');
     const submitBtn = document.getElementById('referral-code-submit-btn');
@@ -1619,38 +1641,40 @@ async function redeemReferralCode() {
     const code = codeInput.value.trim().toUpperCase();
     if (!code) return;
 
-    // Validate format
-    if (!code.startsWith('PULSE-') || code.length <= 6) {
+    // Validate format (7 characters, alphanumeric using our alphabet)
+    if (code.length !== 7 || !/^[A-Z2-9]{7}$/.test(code)) {
         showBanner(t("msg.refCodeInvalid"), "error");
         return;
-    }
-
-    const referrerUsername = code.substring(6); // Remove "PULSE-" prefix
-
-    // Check if user is trying to use their own code
-    if (currentUser) {
-        const metadata = currentUser.user_metadata;
-        const myUsername = (metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "").toUpperCase();
-        if (referrerUsername === myUsername) {
-            showBanner(t("msg.refCodeSelf"), "error");
-            return;
-        }
     }
 
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳";
 
     try {
-        // Look up referrer's profile by username (case-insensitive via ilike)
-        const { data: referrerProfile, error: profileError } = await supabaseClient
+        // Fetch all profiles from Supabase to match the code
+        const { data: profiles, error: profilesError } = await supabaseClient
             .from('profiles')
-            .select('*')
-            .ilike('username', referrerUsername)
-            .maybeSingle();
+            .select('*');
 
-        if (profileError || !referrerProfile) {
+        if (profilesError || !profiles) {
             showBanner(t("msg.refCodeNotFound"), "error");
             return;
+        }
+
+        // Find the matching profile
+        const referrerProfile = profiles.find(p => generateReferralCodeFromDiscordId(p.discord_id) === code);
+
+        if (!referrerProfile) {
+            showBanner(t("msg.refCodeNotFound"), "error");
+            return;
+        }
+
+        // Check if user is trying to use their own code
+        if (currentUser) {
+            if (referrerProfile.id === currentUser.id) {
+                showBanner(t("msg.refCodeSelf"), "error");
+                return;
+            }
         }
 
         // Check if already have a referral stored
@@ -1660,7 +1684,7 @@ async function redeemReferralCode() {
             return;
         }
 
-        // Save referrer's discord_id to localStorage (same mechanism as referral link)
+        // Save referrer's discord_id to localStorage
         localStorage.setItem('pulse_referral_discord_id', referrerProfile.discord_id);
 
         showBanner(t("msg.refCodeSuccess"), "success");
