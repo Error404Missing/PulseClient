@@ -619,12 +619,34 @@
                     <div id="tab-content-referral" class="tab-pane hidden">
                         <!-- Referral Program Card -->
                         <div class="glass-panel referral-card">
-                            <h3>მოიწვიე მეგობარი</h3>
-                            <p class="desc">გაუზიარე შენი რეფერალური ლინკი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!</p>
-                            <div class="referral-link-wrapper" style="margin-top: 16px; display: flex; gap: 10px; width: 100%;">
+                            <h3 data-i18n="dash.referralTitle">მოიწვიე მეგობარი</h3>
+                            <p class="desc" data-i18n="dash.referralDesc">გაუზიარე შენი რეფერალური ლინკი ან კოდი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!</p>
+                            
+                            <!-- Referral Link -->
+                            <label class="referral-section-label" data-i18n="dash.referralLinkLabel">🔗 რეფერალური ლინკი</label>
+                            <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
                                 <input type="text" id="referral-link-input" readonly style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="Loading link...">
-                                <button type="button" id="copy-referral-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;">ლინკის კოპირება</button>
+                                <button type="button" id="copy-referral-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralLinkCopyBtn">ლინკის კოპირება</button>
                             </div>
+
+                            <!-- Referral Code -->
+                            <label class="referral-section-label" style="margin-top: 20px;" data-i18n="dash.referralCodeLabel">🏷️ რეფერალური კოდი</label>
+                            <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
+                                <input type="text" id="referral-code-display" readonly style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; letter-spacing: 2px; font-weight: 600; text-transform: uppercase;" placeholder="Loading code...">
+                                <button type="button" id="copy-referral-code-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralCodeCopyBtn">კოდის კოპირება</button>
+                            </div>
+                        </div>
+
+                        <!-- Use Referral Code Card -->
+                        <div class="glass-panel referral-code-redeem-card" style="margin-top: 20px;">
+                            <h3 data-i18n="dash.referralRedeemTitle">🎁 რეფერალური კოდის გამოყენება</h3>
+                            <p class="desc" data-i18n="dash.referralRedeemDesc">თუ მეგობარმა გაგიზიარა რეფერალური კოდი, ჩაწერე აქ — შენს პირველ გასაღების გააქტიურებაზე ან საცდელის აღებაზე მას დაემატება 3 დღე.</p>
+                            <form id="referral-code-form" class="bind-form" style="margin-top: 14px;">
+                                <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
+                                    <input type="text" id="referral-code-input" data-i18n-placeholder="dash.referralRedeemPlaceholder" placeholder="მაგ: PULSE-USERNAME" required style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; text-transform: uppercase;">
+                                    <button type="submit" id="referral-code-submit-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralRedeemBtn">გააქტიურება</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 

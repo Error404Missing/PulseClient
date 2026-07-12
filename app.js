@@ -402,6 +402,32 @@ function handleUserSignIn(user) {
         };
     }
 
+    // Set up referral code display for the logged in user
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const refCodeDisplay = document.getElementById('referral-code-display');
+    if (refCodeDisplay && username) {
+        refCodeDisplay.value = `PULSE-${username.toUpperCase()}`;
+    }
+    const copyRefCodeBtn = document.getElementById('copy-referral-code-btn');
+    if (copyRefCodeBtn && refCodeDisplay) {
+        copyRefCodeBtn.onclick = () => {
+            navigator.clipboard.writeText(refCodeDisplay.value).then(() => {
+                const origText = copyRefCodeBtn.textContent;
+                copyRefCodeBtn.textContent = t("msg.copied");
+                setTimeout(() => { copyRefCodeBtn.textContent = origText; }, 2000);
+            });
+        };
+    }
+
+    // Set up referral code redemption form
+    const refCodeForm = document.getElementById('referral-code-form');
+    if (refCodeForm) {
+        refCodeForm.onsubmit = async (e) => {
+            e.preventDefault();
+            await redeemReferralCode();
+        };
+    }
+
     // Fetch Licenses
     fetchUserLicenses();
 
@@ -1582,6 +1608,70 @@ async function processReferralBonus(referredUsername) {
     } catch (err) {
         console.error("Error processing referral bonus:", err.message);
         return null;
+    }
+}
+
+// Redeem a referral code (PULSE-USERNAME format)
+async function redeemReferralCode() {
+    const codeInput = document.getElementById('referral-code-input');
+    const submitBtn = document.getElementById('referral-code-submit-btn');
+    if (!codeInput || !submitBtn) return;
+
+    const code = codeInput.value.trim().toUpperCase();
+    if (!code) return;
+
+    // Validate format
+    if (!code.startsWith('PULSE-') || code.length <= 6) {
+        showBanner(t("msg.refCodeInvalid"), "error");
+        return;
+    }
+
+    const referrerUsername = code.substring(6); // Remove "PULSE-" prefix
+
+    // Check if user is trying to use their own code
+    if (currentUser) {
+        const metadata = currentUser.user_metadata;
+        const myUsername = (metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "").toUpperCase();
+        if (referrerUsername === myUsername) {
+            showBanner(t("msg.refCodeSelf"), "error");
+            return;
+        }
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "⏳";
+
+    try {
+        // Look up referrer's profile by username (case-insensitive via ilike)
+        const { data: referrerProfile, error: profileError } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .ilike('username', referrerUsername)
+            .maybeSingle();
+
+        if (profileError || !referrerProfile) {
+            showBanner(t("msg.refCodeNotFound"), "error");
+            return;
+        }
+
+        // Check if already have a referral stored
+        const existingRef = localStorage.getItem('pulse_referral_discord_id');
+        if (existingRef) {
+            showBanner(t("msg.refCodeAlready"), "error");
+            return;
+        }
+
+        // Save referrer's discord_id to localStorage (same mechanism as referral link)
+        localStorage.setItem('pulse_referral_discord_id', referrerProfile.discord_id);
+
+        showBanner(t("msg.refCodeSuccess"), "success");
+        codeInput.value = '';
+    } catch (err) {
+        console.error("Error redeeming referral code:", err.message);
+        showBanner(t("msg.refCodeFail") + err.message, "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
     }
 }
 
