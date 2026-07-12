@@ -403,7 +403,6 @@ function handleUserSignIn(user) {
     }
 
     // Set up referral code display for the logged in user
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
     const refCodeDisplay = document.getElementById('referral-code-display');
     if (refCodeDisplay && username) {
         refCodeDisplay.value = `PULSE-${username.toUpperCase()}`;
