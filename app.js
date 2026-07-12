@@ -79,7 +79,7 @@ const adminUserSelectTrigger = document.getElementById('admin-user-select-trigge
 const adminUserSearch = document.getElementById('admin-modal-user-search');
 const adminUserOptionsList = document.getElementById('admin-modal-user-options-list');
 
-const ADMIN_DISCORD_IDS = ["1475396409246089367", "1397279439988981843", "1158855771031867432","1496104716143165521"];
+const ADMIN_DISCORD_IDS = ["1475396409246089367", "1397279439988981843", "1158855771031867432","1525921394095951902"];
 let currentUser = null;
 let adminLicenses = [];
 let allUserProfiles = [];
