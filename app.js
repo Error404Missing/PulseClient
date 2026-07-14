@@ -775,6 +775,21 @@ function scrollToElement(id) {
 }
 window.scrollToElement = scrollToElement;
 
+// Toggle Unified Download options panel
+function toggleDownloadOptions() {
+    const panel = document.getElementById('download-options-panel');
+    const chevron = document.getElementById('dl-chevron-icon');
+    if (!panel) return;
+
+    panel.classList.toggle('show-options');
+    if (panel.classList.contains('show-options')) {
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+    } else {
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+    }
+}
+window.toggleDownloadOptions = toggleDownloadOptions;
+
 // Toggle FAQ item expansion
 function toggleFaq(event) {
     const item = event.currentTarget;
