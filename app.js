@@ -627,6 +627,11 @@ async function bindLicenseKey(e) {
             newNote += ` (Linked via Dashboard)`;
         }
 
+        if (referrerName && expiresAtUpdate && !expiresAtUpdate.startsWith("2000-01-01")) {
+            const currentExpiry = new Date(expiresAtUpdate);
+            expiresAtUpdate = new Date(currentExpiry.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString();
+        }
+
         if (referrerName && !newNote.includes("Referred by:")) {
             newNote += ` | Referred by: ${referrerName}`;
         }
@@ -1490,8 +1495,12 @@ async function claimFreeTrial() {
         if (queryError) throw queryError;
 
         if (existingLicenses && existingLicenses.length > 0) {
-            showBanner(t("msg.trialAlreadyClaimed"), "error");
-            return;
+            const hasClaimedTrial = existingLicenses.some(l => l.note && l.note.includes("Free Trial"));
+            const hasOtherLicense = existingLicenses.some(l => l.note && !l.note.includes("Free Trial") && !l.note.includes("Referral Bonus"));
+            if (hasClaimedTrial || hasOtherLicense) {
+                showBanner(t("msg.trialAlreadyClaimed"), "error");
+                return;
+            }
         }
 
         // 3. Process referral bonus if this is their first license
@@ -1638,6 +1647,11 @@ async function redeemReferralCode() {
     const submitBtn = document.getElementById('referral-code-submit-btn');
     if (!codeInput || !submitBtn) return;
 
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") || "Please log in first", "error");
+        return;
+    }
+
     const code = codeInput.value.trim().toUpperCase();
     if (!code) return;
 
@@ -1650,45 +1664,34 @@ async function redeemReferralCode() {
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳";
 
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+
     try {
-        // Fetch all profiles from Supabase to match the code
-        const { data: profiles, error: profilesError } = await supabaseClient
-            .from('profiles')
-            .select('*');
+        // Call the backend endpoint — it uses the service_role key to bypass RLS
+        const response = await fetch('https://errormissing-pulse-bot.hf.space/referral/redeem', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code, discord_id: String(discordId), username })
+        });
 
-        if (profilesError || !profiles) {
-            showBanner(t("msg.refCodeNotFound"), "error");
-            return;
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            showBanner(t("msg.refCodeSuccess") || result.message, "success");
+            codeInput.value = '';
+            // Clean up localStorage if it contained this referral
+            localStorage.removeItem('pulse_referral_discord_id');
+            fetchUserLicenses();
+        } else {
+            // Map known Georgian/backend messages to i18n keys if available
+            const msg = result.message || '';
+            if (msg.includes('საკუთარი კოდის')) showBanner(t("msg.refCodeSelf"), "error");
+            else if (msg.includes('უკვე გამოიყენეთ')) showBanner(t("msg.refCodeAlreadyUsed") || msg, "error");
+            else if (msg.includes('ვერ მოიძებნა')) showBanner(t("msg.refCodeNotFound"), "error");
+            else showBanner(t("msg.refCodeFail") + msg, "error");
         }
-
-        // Find the matching profile
-        const referrerProfile = profiles.find(p => generateReferralCodeFromDiscordId(p.discord_id) === code);
-
-        if (!referrerProfile) {
-            showBanner(t("msg.refCodeNotFound"), "error");
-            return;
-        }
-
-        // Check if user is trying to use their own code
-        if (currentUser) {
-            if (referrerProfile.id === currentUser.id) {
-                showBanner(t("msg.refCodeSelf"), "error");
-                return;
-            }
-        }
-
-        // Check if already have a referral stored
-        const existingRef = localStorage.getItem('pulse_referral_discord_id');
-        if (existingRef) {
-            showBanner(t("msg.refCodeAlready"), "error");
-            return;
-        }
-
-        // Save referrer's discord_id to localStorage
-        localStorage.setItem('pulse_referral_discord_id', referrerProfile.discord_id);
-
-        showBanner(t("msg.refCodeSuccess"), "success");
-        codeInput.value = '';
     } catch (err) {
         console.error("Error redeeming referral code:", err.message);
         showBanner(t("msg.refCodeFail") + err.message, "error");
