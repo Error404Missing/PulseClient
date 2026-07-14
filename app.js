@@ -30,8 +30,8 @@ const refreshLicensesBtn = document.getElementById('refresh-licenses-btn');
 const bindLicenseForm = document.getElementById('bind-license-form');
 const bindKeyInput = document.getElementById('bind-key-input');
 const bindSubmitBtn = document.getElementById('bind-submit-btn');
-const downloadPvpBtn = document.getElementById('download-pvp-btn');
-const downloadBasefindBtn = document.getElementById('download-basefind-btn');
+const downloadPvpBtn = document.getElementById('download-pvp-btn-modal');
+const downloadBasefindBtn = document.getElementById('download-basefind-btn-modal');
 
 const GITHUB_REPO_OWNER = 'Error404Missing';
 const GITHUB_REPO_NAME = 'PulseClient';
@@ -775,20 +775,17 @@ function scrollToElement(id) {
 }
 window.scrollToElement = scrollToElement;
 
-// Toggle Unified Download options panel
-function toggleDownloadOptions() {
-    const panel = document.getElementById('download-options-panel');
-    const chevron = document.getElementById('dl-chevron-icon');
-    if (!panel) return;
-
-    panel.classList.toggle('show-options');
-    if (panel.classList.contains('show-options')) {
-        if (chevron) chevron.style.transform = 'rotate(180deg)';
-    } else {
-        if (chevron) chevron.style.transform = 'rotate(0deg)';
-    }
+// Client Download Modal Actions
+function openDownloadModal() {
+    const modal = document.getElementById('client-download-modal');
+    if (modal) modal.classList.remove('hidden');
 }
-window.toggleDownloadOptions = toggleDownloadOptions;
+function closeDownloadModal() {
+    const modal = document.getElementById('client-download-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.openDownloadModal = openDownloadModal;
+window.closeDownloadModal = closeDownloadModal;
 
 // Toggle FAQ item expansion
 function toggleFaq(event) {
