@@ -509,13 +509,11 @@
     }
   };
 
-  // Merge NEW into window.TRANSLATIONS (do not overwrite existing keys)
+  // Merge NEW into window.TRANSLATIONS (always overwrite with latest)
   Object.keys(NEW).forEach(lang => {
     window.TRANSLATIONS[lang] = window.TRANSLATIONS[lang] || {};
     Object.keys(NEW[lang]).forEach(k => {
-      if (typeof window.TRANSLATIONS[lang][k] === 'undefined') {
-        window.TRANSLATIONS[lang][k] = NEW[lang][k];
-      }
+      window.TRANSLATIONS[lang][k] = NEW[lang][k];
     });
   });
 

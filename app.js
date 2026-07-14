@@ -779,6 +779,8 @@ window.scrollToElement = scrollToElement;
 function openDownloadModal() {
     const modal = document.getElementById('client-download-modal');
     if (modal) modal.classList.remove('hidden');
+    // Re-apply translations to modal elements
+    if (typeof applyLanguage === 'function') applyLanguage(window.currentLang || 'ka');
 }
 function closeDownloadModal() {
     const modal = document.getElementById('client-download-modal');
