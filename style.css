@@ -3138,3 +3138,374 @@ h3 {
     display: inline-block;
     max-width: fit-content;
 }
+
+/* ==========================================================================
+   PREMIUM AESTHETICS & INTERACTIVE HOVER ANIMATION ENGINE (iOS 26 VIBES)
+   ========================================================================== */
+
+:root {
+    --spring-transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --hover-spring: transform 0.5s cubic-bezier(0.34, 1.65, 0.66, 1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+    --purple-glow: 0 0 25px rgba(99, 102, 241, 0.45);
+    --indigo-glow: 0 0 35px rgba(79, 70, 229, 0.55);
+    --teal-glow: 0 0 30px rgba(0, 255, 204, 0.35);
+    --light-shimmer: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 60%, transparent 70%);
+}
+
+/* 1. Global Reset for Spring Transitions */
+.btn,
+.logo,
+.nav-links button,
+.lang-switcher .lang-btn,
+.feature-card,
+.pricing-card,
+.faq-item,
+.setup-flow-item,
+.device-status-card,
+.krypton-download-card,
+.menu-item,
+.launcher-card,
+.step-card,
+.referral-card,
+.referral-code-redeem-card,
+.trial-card,
+.trial-pricing-card,
+.confirm-actions .btn,
+.purchase-discord-btn,
+.promo-code-badge,
+.user-option,
+.custom-select-trigger,
+.close-banner,
+.btn-refresh,
+.reset-hwid-btn,
+.alert-banner {
+    transition: var(--spring-transition) !important;
+}
+
+/* 2. Sleek Background Blob Enhancements */
+.blob {
+    opacity: 0.28 !important;
+    mix-blend-mode: screen;
+    filter: blur(160px) !important;
+    will-change: transform;
+}
+.blob-1 {
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 80%) !important;
+}
+.blob-2 {
+    background: radial-gradient(circle, #3b82f6 0%, transparent 80%) !important;
+}
+.blob-3 {
+    background: radial-gradient(circle, #ec4899 0%, transparent 80%) !important;
+}
+.blob-4 {
+    background: radial-gradient(circle, #1e1b4b 0%, transparent 80%) !important;
+}
+
+/* 3. Hero Visual Preview Sway (Gentle Floating Animation) */
+.main-preview {
+    animation: gentleFloat 6s ease-in-out infinite alternate !important;
+    will-change: transform;
+}
+
+.main-preview:hover {
+    transform: translateY(-8px) scale(1.03) rotateX(2deg) rotateY(3deg) !important;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.65), var(--purple-glow) !important;
+    border-color: rgba(99, 102, 241, 0.4) !important;
+}
+
+/* 4. Logo Hover Effect */
+.logo:hover {
+    transform: scale(1.04) !important;
+}
+.logo:hover img {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.6) !important;
+    transform: rotate(6deg) scale(1.05);
+    transition: var(--spring-transition);
+}
+.logo:hover .pulse-logo-text {
+    background: linear-gradient(135deg, #a78bfa 0%, #00ffcc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: var(--spring-transition);
+}
+
+/* 5. Navbar Hover Enhancement */
+.navbar:hover {
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(99, 102, 241, 0.05) !important;
+}
+
+.nav-links button:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #fff !important;
+}
+
+.nav-links button:active {
+    transform: scale(0.95) !important;
+}
+
+/* 6. Language Switcher Bounce */
+.lang-switcher .lang-btn:hover {
+    transform: scale(1.08) !important;
+}
+.lang-switcher .lang-btn.active:hover {
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* 7. Buttons spring-glow & Magnetic feel overrides */
+.btn-primary:hover {
+    background-color: #ffffff !important;
+    transform: translateY(-4px) scale(1.04) !important;
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.28) !important;
+}
+
+.btn-glow:hover {
+    transform: translateY(-4px) scale(1.04) !important;
+    box-shadow: var(--indigo-glow), 0 20px 40px rgba(99, 102, 241, 0.35) !important;
+    filter: brightness(1.15) !important;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.09) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-3px) scale(1.03) !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 8. Setup flow steps animations */
+.setup-flow-item:hover {
+    transform: translateY(-6px) scale(1.12) rotate(4deg) !important;
+}
+
+.setup-flow-item:hover svg {
+    animation: heartbeat 1.2s infinite alternate ease-in-out;
+}
+
+/* 9. Feature Cards Premium Scale & Glowing border */
+.feature-card:hover {
+    transform: translateY(-8px) scale(1.03) rotateX(1.5deg) rotateY(1.5deg) !important;
+    border-color: rgba(99, 102, 241, 0.35) !important;
+    background: rgba(255, 255, 255, 0.055) !important;
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.12) !important;
+}
+
+.feature-card .icon-wrapper {
+    transition: var(--spring-transition);
+}
+
+.feature-card:hover .icon-wrapper {
+    transform: scale(1.15) rotate(-6deg) !important;
+    background-color: rgba(99, 102, 241, 0.15) !important;
+    border-color: rgba(99, 102, 241, 0.4) !important;
+    color: #00ffcc !important;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+}
+
+.feature-card:hover .icon-wrapper svg {
+    transform: scale(1.1);
+    transition: var(--spring-transition);
+}
+
+/* 10. Pricing Cards Spark & Zoom */
+.pricing-card:hover {
+    transform: translateY(-10px) scale(1.03) !important;
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.65), var(--purple-glow) !important;
+    border-color: rgba(99, 102, 241, 0.35) !important;
+}
+
+.pricing-card.popular:hover {
+    transform: translateY(-12px) scale(1.04) !important;
+    border-color: rgba(99, 102, 241, 0.6) !important;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), var(--indigo-glow) !important;
+}
+
+.pricing-card.popular::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -150%; width: 50%; height: 100%;
+    background: var(--light-shimmer);
+    transform: skewX(-25deg);
+}
+
+.pricing-card.popular:hover::before {
+    animation: shimmerSweep 1.5s infinite;
+}
+
+/* 11. FAQ item hover slide chevron */
+.faq-item:hover {
+    transform: translateY(-3px) scale(1.01) !important;
+    background-color: rgba(255, 255, 255, 0.065) !important;
+    border-color: rgba(99, 102, 241, 0.25) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.04) !important;
+}
+
+.faq-item:hover h4 {
+    color: #fff !important;
+}
+
+.faq-item:hover .faq-toggle-icon {
+    color: var(--krypton-yellow) !important;
+    transform: scale(1.2);
+}
+
+.faq-item.active {
+    border-color: rgba(99, 102, 241, 0.45) !important;
+    background-color: rgba(99, 102, 241, 0.035) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 4px 0 0 var(--krypton-yellow) !important;
+}
+
+/* 12. Dashboard Elements Micro-interactions */
+.device-status-card:hover {
+    transform: translateY(-4px) scale(1.02) !important;
+    border-color: rgba(99, 102, 241, 0.3) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.05) !important;
+}
+
+.device-status-card:hover .device-icon {
+    transform: scale(1.2) rotate(8deg);
+    transition: var(--spring-transition);
+}
+
+.btn-device-slot:hover {
+    transform: scale(1.03) !important;
+    border-color: var(--krypton-yellow) !important;
+    background-color: rgba(99, 102, 241, 0.08) !important;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Sidebar Menu Item Shift on hover */
+.menu-item:hover {
+    transform: translateX(6px) scale(1.02) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35) !important;
+}
+
+.menu-item:hover svg {
+    transform: scale(1.15) rotate(4deg);
+}
+
+.menu-item.active:hover {
+    box-shadow: 0 8px 25px var(--krypton-yellow-glow) !important;
+    transform: translateX(4px) scale(1.02) !important;
+}
+
+/* Main Download Card */
+.krypton-download-card:hover {
+    transform: translateY(-5px) scale(1.015) !important;
+    border-color: rgba(99, 102, 241, 0.35) !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), var(--purple-glow) !important;
+}
+
+.btn-krypton-download:hover {
+    transform: translateY(-3px) scale(1.04) !important;
+    box-shadow: var(--indigo-glow), 0 15px 30px rgba(99, 102, 241, 0.3) !important;
+    filter: brightness(1.15) !important;
+}
+
+/* Step cards & Launcher Cards */
+.step-card:hover,
+.launcher-card:hover {
+    transform: translateY(-6px) scale(1.03) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Input Fields hover & focus dynamic glow */
+.bind-form input:hover,
+.referral-code-redeem-card input:hover,
+.admin-create-card input:hover,
+.custom-select-trigger:hover {
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.bind-form input:focus,
+.referral-code-redeem-card input:focus,
+.admin-create-card input:focus,
+.custom-select-trigger:focus {
+    border-color: var(--krypton-yellow) !important;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), 0 5px 15px rgba(0, 0, 0, 0.4) !important;
+    outline: none;
+}
+
+/* Form Submit Buttons */
+.bind-form button:hover,
+.referral-code-redeem-card button:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2) !important;
+}
+
+/* Interactive tables rows */
+.admin-table tbody tr {
+    transition: var(--spring-transition);
+}
+.admin-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.035) !important;
+    transform: scale(1.002);
+}
+
+/* User Selection Options */
+.user-option:hover {
+    transform: translateX(4px) scale(1.01) !important;
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    color: #fff !important;
+}
+
+/* Alert Banner Close Button */
+.close-banner:hover {
+    transform: scale(1.15) !important;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Refresh Button Spin */
+.btn-refresh:hover {
+    transform: scale(1.08) !important;
+}
+.btn-refresh:hover svg {
+    transform: rotate(180deg) !important;
+}
+
+/* Key result copy btn */
+.admin-key-result .copy-btn:hover {
+    transform: scale(1.05) !important;
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+/* Card hover shimmers */
+.referral-card:hover,
+.referral-code-redeem-card:hover,
+.trial-card:hover,
+.trial-pricing-card:hover {
+    transform: translateY(-5px) scale(1.02) !important;
+    border-color: rgba(99, 102, 241, 0.3) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55), 0 0 20px rgba(99, 102, 241, 0.08) !important;
+}
+
+/* ==========================================
+   KEYFRAMES DEFINITIONS
+   ========================================== */
+
+@keyframes gentleFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(0.5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shimmerSweep {
+    0% { left: -150%; }
+    50% { left: 150%; }
+    100% { left: 150%; }
+}
+
