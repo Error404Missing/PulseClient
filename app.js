@@ -2317,57 +2317,115 @@ function generatePulseAIResponse(input) {
     const lower = input.toLowerCase().trim();
     const isGeorgian = /[\u10A0-\u10FF]/.test(input);
 
-    // Keybinds & Open Menu
-    if (lower.includes('f12') || lower.includes('shift') || lower.includes('ღილაკ') || lower.includes('მენიუ') || lower.includes('keybind') || lower.includes('open') || lower.includes('menu')) {
+    const hasAny = (keywords) => keywords.some(k => lower.includes(k));
+
+    // 1. Greetings / Conversational
+    if (hasAny(['გამარჯობა', 'სალამი', 'ზდაროვა', 'გამარჯობათ', 'hello', 'hi', 'hey', 'sup', 'yo', 'როგორ ხარ', 'როგორ ხართ'])) {
         if (isGeorgian) {
-            return "⌨️ <strong>PulseClient-ის ღილაკები:</strong><br>• <strong>Pulse PvP Client</strong> — მენიუ იხსნება <strong>F12</strong> ღილაკით.<br>• <strong>Pulse Base Find</strong> — მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით.";
+            return "გამარჯობა! 👋 მე ვარ <strong>Pulse AI</strong>, PulseClient-ის ოფიციალური ასისტენტი. რით შემიძლია დაგეხმარო?<br><br>• კლიენტის ჩამოტვირთვა & ინსტალაცია<br>• მენიუს ღილაკები (F12 / Shift)<br>• შეძენა & ლიცენზია<br>• HWID და პრობლემების მოგვარება";
         }
-        return "⌨️ <strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client</strong> — Menu opens with <strong>F12</strong>.<br>• <strong>Pulse Base Find</strong> — Menu opens with <strong>Right Shift</strong>.";
+        return "Hello! 👋 I am <strong>Pulse AI</strong>, the official PulseClient support bot. How can I help you today?<br><br>• Client Download & Installation<br>• Keybinds (F12 / Shift)<br>• Purchase & Licensing<br>• HWID & Troubleshooting";
     }
 
-    // Installation & Setup
-    if (lower.includes('ინსტალაც') || lower.includes('დაყენებ') || lower.includes('ჩაგდება') || lower.includes('install') || lower.includes('setup') || lower.includes('folder') || lower.includes('mods')) {
+    // 2. Identity / Capabilities
+    if (hasAny(['ვინ ხარ', 'რა ხარ', 'რა შეგიძლია', 'who are you', 'what are you', 'what can you do'])) {
         if (isGeorgian) {
-            return "💡 <strong>ინსტალაციის ინსტრუქცია:</strong><br>1. გადმოწერეთ სასურველი <code>.jar</code> ფაილი საიტიდან.<br>2. ჩააგდეთ ფაილი თქვენს <code>.minecraft/mods</code> საქაღალდეში.<br>3. ჩართეთ თამაში <strong>Fabric 1.21.11</strong> ვერსიაზე (საჭიროა Java 21).";
+            return "🤖 მე ვარ <strong>Pulse AI</strong> — ხელოვნური ინტელექტის ასისტენტი. შემიძლია პასუხი გავცე შენს ნებისმიერ კითხვას PulseClient-ის, ინსტალაციის, ღილაკების, ლიცენზიის, ანტიკლიენტის შემოვლებისა და ხარვეზების შესახებ!";
         }
-        return "💡 <strong>Installation Guide:</strong><br>1. Download the preferred <code>.jar</code> file from the site.<br>2. Drop the file into your <code>.minecraft/mods</code> folder.<br>3. Launch Minecraft with <strong>Fabric 1.21.11</strong> (Java 21 required).";
+        return "🤖 I am <strong>Pulse AI</strong> — an AI support assistant for PulseClient. I can help answer questions about installation, keybinds, license key management, bypasses, and troubleshooting!";
     }
 
-    // Buying & License Purchase
-    if (lower.includes('ყიდვა') || lower.includes('ყიდვ') || lower.includes('ფასი') || lower.includes('buy') || lower.includes('price') || lower.includes('purchase') || lower.includes('ticket')) {
+    // 3. Keybinds & Menu Triggers
+    if (hasAny(['f12', 'shift', 'right shift', 'ღილაკ', 'მენიუ', 'გახსნა', 'როგორ გავხსნა', 'keybind', 'bind', 'menu', 'open', 'controls', 'რომელი ღილაკით'])) {
         if (isGeorgian) {
-            return "🛒 <strong>როგორ ვიყიდოთ ლიცენზია?</strong><br>1. გადადით ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით <strong>Ticket</strong> 'Buy / Purchase' კატეგორიაში.<br>3. ჩვენი გუნდი ეგრევე დაგეხმარებათ შეძენასა და გასაღების მიღებაში!";
+            return "⌨️ <strong>PulseClient მენიუს ღილაკები:</strong><br>• <strong>Pulse PvP Client:</strong> მენიუ იხსნება <strong>F12</strong> ღილაკით (ოპტიმიზირებული FPS, Kill Trigger, Watermark fix).<br>• <strong>Pulse Base Find:</strong> მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით (Matrix/GrimAC bypass).";
         }
-        return "🛒 <strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a <strong>Ticket</strong> in the 'Buy / Purchase' category.<br>3. Our team will generate your key within minutes!";
+        return "⌨️ <strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client:</strong> Menu opens with <strong>F12</strong> (Optimized FPS, Kill Trigger).<br>• <strong>Pulse Base Find:</strong> Menu opens with <strong>Right Shift</strong> (Matrix/GrimAC bypass).";
     }
 
-    // Referral Program
-    if (lower.includes('რეფერალ') || lower.includes('referral') || lower.includes('მეგობარ') || lower.includes('invite') || lower.includes('+3') || lower.includes('დღე')) {
+    // 4. Installation & Mods folder
+    if (hasAny(['ინსტალაც', 'დაყენებ', 'ჩაგდება', 'როგორ ჩავაგდო', 'სად ჩავაგდო', 'install', 'setup', 'mods', 'folder', 'fabric', 'jar'])) {
         if (isGeorgian) {
-            return "🎁 <strong>რეფერალური სისტემა:</strong><br>გაზიარეთ თქვენი პირადი რეფერალური კოდი დეშბორდიდან. როდესაც მეგობარი გამოიყენებს მას, <strong>ორივე მიიღებთ +3 უფასო დღეს</strong> ლიცენზიაზე!";
+            return "💡 <strong>ინსტალაციის ნაბიჯები:</strong><br>1. ჩამოტვირთეთ `.jar` ფაილი საიტიდან (PvP ან Base Find).<br>2. გახსენით `%appdata%/.minecraft/mods` საქაღალდე.<br>3. ჩააგდეთ ნასროლი `.jar` ფაილი მოდების საქაღალდეში.<br>4. ჩართეთ Minecraft <strong>Fabric 1.21.11</strong> პროფილით (Java 21-ით).";
         }
-        return "🎁 <strong>Referral Program:</strong><br>Share your unique referral code from your dashboard. When a friend redeems it, <strong>both of you get +3 bonus days</strong> added to your licenses!";
+        return "💡 <strong>Installation Steps:</strong><br>1. Download the `.jar` file from our website.<br>2. Open `%appdata%/.minecraft/mods` folder.<br>3. Drop the downloaded `.jar` file into the mods directory.<br>4. Launch Minecraft using <strong>Fabric 1.21.11</strong> (Java 21 required).";
     }
 
-    // Launchers
-    if (lower.includes('tlauncher') || lower.includes('lunar') || lower.includes('feather') || lower.includes('prism') || lower.includes('launcher') || lower.includes('ლაუნჩერ')) {
+    // 5. Version & Java Requirements
+    if (hasAny(['1.21', '1.21.11', 'ვერსია', 'version', 'java', 'java 21', 'java21'])) {
         if (isGeorgian) {
-            return "🚀 <strong>თავსებადობა:</strong><br>PulseClient თავსებადია TLauncher-თან, Lunar-თან, Prism Launcher-თან და ყველა სტანდარტულ Fabric 1.21.11 ლაუნჩერთან!";
+            return "⚙️ <strong>ვერსია და მოთხოვნები:</strong><br>• Minecraft ვერსია: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java ვერსია: <strong>Java 21</strong> (რეკომენდებულია Temurin Java 21 ან Oracle Java 21).";
         }
-        return "🚀 <strong>Compatibility:</strong><br>PulseClient works seamlessly with TLauncher, Lunar Client, Prism Launcher, Feather, and all Fabric 1.21.11 loaders!";
+        return "⚙️ <strong>Versions & Requirements:</strong><br>• Minecraft Version: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java Version: <strong>Java 21</strong> (Temurin/Oracle Java 21 recommended).";
     }
 
-    // HWID Reset / Lock
-    if (lower.includes('hwid') || lower.includes('pc') || lower.includes('კომპიუტერ') || lower.includes('შეცვლა') || lower.includes('reset')) {
+    // 6. Launchers Compatibility
+    if (hasAny(['tlauncher', 'lunar', 'feather', 'prism', 'curseforge', 'modrinth', 'official launcher', 'ლაუნჩერ', 'launcher'])) {
         if (isGeorgian) {
-            return "🔒 <strong>HWID & მოწყობილობები:</strong><br>თქვენი ლიცენზია ავტომატურად ებმება პირველ კომპიუტერს ჩართვისას. HWID-ის შესაცვლელად გამოიყენეთ დეშბორდის მენიუ ან მოგვწერეთ Discord-ზე.";
+            return "🚀 <strong>თავსებადი ლაუნჩერები:</strong><br>PulseClient მუშაობს თითქმის ყველა ლაუნჩერზე, სადაც Fabric 1.21.11-ის ჩართვა შეიძლება:<br>• TLauncher (აირჩიეთ Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Lunar Client (Fabric-ის მოდულით)<br>• ოფიციალური Minecraft Launcher.";
         }
-        return "🔒 <strong>HWID & Devices:</strong><br>Your license automatically binds to the first PC upon launch. You can manage or reset your bound HWID directly in your dashboard.";
+        return "🚀 <strong>Compatible Launchers:</strong><br>PulseClient works with any launcher supporting Fabric 1.21.11:<br>• TLauncher (Select Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Official Minecraft Launcher";
     }
 
-    // Default Fallback
+    // 7. PvP vs Base Finder differences
+    if (hasAny(['განსხვავება', 'სხვაობა', 'pvp', 'basefind', 'base finder', 'difference', 'which one', 'რომელი გადმოვწერო'])) {
+        if (isGeorgian) {
+            return "⚖️ <strong>რომელი ვერსია ავირჩიო?</strong><br>• <strong>Pulse PvP Client:</strong> საუკეთესოა PvP ბრძოლებისთვის, გაზრდილი FPS, Kill Trigger, OpSec უსაფრთხოება. (იხსნება <strong>F12</strong>-ით).<br>• <strong>Pulse Base Find:</strong> სპეციალურად ბაზების საპოვნელად და სათვალთვალოდ, Matrix & GrimAC შემოვლით. (იხსნება <strong>Right Shift</strong>-ით).";
+        }
+        return "⚖️ <strong>Which version to pick?</strong><br>• <strong>Pulse PvP Client:</strong> Best for combat, max FPS, Kill Trigger & OpSec (Opens with <strong>F12</strong>).<br>• <strong>Pulse Base Find:</strong> Built for base tracking with Matrix & GrimAC bypasses (Opens with <strong>Right Shift</strong>).";
+    }
+
+    // 8. Purchasing & Price
+    if (hasAny(['ყიდვა', 'ყიდვ', 'ფასი', 'ღირს', 'რა ღირს', 'buy', 'price', 'cost', 'purchase', 'ticket', 'discord', 'paypal', 'card', 'crypto'])) {
+        if (isGeorgian) {
+            return "🛒 <strong>როგორ შევიძინოთ ლიცენზია?</strong><br>1. შემობრძანდით ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით **Ticket** 'Buy / Purchase' არხში.<br>3. ადმინისტრაცია რამდენიმე წუთში დაგეხმარებათ გადახდასა და გასაღების აქტივაციაში!";
+        }
+        return "🛒 <strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a **Ticket** in the 'Buy / Purchase' channel.<br>3. Support will help you complete payment and activate your key in minutes!";
+    }
+
+    // 9. Promocodes & Referrals & Free trial
+    if (hasAny(['პრომო', 'პრომოკოდი', 'კოდი', 'რეფერალ', 'უფასო', 'free', 'promo', 'referral', 'bonus', 'trial', 'ტესტ'])) {
+        if (isGeorgian) {
+            return "🎁 <strong>უფასო დღეები & პრომოკოდები:</strong><br>• <strong>რეფერალური სისტემა:</strong> შენი პირადი კოდი ნახე დეშბორდში. როცა მეგობარი შეიყვანს მას, <strong>ორივეს დაგემატებათ +3 უფასო დღე</strong>!<br>• <strong>პრომოკოდები:</strong> პრომოკოდის შესაყვანად გადადი დეშბორდში 'Redeem' ჩანართზე.";
+        }
+        return "🎁 <strong>Free Days & Promo Codes:</strong><br>• <strong>Referral System:</strong> Find your invite code in the dashboard. When a friend uses it, <strong>both get +3 bonus days</strong>!<br>• <strong>Promo Codes:</strong> Redeem codes under the 'Redeem' tab in your dashboard.";
+    }
+
+    // 10. HWID & PC Lock
+    if (hasAny(['hwid', 'pc', 'კომპიუტერ', 'შეცვლა', 'reset', 'lock', 'device'])) {
+        if (isGeorgian) {
+            return "🔒 <strong>HWID და მოწყობილობები:</strong><br>თქვენი ლიცენზია პირველივე ჩართვისას ავტომატურად უკავშირდება თქვენს PC-ს. თუ კომპიუტერი შეცვალეთ, დეშბორდიდან შეგიძლიათ მოითხოვოთ HWID Reset ან მოგვწეროთ Discord-ზე.";
+        }
+        return "🔒 <strong>HWID & Devices:</strong><br>Your license auto-binds to your PC hardware upon first launch. If you upgrade your PC, request a HWID reset via Dashboard or Discord support.";
+    }
+
+    // 11. Crashing & Troubleshooting
+    if (hasAny(['ქრაშავს', 'არ იხსნება', 'error', 'crash', 'problem', 'პრობლემა', 'ხარვეზი', 'არ რთავს', 'გათიშვა', 'შეცდომა'])) {
+        if (isGeorgian) {
+            return "🛠️ <strong>პრობლემის მოგვარება (Troubleshooting):</strong><br>1. დარწმუნდით რომ გაქვთ <strong>Java 21</strong> დაყენებული.<br>2. შეამოწმეთ Fabric Loader-ის ვერსია (უნდა იყოს 0.16.0 ან ახალი).<br>3. თუ სხვა მოდებიც გაქვთ `.minecraft/mods`-ში, დროებით ამოიღეთ (მაგ: OptiFine / Iris).<br>4. თუ მაინც ქრაშავს, მოგვწერეთ Discord Ticket-ში და გამოგვიგზავნეთ `latest.log`.";
+        }
+        return "🛠️ <strong>Troubleshooting Guide:</strong><br>1. Ensure you have <strong>Java 21</strong> installed.<br>2. Verify Fabric Loader is version 0.16.0 or newer.<br>3. Try removing conflicting mods from `.minecraft/mods`.<br>4. If crashes persist, send your `latest.log` in a Discord Ticket!";
+    }
+
+    // 12. Ban Safety / Anticheat / OpSec
+    if (hasAny(['ban', 'ბანი', 'დამბანენ', 'anticheat', 'safe', 'უსაფრთხო', 'undetected', 'opsec', 'grim', 'matrix'])) {
+        if (isGeorgian) {
+            return "🛡️ <strong>ანტიჩითები & OpSec:</strong><br>PulseClient აღჭურვილია სპეციალური <strong>OpSec Mod</strong>-ით და Matrix/GrimAC შემოვლითი ალგორითმებით. სწორი პარამეტრებით თამაშისას ბანის რისკი მინიმალურია!";
+        }
+        return "🛡️ <strong>Anticheat Safety & OpSec:</strong><br>PulseClient includes an advanced <strong>OpSec Mod</strong> and Matrix/GrimAC bypass features designed to keep your gameplay safe and undetected.";
+    }
+
+    // 13. Gratitude / Thanks
+    if (hasAny(['მადლობა', 'გმადლობ', 'thanks', 'thank you', 'thx', 'kk', 'კაი', 'კარგი'])) {
+        if (isGeorgian) {
+            return "არაფრის! 😊 თუ რამე კითხვა გექნება, ნებისმიერ დროს მომწერე. წარმატებულ თამაშს გისურვებ PulseClient-თან ერთად! 🚀";
+        }
+        return "You're welcome! 😊 If you have any other questions, feel free to ask anytime. Enjoy gaming with PulseClient! 🚀";
+    }
+
+    // Default Smart Fallback
     if (isGeorgian) {
-        return "🤖 მე ვარ Pulse AI! თუ გჭირდება დამატებითი დახმარება, შეგიძლია მოგვწერო ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a> ან გახსნა Support Ticket.";
+        return "🤖 <strong>Pulse AI:</strong> ვერ მივხვდი ზუსტად რას გულისხმობ. შეგიძლია იკითხო მაგალითად:<br>• <em>\"რომელი ღილაკით იხსნება მენიუ?\"</em><br>• <em>\"როგორ დავაინსტალირო მოდი?\"</em><br>• <em>\"როგორ შევიძინო ლიცენზია?\"</em><br>• <em>\"როგორ გავასწორო ქრაში?\"</em><br><br>ან მოგვწერე <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord-ზე</a>!";
     }
-    return "🤖 I'm Pulse AI! If you need further assistance, please reach out on our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a> or open a Support Ticket.";
+    return "🤖 <strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 }
