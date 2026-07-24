@@ -2237,3 +2237,124 @@ async function deletePromocode(code) {
     }
 }
 window.deletePromocode = deletePromocode;
+
+// ==========================================
+// PULSE AI ASSISTANT ENGINE
+// ==========================================
+
+function togglePulseAIChat() {
+    const win = document.getElementById('pulse-ai-chat-window');
+    if (!win) return;
+    win.classList.toggle('hidden');
+    if (!win.classList.contains('hidden')) {
+        const input = document.getElementById('pulse-ai-input');
+        if (input) input.focus();
+        scrollPulseAIMessages();
+    }
+}
+window.togglePulseAIChat = togglePulseAIChat;
+
+function scrollPulseAIMessages() {
+    const area = document.getElementById('pulse-ai-messages');
+    if (area) {
+        area.scrollTop = area.scrollHeight;
+    }
+}
+
+function askPulseAIQuick(questionText) {
+    const input = document.getElementById('pulse-ai-input');
+    if (input) {
+        input.value = questionText;
+        handlePulseAISubmit(new Event('submit'));
+    }
+}
+window.askPulseAIQuick = askPulseAIQuick;
+
+function handlePulseAISubmit(event) {
+    if (event) event.preventDefault();
+    const input = document.getElementById('pulse-ai-input');
+    if (!input) return;
+    const query = input.value.trim();
+    if (!query) return;
+
+    // Append User Message
+    appendPulseAIMessage('user', escapeHTML(query));
+    input.value = '';
+
+    // Show Typing indicator / response
+    setTimeout(() => {
+        const reply = generatePulseAIResponse(query);
+        appendPulseAIMessage('bot', reply);
+    }, 350);
+}
+window.handlePulseAISubmit = handlePulseAISubmit;
+
+function appendPulseAIMessage(sender, text) {
+    const area = document.getElementById('pulse-ai-messages');
+    if (!area) return;
+
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `pulse-ai-msg ${sender}`;
+    msgDiv.innerHTML = `<div class="pulse-ai-msg-bubble">${text}</div>`;
+    area.appendChild(msgDiv);
+    scrollPulseAIMessages();
+}
+
+function generatePulseAIResponse(input) {
+    const lower = input.toLowerCase().trim();
+    const isGeorgian = /[\u10A0-\u10FF]/.test(input);
+
+    // Keybinds & Open Menu
+    if (lower.includes('f12') || lower.includes('shift') || lower.includes('ღილაკ') || lower.includes('მენიუ') || lower.includes('keybind') || lower.includes('open') || lower.includes('menu')) {
+        if (isGeorgian) {
+            return "⌨️ <strong>PulseClient-ის ღილაკები:</strong><br>• <strong>Pulse PvP Client</strong> — მენიუ იხსნება <strong>F12</strong> ღილაკით.<br>• <strong>Pulse Base Find</strong> — მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით.";
+        }
+        return "⌨️ <strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client</strong> — Menu opens with <strong>F12</strong>.<br>• <strong>Pulse Base Find</strong> — Menu opens with <strong>Right Shift</strong>.";
+    }
+
+    // Installation & Setup
+    if (lower.includes('ინსტალაც') || lower.includes('დაყენებ') || lower.includes('ჩაგდება') || lower.includes('install') || lower.includes('setup') || lower.includes('folder') || lower.includes('mods')) {
+        if (isGeorgian) {
+            return "💡 <strong>ინსტალაციის ინსტრუქცია:</strong><br>1. გადმოწერეთ სასურველი <code>.jar</code> ფაილი საიტიდან.<br>2. ჩააგდეთ ფაილი თქვენს <code>.minecraft/mods</code> საქაღალდეში.<br>3. ჩართეთ თამაში <strong>Fabric 1.21.11</strong> ვერსიაზე (საჭიროა Java 21).";
+        }
+        return "💡 <strong>Installation Guide:</strong><br>1. Download the preferred <code>.jar</code> file from the site.<br>2. Drop the file into your <code>.minecraft/mods</code> folder.<br>3. Launch Minecraft with <strong>Fabric 1.21.11</strong> (Java 21 required).";
+    }
+
+    // Buying & License Purchase
+    if (lower.includes('ყიდვა') || lower.includes('ყიდვ') || lower.includes('ფასი') || lower.includes('buy') || lower.includes('price') || lower.includes('purchase') || lower.includes('ticket')) {
+        if (isGeorgian) {
+            return "🛒 <strong>როგორ ვიყიდოთ ლიცენზია?</strong><br>1. გადადით ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით <strong>Ticket</strong> 'Buy / Purchase' კატეგორიაში.<br>3. ჩვენი გუნდი ეგრევე დაგეხმარებათ შეძენასა და გასაღების მიღებაში!";
+        }
+        return "🛒 <strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a <strong>Ticket</strong> in the 'Buy / Purchase' category.<br>3. Our team will generate your key within minutes!";
+    }
+
+    // Referral Program
+    if (lower.includes('რეფერალ') || lower.includes('referral') || lower.includes('მეგობარ') || lower.includes('invite') || lower.includes('+3') || lower.includes('დღე')) {
+        if (isGeorgian) {
+            return "🎁 <strong>რეფერალური სისტემა:</strong><br>გაზიარეთ თქვენი პირადი რეფერალური კოდი დეშბორდიდან. როდესაც მეგობარი გამოიყენებს მას, <strong>ორივე მიიღებთ +3 უფასო დღეს</strong> ლიცენზიაზე!";
+        }
+        return "🎁 <strong>Referral Program:</strong><br>Share your unique referral code from your dashboard. When a friend redeems it, <strong>both of you get +3 bonus days</strong> added to your licenses!";
+    }
+
+    // Launchers
+    if (lower.includes('tlauncher') || lower.includes('lunar') || lower.includes('feather') || lower.includes('prism') || lower.includes('launcher') || lower.includes('ლაუნჩერ')) {
+        if (isGeorgian) {
+            return "🚀 <strong>თავსებადობა:</strong><br>PulseClient თავსებადია TLauncher-თან, Lunar-თან, Prism Launcher-თან და ყველა სტანდარტულ Fabric 1.21.11 ლაუნჩერთან!";
+        }
+        return "🚀 <strong>Compatibility:</strong><br>PulseClient works seamlessly with TLauncher, Lunar Client, Prism Launcher, Feather, and all Fabric 1.21.11 loaders!";
+    }
+
+    // HWID Reset / Lock
+    if (lower.includes('hwid') || lower.includes('pc') || lower.includes('კომპიუტერ') || lower.includes('შეცვლა') || lower.includes('reset')) {
+        if (isGeorgian) {
+            return "🔒 <strong>HWID & მოწყობილობები:</strong><br>თქვენი ლიცენზია ავტომატურად ებმება პირველ კომპიუტერს ჩართვისას. HWID-ის შესაცვლელად გამოიყენეთ დეშბორდის მენიუ ან მოგვწერეთ Discord-ზე.";
+        }
+        return "🔒 <strong>HWID & Devices:</strong><br>Your license automatically binds to the first PC upon launch. You can manage or reset your bound HWID directly in your dashboard.";
+    }
+
+    // Default Fallback
+    if (isGeorgian) {
+        return "🤖 მე ვარ Pulse AI! თუ გჭირდება დამატებითი დახმარება, შეგიძლია მოგვწერო ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a> ან გახსნა Support Ticket.";
+    }
+    return "🤖 I'm Pulse AI! If you need further assistance, please reach out on our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a> or open a Support Ticket.";
+}

@@ -1095,6 +1095,73 @@
         </div>
     </div>
 
+    <!-- Pulse AI Assistant Widget -->
+    <div id="pulse-ai-widget" class="pulse-ai-container">
+        <!-- Floating Launcher Button (Bottom-Left to avoid Discord widget collision) -->
+        <button id="pulse-ai-launcher" class="pulse-ai-launcher-btn" onclick="togglePulseAIChat()" aria-label="Pulse AI Support">
+            <div class="pulse-ai-badge-dot"></div>
+            <div class="pulse-ai-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+                    <path d="M12 12L2.5 7.5"></path>
+                    <path d="M12 12v10"></path>
+                    <circle cx="12" cy="12" r="3" fill="#6366f1"></circle>
+                </svg>
+            </div>
+            <span class="pulse-ai-launcher-text">Pulse AI</span>
+        </button>
+
+        <!-- Chat Window Container -->
+        <div id="pulse-ai-chat-window" class="pulse-ai-chat-card hidden">
+            <!-- Header -->
+            <div class="pulse-ai-header">
+                <div class="pulse-ai-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                </div>
+                <div class="pulse-ai-header-info">
+                    <h4>Pulse AI <span class="ai-status-online">● Online</span></h4>
+                    <p data-i18n="ai.subtitle">24/7 ასისტენტი მხარდაჭერისთვის</p>
+                </div>
+                <button class="pulse-ai-close-btn" onclick="togglePulseAIChat()" aria-label="Close AI Chat">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Quick Suggestions -->
+            <div class="pulse-ai-chips-scroll">
+                <button class="pulse-ai-chip" onclick="askPulseAIQuick('როგორ დავაინსტალირო?')">💡 ინსტალაცია</button>
+                <button class="pulse-ai-chip" onclick="askPulseAIQuick('რომელი ღილაკით იხსნება მენიუ?')">⌨️ ღილაკები (F12 / Shift)</button>
+                <button class="pulse-ai-chip" onclick="askPulseAIQuick('როგორ ვიყიდო ლიცენზია?')">🛒 შეძენა</button>
+                <button class="pulse-ai-chip" onclick="askPulseAIQuick('რეფერალური სისტემა')">🎁 +3 უფასო დღე</button>
+            </div>
+
+            <!-- Chat History Area -->
+            <div id="pulse-ai-messages" class="pulse-ai-messages-area">
+                <div class="pulse-ai-msg bot">
+                    <div class="pulse-ai-msg-bubble" data-i18n="ai.welcomeMsg">
+                        გამარჯობა! მე ვარ <strong>Pulse AI</strong> 🤖. როგორ დაგეხმარო დღეს? (შეგიძლია დამისვა კითხვები ინსტალაციაზე, ღილაკებზე, შეძენაზე ან პრობლემებზე).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <form id="pulse-ai-form" class="pulse-ai-input-form" onsubmit="handlePulseAISubmit(event)">
+                <input type="text" id="pulse-ai-input" placeholder="დასვი კითხვა..." autocomplete="off" required data-i18n-placeholder="ai.inputPlaceholder" />
+                <button type="submit" class="pulse-ai-send-btn" aria-label="Send Message">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- App Configuration and Logic script -->
     <script src="i18n.js?v=1.1.8"></script>
     <script src="app.js?v=1.1.8"></script>
