@@ -2270,6 +2270,19 @@ function askPulseAIQuick(questionText) {
 }
 window.askPulseAIQuick = askPulseAIQuick;
 
+function escapePulseHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, function(m) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[m];
+    });
+}
+
 function handlePulseAISubmit(event) {
     if (event) event.preventDefault();
     const input = document.getElementById('pulse-ai-input');
@@ -2278,7 +2291,7 @@ function handlePulseAISubmit(event) {
     if (!query) return;
 
     // Append User Message
-    appendPulseAIMessage('user', escapeHTML(query));
+    appendPulseAIMessage('user', escapePulseHTML(query));
     input.value = '';
 
     // Show Typing indicator / response
