@@ -1633,16 +1633,20 @@ async function processReferralBonus(referredUsername) {
     }
 }
 
-// Generate a deterministic referral code from discordId
+// Generate a deterministic referral code from discordId (aligned 100% with backend Python logic)
 function generateReferralCodeFromDiscordId(discordId) {
     if (!discordId) return '';
     let hash = 0;
+    discordId = String(discordId).trim();
     for (let i = 0; i < discordId.length; i++) {
         const char = discordId.charCodeAt(i);
         hash = (hash << 5) - hash + char;
-        hash = hash & hash; // Convert to 32bit integer
+        hash = hash & hash; // Convert to 32-bit signed integer
     }
-    hash = Math.abs(hash);
+    // Match Python unsigned 32-bit conversion (h if h >= 0 else h + 0x100000000)
+    if (hash < 0) {
+        hash += 4294967296;
+    }
     
     // Map to 7 characters using a 32-character alphabet (excludes confusing 0, O, 1, I)
     const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
