@@ -386,7 +386,7 @@ function handleUserSignIn(user) {
     fetchLatestProfile(user.id);
 
     // Set up referral link for the logged in user
-    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
+    const discordId = getDiscordId(user);
     const refLinkInput = document.getElementById('referral-link-input');
     if (refLinkInput && discordId) {
         refLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${discordId}`;
@@ -1633,6 +1633,23 @@ async function processReferralBonus(referredUsername) {
     }
 }
 
+function getDiscordId(user) {
+    if (!user) return '';
+    const meta = user.user_metadata || {};
+    if (meta.provider_id) return String(meta.provider_id).trim();
+    if (meta.sub && /^\d+$/.test(meta.sub)) return String(meta.sub).trim();
+    if (user.identities && Array.isArray(user.identities)) {
+        const discordIdentity = user.identities.find(i => i.provider === 'discord' || (i.identity_data && i.identity_data.provider_id));
+        if (discordIdentity) {
+            return String(discordIdentity.id || discordIdentity.identity_data?.provider_id || '').trim();
+        }
+        if (user.identities[0] && user.identities[0].id) {
+            return String(user.identities[0].id).trim();
+        }
+    }
+    return '';
+}
+
 // Generate a deterministic referral code from discordId (aligned 100% with backend Python logic)
 function generateReferralCodeFromDiscordId(discordId) {
     if (!discordId) return '';
@@ -1684,7 +1701,9 @@ async function redeemReferralCode() {
 
     const metadata = currentUser.user_metadata;
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+    const discordId = getDiscordId(currentUser);
+
+    console.log("[Pulse AI Referral Debug] Sending code:", code, "discordId:", discordId, "username:", username);
 
     try {
         // Call the backend endpoint — it uses the service_role key to bypass RLS
@@ -1694,7 +1713,9 @@ async function redeemReferralCode() {
             body: JSON.stringify({ code, discord_id: String(discordId), username })
         });
 
+        console.log("[Pulse AI Referral Debug] HTTP status:", response.status, "ok:", response.ok);
         const result = await response.json();
+        console.log("[Pulse AI Referral Debug] Server result:", JSON.stringify(result));
 
         if (result.status === 'success') {
             showBanner(t("msg.refCodeSuccess") || result.message, "success");
@@ -1711,7 +1732,7 @@ async function redeemReferralCode() {
             else showBanner(t("msg.refCodeFail") + msg, "error");
         }
     } catch (err) {
-        console.error("Error redeeming referral code:", err.message);
+        console.error("[Pulse AI Referral Debug] CATCH error:", err);
         showBanner(t("msg.refCodeFail") + err.message, "error");
     } finally {
         submitBtn.disabled = false;
@@ -1795,7 +1816,7 @@ async function saveUserProfile(user) {
     const metadata = user.user_metadata;
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
     const avatar = cleanAvatarUrl(metadata.avatar_url);
-    const discordId = metadata.provider_id || (user.identities && user.identities[0]?.id);
+    const discordId = getDiscordId(user);
 
     if (!username) return;
 
