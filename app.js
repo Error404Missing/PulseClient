@@ -1676,6 +1676,26 @@ function generateReferralCodeFromDiscordId(discordId) {
     return code;
 }
 
+function generateOldReferralCodeFromDiscordId(discordId) {
+    if (!discordId) return '';
+    let hash = 0;
+    discordId = String(discordId).trim();
+    for (let i = 0; i < discordId.length; i++) {
+        const char = discordId.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;
+    }
+    hash = Math.abs(hash);
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    let temp = hash;
+    for (let i = 0; i < 7; i++) {
+        code += alphabet.charAt(temp % alphabet.length);
+        temp = Math.floor(temp / alphabet.length);
+    }
+    return code;
+}
+
 // Redeem a referral code (7-character random format)
 async function redeemReferralCode() {
     const codeInput = document.getElementById('referral-code-input');
@@ -1703,14 +1723,36 @@ async function redeemReferralCode() {
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
     const discordId = getDiscordId(currentUser);
 
-    console.log("[Pulse AI Referral Debug] Sending code:", code, "discordId:", discordId, "username:", username);
+    let codeToSend = code;
+
+    // Dual-algorithm referral resolution: check profiles table for old or new code match
+    try {
+        const { data: profiles } = await supabaseClient
+            .from('profiles')
+            .select('discord_id, username');
+
+        if (profiles && profiles.length > 0) {
+            const matchedReferrer = profiles.find(p => 
+                generateReferralCodeFromDiscordId(p.discord_id) === code ||
+                generateOldReferralCodeFromDiscordId(p.discord_id) === code
+            );
+            if (matchedReferrer) {
+                codeToSend = generateReferralCodeFromDiscordId(matchedReferrer.discord_id);
+                console.log("[Pulse AI Referral Debug] Dual-algorithm matched referrer:", matchedReferrer.username, "sending server code:", codeToSend);
+            }
+        }
+    } catch (profileErr) {
+        console.warn("[Pulse AI Referral Debug] Profile lookup warning:", profileErr.message);
+    }
+
+    console.log("[Pulse AI Referral Debug] Sending code:", codeToSend, "discordId:", discordId, "username:", username);
 
     try {
         // Call the backend endpoint — it uses the service_role key to bypass RLS
         const response = await fetch('https://errormissing-pulse-bot.hf.space/referral/redeem', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code, discord_id: String(discordId), username })
+            body: JSON.stringify({ code: codeToSend, discord_id: String(discordId), username })
         });
 
         console.log("[Pulse AI Referral Debug] HTTP status:", response.status, "ok:", response.ok);
