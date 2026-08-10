@@ -369,9 +369,14 @@ function handleUserSignIn(user) {
     dashAvatar.src = avatar;
     dashUsername.textContent = username;
 
-    // Switch Views
-    landingPage.classList.add('hidden');
-    dashboardPage.classList.remove('hidden');
+    // Switch Views only if dashboard tab explicitly requested
+    if (window.location.hash === '#dashboard' || window.location.hash.startsWith('#tab-')) {
+        landingPage.classList.add('hidden');
+        dashboardPage.classList.remove('hidden');
+    } else {
+        landingPage.classList.remove('hidden');
+        dashboardPage.classList.add('hidden');
+    }
 
     // Show/Hide Admin menu item
     if (isAdmin()) {
@@ -2508,3 +2513,43 @@ const downloadMacBtn = document.getElementById('download-mac-btn-modal');
         btn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
     }
 });
+
+
+// Device Slot Modal functions
+function openDeviceSlotModal() {
+    const modal = document.getElementById('device-slot-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        updateDeviceSlotModalInfo();
+    }
+}
+window.openDeviceSlotModal = openDeviceSlotModal;
+
+function closeDeviceSlotModal() {
+    const modal = document.getElementById('device-slot-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.closeDeviceSlotModal = closeDeviceSlotModal;
+
+function updateDeviceSlotModalInfo() {
+    const hwidEl = document.getElementById('device-modal-hwid-text');
+    if (!hwidEl) return;
+    if (userLicenses && userLicenses.length > 0) {
+        const activeLic = userLicenses.find(l => l.is_active) || userLicenses[0];
+        const hwid = activeLic.hwid && activeLic.hwid !== 'null' ? activeLic.hwid : 'არ არის მიბმული';
+        hwidEl.textContent = 'HWID: ' + hwid;
+    } else {
+        hwidEl.textContent = 'HWID: ლიცენზია არ მოიძებნა';
+    }
+}
+
+async function resetDeviceSlotHwid() {
+    if (!userLicenses || userLicenses.length === 0) {
+        showBanner("აქტიური ლიცენზია არ მოიძებნა", "error");
+        return;
+    }
+    const activeLic = userLicenses.find(l => l.is_active) || userLicenses[0];
+    await resetUserHwid(activeLic.license_key);
+    updateDeviceSlotModalInfo();
+}
+window.resetDeviceSlotHwid = resetDeviceSlotHwid;

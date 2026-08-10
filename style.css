@@ -98,44 +98,10 @@ body {
     animation: floatDarkRed 24s infinite alternate ease-in-out;
 }
 
-.blob-1 {
-    top: -15%;
-    left: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, #ff0000 0%, transparent 75%);
-    animation-duration: 24s;
-}
-
-.blob-2 {
-    bottom: -15%;
-    right: -10%;
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, #990000 0%, transparent 75%);
-    animation-duration: 30s;
-    animation-delay: -5s;
-}
-
-.blob-3 {
-    top: 35%;
-    left: 40%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #cc0000 0%, transparent 75%);
-    animation-duration: 20s;
-    animation-delay: -10s;
-}
-
-.blob-4 {
-    bottom: 15%;
-    left: 5%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #660000 0%, transparent 75%);
-    animation-duration: 28s;
-    animation-delay: -7s;
-}
+.blob-1 { background: radial-gradient(circle, #ff0000 0%, transparent 80%) !important; }
+.blob-2 { background: radial-gradient(circle, #990000 0%, transparent 80%) !important; }
+.blob-3 { background: radial-gradient(circle, #cc0000 0%, transparent 80%) !important; }
+.blob-4 { background: radial-gradient(circle, #660000 0%, transparent 80%) !important; }
 
 @keyframes floatDarkRed {
     0% { transform: translate(0, 0) scale(1); }
@@ -3204,18 +3170,10 @@ h3 {
     filter: blur(160px) !important;
     will-change: transform;
 }
-.blob-1 {
-    background: radial-gradient(circle, #8b5cf6 0%, transparent 80%) !important;
-}
-.blob-2 {
-    background: radial-gradient(circle, #3b82f6 0%, transparent 80%) !important;
-}
-.blob-3 {
-    background: radial-gradient(circle, #ec4899 0%, transparent 80%) !important;
-}
-.blob-4 {
-    background: radial-gradient(circle, #1e1b4b 0%, transparent 80%) !important;
-}
+.blob-1 { background: radial-gradient(circle, #ff0000 0%, transparent 80%) !important; }
+.blob-2 { background: radial-gradient(circle, #990000 0%, transparent 80%) !important; }
+.blob-3 { background: radial-gradient(circle, #cc0000 0%, transparent 80%) !important; }
+.blob-4 { background: radial-gradient(circle, #660000 0%, transparent 80%) !important; }
 
 /* 3. Hero Visual Preview Sway (Gentle Floating Animation) */
 .main-preview {
@@ -3234,15 +3192,15 @@ h3 {
     transform: scale(1.04) !important;
 }
 .logo:hover img {
-    box-shadow: 0 0 15px rgba(255, 0, 60, 0.6) !important;
-    transform: rotate(6deg) scale(1.05);
-    transition: var(--spring-transition);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.85) !important;
+    transform: rotate(6deg) scale(1.08);
+    transition: var(--transition);
 }
 .logo:hover .pulse-logo-text {
-    background: linear-gradient(135deg, #a78bfa 0%, #00ffcc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: var(--spring-transition);
+    background: linear-gradient(135deg, #ff0000 0%, #ff6666 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    transition: var(--transition);
 }
 
 /* 5. Navbar Hover Enhancement */
