@@ -4,14 +4,15 @@
 
 :root {
     --bg-dark: #000000;
-    --card-bg: rgba(15, 0, 3, 0.6);
-    --card-border: rgba(255, 0, 0, 0.2);
-    --card-hover-border: rgba(255, 0, 0, 0.6);
+    --bg-surface: #050505;
+    --card-bg: rgba(8, 8, 10, 0.88);
+    --card-border: rgba(255, 0, 0, 0.25);
+    --card-hover-border: rgba(255, 0, 0, 0.65);
     
-    --accent: #ff0000; /* Pure Neon Blood Red */
-    --accent-light: #ff3333; /* Vibrant Pure Red */
-    --accent-glow: rgba(255, 0, 0, 0.6);
-    --accent-gradient: linear-gradient(135deg, #ff0000 0%, #cc0000 50%, #990000 100%);
+    --accent: #ff0000;           /* Pure Neon Blood Red */
+    --accent-light: #ff3333;     /* Bright Red */
+    --accent-glow: rgba(255, 0, 0, 0.55);
+    --accent-gradient: linear-gradient(135deg, #ff0000 0%, #b30000 100%);
     
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
@@ -19,15 +20,13 @@
     
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.1);
-    
     --danger: #ff0000;
     --danger-bg: rgba(255, 0, 0, 0.15);
-    
     --warning: #f59e0b;
     --warning-bg: rgba(245, 158, 11, 0.1);
 
     --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    --ios-blur: blur(35px) saturate(220%);
+    --ios-blur: blur(25px) saturate(200%);
 }
 
 /* Reset */
@@ -69,7 +68,7 @@ a.btn-secondary:visited {
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-color: #000000 !important;
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -87,59 +86,62 @@ body {
     bottom: 0;
     z-index: -1;
     overflow: hidden;
-    background-color: #000000;
+    background-color: #000000 !important;
 }
 
 .blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(130px);
-    opacity: 0.38;
+    filter: blur(140px);
+    opacity: 0.18 !important; /* Low opacity so black color dominates! */
     mix-blend-mode: screen;
-    animation: floatPureRed 22s infinite alternate ease-in-out;
+    animation: floatDarkRed 24s infinite alternate ease-in-out;
 }
 
 .blob-1 {
-    top: -10%;
+    top: -15%;
     left: -10%;
-    width: 650px;
-    height: 650px;
-    background: radial-gradient(circle, #ff0000 0%, transparent 80%);
-    animation-duration: 22s;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #ff0000 0%, transparent 75%);
+    animation-duration: 24s;
 }
 
 .blob-2 {
-    bottom: -10%;
+    bottom: -15%;
     right: -10%;
-    width: 750px;
-    height: 750px;
-    background: radial-gradient(circle, #cc0000 0%, transparent 80%);
-    animation-duration: 28s;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, #990000 0%, transparent 75%);
+    animation-duration: 30s;
     animation-delay: -5s;
 }
 
 .blob-3 {
     top: 35%;
-    left: 45%;
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, #ff3333 0%, transparent 80%);
+    left: 40%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #cc0000 0%, transparent 75%);
     animation-duration: 20s;
-    animation-delay: -9s;
+    animation-delay: -10s;
 }
 
 .blob-4 {
-    bottom: 20%;
+    bottom: 15%;
     left: 5%;
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, #880000 0%, transparent 80%);
-    animation-duration: 26s;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #660000 0%, transparent 75%);
+    animation-duration: 28s;
     animation-delay: -7s;
 }
 
-@keyframes floatPureRed {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+@keyframes floatDarkRed {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(35px, 25px) scale(1.08); }
+    100% { transform: translate(-30px, -40px) scale(0.95); }
+}
     50% { transform: translate(45px, 35px) scale(1.12) rotate(5deg); }
     100% { transform: translate(-35px, -50px) scale(0.92) rotate(-5deg); }
 }
@@ -187,7 +189,7 @@ body {
 /* iOS glass panel */
 .glass-panel {
     position: relative;
-    background: var(--card-bg);
+    background: rgba(10, 10, 12, 0.9) !important;
     border: 1px solid var(--card-border);
     backdrop-filter: var(--ios-blur);
     -webkit-backdrop-filter: var(--ios-blur);
@@ -2105,7 +2107,7 @@ h3 {
 }
 
 .modal-content {
-    background: var(--card-bg);
+    background: rgba(10, 10, 12, 0.9) !important;
     border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 32px;
