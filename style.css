@@ -4044,3 +4044,34 @@ body, html {
     color: #ffffff !important;
     border: 1px solid rgba(255, 0, 0, 0.2) !important;
 }
+
+
+body, html {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.bg-blobs {
+    background-color: #000000 !important;
+}
+
+.blob {
+    opacity: 0.08 !important; /* Ultra low blob opacity so jet black dominates! */
+}
+
+.modal-content {
+    background: #000000 !important;
+    border: 1px solid rgba(255, 0, 0, 0.4) !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1), 0 0 20px rgba(255, 0, 0, 0.2) !important;
+}
+
+.modal-download-card-item {
+    background: #09090b !important;
+    border: 1px solid rgba(255, 0, 0, 0.25) !important;
+}
+
+.modal-download-card-item:hover {
+    border-color: rgba(255, 0, 0, 0.7) !important;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3) !important;
+    background: #111114 !important;
+}

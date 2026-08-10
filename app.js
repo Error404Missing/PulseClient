@@ -2496,3 +2496,15 @@ function generatePulseAIResponse(input) {
     }
     return "🤖 <strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 }
+
+
+// Register OS download button handlers
+const downloadLinuxBtn = document.getElementById('download-linux-btn-modal');
+const downloadMacBtn = document.getElementById('download-mac-btn-modal');
+
+[downloadPvpBtn, downloadBasefindBtn, downloadLinuxBtn, downloadMacBtn].forEach(btn => {
+    if (btn) {
+        btn.href = GITHUB_BASEFIND_DOWNLOAD_URL;
+        btn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
+    }
+});
