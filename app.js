@@ -35,11 +35,13 @@ const downloadBasefindBtn = document.getElementById('download-basefind-btn-modal
 
 const GITHUB_REPO_OWNER = 'Error404Missing';
 const GITHUB_REPO_NAME = 'PulseClient';
-const GITHUB_PVP_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
-const GITHUB_BASEFIND_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
+const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
+const GITHUB_PVP_JAR_FILE = GITHUB_JAR_FILE;
+const GITHUB_BASEFIND_JAR_FILE = GITHUB_JAR_FILE;
 
-const GITHUB_PVP_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_PVP_JAR_FILE}`;
-const GITHUB_BASEFIND_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_BASEFIND_JAR_FILE}`;
+const GITHUB_CLIENT_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_JAR_FILE}`;
+const GITHUB_PVP_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
+const GITHUB_BASEFIND_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 
 // Admin DOM Elements
 const adminMenuItem = document.getElementById('admin-menu-item');
