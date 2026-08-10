@@ -3991,3 +3991,56 @@ h3 {
     box-shadow: 0 6px 18px rgba(255, 0, 60, 0.5);
 }
 
+
+
+body, html {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.bg-blobs {
+    background-color: #000000 !important;
+}
+
+.blob {
+    opacity: 0.12 !important; /* Low opacity so pure black background dominates! */
+}
+
+.glass-panel,
+.setup-card,
+.feature-card,
+.pricing-card,
+.dash-card,
+.auth-card,
+.modal-content,
+.modal-download-card-item {
+    background: #09090b !important;
+    border: 1px solid rgba(255, 0, 0, 0.3) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.95) !important;
+}
+
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.92) !important;
+}
+
+.navbar {
+    background: #000000 !important;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.25) !important;
+}
+
+.footer {
+    background: #000000 !important;
+    border-top: 1px solid rgba(255, 0, 0, 0.25) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6) !important;
+}
+
+.btn-secondary {
+    background: #141416 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 0, 0, 0.2) !important;
+}
