@@ -3,29 +3,31 @@
    ========================================== */
 
 :root {
-    --bg-dark: #030303;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --card-hover-border: rgba(255, 255, 255, 0.16);
+    --bg-dark: #040406;
+    --card-bg: rgba(20, 10, 15, 0.45);
+    --card-border: rgba(255, 42, 95, 0.15);
+    --card-hover-border: rgba(255, 42, 95, 0.45);
     
-    --accent: #6366f1; /* iOS Purple/Indigo */
-    --accent-glow: rgba(99, 102, 241, 0.45);
+    --accent: #ff003c; /* Crimson Neon Red */
+    --accent-light: #ff4d6d; /* Soft Rose Crimson */
+    --accent-glow: rgba(255, 0, 60, 0.5);
+    --accent-gradient: linear-gradient(135deg, #ff003c 0%, #d90429 60%, #800f2f 100%);
     
     --text-primary: rgba(255, 255, 255, 0.96);
-    --text-secondary: rgba(255, 255, 255, 0.6);
-    --text-muted: rgba(255, 255, 255, 0.35);
+    --text-secondary: rgba(255, 255, 255, 0.65);
+    --text-muted: rgba(255, 255, 255, 0.38);
     
     --success: #34d399;
     --success-bg: rgba(52, 211, 153, 0.08);
     
-    --danger: #f87171;
-    --danger-bg: rgba(248, 113, 113, 0.08);
+    --danger: #ff003c;
+    --danger-bg: rgba(255, 0, 60, 0.1);
     
     --warning: #fbbf24;
     --warning-bg: rgba(251, 191, 36, 0.08);
 
-    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    --ios-blur: blur(30px) saturate(190%);
+    --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    --ios-blur: blur(35px) saturate(210%);
 }
 
 /* Reset */
@@ -85,59 +87,62 @@ body {
     bottom: 0;
     z-index: -1;
     overflow: hidden;
-    background-color: #030303;
+    background-color: #040406;
 }
 
 .blob {
     position: absolute;
     border-radius: 50%;
     filter: blur(140px);
-    opacity: 0.24;
+    opacity: 0.32;
     mix-blend-mode: screen;
-    animation: float 25s infinite alternate ease-in-out;
+    animation: floatRed 22s infinite alternate ease-in-out;
 }
 
 .blob-1 {
-    top: -10%;
+    top: -12%;
     left: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, #7c3aed 0%, transparent 80%);
-    animation-duration: 25s;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, #ff003c 0%, transparent 80%);
+    animation-duration: 22s;
 }
 
 .blob-2 {
-    bottom: -10%;
+    bottom: -12%;
     right: -10%;
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, #4f46e5 0%, transparent 80%);
-    animation-duration: 30s;
+    width: 750px;
+    height: 750px;
+    background: radial-gradient(circle, #b7094c 0%, transparent 80%);
+    animation-duration: 28s;
     animation-delay: -5s;
 }
 
 .blob-3 {
-    top: 30%;
-    left: 50%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #db2777 0%, transparent 80%);
-    animation-duration: 22s;
-    animation-delay: -10s;
+    top: 35%;
+    left: 45%;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, #ff4d6d 0%, transparent 80%);
+    animation-duration: 20s;
+    animation-delay: -9s;
 }
 
 .blob-4 {
-    bottom: 25%;
-    left: 10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, #312e81 0%, transparent 80%);
-    animation-duration: 28s;
+    bottom: 20%;
+    left: 5%;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, #590d22 0%, transparent 80%);
+    animation-duration: 26s;
     animation-delay: -7s;
 }
 
-@keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
+@keyframes floatRed {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate(45px, 35px) scale(1.12) rotate(5deg); }
+    100% { transform: translate(-35px, -50px) scale(0.92) rotate(-5deg); }
+}
     50% { transform: translate(40px, 30px) scale(1.1); }
     100% { transform: translate(-30px, -45px) scale(0.92); }
 }
@@ -197,7 +202,7 @@ body {
 .faq-item:hover {
     border-color: var(--card-hover-border);
     background: rgba(255, 255, 255, 0.045);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 30px rgba(99, 102, 241, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 30px rgba(255, 0, 60, 0.08);
     transform: translateY(-4px) scale(1.005);
 }
 
@@ -222,7 +227,7 @@ h3 {
 }
 
 .highlight {
-    background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+    background: linear-gradient(135deg, #a78bfa 0%, #ff003c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
@@ -262,7 +267,7 @@ h3 {
 }
 
 .btn-glow {
-    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    background: linear-gradient(135deg, #818cf8 0%, #ff003c 100%);
     color: #fff;
 }
 
@@ -371,7 +376,7 @@ h3 {
 }
 
 .nav-links button:focus-visible {
-    outline: 2px solid rgba(99, 102, 241, 0.45);
+    outline: 2px solid rgba(255, 0, 60, 0.45);
     outline-offset: 2px;
 }
 
@@ -411,9 +416,9 @@ h3 {
 }
 
 .lang-switcher .lang-btn.active {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(129, 140, 248, 0.2));
+    background: linear-gradient(135deg, rgba(255, 0, 60, 0.35), rgba(129, 140, 248, 0.2));
     color: #fff;
-    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 2px 10px rgba(255, 0, 60, 0.25);
 }
 
 .user-pill {
@@ -845,8 +850,8 @@ h3 {
 
 .pricing-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 24px 48px rgba(99, 102, 241, 0.12);
-    border-color: rgba(99, 102, 241, 0.25);
+    box-shadow: 0 24px 48px rgba(255, 0, 60, 0.12);
+    border-color: rgba(255, 0, 60, 0.25);
 }
 
 .pricing-card.popular {
@@ -856,8 +861,8 @@ h3 {
 }
 
 .pricing-card.popular:hover {
-    border-color: rgba(99, 102, 241, 0.45);
-    box-shadow: 0 28px 56px rgba(99, 102, 241, 0.18);
+    border-color: rgba(255, 0, 60, 0.45);
+    box-shadow: 0 28px 56px rgba(255, 0, 60, 0.18);
 }
 
 .popular-badge {
@@ -984,7 +989,7 @@ h3 {
 }
 
 .faq-item.active {
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: rgba(255, 0, 60, 0.3);
     background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -1016,8 +1021,8 @@ h3 {
    DASHBOARD (iOS 26 Purple Theme)
    ========================================== */
 :root {
-    --krypton-yellow: #6366f1; /* iOS Purple/Indigo */
-    --krypton-yellow-glow: rgba(99, 102, 241, 0.45);
+    --krypton-yellow: #ff003c; /* iOS Purple/Indigo */
+    --krypton-yellow-glow: rgba(255, 0, 60, 0.45);
     --krypton-bg-card: rgba(255, 255, 255, 0.03);
     --krypton-border: rgba(255, 255, 255, 0.08);
 }
@@ -1046,7 +1051,7 @@ h3 {
 }
 
 .logo-red {
-    color: #6366f1; /* purple/indigo */
+    color: #ff003c; /* purple/indigo */
 }
 
 .logo-white {
@@ -1094,7 +1099,7 @@ h3 {
 
 .device-count {
     margin-left: auto;
-    background-color: rgba(99, 102, 241, 0.1);
+    background-color: rgba(255, 0, 60, 0.1);
     color: var(--krypton-yellow);
     padding: 2px 10px;
     border-radius: 99px;
@@ -1266,12 +1271,12 @@ h3 {
     width: 52px;
     height: 52px;
     border-radius: 12px;
-    background-color: rgba(99, 102, 241, 0.08);
+    background-color: rgba(255, 0, 60, 0.08);
     color: var(--krypton-yellow);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.05);
+    box-shadow: inset 0 0 12px rgba(255, 0, 60, 0.05);
 }
 
 .icon-download-large svg {
@@ -1332,7 +1337,7 @@ h3 {
 }
 
 .btn-krypton-download:hover {
-    background-color: #4f46e5;
+    background-color: #d90429;
     transform: translateY(-2px);
     box-shadow: 0 6px 25px var(--krypton-yellow-glow);
 }
@@ -1382,7 +1387,7 @@ h3 {
 }
 
 .step-card:hover {
-    border-color: rgba(99, 102, 241, 0.25);
+    border-color: rgba(255, 0, 60, 0.25);
     background-color: rgba(255,255,255,0.02);
 }
 
@@ -1390,7 +1395,7 @@ h3 {
     width: 38px;
     height: 38px;
     border-radius: 8px;
-    background-color: rgba(99, 102, 241, 0.08);
+    background-color: rgba(255, 0, 60, 0.08);
     color: var(--krypton-yellow);
     display: flex;
     align-items: center;
@@ -1429,7 +1434,7 @@ h3 {
 }
 
 .launcher-card:hover {
-    border-color: rgba(99, 102, 241, 0.25);
+    border-color: rgba(255, 0, 60, 0.25);
     background-color: rgba(255,255,255,0.02);
 }
 
@@ -1496,8 +1501,8 @@ h3 {
 
 .btn-refresh:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(99, 102, 241, 0.35) !important;
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+    border-color: rgba(255, 0, 60, 0.35) !important;
+    box-shadow: 0 0 12px rgba(255, 0, 60, 0.15);
 }
 
 .btn-refresh:hover svg {
@@ -1630,7 +1635,7 @@ h3 {
 }
 
 .bind-form button:hover {
-    background-color: #4f46e5 !important;
+    background-color: #d90429 !important;
     transform: translateY(-1px);
 }
 
@@ -1642,7 +1647,7 @@ h3 {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
+    background: linear-gradient(135deg, rgba(255, 0, 60, 0.25), rgba(168, 85, 247, 0.25));
     color: #a78bfa;
     padding: 2px 8px;
     border-radius: 6px;
@@ -1705,7 +1710,7 @@ h3 {
 .admin-form .form-group input:focus,
 .admin-form .form-group select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 0, 60, 0.1);
 }
 
 .admin-form .form-group input::placeholder {
@@ -1779,7 +1784,7 @@ h3 {
 
 .admin-controls #admin-search-input:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 0, 60, 0.1);
 }
 
 .admin-controls #admin-search-input::placeholder {
@@ -1814,7 +1819,7 @@ h3 {
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: rgba(99, 102, 241, 0.35) rgba(255, 255, 255, 0.04);
+    scrollbar-color: rgba(255, 0, 60, 0.35) rgba(255, 255, 255, 0.04);
 }
 
 .admin-table-wrapper::-webkit-scrollbar {
@@ -1827,7 +1832,7 @@ h3 {
 }
 
 .admin-table-wrapper::-webkit-scrollbar-thumb {
-    background: rgba(99, 102, 241, 0.35);
+    background: rgba(255, 0, 60, 0.35);
     border-radius: 4px;
 }
 
@@ -1839,7 +1844,7 @@ h3 {
 }
 
 .admin-table thead {
-    background: rgba(99, 102, 241, 0.08);
+    background: rgba(255, 0, 60, 0.08);
 }
 
 .admin-table th {
@@ -1866,7 +1871,7 @@ h3 {
 }
 
 .admin-table tbody tr:hover {
-    background-color: rgba(99, 102, 241, 0.04);
+    background-color: rgba(255, 0, 60, 0.04);
 }
 
 .admin-table tbody tr:last-child td {
@@ -2145,15 +2150,15 @@ h3 {
 
 /* Update Notification Banner Style */
 .update-notification {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.08));
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    background: linear-gradient(135deg, rgba(255, 0, 60, 0.15), rgba(168, 85, 247, 0.08));
+    border: 1px solid rgba(255, 0, 60, 0.25);
     border-radius: 16px;
     padding: 16px 20px;
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 24px;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 8px 32px rgba(255, 0, 60, 0.15);
     animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -2162,7 +2167,7 @@ h3 {
 }
 
 .update-notification .update-icon {
-    background: rgba(99, 102, 241, 0.2);
+    background: rgba(255, 0, 60, 0.2);
     color: #a78bfa;
     width: 44px;
     height: 44px;
@@ -2203,7 +2208,7 @@ h3 {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    background: linear-gradient(135deg, #ff003c, #8b5cf6) !important;
     text-decoration: none;
     font-weight: 600;
 }
@@ -2397,7 +2402,7 @@ h3 {
 }
 
 .custom-select-trigger:hover {
-    border-color: rgba(99, 102, 241, 0.4);
+    border-color: rgba(255, 0, 60, 0.4);
 }
 
 .custom-select-trigger .arrow {
@@ -2461,13 +2466,13 @@ h3 {
 }
 
 .user-option:hover {
-    background-color: rgba(99, 102, 241, 0.15);
+    background-color: rgba(255, 0, 60, 0.15);
 }
 
 .user-option.selected {
-    background-color: rgba(99, 102, 241, 0.3) !important;
-    border: 1px solid rgba(99, 102, 241, 0.5);
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+    background-color: rgba(255, 0, 60, 0.3) !important;
+    border: 1px solid rgba(255, 0, 60, 0.5);
+    box-shadow: 0 0 10px rgba(255, 0, 60, 0.2);
 }
 
 .user-option img {
@@ -2567,8 +2572,8 @@ h3 {
 }
 
 .modal-user-grid .user-option:hover {
-    border-color: rgba(99, 102, 241, 0.4);
-    background-color: rgba(99, 102, 241, 0.08);
+    border-color: rgba(255, 0, 60, 0.4);
+    background-color: rgba(255, 0, 60, 0.08);
 }
 
 /* Custom scrollbar for user grid */
@@ -2582,12 +2587,12 @@ h3 {
 }
 
 .modal-user-grid::-webkit-scrollbar-thumb {
-    background: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 0, 60, 0.3);
     border-radius: 3px;
 }
 
 .modal-user-grid::-webkit-scrollbar-thumb:hover {
-    background: rgba(99, 102, 241, 0.5);
+    background: rgba(255, 0, 60, 0.5);
 }
 
 /* Custom Trial Card styles */
@@ -2603,10 +2608,10 @@ h3 {
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #6366f1, #a855f7);
+    background: linear-gradient(90deg, #ff003c, #a855f7);
 }
 .trial-card:hover {
-    border-color: rgba(99, 102, 241, 0.25);
+    border-color: rgba(255, 0, 60, 0.25);
     transform: translateY(-2px);
 }
 
@@ -2615,9 +2620,9 @@ h3 {
 }
 
 @keyframes trialCardPulse {
-    0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6); border-color: rgba(99, 102, 241, 0.6); }
-    70% { box-shadow: 0 0 0 14px rgba(99, 102, 241, 0); border-color: rgba(99, 102, 241, 0.3); }
-    100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+    0% { box-shadow: 0 0 0 0 rgba(255, 0, 60, 0.6); border-color: rgba(255, 0, 60, 0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(255, 0, 60, 0); border-color: rgba(255, 0, 60, 0.3); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 60, 0); }
 }
 
 /* Free trial pricing card on landing page */
@@ -3011,10 +3016,10 @@ h3 {
 
 /* Info Alert (Blue/Purple theme) */
 .alert-banner.info {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.05));
-    border-color: rgba(99, 102, 241, 0.3);
+    background: linear-gradient(135deg, rgba(255, 0, 60, 0.15), rgba(168, 85, 247, 0.05));
+    border-color: rgba(255, 0, 60, 0.3);
     color: #818cf8;
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08), inset 0 0 12px rgba(99, 102, 241, 0.05);
+    box-shadow: 0 8px 24px rgba(255, 0, 60, 0.08), inset 0 0 12px rgba(255, 0, 60, 0.05);
 }
 
 .alert-banner.info::before {
@@ -3024,8 +3029,8 @@ h3 {
     left: 0;
     width: 4px;
     height: 100%;
-    background: #6366f1;
-    box-shadow: 0 0 10px #6366f1;
+    background: #ff003c;
+    box-shadow: 0 0 10px #ff003c;
 }
 
 /* Alert Content Elements */
@@ -3146,7 +3151,7 @@ h3 {
 :root {
     --spring-transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     --hover-spring: transform 0.5s cubic-bezier(0.34, 1.65, 0.66, 1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
-    --purple-glow: 0 0 25px rgba(99, 102, 241, 0.45);
+    --purple-glow: 0 0 25px rgba(255, 0, 60, 0.45);
     --indigo-glow: 0 0 35px rgba(79, 70, 229, 0.55);
     --teal-glow: 0 0 30px rgba(0, 255, 204, 0.35);
     --light-shimmer: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 60%, transparent 70%);
@@ -3211,7 +3216,7 @@ h3 {
 .main-preview:hover {
     transform: translateY(-8px) scale(1.03) rotateX(2deg) rotateY(3deg) !important;
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.65), var(--purple-glow) !important;
-    border-color: rgba(99, 102, 241, 0.4) !important;
+    border-color: rgba(255, 0, 60, 0.4) !important;
 }
 
 /* 4. Logo Hover Effect */
@@ -3219,7 +3224,7 @@ h3 {
     transform: scale(1.04) !important;
 }
 .logo:hover img {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.6) !important;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.6) !important;
     transform: rotate(6deg) scale(1.05);
     transition: var(--spring-transition);
 }
@@ -3233,7 +3238,7 @@ h3 {
 /* 5. Navbar Hover Enhancement */
 .navbar:hover {
     border-color: rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(99, 102, 241, 0.05) !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(255, 0, 60, 0.05) !important;
 }
 
 .nav-links button:hover {
@@ -3251,7 +3256,7 @@ h3 {
     transform: scale(1.08) !important;
 }
 .lang-switcher .lang-btn.active:hover {
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+    box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4) !important;
 }
 
 /* 7. Buttons spring-glow & Magnetic feel overrides */
@@ -3263,7 +3268,7 @@ h3 {
 
 .btn-glow:hover {
     transform: translateY(-4px) scale(1.04) !important;
-    box-shadow: var(--indigo-glow), 0 20px 40px rgba(99, 102, 241, 0.35) !important;
+    box-shadow: var(--indigo-glow), 0 20px 40px rgba(255, 0, 60, 0.35) !important;
     filter: brightness(1.15) !important;
 }
 
@@ -3286,9 +3291,9 @@ h3 {
 /* 9. Feature Cards Premium Scale & Glowing border */
 .feature-card:hover {
     transform: translateY(-8px) scale(1.03) rotateX(1.5deg) rotateY(1.5deg) !important;
-    border-color: rgba(99, 102, 241, 0.35) !important;
+    border-color: rgba(255, 0, 60, 0.35) !important;
     background: rgba(255, 255, 255, 0.055) !important;
-    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.12) !important;
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 0, 60, 0.12) !important;
 }
 
 .feature-card .icon-wrapper {
@@ -3297,8 +3302,8 @@ h3 {
 
 .feature-card:hover .icon-wrapper {
     transform: scale(1.15) rotate(-6deg) !important;
-    background-color: rgba(99, 102, 241, 0.15) !important;
-    border-color: rgba(99, 102, 241, 0.4) !important;
+    background-color: rgba(255, 0, 60, 0.15) !important;
+    border-color: rgba(255, 0, 60, 0.4) !important;
     color: #00ffcc !important;
     box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
 }
@@ -3312,12 +3317,12 @@ h3 {
 .pricing-card:hover {
     transform: translateY(-10px) scale(1.03) !important;
     box-shadow: 0 35px 70px rgba(0, 0, 0, 0.65), var(--purple-glow) !important;
-    border-color: rgba(99, 102, 241, 0.35) !important;
+    border-color: rgba(255, 0, 60, 0.35) !important;
 }
 
 .pricing-card.popular:hover {
     transform: translateY(-12px) scale(1.04) !important;
-    border-color: rgba(99, 102, 241, 0.6) !important;
+    border-color: rgba(255, 0, 60, 0.6) !important;
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), var(--indigo-glow) !important;
 }
 
@@ -3337,8 +3342,8 @@ h3 {
 .faq-item:hover {
     transform: translateY(-3px) scale(1.01) !important;
     background-color: rgba(255, 255, 255, 0.065) !important;
-    border-color: rgba(99, 102, 241, 0.25) !important;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.04) !important;
+    border-color: rgba(255, 0, 60, 0.25) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 0, 60, 0.04) !important;
 }
 
 .faq-item:hover h4 {
@@ -3351,16 +3356,16 @@ h3 {
 }
 
 .faq-item.active {
-    border-color: rgba(99, 102, 241, 0.45) !important;
-    background-color: rgba(99, 102, 241, 0.035) !important;
+    border-color: rgba(255, 0, 60, 0.45) !important;
+    background-color: rgba(255, 0, 60, 0.035) !important;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 4px 0 0 var(--krypton-yellow) !important;
 }
 
 /* 12. Dashboard Elements Micro-interactions */
 .device-status-card:hover {
     transform: translateY(-4px) scale(1.02) !important;
-    border-color: rgba(99, 102, 241, 0.3) !important;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.05) !important;
+    border-color: rgba(255, 0, 60, 0.3) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 0, 60, 0.05) !important;
 }
 
 .device-status-card:hover .device-icon {
@@ -3371,8 +3376,8 @@ h3 {
 .btn-device-slot:hover {
     transform: scale(1.03) !important;
     border-color: var(--krypton-yellow) !important;
-    background-color: rgba(99, 102, 241, 0.08) !important;
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15) !important;
+    background-color: rgba(255, 0, 60, 0.08) !important;
+    box-shadow: 0 8px 20px rgba(255, 0, 60, 0.15) !important;
 }
 
 /* Sidebar Menu Item Shift on hover */
@@ -3395,13 +3400,13 @@ h3 {
 /* Main Download Card */
 .krypton-download-card:hover {
     transform: translateY(-5px) scale(1.015) !important;
-    border-color: rgba(99, 102, 241, 0.35) !important;
+    border-color: rgba(255, 0, 60, 0.35) !important;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), var(--purple-glow) !important;
 }
 
 .btn-krypton-download:hover {
     transform: translateY(-3px) scale(1.04) !important;
-    box-shadow: var(--indigo-glow), 0 15px 30px rgba(99, 102, 241, 0.3) !important;
+    box-shadow: var(--indigo-glow), 0 15px 30px rgba(255, 0, 60, 0.3) !important;
     filter: brightness(1.15) !important;
 }
 
@@ -3429,7 +3434,7 @@ h3 {
 .custom-select-trigger:focus {
     border-color: var(--krypton-yellow) !important;
     background-color: rgba(0, 0, 0, 0.6) !important;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), 0 5px 15px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 0 0 3px rgba(255, 0, 60, 0.25), 0 5px 15px rgba(0, 0, 0, 0.4) !important;
     outline: none;
 }
 
@@ -3437,7 +3442,7 @@ h3 {
 .bind-form button:hover,
 .referral-code-redeem-card button:hover {
     transform: translateY(-2px) scale(1.03) !important;
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2) !important;
+    box-shadow: 0 10px 20px rgba(255, 0, 60, 0.2) !important;
 }
 
 /* Interactive tables rows */
@@ -3452,7 +3457,7 @@ h3 {
 /* User Selection Options */
 .user-option:hover {
     transform: translateX(4px) scale(1.01) !important;
-    background-color: rgba(99, 102, 241, 0.1) !important;
+    background-color: rgba(255, 0, 60, 0.1) !important;
     color: #fff !important;
 }
 
@@ -3483,8 +3488,8 @@ h3 {
 .trial-card:hover,
 .trial-pricing-card:hover {
     transform: translateY(-5px) scale(1.02) !important;
-    border-color: rgba(99, 102, 241, 0.3) !important;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55), 0 0 20px rgba(99, 102, 241, 0.08) !important;
+    border-color: rgba(255, 0, 60, 0.3) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 0, 60, 0.08) !important;
 }
 
 /* ==========================================
@@ -3517,7 +3522,7 @@ h3 {
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     backdrop-filter: blur(40px) saturate(200%) !important;
     -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8), 0 0 50px rgba(99, 102, 241, 0.15) !important;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 0, 60, 0.15) !important;
 }
 
 .modal-download-options {
@@ -3551,7 +3556,7 @@ h3 {
 }
 
 .modal-download-card-item.pvp-card .card-glow-bg {
-    background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+    background: radial-gradient(circle at 10% 20%, rgba(255, 0, 60, 0.08) 0%, transparent 60%);
 }
 
 .modal-download-card-item.basefind-card .card-glow-bg {
@@ -3614,8 +3619,8 @@ h3 {
 /* Hover States for Modal Options */
 .modal-download-card-item:hover {
     transform: translateY(-5px) scale(1.025);
-    border-color: rgba(99, 102, 241, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.06);
+    border-color: rgba(255, 0, 60, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 0, 60, 0.06);
 }
 
 .modal-download-card-item.basefind-card:hover {
@@ -3674,22 +3679,22 @@ h3 {
     align-items: center;
     gap: 10px;
     background: linear-gradient(135deg, rgba(17, 18, 26, 0.9) 0%, rgba(30, 32, 48, 0.9) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.4);
+    border: 1px solid rgba(255, 0, 60, 0.4);
     padding: 10px 18px 10px 14px;
     border-radius: 99px;
     color: #ffffff;
     cursor: pointer;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 60, 0.25);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
 }
 
 .pulse-ai-launcher-btn:hover {
     transform: translateY(-4px) scale(1.04);
-    border-color: rgba(99, 102, 241, 0.8);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.45);
+    border-color: rgba(255, 0, 60, 0.8);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 0, 60, 0.45);
 }
 
 .pulse-ai-badge-dot {
@@ -3714,12 +3719,12 @@ h3 {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    background: linear-gradient(135deg, #ff003c 0%, #a855f7 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 12px rgba(255, 0, 60, 0.5);
 }
 
 .pulse-ai-launcher-text {
@@ -3741,11 +3746,11 @@ h3 {
     max-width: calc(100vw - 32px);
     max-height: calc(100vh - 100px);
     background: rgba(13, 14, 20, 0.95);
-    border: 1px solid rgba(99, 102, 241, 0.35);
+    border: 1px solid rgba(255, 0, 60, 0.35);
     border-radius: 20px;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 0, 60, 0.2);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -3776,12 +3781,12 @@ h3 {
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    background: linear-gradient(135deg, #ff003c 0%, #a855f7 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 0, 60, 0.3);
 }
 
 .pulse-ai-header-info {
@@ -3847,8 +3852,8 @@ h3 {
 
 .pulse-ai-chip {
     flex: 0 0 auto;
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    background: rgba(255, 0, 60, 0.12);
+    border: 1px solid rgba(255, 0, 60, 0.25);
     color: #c7d2fe;
     font-size: 11.5px;
     font-weight: 500;
@@ -3860,9 +3865,9 @@ h3 {
 }
 
 .pulse-ai-chip:hover {
-    background: rgba(99, 102, 241, 0.25);
+    background: rgba(255, 0, 60, 0.25);
     color: #ffffff;
-    border-color: rgba(99, 102, 241, 0.5);
+    border-color: rgba(255, 0, 60, 0.5);
     transform: translateY(-1px);
 }
 
@@ -3913,10 +3918,10 @@ h3 {
 }
 
 .pulse-ai-msg.user .pulse-ai-msg-bubble {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    background: linear-gradient(135deg, #ff003c 0%, #d90429 100%);
     color: #ffffff;
     border-bottom-right-radius: 4px;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 0, 60, 0.3);
 }
 
 .pulse-ai-msg-bubble strong {
@@ -3951,16 +3956,16 @@ h3 {
 }
 
 .pulse-ai-input-form input:focus {
-    border-color: rgba(99, 102, 241, 0.6);
+    border-color: rgba(255, 0, 60, 0.6);
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 12px rgba(255, 0, 60, 0.2);
 }
 
 .pulse-ai-send-btn {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #ff003c 0%, #8b5cf6 100%);
     border: none;
     color: #ffffff;
     display: flex;
@@ -3968,11 +3973,11 @@ h3 {
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    box-shadow: 0 4px 12px rgba(255, 0, 60, 0.35);
 }
 
 .pulse-ai-send-btn:hover {
     transform: scale(1.08);
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 6px 18px rgba(255, 0, 60, 0.5);
 }
 
