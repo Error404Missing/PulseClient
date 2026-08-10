@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=4.0.0">
+    <link rel="stylesheet" href="style.css?v=5.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -29,7 +29,7 @@
     <header class="navbar">
         <div class="logo" style="cursor: pointer;" onclick="navigateToLandingSection(event, 'landing-page')">
             <!-- Sleek Image Logo -->
-            <img src="logo.png" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <img src="logo.png" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
             <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
         </div>
         <nav class="nav-links">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="preview-content">
-                        <img src="mogged.png" alt="Pulse Client Logo" style="width: 140px; height: 140px; border-radius: 20px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); object-fit: cover;">
+                        <img src="mogged.png" alt="Pulse Client Logo" style="width: 140px; height: 140px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4); margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); object-fit: cover;">
                         <h3 style="margin-bottom: 12px;" data-i18n="hero.protection">PulseClient დაცვა</h3>
                         <div class="status-indicator" style="justify-content: center;">
                             <span class="pulse-dot"></span>
@@ -435,13 +435,13 @@
                         <!-- Unified Download Card -->
                         <div class="krypton-download-card unified-download-card" id="unified-download-card" style="position: relative; overflow: visible;">
                             <div class="card-left">
-                                <div class="icon-download-large" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
+                                <div class="icon-download-large" style="background: rgba(255, 0, 0, 0.15); color: #ff0000;">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </div>
                                 <div class="download-meta">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <h3 data-i18n="dash.clientTitle">PulseClient</h3>
-                                        <span class="badge-jar" style="background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff;">CLIENT</span>
+                                        <span class="badge-jar" style="background: linear-gradient(135deg, #ff0000, #a855f7); color: #fff;">CLIENT</span>
                                     </div>
                                     <span class="version-label" data-i18n="dash.chooseVersion">აირჩიეთ სასურველი ვერსია</span>
                                     <span class="updated-date" data-i18n="dash.updatedToday">ბოლოს განახლდა: დღეს</span>
@@ -1018,7 +1018,7 @@
                 <!-- PvP Client Option -->
                 <a id="download-pvp-btn-modal" href="#" class="modal-download-card-item pvp-card" download onclick="closeDownloadModal()">
                     <div class="card-glow-bg"></div>
-                    <div class="option-icon" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
+                    <div class="option-icon" style="background: rgba(255, 0, 0, 0.15); color: #ff0000;">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
                             <line x1="13" y1="19" x2="19" y2="13"></line>
@@ -1028,7 +1028,7 @@
                     <div class="option-info">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <h4 data-i18n="dash.pvpVersion">Pulse PvP Client</h4>
-                            <span class="badge-jar" style="background: #6366f1; color: #fff;">PVP</span>
+                            <span class="badge-jar" style="background: #ff0000; color: #fff;">PVP</span>
                         </div>
                         <p class="desc" data-i18n="dash.pvpDesc" style="color: var(--text-secondary); font-size: 12.5px; margin-top: 4px; line-height: 1.4;">საუკეთესოა PvP ბრძოლებისთვის, ოპტიმიზირებული FPS-ითა და ქილებიგერით</p>
                         <span class="version-label" style="display: block; font-size: 11px; color: var(--text-muted); margin-top: 6px;">pulse-b1.1 <span class="badge-jar">.jar</span></span>
@@ -1105,7 +1105,7 @@
                     <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
                     <path d="M12 12L2.5 7.5"></path>
                     <path d="M12 12v10"></path>
-                    <circle cx="12" cy="12" r="3" fill="#6366f1"></circle>
+                    <circle cx="12" cy="12" r="3" fill="#ff0000"></circle>
                 </svg>
             </div>
             <span class="pulse-ai-launcher-text">Pulse AI</span>
