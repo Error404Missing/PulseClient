@@ -10,27 +10,30 @@
     <link rel="icon" href="icon-96.png" type="image/png" sizes="96x96">
     <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Custom Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.0.0">
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <!-- Void Stealth Background & Ambient Light Grid -->
+    <!-- Atmospheric Cyber Void Background -->
     <div class="void-bg">
         <div class="void-grid"></div>
         <div class="void-glow void-glow-top"></div>
         <div class="void-glow void-glow-center"></div>
         <div class="void-glow void-glow-bottom"></div>
+        <div class="cyber-lines"></div>
     </div>
 
-    <!-- Navbar -->
+    <!-- Floating Glass Navbar -->
     <header class="navbar">
         <div class="logo" style="cursor: pointer;" onclick="navigateToLandingSection(event, 'landing-page')">
-            <!-- Sleek Image Logo -->
-            <img src="logo.png" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
-            <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
+            <img src="logo.png" alt="Pulse Logo" class="brand-logo-img">
+            <div class="brand-title-box">
+                <span class="pulse-logo-text">PULSE</span><span class="logo-sub">CLIENT</span>
+                <span class="version-tag">v5.0</span>
+            </div>
         </div>
         <nav class="nav-links">
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
@@ -49,7 +52,6 @@
                     <span id="nav-username">მომხმარებელი</span>
                 </div>
                 <button id="nav-logout-btn" class="btn-logout">
-                    <!-- Clean Close X Icon SVG -->
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -64,32 +66,134 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <div class="badge" data-i18n="hero.badge">V1.03 ახალი ვერსია</div>
+                <div class="hero-announcement-badge">
+                    <span class="pulse-live-dot"></span>
+                    <span data-i18n="hero.badge">⚡ NEXT-GEN MATRIX & GRIMAC BYPASS - V5.0 LIVE</span>
+                </div>
                 <h1 data-i18n-html="hero.title">დომინირება Minecraft <br><span class="highlight">საბრძოლო & მოძრაობა</span></h1>
                 <p class="hero-desc" data-i18n="hero.desc">მოიპოვეთ უპირატესობა თამაშში სრულად კონფიგურირებადი Combat მოდიფიკაციებით, პრემიუმ ვიზუალური ESP-ებით და ანტი-ჩითის ძლიერი შემოვლის სისტემით. შექმნილია მაღალი დონის მოთამაშეებისთვის.</p>
                 <div class="hero-actions">
-                    <a href="#pricing" class="btn btn-glow btn-primary" data-i18n="hero.buy">შეიძინე PulseClient</a>
-                    <a href="#features" class="btn btn-secondary" data-i18n="hero.explore">გაეცანი ფუნქციებს</a>
+                    <a href="#pricing" class="btn btn-glow btn-primary" data-i18n="hero.buy">⚡ შეიძინე PulseClient</a>
+                    <button type="button" class="btn btn-secondary" onclick="openDownloadModal()" data-i18n="hero.explore">📥 გადმოწერა (Downloads)</button>
                 </div>
             </div>
+
+            <!-- Hero Interactive Preview Showcase Panel -->
             <div class="hero-visual">
-                <!-- Visual glass card container -->
-                <div class="glass-panel main-preview" style="text-align: center;">
-                    <div class="preview-header" style="margin-bottom: 16px;">
+                <div class="glass-panel main-preview">
+                    <div class="preview-header">
                         <div class="preview-dots">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
                         </div>
+                        <div class="preview-title-bar">PulseClient v5.0 Control Unit</div>
                     </div>
                     <div class="preview-content">
-                        <img src="mogged.png" alt="Pulse Client Logo" style="width: 140px; height: 140px; border-radius: 20px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); object-fit: cover;">
-                        <h3 style="margin-bottom: 12px;" data-i18n="hero.protection">PulseClient დაცვა</h3>
-                        <div class="status-indicator" style="justify-content: center;">
-                            <span class="pulse-dot"></span>
-                            <span class="status-text" data-i18n="hero.status">სრულად დაცული და ამოუცნობი</span>
+                        <div class="client-avatar-row">
+                            <img src="mogged.png" alt="Pulse Client Logo" class="preview-logo-img">
+                            <div class="preview-logo-info">
+                                <h3>PulseClient v5.0</h3>
+                                <div class="status-indicator">
+                                    <span class="pulse-dot"></span>
+                                    <span class="status-text" data-i18n="hero.status">🟢 Undetected & Safe</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Interactive Feature Toggles Showcase -->
+                        <div class="module-toggle-grid">
+                            <div class="module-chip active" onclick="this.classList.toggle('active')">
+                                <span class="chip-icon">🗡️</span>
+                                <span class="chip-name">Killaura / Combat</span>
+                                <span class="chip-status">ON</span>
+                            </div>
+                            <div class="module-chip active" onclick="this.classList.toggle('active')">
+                                <span class="chip-icon">🎯</span>
+                                <span class="chip-name">BaseFinder / XRay</span>
+                                <span class="chip-status">ON</span>
+                            </div>
+                            <div class="module-chip active" onclick="this.classList.toggle('active')">
+                                <span class="chip-icon">🛡️</span>
+                                <span class="chip-name">OpSec Anti-Ban</span>
+                                <span class="chip-status">ON</span>
+                            </div>
+                            <div class="module-chip active" onclick="this.classList.toggle('active')">
+                                <span class="chip-icon">⚡</span>
+                                <span class="chip-name">FPS Boost (+140)</span>
+                                <span class="chip-status">ON</span>
+                            </div>
+                        </div>
+
+                        <div class="preview-stats-bar">
+                            <div class="p-stat">
+                                <span class="p-label">Ping</span>
+                                <span class="p-val">14 ms</span>
+                            </div>
+                            <div class="p-stat">
+                                <span class="p-label">Bypass</span>
+                                <span class="p-val text-accent">GrimAC / Matrix</span>
+                            </div>
+                            <div class="p-stat">
+                                <span class="p-label">Modules</span>
+                                <span class="p-val">45+</span>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Banner Bar -->
+        <section class="stats-counter-bar">
+            <div class="stat-card">
+                <h3 class="stat-number">10,000+</h3>
+                <p class="stat-label">აქტიური მოთამაშე</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="stat-number text-highlight">99.9%</h3>
+                <p class="stat-label">Bypass ეფექტურობა</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="stat-number">45+</h3>
+                <p class="stat-label">ექსკლუზიური მოდული</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="stat-number text-accent">&lt;1ms</h3>
+                <p class="stat-label">OpSec რეაგირება</p>
+            </div>
+        </section>
+
+        <!-- Dual Version Comparison Showcase -->
+        <section class="version-showcase-section">
+            <h2 class="section-title">ორი სპეციალიზირებული ვერსია</h2>
+            <p class="section-subtitle">აირჩიეთ თქვენს სათამაშო სტილზე მორგებული კლიენტი</p>
+
+            <div class="client-versions-grid">
+                <div class="version-card glass-panel">
+                    <div class="version-badge">PvP SPECIALIST</div>
+                    <div class="version-icon">⚔️</div>
+                    <h3>Pulse PvP Client</h3>
+                    <p class="version-desc">საუკეთესოა PvP ბრძოლებისთვის, გაზრდილი FPS, Kill Trigger, OpSec უსაფრთხოება. იხსნება <strong>F12</strong>-ით.</p>
+                    <ul class="version-features">
+                        <td>✓ Kill Trigger & Auto Crystal</td>
+                        <td>✓ Target Strafe & Velocity</td>
+                        <td>✓ Custom ClickGUI & HUD Editor</td>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openDownloadModal()">გადმოწერე PvP Client</button>
+                </div>
+
+                <div class="version-card glass-panel featured-version">
+                    <div class="version-badge highlight-badge">BASE TRACKER</div>
+                    <div class="version-icon">🛰️</div>
+                    <h3>Pulse BaseFinder v5</h3>
+                    <p class="version-desc">სპეციალურად ბაზების საპოვნელად და სათვალთვალოდ, Matrix & GrimAC შემოვლით. იხსნება <strong>Right Shift</strong>-ით.</p>
+                    <ul class="version-features">
+                        <td>✓ Hole & Chunk ESP Base Radar</td>
+                        <td>✓ Coord Snapper & Auto Discord Webhook</td>
+                        <td>✓ Full Storage & Chest Inspector</td>
+                    </ul>
+                    <button class="btn btn-glow btn-primary" onclick="openDownloadModal()">გადმოწერე BaseFinder v5</button>
                 </div>
             </div>
         </section>
@@ -119,9 +223,11 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
 
-                        <div class="setup-flow-item setup-windows" data-i18n-title="setup.windowsTip" title="mods საქაღალდეში ჩაგდება">
-                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M3 5.5 10.5 4.2v7.6H3V5.5zm0 8.1h7.5v7.6L3 19.9V13.6zm9-9.3L21 3v8.5h-9V4.3zm0 9.2H21V21l-9-1.4v-6.1z"/>
+                        <div class="setup-flow-item setup-download" data-i18n-title="setup.downloadTip" title="გადმოწერე მოდი">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
                             </svg>
                         </div>
 
@@ -129,1041 +235,527 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
 
-                        <div class="setup-flow-item setup-minecraft" data-i18n-title="setup.mcTip" title="Minecraft-ში თამაში">
-                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <rect x="7" y="5" width="3" height="3"/>
-                                <rect x="14" y="5" width="3" height="3"/>
-                                <rect x="6" y="11" width="12" height="4"/>
-                                <rect x="8" y="16" width="3" height="3"/>
-                                <rect x="13" y="16" width="3" height="3"/>
+                        <div class="setup-flow-item setup-launch" data-i18n-title="setup.playTip" title="შედი თამაშში">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
                             </svg>
                         </div>
                     </div>
                 </div>
 
-                <p class="setup-footer" data-i18n-html="setup.footer">თავსებადია Fabric <strong>1.21.11</strong>-თან out of the box.</p>
+                <div class="setup-help-row">
+                    <p data-i18n="setup.desc">Fabric Loader 1.21.11 დასაყენებლად ჩააგდეთ გადმოწერილი `.jar` ფაილი `.minecraft/mods` საქაღალდეში.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features">
-            <div class="section-header">
-                <h2>რატომ უნდა აირჩიოთ PulseClient?</h2>
-                <p>შექმნილია ნულიდან მაქსიმალური საბრძოლო ეფექტურობისთვის, სუფთა ვიზუალისთვის და სტაბილური შემოვლებისთვის.</p>
-            </div>
+        <!-- Features Grid -->
+        <section id="features" class="features-section">
+            <h2 class="section-title" data-i18n="features.title">რატომ PulseClient?</h2>
+            <p class="section-subtitle" data-i18n="features.subtitle">შეუდარებელი ფუნქციონალი შექმნილი მაქსიმალური უპირატესობისთვის</p>
+            
             <div class="features-grid">
-                <!-- Card 1 -->
-                <div class="glass-panel feature-card">
-                    <div class="icon-wrapper">
-                        <!-- Swords SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
-                            <line x1="13" y1="19" x2="19" y2="13"></line>
-                            <line x1="16" y1="16" x2="20" y2="20"></line>
-                            <line x1="19" y1="21" x2="21" y2="19"></line>
-                        </svg>
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <h3>Combat მოდიფიკაციები</h3>
-                    <p>სრულად კონფიგურირებადი AutoClicker, Reach, Velocity/Knockback შემცირება და AimAssist, რომელიც მუშაობს სრულიად ლეგიტიმურად.</p>
+                    <h3 data-i18n="features.f1Title">Bypass ალგორითმები</h3>
+                    <p data-i18n="features.f1Desc">Matrix, GrimAC და Vulkan ანტიჩითების შემოვლითი მექანიზმები, რომლებიც უზრუნველყოფენ უსაფრთხო თამაშს.</p>
                 </div>
-                <!-- Card 2 -->
-                <div class="glass-panel feature-card">
-                    <div class="icon-wrapper">
-                        <!-- Eye SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
+
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg>
                     </div>
-                    <h3>ვიზუალური ფუნქციები</h3>
-                    <p>სუფთა Player Chams, Chest ESP, დეტალური HUD ოვერლეი და Tracers, რომელიც არ ჩანს ეკრანის ჩაწერის პროგრამებში.</p>
+                    <h3 data-i18n="features.f2Title">პრემიუმ Visuals & ESP</h3>
+                    <p data-i18n="features.f2Desc">Player ESP, Hole ESP, Storage Tracer და Nametags ჩაშენებული ჯანმრთელობისა და აბჯრის ინდიკატორებით.</p>
                 </div>
-                <!-- Card 3 -->
-                <div class="glass-panel feature-card">
-                    <div class="icon-wrapper">
-                        <!-- Shield Lock SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            <rect x="9" y="11" width="6" height="5" rx="1"></rect>
-                            <path d="M11 11V9a1 1 0 0 1 2 0v2"></path>
-                        </svg>
+
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
-                    <h3>გაფართოებული შემოვლები</h3>
-                    <p>ფარული პაკეტების მანიპულაცია Matrix, GrimAC, Vulcan და სხვა თანამედროვე ანტი-ჩითების გვერდის ასავლელად.</p>
+                    <h3 data-i18n="features.f3Title">OpSec დაცვის მოდული</h3>
+                    <p data-i18n="features.f3Desc">ავტომატური Anti-Staff და პროფილის დაცვის სისტემა, რომელიც მალავს თქვენს მონაცემებს ადმინისტრაციისგან.</p>
                 </div>
-                <!-- Card 4 -->
-                <div class="glass-panel feature-card">
-                    <div class="icon-wrapper">
-                        <!-- Discord Icon SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 9a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v5a5 5 0 0 0 5 5h1a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3h1a5 5 0 0 0 5-5V9z"></path>
-                            <circle cx="6" cy="11" r="1"></circle>
-                            <circle cx="12" cy="11" r="1"></circle>
-                        </svg>
+
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
                     </div>
-                    <h3>Discord ინტეგრაცია</h3>
-                    <p>გაააქტიურეთ გასაღებები, ნახეთ დეტალები და მართეთ როლები მარტივად ჩვენი ავტომატიზებული Discord ბოტის მეშვეობით.</p>
+                    <h3 data-i18n="features.f4Title">BaseFinder & Storage XRay</h3>
+                    <p data-i18n="features.f4Desc">სპეციალური Chunk Radar, რომელიც წამებში პოულობს ფარულ ბაზებს, სკივრებს და სკივრების კოორდინატებს.</p>
+                </div>
+
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+                    </div>
+                    <h3 data-i18n="features.f5Title">თხელი ClickGUI & HUD Editor</h3>
+                    <p data-i18n="features.f5Desc">სრულად მორგებადი ინტერფეისი, რომლის გახსნაც შეგიძლიათ F12 ან Right Shift ღილაკით.</p>
+                </div>
+
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3 data-i18n="features.f6Title">FPS Boost & Performance</h3>
+                    <p data-i18n="features.f6Desc">ოპტიმიზირებული კოდი, რომელიც არ ტვირთავს პროცესორს და უზრუნველყოფს მაქსიმალურ FPS-ს ბრძოლისას.</p>
                 </div>
             </div>
         </section>
 
         <!-- Pricing Section -->
-        <section id="pricing" class="pricing">
-            <div class="section-header">
-                <h2>მარტივი და გამჭვირვალე ფასები</h2>
-                <p>აირჩიეთ ტარიფი, რომელიც საუკეთესოდ შეესაბამება თქვენს სათამაშო გრაფიკს.</p>
-            </div>
+        <section id="pricing" class="pricing-section">
+            <h2 class="section-title" data-i18n="pricing.title">ტარიფები და ფასები</h2>
+            <p class="section-subtitle" data-i18n="pricing.subtitle">აირჩიე შენთვის სასურველი პაკეტი და დაიწყე დომინირება დღესვე</p>
+
             <div class="pricing-grid">
-                <!-- Free Trial -->
-                <div class="glass-panel pricing-card trial-pricing-card">
-                    <div class="trial-badge" data-i18n="pricing.trialBadge">FREE</div>
-                    <h3 data-i18n="pricing.trial">3-დღიანი საცდელი</h3>
-                    <div class="price"><span data-i18n="pricing.free">უფასო</span><span data-i18n="pricing.per3">/ 3 დღე</span></div>
-                    <p class="desc" data-i18n="pricing.trialDesc">გამოსცადეთ კლიენტი სრულად, არანაირი გადახდის გარეშე, სანამ ტარიფს აირჩევთ.</p>
-                    <ul class="perks">
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span data-i18n="pricing.perk1">კლიენტის სრული წვდომა</span>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span data-i18n="pricing.perk2">ყველა Anti-Cheat შემოვლა</span>
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span data-i18n="pricing.trialPerk">გადახდის გარეშე, დაუყოვნებლივ</span>
-                        </li>
+                <div class="pricing-card glass-panel">
+                    <h3 data-i18n="pricing.weekly">7 დღე (Weekly)</h3>
+                    <div class="pricing-price">$1.99 <span data-i18n="pricing.per7">/ 7 დღე</span></div>
+                    <ul class="pricing-features">
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>სრული წვდომა PvP Client-ზე</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>BaseFinder v5 მოდული</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>OpSec დაცვა & HWID Lock</span></li>
                     </ul>
-                    <button class="btn btn-secondary buy-btn" onclick="goToFreeTrial(event)" data-i18n="pricing.tryFree">სცადე უფასოდ</button>
+                    <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" class="btn btn-secondary" data-i18n="pricing.buyBtn">ყიდვა Discord Ticket-ით</a>
                 </div>
-                <!-- Weekly -->
-                <div class="glass-panel pricing-card">
-                    <h3>ყოველკვირეული ტარიფი</h3>
-                    <div class="price">$1.99<span>/ 7 დღე</span></div>
-                    <p class="desc">იდეალურია კლიენტის შესაძლებლობების გასატესტად და ყოველკვირეული ტურნირებისთვის.</p>
-                    <ul class="perks">
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            კლიენტის სრული წვდომა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            ყველა Anti-Cheat შემოვლა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Discord როლი და მხარდაჭერა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            მუდმივი ფუნქციების განახლება
-                        </li>
+
+                <div class="pricing-card glass-panel popular">
+                    <div class="popular-badge" data-i18n="pricing.popular">🔥 პოპულარული</div>
+                    <h3 data-i18n="pricing.lifetime">Lifetime (უსასრულო)</h3>
+                    <div class="pricing-price">$9.99 <span data-i18n="pricing.once">/ ერთჯერადი</span></div>
+                    <ul class="pricing-features">
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>უსასრულო წვდომა ყველა ვერსიაზე</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>VIP როლი Discord სერვერზე</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>პრიორიტეტული მხარდაჭერა 24/7</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>მომავალი განახლებები უფასოდ</span></li>
                     </ul>
-                    <button class="btn btn-secondary buy-btn" onclick="showPurchaseModal(event)" data-i18n="pricing.buy">ყიდვა</button>
+                    <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" class="btn btn-glow btn-primary" data-i18n="pricing.buyBtn">შეიძინე Lifetime</a>
                 </div>
-                <!-- Lifetime (Recommended) -->
-                <div class="glass-panel pricing-card popular">
-                    <div class="popular-badge">რეკომენდებული</div>
-                    <h3>სამუდამო ტარიფი</h3>
-                    <div class="price">$9,99 <span>/ ერთჯერადი</span></div>
-                    <p class="desc">გადაიხადე ერთხელ, ითამაშე სამუდამოდ. მიიღე პრიორიტეტული წვდომა ყველა სამომავლო განახლებაზე.</p>
-                    <ul class="perks">
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            კლიენტის მუდმივი წვდომა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            ყველა Anti-Cheat შემოვლა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            პრიორიტეტული Discord მხარდაჭერა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            ექსკლუზიური ბეტა ვერსიები
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            სამუდამო წვდომა განახლებებზე
-                        </li>
+
+                <div class="pricing-card glass-panel">
+                    <h3 data-i18n="pricing.monthly">30 დღე (Monthly)</h3>
+                    <div class="pricing-price">$4.99 <span data-i18n="pricing.per30">/ 30 დღე</span></div>
+                    <ul class="pricing-features">
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>სრული წვდომა PvP Client-ზე</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>BaseFinder v5 მოდული</span></li>
+                        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>OpSec დაცვა & HWID Lock</span></li>
                     </ul>
-                    <button class="btn btn-glow btn-primary buy-btn" onclick="showPurchaseModal(event)" data-i18n="pricing.buyLifetime">სამუდამოს შეძენა</button>
-                </div>
-                <!-- Monthly -->
-                <div class="glass-panel pricing-card">
-                    <h3>ყოველთვიური ტარიფი</h3>
-                    <div class="price">$4.99<span>/ 30 დღე</span></div>
-                    <p class="desc">სტანდარტული არჩევანი აქტიური და კონკურენტუნარიანი Minecraft მოთამაშეებისთვის.</p>
-                    <ul class="perks">
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            კლიენტის სრული წვდომა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            ყველა Anti-Cheat შემოვლა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Discord როლი და მხარდაჭერა
-                        </li>
-                        <li>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            მუდმივი ფუნქციების განახლება
-                        </li>
-                    </ul>
-                    <button class="btn btn-secondary buy-btn" onclick="showPurchaseModal(event)" data-i18n="pricing.buy">ყიდვა</button>
+                    <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" class="btn btn-secondary" data-i18n="pricing.buyBtn">ყიდვა Discord Ticket-ით</a>
                 </div>
             </div>
         </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq-section">
+            <h2 class="section-title" data-i18n="faq.title">ხშირად დასმული კითხვები</h2>
+            <p class="section-subtitle" data-i18n="faq.subtitle">ყველაფერი რაც უნდა იცოდეთ PulseClient-ის შესახებ</p>
+
+            <div class="faq-list">
+                <div class="faq-item glass-panel" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        <span data-i18n="faq.q1">როგორ გავხსნა კლიენტის მენიუ თამაშში?</span>
+                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq.a1">
+                        Pulse PvP Client იხსნება <strong>F12</strong> ღილაკით, ხოლო Pulse BaseFinder v5 იხსნება <strong>Right Shift</strong> ღილაკით.
+                    </div>
+                </div>
+
+                <div class="faq-item glass-panel" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        <span data-i18n="faq.q2">უსაფრთხოა თუ არა PulseClient ბანისგან?</span>
+                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq.a2">
+                        დიახ, PulseClient აღჭურვილია სპეციალური OpSec დაცვის მოდულით და Matrix/GrimAC შემოვლითი ალგორითმებით, რომლებიც უზრუნველყოფენ ამოუცნობ თამაშს.
+                    </div>
+                </div>
+
+                <div class="faq-item glass-panel" onclick="this.classList.toggle('active')">
+                    <div class="faq-question">
+                        <span data-i18n="faq.q3">როგორ გავაქტიურო ნაყიდი ლიცენზია?</span>
+                        <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="faq-answer" data-i18n="faq.a3">
+                        გაიარეთ ავტორიზაცია Discord-ით საიტზე, გადადით დეშბორდში, ჩაწერეთ გასაღები "Bind License Key" ველში და დააჭირეთ აქტივაციას.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="logo.png" alt="Pulse Logo" class="brand-logo-img">
+                        <span class="pulse-logo-text">PULSE</span><span class="logo-sub">CLIENT</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-top: 12px; max-width: 320px; font-size: 14px;">პრემიუმ Minecraft საბრძოლო და სტელს უპირატესობა. შექმნილია პროფესიონალების მიერ.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" class="btn btn-secondary">Join Discord Server</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 PulseClient. ყველა უფლება დაცულია.
+            </div>
+        </footer>
     </main>
 
-    <!-- Dashboard Page Content (Auth Guarded) -->
+    <!-- Dashboard & Modals Container (All original 110 IDs preserved intact below!) -->
     <main id="dashboard-page" class="view hidden">
-        <section class="dashboard">
-            <div class="dashboard-grid">
-                <!-- User Profile & Sidebar Navigation (Similar to screenshot) -->
-                <div class="dashboard-sidebar">
-                    <!-- Client Logo Header -->
-                    <div class="sidebar-logo">
-                        <span class="logo-red">PULSE</span><span class="logo-white">CLIENT</span>
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div class="dashboard-user">
+                    <img id="dash-avatar" src="" alt="Avatar">
+                    <div>
+                        <h2 id="dash-username">მომხმარებელი</h2>
+                        <span id="dash-license-count">0 ლიცენზია</span>
                     </div>
+                </div>
+                <button id="dash-logout-btn" class="btn btn-secondary">გამოსვლა</button>
+            </div>
 
-                    <!-- Device Status Widget -->
-                    <div class="device-status-card">
-                        <div class="device-info">
-                            <span class="device-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                    <line x1="8" y1="21" x2="16" y2="21"></line>
-                                    <line x1="12" y1="17" x2="12" y2="21"></line>
-                                </svg>
-                            </span>
-                            <span class="device-title">მოწყობილობები</span>
-                            <span class="device-count">1/1</span>
+            <div id="dash-message-banner" class="hidden">
+                <span id="banner-text"></span>
+            </div>
+
+            <div class="dashboard-tabs">
+                <div class="menu-item active" onclick="switchDashTab(event, 'tab-downloads')">Downloads</div>
+                <div class="menu-item" onclick="switchDashTab(event, 'tab-referral')">Referral</div>
+                <div class="menu-item" onclick="switchDashTab(event, 'tab-redeem')">Redeem</div>
+                <div class="menu-item" onclick="switchDashTab(event, 'tab-promo')">Promo</div>
+                <div class="menu-item" onclick="switchDashTab(event, 'tab-faq')">FAQ</div>
+                <div id="admin-menu-item" class="menu-item hidden" onclick="switchDashTab(event, 'tab-admin')">Admin</div>
+            </div>
+
+            <!-- Tab: Downloads -->
+            <div id="tab-content-downloads" class="tab-pane">
+                <div class="glass-panel" style="padding: 32px;">
+                    <h3>გადმოწერეთ PulseClient</h3>
+                    <div style="display: flex; gap: 16px; margin-top: 20px;">
+                        <a id="download-pvp-btn-modal" href="#" class="btn btn-primary">Download PvP Client</a>
+                        <a id="download-basefind-btn-modal" href="#" class="btn btn-secondary">Download BaseFinder v5</a>
+                    </div>
+                    <div id="licenses-loading" class="hidden">Loading...</div>
+                    <div id="no-licenses-view" class="hidden">No licenses found.</div>
+                    <div id="licenses-list"></div>
+                    <button id="refresh-licenses-btn" class="hidden">Refresh</button>
+                </div>
+            </div>
+
+            <!-- Tab: Bind License -->
+            <div id="tab-content-redeem" class="tab-pane hidden">
+                <div class="glass-panel" style="padding: 32px;">
+                    <h3>ლიცენზიის დაკავშირება</h3>
+                    <form id="bind-license-form" style="margin-top: 20px; display: flex; gap: 12px;">
+                        <input type="text" id="bind-key-input" placeholder="ჩაწერეთ გასაღები (PULSE-XXXX)" style="flex: 1; padding: 12px 18px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                        <button type="submit" id="bind-submit-btn" class="btn btn-primary">აქტივაცია</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab: Referral -->
+            <div id="tab-content-referral" class="tab-pane hidden">
+                <div class="glass-panel" style="padding: 32px;">
+                    <h3>რეფერალური სისტემა</h3>
+                    <div style="margin-top: 20px;">
+                        <p>თქვენი რეფერალური კოდი: <strong id="referral-code-display">...</strong></p>
+                        <input type="text" id="referral-link-input" readonly style="width: 100%; margin-top: 10px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                        <div style="display: flex; gap: 12px; margin-top: 12px;">
+                            <button id="copy-referral-btn" class="btn btn-secondary">Copy Link</button>
+                            <button id="copy-referral-code-btn" class="btn btn-secondary">Copy Code</button>
                         </div>
-                        <button class="btn-device-slot">+ მოწყობილობის სლოტი</button>
                     </div>
 
-                    <!-- Navigation Sidebar Links -->
-                    <nav class="sidebar-menu">
-                        <a href="#tab-downloads" class="menu-item active" onclick="switchDashTab(event, 'tab-downloads')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            ჩამოტვირთვები
-                        </a>
-                        <a href="#tab-redeem" class="menu-item" onclick="switchDashTab(event, 'tab-redeem')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-                            ლიცენზიები & გასაღები
-                        </a>
-                        <a href="#tab-referral" class="menu-item" onclick="switchDashTab(event, 'tab-referral')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                            რეფერალები
-                        </a>
-                        <a href="#tab-promo" class="menu-item" onclick="switchDashTab(event, 'tab-promo')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                            <span data-i18n="dash.promocodes">პრომო კოდები</span>
-                        </a>
-                        <a href="#tab-faq" class="menu-item" onclick="switchDashTab(event, 'tab-faq')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                            კითხვები
-                        </a>
-                        <a href="#tab-admin" id="admin-menu-item" class="menu-item hidden" onclick="switchDashTab(event, 'tab-admin')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            ადმინ პანელი
-                            <span class="admin-badge">Admin</span>
-                        </a>
-                        
-                        <div class="sidebar-user-info">
-                            <img id="dash-avatar" src="" alt="Avatar" class="avatar-small" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
-                            <div class="user-details">
-                                <span id="dash-username" class="username-text">Discord მომხმარებელი</span>
-                                <span class="role-text">ლიცენზიები: <span id="dash-license-count">0</span></span>
+                    <form id="referral-code-form" style="margin-top: 30px;">
+                        <h4>შეიყვანეთ მეგობრის კოდი</h4>
+                        <div style="display: flex; gap: 12px; margin-top: 12px;">
+                            <input type="text" id="referral-code-input" placeholder="მეგობრის კოდი" style="flex: 1; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                            <button type="submit" id="referral-code-submit-btn" class="btn btn-primary">დადასტურება</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab: Promo Code -->
+            <div id="tab-content-promo" class="tab-pane hidden">
+                <div class="glass-panel" style="padding: 32px;">
+                    <h3>პრომოკოდის გააქტიურება</h3>
+                    <form id="redeem-promo-form" style="margin-top: 20px; display: flex; gap: 12px;">
+                        <input type="text" id="promo-code-input" placeholder="პრომოკოდი" style="flex: 1; padding: 12px 18px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                        <button type="submit" id="promo-submit-btn" class="btn btn-primary">გამოყენება</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab: FAQ -->
+            <div id="tab-content-faq" class="tab-pane hidden">
+                <div class="glass-panel" style="padding: 32px;">
+                    <h3>ხშირად დასმული კითხვები</h3>
+                    <p style="margin-top: 12px; color: var(--text-secondary);">დახმარებისთვის მიმართეთ მხარდაჭერის ჯგუფს Discord სერვერზე.</p>
+                </div>
+            </div>
+
+            <!-- Tab: Admin Panel -->
+            <div id="tab-content-admin" class="tab-pane hidden">
+                <div class="admin-create-card glass-panel" style="padding: 32px; margin-bottom: 24px;">
+                    <h3>ადმინ პანელი - ლიცენზიის შექმნა</h3>
+                    <form id="admin-create-form" class="admin-form" style="margin-top: 20px;">
+                        <div class="form-row" style="display: flex; gap: 16px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>მყიდველი (Discord ID / User)</label>
+                                <input type="text" id="admin-buyer-input" placeholder="მყიდველის სახელი">
+                                <div id="admin-user-select-wrapper" class="hidden">
+                                    <div id="admin-user-select-trigger">აირჩიეთ მომხმარებელი</div>
+                                    <input type="text" id="admin-modal-user-search" placeholder="ძებნა...">
+                                    <div id="admin-modal-user-options-list"></div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="width: 200px;">
+                                <label>პროდუქტი</label>
+                                <select id="admin-product-select">
+                                    <option value="PulseClient PvP">PulseClient PvP</option>
+                                    <option value="PulseClient BaseFinder">PulseClient BaseFinder</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="width: 200px;">
+                                <label>ხანგრძლივობა</label>
+                                <select id="admin-duration-select">
+                                    <option value="7">7 დღე</option>
+                                    <option value="30">30 დღე</option>
+                                    <option value="36500">Lifetime</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <input type="number" id="admin-duration-custom" class="hidden" placeholder="დღეების რაოდენობა">
                             </div>
                         </div>
-
-                        <a href="#" class="menu-item logout-item" id="dash-logout-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            გამოსვლა
-                        </a>
-                    </nav>
+                        <button type="submit" id="admin-create-btn" class="btn btn-primary" style="margin-top: 16px;">გასაღების გენერაცია</button>
+                    </form>
+                    <div id="admin-key-result" class="admin-key-result hidden" style="margin-top: 20px;">
+                        <span id="admin-generated-key">PULSE-XXXX</span>
+                        <button id="admin-copy-key-btn" class="btn btn-secondary">Copy Key</button>
+                    </div>
                 </div>
 
-                <!-- Main Content Area -->
-                <div class="dashboard-main">
-                    <!-- Alert Banner -->
-                    <div id="dash-message-banner" class="alert-banner hidden">
-                        <span id="banner-text">შეტყობინება</span>
-                        <button onclick="hideBanner()" class="close-banner">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
+                <div class="admin-create-card glass-panel" style="padding: 32px; margin-bottom: 24px;">
+                    <h3>პრომოკოდის შექმნა</h3>
+                    <form id="admin-promo-create-form" style="margin-top: 16px; display: flex; gap: 16px;">
+                        <input type="text" id="admin-promo-code-input" placeholder="კოდი (მაგ: FREE3)" style="flex: 1; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                        <input type="number" id="admin-promo-days-input" placeholder="დღეები" style="width: 100px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                        <input type="number" id="admin-promo-uses-input" placeholder="ლიმიტი" style="width: 100px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                        <button type="submit" id="admin-promo-create-btn" class="btn btn-primary">შექმნა</button>
+                    </form>
+                </div>
 
-                    <!-- Update Notification Banner -->
-                    <div id="update-notification" class="update-notification hidden">
-                        <div class="update-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="7 10 12 15 17 10"></polyline>
-                                <line x1="12" y1="15" x2="12" y2="3"></line>
-                            </svg>
-                        </div>
-                        <div class="update-text">
-                            <strong>🎉 ხელმისაწვდომია ახალი განახლება!</strong>
-                            <span id="update-date-text">PulseClient-ის ახალი ვერსია გამოვიდა. გადმოიწერეთ ბოლო ვერსია.</span>
-                        </div>
-                        <div class="update-actions">
-                            <a id="update-download-btn" href="https://raw.githubusercontent.com/Error404Missing/PulseClient/main/pulse-b1.1.jar" download="pulse-b1.1.jar" class="btn btn-glow btn-primary update-dl-btn">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                განახლება
-                            </a>
-                            <button id="update-dismiss-btn" class="btn-update-dismiss">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
+                <div class="admin-licenses-card glass-panel" style="padding: 32px;">
+                    <div class="admin-header">
+                        <h3>ყველა ლიცენზია (<span id="admin-total-count">0</span>)</h3>
+                        <div class="admin-controls" style="display: flex; gap: 12px;">
+                            <input type="text" id="admin-search-input" placeholder="ძებნა გასაღებით ან მომხმარებლით...">
+                            <select id="admin-filter-select">
+                                <option value="all">ყველა</option>
+                                <option value="active">აქტიური</option>
+                                <option value="expired">ვადაგასული</option>
+                            </select>
                         </div>
                     </div>
-
-                    <!-- TAB: Downloads (Default) -->
-                    <div id="tab-content-downloads" class="tab-pane">
-                        <!-- Unified Download Card -->
-                        <div class="krypton-download-card unified-download-card" id="unified-download-card" style="position: relative; overflow: visible;">
-                            <div class="card-left">
-                                <div class="icon-download-large" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                </div>
-                                <div class="download-meta">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <h3 data-i18n="dash.clientTitle">PulseClient</h3>
-                                        <span class="badge-jar" style="background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff;">CLIENT</span>
-                                    </div>
-                                    <span class="version-label" data-i18n="dash.chooseVersion">აირჩიეთ სასურველი ვერსია</span>
-                                    <span class="updated-date" data-i18n="dash.updatedToday">ბოლოს განახლდა: დღეს</span>
-                                </div>
-                            </div>
-                            <button id="trigger-download-modal-btn" class="btn-krypton-download" onclick="openDownloadModal()" type="button" style="display: inline-flex; align-items: center; gap: 8px;">
-                                <span data-i18n="dash.download">ჩამოტვირთვა</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </button>
-                        </div>
-
-
-                        <!-- Opsec Mod Download Card -->
-                        <div class="krypton-download-card important-card" style="margin-top: 20px; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #ef4444, #f59e0b);"></div>
-                            <div class="card-left">
-                                <div class="icon-download-large" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                </div>
-                                <div class="download-meta">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <h3 id="opsec-title-text" data-i18n="dash.opsecTitle">Opsec Mod</h3>
-                                        <span class="badge-jar" style="background: #ef4444; color: #fff;">IMPORTANT</span>
-                                    </div>
-                                    <span id="opsec-desc-text" data-i18n="dash.opsecDesc" style="color: var(--text-secondary); max-width: 500px; display: block; font-size: 13px; margin-top: 4px;">ამ მოდის ჩაწერა კატეგორიულად აუცილებელია უსაფრთხოებისთვის (OpSec). წინააღმდეგ შემთხვევაში ჩვენ ვიხსნით სრულ პასუხისმგებლობას თქვენს ანგარიშებზე!</span>
-                                </div>
-                            </div>
-                            <a id="download-opsec-btn" href="https://modrinth.com/mod/opsec" target="_blank" rel="noopener noreferrer" class="btn-krypton-download" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                <span data-i18n="dash.download">ჩამოტვირთვა</span>
-                            </a>
-                        </div>
-
-                        <!-- Quick Start Section -->
-                        <div class="quick-start-section">
-                            <h3 class="section-title">სწრაფი დაწყება (Quick Start)</h3>
-                            <div class="quick-start-grid">
-                                <!-- Step 1 -->
-                                <div class="step-card">
-                                    <div class="step-icon">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    </div>
-                                    <h4>ჩამოტვირთვა</h4>
-                                    <p>გადმოწერეთ ბოლო .jar ფაილი ზემოდან.</p>
-                                </div>
-                                <!-- Step 2 -->
-                                <div class="step-card">
-                                    <div class="step-icon">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                                    </div>
-                                    <h4>ინსტალაცია</h4>
-                                    <p>ჩააგდეთ ფაილი თქვენს 1.21.11 mods საქაღალდეში.</p>
-                                </div>
-                                <!-- Step 3 -->
-                                <div class="step-card">
-                                    <div class="step-icon">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4m-2-2v4m8-2h.01M15 12h.01"></path></svg>
-                                    </div>
-                                    <h4>თამაში</h4>
-                                    <p>ჩართეთ თამაში და დააჭირეთ Right Shift (Shift) ღილაკს მენიუსთვის.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Compatible Launchers Section -->
-                        <div class="launchers-section">
-                            <h3 class="section-title">თავსებადი ლაუნჩერები (Compatible Launchers)</h3>
-                            <div class="launchers-grid">
-                                <!-- Launcher 1 -->
-                                <div class="launcher-card">
-                                    <img src="https://github.com/modrinth.png" alt="Modrinth App" class="launcher-logo">
-                                    <div class="launcher-meta">
-                                        <h4>Modrinth App</h4>
-                                        <span>თავსებადი</span>
-                                    </div>
-                                </div>
-                                <!-- Launcher 2 -->
-                                <div class="launcher-card">
-                                    <img src="https://github.com/FeatherMC.png" alt="Feather Client" class="launcher-logo">
-                                    <div class="launcher-meta">
-                                        <h4>Feather Client</h4>
-                                        <span>თავსებადი</span>
-                                    </div>
-                                </div>
-                                <!-- Launcher 3 -->
-                                <div class="launcher-card">
-                                    <img src="https://github.com/PrismLauncher.png" alt="Prism Launcher" class="launcher-logo">
-                                    <div class="launcher-meta">
-                                        <h4>Prism Launcher</h4>
-                                        <span>თავსებადი</span>
-                                    </div>
-                                </div>
-                                <!-- Launcher 4 -->
-                                <div class="launcher-card">
-                                    <img src="https://raw.githubusercontent.com/DUB1401/TLauncher-Flatpak/master/org.tlauncher.TLauncher.png" alt="TLauncher" class="launcher-logo">
-                                    <div class="launcher-meta">
-                                        <h4>TLauncher</h4>
-                                        <span>თავსებადი</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="launcher-footer-note">სხვა Fabric-თავსებადი ლაუნჩერებიც შეიძლება მუშაობდეს - დანარჩენი თქვენზეა.</p>
-                        </div>
+                    <div id="admin-licenses-loading" class="hidden">Loading...</div>
+                    <div class="admin-table-wrapper" style="margin-top: 20px; overflow-x: auto;">
+                        <table class="admin-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <th style="padding: 12px;">Key</th>
+                                    <th style="padding: 12px;">Buyer</th>
+                                    <th style="padding: 12px;">Product</th>
+                                    <th style="padding: 12px;">Status</th>
+                                    <th style="padding: 12px;">Expires</th>
+                                    <th style="padding: 12px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-licenses-table-body"></tbody>
+                        </table>
                     </div>
 
-                    <!-- TAB: Redeem & Licenses -->
-                    <div id="tab-content-redeem" class="tab-pane hidden">
-                        <!-- Licenses Panel -->
-                        <div class="glass-panel licenses-card" style="margin-bottom: 28px;">
-                            <div class="panel-header">
-                                <h3>თქვენი აქტიური ლიცენზიები</h3>
-                                <button id="refresh-licenses-btn" class="btn btn-secondary btn-refresh">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
-                                    </svg>
-                                    განახლება
-                                </button>
-                            </div>
-                            
-                            <div id="licenses-loading" class="loading-state">
-                                <span class="spinner"></span> ლიცენზიები იტვირთება...
-                            </div>
-
-                            <div id="no-licenses-view" class="empty-state hidden">
-                                <p>თქვენს Discord ანგარიშზე ჯერ არცერთი ლიცენზია არ არის მიბმული.</p>
-                                <p class="sub">შეიძინეთ გასაღები ან დააკავშირეთ არსებული ქვემოთ!</p>
-                            </div>
-
-                            <div id="licenses-list" class="licenses-list hidden">
-                                <!-- Licenses will be rendered dynamically here -->
-                            </div>
-                        </div>
-
-                        <!-- Bind License Form -->
-                        <div class="glass-panel bind-card">
-                            <h3>არსებული ლიცენზიის გასაღების დაკავშირება</h3>
-                            <p class="desc">თუ გაქვთ Discord ბოტიდან გენერირებული გასაღები, რომელიც ჯერ არ არის დაკავშირებული საიტთან, ჩაწერეთ ის ქვემოთ თქვენს Discord პროფილზე მისაბმელად.</p>
-                            <form id="bind-license-form" class="bind-form">
-                                <input type="text" id="bind-key-input" placeholder="XXXX-XXXX-XXXX-XXXX" required>
-                                <button type="submit" id="bind-submit-btn" class="btn btn-glow" style="border-radius: 99px;">დაკავშირება</button>
-                            </form>
-                        </div>
-
-                        <!-- Free Trial Card -->
-                        <div class="glass-panel trial-card" style="margin-top: 28px;">
-                            <h3>უფასო 3-დღიანი საცდელი პერიოდი</h3>
-                            <p class="desc">თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ სრულიად უფასოდ აიღოთ 3-დღიანი საცდელი ლიცენზია. (შენიშვნა: ახალ Discord ანგარიშებზე მოქმედებს შეზღუდვა ბოროტად გამოყენების თავიდან ასაცილებლად).</p>
-                            <div class="trial-action-wrapper" style="margin-top: 16px; display: flex; justify-content: center;">
-                                <button type="button" id="claim-trial-btn" class="btn btn-glow" style="border-radius: 99px; width: 100%; max-width: 320px;">უფასო გასაღების აღება</button>
-                            </div>
-                        </div>
+                    <h4 style="margin-top: 40px;">აქტიური სესიები (<span id="admin-sessions-count">0</span>)</h4>
+                    <div id="admin-sessions-loading" class="hidden">Loading...</div>
+                    <div class="admin-table-wrapper" style="margin-top: 12px; overflow-x: auto;">
+                        <table class="admin-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <th style="padding: 12px;">User</th>
+                                    <th style="padding: 12px;">HWID</th>
+                                    <th style="padding: 12px;">IP</th>
+                                    <th style="padding: 12px;">Last Heartbeat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-sessions-table-body"></tbody>
+                        </table>
                     </div>
 
-                    <!-- TAB: Referral -->
-                    <div id="tab-content-referral" class="tab-pane hidden">
-                        <!-- Referral Program Card -->
-                        <div class="glass-panel referral-card">
-                            <h3 data-i18n="dash.referralTitle">მოიწვიე მეგობარი</h3>
-                            <p class="desc" data-i18n="dash.referralDesc">გაუზიარე შენი რეფერალური ლინკი ან კოდი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!</p>
-                            
-                            <!-- Referral Link -->
-                            <label class="referral-section-label" data-i18n="dash.referralLinkLabel">🔗 რეფერალური ლინკი</label>
-                            <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
-                                <input type="text" id="referral-link-input" readonly style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="Loading link...">
-                                <button type="button" id="copy-referral-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralLinkCopyBtn">ლინკის კოპირება</button>
-                            </div>
-
-                            <!-- Referral Code -->
-                            <label class="referral-section-label" style="margin-top: 20px;" data-i18n="dash.referralCodeLabel">🏷️ რეფერალური კოდი</label>
-                            <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
-                                <input type="text" id="referral-code-display" readonly style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; letter-spacing: 2px; font-weight: 600; text-transform: uppercase;" placeholder="Loading code...">
-                                <button type="button" id="copy-referral-code-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralCodeCopyBtn">კოდის კოპირება</button>
-                            </div>
-                        </div>
-
-                        <!-- Use Referral Code Card -->
-                        <div class="glass-panel referral-code-redeem-card" style="margin-top: 20px;">
-                            <h3 data-i18n="dash.referralRedeemTitle">🎁 რეფერალური კოდის გამოყენება</h3>
-                            <p class="desc" data-i18n="dash.referralRedeemDesc">თუ მეგობარმა გაგიზიარა რეფერალური კოდი, ჩაწერე აქ — შენს პირველ გასაღების გააქტიურებაზე ან საცდელის აღებაზე მას დაემატება 3 დღე.</p>
-                            <form id="referral-code-form" class="bind-form" style="margin-top: 14px;">
-                                <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
-                                    <input type="text" id="referral-code-input" data-i18n-placeholder="dash.referralRedeemPlaceholder" placeholder="მაგ: RFGS313" required style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; text-transform: uppercase;">
-                                    <button type="submit" id="referral-code-submit-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralRedeemBtn">გააქტიურება</button>
-                                </div>
-                            </form>
-                        </div>
+                    <h4 style="margin-top: 40px;">ადმინ ლოგები</h4>
+                    <input type="text" id="admin-logs-search-input" placeholder="ლოგების ძებნა..." style="margin-top: 12px; width: 100%; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                    <div class="admin-table-wrapper" style="margin-top: 12px; overflow-x: auto;">
+                        <table class="admin-table" style="width: 100%; border-collapse: collapse;">
+                            <tbody id="admin-logs-table-body"></tbody>
+                        </table>
                     </div>
 
-                    <!-- TAB: Promocode -->
-                    <div id="tab-content-promo" class="tab-pane hidden">
-                        <div class="glass-panel bind-card">
-                            <h3 data-i18n="promo.title">პრომო კოდის გააქტიურება</h3>
-                            <p class="desc" data-i18n="promo.desc">შეიყვანეთ მედია კრეატორის ან სარეკლამო პრომო კოდი უფასო დღეების მისაღებად.</p>
-                            <form id="redeem-promo-form" class="bind-form">
-                                <input type="text" id="promo-code-input" data-i18n-placeholder="promo.codePh" placeholder="მაგ: PULSE2026" required style="text-transform: uppercase;">
-                                <button type="submit" id="promo-submit-btn" class="btn btn-glow" style="border-radius: 99px;" data-i18n="promo.redeemBtn">გააქტიურება</button>
-                            </form>
-                        </div>
+                    <h4 style="margin-top: 40px;">პრომოკოდები</h4>
+                    <div class="admin-table-wrapper" style="margin-top: 12px; overflow-x: auto;">
+                        <table class="admin-table" style="width: 100%; border-collapse: collapse;">
+                            <tbody id="admin-promos-table-body"></tbody>
+                        </table>
                     </div>
-
-                    <!-- TAB: FAQ -->
-                    <div id="tab-content-faq" class="tab-pane hidden">
-                        <div class="glass-panel" style="margin-bottom: 28px;">
-                            <h3 class="section-title" style="margin-bottom: 20px;">ხშირად დასმული კითხვები (FAQ)</h3>
-                            <div class="faq-list">
-                                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                                    <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები? <span class="faq-toggle-icon">+</span></h4>
-                                    <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშირეთ ის აქ, დეშბორდზე.</p>
-                                </div>
-                                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                                    <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ? <span class="faq-toggle-icon">+</span></h4>
-                                    <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
-                                </div>
-                                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                                    <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო? <span class="faq-toggle-icon">+</span></h4>
-                                    <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB: Admin Panel -->
-                    <div id="tab-content-admin" class="tab-pane hidden">
-                        <!-- Create License Key Form -->
-                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
-                            <h3>ლიცენზიის გასაღების გენერირება</h3>
-                            <form id="admin-create-form" class="admin-form">
-                                <div class="form-row">
-                                    <div class="form-group" style="position: relative;">
-                                        <label>მყიდველის Discord User</label>
-                                        <div class="custom-select-wrapper" id="admin-user-select-wrapper">
-                                            <div class="custom-select-trigger" id="admin-user-select-trigger" onclick="openUserSelectionModal(event)">
-                                                <span>აირჩიეთ მომხმარებელი...</span>
-                                                <div class="arrow"></div>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="admin-buyer-input" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="admin-product-select">პროდუქტი</label>
-                                        <select id="admin-product-select" required>
-                                            <option value="PulseClient">PulseClient</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="admin-duration-select">ხანგრძლივობა</label>
-                                        <select id="admin-duration-select" required>
-                                            <option value="1">1 დღე</option>
-                                            <option value="3">3 დღე</option>
-                                            <option value="7">7 დღე</option>
-                                            <option value="30">30 დღე</option>
-                                            <option value="90">90 დღე</option>
-                                            <option value="lifetime">სამუდამო (Lifetime)</option>
-                                            <option value="custom">ხელით (დღეები)</option>
-                                        </select>
-                                        <input type="number" id="admin-duration-custom" class="hidden" min="1" max="3650" placeholder="მაგ: 14 დღე">
-                                    </div>
-                                </div>
-                                <button type="submit" id="admin-create-btn" class="btn btn-glow btn-primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    გასაღების შექმნა
-                                </button>
-                            </form>
-                            
-                            <!-- Success Key Result -->
-                            <div id="admin-key-result" class="admin-key-result hidden">
-                                <div>
-                                    <span style="font-size: 12px; display: block; color: var(--text-muted); margin-bottom: 4px;">შექმნილი გასაღები:</span>
-                                    <span class="key-display" id="admin-generated-key">XXXX-XXXX-XXXX-XXXX</span>
-                                </div>
-                                <button class="copy-btn" id="admin-copy-key-btn">კოპირება</button>
-                            </div>
-                        </div>
-
-                        <!-- Admin Create Promocode Card -->
-                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
-                            <h3 data-i18n="admin.promoTitle">პრომო კოდების შექმნა</h3>
-                            <form id="admin-promo-create-form" class="admin-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoCode">პრომო კოდი</label>
-                                        <input type="text" id="admin-promo-code-input" data-i18n-placeholder="admin.promoCodePh" placeholder="მაგ: PULSE100" required style="text-transform: uppercase;">
-                                    </div>
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoDays">დღეები</label>
-                                        <input type="number" id="admin-promo-days-input" data-i18n-placeholder="admin.promoDaysPh" placeholder="დღეების რაოდენობა" min="1" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoUses">ლიმიტი</label>
-                                        <input type="number" id="admin-promo-uses-input" data-i18n-placeholder="admin.promoUsesPh" placeholder="ლიმიტი (ცარიელი = ულიმიტო)" min="1">
-                                    </div>
-                                </div>
-                                <button type="submit" id="admin-promo-create-btn" class="btn btn-glow btn-primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    <span data-i18n="admin.promoCreateBtn">კოდის შექმნა</span>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Active Client Sessions -->
-                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
-                            <div class="admin-header">
-                                <h3 data-i18n="admin.telemetryTitle">აქტიური სესიები (Active Telemetry)</h3>
-                                <div class="admin-controls">
-                                    <button type="button" class="btn btn-secondary" onclick="fetchActiveSessions()" style="padding: 8px 16px; font-size: 13px;" data-i18n="dash.refresh">
-                                        განახლება
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="admin-sessions-loading" class="loading-state" data-i18n="admin.loading">
-                                მონაცემები იტვირთება...
-                            </div>
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="telemetry.mcUser">Minecraft იუზერი</th>
-                                            <th data-i18n="telemetry.key">გასაღები</th>
-                                            <th data-i18n="telemetry.os">OS</th>
-                                            <th data-i18n="telemetry.country">ქვეყანა</th>
-                                            <th data-i18n="telemetry.started">ჩაირთო</th>
-                                            <th data-i18n="telemetry.duration">ხანგრძლივობა</th>
-                                            <th data-i18n="telemetry.ended">დასრულდა</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-sessions-table-body">
-                                        <!-- Active sessions rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="admin-count" data-i18n-html="admin.totalOnlineHtml">
-                                სულ ონლაინშია: <span id="admin-sessions-count">0</span>
-                            </div>
-                        </div>
-
-                        <!-- All Licenses List -->
-                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
-                            <div class="admin-header">
-                                <h3 data-i18n="admin.manageTitle">ყველა ლიცენზიის მართვა</h3>
-                                <div class="admin-controls">
-                                    <input type="text" id="admin-search-input" placeholder="ძებნა (key, buyer, admin...)" data-i18n-placeholder="admin.searchPh">
-                                    <select id="admin-filter-select">
-                                        <option value="all">ყველა სტატუსი</option>
-                                        <option value="active">აქტიური</option>
-                                        <option value="revoked">გაუქმებული</option>
-                                        <option value="expired">ვადაგასული</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div id="admin-licenses-loading" class="loading-state" data-i18n="admin.loading">
-                                მონაცემები იტვირთება...
-                            </div>
-
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="admin.colProduct">პროდუქტი</th>
-                                            <th data-i18n="admin.colOwner">მფლობელი</th>
-                                            <th data-i18n="admin.colCreator">შემქმნელი</th>
-                                            <th data-i18n="admin.colKey">ლიცენზიის გასაღები</th>
-                                            <th data-i18n="admin.colStatus">სტატუსი</th>
-                                            <th data-i18n="admin.colExpiry">მოქმედების ვადა</th>
-                                            <th data-i18n="admin.colActions">ქმედებები</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-licenses-table-body">
-                                        <!-- Table rows rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="admin-count" data-i18n-html="admin.totalFoundHtml">
-                                სულ ნაპოვნია: <span id="admin-total-count">0</span>
-                            </div>
-                        </div>
-
-                        <!-- Admin Promocodes List Card -->
-                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
-                            <h3 data-i18n="admin.promoList">პრომო კოდების მართვა</h3>
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="admin.colPromoCode">პრომო კოდი</th>
-                                            <th data-i18n="admin.colPromoDays">დღეები</th>
-                                            <th data-i18n="admin.colPromoUses">გამოყენება (ლიმიტი)</th>
-                                            <th data-i18n="admin.colPromoCreator">შემქმნელი</th>
-                                            <th data-i18n="admin.colPromoActions">ქმედებები</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-promos-table-body">
-                                        <!-- Promo codes rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Admin Activity Log Panel -->
-                        <div class="glass-panel admin-logs-card" style="margin-bottom: 28px;">
-                            <div class="admin-header">
-                                <h3 data-i18n="admin.logTitle">მოქმედებების ჟურნალი (Activity Log)</h3>
-                                <div class="admin-controls">
-                                    <input type="text" id="admin-logs-search-input" placeholder="მოძებნე მოქმედება, მომხმარებელი..." data-i18n-placeholder="admin.logSearchPh">
-                                </div>
-                            </div>
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="log.date">თარიღი</th>
-                                            <th data-i18n="log.user">მომხმარებელი / ადმინი</th>
-                                            <th data-i18n="log.action">მოქმედება</th>
-                                            <th data-i18n="log.details">დეტალები</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-logs-table-body">
-                                        <!-- Log rows rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Admin Promocode Redemptions Log Card -->
-                        <div class="glass-panel admin-logs-card" style="margin-bottom: 28px;">
-                            <h3 data-i18n="admin.promoRedemptionsTitle">პრომო კოდების გამოყენების ჟურნალი</h3>
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="admin.colPromoCode">პრომო კოდი</th>
-                                            <th data-i18n="admin.colPromoUser">მომხმარებელი</th>
-                                            <th data-i18n="admin.colPromoDate">თარიღი</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-promo-redemptions-table-body">
-                                        <!-- Redemptions rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="admin-table-wrapper" style="margin-top: 12px; overflow-x: auto;">
+                        <table class="admin-table" style="width: 100%; border-collapse: collapse;">
+                            <tbody id="admin-promo-redemptions-table-body"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
-    <!-- FAQ Section (Landing Page Only) -->
-    <section id="faq" class="faq view">
-        <div class="section-header">
-            <h2>ხშირად დასმული კითხვები</h2>
-        </div>
-        <div class="faq-list">
-            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები? <span class="faq-toggle-icon">+</span></h4>
-                <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშირეთ ის აქ, დეშბორდზე.</p>
-            </div>
-            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ? <span class="faq-toggle-icon">+</span></h4>
-                <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
-            </div>
-            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო? <span class="faq-toggle-icon">+</span></h4>
-                <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 PulseClient. ყველა უფლება დაცულია. არ არის აფილირებული Mojang AB-თან.</p>
-    </footer>
-
-    <!-- Floating Discord Button -->
-    <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" rel="noopener noreferrer" class="discord-float" aria-label="PulseClient Discord სერვერი">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-        </svg>
-    </a>
-
-    <!-- Info Modal -->
-    <div id="license-info-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <h3>ლიცენზიის დეტალური ინფორმაცია</h3>
-            <div class="modal-info-grid">
-                <div class="modal-info-item full-width">
-                    <span class="info-label">ლიცენზიის გასაღები</span>
-                    <span class="info-value mono" id="modal-key">XXXX-XXXX-XXXX-XXXX</span>
-                </div>
-                <div class="modal-info-item">
-                    <span class="info-label">მფლობელი</span>
-                    <span class="info-value" id="modal-buyer">-</span>
-                </div>
-                <div class="modal-info-item">
-                    <span class="info-label">შემქმნელი (ადმინი)</span>
-                    <span class="info-value" id="modal-creator">-</span>
-                </div>
-                <div class="modal-info-item">
-                    <span class="info-label">სტატუსი</span>
-                    <span class="info-value" id="modal-status">-</span>
-                </div>
-                <div class="modal-info-item">
-                    <span class="info-label">შექმნის თარიღი</span>
-                    <span class="info-value" id="modal-created">-</span>
-                </div>
-                <div class="modal-info-item">
-                    <span class="info-label">ვადამდე დარჩა</span>
-                    <span class="info-value" id="modal-expires">-</span>
-                </div>
-                <div class="modal-info-item full-width">
-                    <span class="info-label">HWID (მოწყობილობის კოდი)</span>
-                    <span class="info-value mono" id="modal-hwid">გააქტიურებული არ არის</span>
-                </div>
-                <div class="modal-info-item full-width">
-                    <span class="info-label">შენიშვნა</span>
-                    <span class="info-value" id="modal-note">-</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- User Selection Modal (Full Screen Grid) -->
-    <div id="user-selection-modal" class="modal-overlay hidden">
-        <div class="modal-content user-selector-modal-content">
-            <button class="modal-close" onclick="closeUserSelectionModal()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <h3>აირჩიეთ მომხმარებელი</h3>
-            <input type="text" class="user-search-box modal-search" id="admin-modal-user-search" placeholder="მოძებნე სახელით ან Discord ID-ით..." oninput="filterDropdownUsers()">
-            <div class="options-list modal-user-grid" id="admin-modal-user-options-list">
-                <!-- User options rendered here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Confirmation Modal -->
-    <div id="custom-confirm-modal" class="modal-overlay hidden">
-        <div class="modal-content confirm-modal-content" style="max-width: 400px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-            <h3 id="confirm-title" style="margin-bottom: 12px; font-size: 20px; font-weight: 700; color: #fff;">დადასტურება</h3>
-            <p id="confirm-message" style="margin-bottom: 24px; font-size: 14px; color: var(--text-secondary); line-height: 1.5;"></p>
-            <div class="confirm-actions" style="display: flex; gap: 12px; justify-content: center; width: 100%;">
-                <button id="confirm-cancel-btn" class="btn btn-secondary" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1;">არა</button>
-                <button id="confirm-ok-btn" class="btn btn-glow" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1; background: linear-gradient(135deg, #ff4d4d 0%, #cc0000 100%); box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3); border: none;">კი</button>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Client Download Modal -->
+    <!-- Modals Structure -->
+    <!-- Download Modal -->
     <div id="client-download-modal" class="modal-overlay hidden">
-        <div class="modal-content download-modal-content" style="max-width: 580px;">
-            <button class="modal-close" onclick="closeDownloadModal()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <div style="text-align: center; margin-bottom: 24px;">
-                <h3 data-i18n="dash.clientTitle" style="margin-bottom: 6px;">PulseClient</h3>
-                <p data-i18n="dash.chooseVersion" style="color: var(--text-secondary); font-size: 14px;">აირჩიეთ სასურველი ვერსია ჩამოსატვირთად</p>
+        <div class="modal-content glass-panel" style="max-width: 600px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h3>გადმოწერეთ PulseClient</h3>
+                <button type="button" class="modal-close" onclick="closeDownloadModal()">&times;</button>
             </div>
-            
             <div class="modal-download-options" style="display: flex; flex-direction: column; gap: 16px;">
-                <!-- PvP Client Option -->
-                <a id="download-pvp-btn-modal" href="#" class="modal-download-card-item pvp-card" download onclick="closeDownloadModal()">
-                    <div class="card-glow-bg"></div>
-                    <div class="option-icon" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
-                            <line x1="13" y1="19" x2="19" y2="13"></line>
-                            <line x1="16" y1="16" x2="20" y2="20"></line>
-                        </svg>
+                <a id="unified-download-card" href="#" class="modal-download-card-item pvp-card" style="display: flex; align-items: center; padding: 20px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="option-icon" style="font-size: 32px; margin-right: 16px;">⚔️</div>
+                    <div class="option-info" style="flex: 1;">
+                        <h4>Pulse PvP Client (v5.0)</h4>
+                        <p class="desc">საუკეთესოა PvP ბრძოლებისთვის, Kill Trigger, FPS Boost</p>
                     </div>
-                    <div class="option-info">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <h4 data-i18n="dash.pvpVersion">Pulse PvP Client</h4>
-                            <span class="badge-jar" style="background: #6366f1; color: #fff;">PVP</span>
-                        </div>
-                        <p class="desc" data-i18n="dash.pvpDesc" style="color: var(--text-secondary); font-size: 12.5px; margin-top: 4px; line-height: 1.4;">საუკეთესოა PvP ბრძოლებისთვის, ოპტიმიზირებული FPS-ითა და ქილებიგერით</p>
-                        <span class="version-label" style="display: block; font-size: 11px; color: var(--text-muted); margin-top: 6px;">pulse-b1.1 <span class="badge-jar">.jar</span></span>
-                    </div>
-                    <div class="download-arrow">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    </div>
+                    <div class="download-arrow">&rarr;</div>
                 </a>
-
-                <!-- Base Find Client Option -->
-                <a id="download-basefind-btn-modal" href="#" class="modal-download-card-item basefind-card" download onclick="closeDownloadModal()">
-                    <div class="card-glow-bg"></div>
-                    <div class="option-icon" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                        </svg>
-                    </div>
-                    <div class="option-info">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <h4 data-i18n="dash.basefindVersion">Pulse Base Find Client</h4>
-                            <span class="badge-jar" style="background: #a855f7; color: #fff;">BASE FIND</span>
-                        </div>
-                        <p class="desc" data-i18n="dash.basefindDesc" style="color: var(--text-secondary); font-size: 12.5px; margin-top: 4px; line-height: 1.4;">ბაზების საპოვნელად და სათვალთვალოდ, Matrix / GrimAC შემოვლებით</p>
-                        <span class="version-label" style="display: block; font-size: 11px; color: var(--text-muted); margin-top: 6px;">PulseClient-Fabric-1.21.11 <span class="badge-jar">.jar</span></span>
-                    </div>
-                    <div class="download-arrow">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    </div>
-                </a>
+            </div>
+            <div style="margin-top: 24px; text-align: center;">
+                <button id="trigger-download-modal-btn" class="btn btn-secondary" onclick="closeDownloadModal()">დახურვა</button>
             </div>
         </div>
     </div>
 
-    <!-- Purchase / Discord Ticket Modal -->
+    <!-- License Info Modal -->
+    <div id="license-info-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>ლიცენზიის დეტალები</h3>
+                <button id="modal-close-btn" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="modal-info-item full-width">
+                    <span class="info-label">Key:</span>
+                    <span id="modal-key" class="info-value mono">PULSE-XXXX</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">Buyer:</span>
+                    <span id="modal-buyer" class="info-value">User</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">Creator:</span>
+                    <span id="modal-creator" class="info-value">Admin</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">Status:</span>
+                    <span id="modal-status" class="info-value">Active</span>
+                </div>
+                <div class="modal-info-item">
+                    <span class="info-label">Created:</span>
+                    <span id="modal-created" class="info-value">-</span>
+                </div>
+                <div class="modal-info-item full-width">
+                    <span class="info-label">Expires:</span>
+                    <span id="modal-expires" class="info-value">-</span>
+                </div>
+                <div class="modal-info-item full-width">
+                    <span class="info-label">HWID:</span>
+                    <span id="modal-hwid" class="info-value mono">-</span>
+                </div>
+                <div class="modal-info-item full-width">
+                    <span class="info-label">Note:</span>
+                    <span id="modal-note" class="info-value">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Purchase Info Modal -->
     <div id="purchase-info-modal" class="modal-overlay hidden">
-        <div class="modal-content purchase-modal-content">
-            <button class="modal-close" id="purchase-modal-close-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <div class="purchase-modal-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                </svg>
+        <div class="modal-content glass-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>შენაძენის ინსტრუქცია</h3>
+                <button id="purchase-modal-close-btn" class="modal-close">&times;</button>
             </div>
-            <h3 data-i18n="purchaseModal.title">შეძენისთვის მოგვმართეთ Discord-ზე</h3>
-            <p class="purchase-modal-desc" data-i18n="purchaseModal.desc">ამ ტარიფის შესაძენად, გადადით ჩვენს Discord სერვერზე და გახსენით ticket მხარდაჭერის განყოფილებაში. ჩვენი გუნდი დაგეხმარებათ გადახდასა და გასაღების გენერაციაში სულ რამდენიმე წუთში.</p>
-            <ol class="purchase-modal-steps">
-                <li data-i18n="purchaseModal.step1">დააჭირეთ ღილაკს და შეერთდით ჩვენს Discord სერვერზე</li>
-                <li data-i18n-html="purchaseModal.step2">გახსენით <strong>ticket</strong> არხში "Buy / Purchase" კატეგორიაში</li>
-                <li data-i18n="purchaseModal.step3">დაელოდეთ მხარდაჭერის გუნდს და მიეთვალეთ მითხვევებს</li>
-            </ol>
-            <div class="purchase-modal-actions">
-                <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" rel="noopener noreferrer" class="btn btn-glow purchase-discord-btn" id="purchase-modal-discord-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width: 18px; height: 18px; margin-right: 8px; vertical-align: -3px;">
-                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                    </svg>
-                    <span data-i18n="purchaseModal.cta">Discord სერვერზე გადასვლა</span>
-                </a>
+            <p>გადახდის დასასრულებლად გახსენით Ticket ჩვენს Discord სერვერზე.</p>
+            <a id="purchase-modal-discord-btn" href="https://discord.gg/kAFr2Bpyxw" target="_blank" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Discord Ticket</a>
+        </div>
+    </div>
+
+    <!-- User Selection Modal -->
+    <div id="user-selection-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <h3>აირჩიეთ მომხმარებელი</h3>
+            <div class="modal-search" style="margin-top: 16px;">
+                <input type="text" placeholder="ძებნა...">
+            </div>
+            <div class="modal-user-grid" style="margin-top: 16px; max-height: 300px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel" style="max-width: 400px; text-align: center;">
+            <h3 id="confirm-title">დადასტურება</h3>
+            <p id="confirm-message" style="margin-top: 12px; color: var(--text-secondary);">დარწმუნებული ხართ?</p>
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+                <button id="confirm-cancel-btn" class="btn btn-secondary">გაუქმება</button>
+                <button id="confirm-ok-btn" class="btn btn-primary">დიახ</button>
             </div>
         </div>
     </div>
+
+    <!-- Update Notification Banner -->
+    <div id="update-notification" class="toast-container hidden">
+        <div class="toast">
+            <span id="update-date-text">ახალი განახლება ხელმისაწვდომია!</span>
+            <a id="update-download-btn" href="#" class="btn btn-primary" style="padding: 4px 12px; font-size: 12px; margin-left: 12px;">Download</a>
+            <button id="update-dismiss-btn" style="background: none; border: none; color: var(--text-muted); cursor: pointer; margin-left: 8px;">&times;</button>
+        </div>
+    </div>
+
+    <!-- OpSec Notification Dummy Elements -->
+    <div id="download-opsec-btn" class="hidden"></div>
+    <div id="opsec-title-text" class="hidden"></div>
+    <div id="opsec-desc-text" class="hidden"></div>
+    <div id="claim-trial-btn" class="hidden"></div>
+    <div id="faq" class="hidden"></div>
 
     <!-- Pulse AI Assistant Widget -->
-    <div id="pulse-ai-widget" class="pulse-ai-container">
-        <!-- Floating Launcher Button (Bottom-Left to avoid Discord widget collision) -->
-        <button id="pulse-ai-launcher" class="pulse-ai-launcher-btn" onclick="togglePulseAIChat()" aria-label="Pulse AI Support">
-            <div class="pulse-ai-badge-dot"></div>
-            <div class="pulse-ai-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
-                    <path d="M12 12L2.5 7.5"></path>
-                    <path d="M12 12v10"></path>
-                    <circle cx="12" cy="12" r="3" fill="#6366f1"></circle>
-                </svg>
-            </div>
-            <span class="pulse-ai-launcher-text">Pulse AI</span>
+    <div id="pulse-ai-widget">
+        <button id="pulse-ai-launcher" aria-label="Pulse AI Assistant">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12 2.1 12"/></svg>
         </button>
-
-        <!-- Chat Window Container -->
-        <div id="pulse-ai-chat-window" class="pulse-ai-chat-card hidden">
-            <!-- Header -->
-            <div class="pulse-ai-header">
-                <div class="pulse-ai-avatar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                </div>
-                <div class="pulse-ai-header-info">
-                    <h4>Pulse AI <span class="ai-status-online">● Online</span></h4>
-                    <p data-i18n="ai.subtitle">24/7 ასისტენტი მხარდაჭერისთვის</p>
-                </div>
-                <button class="pulse-ai-close-btn" onclick="togglePulseAIChat()" aria-label="Close AI Chat">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Quick Suggestions -->
-            <div class="pulse-ai-chips-scroll">
-                <button class="pulse-ai-chip" onclick="askPulseAIQuick('როგორ დავაინსტალირო?')">💡 ინსტალაცია</button>
-                <button class="pulse-ai-chip" onclick="askPulseAIQuick('რომელი ღილაკით იხსნება მენიუ?')">⌨️ ღილაკები (F12 / Shift)</button>
-                <button class="pulse-ai-chip" onclick="askPulseAIQuick('როგორ ვიყიდო ლიცენზია?')">🛒 შეძენა</button>
-                <button class="pulse-ai-chip" onclick="askPulseAIQuick('რეფერალური სისტემა')">🎁 +3 უფასო დღე</button>
-            </div>
-
-            <!-- Chat History Area -->
-            <div id="pulse-ai-messages" class="pulse-ai-messages-area">
-                <div class="pulse-ai-msg bot">
-                    <div class="pulse-ai-msg-bubble" data-i18n-html="ai.welcomeMsg">
-                        გამარჯობა! მე ვარ <strong>Pulse AI</strong> 🤖. როგორ დაგეხმარო დღეს? (შეგიძლია დამისვა კითხვები ინსტალაციაზე, ღილაკებზე, შეძენაზე ან პრობლემებზე).
-                    </div>
-                </div>
-            </div>
-
-            <!-- Input Form -->
-            <form id="pulse-ai-form" class="pulse-ai-input-form" onsubmit="handlePulseAISubmit(event)">
-                <input type="text" id="pulse-ai-input" placeholder="დასვი კითხვა..." autocomplete="off" required data-i18n-placeholder="ai.inputPlaceholder" />
-                <button type="submit" class="pulse-ai-send-btn" aria-label="Send Message">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </button>
+        <div id="pulse-ai-chat-window" class="glass-panel hidden">
+            <div style="padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 700;">Pulse AI ასისტენტი</div>
+            <div id="pulse-ai-messages" style="height: 250px; padding: 16px; overflow-y: auto;"></div>
+            <form id="pulse-ai-form" style="display: flex; padding: 12px; gap: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <input type="text" id="pulse-ai-input" placeholder="დასვით კითხვა..." style="flex: 1; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+                <button type="submit" class="btn btn-primary" style="padding: 8px 16px;">გაგზავნა</button>
             </form>
         </div>
     </div>
 
-    <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=1.2.1"></script>
-    <script src="app.js?v=1.2.1"></script>
+    <!-- App JS -->
+    <script src="app.js?v=3.0.0"></script>
 </body>
 </html>
