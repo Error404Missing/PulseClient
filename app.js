@@ -2496,18 +2496,3 @@ function generatePulseAIResponse(input) {
     }
     return "🤖 <strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 }
-
-// -----------------------------
-// DYNAMIC CARD CURSOR SPOTLIGHT TRACKING (Vercel & Raycast Style)
-// -----------------------------
-document.addEventListener('mousemove', (e) => {
-    const cards = document.querySelectorAll('.glass-panel, .setup-card, .feature-card, .pricing-card, .faq-item, .dash-card, .auth-card, .modal-card, .krypton-download-card, .modal-download-card-item, .admin-create-card, .admin-licenses-card');
-    cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-    });
-});
-
