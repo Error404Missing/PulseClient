@@ -849,6 +849,17 @@ window.showDashboard = showDashboard;
 // ADMIN PANEL FUNCTIONS
 // ==========================================
 
+
+const OWNER_DISCORD_ID = "1475396409246089367";
+
+function isSuperOwner() {
+    if (!currentUser) return false;
+    const providerId = String(currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id));
+    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "").toLowerCase();
+    return providerId === OWNER_DISCORD_ID || username === "errora" || username.includes("error404") || username.includes("udzlieresi");
+}
+window.isSuperOwner = isSuperOwner;
+
 function isAdmin() {
     if (!currentUser) return false;
     const providerId = currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
@@ -1827,7 +1838,7 @@ function showLicenseDetails(key) {
     const modalIpContainer = document.getElementById('modal-ip-container');
     const modalIp = document.getElementById('modal-ip');
     if (modalIpContainer && modalIp) {
-        if (isAdmin()) {
+        if (isSuperOwner()) {
             modalIpContainer.style.display = 'block';
             const matchedProfile = allUserProfiles.find(p => p.username === buyer);
             modalIp.textContent = matchedProfile?.last_ip || "N/A (არ არის ჩაწერილი)";
