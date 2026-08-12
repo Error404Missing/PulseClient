@@ -849,17 +849,6 @@ window.showDashboard = showDashboard;
 // ADMIN PANEL FUNCTIONS
 // ==========================================
 
-
-const OWNER_DISCORD_ID = "1475396409246089367";
-
-function isSuperOwner() {
-    if (!currentUser) return false;
-    const providerId = String(currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id));
-    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "").toLowerCase();
-    return providerId === OWNER_DISCORD_ID || username === "errora" || username.includes("error404") || username.includes("udzlieresi");
-}
-window.isSuperOwner = isSuperOwner;
-
 function isAdmin() {
     if (!currentUser) return false;
     const providerId = currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
@@ -1844,8 +1833,6 @@ function showLicenseDetails(key) {
 
             (async () => {
                 let foundIp = null;
-
-                // 1. Query client_sessions by license key
                 try {
                     const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?license_key=eq.${encodeURIComponent(lic.license_key)}&order=last_heartbeat.desc&limit=1`, {
                         headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
@@ -1860,7 +1847,6 @@ function showLicenseDetails(key) {
                     console.warn("Error fetching session IP by key:", e);
                 }
 
-                // 2. Query client_sessions by HWID if key query had no IP
                 if (!foundIp && lic.hwid && lic.hwid !== 'null') {
                     try {
                         const res2 = await fetch(`${supabaseUrl}/rest/v1/client_sessions?hwid=eq.${encodeURIComponent(lic.hwid)}&order=last_heartbeat.desc&limit=1`, {
@@ -1877,7 +1863,6 @@ function showLicenseDetails(key) {
                     }
                 }
 
-                // 3. Fallback to profiles table match
                 if (!foundIp && buyer) {
                     const matchedProfile = allUserProfiles.find(p => p.username === buyer);
                     if (matchedProfile && matchedProfile.last_ip) {
@@ -1937,32 +1922,16 @@ async function saveUserProfile(user) {
 
     if (!username) return;
 
-    let userIp = null;
     try {
-        const ipRes = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
-        if (ipRes.ok) {
-            const ipData = await ipRes.json();
-            userIp = ipData.ip;
-        }
-    } catch (ipErr) {
-        console.warn("Could not fetch user IP:", ipErr);
-    }
-
-    try {
-        const upsertPayload = {
-            id: user.id,
-            discord_id: String(discordId),
-            username: username,
-            avatar_url: avatar,
-            updated_at: new Date().toISOString()
-        };
-        if (userIp) {
-            upsertPayload.last_ip = userIp;
-        }
-
         const { error } = await supabaseClient
             .from('profiles')
-            .upsert(upsertPayload, { onConflict: 'id' });
+            .upsert({
+                id: user.id,
+                discord_id: String(discordId),
+                username: username,
+                avatar_url: avatar,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'id' });
 
         if (error) throw error;
     } catch (err) {
