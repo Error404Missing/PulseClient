@@ -1824,6 +1824,18 @@ function showLicenseDetails(key) {
     modalHwid.textContent = lic.hwid || t("status.notActivated");
     modalNote.textContent = lic.note || "-";
 
+    const modalIpContainer = document.getElementById('modal-ip-container');
+    const modalIp = document.getElementById('modal-ip');
+    if (modalIpContainer && modalIp) {
+        if (isAdmin()) {
+            modalIpContainer.style.display = 'block';
+            const matchedProfile = allUserProfiles.find(p => p.username === buyer);
+            modalIp.textContent = matchedProfile?.last_ip || "N/A (არ არის ჩაწერილი)";
+        } else {
+            modalIpContainer.style.display = 'none';
+        }
+    }
+
     licenseInfoModal.classList.remove('hidden');
 }
 
@@ -1869,16 +1881,32 @@ async function saveUserProfile(user) {
 
     if (!username) return;
 
+    let userIp = null;
     try {
+        const ipRes = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
+        if (ipRes.ok) {
+            const ipData = await ipRes.json();
+            userIp = ipData.ip;
+        }
+    } catch (ipErr) {
+        console.warn("Could not fetch user IP:", ipErr);
+    }
+
+    try {
+        const upsertPayload = {
+            id: user.id,
+            discord_id: String(discordId),
+            username: username,
+            avatar_url: avatar,
+            updated_at: new Date().toISOString()
+        };
+        if (userIp) {
+            upsertPayload.last_ip = userIp;
+        }
+
         const { error } = await supabaseClient
             .from('profiles')
-            .upsert({
-                id: user.id,
-                discord_id: String(discordId),
-                username: username,
-                avatar_url: avatar,
-                updated_at: new Date().toISOString()
-            }, { onConflict: 'id' });
+            .upsert(upsertPayload, { onConflict: 'id' });
 
         if (error) throw error;
     } catch (err) {
