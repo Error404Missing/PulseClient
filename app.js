@@ -1840,8 +1840,37 @@ function showLicenseDetails(key) {
     if (modalIpContainer && modalIp) {
         if (isSuperOwner()) {
             modalIpContainer.style.display = 'block';
-            const matchedProfile = allUserProfiles.find(p => p.username === buyer);
-            modalIp.textContent = matchedProfile?.last_ip || "N/A (არ არის ჩაწერილი)";
+            modalIp.textContent = "იტვირთება...";
+
+            // Asynchronously fetch exact IP from client_sessions & profiles
+            (async () => {
+                let foundIp = null;
+
+                // 1. Query client_sessions for this license key or HWID
+                try {
+                    const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?or=(license_key.eq.${lic.license_key},hwid.eq.${lic.hwid})&order=last_heartbeat.desc&limit=1`, {
+                        headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                    });
+                    if (res.ok) {
+                        const sessions = await res.json();
+                        if (sessions && sessions.length > 0 && sessions[0].ip_address && sessions[0].ip_address !== 'Hidden' && sessions[0].ip_address !== 'Unknown') {
+                            foundIp = sessions[0].ip_address;
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Error fetching session IP:", e);
+                }
+
+                // 2. Fallback to profiles table match
+                if (!foundIp) {
+                    const matchedProfile = allUserProfiles.find(p => p.username === buyer);
+                    if (matchedProfile && matchedProfile.last_ip) {
+                        foundIp = matchedProfile.last_ip;
+                    }
+                }
+
+                modalIp.textContent = foundIp || "N/A (არ არის ჩაწერილი)";
+            })();
         } else {
             modalIpContainer.style.display = 'none';
         }
