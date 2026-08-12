@@ -1838,17 +1838,16 @@ function showLicenseDetails(key) {
     const modalIpContainer = document.getElementById('modal-ip-container');
     const modalIp = document.getElementById('modal-ip');
     if (modalIpContainer && modalIp) {
-        if (isSuperOwner()) {
+        if (isAdmin()) {
             modalIpContainer.style.display = 'block';
             modalIp.textContent = "იტვირთება...";
 
-            // Asynchronously fetch exact IP from client_sessions & profiles
             (async () => {
                 let foundIp = null;
 
-                // 1. Query client_sessions for this license key or HWID
+                // 1. Query client_sessions by license key
                 try {
-                    const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?or=(license_key.eq.${lic.license_key},hwid.eq.${lic.hwid})&order=last_heartbeat.desc&limit=1`, {
+                    const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?license_key=eq.${encodeURIComponent(lic.license_key)}&order=last_heartbeat.desc&limit=1`, {
                         headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
                     });
                     if (res.ok) {
@@ -1858,11 +1857,28 @@ function showLicenseDetails(key) {
                         }
                     }
                 } catch (e) {
-                    console.warn("Error fetching session IP:", e);
+                    console.warn("Error fetching session IP by key:", e);
                 }
 
-                // 2. Fallback to profiles table match
-                if (!foundIp) {
+                // 2. Query client_sessions by HWID if key query had no IP
+                if (!foundIp && lic.hwid && lic.hwid !== 'null') {
+                    try {
+                        const res2 = await fetch(`${supabaseUrl}/rest/v1/client_sessions?hwid=eq.${encodeURIComponent(lic.hwid)}&order=last_heartbeat.desc&limit=1`, {
+                            headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                        });
+                        if (res2.ok) {
+                            const sessions2 = await res2.json();
+                            if (sessions2 && sessions2.length > 0 && sessions2[0].ip_address && sessions2[0].ip_address !== 'Hidden' && sessions2[0].ip_address !== 'Unknown') {
+                                foundIp = sessions2[0].ip_address;
+                            }
+                        }
+                    } catch (e2) {
+                        console.warn("Error fetching session IP by hwid:", e2);
+                    }
+                }
+
+                // 3. Fallback to profiles table match
+                if (!foundIp && buyer) {
                     const matchedProfile = allUserProfiles.find(p => p.username === buyer);
                     if (matchedProfile && matchedProfile.last_ip) {
                         foundIp = matchedProfile.last_ip;
