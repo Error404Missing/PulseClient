@@ -2555,3 +2555,55 @@ async function resetDeviceSlotHwid() {
     updateDeviceSlotModalInfo();
 }
 window.resetDeviceSlotHwid = resetDeviceSlotHwid;
+
+
+// Custom User Discord Username JAR Download Handler
+function getUserCustomJarFilename() {
+    let username = "Guest";
+    if (currentUser) {
+        const metadata = currentUser.user_metadata || {};
+        username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || username;
+    }
+    // Sanitize username for safe OS filename (alphanumeric, underscore, dash)
+    const cleanUser = username.replace(/[^a-zA-Z0-9_\-]/g, "_").replace(/_+/g, "_").trim() || "User";
+    return `PulseClient-Fabric.1.21.11-${cleanUser}.jar`;
+}
+window.getUserCustomJarFilename = getUserCustomJarFilename;
+
+async function handleCustomClientDownload(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    const customFilename = getUserCustomJarFilename();
+    showBanner(`ფაილის გადმოწერა დაიწყო: ${customFilename}`, "info");
+
+    try {
+        const response = await fetch(GITHUB_CLIENT_DOWNLOAD_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = customFilename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+        closeDownloadModal();
+    } catch (err) {
+        console.warn("Blob fetch download failed, using fallback download anchor:", err);
+        const a = document.createElement('a');
+        a.href = GITHUB_CLIENT_DOWNLOAD_URL;
+        a.download = customFilename;
+        a.setAttribute('download', customFilename);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        closeDownloadModal();
+    }
+}
+window.handleCustomClientDownload = handleCustomClientDownload;
