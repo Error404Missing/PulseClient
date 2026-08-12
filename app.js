@@ -1,1 +1,2693 @@
-const a0_0x390237=a0_0x3834;(function(_0x4d3fb9,_0x311100){const _0x4772e1=a0_0x3834,_0x17703d=_0x4d3fb9();while(!![]){try{const _0x33bdee=parseInt(_0x4772e1(0x154))/0x1+parseInt(_0x4772e1(0x224))/0x2+parseInt(_0x4772e1(0x1aa))/0x3*(-parseInt(_0x4772e1(0x132))/0x4)+-parseInt(_0x4772e1(0x143))/0x5+-parseInt(_0x4772e1(0x302))/0x6+parseInt(_0x4772e1(0x279))/0x7+parseInt(_0x4772e1(0x19a))/0x8;if(_0x33bdee===_0x311100)break;else _0x17703d['push'](_0x17703d['shift']());}catch(_0x25e72d){_0x17703d['push'](_0x17703d['shift']());}}}(a0_0x195f,0x7d15b),(document[a0_0x390237(0x215)](a0_0x390237(0x2e7),function(_0x58461b){const _0x4cb4fc=a0_0x390237;_0x58461b[_0x4cb4fc(0x1dd)]();},!0x1),document[a0_0x390237(0x215)]('keydown',function(_0x7f4de7){const _0x20be01=a0_0x390237;if(0x7b===_0x7f4de7['keyCode']||_0x7f4de7['ctrlKey']&&_0x7f4de7['shiftKey']&&(0x49===_0x7f4de7[_0x20be01(0x117)]||0x4a===_0x7f4de7[_0x20be01(0x117)]||0x43===_0x7f4de7[_0x20be01(0x117)])||_0x7f4de7['ctrlKey']&&(0x55===_0x7f4de7['keyCode']||0x53===_0x7f4de7[_0x20be01(0x117)]))return _0x7f4de7[_0x20be01(0x1dd)](),_0x7f4de7[_0x20be01(0x177)](),!0x1;},!0x1)));const a0_0xe8aa85=a0_0x20e0;(function(){const _0x2d3209=a0_0x390237,_0x229e81=a0_0x20e0,_0x189ef3=a0_0x969b();for(;;)try{if(0x37331===-parseInt(_0x229e81(0x178))/0x1*(-parseInt(_0x229e81(0x3cb))/0x2)+-parseInt(_0x229e81(0x379))/0x3*(-parseInt(_0x229e81(0x224))/0x4)+-parseInt(_0x229e81(0x11f))/0x5*(parseInt(_0x229e81(0x20b))/0x6)+-parseInt(_0x229e81(0x36c))/0x7+-parseInt(_0x229e81(0x218))/0x8+-parseInt(_0x229e81(0x3d4))/0x9*(parseInt(_0x229e81(0x198))/0xa)+-parseInt(_0x229e81(0x3ab))/0xb*(-parseInt(_0x229e81(0x1bd))/0xc))break;_0x189ef3[_0x2d3209(0x289)](_0x189ef3['shift']());}catch(_0x5d206e){_0x189ef3[_0x2d3209(0x289)](_0x189ef3[_0x2d3209(0x397)]());}}()),document[a0_0xe8aa85(0x2be)](a0_0xe8aa85(0x1a7),function(_0x1f37de){_0x1f37de[a0_0xe8aa85(0x3cd)]();},!0x1),document[a0_0xe8aa85(0x2be)](a0_0xe8aa85(0x3a6),function(_0x141517){const _0x2a2886=a0_0x390237,_0x3a3ae3=a0_0xe8aa85;if(0x7b===_0x141517[_0x3a3ae3(0x3ce)]||_0x141517[_0x3a3ae3(0x1d3)]&&_0x141517[_0x3a3ae3(0x3dc)]&&(0x49===_0x141517[_0x3a3ae3(0x3ce)]||0x4a===_0x141517[_0x3a3ae3(0x3ce)]||0x43===_0x141517[_0x3a3ae3(0x3ce)])||_0x141517[_0x3a3ae3(0x1d3)]&&(0x55===_0x141517[_0x2a2886(0x117)]||0x53===_0x141517[_0x2a2886(0x117)]))return _0x141517[_0x3a3ae3(0x3cd)](),_0x141517[_0x2a2886(0x177)](),!0x1;},!0x1);const a0_0x563c76=a0_0x34a8;(function(){const _0x101eb3=a0_0xe8aa85,_0x2d4d04=a0_0x34a8,_0x4c536f=a0_0x595f();for(;;)try{if(0xa57c1==-parseInt(_0x2d4d04(0x1ac))/0x1*(-parseInt(_0x2d4d04(0x135))/0x2)+-parseInt(_0x2d4d04(0x2ac))/0x3*(-parseInt(_0x2d4d04(0x181))/0x4)+-parseInt(_0x2d4d04(0x283))/0x5+parseInt(_0x2d4d04(0x13c))/0x6*(parseInt(_0x2d4d04(0x17e))/0x7)+-parseInt(_0x2d4d04(0x2c2))/0x8+-parseInt(_0x2d4d04(0x191))/0x9*(-parseInt(_0x2d4d04(0x354))/0xa)+parseInt(_0x2d4d04(0x147))/0xb*(-parseInt(_0x2d4d04(0x1e3))/0xc))break;_0x4c536f[_0x101eb3(0x1f4)](_0x4c536f[_0x101eb3(0x2fa)]());}catch(_0x453f81){_0x4c536f['push'](_0x4c536f[_0x101eb3(0x2fa)]());}}()),document[a0_0x390237(0x215)](a0_0xe8aa85(0x1a7),function(_0x5af331){_0x5af331[a0_0x34a8(0x202)]();},!0x1),document[a0_0xe8aa85(0x2be)](a0_0x563c76(0x170),function(_0x429e70){const _0x5eefb5=a0_0x390237,_0x530107=a0_0xe8aa85,_0x34565f=a0_0x563c76;if(0x7b===_0x429e70[_0x34565f(0x2b8)]||_0x429e70[_0x530107(0x1d3)]&&_0x429e70[_0x530107(0x3dc)]&&(0x49===_0x429e70[_0x5eefb5(0x117)]||0x4a===_0x429e70[_0x34565f(0x2b8)]||0x43===_0x429e70[_0x34565f(0x2b8)])||_0x429e70[_0x530107(0x1d3)]&&(0x55===_0x429e70[_0x34565f(0x2b8)]||0x53===_0x429e70[_0x34565f(0x2b8)]))return _0x429e70[_0x34565f(0x202)](),_0x429e70[_0x530107(0x308)](),!0x1;},!0x1);const supabaseUrl=a0_0x563c76(0x16e),supabaseKey=a0_0xe8aa85(0x24f),supabaseClient=window['supabase'][a0_0xe8aa85(0x24a)](supabaseUrl,supabaseKey),navLoginBtn=document[a0_0x390237(0x121)](a0_0xe8aa85(0x120)),navUserProfile=document[a0_0x563c76(0x38f)](a0_0x563c76(0x124)),navAvatar=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x2d4)),navUsername=document[a0_0x563c76(0x38f)](a0_0x563c76(0x394)),navLogoutBtn=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x1e1)),landingPage=document[a0_0x563c76(0x38f)](a0_0x563c76(0x145)),dashboardPage=document[a0_0x563c76(0x38f)](a0_0x390237(0x378)),dashAvatar=document[a0_0x563c76(0x38f)](a0_0x563c76(0x1cb)),dashUsername=document[a0_0x563c76(0x38f)](a0_0x563c76(0x377)),dashLicenseCount=document[a0_0x563c76(0x38f)](a0_0xe8aa85(0x316)),dashLogoutBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x34b)),dashMessageBanner=document[a0_0x563c76(0x38f)](a0_0xe8aa85(0x12b)),bannerText=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x21c)),licensesLoading=document[a0_0x563c76(0x38f)](a0_0xe8aa85(0xea)),noLicensesView=document[a0_0x563c76(0x38f)](a0_0x563c76(0x25a)),licensesList=document[a0_0x563c76(0x38f)](a0_0x563c76(0x392)),refreshLicensesBtn=document[a0_0x390237(0x121)](a0_0x563c76(0x38a)),bindLicenseForm=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x2b2)),bindKeyInput=document[a0_0x563c76(0x38f)](a0_0x390237(0x33a)),bindSubmitBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x39e)),downloadPvpBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x157)),downloadBasefindBtn=document[a0_0x390237(0x121)](a0_0x563c76(0x2c1)),GITHUB_REPO_OWNER=a0_0xe8aa85(0x215),GITHUB_REPO_NAME=a0_0x563c76(0x10f),GITHUB_JAR_FILE=a0_0xe8aa85(0x20a),GITHUB_PVP_JAR_FILE=GITHUB_JAR_FILE,GITHUB_BASEFIND_JAR_FILE=GITHUB_JAR_FILE,GITHUB_CLIENT_DOWNLOAD_URL=a0_0x563c76(0x2f6)+GITHUB_JAR_FILE,GITHUB_PVP_DOWNLOAD_URL=GITHUB_CLIENT_DOWNLOAD_URL,GITHUB_BASEFIND_DOWNLOAD_URL=GITHUB_CLIENT_DOWNLOAD_URL,adminMenuItem=document[a0_0x563c76(0x38f)](a0_0x563c76(0x2d1)),tabContentAdmin=document[a0_0x563c76(0x38f)](a0_0x563c76(0x19d)),adminCreateForm=document[a0_0x563c76(0x38f)](a0_0x563c76(0x272)),adminBuyerInput=document[a0_0x563c76(0x38f)](a0_0x563c76(0x327)),adminProductSelect=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x177)),adminDurationSelect=document[a0_0x563c76(0x38f)](a0_0xe8aa85(0x382)),adminDurationCustom=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x2b9)),adminKeyResult=document[a0_0x390237(0x121)](a0_0x563c76(0x320)),adminGeneratedKey=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x387)),adminCopyKeyBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x368)),adminSearchInput=document[a0_0x563c76(0x38f)](a0_0x563c76(0x17d)),adminFilterSelect=document[a0_0x390237(0x121)](a0_0x563c76(0x13f)),adminLicensesLoading=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x1b4)),adminLicensesTableBody=document[a0_0x563c76(0x38f)](a0_0x563c76(0x2c9)),adminTotalCount=document[a0_0x563c76(0x38f)](a0_0x563c76(0x3ae)),adminLogsTableBody=document[a0_0x563c76(0x38f)](a0_0x563c76(0x186)),adminLogsSearchInput=document[a0_0x390237(0x121)](a0_0xe8aa85(0x37a)),adminSessionsTableBody=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x342)),adminSessionsLoading=document[a0_0x563c76(0x38f)](a0_0xe8aa85(0x2b6)),adminSessionsCount=document[a0_0x563c76(0x38f)](a0_0x563c76(0x1ad)),licenseInfoModal=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x33d)),modalCloseBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x2f7)),modalKey=document[a0_0x563c76(0x38f)](a0_0x563c76(0x30d)),modalBuyer=document[a0_0x563c76(0x38f)](a0_0x563c76(0x274)),modalCreator=document[a0_0xe8aa85(0x345)](a0_0xe8aa85(0x2da)),modalStatus=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x166)),modalCreated=document[a0_0x563c76(0x38f)](a0_0x563c76(0x30b)),modalExpires=document[a0_0x563c76(0x38f)](a0_0x563c76(0x1ec)),modalHwid=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x118)),modalNote=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x18c)),adminUserSelectWrapper=document[a0_0x563c76(0x38f)](a0_0x563c76(0x2df)),adminUserSelectTrigger=document[a0_0x563c76(0x38f)](a0_0x563c76(0x2ee)),adminUserSearch=document[a0_0x563c76(0x38f)](a0_0x563c76(0x193)),adminUserOptionsList=document[a0_0x563c76(0x38f)](a0_0x563c76(0x14e)),ADMIN_DISCORD_IDS=[a0_0x563c76(0x1b9),a0_0x563c76(0x1cf),a0_0x390237(0x2b3),'',a0_0x563c76(0x2a5)];let currentUser=null,adminLicenses=[],allUserProfiles=[];const PRICING_PLANS=[{'cardIndex':0x2,'planId':a0_0x563c76(0x134),'price_cents':0xc7,'currency':a0_0x563c76(0x1b2),'periodKey':a0_0x563c76(0x192)},{'cardIndex':0x3,'planId':a0_0x563c76(0x248),'price_cents':0x3e7,'currency':a0_0xe8aa85(0x3be),'periodKey':a0_0x563c76(0x167)},{'cardIndex':0x4,'planId':a0_0x563c76(0x25b),'price_cents':0x1f3,'currency':a0_0x563c76(0x1b2),'periodKey':a0_0xe8aa85(0x2cc)}];function formatCurrency(_0x464b30,_0x5e7f08=a0_0x563c76(0x1b2)){const _0x35dfda=a0_0xe8aa85,_0x170269=a0_0x563c76;if(0x0===_0x464b30)return window['t']?window['t'](_0x170269(0x2d2)):_0x170269(0x1c4);const _0x368386=_0x170269(0x232)==typeof window[_0x35dfda(0x11d)]?window[_0x170269(0x26f)]():_0x170269(0x21d);try{return new Intl[(_0x35dfda(0x395))](_0x368386,{'style':_0x170269(0x153),'currency':_0x5e7f08,'maximumFractionDigits':0x2})[_0x170269(0x121)](_0x464b30/0x64);}catch(_0xd719e5){return _0x170269(0x1f7)===_0x5e7f08?(_0x464b30/0x64)[_0x170269(0x29f)](0x2)+_0x170269(0x223):'$'+(_0x464b30/0x64)[_0x170269(0x29f)](0x2);}}function a0_0x595f(){const _0x3b924b=a0_0x390237,_0x24ba65=a0_0xe8aa85,_0x38f5a3=[_0x24ba65(0x3d0),_0x24ba65(0x3e4),_0x24ba65(0x1bf),_0x3b924b(0x3ef),_0x3b924b(0x1bb),_0x24ba65(0xde),_0x3b924b(0x386),_0x3b924b(0x284),_0x3b924b(0x1e5),_0x24ba65(0x1a1),_0x24ba65(0x217),_0x24ba65(0x225),_0x24ba65(0x1be),_0x24ba65(0x3ac),_0x24ba65(0x26b),_0x24ba65(0x26c),_0x24ba65(0x2d9),_0x24ba65(0x13d),_0x24ba65(0x387),_0x24ba65(0x31c),_0x3b924b(0x1bd),_0x24ba65(0x261),_0x24ba65(0x31b),_0x3b924b(0x28d),_0x24ba65(0x363),_0x24ba65(0x35b),_0x24ba65(0x169),_0x24ba65(0x17c),_0x24ba65(0x342),_0x24ba65(0x35e),_0x24ba65(0x1d1),_0x3b924b(0xfd),_0x24ba65(0x2de),_0x24ba65(0x197),_0x24ba65(0x3e1),_0x24ba65(0x3e2),_0x24ba65(0x20c),_0x24ba65(0x239),_0x24ba65(0x3b4),'C3jJ',_0x24ba65(0x36a),_0x24ba65(0x146),_0x24ba65(0x2c6),_0x24ba65(0x3dd),_0x3b924b(0x1e7),_0x24ba65(0x14d),_0x24ba65(0x394),_0x24ba65(0x289),'DgHLBG',_0x24ba65(0x3b1),_0x24ba65(0x185),_0x24ba65(0x136),_0x24ba65(0x21b),_0x3b924b(0x2d1),_0x24ba65(0xfc),_0x24ba65(0x348),_0x3b924b(0x1ab),_0x24ba65(0x399),_0x24ba65(0x371),_0x3b924b(0x12a),_0x24ba65(0x21f),_0x24ba65(0x12e),_0x24ba65(0x248),_0x3b924b(0x3cd),_0x24ba65(0x2af),_0x3b924b(0x22b),_0x3b924b(0x20b),_0x24ba65(0x257),_0x24ba65(0x175),_0x24ba65(0x360),_0x24ba65(0x26e),_0x24ba65(0x183),_0x3b924b(0x12c),_0x24ba65(0x329),_0x24ba65(0x3d7),_0x24ba65(0x106),_0x24ba65(0x39e),_0x24ba65(0x2c9),_0x24ba65(0x204),_0x24ba65(0x1f6),_0x24ba65(0x20d),_0x24ba65(0x2f3),_0x24ba65(0x2b4),_0x24ba65(0x2fe),_0x24ba65(0x262),_0x24ba65(0x19c),'phrKignVBhnWyw49iJCIihn0EwXLpsj0zxH0lwfSAwDUoIbJzw50zxi7ignVBg9YoIb2yxiOls10zxH0lw11DgvKktSGCgfKzgLUzZOGmJrWEdSIpG',_0x3b924b(0x2aa),_0x24ba65(0x228),_0x24ba65(0x3f0),'ChvSC2vFzgLZBwLZC2vKx3vWzgf0zv9ZAge','A2eTr0u',_0x24ba65(0x196),_0x24ba65(0x1f3),_0x3b924b(0x338),_0x24ba65(0x23d),_0x24ba65(0x3f7),_0x24ba65(0x28d),_0x24ba65(0x29d),_0x24ba65(0xf3),_0x24ba65(0x145),_0x3b924b(0x297),_0x24ba65(0x32a),_0x24ba65(0x141),_0x24ba65(0x208),_0x3b924b(0x263),_0x24ba65(0x235),_0x24ba65(0x331),_0x3b924b(0x1e3),_0x24ba65(0x13f),_0x24ba65(0x162),_0x24ba65(0xf2),_0x24ba65(0xd5),_0x3b924b(0x26e),_0x24ba65(0x1fd),_0x24ba65(0x322),_0x24ba65(0x19e),_0x24ba65(0x17f),_0x24ba65(0x351),_0x24ba65(0x2d2),_0x24ba65(0x303),_0x24ba65(0xe9),_0x3b924b(0x3d2),_0x24ba65(0x3c1),_0x3b924b(0x344),'ChjPy2u',_0x24ba65(0x25e),_0x24ba65(0x182),_0x3b924b(0x37a),_0x24ba65(0x1e6),_0x24ba65(0x250),_0x3b924b(0xf8),_0x24ba65(0x1a3),_0x3b924b(0x34c),_0x24ba65(0xf0),_0x3b924b(0x292),_0x3b924b(0x2bd),_0x24ba65(0x18f),_0x24ba65(0x3ee),_0x24ba65(0xd3),'y2HHBMDL',_0x3b924b(0x38d),_0x24ba65(0x3ae),_0x24ba65(0x1f5),_0x24ba65(0x2c3),_0x24ba65(0x1b1),_0x24ba65(0x37b),_0x24ba65(0x3aa),_0x24ba65(0x305),_0x24ba65(0x2bf),_0x24ba65(0x209),_0x24ba65(0x27e),_0x24ba65(0x3af),_0x24ba65(0xf9),_0x24ba65(0x28a),_0x24ba65(0x116),_0x24ba65(0x2ad),_0x24ba65(0x33c),_0x24ba65(0x3a4),_0x24ba65(0x283),_0x24ba65(0x2a2),_0x24ba65(0x313),_0x24ba65(0x2c1),_0x24ba65(0x128),_0x3b924b(0x108),_0x24ba65(0x174),_0x24ba65(0x34a),_0x3b924b(0x280),_0x3b924b(0x208),_0x24ba65(0x2fc),_0x24ba65(0x23b),_0x24ba65(0x270),_0x24ba65(0x1db),_0x3b924b(0x10e),_0x24ba65(0x184),_0x3b924b(0x268),_0x3b924b(0x346),_0x24ba65(0x2f1),_0x24ba65(0x293),_0x24ba65(0x1e7),_0x24ba65(0x27b),_0x24ba65(0x110),_0x24ba65(0x1e3),_0x24ba65(0x292),_0x24ba65(0x2ef),_0x24ba65(0x279),_0x24ba65(0x232),_0x24ba65(0x2e1),_0x24ba65(0x38b),_0x3b924b(0x10d),_0x3b924b(0x2e2),_0x24ba65(0x2b3),_0x3b924b(0x22c),_0x24ba65(0x115),_0x3b924b(0x148),_0x24ba65(0x1ab),_0x24ba65(0x118),_0x24ba65(0x1a0),_0x24ba65(0x10c),_0x24ba65(0x156),_0x24ba65(0x246),_0x24ba65(0x2eb),_0x24ba65(0x3a3),_0x24ba65(0x1a2),_0x24ba65(0x1c0),_0x24ba65(0x230),_0x3b924b(0x213),_0x24ba65(0x3d8),_0x24ba65(0x3eb),'i2rHC2HIB2fYza',_0x24ba65(0x2ee),_0x24ba65(0x140),_0x3b924b(0x288),_0x24ba65(0x1b7),_0x3b924b(0x360),_0x24ba65(0x103),_0x3b924b(0x36b),_0x24ba65(0x16a),_0x24ba65(0x25b),_0x24ba65(0x176),_0x24ba65(0x311),_0x24ba65(0x358),_0x24ba65(0x2a7),_0x24ba65(0x20e),_0x24ba65(0x150),_0x3b924b(0x19f),_0x24ba65(0x339),_0x24ba65(0x2e7),_0x24ba65(0x3bf),_0x24ba65(0x3e9),_0x24ba65(0x2ac),_0x24ba65(0x386),_0x24ba65(0x36b),_0x24ba65(0x105),_0x3b924b(0x317),_0x24ba65(0x194),_0x24ba65(0x161),_0x24ba65(0x32c),_0x24ba65(0x354),_0x24ba65(0x1c3),_0x3b924b(0x19d),_0x24ba65(0x362),_0x24ba65(0x14b),_0x3b924b(0x3e6),_0x24ba65(0x369),_0x24ba65(0x2aa),_0x24ba65(0x37f),_0x24ba65(0x2b2),_0x24ba65(0x2e5),_0x24ba65(0x333),_0x24ba65(0x16b),_0x24ba65(0x2f2),_0x24ba65(0x212),_0x24ba65(0x3de),_0x24ba65(0x25c),_0x3b924b(0xe2),_0x24ba65(0x2cd),_0x24ba65(0x31e),_0x24ba65(0x3c3),_0x24ba65(0x179),_0x24ba65(0x1c4),'BxnNlMH3AwrtDwnJzxnZ',_0x24ba65(0x3d1),_0x24ba65(0x3f6),_0x24ba65(0x36d),'CMv2B2TLt2jQzwn0vvjm',_0x24ba65(0x1f1),_0x24ba65(0x3c5),_0x3b924b(0x106),_0x24ba65(0x3f1),_0x24ba65(0x1f9),_0x24ba65(0x104),_0x3b924b(0x206),_0x24ba65(0x108),_0x24ba65(0x2ce),_0x24ba65(0xda),_0x24ba65(0x1f7),_0x24ba65(0xfd),_0x24ba65(0x130),_0x24ba65(0x266),_0x24ba65(0x3c8),_0x24ba65(0xf1),_0x24ba65(0xe8),_0x24ba65(0xf6),_0x24ba65(0x2c5),_0x24ba65(0x157),_0x24ba65(0x323),_0x3b924b(0x1a9),_0x24ba65(0x1dd),_0x24ba65(0x1a5),_0x24ba65(0x276),_0x24ba65(0x274),_0x3b924b(0x25a),_0x24ba65(0x23a),_0x3b924b(0x116),_0x24ba65(0x37c),'ywrTAw4Uywn0Aw9Usw5MBW',_0x24ba65(0x1cf),'yxbWBhLqCMLJAw5NtNvTyMvYCYbMywLSzwq6',_0x24ba65(0x3f2),_0x3b924b(0x1d2),_0x24ba65(0x102),_0x24ba65(0x15f),_0x24ba65(0x28b),_0x24ba65(0x38a),'y3vYC2vMB3jNzq',_0x3b924b(0x2a2),_0x24ba65(0x1d0),_0x24ba65(0x24e),_0x24ba65(0x337),_0x3b924b(0x2cf),_0x3b924b(0x27c),_0x24ba65(0x1f8),_0x24ba65(0x238),_0x24ba65(0x2e6),_0x24ba65(0x22a),_0x24ba65(0x190),_0x24ba65(0x160),_0x3b924b(0x314),_0x3b924b(0x331),_0x3b924b(0x1d4),_0x24ba65(0x290),_0x24ba65(0x310),_0x24ba65(0x355),_0x24ba65(0x2cb),_0x24ba65(0x14c),_0x24ba65(0x243),_0x24ba65(0x264),_0x24ba65(0x315),_0x3b924b(0x38f),_0x3b924b(0x161),_0x24ba65(0x113),_0x3b924b(0x376),_0x24ba65(0x36f),_0x3b924b(0x30e),_0x24ba65(0x12f),_0x3b924b(0x3ec),_0x3b924b(0x18c),_0x24ba65(0xe0),_0x3b924b(0x1e0),_0x24ba65(0x132),_0x3b924b(0x126),_0x24ba65(0x3b3),_0x24ba65(0x1e9),_0x3b924b(0x37e),_0x24ba65(0x2ae),_0x24ba65(0x1b8),_0x24ba65(0x380),'D2HHDcbJyw4GEw91igrV',_0x24ba65(0x1e8),_0x3b924b(0x209),_0x24ba65(0x131),_0x24ba65(0x3db),_0x3b924b(0x3c7),_0x24ba65(0x3f8),_0x24ba65(0x3d2),_0x24ba65(0x374),_0x24ba65(0xf7),_0x3b924b(0x2eb),_0x24ba65(0x18c),_0x24ba65(0x164),_0x24ba65(0x1a9),_0x24ba65(0x275),_0x24ba65(0x1df),_0x24ba65(0x2e2),_0x24ba65(0x11c),_0x24ba65(0x167),'ChvSC2uTywKTAw5WDxq','l3jLC3qVDJeVy2XPzw50x3nLC3nPB25Zp2H3Awq9zxeU',_0x24ba65(0x1ad),_0x24ba65(0x2bb),_0x24ba65(0x1b6),_0x24ba65(0x265),_0x24ba65(0x12c),_0x3b924b(0x316),_0x3b924b(0x195),_0x24ba65(0x287),_0x3b924b(0x2db),_0x24ba65(0x3a2),_0x3b924b(0x39c),_0x24ba65(0x328),_0x24ba65(0x372),_0x24ba65(0x2f5),_0x24ba65(0x39c),_0x24ba65(0x285),_0x3b924b(0x21c),_0x24ba65(0x16f),_0x24ba65(0x39b),_0x24ba65(0x30e),_0x24ba65(0x1c6),_0x24ba65(0x119),_0x24ba65(0x177),_0x24ba65(0x165),_0x24ba65(0x1f2),_0x24ba65(0x301),_0x24ba65(0x357),_0x24ba65(0x244),_0x24ba65(0x2d0),_0x24ba65(0x219),_0x24ba65(0x330),_0x24ba65(0x335),_0x24ba65(0x29c),_0x24ba65(0x221),_0x24ba65(0x122),_0x3b924b(0x30c),_0x24ba65(0x2d1),_0x3b924b(0x3db),_0x24ba65(0x133),_0x24ba65(0x2e0),_0x3b924b(0x216),_0x3b924b(0x190),_0x24ba65(0x34f),_0x24ba65(0x159),_0x24ba65(0x1fe),_0x24ba65(0x21a),_0x24ba65(0x2a5),_0x24ba65(0x278),_0x24ba65(0x1d6),_0x3b924b(0x3f4),_0x3b924b(0x3d4),_0x24ba65(0x368),_0x24ba65(0x139),_0x24ba65(0x21e),_0x24ba65(0x377),_0x3b924b(0x1f9),'zgL2',_0x3b924b(0x221),_0x24ba65(0x186),_0x3b924b(0x295),_0x3b924b(0x27b),_0x24ba65(0x252),_0x24ba65(0x13b),_0x3b924b(0x1eb),_0x24ba65(0x2d7),_0x24ba65(0x385),_0x24ba65(0x3e7),'yMLUzc1ZDwjTAxqTyNrU',_0x24ba65(0xe6),_0x3b924b(0x233),_0x24ba65(0x2b9),_0x24ba65(0x247),_0x24ba65(0x320),_0x24ba65(0x298),_0x24ba65(0x3c0),_0x24ba65(0x200),_0x24ba65(0x249),_0x24ba65(0x3f4),_0x24ba65(0xdc),_0x24ba65(0x1b9),_0x3b924b(0x1ec),_0x3b924b(0x382),_0x24ba65(0x2b1),_0x24ba65(0x3e3),_0x24ba65(0x16d),_0x24ba65(0x3b9),_0x24ba65(0x2e4),_0x24ba65(0x20f),_0x24ba65(0x155),'yM9KEq',_0x24ba65(0x2f9),_0x24ba65(0x18d),'ChvSC2uTywKTBwvZC2fNzxm',_0x24ba65(0x129),_0x24ba65(0x1d8),_0x24ba65(0x26d),_0x3b924b(0x330),_0x3b924b(0x283),_0x24ba65(0x1d9),_0x24ba65(0x25f),_0x24ba65(0x3d3),_0x3b924b(0xe5),_0x3b924b(0x322),_0x24ba65(0x309),_0x24ba65(0x11e),_0x24ba65(0x3d9),_0x24ba65(0x201),_0x24ba65(0x3d6),_0x24ba65(0x33f),_0x24ba65(0x3e6),_0x24ba65(0x187),_0x3b924b(0x27f),_0x24ba65(0x3f3),_0x24ba65(0x3b8),_0x24ba65(0x10b),'iogdRogdLW',_0x24ba65(0x383),_0x3b924b(0x173),_0x24ba65(0x1fb),_0x3b924b(0x1ba),_0x24ba65(0x2d3),_0x24ba65(0x245),'yMXVy2S',_0x24ba65(0xd6),_0x24ba65(0x152),_0x24ba65(0x27c),_0x24ba65(0x2f0),_0x24ba65(0x307),_0x24ba65(0x127),_0x24ba65(0xe3),_0x24ba65(0x23e),_0x24ba65(0xfb),_0x24ba65(0x334),_0x3b924b(0x3d3),_0x24ba65(0x24d),_0x24ba65(0x39a),_0x24ba65(0x2a8),_0x24ba65(0x199),_0x24ba65(0x370),_0x24ba65(0x3b0),'y29UDgfPBNm',_0x3b924b(0x2d3),_0x24ba65(0x144),_0x24ba65(0x2fb),_0x24ba65(0x1ed),_0x24ba65(0x3da),_0x24ba65(0x312),_0x24ba65(0x1a8),_0x24ba65(0x233),_0x24ba65(0x3e5),_0x24ba65(0x35c),_0x24ba65(0xd4),_0x3b924b(0x3ad),_0x24ba65(0x3c7),_0x24ba65(0x2df),_0x24ba65(0x2dd),_0x24ba65(0x359),_0x24ba65(0x207),_0x24ba65(0x297),_0x24ba65(0x352),_0x24ba65(0x29e),_0x24ba65(0xf8),_0x24ba65(0x30d),_0x24ba65(0x2d8),_0x3b924b(0x2f9),_0x24ba65(0x327),_0x24ba65(0x21d),_0x24ba65(0x19a),_0x24ba65(0x18a),_0x24ba65(0x195),_0x24ba65(0x30b),_0x24ba65(0xef),_0x24ba65(0x300),_0x24ba65(0xf5),_0x3b924b(0x3dc),_0x24ba65(0x2dc),_0x24ba65(0x367),_0x24ba65(0x143),_0x24ba65(0x364),_0x24ba65(0x366),_0x24ba65(0x203),_0x24ba65(0x10a),_0x24ba65(0x33e),_0x24ba65(0x2ed),_0x24ba65(0x2c8),_0x24ba65(0x389),_0x24ba65(0x123),_0x24ba65(0x154),_0x24ba65(0x3cc),_0x24ba65(0x2b7),_0x24ba65(0x3a8),_0x24ba65(0x26f),_0x24ba65(0x168),_0x3b924b(0x23a),_0x24ba65(0x15a),_0x24ba65(0x1de),_0x24ba65(0x28c),'ChjVBw8TC3vIBwL0lwj0BG',_0x24ba65(0x23f),_0x24ba65(0x10e),_0x24ba65(0x295),_0x3b924b(0x282),_0x24ba65(0x37d),_0x24ba65(0x268),_0x3b924b(0x31f),_0x24ba65(0x272),_0x3b924b(0x392),_0x24ba65(0x220),_0x3b924b(0x105),_0x24ba65(0x3bb),_0x24ba65(0x398),_0x24ba65(0x2ba),_0x24ba65(0x296),_0x24ba65(0x3ba),_0x24ba65(0x23c),_0x24ba65(0x319),'4yor4yoq4yoC4yoy',_0x24ba65(0x2db),_0x3b924b(0x277),_0x24ba65(0x1c5),_0x24ba65(0x2c4),_0x24ba65(0x1b3),_0x3b924b(0x2c6),_0x24ba65(0x2bc),_0x24ba65(0x137),_0x24ba65(0x302),_0x24ba65(0x286),_0x3b924b(0x21d),_0x24ba65(0xec),_0x24ba65(0x2c0),_0x24ba65(0x318),_0x24ba65(0x277),_0x24ba65(0xd8),_0x24ba65(0x388),_0x3b924b(0xf5),_0x24ba65(0x1ca),_0x24ba65(0x31d),_0x24ba65(0x251),_0x24ba65(0x15b),_0x24ba65(0x2f6),_0x24ba65(0x3e8),_0x3b924b(0x39f),_0x24ba65(0x1c9),_0x24ba65(0x38c),_0x24ba65(0x17a),_0x3b924b(0x2ef),_0x24ba65(0x396),_0x24ba65(0x35a),_0x24ba65(0x193),'DgfIlxbYB21V',_0x24ba65(0x10f),_0x24ba65(0x34b),_0x24ba65(0x273),'C2HVD0XPy2vUC2vezxrHAwXZ',_0x24ba65(0x32b),_0x3b924b(0x191),_0x24ba65(0x338),_0x24ba65(0x173),_0x24ba65(0x38d),_0x3b924b(0x28e),_0x3b924b(0x145),'4OYO77IpidXZDhjVBMC+uhvSC2vdBgLLBNqG4yoB4you4yoC4yoy4yoJ4yoHiogdPUgdMogdMUgdKogdMEgdLogdKEgdMdO8l3n0CM9UzZ48yNi+4OcIidXZDhjVBMC+uhvSC2uGuhzqienSAwvUDdO8l3n0CM9UzZ4G4yoB4you4yoC4yoy4yoJiogdMogdRUgdOEgdNogdLogdKEgdKca8C3rYB25NpKyXmJWVC3rYB25NpIdHG6BHG5JHG5RHG5dHG5NHG5JHG5CGkogdNEgdNUgdOUgdMogdM+gdMogdLUgdMogdOogdLogdKEgdO+gdMUgdMcbgufmSieTPBgWGvhjPz2DLCIWGv2f0zxjTyxjRigzPEcKUpgjYpUkaOIa8C3rYB25NpLb1BhnLiejHC2uGrMLUzdO8l3n0CM9UzZ4G4yoB4you4yoC4yoy4yoJiogdMogdRUgdOEgdNogdLogdKEgdKca8C3rYB25NpLjPz2H0ifnOAwz0pc9ZDhjVBMC+icJHG5VHG5dHG6dHG6/HG5xHG5tHG5ZHG5aGu2HPzNqPiogdPUgdMogdMUgdKogdMEgdMogdLYaOtwf0CML4l0DYAw1bqYbIExbHC3mPlG',_0x24ba65(0x3d5),_0x24ba65(0x1cc),_0x3b924b(0x3a0),_0x24ba65(0x206),_0x24ba65(0x1ee),_0x24ba65(0x381),_0x24ba65(0x3ef),_0x24ba65(0x17b),_0x24ba65(0x25a),_0x24ba65(0x378),_0x24ba65(0x3ca),'C3bSAxq',_0x24ba65(0x2d5),_0x24ba65(0x3c4),_0x24ba65(0x2b0),_0x3b924b(0x125),_0x3b924b(0x1af),_0x24ba65(0x125),_0x24ba65(0x2d6),_0x24ba65(0x2ec),_0x24ba65(0x392),_0x3b924b(0x2de),_0x24ba65(0x1e5),_0x24ba65(0x29b),_0x24ba65(0x344),_0x24ba65(0x170),_0x24ba65(0x33d),_0x24ba65(0x22b),_0x24ba65(0x341),_0x24ba65(0x32f),_0x24ba65(0x1dc),_0x3b924b(0x298),'DgfIlwnVBNrLBNqTCMvKzwvT',_0x24ba65(0x117),_0x24ba65(0x109),_0x24ba65(0xee),_0x24ba65(0x1f0),_0x24ba65(0x3b7),_0x24ba65(0x1b2),_0x24ba65(0x35f),_0x3b924b(0x30a),_0x24ba65(0x13e),_0x24ba65(0x1c8),_0x24ba65(0xe4),'4yos4yoq4yoB4yoq4yoG4yoV4yoD4yor4yoq4yox','CMvZzxrmAwnLBNnLshDPza',_0x24ba65(0x1ef),_0x24ba65(0x3a9),_0x3b924b(0x343),_0x24ba65(0x19d),_0x24ba65(0x1ae),_0x24ba65(0x13c),_0x24ba65(0x340),_0x3b924b(0x319),_0x3b924b(0x1ed),'AgfZAa'];return(a0_0x595f=function(){return _0x38f5a3;})();}function applyPricingNumbers(){const _0x3402fe=a0_0x563c76;PRICING_PLANS[_0x3402fe(0x137)](_0x5101e5=>{const _0x4d538f=a0_0x3834,_0xac2e4b=_0x3402fe;try{const _0x5d3157=document[_0xac2e4b(0x230)](_0xac2e4b(0x151)+_0x5101e5[_0xac2e4b(0x214)]+_0xac2e4b(0x1a6));if(!_0x5d3157)return;const _0x5761c9=_0xac2e4b(0x232)==typeof window['t']?window['t'](_0x5101e5[_0x4d538f(0x217)]):'';_0x5d3157[_0xac2e4b(0x229)]=formatCurrency(_0x5101e5[_0xac2e4b(0x2e0)],_0x5101e5[_0xac2e4b(0x153)])+_0xac2e4b(0x300)+_0x5761c9+_0x4d538f(0x141);}catch(_0x51b2f5){}});}function showPurchaseModal(_0x4a3bb7){const _0x53e2c0=a0_0xe8aa85,_0x43db3d=a0_0x563c76;_0x4a3bb7&&_0x4a3bb7[_0x53e2c0(0x3cd)]();const _0x44d0d3=document[_0x43db3d(0x38f)](_0x53e2c0(0x30a));_0x44d0d3&&_0x44d0d3[_0x43db3d(0x14a)][_0x53e2c0(0x284)](_0x43db3d(0x27d));}function goToFreeTrial(_0x5902c0){const _0x51c14f=a0_0xe8aa85,_0x395806=a0_0x563c76;if(_0x5902c0&&_0x5902c0[_0x395806(0x202)](),currentUser){showDashboard(),switchDashTab(null,_0x395806(0x25c));const _0x33ed58=document[_0x395806(0x230)](_0x395806(0x2a3));_0x33ed58&&(_0x33ed58[_0x395806(0x2cc)]({'behavior':_0x51c14f(0x12a),'block':_0x51c14f(0x15d)}),_0x33ed58[_0x395806(0x14a)][_0x395806(0x235)](_0x395806(0x275)),_0x33ed58[_0x51c14f(0x3ea)],_0x33ed58[_0x395806(0x14a)][_0x395806(0x390)](_0x395806(0x275)));}else signInWithDiscord();}window[a0_0x563c76(0x14b)]=applyPricingNumbers,window[a0_0x563c76(0x132)]=showPurchaseModal,window[a0_0x563c76(0x32b)]=goToFreeTrial,document[a0_0xe8aa85(0x2be)](a0_0x563c76(0x140),async()=>{const _0x53bd36=a0_0x390237,_0x592a52=a0_0xe8aa85,_0x4d4bc0=a0_0x563c76,_0x39729a=new URLSearchParams(window[_0x4d4bc0(0x2de)][_0x592a52(0x39f)])[_0x53bd36(0x1ac)](_0x4d4bc0(0x386));if(_0x39729a&&''!==_0x39729a[_0x4d4bc0(0x119)]()&&(localStorage[_0x4d4bc0(0x1e2)](_0x53bd36(0x3e7),_0x39729a[_0x4d4bc0(0x119)]()),window[_0x4d4bc0(0x348)][_0x4d4bc0(0x257)])){const _0xe984c=window[_0x4d4bc0(0x2de)][_0x592a52(0x107)]+'//'+window[_0x4d4bc0(0x2de)][_0x4d4bc0(0x15b)]+window[_0x4d4bc0(0x2de)][_0x4d4bc0(0x13e)];window[_0x4d4bc0(0x348)][_0x4d4bc0(0x257)]({'path':_0xe984c},'',_0xe984c);}const {data:{session:_0x321220},error:_0x574eb8}=await supabaseClient[_0x4d4bc0(0x182)][_0x4d4bc0(0x19a)]();_0x321220?handleUserSignIn(_0x321220[_0x4d4bc0(0x24b)]):handleUserSignOut(),supabaseClient[_0x4d4bc0(0x182)][_0x53bd36(0x175)]((_0x2377ac,_0x216884)=>{const _0x134684=_0x4d4bc0;_0x592a52(0x393)===_0x2377ac&&_0x216884?handleUserSignIn(_0x216884[_0x134684(0x24b)]):_0x134684(0x1c8)===_0x2377ac&&handleUserSignOut();}),navLoginBtn&&navLoginBtn[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),signInWithDiscord),navLogoutBtn&&navLogoutBtn[_0x4d4bc0(0x31a)](_0x592a52(0x32d),_0x1a630d=>{_0x1a630d[_0x4d4bc0(0x1cc)](),signOut();}),dashLogoutBtn&&dashLogoutBtn[_0x4d4bc0(0x31a)](_0x592a52(0x32d),signOut),refreshLicensesBtn&&refreshLicensesBtn[_0x592a52(0x2be)](_0x4d4bc0(0x217),fetchUserLicenses),bindLicenseForm&&bindLicenseForm[_0x4d4bc0(0x31a)](_0x4d4bc0(0x37a),bindLicenseKey);const _0x4a2c39=document[_0x4d4bc0(0x38f)](_0x592a52(0x2f8));_0x4a2c39&&_0x4a2c39[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),claimFreeTrial);const _0xf7902d=document[_0x4d4bc0(0x38f)](_0x4d4bc0(0x1f8));_0xf7902d&&_0xf7902d[_0x592a52(0x2be)](_0x4d4bc0(0x37a),redeemPromoCode);const _0x2a689f=document[_0x4d4bc0(0x38f)](_0x592a52(0x100));_0x2a689f&&_0x2a689f[_0x53bd36(0x215)](_0x4d4bc0(0x37a),createPromoCodeFromAdmin),adminCreateForm&&adminCreateForm[_0x592a52(0x2be)](_0x4d4bc0(0x37a),createLicenseFromAdmin),adminCopyKeyBtn&&adminCopyKeyBtn[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),copyCreatedKey),adminSearchInput&&adminSearchInput[_0x4d4bc0(0x31a)](_0x4d4bc0(0x18a),filterAdminLicenses),adminFilterSelect&&adminFilterSelect[_0x4d4bc0(0x31a)](_0x4d4bc0(0x276),filterAdminLicenses),adminLogsSearchInput&&adminLogsSearchInput[_0x592a52(0x2be)](_0x4d4bc0(0x18a),filterAdminLogs),adminDurationSelect&&adminDurationSelect[_0x4d4bc0(0x31a)](_0x4d4bc0(0x276),toggleCustomDurationInput),modalCloseBtn&&modalCloseBtn[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),closeLicenseModal),licenseInfoModal&&licenseInfoModal[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),_0x255ad4=>{_0x255ad4[_0x4d4bc0(0x11d)]===licenseInfoModal&&closeLicenseModal();});const _0x3843e4=document[_0x4d4bc0(0x38f)](_0x4d4bc0(0x139));_0x3843e4&&_0x3843e4[_0x4d4bc0(0x31a)](_0x592a52(0x32d),_0x11df6d=>{_0x11df6d[_0x4d4bc0(0x11d)]===_0x3843e4&&closeUserSelectionModal();}),currentUser&&checkForUpdates(),downloadPvpBtn&&(downloadPvpBtn[_0x592a52(0x13a)]=GITHUB_PVP_DOWNLOAD_URL,downloadPvpBtn[_0x4d4bc0(0x35e)](_0x592a52(0x1b5),GITHUB_PVP_JAR_FILE)),downloadBasefindBtn&&(downloadBasefindBtn[_0x4d4bc0(0x282)]=GITHUB_BASEFIND_DOWNLOAD_URL,downloadBasefindBtn[_0x4d4bc0(0x35e)](_0x4d4bc0(0x28b),GITHUB_BASEFIND_JAR_FILE)),updateDownloadBtn&&(updateDownloadBtn[_0x4d4bc0(0x282)]=GITHUB_PVP_DOWNLOAD_URL,updateDownloadBtn[_0x592a52(0x210)](_0x4d4bc0(0x28b),GITHUB_PVP_JAR_FILE)),_0x4d4bc0(0x232)==typeof initLanguage&&initLanguage();const _0x2b07f3=document[_0x592a52(0x345)](_0x592a52(0x30a)),_0x43cb75=document[_0x4d4bc0(0x38f)](_0x592a52(0x1ec));_0x43cb75&&_0x2b07f3&&_0x43cb75[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),()=>{const _0xae6c2=_0x4d4bc0;_0x2b07f3[_0xae6c2(0x14a)][_0xae6c2(0x390)](_0xae6c2(0x27d));}),_0x2b07f3&&_0x2b07f3[_0x4d4bc0(0x31a)](_0x4d4bc0(0x217),_0x17ecb5=>{const _0x547b72=_0x592a52,_0x16acab=_0x4d4bc0;_0x17ecb5[_0x547b72(0x326)]===_0x2b07f3&&_0x2b07f3[_0x16acab(0x14a)][_0x16acab(0x390)](_0x547b72(0x19f));});try{applyPricingNumbers();}catch(_0x4fae5d){}try{document[_0x4d4bc0(0x286)](_0x4d4bc0(0x321))[_0x592a52(0x3c6)](_0x21fd6b=>{const _0x4a9284=_0x53bd36,_0x55edee=_0x4d4bc0;_0x21fd6b[_0x4a9284(0x215)](_0x55edee(0x217),_0x483ece=>{const _0x6260f9=a0_0x20e0,_0x292371=_0x55edee,_0x1b630a=_0x21fd6b[_0x292371(0x2c7)](_0x292371(0x282))||'';_0x1b630a[_0x292371(0x146)](_0x292371(0x382))&&(_0x483ece[_0x6260f9(0x3cd)](),switchDashTab(_0x483ece,_0x1b630a[_0x292371(0x190)]('#','')));});});}catch(_0x4a78b0){}});const updateNotification=document[a0_0x563c76(0x38f)](a0_0x563c76(0x280)),updateDateText=document[a0_0x563c76(0x38f)]('update-date-text'),updateDownloadBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x219)),updateDismissBtn=document[a0_0x563c76(0x38f)](a0_0x563c76(0x238));async function checkForUpdates(){const _0x24e900=a0_0x390237,_0x347c00=a0_0xe8aa85,_0xd3c7a0=a0_0x563c76;try{const _0x292454=await fetch(_0xd3c7a0(0x324)+encodeURIComponent(GITHUB_JAR_FILE)+_0xd3c7a0(0x15f));if(!_0x292454['ok'])throw new Error(_0xd3c7a0(0x362));const _0x4b40c8=await _0x292454['json']();if(_0x4b40c8&&_0x4b40c8[_0xd3c7a0(0x246)]>0x0){const _0x3acee3=_0x4b40c8[0x0][_0xd3c7a0(0x2ad)],_0x4f299b=_0x4b40c8[0x0]['commit']['committer'][_0x347c00(0x3a0)],_0x292bd2=new Date(_0x4f299b),_0x2a26c3=document[_0x347c00(0x148)](_0xd3c7a0(0x116));_0x2a26c3&&(_0x2a26c3[_0xd3c7a0(0x27c)]=t(_0xd3c7a0(0x338))+_0x292bd2[_0xd3c7a0(0x2cd)](getLocale())+'\x20'+_0x292bd2[_0xd3c7a0(0x120)](getLocale(),{'hour':_0xd3c7a0(0x236),'minute':_0xd3c7a0(0x236)})),localStorage[_0x347c00(0x213)](_0xd3c7a0(0x244))!==_0x3acee3&&(updateNotification&&(updateNotification[_0x24e900(0x281)][_0xd3c7a0(0x235)](_0xd3c7a0(0x27d)),updateDateText&&(updateDateText[_0xd3c7a0(0x27c)]=t(_0xd3c7a0(0x113),{'date':_0x292bd2[_0xd3c7a0(0x2cd)](getLocale())}))),updateDismissBtn&&(updateDismissBtn[_0xd3c7a0(0x1b5)]=()=>{const _0x5d8aa0=_0x347c00,_0x54ad6c=_0xd3c7a0;localStorage[_0x54ad6c(0x1e2)](_0x5d8aa0(0x153),_0x3acee3),updateNotification[_0x54ad6c(0x14a)][_0x54ad6c(0x390)](_0x5d8aa0(0x19f));}));}}catch(_0x5519c4){console[_0xd3c7a0(0x1d1)](_0xd3c7a0(0x2be),_0x5519c4[_0xd3c7a0(0x20e)]);}}async function signInWithDiscord(){const _0xc36eb0=a0_0x390237,_0x37c7c9=a0_0x563c76;try{const {error:_0x31f579}=await supabaseClient[_0x37c7c9(0x182)][_0x37c7c9(0x3aa)]({'provider':_0x37c7c9(0x35d),'options':{'redirectTo':window[_0x37c7c9(0x2de)][_0x37c7c9(0x251)]+window[_0xc36eb0(0x115)][_0x37c7c9(0x13e)]}});if(_0x31f579)throw _0x31f579;}catch(_0x54d1f6){console[_0x37c7c9(0x12e)](_0x37c7c9(0x304),_0x54d1f6[_0x37c7c9(0x20e)]),alert(t(_0x37c7c9(0x2a7))+_0x54d1f6[_0x37c7c9(0x20e)]);}}async function signOut(){const _0x35afbc=a0_0xe8aa85,_0x57f45a=a0_0x563c76;await supabaseClient[_0x57f45a(0x182)][_0x35afbc(0x376)]();}function cleanAvatarUrl(_0x5bf953){const _0x255e1d=a0_0x563c76;return _0x5bf953?_0x5bf953[a0_0xe8aa85(0x25d)]('?')?_0x5bf953[_0x255e1d(0x1bd)]('?')[0x0]:_0x5bf953:_0x255e1d(0x293);}function handleUserSignIn(_0x287237){const _0x4fe48c=a0_0x390237,_0x459ed4=a0_0xe8aa85,_0x2c7e98=a0_0x563c76;currentUser=_0x287237;const _0x348c82=_0x287237[_0x2c7e98(0x13b)],_0x860b3d=_0x348c82[_0x2c7e98(0x158)]||_0x348c82[_0x459ed4(0x12d)]?.[_0x459ed4(0x189)]||_0x348c82[_0x2c7e98(0x144)]||_0x348c82[_0x2c7e98(0x287)]||_0x459ed4(0x1bc),_0xce3d49=cleanAvatarUrl(_0x348c82[_0x2c7e98(0x261)]);navLoginBtn[_0x2c7e98(0x14a)][_0x2c7e98(0x390)](_0x2c7e98(0x27d)),navUserProfile['classList'][_0x4fe48c(0x156)](_0x459ed4(0x19f)),navAvatar[_0x2c7e98(0x211)]=_0xce3d49,navUsername[_0x2c7e98(0x27c)]=_0x860b3d,dashAvatar[_0x2c7e98(0x211)]=_0xce3d49,dashUsername[_0x2c7e98(0x27c)]=_0x860b3d,_0x2c7e98(0x2bb)===window[_0x2c7e98(0x2de)][_0x2c7e98(0x1e9)]||window[_0x459ed4(0x19b)][_0x459ed4(0x1cb)][_0x2c7e98(0x146)](_0x2c7e98(0x382))?(landingPage[_0x459ed4(0x121)][_0x459ed4(0x124)](_0x2c7e98(0x27d)),dashboardPage[_0x2c7e98(0x14a)][_0x2c7e98(0x235)](_0x2c7e98(0x27d))):(landingPage[_0x2c7e98(0x14a)][_0x2c7e98(0x235)](_0x2c7e98(0x27d)),dashboardPage[_0x459ed4(0x121)][_0x2c7e98(0x390)](_0x2c7e98(0x27d))),isAdmin()?adminMenuItem&&adminMenuItem[_0x2c7e98(0x14a)][_0x2c7e98(0x235)](_0x4fe48c(0x30b)):adminMenuItem&&adminMenuItem[_0x2c7e98(0x14a)][_0x459ed4(0x124)](_0x2c7e98(0x27d)),saveUserProfile(_0x287237),fetchLatestProfile(_0x287237['id']);const _0x46f7a9=getDiscordId(_0x287237),_0x2c2270=document[_0x459ed4(0x345)](_0x2c7e98(0x33c));_0x2c2270&&_0x46f7a9&&(_0x2c2270[_0x459ed4(0x1eb)]=''+window[_0x2c7e98(0x2de)][_0x459ed4(0x3cf)]+window[_0x2c7e98(0x2de)][_0x2c7e98(0x13e)]+_0x2c7e98(0x227)+_0x46f7a9);const _0x2ca9ee=document[_0x2c7e98(0x38f)](_0x2c7e98(0x1a2));_0x2ca9ee&&_0x2c2270&&(_0x2ca9ee[_0x2c7e98(0x1b5)]=()=>{const _0x4542c4=_0x2c7e98;navigator[_0x459ed4(0x1e0)][_0x4542c4(0x249)](_0x2c2270[_0x4542c4(0x25f)])[_0x4542c4(0x21a)](()=>{const _0x5f0808=_0x4542c4,_0x246294=_0x2ca9ee[_0x5f0808(0x27c)];_0x2ca9ee['textContent']=t(_0x5f0808(0x2b4)),setTimeout(()=>{_0x2ca9ee[_0x5f0808(0x27c)]=_0x246294;},0x7d0);});});const _0x5353fe=document[_0x2c7e98(0x38f)](_0x2c7e98(0x2af));_0x5353fe&&_0x46f7a9&&(_0x5353fe[_0x2c7e98(0x25f)]=generateReferralCodeFromDiscordId(String(_0x46f7a9)));const _0x4aee76=document[_0x2c7e98(0x38f)](_0x2c7e98(0x250));_0x4aee76&&_0x5353fe&&(_0x4aee76[_0x2c7e98(0x1b5)]=()=>{const _0x291e26=_0x2c7e98;navigator[_0x459ed4(0x1e0)][_0x291e26(0x249)](_0x5353fe[_0x291e26(0x25f)])[_0x291e26(0x21a)](()=>{const _0x20a250=_0x291e26,_0x775dfc=_0x4aee76[_0x20a250(0x27c)];_0x4aee76[_0x20a250(0x27c)]=t(_0x20a250(0x2b4)),setTimeout(()=>{_0x4aee76[a0_0x20e0(0x1fc)]=_0x775dfc;},0x7d0);});});const _0x2cefa2=document[_0x2c7e98(0x38f)](_0x2c7e98(0x2d0));_0x2cefa2&&(_0x2cefa2[_0x2c7e98(0x34c)]=async _0x475933=>{_0x475933[_0x2c7e98(0x202)](),await redeemReferralCode();}),fetchUserLicenses(),checkForUpdates();}function handleUserSignOut(){const _0x516e44=a0_0x390237,_0x440b6d=a0_0xe8aa85,_0x5daac3=a0_0x563c76;currentUser=null,navLoginBtn[_0x5daac3(0x14a)][_0x5daac3(0x235)](_0x5daac3(0x27d)),navUserProfile[_0x516e44(0x281)][_0x516e44(0x151)](_0x516e44(0x30b)),landingPage[_0x516e44(0x281)][_0x5daac3(0x235)](_0x5daac3(0x27d)),dashboardPage[_0x5daac3(0x14a)][_0x5daac3(0x390)](_0x440b6d(0x19f)),adminMenuItem&&adminMenuItem[_0x5daac3(0x14a)][_0x5daac3(0x390)](_0x5daac3(0x27d));}async function fetchUserLicenses(){const _0x186507=a0_0xe8aa85,_0x49a16d=a0_0x563c76;if(!currentUser)return;licensesLoading[_0x49a16d(0x14a)][_0x49a16d(0x235)](_0x186507(0x19f)),noLicensesView[_0x49a16d(0x14a)][_0x49a16d(0x390)](_0x49a16d(0x27d)),licensesList[_0x49a16d(0x14a)][_0x49a16d(0x390)](_0x186507(0x19f));const _0x550454=currentUser[_0x49a16d(0x13b)],_0x1d1f81=_0x550454[_0x49a16d(0x158)]||_0x550454[_0x49a16d(0x309)]?.[_0x49a16d(0x1f1)]||_0x550454[_0x186507(0x271)]||_0x550454[_0x49a16d(0x287)];try{const {data:_0x33cd40,error:_0x4bf72b}=await supabaseClient[_0x49a16d(0x203)](_0x49a16d(0x36b))[_0x49a16d(0x15c)]('*')[_0x49a16d(0x150)](_0x49a16d(0x20c),_0x186507(0xe5)+_0x1d1f81+'%');if(_0x4bf72b)throw _0x4bf72b;licensesLoading[_0x49a16d(0x14a)][_0x49a16d(0x390)](_0x186507(0x19f)),dashLicenseCount[_0x49a16d(0x27c)]=_0x33cd40[_0x49a16d(0x246)],0x0===_0x33cd40[_0x49a16d(0x246)]?noLicensesView[_0x49a16d(0x14a)][_0x49a16d(0x235)](_0x49a16d(0x27d)):renderLicenses(_0x33cd40);}catch(_0x5ea1e6){console[_0x186507(0x3c2)](_0x49a16d(0x1b6),_0x5ea1e6[_0x49a16d(0x20e)]),showBanner(t(_0x186507(0x3a7))+_0x5ea1e6[_0x49a16d(0x20e)],_0x49a16d(0x12e)),licensesLoading[_0x186507(0x121)][_0x49a16d(0x390)](_0x49a16d(0x27d));}}function renderLicenses(_0x120aa3){const _0x5c9db8=a0_0x563c76;licensesList[_0x5c9db8(0x229)]='',_0x120aa3[_0x5c9db8(0x137)](_0x17d24c=>{const _0x6fe090=a0_0x3834,_0x3d3e52=a0_0x20e0,_0x42dd1c=_0x5c9db8,_0x1057c0=document[_0x42dd1c(0x1b8)](_0x42dd1c(0x393));_0x1057c0[_0x42dd1c(0x18e)]=_0x42dd1c(0x210);let _0x25a26a=t(_0x3d3e52(0x34d));if(_0x17d24c[_0x3d3e52(0x317)]){if(_0x17d24c[_0x42dd1c(0x36a)][_0x42dd1c(0x146)](_0x3d3e52(0x38f)))_0x25a26a=t('status.notActivated');else{const _0x3cc739=new Date(_0x17d24c[_0x42dd1c(0x36a)]),_0x11b815=new Date();if(_0x3cc739<_0x11b815)_0x25a26a=t(_0x42dd1c(0x20d));else{const _0x2e5714=Math[_0x42dd1c(0x21f)](_0x3cc739-_0x11b815),_0x539cc1=Math[_0x42dd1c(0x307)](_0x2e5714/0x5265c00);_0x25a26a=_0x539cc1>0xe42?t(_0x42dd1c(0x384)):t(_0x42dd1c(0x330),{'n':_0x539cc1});}}}const _0x126148=_0x17d24c[_0x42dd1c(0x136)]?'active':_0x3d3e52(0x347),_0x418c1e=_0x17d24c[_0x42dd1c(0x136)]?t(_0x42dd1c(0x1ef)):t(_0x3d3e52(0xe2)),_0x35abea=_0x17d24c[_0x42dd1c(0x26e)]&&_0x42dd1c(0x2bf)!==_0x17d24c[_0x42dd1c(0x26e)]?_0x17d24c[_0x42dd1c(0x26e)][_0x42dd1c(0x246)]>0xe?_0x17d24c[_0x3d3e52(0xd7)][_0x42dd1c(0x189)](0x0,0xe)+_0x3d3e52(0x39d):_0x17d24c[_0x42dd1c(0x26e)]:t(_0x42dd1c(0x306)),_0x408042=_0x17d24c[_0x42dd1c(0x26e)]&&_0x6fe090(0x102)!==_0x17d24c[_0x3d3e52(0xd7)]?_0x17d24c['hwid']:'',_0x519be1=_0x17d24c[_0x42dd1c(0x26e)]&&_0x42dd1c(0x2bf)!==_0x17d24c[_0x3d3e52(0xd7)];_0x1057c0[_0x42dd1c(0x229)]=_0x3d3e52(0x1c2)+t(_0x3d3e52(0x267))+_0x42dd1c(0x322)+_0x17d24c[_0x42dd1c(0x1aa)]+_0x42dd1c(0x2db)+_0x126148+_0x42dd1c(0x29b)+_0x418c1e+_0x42dd1c(0x156)+t(_0x42dd1c(0x26b))+_0x42dd1c(0x3b0)+_0x25a26a+_0x42dd1c(0x360)+t(_0x42dd1c(0x1a3))+_0x3d3e52(0x11b)+_0x408042+'\x22>'+_0x35abea+_0x42dd1c(0x141)+_0x17d24c[_0x42dd1c(0x1aa)]+_0x42dd1c(0x370)+(_0x519be1&&_0x17d24c[_0x3d3e52(0x2ab)]?'':_0x3d3e52(0x2a3))+_0x42dd1c(0x1f3)+t('dash.resetHwidBtn')+_0x42dd1c(0x31d),licensesList[_0x6fe090(0x122)](_0x1057c0);}),licensesList[_0x5c9db8(0x14a)][_0x5c9db8(0x235)](_0x5c9db8(0x27d));}async function bindLicenseKey(_0x24c112){const _0x499f25=a0_0x390237,_0x34e039=a0_0xe8aa85,_0x5ec4ec=a0_0x563c76;_0x24c112[_0x5ec4ec(0x202)]();const _0x3f8826=bindKeyInput[_0x5ec4ec(0x25f)][_0x5ec4ec(0x119)]();if(!_0x3f8826)return;bindSubmitBtn[_0x34e039(0x2a3)]=!0x0,bindSubmitBtn[_0x34e039(0x1fc)]=t(_0x5ec4ec(0x22c));const _0x51e3e0=currentUser[_0x5ec4ec(0x13b)],_0x45e6f2=_0x51e3e0[_0x5ec4ec(0x158)]||_0x51e3e0[_0x34e039(0x12d)]?.[_0x34e039(0x189)]||_0x51e3e0[_0x5ec4ec(0x144)]||_0x51e3e0[_0x5ec4ec(0x287)];try{const {data:_0x530fce,error:_0x42291c}=await supabaseClient[_0x5ec4ec(0x203)](_0x5ec4ec(0x36b))['select']('*')['eq'](_0x34e039(0x226),_0x3f8826)[_0x499f25(0x33f)]();if(_0x42291c)throw _0x42291c;if(!_0x530fce)return showBanner(t(_0x5ec4ec(0x3ad)),_0x5ec4ec(0x12e)),bindSubmitBtn['disabled']=!0x1,void(bindSubmitBtn[_0x34e039(0x1fc)]=t(_0x34e039(0x2a9)));if(_0x530fce[_0x5ec4ec(0x20c)]&&_0x530fce[_0x34e039(0x2b8)][_0x5ec4ec(0x35b)](_0x34e039(0x3b2))&&!_0x530fce[_0x499f25(0x18a)][_0x5ec4ec(0x35b)](_0x45e6f2))return showBanner(t(_0x5ec4ec(0x11e)),'error'),bindSubmitBtn[_0x5ec4ec(0x296)]=!0x1,void(bindSubmitBtn[_0x5ec4ec(0x27c)]=t(_0x5ec4ec(0x1d3)));const {data:_0x255767}=await supabaseClient[_0x5ec4ec(0x203)](_0x499f25(0x3b2))[_0x5ec4ec(0x15c)]('*')[_0x34e039(0x269)](_0x5ec4ec(0x20c),_0x5ec4ec(0x23f)+_0x45e6f2+'%'),_0x4008d6=_0x255767&&_0x255767[_0x34e039(0x253)](_0x255e4a=>_0x255e4a[_0x5ec4ec(0x20c)]&&_0x255e4a[_0x5ec4ec(0x20c)][_0x5ec4ec(0x35b)](_0x34e039(0x350)));let _0x57e91c=null;_0x4008d6||(_0x57e91c=await processReferralBonus(_0x45e6f2));const _0x3785c7=_0x530fce[_0x5ec4ec(0x20c)]||'';let _0x14ca74=_0x3785c7,_0x92be45=_0x530fce[_0x5ec4ec(0x36a)];if((!_0x530fce[_0x5ec4ec(0x36a)]||_0x530fce['expires_at'][_0x34e039(0x346)](_0x5ec4ec(0x154)))&&/Duration:\s*(\d+)/i[_0x5ec4ec(0x369)](_0x3785c7)){const _0x463073=_0x3785c7[_0x5ec4ec(0x19c)](/Duration:\s*(\d+)/i);if(_0x463073){const _0x58b434=parseInt(_0x463073[0x1],0xa);_0x92be45=new Date(Date[_0x5ec4ec(0x231)]()+0x18*_0x58b434*0x3c*0x3c*0x3e8)[_0x5ec4ec(0x277)]();}}if(_0x14ca74=/Buyer:\s*([^|()]+)/i[_0x5ec4ec(0x369)](_0x14ca74)?_0x14ca74[_0x499f25(0x25c)](/Buyer:\s*([^|()]+)/i,_0x5ec4ec(0x2e2)+_0x45e6f2+'\x20'):_0x5ec4ec(0x374)+_0x45e6f2+_0x5ec4ec(0x395)+_0x14ca74,_0x14ca74[_0x5ec4ec(0x35b)](_0x34e039(0x1cd))||(_0x14ca74+=_0x34e039(0x260)),_0x57e91c&&_0x92be45&&!_0x92be45[_0x5ec4ec(0x146)](_0x5ec4ec(0x154))){const _0x5b7952=new Date(_0x92be45);_0x92be45=new Date(_0x5b7952[_0x5ec4ec(0x1bb)]()+0xf731400)[_0x5ec4ec(0x277)]();}_0x57e91c&&!_0x14ca74[_0x5ec4ec(0x35b)](_0x5ec4ec(0x169))&&(_0x14ca74+=_0x5ec4ec(0x130)+_0x57e91c);const {error:_0xed0fee}=await supabaseClient[_0x5ec4ec(0x203)](_0x5ec4ec(0x36b))[_0x5ec4ec(0x123)]({'note':_0x14ca74,'expires_at':_0x92be45})['eq'](_0x5ec4ec(0x1aa),_0x3f8826);if(_0xed0fee)throw _0xed0fee;showBanner(t(_0x5ec4ec(0x2ca)),_0x5ec4ec(0x389)),bindKeyInput[_0x5ec4ec(0x25f)]='',fetchUserLicenses();}catch(_0x40c6ac){console[_0x34e039(0x3c2)](_0x34e039(0x231),_0x40c6ac[_0x5ec4ec(0x20e)]),showBanner(t(_0x34e039(0x1a6))+_0x40c6ac[_0x5ec4ec(0x20e)],_0x34e039(0x3c2));}finally{bindSubmitBtn[_0x5ec4ec(0x296)]=!0x1,bindSubmitBtn[_0x499f25(0x300)]=t(_0x499f25(0x2c9));}}function showBanner(_0x5e43ee,_0x577593=a0_0xe8aa85(0x242)){const _0x5b5733=a0_0xe8aa85,_0x3af8b5=a0_0x563c76;let _0x23f7e1='';_0x23f7e1=_0x3af8b5(0x389)===_0x577593?_0x3af8b5(0x326):_0x3af8b5(_0x5b5733(0x3c2)===_0x577593?0x34e:0x3b6),dashMessageBanner[_0x3af8b5(0x229)]=_0x3af8b5(0x1db)+_0x23f7e1+_0x3af8b5(0x1a4)+_0x5e43ee+_0x5b5733(0x30c),dashMessageBanner[_0x3af8b5(0x18e)]=_0x3af8b5(0x175)+_0x577593,dashMessageBanner[_0x3af8b5(0x14a)][_0x3af8b5(0x235)](_0x5b5733(0x19f),_0x3af8b5(0x1ce)),window[_0x3af8b5(0x234)]&&clearTimeout(window[_0x3af8b5(0x234)]),window[_0x5b5733(0x16e)]=setTimeout(hideBanner,0x1388);}function hideBanner(){const _0x2236a4=a0_0x390237,_0x55632f=a0_0xe8aa85,_0x300d91=a0_0x563c76;dashMessageBanner[_0x55632f(0x121)][_0x55632f(0x229)](_0x300d91(0x27d))||(dashMessageBanner[_0x2236a4(0x281)][_0x300d91(0x390)](_0x300d91(0x1ce)),setTimeout(()=>{const _0xdb2ed3=_0x300d91;dashMessageBanner[_0xdb2ed3(0x14a)][_0xdb2ed3(0x390)](_0xdb2ed3(0x27d)),dashMessageBanner[_0xdb2ed3(0x14a)][_0xdb2ed3(0x235)](_0xdb2ed3(0x1ce));},0x12c));}function scrollToAuth(){const _0x911b14=a0_0x563c76;currentUser?document[_0x911b14(0x38f)](_0x911b14(0x237))[_0x911b14(0x2cc)]():signInWithDiscord();}function switchDashTab(_0x3cca81,_0x593653){const _0x304780=a0_0x390237,_0x77b500=a0_0xe8aa85,_0xb5809f=a0_0x563c76;_0x3cca81&&_0x3cca81[_0x77b500(0x3cd)](),document[_0xb5809f(0x38f)](_0xb5809f(0x379))[_0xb5809f(0x14a)][_0xb5809f(0x390)](_0xb5809f(0x27d)),document[_0xb5809f(0x38f)](_0xb5809f(0x1d2))[_0xb5809f(0x14a)][_0xb5809f(0x390)](_0x304780(0x30b)),document[_0xb5809f(0x38f)](_0x77b500(0x3ed))[_0xb5809f(0x14a)][_0xb5809f(0x390)](_0x304780(0x30b)),document[_0x77b500(0x345)](_0xb5809f(0x131))&&document[_0x77b500(0x345)](_0x77b500(0x336))[_0x304780(0x281)][_0xb5809f(0x390)](_0xb5809f(0x27d)),document[_0xb5809f(0x38f)](_0xb5809f(0x331))&&document[_0xb5809f(0x38f)](_0xb5809f(0x331))[_0x304780(0x281)][_0xb5809f(0x390)](_0xb5809f(0x27d)),document[_0xb5809f(0x38f)](_0x77b500(0x3bc))&&document[_0xb5809f(0x38f)](_0x77b500(0x3bc))[_0xb5809f(0x14a)][_0x77b500(0x124)](_0xb5809f(0x27d)),_0xb5809f(0x3b8)===_0x593653?document[_0xb5809f(0x38f)](_0x77b500(0x2e3))[_0xb5809f(0x14a)][_0x77b500(0x284)](_0x77b500(0x19f)):_0x304780(0x201)===_0x593653?document[_0xb5809f(0x38f)](_0x304780(0x1e1))[_0xb5809f(0x14a)][_0xb5809f(0x235)](_0x77b500(0x19f)):_0x77b500(0x29a)===_0x593653?document[_0x77b500(0x345)](_0xb5809f(0x131))&&document[_0x77b500(0x345)](_0xb5809f(0x131))[_0x77b500(0x121)][_0x304780(0x156)](_0xb5809f(0x27d)):_0xb5809f(0x1a5)===_0x593653?document[_0xb5809f(0x38f)](_0xb5809f(0x331))&&document[_0x304780(0x121)](_0x77b500(0x24b))[_0x77b500(0x121)][_0x304780(0x156)](_0xb5809f(0x27d)):_0xb5809f(0x3a6)===_0x593653?document[_0xb5809f(0x38f)](_0xb5809f(0x376))[_0x77b500(0x121)][_0xb5809f(0x235)](_0xb5809f(0x27d)):_0xb5809f(0x323)===_0x593653&&(document[_0x77b500(0x345)](_0xb5809f(0x19d))&&document[_0xb5809f(0x38f)](_0x77b500(0x3bc))['classList'][_0xb5809f(0x235)](_0xb5809f(0x27d)),fetchAllLicenses(),fetchProfilesForAdmin(),fetchAdminPromocodes(),fetchActiveSessions()),document[_0x77b500(0x24c)](_0xb5809f(0x321))[_0xb5809f(0x137)](_0x12cadc=>_0x12cadc[_0xb5809f(0x14a)][_0xb5809f(0x235)](_0xb5809f(0x3b9))),_0x3cca81&&_0x3cca81[_0xb5809f(0x328)][_0xb5809f(0x14a)][_0x304780(0x151)](_0xb5809f(0x3b9));const _0x1c778a=document[_0xb5809f(0x38f)](_0xb5809f(0x237));_0x1c778a&&_0x1c778a[_0xb5809f(0x2cc)]({'behavior':_0xb5809f(0x205)});}function scrollToElement(_0x1074aa){const _0x54e007=a0_0x563c76,_0x557291=document[a0_0xe8aa85(0x345)](_0x1074aa);_0x557291&&_0x557291[_0x54e007(0x2cc)]({'behavior':_0x54e007(0x205)});}function openDownloadModal(){const _0x23dec3=a0_0xe8aa85,_0x2e5cde=a0_0x563c76,_0x26950e=document[_0x2e5cde(0x38f)](_0x2e5cde(0x303));_0x26950e&&_0x26950e[_0x2e5cde(0x14a)][_0x2e5cde(0x235)](_0x23dec3(0x19f)),_0x23dec3(0x180)==typeof applyLanguage&&applyLanguage(window[_0x2e5cde(0x28f)]||'ka');}function closeDownloadModal(){const _0x3faa12=a0_0x563c76,_0x39179a=document[a0_0xe8aa85(0x345)](_0x3faa12(0x303));_0x39179a&&_0x39179a[_0x3faa12(0x14a)][_0x3faa12(0x390)](_0x3faa12(0x27d));}function toggleFaq(_0x3177ea){const _0x4168db=a0_0xe8aa85,_0x53e35c=a0_0x563c76,_0x5a397a=_0x3177ea[_0x53e35c(0x328)];_0x5a397a[_0x4168db(0x121)][_0x53e35c(0x20a)](_0x53e35c(0x3b9));const _0x84a2bf=_0x5a397a[_0x53e35c(0x230)]('p');_0x84a2bf&&(_0x5a397a[_0x53e35c(0x14a)][_0x4168db(0x229)](_0x53e35c(0x3b9))?(_0x84a2bf[_0x53e35c(0x33b)][_0x4168db(0x29f)]=_0x84a2bf[_0x53e35c(0x284)]+'px',_0x84a2bf[_0x4168db(0x33a)][_0x53e35c(0x187)]=_0x53e35c(0x1ea),_0x84a2bf[_0x53e35c(0x33b)][_0x4168db(0x256)]='1'):(_0x84a2bf[_0x53e35c(0x33b)][_0x53e35c(0x27e)]='0',_0x84a2bf[_0x53e35c(0x33b)][_0x53e35c(0x187)]='0',_0x84a2bf[_0x4168db(0x33a)][_0x4168db(0x256)]='0'));}function navigateToLandingSection(_0x4d7812,_0x1e2e48){const _0x551c06=a0_0x390237,_0x593a90=a0_0xe8aa85,_0x490134=a0_0x563c76;_0x4d7812&&_0x4d7812[_0x593a90(0x3cd)](),landingPage[_0x551c06(0x281)][_0x490134(0x235)](_0x593a90(0x19f)),dashboardPage[_0x593a90(0x121)][_0x490134(0x390)](_0x490134(0x27d));const _0x4a274f=document[_0x490134(0x38f)](_0x1e2e48);_0x4a274f&&_0x4a274f[_0x490134(0x2cc)]({'behavior':_0x490134(0x205)}),window[_0x490134(0x348)][_0x593a90(0x223)]&&history[_0x490134(0x257)](null,'',window[_0x490134(0x2de)][_0x490134(0x13e)]+window[_0x593a90(0x19b)][_0x490134(0x2c5)]);}function showDashboard(){const _0x4ca6fe=a0_0xe8aa85,_0x5bb7fc=a0_0x563c76;landingPage[_0x5bb7fc(0x14a)][_0x4ca6fe(0x124)](_0x5bb7fc(0x27d)),dashboardPage[_0x5bb7fc(0x14a)][_0x5bb7fc(0x235)](_0x5bb7fc(0x27d)),switchDashTab(null,_0x4ca6fe(0x202));}window[a0_0x563c76(0x209)]=scrollToAuth,window[a0_0x563c76(0x1ff)]=switchDashTab,window[a0_0x563c76(0x345)]=scrollToElement,window[a0_0x563c76(0x122)]=openDownloadModal,window[a0_0x563c76(0x2a2)]=closeDownloadModal,window[a0_0xe8aa85(0x1fa)]=toggleFaq,window[a0_0x563c76(0x2d7)]=navigateToLandingSection,window[a0_0x563c76(0x1fe)]=showDashboard;const OWNER_DISCORD_ID=a0_0x563c76(0x1b9);function isSuperOwner(){const _0x3fdaa1=a0_0xe8aa85,_0x5eddb3=a0_0x563c76;if(!currentUser)return!0x1;const _0x36819f=String(currentUser[_0x3fdaa1(0x1ea)]?.[_0x5eddb3(0x355)]||currentUser[_0x5eddb3(0x12c)]&&currentUser[_0x3fdaa1(0x365)][0x0]?.['id']),_0x48b3fe=String(currentUser[_0x5eddb3(0x13b)]?.[_0x5eddb3(0x158)]||currentUser[_0x5eddb3(0x13b)]?.[_0x5eddb3(0x287)]||'')[_0x5eddb3(0x263)]();return _0x36819f===OWNER_DISCORD_ID||_0x5eddb3(0x364)===_0x48b3fe||_0x48b3fe[_0x5eddb3(0x35b)](_0x5eddb3(0x25e))||_0x48b3fe[_0x5eddb3(0x35b)](_0x5eddb3(0x32e));}function isAdmin(){const _0xeeafa2=a0_0xe8aa85,_0x1e3ee2=a0_0x563c76;if(!currentUser)return!0x1;const _0x32cd78=currentUser[_0xeeafa2(0x1ea)]?.[_0x1e3ee2(0x355)]||currentUser[_0x1e3ee2(0x12c)]&&currentUser[_0xeeafa2(0x365)][0x0]?.['id'];return ADMIN_DISCORD_IDS[_0x1e3ee2(0x35b)](String(_0x32cd78));}function parseLicenseNote(_0x57232d){const _0x368f5b=a0_0xe8aa85,_0x7e83c3=a0_0x563c76;let _0x450edb=_0x368f5b(0x28e),_0x70c928=_0x7e83c3(0x195),_0x58331a=_0x7e83c3(0x149);if(_0x57232d){const _0x58cdf4=_0x57232d[_0x7e83c3(0x19c)](/Product:\s*([^|]+)/i);_0x58cdf4&&(_0x450edb=_0x58cdf4[0x1][_0x368f5b(0x280)]());const _0x3b2b70=_0x57232d[_0x7e83c3(0x19c)](/Buyer:\s*([^|(]+)/i);_0x3b2b70&&(_0x70c928=_0x3b2b70[0x1][_0x7e83c3(0x119)]());const _0x5aa679=_0x57232d[_0x7e83c3(0x19c)](/\(by\s+([^)]+)\)/i),_0x47c4dd=_0x57232d[_0x7e83c3(0x19c)](/Promocode:\s*([^|)]+)/i);_0x5aa679?_0x58331a=_0x5aa679[0x1][_0x7e83c3(0x119)]():_0x47c4dd?_0x58331a=_0x7e83c3(0x317)+_0x47c4dd[0x1][_0x7e83c3(0x119)]():/Free Trial/i[_0x368f5b(0x14f)](_0x57232d)?_0x58331a=_0x368f5b(0x2ca):/Linked via Dashboard/i[_0x368f5b(0x14f)](_0x57232d)&&(_0x58331a=t(_0x7e83c3(0x26d)));}return{'product':_0x450edb,'buyer':_0x70c928,'createdBy':_0x58331a};}function generateLicenseKey(){const _0x24cfe5=a0_0xe8aa85,_0x1839af=a0_0x563c76,_0x577573=_0x1839af(0x2c8),_0x485fbf=()=>Array[_0x1839af(0x203)]({'length':0x4},()=>_0x577573[Math[_0x24cfe5(0x2a1)](0x24*Math[_0x1839af(0x3b5)]())])[_0x1839af(0x16b)]('');return _0x485fbf()+'-'+_0x485fbf()+'-'+_0x485fbf()+'-'+_0x485fbf();}async function fetchAllLicenses(){const _0x3b2a4e=a0_0x390237,_0x1ade82=a0_0xe8aa85,_0x876987=a0_0x563c76;if(isAdmin()){adminLicensesLoading[_0x876987(0x14a)][_0x1ade82(0x284)](_0x876987(0x27d)),adminLicensesTableBody[_0x3b2a4e(0x2b1)]='';try{const _0xc34fd0=await fetch(supabaseUrl+_0x876987(0x2fd),{'headers':{'apikey':supabaseKey,'Authorization':_0x876987(0x2e6)+supabaseKey,'Content-Type':_0x876987(0x16f)}});if(!_0xc34fd0['ok'])throw new Error(await _0xc34fd0[_0x876987(0x18d)]());const _0x278f08=await _0xc34fd0[_0x876987(0x371)]();adminLicenses=_0x278f08||[],renderAdminLicenses(adminLicenses),renderAdminLogs(adminLicenses);}catch(_0x2e0a60){console[_0x3b2a4e(0x232)](_0x876987(0x142),_0x2e0a60[_0x876987(0x20e)]),showBanner(t(_0x1ade82(0x142))+_0x2e0a60[_0x876987(0x20e)],_0x1ade82(0x3c2));}finally{adminLicensesLoading[_0x876987(0x14a)][_0x876987(0x390)](_0x876987(0x27d));}}}async function fetchActiveSessions(){const _0x5cf8c4=a0_0xe8aa85,_0x502271=a0_0x563c76;if(isAdmin()){adminSessionsLoading&&adminSessionsLoading[_0x5cf8c4(0x121)][_0x5cf8c4(0x284)](_0x502271(0x27d)),adminSessionsTableBody&&(adminSessionsTableBody[_0x502271(0x229)]='');try{const _0x536492=await fetch(supabaseUrl+_0x502271(0x1ee),{'headers':{'apikey':supabaseKey,'Authorization':_0x502271(0x2e6)+supabaseKey,'Content-Type':_0x502271(0x16f)}});if(!_0x536492['ok'])throw new Error(await _0x536492[_0x5cf8c4(0x2cf)]());renderActiveSessions(await _0x536492[_0x502271(0x371)]()||[]);}catch(_0x5b53f2){console['error'](_0x502271(0x19f),_0x5b53f2[_0x502271(0x20e)]);}finally{adminSessionsLoading&&adminSessionsLoading[_0x502271(0x14a)][_0x502271(0x390)](_0x502271(0x27d));}}}function renderActiveSessions(_0x1c3d85){const _0x5eec1c=a0_0x390237,_0x75ebe4=a0_0xe8aa85,_0x4bc384=a0_0x563c76;if(!adminSessionsTableBody)return;adminSessionsTableBody[_0x75ebe4(0x1e1)]='';const _0x42eac6=Date[_0x4bc384(0x231)]();let _0x16cdd4=0x0;if(0x0===_0x1c3d85[_0x4bc384(0x246)]){const _0x3f0cfb=document['createElement']('tr');return _0x3f0cfb[_0x4bc384(0x229)]=_0x75ebe4(0x291),adminSessionsTableBody[_0x4bc384(0x350)](_0x3f0cfb),void(adminSessionsCount&&(adminSessionsCount[_0x4bc384(0x27c)]='0'));}const _0x5b415e=_0x59d6d0=>{const _0x195bd2=_0x75ebe4,_0x5a990f=_0x4bc384;return _0x59d6d0?new Date(_0x59d6d0)[_0x5a990f(0x17c)](_0x5a990f(0x245),{'day':_0x195bd2(0x1c7),'month':_0x5a990f(0x236),'hour':_0x5a990f(0x236),'minute':_0x5a990f(0x236)}):_0x5a990f(0x1c6);};_0x1c3d85[_0x75ebe4(0x3c6)](_0xe74ecd=>{const _0x5c4a7b=a0_0x3834,_0x40ec5a=_0x75ebe4,_0x11acdd=_0x4bc384,_0x11c55e=new Date(_0xe74ecd[_0x40ec5a(0x391)]),_0x489acc=_0x42eac6-_0x11c55e['getTime']()<0xdbba0;_0x489acc&&_0x16cdd4++;const _0x1a4366=_0xe74ecd[_0x11acdd(0x226)]||0x0;let _0x417b55;_0x417b55=_0x1a4366<0x3c?_0x1a4366+_0x11acdd(0x11f):Math[_0x5c4a7b(0x3cb)](_0x1a4366/0x3c)+_0x11acdd(0x2ba)+_0x1a4366%0x3c+_0x40ec5a(0x2fd);const _0x417eef=_0x11acdd(_0x489acc?0x1c7:0x1e0),_0x1937ec=_0xe74ecd[_0x11acdd(0x1aa)]?_0xe74ecd[_0x11acdd(0x1aa)][_0x11acdd(0x189)](0x0,0x4)+_0x11acdd(0x34a):_0x11acdd(0x1c6),_0x2cfc25=_0xe74ecd[_0x11acdd(0x2c0)]&&_0x11acdd(0x195)!==_0xe74ecd[_0x40ec5a(0x373)]?_0xe74ecd[_0x11acdd(0x2c0)]:null;let _0x1a7f4d=_0xe74ecd[_0x40ec5a(0x373)]||_0x11acdd(0x1c6);_0x2cfc25&&0x2===_0x2cfc25[_0x40ec5a(0x205)]&&(_0x1a7f4d=String[_0x40ec5a(0x1d4)](..._0x2cfc25[_0x40ec5a(0x227)]()[_0x11acdd(0x1bd)]('')[_0x11acdd(0x3b2)](_0x187e6b=>0x1f1e6+_0x187e6b[_0x11acdd(0x164)](0x0)-0x41))+'\x20'+_0x2cfc25);const _0x1f555e=_0x5b415e(_0xe74ecd[_0x11acdd(0x2a0)]),_0x5c4bf9=_0x489acc?_0x11acdd(0x373):_0x5b415e(_0xe74ecd[_0x11acdd(0x3a2)]),_0x2053e9=document[_0x11acdd(0x1b8)]('tr');_0x2053e9[_0x40ec5a(0x1e1)]=_0x11acdd(0x2b3)+_0x417eef+(_0xe74ecd[_0x11acdd(0x1af)]||_0x11acdd(0x195))+_0x11acdd(0x313)+_0x1937ec+_0x40ec5a(0x26a)+(_0xe74ecd[_0x5c4a7b(0x235)]||_0x11acdd(0x1c6))+_0x11acdd(0x35f)+_0x1a7f4d+_0x11acdd(0x161)+_0x1f555e+_0x5c4a7b(0x2ba)+_0x417b55+_0x40ec5a(0x135)+_0x5c4bf9+_0x11acdd(0x1be),adminSessionsTableBody[_0x40ec5a(0x1d7)](_0x2053e9);}),adminSessionsCount&&(adminSessionsCount[_0x5eec1c(0x300)]=_0x16cdd4[_0x4bc384(0x22a)]());}function renderAdminLicenses(_0x15938e){const _0x257658=a0_0x390237,_0x3ca5cf=a0_0xe8aa85,_0x34f8d1=a0_0x563c76;if(adminLicensesTableBody[_0x3ca5cf(0x1e1)]='',adminTotalCount[_0x3ca5cf(0x1fc)]=_0x15938e[_0x257658(0x36f)],0x0===_0x15938e[_0x34f8d1(0x246)]){const _0x2474a0=document[_0x34f8d1(0x1b8)]('tr');return _0x2474a0[_0x34f8d1(0x229)]=_0x34f8d1(0x240)+t(_0x3ca5cf(0x1d5))+'</td>',void adminLicensesTableBody[_0x34f8d1(0x350)](_0x2474a0);}_0x15938e[_0x3ca5cf(0x3c6)](_0x3dfa89=>{const _0x4a3059=_0x257658,_0x378cb2=_0x3ca5cf,_0x3cca89=_0x34f8d1,{product:_0x4451eb,buyer:_0x39777c,createdBy:_0x45c1ad}=parseLicenseNote(_0x3dfa89[_0x378cb2(0x2b8)]);let _0x41434d=_0x4a3059(0x380),_0x9b9813=t(_0x3cca89(0x1ef));_0x3dfa89[_0x3cca89(0x136)]?_0x3dfa89[_0x3cca89(0x36a)]&&!_0x3dfa89[_0x3cca89(0x36a)][_0x3cca89(0x146)](_0x3cca89(0x154))&&new Date(_0x3dfa89[_0x3cca89(0x36a)])<new Date()&&(_0x41434d=_0x3cca89(0x114),_0x9b9813=t(_0x378cb2(0x3bd))):(_0x41434d=_0x3cca89(0x332),_0x9b9813=t(_0x3cca89(0x366)));let _0x572f41=t(_0x378cb2(0x34d));_0x3dfa89[_0x3cca89(0x36a)]&&(_0x572f41=_0x3dfa89[_0x3cca89(0x36a)][_0x3cca89(0x146)](_0x378cb2(0x38f))?t(_0x4a3059(0x1e6)):new Date(_0x3dfa89[_0x3cca89(0x36a)])[_0x3cca89(0x2cd)](getLocale(),{'year':_0x378cb2(0x114),'month':_0x378cb2(0x1c7),'day':_0x3cca89(0x236)}));const _0x1950ce=document[_0x378cb2(0x1ba)]('tr');_0x1950ce[_0x3cca89(0x229)]=_0x3cca89(0x297)+_0x4451eb+_0x3cca89(0x133)+_0x39777c+_0x378cb2(0x14e)+_0x45c1ad+_0x3cca89(0x319)+_0x3dfa89[_0x3cca89(0x1aa)]+'\x22>'+_0x3dfa89[_0x3cca89(0x1aa)]+_0x378cb2(0x22f)+_0x41434d+'\x22>'+_0x9b9813+_0x3cca89(0x2bc)+_0x572f41+_0x4a3059(0x19e)+_0x3dfa89[_0x3cca89(0x1aa)]+_0x3cca89(0x1e8)+t(_0x3cca89(0x312))+_0x3cca89(0x385)+t(_0x3cca89(0x312))+_0x378cb2(0xd9)+_0x3dfa89[_0x3cca89(0x1aa)]+_0x378cb2(0x214)+t(_0x3cca89(0x3a9))+_0x378cb2(0x2ff)+t(_0x4a3059(0x14c))+'\x22\x20'+(_0x3dfa89[_0x3cca89(0x26e)]?'':_0x3cca89(0x296))+_0x3cca89(0x215)+_0x3dfa89[_0x3cca89(0x1aa)]+_0x3cca89(0x1e8)+t(_0x3cca89(0x351))+_0x3cca89(0x385)+t(_0x3cca89(0x351))+'\x22\x20'+(_0x3dfa89[_0x3cca89(0x136)]?'':_0x3cca89(0x296))+'>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<svg\x20viewBox=\x220\x200\x2024\x2024\x22\x20fill=\x22none\x22\x20stroke=\x22currentColor\x22\x20stroke-width=\x222\x22\x20stroke-linecap=\x22round\x22\x20stroke-linejoin=\x22round\x22><circle\x20cx=\x2212\x22\x20cy=\x2212\x22\x20r=\x2210\x22></circle><line\x20x1=\x2215\x22\x20y1=\x229\x22\x20x2=\x229\x22\x20y2=\x2215\x22></line><line\x20x1=\x229\x22\x20y1=\x229\x22\x20x2=\x2215\x22\x20y2=\x2215\x22></line></svg>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20',adminLicensesTableBody[_0x3cca89(0x350)](_0x1950ce);});}function filterAdminLicenses(){const _0x53cd74=a0_0xe8aa85,_0x5c039f=a0_0x563c76,_0x226a8b=adminSearchInput[_0x53cd74(0x1eb)][_0x5c039f(0x263)]()[_0x5c039f(0x119)](),_0x19cb90=adminFilterSelect[_0x5c039f(0x25f)];renderAdminLicenses(adminLicenses[_0x5c039f(0x2e9)](_0x5924b1=>{const _0xc87c26=a0_0x3834,_0x376834=_0x53cd74,_0x28b794=_0x5c039f,{product:_0x5786a8,buyer:_0xc2ba02,createdBy:_0x2fad9c}=parseLicenseNote(_0x5924b1[_0x28b794(0x20c)]),_0x576ce9=_0x5924b1[_0x376834(0x226)][_0xc87c26(0x2e1)]()[_0x28b794(0x35b)](_0x226a8b)||_0xc2ba02[_0x28b794(0x263)]()[_0x28b794(0x35b)](_0x226a8b)||_0x2fad9c[_0x28b794(0x263)]()[_0x28b794(0x35b)](_0x226a8b)||_0x5786a8[_0x28b794(0x263)]()[_0x28b794(0x35b)](_0x226a8b)||_0x5924b1[_0x28b794(0x20c)]&&_0x5924b1['note'][_0x28b794(0x263)]()[_0x376834(0x25d)](_0x226a8b);let _0x1c62f5=!0x0;return _0x28b794(0x3b9)===_0x19cb90?_0x1c62f5=_0x5924b1[_0x28b794(0x136)]&&(!_0x5924b1[_0x28b794(0x36a)]||_0x5924b1[_0x28b794(0x36a)][_0x376834(0x346)](_0x28b794(0x154))||new Date(_0x5924b1[_0x28b794(0x36a)])>=new Date()):_0x28b794(0x332)===_0x19cb90?_0x1c62f5=!_0x5924b1[_0x28b794(0x136)]:_0x28b794(0x114)===_0x19cb90&&(_0x1c62f5=_0x5924b1[_0x28b794(0x136)]&&_0x5924b1[_0x28b794(0x36a)]&&!_0x5924b1[_0x28b794(0x36a)][_0x28b794(0x146)](_0x28b794(0x154))&&new Date(_0x5924b1[_0x28b794(0x36a)])<new Date()),_0x576ce9&&_0x1c62f5;}));}function renderAdminLogs(_0x12eb65){const _0x524fa4=a0_0xe8aa85,_0x2ca66f=a0_0x563c76;if(!adminLogsTableBody)return;adminLogsTableBody[_0x524fa4(0x1e1)]='';const _0x2c2be0=[];_0x12eb65[_0x2ca66f(0x137)](_0x4aed68=>{const _0x2aab41=a0_0x3834,_0x37b6c5=_0x524fa4,_0x201532=_0x2ca66f,{product:_0x577fa3,buyer:_0xc7ebb7,createdBy:_0x1455d3}=parseLicenseNote(_0x4aed68[_0x201532(0x20c)]),_0x2df6f0=new Date(_0x4aed68[_0x201532(0x298)])[_0x201532(0x17c)](getLocale());let _0x290ec6=_0x201532(0x29d),_0x5c8e17=_0x201532(0x1fd)+_0x577fa3+_0x37b6c5(0x299)+_0xc7ebb7+_0x201532(0x196)+_0x4aed68[_0x37b6c5(0x226)]+_0x201532(0x32d);if(_0x4aed68[_0x37b6c5(0x2b8)]&&_0x4aed68[_0x201532(0x20c)][_0x201532(0x35b)](_0x201532(0x32f))&&(_0x290ec6=_0x201532(0x3a7),_0x5c8e17=_0x37b6c5(0x3a5)+_0x4aed68[_0x201532(0x1aa)]+_0x201532(0x32d)),_0x2c2be0[_0x37b6c5(0x1f4)]({'dateObj':new Date(_0x4aed68[_0x37b6c5(0x259)]),'date':_0x2df6f0,'user':_0x1455d3||_0x201532(0x305),'action':_0x290ec6,'details':_0x5c8e17}),_0x4aed68[_0x201532(0x20c)]&&_0x4aed68[_0x201532(0x20c)][_0x201532(0x35b)](_0x201532(0x169))){const _0x30a82c=_0x4aed68[_0x201532(0x20c)][_0x201532(0x19c)](/Referred by:\s*([^|]+)/i),_0x597a99=_0x30a82c?_0x30a82c[0x1][_0x37b6c5(0x280)]():_0x201532(0x197);_0x2c2be0[_0x201532(0x265)]({'dateObj':new Date(_0x4aed68[_0x201532(0x298)]),'date':_0x2df6f0,'user':_0xc7ebb7,'action':_0x201532(0x11a),'details':_0x201532(0x206)+_0x597a99+_0x201532(0x14f)});}_0x4aed68[_0x201532(0x20c)]&&_0x4aed68[_0x201532(0x20c)][_0x201532(0x35b)](_0x201532(0x279))&&[..._0x4aed68[_0x201532(0x20c)][_0x201532(0x204)](/Referral Bonus for inviting\s+([^|)]+)/gi)][_0x201532(0x137)](_0xff8f5a=>{const _0x19fa21=_0x201532,_0x3d9066=_0xff8f5a[0x1][_0x19fa21(0x119)]();_0x2c2be0[_0x19fa21(0x265)]({'dateObj':new Date(_0x4aed68[_0x19fa21(0x298)]),'date':_0x2df6f0,'user':_0xc7ebb7,'action':_0x19fa21(0x176),'details':_0x19fa21(0x365)+_0x3d9066+_0x19fa21(0x34f)});}),_0x4aed68[_0x201532(0x20c)]&&_0x4aed68[_0x2aab41(0x18a)][_0x2aab41(0xf1)]('Promocode:')&&[..._0x4aed68[_0x201532(0x20c)][_0x37b6c5(0x3ec)](/Promocode:\s*([^|)]+)/gi)][_0x201532(0x137)](_0x22866a=>{const _0x4d86d3=_0x201532,_0x5eae85=_0x22866a[0x1][_0x4d86d3(0x119)]();_0x2c2be0[_0x4d86d3(0x265)]({'dateObj':new Date(_0x4aed68[_0x4d86d3(0x298)]),'date':_0x2df6f0,'user':_0xc7ebb7,'action':_0x4d86d3(0x2e8),'details':_0x4d86d3(0x22d)+_0x5eae85+_0x4d86d3(0x278)+_0x4aed68[_0x4d86d3(0x1aa)]+_0x4d86d3(0x32d)});}),_0x4aed68[_0x201532(0x136)]||_0x2c2be0[_0x201532(0x265)]({'dateObj':new Date(_0x4aed68[_0x201532(0x298)]),'date':_0x2df6f0,'user':_0x201532(0x37b),'action':_0x37b6c5(0x181),'details':_0x37b6c5(0x188)+_0x4aed68[_0x201532(0x1aa)]+_0x37b6c5(0x353)});}),_0x2c2be0[_0x2ca66f(0x264)]((_0x33cec8,_0x1b956f)=>_0x1b956f[_0x2ca66f(0x1dc)]-_0x33cec8[_0x2ca66f(0x1dc)]),0x0!==_0x2c2be0[_0x2ca66f(0x246)]?_0x2c2be0[_0x2ca66f(0x137)](_0x8bebf=>{const _0x5bd924=a0_0x3834,_0x49e811=_0x524fa4,_0x37ce28=_0x2ca66f,_0x52acbc=document[_0x37ce28(0x1b8)]('tr');_0x52acbc[_0x37ce28(0x229)]=_0x37ce28(0x24f)+_0x8bebf[_0x37ce28(0x22f)]+_0x37ce28(0x23a)+_0x8bebf[_0x37ce28(0x24b)]+_0x5bd924(0x3ca)+_0x8bebf[_0x49e811(0x3ad)]+_0x37ce28(0x2bc)+_0x8bebf[_0x37ce28(0x125)]+_0x49e811(0x18b),adminLogsTableBody[_0x49e811(0x1d7)](_0x52acbc);}):adminLogsTableBody[_0x2ca66f(0x229)]=_0x2ca66f(0x266);}function filterAdminLogs(){const _0x1aa0be=a0_0xe8aa85,_0x2e3db2=a0_0x563c76;if(!adminLogsSearchInput)return;const _0x262354=adminLogsSearchInput[_0x2e3db2(0x25f)][_0x2e3db2(0x263)]()[_0x1aa0be(0x280)]();renderAdminLogs(adminLicenses[_0x2e3db2(0x2e9)](_0x3dfe4b=>{const _0x22f5af=_0x1aa0be,_0x497b6f=_0x2e3db2,{product:_0x245ffe,buyer:_0xd75314,createdBy:_0x316908}=parseLicenseNote(_0x3dfe4b[_0x497b6f(0x20c)]);return _0x3dfe4b[_0x497b6f(0x1aa)][_0x497b6f(0x263)]()[_0x22f5af(0x25d)](_0x262354)||_0xd75314[_0x22f5af(0x325)]()[_0x497b6f(0x35b)](_0x262354)||_0x316908[_0x497b6f(0x263)]()[_0x497b6f(0x35b)](_0x262354)||_0x3dfe4b[_0x497b6f(0x20c)]&&_0x3dfe4b[_0x497b6f(0x20c)][_0x497b6f(0x263)]()[_0x497b6f(0x35b)](_0x262354);}));}function toggleCustomDurationInput(){const _0x5dd858=a0_0xe8aa85,_0x462f5e=a0_0x563c76;if(!adminDurationCustom||!adminDurationSelect)return;const _0x40bfe5=_0x5dd858(0x263)===adminDurationSelect[_0x462f5e(0x25f)];adminDurationCustom[_0x462f5e(0x14a)][_0x5dd858(0x27d)](_0x462f5e(0x27d),!_0x40bfe5),adminDurationCustom[_0x462f5e(0x1e6)]=_0x40bfe5,_0x40bfe5?adminDurationCustom['focus']():adminDurationCustom[_0x462f5e(0x25f)]='';}function getSelectedDurationDays(){const _0x44db5d=a0_0xe8aa85,_0x11cf39=a0_0x563c76,_0x2291d4=adminDurationSelect[_0x11cf39(0x25f)];if(_0x44db5d(0x27a)===_0x2291d4)return null;if(_0x11cf39(0x3a0)===_0x2291d4){const _0x56d860=parseInt(adminDurationCustom?.[_0x11cf39(0x25f)],0xa);return!_0x56d860||_0x56d860<0x1?NaN:_0x56d860;}return parseInt(_0x2291d4,0xa);}async function createLicenseFromAdmin(_0x28dbde){const _0x58f718=a0_0x390237,_0x239111=a0_0xe8aa85,_0x562c83=a0_0x563c76;if(_0x28dbde[_0x562c83(0x202)](),!isAdmin())return;const _0x36439b=adminBuyerInput[_0x562c83(0x25f)][_0x562c83(0x119)](),_0x5bbd2b=adminProductSelect[_0x58f718(0x107)],_0x488294=getSelectedDurationDays();if(!_0x36439b)return;if(Number[_0x562c83(0x243)](_0x488294))return void showBanner(t(_0x562c83(0x33e)),_0x562c83(0x12e));const _0x18ab51=document[_0x562c83(0x38f)](_0x562c83(0x198));_0x18ab51[_0x239111(0x2a3)]=!0x0,_0x18ab51[_0x239111(0x1fc)]=t(_0x562c83(0x160));const _0x2312c3=generateLicenseKey();let _0x2ff028=_0x239111(0x3b6);null===_0x488294&&(_0x2ff028=_0x562c83(0x2ea));const _0x388307=currentUser[_0x562c83(0x13b)];let _0x35d768=_0x562c83(0x1a8)+_0x5bbd2b+_0x58f718(0x155)+_0x36439b+_0x562c83(0x201)+(_0x388307[_0x562c83(0x158)]||_0x388307[_0x562c83(0x309)]?.[_0x239111(0x189)]||_0x388307[_0x58f718(0x11b)]||_0x58f718(0x10a))+')';null!==_0x488294&&(_0x35d768+=_0x58f718(0x325)+_0x488294);try{const _0x19343a=await fetch(supabaseUrl+_0x562c83(0x26c),{'method':_0x562c83(0x1b0),'headers':{'apikey':supabaseKey,'Authorization':_0x239111(0x14a)+supabaseKey,'Content-Type':_0x562c83(0x16f),'Prefer':_0x562c83(0x2a8)},'body':JSON[_0x562c83(0x25d)]({'license_key':_0x2312c3,'expires_at':_0x2ff028,'is_active':!0x0,'note':_0x35d768})});if(!_0x19343a['ok'])throw new Error(await _0x19343a[_0x239111(0x2cf)]());adminGeneratedKey[_0x562c83(0x27c)]=_0x2312c3,adminKeyResult[_0x562c83(0x14a)][_0x239111(0x284)](_0x562c83(0x27d)),adminBuyerInput[_0x239111(0x1eb)]='',adminUserOptionsList[_0x562c83(0x286)](_0x239111(0x254))[_0x562c83(0x137)](_0x1b2a6a=>_0x1b2a6a[_0x562c83(0x14a)][_0x562c83(0x235)](_0x562c83(0x2ab))),showBanner(t(_0x58f718(0xf0)),_0x239111(0x361)),fetchAllLicenses();}catch(_0x22d30e){console[_0x562c83(0x12e)](_0x562c83(0x344),_0x22d30e[_0x562c83(0x20e)]),showBanner(t(_0x562c83(0x1f9))+_0x22d30e[_0x239111(0x1b0)],_0x562c83(0x12e));}finally{_0x18ab51[_0x562c83(0x296)]=!0x1,_0x18ab51[_0x562c83(0x229)]=_0x562c83(0x358)+t(_0x562c83(0x12f));}}function copyCreatedKey(){const _0x5de322=a0_0x563c76,_0x23dceb=adminGeneratedKey[a0_0xe8aa85(0x1fc)];navigator[_0x5de322(0x1f6)][_0x5de322(0x249)](_0x23dceb)[_0x5de322(0x21a)](()=>{const _0x327bfa=a0_0x3834,_0x3d604a=_0x5de322,_0x112028=document[_0x327bfa(0x121)](_0x3d604a(0x368)),_0x3ad56a=_0x112028[_0x3d604a(0x27c)];_0x112028[_0x3d604a(0x27c)]=t(_0x3d604a(0x2b4)),setTimeout(()=>{_0x112028[_0x3d604a(0x27c)]=_0x3ad56a;},0x7d0);});}async function revokeLicense(_0x1b5050){const _0x4197c2=a0_0x390237,_0x108d49=a0_0xe8aa85,_0x4261ac=a0_0x563c76;if(isAdmin()&&await showCustomConfirm(t(_0x4261ac(0x3ab)),t(_0x4261ac(0x255))+_0x1b5050))try{const _0x29a554=await fetch(supabaseUrl+_0x4261ac(0x1c2)+_0x1b5050,{'method':_0x4261ac(0x2c4),'headers':{'apikey':supabaseKey,'Authorization':_0x108d49(0x14a)+supabaseKey,'Content-Type':_0x108d49(0x3b5)},'body':JSON[_0x4197c2(0x136)]({'is_active':!0x1})});if(!_0x29a554['ok'])throw new Error(await _0x29a554[_0x4261ac(0x18d)]());showBanner(t(_0x4261ac(0x259)),_0x4261ac(0x389)),fetchAllLicenses();}catch(_0x1e7408){console[_0x4261ac(0x12e)](_0x4261ac(0x115),_0x1e7408[_0x4261ac(0x20e)]),showBanner(t(_0x4261ac(0x268))+_0x1e7408[_0x4261ac(0x20e)],_0x4261ac(0x12e));}}async function resetLicenseHwid(_0x491bb2){const _0x1da2ee=a0_0x390237,_0x3f42a7=a0_0xe8aa85,_0x1c47dd=a0_0x563c76;if(isAdmin()&&await showCustomConfirm(t(_0x1c47dd(0x3ab)),t(_0x1c47dd(0x2c6))+_0x491bb2))try{const _0x3f9b63=await fetch(supabaseUrl+_0x1c47dd(0x1c2)+_0x491bb2,{'method':_0x1c47dd(0x2c4),'headers':{'apikey':supabaseKey,'Authorization':_0x1c47dd(0x2e6)+supabaseKey,'Content-Type':_0x1c47dd(0x16f)},'body':JSON[_0x1c47dd(0x25d)]({'hwid':null})});if(!_0x3f9b63['ok'])throw new Error(await _0x3f9b63[_0x3f42a7(0x2cf)]());showBanner(t(_0x1c47dd(0x2ef)),_0x1c47dd(0x389)),fetchAllLicenses();}catch(_0x23e5f1){console['error'](_0x1c47dd(0x299),_0x23e5f1[_0x1c47dd(0x20e)]),showBanner(t(_0x1c47dd(0x1d4))+_0x23e5f1[_0x1da2ee(0x305)],_0x1c47dd(0x12e));}}async function resetUserHwid(_0x4d1749){const _0x1bddf9=a0_0xe8aa85,_0x548c19=a0_0x563c76;if(await showCustomConfirm(t(_0x548c19(0x3ab)),t(_0x548c19(0x17a))||_0x548c19(0x2d6)))try{const {error:_0x427f5b}=await supabaseClient[_0x548c19(0x203)](_0x548c19(0x36b))[_0x548c19(0x123)]({'hwid':null})['eq'](_0x1bddf9(0x226),_0x4d1749);if(_0x427f5b)throw _0x427f5b;showBanner(t(_0x548c19(0x2ef)),_0x548c19(0x389)),fetchUserLicenses();}catch(_0x59c621){console[_0x548c19(0x12e)](_0x548c19(0x299),_0x59c621[_0x1bddf9(0x1b0)]),showBanner(t(_0x548c19(0x1d4))+_0x59c621[_0x548c19(0x20e)],_0x548c19(0x12e));}}function showCustomConfirm(_0x57b0f4,_0xc09e44){return new Promise(_0x397138=>{const _0x3ff580=a0_0x20e0,_0x3a3557=a0_0x34a8,_0x50e904=document[_0x3ff580(0x345)](_0x3a3557(0x12b)),_0x4fe559=document[_0x3a3557(0x38f)](_0x3a3557(0x18b)),_0x3e7484=document[_0x3a3557(0x38f)](_0x3a3557(0x188)),_0x4dd802=document[_0x3ff580(0x345)](_0x3a3557(0x2fa)),_0x3cc02b=document[_0x3a3557(0x38f)](_0x3ff580(0x134));if(!(_0x50e904&&_0x4fe559&&_0x3e7484&&_0x4dd802&&_0x3cc02b))return void _0x397138(confirm(_0xc09e44));_0x4fe559[_0x3a3557(0x27c)]=_0x57b0f4,_0x3e7484[_0x3a3557(0x27c)]=_0xc09e44,_0x4dd802[_0x3a3557(0x27c)]=t(_0x3a3557(0x24a)),_0x3cc02b[_0x3a3557(0x27c)]=t(_0x3a3557(0x2eb)),_0x50e904[_0x3a3557(0x14a)][_0x3a3557(0x235)](_0x3a3557(0x27d)),document[_0x3a3557(0x3b4)][_0x3ff580(0x33a)][_0x3ff580(0x126)]=_0x3ff580(0x19f);const _0x4a57b5=()=>{_0x332b8a(),_0x397138(!0x1);},_0x1eb2b1=()=>{_0x332b8a(),_0x397138(!0x0);},_0x332b8a=()=>{const _0x918a7e=_0x3ff580,_0x5b19b3=_0x3a3557;_0x50e904[_0x918a7e(0x121)][_0x5b19b3(0x390)](_0x5b19b3(0x27d)),document[_0x5b19b3(0x3b4)][_0x5b19b3(0x33b)][_0x5b19b3(0x199)]='',_0x4dd802[_0x5b19b3(0x30c)](_0x918a7e(0x32d),_0x4a57b5),_0x3cc02b[_0x5b19b3(0x30c)](_0x5b19b3(0x217),_0x1eb2b1),_0x50e904[_0x5b19b3(0x30c)](_0x5b19b3(0x217),_0x5e18ea);},_0x5e18ea=_0x563827=>{_0x563827[_0x3ff580(0x326)]===_0x50e904&&_0x4a57b5();};_0x4dd802[_0x3ff580(0x2be)](_0x3a3557(0x217),_0x4a57b5),_0x3cc02b[_0x3a3557(0x31a)](_0x3a3557(0x217),_0x1eb2b1),_0x50e904[_0x3a3557(0x31a)](_0x3a3557(0x217),_0x5e18ea);});}async function claimFreeTrial(){const _0x1c06a2=a0_0x390237,_0x33bd12=a0_0xe8aa85,_0x1ef607=a0_0x563c76;if(!currentUser)return void showBanner(t(_0x1ef607(0x2a7))+_0x1ef607(0x39d),_0x1c06a2(0x232));const _0x3e999f=document[_0x1ef607(0x38f)](_0x1ef607(0x1d0));_0x3e999f&&(_0x3e999f[_0x1ef607(0x296)]=!0x0,_0x3e999f[_0x1ef607(0x27c)]=t(_0x1ef607(0x160)));const _0x106d36=currentUser[_0x1ef607(0x13b)],_0x4ad027=_0x106d36['user_name']||_0x106d36[_0x1ef607(0x309)]?.[_0x1ef607(0x1f1)]||_0x106d36[_0x1ef607(0x144)]||_0x106d36[_0x1ef607(0x287)],_0xc667b3=_0x106d36[_0x33bd12(0x101)]||currentUser[_0x1ef607(0x12c)]&&currentUser[_0x1ef607(0x12c)][0x0]?.['id'];try{if(_0xc667b3)try{const _0x37bb4c=BigInt(_0xc667b3),_0xd7f462=Number(0x14aa2cab000n+(_0x37bb4c>>0x16n));if((Date[_0x1ef607(0x231)]()-_0xd7f462)/0x5265c00<0x1e)return void showBanner(t(_0x33bd12(0x2a4)),_0x1ef607(0x12e));}catch(_0x5d053e){console[_0x1ef607(0x12e)](_0x1ef607(0x1d9),_0x5d053e);}const _0x2c4773=_0x33bd12(0x3c9)+_0xc667b3+'%',_0x24e280=_0x1ef607(0x23f)+_0x4ad027+'%',{data:_0x1aa488,error:_0x27d6a6}=await supabaseClient['from'](_0x1ef607(0x36b))[_0x1ef607(0x15c)]('*')['or'](_0x1ef607(0x1cd)+_0x2c4773+_0x1ef607(0x1b7)+_0x24e280);if(_0x27d6a6)throw _0x27d6a6;if(_0x1aa488&&_0x1aa488[_0x1ef607(0x246)]>0x0){const _0x3707f1=_0x1aa488[_0x1ef607(0x185)](_0x467335=>_0x467335[_0x1ef607(0x20c)]&&_0x467335[_0x1ef607(0x20c)][_0x1ef607(0x35b)](_0x1ef607(0x32f))),_0xb0dba4=_0x1aa488[_0x33bd12(0x253)](_0x455fb6=>_0x455fb6[_0x33bd12(0x2b8)]&&!_0x455fb6[_0x33bd12(0x2b8)][_0x1ef607(0x35b)](_0x33bd12(0x2ca))&&!_0x455fb6[_0x1ef607(0x20c)][_0x1ef607(0x35b)](_0x1ef607(0x2a4)));if(_0x3707f1||_0xb0dba4)return void showBanner(t(_0x1ef607(0x213)),_0x1ef607(0x12e));}const _0x2c4253=_0x1aa488&&_0x1aa488[_0x1ef607(0x185)](_0x49468a=>_0x49468a[_0x33bd12(0x2b8)]&&_0x49468a[_0x1ef607(0x20c)][_0x1ef607(0x35b)](_0x1ef607(0x169)));let _0x3a6ae9=null;_0x2c4253||(_0x3a6ae9=await processReferralBonus(_0x4ad027));const _0x538b87=generateLicenseKey(),_0x44203f=_0x3a6ae9?0x6:0x3,_0xfc82db=new Date(Date[_0x33bd12(0x2d4)]()+0x18*_0x44203f*0x3c*0x3c*0x3e8)[_0x1ef607(0x277)]();let _0x36e63c=_0x1ef607(0x374)+_0x4ad027+'\x20|\x20DiscordID:\x20'+_0xc667b3+_0x1ef607(0x22e);_0x3a6ae9&&(_0x36e63c+=_0x1ef607(0x130)+_0x3a6ae9);const {error:_0x2a7928}=await supabaseClient[_0x1ef607(0x203)](_0x1ef607(0x36b))[_0x33bd12(0x31f)]({'license_key':_0x538b87,'expires_at':_0xfc82db,'is_active':!0x0,'note':_0x36e63c});if(_0x2a7928)throw _0x2a7928;showBanner(t(_0x33bd12(0x36e)),_0x1ef607(0x389)),fetchUserLicenses();}catch(_0x453049){console[_0x1ef607(0x12e)](_0x1ef607(0x1c1),_0x453049[_0x1ef607(0x20e)]),showBanner(t(_0x33bd12(0x22d))+_0x453049[_0x1ef607(0x20e)],_0x1ef607(0x12e));}finally{_0x3e999f&&(_0x3e999f[_0x1ef607(0x296)]=!0x1,_0x3e999f[_0x1ef607(0x27c)]=t(_0x33bd12(0x234)));}}async function processReferralBonus(_0x9b19d){const _0x1dcb6f=a0_0x390237,_0x3caecc=a0_0xe8aa85,_0xc118a1=a0_0x563c76,_0x4ca3f9=localStorage[_0xc118a1(0x356)](_0x3caecc(0x240));if(!_0x4ca3f9)return null;try{const {data:_0x562568,error:_0xea2ad3}=await supabaseClient[_0x3caecc(0x2a0)](_0xc118a1(0x26a))[_0xc118a1(0x15c)]('*')['eq'](_0xc118a1(0x1ed),_0x4ca3f9)[_0xc118a1(0x23b)]();if(_0xea2ad3||!_0x562568)return console[_0xc118a1(0x1d1)](_0x3caecc(0x34e),_0xea2ad3),null;const _0x56deef=_0x562568[_0xc118a1(0x1f1)],{data:_0x4e7448,error:_0x3636a0}=await supabaseClient[_0xc118a1(0x203)](_0xc118a1(0x36b))[_0xc118a1(0x15c)]('*')[_0xc118a1(0x150)](_0xc118a1(0x20c),_0xc118a1(0x23f)+_0x56deef+'%');if(_0x3636a0)throw _0x3636a0;const _0x1d4cfc=_0x4e7448[_0xc118a1(0x1d5)](_0x246c89=>_0x246c89[_0xc118a1(0x136)]&&(!_0x246c89[_0xc118a1(0x36a)]||new Date(_0x246c89[_0xc118a1(0x36a)])>new Date()));if(_0x1d4cfc&&_0x1d4cfc[_0xc118a1(0x36a)]){const _0x2e25ff=new Date(_0x1d4cfc[_0xc118a1(0x36a)]),_0x179ecf=new Date(_0x2e25ff[_0xc118a1(0x1bb)]()+0xf731400)[_0x3caecc(0x27f)](),_0x57ca18=(_0x1d4cfc[_0xc118a1(0x20c)]||'')+(_0xc118a1(0x318)+_0x9b19d),{error:_0x2912b0}=await supabaseClient[_0x3caecc(0x2a0)](_0x1dcb6f(0x3b2))[_0xc118a1(0x123)]({'expires_at':_0x179ecf,'note':_0x57ca18})['eq']('id',_0x1d4cfc['id']);if(_0x2912b0)throw _0x2912b0;console[_0xc118a1(0x1d6)](_0xc118a1(0x1dd)+_0x56deef+_0x3caecc(0x151));}else{const _0x3ab25b=generateLicenseKey(),_0x107b99=new Date(Date[_0xc118a1(0x231)]()+0xf731400)[_0xc118a1(0x277)](),_0x5d8c86=_0xc118a1(0x374)+_0x56deef+_0xc118a1(0x2ae)+_0x9b19d+')',{error:_0x4df4c4}=await supabaseClient[_0xc118a1(0x203)](_0xc118a1(0x36b))[_0xc118a1(0x1f5)]({'license_key':_0x3ab25b,'expires_at':_0x107b99,'is_active':!0x0,'note':_0x5d8c86});if(_0x4df4c4)throw _0x4df4c4;console[_0xc118a1(0x1d6)](_0xc118a1(0x222)+_0x56deef+'.');}return localStorage[_0xc118a1(0x333)](_0xc118a1(0x2f2)),_0x56deef;}catch(_0x3db784){return console[_0xc118a1(0x12e)](_0x1dcb6f(0x33b),_0x3db784[_0x3caecc(0x1b0)]),null;}}function getDiscordId(_0x2110a4){const _0x1d98b8=a0_0x390237,_0x464fc2=a0_0xe8aa85,_0xe6c6e4=a0_0x563c76;if(!_0x2110a4)return'';const _0x224a02=_0x2110a4[_0x464fc2(0x1ea)]||{};if(_0x224a02[_0xe6c6e4(0x355)])return String(_0x224a02[_0x1d98b8(0x10f)])[_0xe6c6e4(0x119)]();if(_0x224a02[_0x464fc2(0xdf)]&&/^\d+$/[_0xe6c6e4(0x369)](_0x224a02[_0x464fc2(0xdf)]))return String(_0x224a02[_0x464fc2(0xdf)])[_0xe6c6e4(0x119)]();if(_0x2110a4[_0xe6c6e4(0x12c)]&&Array[_0xe6c6e4(0x39b)](_0x2110a4[_0xe6c6e4(0x12c)])){const _0x13a418=_0x2110a4[_0xe6c6e4(0x12c)][_0xe6c6e4(0x1d5)](_0x5cce34=>_0x464fc2(0x397)===_0x5cce34[_0xe6c6e4(0x183)]||_0x5cce34[_0xe6c6e4(0x32a)]&&_0x5cce34[_0x1d98b8(0x321)][_0xe6c6e4(0x355)]);if(_0x13a418)return String(_0x13a418['id']||_0x13a418[_0x464fc2(0x241)]?.[_0xe6c6e4(0x355)]||'')[_0x464fc2(0x280)]();if(_0x2110a4[_0xe6c6e4(0x12c)][0x0]&&_0x2110a4[_0x464fc2(0x365)][0x0]['id'])return String(_0x2110a4[_0xe6c6e4(0x12c)][0x0]['id'])[_0xe6c6e4(0x119)]();}return'';}function generateReferralCodeFromDiscordId(_0x423f98){const _0x200e13=a0_0xe8aa85,_0x40749c=a0_0x563c76;if(!_0x423f98)return'';let _0x54bd11=0x0;_0x423f98=String(_0x423f98)[_0x40749c(0x119)]();for(let _0xd71e10=0x0;_0xd71e10<_0x423f98[_0x40749c(0x246)];_0xd71e10++)_0x54bd11=(_0x54bd11<<0x5)-_0x54bd11+_0x423f98[_0x200e13(0x37e)](_0xd71e10),_0x54bd11&=_0x54bd11;_0x54bd11<0x0&&(_0x54bd11+=0x100000000);const _0x223b47=_0x40749c(0x152);let _0x33a1a5='',_0x207995=_0x54bd11;for(let _0x51b6d7=0x0;_0x51b6d7<0x7;_0x51b6d7++)_0x33a1a5+=_0x223b47[_0x40749c(0x11b)](_0x207995%0x20),_0x207995=Math[_0x40749c(0x335)](_0x207995/0x20);return _0x33a1a5;}function generateOldReferralCodeFromDiscordId(_0x6eaa53){const _0x3845d2=a0_0xe8aa85,_0x3ef60e=a0_0x563c76;if(!_0x6eaa53)return'';let _0x108843=0x0;_0x6eaa53=String(_0x6eaa53)[_0x3845d2(0x280)]();for(let _0x7bb411=0x0;_0x7bb411<_0x6eaa53[_0x3ef60e(0x246)];_0x7bb411++)_0x108843=(_0x108843<<0x5)-_0x108843+_0x6eaa53[_0x3ef60e(0x164)](_0x7bb411),_0x108843&=_0x108843;_0x108843=Math[_0x3ef60e(0x21f)](_0x108843);const _0x5f12ed=_0x3ef60e(0x152);let _0x3cd04d='',_0x4447d6=_0x108843;for(let _0x3e510c=0x0;_0x3e510c<0x7;_0x3e510c++)_0x3cd04d+=_0x5f12ed[_0x3ef60e(0x11b)](_0x4447d6%0x20),_0x4447d6=Math[_0x3845d2(0x2a1)](_0x4447d6/0x20);return _0x3cd04d;}function a0_0x20e0(_0x5ded55,_0x19e202){const _0x451d53=a0_0x390237;_0x5ded55-=0xd3;const _0x59f057=a0_0x969b();let _0x4e9e25=_0x59f057[_0x5ded55];void 0x0===a0_0x20e0['MOAYmK']&&(a0_0x20e0[_0x451d53(0x323)]=function(_0xc7cea5){const _0x51493a=_0x451d53;let _0x33b51f='',_0x505e59='';for(let _0x5ba902,_0x5cbdfc,_0x130b06=0x0,_0x56300f=0x0;_0x5cbdfc=_0xc7cea5[_0x51493a(0x2c4)](_0x56300f++);~_0x5cbdfc&&(_0x5ba902=_0x130b06%0x4?0x40*_0x5ba902+_0x5cbdfc:_0x5cbdfc,_0x130b06++%0x4)?_0x33b51f+=String['fromCharCode'](0xff&_0x5ba902>>(-0x2*_0x130b06&0x6)):0x0)_0x5cbdfc=_0x51493a(0x1bc)[_0x51493a(0x2b8)](_0x5cbdfc);for(let _0x1b468f=0x0,_0x4b40d1=_0x33b51f[_0x51493a(0x36f)];_0x1b468f<_0x4b40d1;_0x1b468f++)_0x505e59+='%'+('00'+_0x33b51f['charCodeAt'](_0x1b468f)['toString'](0x10))[_0x51493a(0x353)](-0x2);return decodeURIComponent(_0x505e59);},a0_0x20e0[_0x451d53(0x100)]={},a0_0x20e0[_0x451d53(0x152)]=!0x0);const _0x13739b=_0x5ded55+_0x59f057[0x0],_0x1e2b7b=a0_0x20e0['jHzIqY'][_0x13739b];return _0x1e2b7b?_0x4e9e25=_0x1e2b7b:(_0x4e9e25=a0_0x20e0[_0x451d53(0x323)](_0x4e9e25),a0_0x20e0[_0x451d53(0x100)][_0x13739b]=_0x4e9e25),_0x4e9e25;}async function redeemReferralCode(){const _0x4e4328=a0_0x390237,_0x5a3c00=a0_0xe8aa85,_0x370334=a0_0x563c76,_0x3e1aaf=document[_0x370334(0x38f)](_0x5a3c00(0x216)),_0x2d95f9=document[_0x370334(0x38f)](_0x5a3c00(0x22c));if(!_0x3e1aaf||!_0x2d95f9)return;if(!currentUser)return void showBanner(t(_0x5a3c00(0x321))||_0x4e4328(0x2f7),_0x370334(0x12e));const _0x5bf8e2=_0x3e1aaf[_0x5a3c00(0x1eb)][_0x370334(0x119)]()[_0x370334(0x1d8)]();if(!_0x5bf8e2)return;if(0x7!==_0x5bf8e2[_0x5a3c00(0x205)]||!/^[A-Z2-9]{7}$/[_0x370334(0x369)](_0x5bf8e2))return void showBanner(t(_0x370334(0x308)),_0x370334(0x12e));_0x2d95f9[_0x370334(0x296)]=!0x0,_0x2d95f9[_0x370334(0x27c)]='⏳';const _0x3722aa=currentUser[_0x5a3c00(0x1ea)],_0x25a26d=_0x3722aa[_0x370334(0x158)]||_0x3722aa[_0x370334(0x309)]?.[_0x370334(0x1f1)]||_0x3722aa[_0x370334(0x144)]||_0x3722aa[_0x370334(0x287)],_0x2d77f0=getDiscordId(currentUser);let _0x29d86a=_0x5bf8e2;try{const {data:_0x5e11ae}=await supabaseClient[_0x370334(0x203)](_0x5a3c00(0x1d2))[_0x5a3c00(0x158)](_0x370334(0x1c0));if(_0x5e11ae&&_0x5e11ae[_0x370334(0x246)]>0x0){const _0xc064f6=_0x5e11ae[_0x370334(0x1d5)](_0x3ee73f=>generateReferralCodeFromDiscordId(_0x3ee73f[_0x370334(0x1ed)])===_0x5bf8e2||generateOldReferralCodeFromDiscordId(_0x3ee73f[_0x370334(0x1ed)])===_0x5bf8e2);_0xc064f6&&(_0x29d86a=generateReferralCodeFromDiscordId(_0xc064f6[_0x370334(0x1ed)]),console[_0x5a3c00(0x16c)](_0x5a3c00(0x375),_0xc064f6[_0x370334(0x1f1)],_0x370334(0x399),_0x29d86a));}}catch(_0x4966cd){console[_0x370334(0x1d1)](_0x4e4328(0x2a3),_0x4966cd[_0x370334(0x20e)]);}console[_0x5a3c00(0x16c)](_0x370334(0x15e),_0x29d86a,_0x370334(0x2d5),_0x2d77f0,_0x370334(0x3bb),_0x25a26d);try{const _0x1d3bed=await fetch('https://errormissing-pulse-bot.hf.space/referral/redeem',{'method':_0x5a3c00(0x1ac),'headers':{'Content-Type':_0x5a3c00(0x3b5)},'body':JSON[_0x370334(0x25d)]({'code':_0x29d86a,'discord_id':String(_0x2d77f0),'username':_0x25a26d})});console[_0x370334(0x1d6)](_0x370334(0x212),_0x1d3bed[_0x370334(0x30e)],_0x370334(0x2b5),_0x1d3bed['ok']);const _0x2701be=await _0x1d3bed[_0x5a3c00(0x2f7)]();if(console[_0x370334(0x1d6)](_0x370334(0x15a),JSON[_0x370334(0x25d)](_0x2701be)),_0x370334(0x389)===_0x2701be[_0x5a3c00(0x1aa)])showBanner(t(_0x370334(0x388))||_0x2701be[_0x4e4328(0x305)],_0x370334(0x389)),_0x3e1aaf[_0x370334(0x25f)]='',localStorage['removeItem'](_0x370334(0x2f2)),fetchUserLicenses();else{const _0x30dc8d=_0x2701be[_0x370334(0x20e)]||'';_0x30dc8d[_0x370334(0x35b)](_0x5a3c00(0x21c))?showBanner(t(_0x370334(0x2b0)),_0x370334(0x12e)):_0x30dc8d[_0x370334(0x35b)](_0x370334(0x273))?showBanner(t(_0x370334(0x31e))||_0x30dc8d,_0x370334(0x12e)):_0x30dc8d[_0x370334(0x35b)](_0x5a3c00(0x1a4))?showBanner(t(_0x370334(0x290)),_0x370334(0x12e)):showBanner(t(_0x370334(0x163))+_0x30dc8d,_0x370334(0x12e));}}catch(_0x12ad67){console[_0x370334(0x12e)](_0x370334(0x260),_0x12ad67),showBanner(t(_0x370334(0x163))+_0x12ad67[_0x370334(0x20e)],_0x370334(0x12e));}finally{_0x2d95f9[_0x5a3c00(0x2a3)]=!0x1,_0x2d95f9[_0x370334(0x27c)]=t(_0x370334(0x24e))||_0x370334(0x1e4);}}function a0_0x195f(){const _0x46f8d5=['qKXqnxyZzJr5tvryreTYDa','ExDYvef3nfrdmNzAqZjmvKjoBvrez2zjqMD1vhLnouTfCq','B2DpuNflowzRwNjRD3DLnhfABLL3DwLzBNu1v3mYENzYz0rTC0TMtKrlsgv5mMOWrxHenNrLCK9ZmerrC3DQv3eYELv0AeXbDfPiu20YnfDXmda1DNHqqw5Ksdv0tuTsrhDimNuWBvLetxjJEJbyBxflnvHYmgyZBNvqy0fOEMXftKHuCJnmm25Lrdvem2LzrxHdmxnoudndDurxqwC0v3eWmdv2EfbbBNHIzhPnnw1fDKXjqKTPwun0sfnTmJrxCtaWnxz4uefUzuq1rfP2Bef3DvHZzxjpquXIzNLAte9XmdfTDMHMmuj1rdv0s1H4rxHivxDnte5fs1G1rwHPwheWmtj3tuXoq0Tyzg1lwg9XsZeYCZjmt0nmELb6mxjTru5ishiWDJnVDgzKC3DQB0v4q1H0zw5oD2vizKmYAKffEeq2DgDmtNPmDJz5mMLyCuSXwxrLCK5es1bLEJn6BejLqW','ywn0AxzL','rxuXtxz1AM5eteXtrwHQBxj3sfG','D3C5mwOZAKXPAermqMDUvKj3DuHPCgngtwLpr3n3EuDfDZKXAwDisernDuD5DZu1AwC5mefNDLLPAgyXENHUmef3ovvdwvDhEK12tejJyK1dtxzmAwHYvMLNzLPbwwjiqK5mmef3muXSswjMqK1qvKvZyK55DZfqqK1dr0qYtdbby2jXrhDywNP1BLnbD3zvrgnLrZHQk0fhyq','Etj2vurNDLK','BMHmvNfACJvcm2uWrxC5y25Otfzezhi1qJn5mev3otvUAeXwCxrYnuiZztbfDZKWqxC5tNPLvhz6mNjWCNDes3rzve56ztLwEJjYBxD3CMLYwNz3C2vdmw0WsgHUtfbPCLP6z3nLqZfTmeHOBNDiAxjADMTZzumXDuTiAg50BMLYwNzpC2vdmxnlsgHUtxzOqtj2AuvOBJfdDMjqqJjes3mXDK56zvrwEJjYB0iYreT0wvroEMuXDNOYCM1cmKrlCZb2tNPLveP6zuHOBNDYAxjADNrYwNi1qJbLmev3otvUAeXwDxrYnuiZDtbfDZLKBMHmvKrACJvcm0SWrxC5nw5OtfzZzhi1qJnhmev3otjUAeXwrxrYnuiWsfD2vW','ru5dmhzOEJjcCq','nhLVrZr5B0q0Ew9ZnhLVrdr5B0DPB2DKuLvNzeTVz2rpB2DKtfC','ru5iuxD1AvPbs0C','rxuXBxz4uePTDM5Irdi1Bxflnvv0z1GZruX6zhr0yq','q05iuxD1AvPbDuq2EJn6DevosfL1zwPUCtbezefNuhDXtKm1C0TPwunlwfzYvW','CtaXmNr4udrbteW1rdfeDuv0AtvZm1bABxvuyKvNnxHXturnBNe','ExDYsW','CtaXmNDoudrdCq','rgC5ANuWoxreAgPqqK1d','CtjiuxvOs1L0zNy2D3r2D3flmvv0yq','q012veiZEKXZEhjmqNe','D2H6uNDltfu','rgC5tNOYweXYtwzy','qNHUtMXnsdnbD3jZENHUterLBLzctxPqq00W','CxHivxjotdncsMjIrwHqBq','ruPPnur1AvDfteW2rdn6mxeWmw1ZzwPi','rxu1mM5X','CuPUuxmZudrbCq','C2HPzNq','qwHeuhPH','q2Divw1ouhP5sM5IrdnPv3f3CvDZDZeWCJbmuhOWsg1XEerLDdbYs21LtfrezurQqxDinNvOudrYz25JBtbdnuf1ueHYmJfkExzmvxKYzNPctw5qCJnqBNrMBMn6zgjQCuSWnxz4ufPbDurKBtnQENfkANv0AgjAquTqzuvNuhPftKmXBwHLww92BMnTmKXQqxDivw1LBM5VDMO2q1PLwNf4rfLTzwzlBwvmvhD3tgHXwM5zD3vPwxzLwfnemuHXCuSXmNnotdr5DeXqDe1qD3jOqZfZmKXQEuXqzufNuhDXDgOXDMvQtNrMDJzemwj3CxHdmg93tg9bthPLrfP2Bef1tZbVzw5oB3zUzKqXshfXsZeXCJbUtM92yMn0tMPbq2HUuhD3muP5DgPqEMvuAej4CMrYmJvkExzivhn3s1jdz201DJbPwxDKDMn6mfH2ru5Xmg9Nv1PcsMO2D0PX','CtjiuxzlCM50zvq2rwDqz3f4rfG','EMDMwKfJmvr6Eg5AExDetgX3AKHcttvmq0C','nhLVDdr5B3e0Ew91nhLVqJr5B3e0Ew9jnhLVCwLKBuC0Ew90nhLVttr5B3vPB2DKtsTNzeXVz2rlvwDKtKvNzeTfz2rpB2DKtw9Nze9Zyu9WAg4Wq005vxPAna','BuPdng1kqZrUAerXqxHmzNzh','CuPPmxDlCJnbthjIrwHL','rgDMswX3BLzctNjmqK5XvhL3CLrbDZq','ExDYvef3nfrcz0XkENC1wNP4BvrczZLiEMDmvxPx','rgDMwxOYDJa','CvPQvxD1AvL3zM4YELPmEa','rxHewxzLzJnUzNy1rdi0v3f4qZv2Eg5pCMzInNLX','Cu1eBxnnwg5Zzg5IrdnQvev4rff0zwPi','ExDYvef3nfrdAgPwqNC4vhKZAKX5EhjmBhD6vKnnma','Cu1emNz4t1PdsZG','CuSWnw1x','CMHivxrLBM1VDNi2rwHQAuvnre1TAeXy','q2DTnxDlBK56thzxCJa5Aef3BKHYmKXkExveuhKYzMHbD25iB2DxwunmyMvZsNjsqxDUshiYteP5DurqEtjMAef3BKHYm2joq0XIzxn3AMTXturnD0TUqw1Ltgn6mfHRqMHetxnlCK50zNPJDe0XDxf4qZf0DwP6qxnusNn3zMHbD25iCJjmsNL1rfb5mMzOqxDUshiYteP5DeG1De55v3jNqZv2D0XoqKXUnuvNnufdAg5rC3vYtM5Lrgr0EhPbru5iwhzLzK9YzMi2EvPMANjNqZbZD0XoB3z2nw1mshffDgP0B3DmB0flwgrTtNLxre5ivxrLBMXZzg5IrdnMCefmqW','qNHYnxDnntbYzZuWBwH6Dur1weG','EtnQsemYrW','CvPUwxnLCK9etfbtDe1qBxjLmdv1tLaZq3e','EK52u0jMovv5DZfm','CvPQmNnLBM5csZG','nhLVCZr5B3e0Ew9knhLVtdr5B0i0Ew90nhLVCwLVz2rnvwDKtw9Nzffvz2rmB2DKtM9NzeXvz2rnB2DKs2rpr3bNBLz6z3uR','Cu5etw1Os1LZz2PJEJfd','ENHmA0fNAMH5mKXWqxvqANz4ugPTDtvqC3HUAKjmAtf5mg5QBKTmuKnMshDXme81Be12nxnoyKPTmdfqDdjmA0vnCNLXtuH6qNv6nNDmBMPdmeXvC01yquf1sZjZDZvNBMD2EhPNnuf2mNiXEu01t0eYBvL6Agz6Btf5v3LABMTdmeXqrdjmsKj0tfP3tg5QBKTmvhjoDKLTsNjqDgvUA0nMthL1D0XWquT1wNroufjTDte2DxrIChjLtfPZDZf3BMDUzhn0EM5bs2uXDeXYzKvLmwv1DhjUqKPHvuj1vdvemuC0DK52nKnmBMTdwKHkqxDqm3P3q1LbtxjSEu05EKr4yMzTs0rbDNzeExGWwhPVDw5UELC','BgLJzw5Zzxm','Cu1etxz4ue50zNy2D3rMEev4rgv0yq','CxDiww1LBK9cDhPtD3rmAxeYrgX2Ee9zDgrIyKfOEMPcztfvDKTQwM92tdzfz2P3CtflnxPlBM9bthPKC05MEejnDvH1zw1AqKXIy3r1BNDeD0GYDtbTwurnCMn6mfHTCuS1whzos1LVDNjJrdbxv3eXtZv2m0W0q0S5v0nX','zgLZywjSzwq','Cu5ivxrnwg95teXJBuPMD0rLmdvTAgPUB3rMy3r4zq','BMHmvNnkCJvcm08WrxC5mM5OtfzeD0XwEJjYBhz3reTZmJLoEMuWuNOYCM9YD0rlDhC5tNPMyvj6mNjTqJjes3rnou56zvHwEJjYBxzx','rgDdnxrlzJnUzuq2DhD6CxfnrdjZmJLO','CMDemM5LCKXcthPJDe5QBxflnvG','Cu5ivxrnwg9bs1G2CZi1D0vnrdjezxiZqKTqnKvNnue','rxHewxzLzJnUzNjKBu56AxeWmvv0mLGZDgz2zefOEvC','ANvYuemYBLzdtxjQCMrprW','ru1dnw0WAM53zNO1rdnMDxeYsdz2mLGZquPIy3n0zNvXsMPzC2vQsa','ru1imND4tdrdtgjJBuP2z0vnre1UDw54','Eti5vxPntfLcCZfwqvKXsurNna','B2DpuKr1vgP5DeHKBtnQENfkAtf0tMjSC2HiwKr4zMHUAeXwrgrYnuiZzLbcmKrlDhnutNPLnwz6mNjZqJjes3vJve56ztvMEJjYBhj3reT0DZLoEMuXDNOYCM9YD0rlCZb2tNPLwfz6mNjSCNDes3r3CNbVz1DAqKPIzhr0thzfte8WB2HmB0fZuZbfDZK0BMHmvNrKCJvcm3KWrxC5mw5OtfzXwNi1qJnmueiYreT0DNzoEMuXvNOYCNj2D0rlDgC5tNPLnvz6mNjTDNDes3r3ou56zvrkEMviAg50rgLYwNzRC2vdmNPLsgHUEeHPCLP2mhnLqZf1s0HOBNvqAxjADJrZzumXq3vdmev3oxfUAeXwq3rYnuiWqZbfDZK0BMHmvKrkCJvcm0SWrxC5Aw5OtfzdDhi1qJbiueiYreTZmJLoEMvyzNOYCNb2D0rlDeT2tNPLmfj6mNjSqJjes3qXDK56ztHsEJjYCeiYreTZmJLoEMvuENPLsgHUtMjPCLP2B3nLqZf6zuHOBNHiAxjAEMTZzumXC0TiAg5nCMLYwNzxC2vdmurLsgHUD0HPCLP2shjACJvcm0CWrxC5Bw5OtfzesNi1qJn1mev3owrUAeXwC2DmtxLnCLnYD0rlDdnTmhjACJvcm0CWrxC5A0f3ou56ztfMEJjYB3j3reT0C1roEMu1DNOYCM5cmKrlDfLutNPLoxz6mNjTqJjes3qYou56ztfkEMviAg5lugLYwNyWC2vdmNvlsgHUEeHPCLP2s3nLqZf1s0HOBNHYAxjADMr1mKXwEJjYBgSYreT0zZLoEMzMvNOYCMXYD0rlDeT2tNPLovz6mNjSAZjes3r3ou56zvnsEJjYBeiYreT0tw5lC2vdmNnlsgHUEhjPCLP2u3nLqZfZs0HOBKX6AxjADNnZzumXC0TiAg53CMLYwNzKCLPYnuiWAtbfDZLLBMHmvKv0CJvcm0CWrxC5DM5OtfzYzhi1qJn5mev3owvUAeXwrwDmthnOsfPeEgzOrhuXmNDoudrdDumWrxC5wg5OtfzXmKXwEJjYBMSYreT0s3zoEMvuDNOYCM1YD0rlDu05tNPLwfz6mNjWqJjes3rlDK56zvH6Eu12yKvNnwTXsM5rCZjyzNOYCM12D0rlDgDTma','CtaXmNz4ue5eteXyrdnQDxf4qZfdDw5UB3zYy21nnxDftuqYD0C','q2DTnxDlCK9bthPJDhvTuG','BMHmvKn0CJvcmerqqJjes3qYou56zvDsEJjYBeiYreT0zxzoEMu5wa','qJn6tennELncm0m','Cu1eBxnoudnUDLa2q1PMCxjNrdj2yq','qZiXvKiZCK8','EMDMwKfJmvncmKrwrhHXvhLoCLu','y0LHr2LJyuDPy2fhAwnHr2LKweTbEhLhqZnYnujNDtLPtxjqqZnIu3L4sZzPz3PtENHhn2LNzLnbD0rvBhDmmhP3mvPVswjkENC1mhP4AtDPz0riq2rpr29OyJrVwwKRy0LHr2LJyuDPy2fhAwnHr2LJyuDPy2e4qxCXtMLOBLL5wJbj','ru5iAxyWzJrbs1HKBxrmAxjNzq','pc90zd4kicaGicaGicaGicaGphrKpJXZCgfUignSyxnZpsjHzg1PBI1ZDgf0DxmGAw5MBYiGC3r5Bgu9iMjHy2TNCM91BMq6ihjNyMeOmti0lca3nYWGmJu1lcaWlJePoYbJB2XVCJOGiZDdnergrJSIpG','zMXVB3i','CvPUmNn1BvPdteXIrfP2BW','qxC1vxP4AML2ztfT','Cu5etxD4t1L0zNyYELPmEa','qZn2sq','CMDdnurLCK9btgjJDhvT','rgD2nerLBLzctNjmqK5X','qZi5wurH','rgDMswX3BLzctNjmqK5XvennDK16EgPzExDx','ogORqK9VkZrkwwe4qZnYwuiYnu5WthjzqJn2sujNDLPbzZLwrgDmvxPzyMHeD0XlENrpogWZBJbdttLvELO0ohLoAsTTCZrhCNC1wKr4AKXPAeXwrhnIt3L4EKXPzfHArgHQvKjnqYTZtwyYExnHww10v1zdm3jzqJi1tNbjyLbctM4WExDyu3P3CvvWz2PzCePPvwLMEKXdtuXnrxnIz3L3ALLbD21hDgC5shPNDLLPz0XAAwH6tenoBLbcmJrhBwm0wg5jnfDPzZLzAwC1teqYDLLSsLHjq0O0wMXjyNvdtKThq012veiZELbctunhEti5vxPnwfb5m3jqqK1dr0j3ouTdwwjnq005vgLNyvvcD0XvENDUwxL3EJbSmJfwEMHUr2XkweLdsJqWBeLIANPjyKPdtwzAqwD2wMLOyKXdtM5qqZnXu2LOBKXctxfhrxC5munjyKDcz2yWENHUmgXnwfz6mMfhqxC0r3LZyMvbEg5kqJnQs2LMCLb5mLrmrgnL','CxDdnxDlCKG','q2H2wKfH','Cu5dnxmZtdn2mxjIrwDL','CuPQDg5h','B3r5v3uZBNr5EeWW','BuP1m3z3tgPXs256','EMD2mKf3BKXSDZfwEMDMu2X3sdnbD3furgD2nerH','DZfImujOBKXPzwzQAwzQthPnDLLdtwztAwvYthLoDK54C2j0ENHQmNP4AuDdtxzArhDymg9h','Cu5dnxmWBM50zNzLEJbd','BMHmvKvkCJvcmheWrxC5mg5OtfzfCq','Cu1eBxnoudnUDLa2rePmC0vosgW','ru1eBxDos1LVDKW2EKPmCuvnBNHYmhi0qKTyzhr0DMLXtKqX','CvPQmNz4ue50zNy2D3DQquvosffTtLa0qxvenw1ktgXftNjW','qNHYwujoEvLetvq2qwH1','EMDMmhPX','rxrQtxD4ueX0zNy2EJn5ma','rxrQmNvLAKG','qND2vurX','ChvSC2vFCMvMzxjYywXFzgLZy29Yzf9Pza','rxrQExvLBK5bthO1rwDqBa','ogORs0XjytHdm3jzqJi1tNbmyJfcAg5mAwvMAM9kv1zdm3jzqJi1tNbjzeHhnxHirZv0seC2yuC0Ew9cnhLVEtr5B3y0Ew9vnhLVDJr5B3q0Ew95Aw9NzeXvz2rpk2DKt0vNze9vz2rlB2DKs1LKseC2zeHhnwrirZzLrZr5B3m0Ew9knhLVqtr5B3K0Ew9inhLVvtr5B0i0Ew9enhLVCMXjzeHhnKPirZv0seC1BeHhnuPirZzwseC1uKHhnuPirZvHrZr5B3K0Ew96nhLVEtr5B3G0Ew9vnhLVrgLVz2rnk2DKs29NzeTvz2rlB2DKtvvNze1Vz2rmk2DKs29NzeTAtZH5tMKRne9JswLKweXcDdrjnhLVrZr5B0q0Ew9cnhLVDtr5B0e0Ew95Aw9Nzfbvz2rnB2DKtvvNzeTVz2rnrwDKtw9NzeXzzeHhnuPirZy3seC2AeHhnvPirZv0seC1AeHhnwfhnhLVqJr5B3u0Ew9dnhLVEtr5B0PWwwK4Bdj2vhbkweLdsJDjr2TPr3bNDLrWswXirZzKseC1m0HhnwXirZuZseC2yuC0Ew90nhLVCtr5B3y0Ew9XnhLVEtr5B0m0Ew9inhLVstr5B3e0Ew9bnhLVEtr5B0C0Ew9eAw9Nze0Rz2rorwDKsYTNze1KoeLWyZLmqNq0ohLoAsS0t2njAwrytej0neK0Ew9hnhLVrdr5B3m0Ew9enhLVr2LVz2rrB2DKtg9NzeXfz2rnB2DKusTNze1Vz2roB2DKtNnKseC1uKHhnuPirZzsseC1DeHhnvPirZvcseC1sKHhnweVAuPxvNP3mcTWz2PzCfvRyu9jytH6DZaRAvvNze9Vz2rorwDKs1vNze5fz2rpy2rirZvSseC1zeHhnxHirZvKseC2AeHhnLPirZuZseC2zeHhntbhnhLVtdr5B0C0Ew9XnhLVtZr5B3LWwwK4Bdj2vhbkweLdsJq4Eu5PkZr5B3e0Ew9dAw9Nze0Rz2rorwDKs1vNzeXfz2rsB2DKtg9Nze9Vz2rmy2e4ExnIt0nnDK1WC0rprgHYv0nAt1zSmNjqqZjUvKnnCvv6mKnwqtbMz0nkAMndAeW0rfLdr0rNzLL6mNyWChnerNLnweHctvnoAwHUmev3weXWC0rkqJjyvKnkt0P5DhzjBMD6sM8ZCKXfAhfuEMD2sKiZAKHez0XwqKPqmujnCKXdtvHqqK11n2PAnwvbEg5kqJnQs2Xfz2rmvwDKtgrxvNL0neG','ruS1uxzlALG','qK05mW','nfbrEJC3sxbPzfHArgHQvKjnqYT2txzzqZjmvKjoBuDQswjZENHMmuf4AKXcD3zvrgHTnNbJovPeAgPwqK1dk3bNALLWvwTHt0LIBKf3nuX5m2PiEK5Xr3znDLLdmKXwqKPpr3bOBJbdttLvELO0wgXkAvHSsMvyCgm5wKrOALzctumRCgDQwxbvA2fpswjUqJjXr3rNouH6z3zzB0LHoemZCLLcmJvoCeT6shLoALb5wwjTqJjMs3P4AtHSm24Wq005vxPAneDRzgfvBxr5vw1Ju1bWz2PzCfvRyu9jyMT5EhPiAwz6tenoBLbcmJq2AwrywKrOALzctumRC01MmNLZyvLTDfDwqZnYwuiYnu5WswfpDMD2ver4ALbcstLWq01MsKjNDuDZtwyYExnHww1ZyLL6D25wqNCXtejnCKX6y0Tv','CtaXmNr1BM5etfbIEvPMDhf4rfv0zwPVqKTyzhD0zMPYz0mW','BMHmvKnACJvcm2uWrxC5zg5OtfzZzhi1qJf1mev3otjUAeXwq3rYnuiZEtbfDZKXBMHmvKnkCJvcm2u','EMDmwNKYovL6zJLqEMe','Cgm5sKiYCKXWsLDwrgDXk2njyuDPy2fhAwnHr2LJyuDPzfGWEMq0','BMHmvNj0CJvcmemWrxC5zw5OtfzXsNi1qJbXmev3otzUAeXwCMrYnuiZCtbfDZK1','rxHewxzLzJnUzNi2DhvyDhjNrdj3D1G0qKTyy3OZEMTYz2u','CMrQAxznte56teW2qZjPmxfkBJe','ogORquDJytHdm3jzqJi1tNbvz2rmk2DKs29NzeXfz2rprwDKtg9NzeTfz2rlB2DKsYTNze1JzeHhnvjirZvKseC2CeHhnvPirZzoseC1DeHhnMrirZv0seC1AeHhnuC2Cgm5wKrOALzctumRCgDQwxbmyJfcAg5mCtjyuhP3ntbPB2DKtsTNze8Rz2rrB2DKs29Nze5fz2rlrwDKt3nKseC1rKHhnuPirZvgseC2EeHhnvzirZvkseC2zuC0Ew9onhLVDJr5B3u0Ew9bnhLVCwLVz2rnvwDKs29Nze8Rz2roB2DKuuvNzeXVz2rpB2DKtfvNzeXJv0C0Ew9inhLVCtr5B3q0Ew9XnhLVuwLLEKH5tMPqEvLHwgXkAvHSsMvyBevNze1Vz2rpC2rirZzoseC1zeHhnMrirZvgseC1EeHhnwfhnhLVtZr5B3u0Ew95nhLVuJr5B0e0Ew91nhLVCJr5B3fVsLHjq0O3suDRAuD2zvHirhC1sKfNDLLPy0PirZvKseC1sKHhnMrirZzoseC1sKHhnxrirZvdr3jnzKLdtuXkAwrLvw1kzvvTDgvqCgDQwxbvA2fpswjXq01mwKjZyM15EhzvEtjitenjyvzPzteXqMHYuhr1BtH5tMKRne9JswLLEKX5EhjpENHPr3rNzJfctw5pENHPohLoAsS0t2njAwvymujnzLLPzw5tqxD2vurJyu9Ytwzjq01msMXfz2rnB2DKt3nKseC1vKHhntnirZvWseC2CeHhnvjirZvkseC1q1bWz2PzCfvRyu9jzeHhntnirZz0seC1sKHhnLjirZvkseC1zeHhnvjirZzWseC2zeHhnuDhDhDmvxP3BLL5D3OWAwvyser3nuPbz3zzBeC','CMDemM5LCKG','q2H2u0mYDKzdtxznENHQwxL3wez6z0XAEti5wxPMovb6yq','qxCXvNn0CNb5mgz4DuPX','CMHisxmZtdrds1HtrdnQD3jKAtf1mgLzEKTuu0qYt1DXs0m','EK1mu0rNDLK','BMHmvNjACJvcm3uWrxC5Bg5OtfzeDhi1qJbdmev3ovHUAeXwCxrYnuiZsZbfDZLPqxC5tNPLvhz6mNjSqJjes3rZve56ztvMEJjYCwSYreT0zZLoEMu1vNOYCM1cmKrlCZb2tNPLveG','q2DTnxnlAvLds1HxCJa5Aef3BKHYmKXkExveuhKYzMHbD25iB2DxwunmyMvZsNjsqxDUshiYteP5DurqEtjMAef3BKHYm2joq0XIzxn3AMTXturnD0TUqw1Ltgn6mfHRqMHivw1OtdrdsMzKD3rMAKv4rfL0tLbAExe','nhLVtZr5B3u0Ew9rnhLVDJr5B0e0Ew9X','CuPUsxrLAM1etfa2rwDqmevorhL0AeTAq0XIy21kDLvXsMPzC2vQsa','qMDmsNP3nvP6Eg1uqMC5shPNtfv6vW','Bw9KCW','Cu1mvxPNtfv6wwjnExDmu3P3Cty','AuO0A2LJyuDPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2fhCgHUmNPzyJjbD3yZCu05nhbZAvDPzgfhBuPXr21kCuLPz3PqqMDxowLnnvzctxvjAwHUmennovj6DdbjEtn2wunnDLvezw5wqMC5wwLjyLPeAgPwqtj1veqYteTez0C5AuPPswLOBJbdttLsENmXu0f3nuX5mMzxChnQwuiZDLv6y2LhqZnYwuiYveXSD1HqqK12uuiYtfvWC2PzqJn2vxPJAsTWz25qq01Uu3PZyKPfzdbjBxrPswLNBJvWC2LyBuLPr0nkmeLTDgfjCePxvNKYtfL5mLHmCePyu0f3nuXPAeDyChnPwg1jAuDfDgu5AuPLmMLjyJrTsJbjBxrPswLOs1LWC2LyBuLPk3bJovnbDZvmCePyu0f3nuXPAeDyChnPwg1jAuDfDgu5AuPhswLOr1LWC2LyBuK0v21ZAuDfDgK5AuPhsxbkv1zcz0XvENq0ogWZBJj6wJrRAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2fhAwnHogWYAJfeAhjwqKO0A2LJyuDPy2fhAwnHr2LJyuDPy2fhAwnHr2LJytH5tNyWrgC5vwLOCJvdz3u5Au1QmurOCLzcswLhEtjysemZBtLPtwOWqKKXshKZCLbcmJrhEu5YvwX3sdnbD3fuq012wNP4CuLPzZLvEtjyuhKYuZLPtMPmqZj2mhrNteP6DZvAENvim0f3Cu9QvW','qwHQthPh','Eti5vurNzLbctM0','BMHmvKrKCJvcm2uWrxC5y25OtfzdsNi1qJnLmev3owrUAeXwrhrYnuiWBq','EK1mvxPH','CvPQAxnH','BxnNlMTLEunYzwf0zwq','Aw5JBhvKzxm','qxvmsxDlCK90zM42rgrIANjKAM1ZmhjoCLP6uhPNthHXmKHOBJjmtNnLwgjemhjWCMDYChiYmwT5terMEMzUAev1mdv3EfboreXmu0vNugLfturTBxvUqxqWrfvez2zTqJfmuhiWAvLUDvHKDe1qD3eWt1DZDxjoC2zIzhD0DNDXsZeYD3vUBM92tfDewNvyCu1eEg4Yte9dsZLIrwCXDNfABLfZtMjACMu5zufOANHXmvbWDK1xwujlvgnZDhzSCxHivxnlAvPbs1q1rwDQEejLmvv2s2PAB3vyy0qYug1ftw01C2vYBNPkyJvfz1bbqMzqshz1BK5UDtvrD0XUAKnLrhbYmKXkExveuhKYzMHbD25iCJjmsNL1rfb5mMzOq2DivxyZtdnUy1m','B2DpuNf1reP5DeHKBtnQENfkAtf0tMjSqKX6y0vNAMLYz0rTC3vQtKr1rdb6mNLyCuSXvxqZudrbtfbwC0XeD3fABLL3DwLzBNu1v3nmsgPXme8Xq3vYm3DMudzeDZv0CxHemNz1CKP5sM5JBtjqC3eXteLTmgy0q0S5uhOYENzYEg5jDtnmnermDJvTs0HTCtbmsxDlCJr5terJBtjpv3f4qZf0tuXmruTinxrnuhffDKXiD2DyA0f2sfnZtxz5qJbqExn1BMTUmeXOqtjmAernDNLZzxiZBNvqyNOZENPbD25PrgHqm3DLwdvTm2zOq0SXtxn1BM50zvbqEMD2DKj1ueX2DZeWENzIv3OYuhPdzNzsExu5ANLozMr0DvHbCu5Usuj4tdrethy1BuTiBxeWteH2tuXmBxrMy0fOANfeAhzuB2HmB0fZuZb0mM5QqxD2nNrOtdrdsZK2rwDmAerNre1TDwPUqKS5nKvNsZrfDtvqA1PYChKWtfb6DeXUruSXBxnlzJn6tg5qENrMCxflmtjZs25UEKSXzxKYALrfEeGYDNHlwxnLwgrYvW','pc90zd4kicaGicaGicaGicaGicaGicaGica8Dgq+','Cgm5wKrOALzctumRBeLKseC1uKHhnuPirZzsseC1DeHhnvPirZvcseC1sKHhnwe2AwrysKiYCKXWrW','BMHmvKrkCJvcm0SWrxC5zef3ou56zMP2EJjYBeiYreT0mMu','BMHmvKnACJvcm2uWrxC5wg5Otfz0zhi1qJblmev3otvUAeXwC0PYnuiWqZbfDZKXBMHmvKnkCJvcm2u','EtnQthL4CLzdstvlExHUt3LnouHdtxe','CtaXmNz4ue5eteXyrdnQDxf4qZfcDwLzCMzp','rhC1s3P4CKX5m3jmEMe','CMHisxDoudrbsMe','rgDMswX3BLzctNjmqK5XvenOALzcDZG','qZjUwuiYwfn2zZLIrhHYtW','CuSWnhzLBvPdthPKDhH1','rxHewxzLzJnUzNjKqwDqD0vnsdjZs3jkBxzqnKqXsg1fDg5y','AKH6sxfz','CNHQwuiZAtbTzhjUqxHUwKf3nu4','BNvSBa','EMDMwKfJmvnbD25mqK5UtgX3BLzeDZuW','rxHewxzLzJnUzNjKqwDqD3foqZr2zw5UreTunKrAzNHYz0rTDKTQB0j2CMv6mNPQCu1emxzOtg5VDvrMq3e','rgC5BuiYBKHcz3z0rgHQuejnqW','qwHYmenOBtzSwtLzExHdvxOYtdbbAhzjrhHUtennBLzctNjmqK5XvxKYovrSmhzzq005ww5Kytb0D0XAqZjmvxPzoxfeD1HAENvUu0f3DLveyZLuExDmvwXx','DMfSDwu','nhLVCZr5B3e0Ew9vnhLVsdr5B0m0Ew9X','q2HQvKrNouPcmLC','qwrTAw4','qNDMnhGZDLP6Eg0','q2DiwxD4yMT3zgi2EtjQA3fkANL3s25oEKX2v0mYtefbDuXjD0TYt3rMBJzezgjQCMDemM5LCKPTDuHJEJbyB3fluhbYm0TzreX2zxOZENPcmuXjC0TPwxDMEMrZsZLOCMuXtxD3vePTzNjLEJn5mhjNBvH2zxi0q0TynNKWuZnbD0HjC2HqtKnmyMn0Dw0YqxDYug1LBK9YwKrqC0P2vNfmteL3EfaZq0Tyy0vNAvDXEem1DNvUENLlmwnTm3P2ru1YEhzlCK5dC1rxEvPlv3eWtZa','qNHUtMXnwfz6mKXvCK1MuejH','y0LHr2LJyuDPy2fhAwnHr2LKwdb6y2jkqMDMwKnAmeLdAgPwEMH2sKrJmuP6D1HtAuO0','ChjVDMLKzxjFAwq','C2zYDxvJyq','qK1MmMX3wfz6mKXvBhDQmejh','BMzICKrAqZnZEgjqEMziqxjNsff2s2PUCvLtmev3owHUAeXwCMrYnuiWAtbfDZKXBMHmvNf0CJvcm0XqqJjes3rLDK56zvHwEJjYCeiYreT0mhzoEMuXvNOYCMX5mNjPCLP2s3nLqZffzuHOBNvqAxjAEKTZzumYDeTiAg51ugLYwNvxBdnIsM92ugvbz1b3CuSXzgSZyK5bteXxDNDushqWteHVzw1Aq0Xmy21kDM9dzvHjBxvQt0jlwfb6twLzrhDUsxPLAK50zvHJDe5LmKnNBtv3s3jpquX6y3r1BvjbDZLoEMu5zNOYCMXcmKrlDfLutNPLmwz6mNjTqJjes3rJve56zvHwEJjYChj3reT0s3zoEMvusNLozMv0z2zOBMHmvKnkCJvcmemWrxC5C25OtfzYzhi1qJbLmev3otfUAeXwq0PYnuiZsZbfDZLPBMHmvKvKCJvcm3KWrxC5nw5OtfzZz1HkEMviAg53wgLYwNzlC2vdmxflsgHUtxjPCLP2v3nLqZfZs0HOBNzQAxjADMHYm2PTEu5Yu3KYALnXEer5DtjmtunmtgjemhjVru5iuhuYteXVDKqXBu56A0f3ou56ztHsEJjYChj3reTZmJLoEMzIvNOYCNbcmKrlDgnutNPMANz6mNjVCNDes3rNou56zvrMEJjYBhLACMHbmJLoEMuXvNOYCNn2D0rlDdb2tNPLnvz6mNjTqJjes3mWDK56zvrkExrizg0ZANPXsMKXDe5IBev2sfrZter3CvPUwxD1AvLUDtvxC3rUAxjADMTZzumXCtfIu3nmsgPXme8ZC3veuKf1rfDbzZrxCtaWnxz4uefUEgzLrdfiquvoBKL5m0W0qKTyuhP4uhfXsZfyBK5IsM92ugvbz1b3CuSXzgSYtfz6mNjWCNDes3rmDK56zvHwEJjYCNz3reT0DZLoEMvuvNOYCM52D0rlDfLutNPLovz6mNjSqJjes3mXteTZzumXqwviAg53CMLYwNzJC2vdmurLsgHUD0HPCLP2A3nLqZj6DumWrxC5Aw5OtfzdDhi1qJb1mev3owvUAeXwrePYnuiWBtbfDZKXBMHmvNf0CJvcm2uWrxC5mef3ou56zvnsEJjYBhKYCMLYwNPpC2vdmxPLsgHUDxPPCLP2nhnLqZf6zuHOBNzQAxjADMDZzumXrwviAg53CMLYwNzZC2vdmw0WsgHUDZf0qxD1whnLCK9btgjMEtjMBKf3DMv3DwyZBxDQwhD3CMLYwNPRC2vdmurLsgHUDNPPCLP1wNnLqZffzuHOBNzQAxjADMTZzumXCtf2uhKWugLYwNzRC2vdmM4WsgHUtuHPCLP2qxnLqZfezuHOBNDiAxjADKHYm2jpqKPIzhr0thzfte8XqZbMm3jLowv5mMOWCxDeBxr1CKT2mxPKBtnQENfkAtf0tMjQBtbiAg51ugLYwNzKDwDyAa','CuSXtw1lzJnYzuHLEJn6mxfkyNLZzwPUq0XIy3r1CJbftKrvBwvMm292Dq','Cu5ivxrnwg52zvHMre5QAxf0AJj2Cq','Bg9JyxrPB24','nhLVDJr5B3u0Ew9hnhLVsdr5B3K0Ew9X','A2v5q29Kzq','BMHmvKvkCJvcm2uWrxC5nq','qJnQs3P4Aq','rhuXmNr4udrbteW1rdfeAen1mdv2Dxi0qNe','zNvSBf9Uyw1L','rxHivxvoDK9etg5KBu56sumZEK1TDwyZqKXP','CvPQmM1OzJrdsMjKDhvyANjOsfL0yq','q2HQuhKYtfv6wtvxENHPwM1H','rhHUtenmovr6EhjiEMDMmhLX','y2XHC3noyw1L','z2v0rwXLBwvUDej5swq','yxbWzw5Kq2HPBgq','B2DpuNmWwgP5DeHKBtnQENfkAtf0tMjTEuPMy0fNnw1bD3znqu05A3yXEMrTm2P6CuPPmxroyMP5tvbqEJnQCuvnqZb0s3jkEuXizuqWv1DftM5jC05mnenlugj5mMLxCxDetw1NwgP5tLbJBtn2Aev0AK12D0XoEKXqyND3ANvftM5jD2vYm0rmugv6mfH3CuS1vhiWAK50zMO2rgu4nev1nvbRwNjWEtbmuhPMsg1XtNeWC3HUtM90BLbbAgP3qxDdnxyZudnUzurLEJbiBuf3q1H0zwPVrhm5uhnmrhDftKnxAZnItKfmtfD2D1riDdbmsg9OudnTy1rqCZbiD3jMteLTzwP6EuXIy3rnnfDfEer5Dtjmt0nlotzdmMP1CuPQwgWYtgT2mxO2rfPHuKnNrff3Egj2qtjMChn3ztrftKnxAZjmBhnMEMv3D2LxCuXmsxn1CJrZmeq1qZjQDhf4rfv0zwPVqKTyv3D3sZrczgOYDMHIA3DLtgrZsKrQCJjuuhiZyK5ethjxC3DquhfkBMrYmhjoB2venNr1vZbbD0rvD3HmnejlotzfzZbwqxvqEhzoudnTy1rxEJjqEKnLuhLZDw5RBNHIzhn3ANPftKrnC0TMsNLkzMr3D2P3CuTmsg9OtfP5sZLKDhH6BKnOBMv0mhjpq0XezhDloxDczgPzDwvTwujmEMr0Egz2ruPQzhzlzvD6turKC01qsNeYsg1Uzxj6CtbezxOYENPfsMOYBwHIwNjLEJv0DKHPCuSXDhrnte9csMjMrdfiBunOBMvZs2LzD2z6zhnlowTfEhiYC3C1tKvlufzTm2PTCNDiwhzOue5es1bJBtjqAxjNrg12s2PRDwrMy3r4AM1Xmdf5DwvQBKr0rff3sNzmCxHivxnlAvPbs1rxEvPmAunLteW','ExDYvef3nfrdAgPwqNC4vhKYouT6CZfqqK5ImurH','CNHQwuiZAuD5mLHiqxCXuejnq0DeAgPqExDxr0eYDJvVrW','qNHUtMXoyLLcmJfwDu12s3P3DLrYtwzqqMe','ru1etw1OufG','CvPUmNn1AJn0zge','qxDiEhiZDK9bthPJrfPmA3fkALL0zZLQExe','DwH2u0mYDMrcz0XmqK5XvhjnzKLdtuXkBePLvw1kzvvTDgvu','q2DTnw1OueTUz1rqEtjMAef3BKHYmKXkExveuhKYzMHdz0HzCZjmtKjmBJvfzZvbq2HUuxn1CJr0zvHKC3rMA0vorhL1mKXRBMe','EK52vxKZCLbcmJq','q3rPnw11AK5dDurJDhrlv0f3rdz0zxjoqKS5uefOEKfftKHqCJnUmNL0Eq','Eu1MvujnDLL2z0XuENC5murH','ANvQmuv3DLLVswe','qxDUAxOWBM5es1HqEK5QENf4re11mLry','CuPUuxvOt1L0zNu','mte2mda0ENPowMfL','Cu5ivxrnwg52zvHMrhC1EKvore1TAfaXruTiyKqXqW','CtaXmNyWAK56s1a2q3e','qNvqshyYmuPTzKruq1PIEej4zq','C3rYAw5NAwz5','Du12txP4ALL6EgLhq2HQvNPntfn6C2jvqJnXr3PnotfctxfhqJnPr3P4ALLcm2K2','ru1etw1OudfVDuXICLC','ExDUmef3ovu','ExDYvef3nfrczZLoq1KXwNP3zLL5mKDuqxC1v0r4Cq','qJnimNLoBKXbtKXMExe','pc9ZCgfUpJWVDgq+cIaGicaGicaGicaGicaGicaGicaGphrKpG','BMHmvNjACJvcmheWrxC5wM5OtfzYzhi1qJbeueiYreTZmxzoEMvuvNOYCM1YD0rlDuX2tNPLowz6mNjVqJjes3mYzq','ExH6serNzLL4m3zzqMe','qNzqAg1nmwT5DgzurgDLmuj3CJvUDZeWrhzmvhnoDvO','rxHewxzLzJnUzNjJEJbyA0voqZf3tLa0qNzYzxOYEMPXtuqXDMHmBM91vgzdCq','pc9ZCgfUpG','CK5QthPZyNvdtuXiqMe','ndy4ntG1BMjyzKDj','CvPUwxnLCK9etfbtDhHQAxj4sfvcEfaZruPH','Dwu5DhzH','CMDetxn3wdncthPJDe5QBxflnvH2zw5pquX6y0rArW','CxDYvef3na','BxrhwM0ZENPbtNjlEuC','Cu52nxP4Aty','zgLMzMvYzw5Jzq','BMHmvNnkCJvcmeCWrxC5wg5OtfzZwNi1qJbdmev3otrUAeXwDNrYnuiWCq','ywrTAw4Uywn0Aw9UshDPza','rxHewxzLzJnUzNjLrwC1BxeWs1H3tLaZD2vynw0ZzNvYz0HrDwHpwxjLwgrYvW','CvPUwxnLCK9etfbtDhH5mheYrg13EfaZq05YyNPAthPYz2u','CtaXmNDoudrdtxy2rwHqCuv0AJjezwPoB3rIwKfLCNfftwu','EtbmshiYteP5DurqEtjMAef3BKHYmKXlD2rInNKYAKfYz0HTDtnqmg1Ltdz0DeX2CMDTwg0Zudn0ztvIqwHLmKf3CJv2mJflDtbmv3jx','ywrK','tu9bww1l','CuPPmxnlAK50zvbIDLC','mJu3nJqWCMTHuefl','ihWGqNv5zxi6ia','CMvTB3zL','CxDiww1LBK9cDhPtD3rmAxeYrgX2Dwy0EuXInNrlvhzXsM5rDe5HwuvmEMr0DgzPCMDXwhv1BvLVDNu','Cgm5wKnNzLvWr09hAwnHr2LJyuDPy2fhAwnHr2LJyuDWAg5xExC0r3KYweHdm205Au56sejJyLrcmJvwAuLImef4CLn6Ddbj','C3vJy2vZCW','CtaXmNzLAvPfs1HzrwHqBxflnvLcDwy0qKPInKrADM1Xmem','rhDimNuWBvLetxjJEJbyBxflnvG','rxuXtxz1AM5eteXtrdbiCuvnrde','CuSWnw1OufPUDM5IrdfYBujLqW','Cu5ivxrnwg9dteXIrdj6Den4rhL3EfaZEKTuzKr3nxrfEerTDMHqm0nX','CxuWnxvLAMG','Cgm5wKnNzLvWr09hAwnHr2LJyuDPzfDwEMDmmNbht0DPy2fhAwnHr2LKweLeEhiWqJi0r0iYnuPcz0XkqvOWsufNteT6DwPiqK01tenjr1bPswjkqMDMwKnAmeL5mLHwqZj1vhLnzLvctxzzAuLIsennteHSD1HiEu12u3bZAMrczZLAENnPk2njyuDPy2fhAwnHr2LJyuDPzfHAre1dr0qYteTez0C5AuPLmgLjyK96D0XoqwHXowLkztbPswiYqxD2m3fnotrWC2LxAwrHr21kCuDTsNfjAwD6uejNvZLPttvwqK11swLOBJbdttLsENqWsxKZDLLdtxzvrgvUvKjNovLPswjArgHQvKeYDvremKXlrgDhowLkAvvUC2LhqZnYwuiYveXSD1HqqK12sNL4ytLPtMPwrhC1s2LkngTPy2fhAwnHr2LJyuDPy2fhAwnHr2LKwfnbDZvmAwHhwhbZAvHVy2LhrxrLowLkEuLPAeDzChnPmMLjyJvTsJbjBxrhsxbkv1zcz0XvENq0A2LJyuDPy2fhAwnHr2LJyuDPy2fhAwryu0f3nuXPAeDyChnPmMLjyJvTDdbjBKLPr0vKAtLPsMu0AuLInw1kmeLTDeDjCePxvKjNtfv6DdrRAwnHr2LJyuDPy2fhAwnHr3bJovPetumRy0LHr2LJyuDPy2fhCgm5sur4CJbcmJqRy0LHr2LJyq','qNHUtMXoyLLcmJfwCxDywxP3zKTfDNzAENDX','Be52wNP4Avrcm2iWqxC5vq','CtjimNDlzKG','q3u1mM54udrbDhPqExe','rxrUuxrOtdrds1HzrdfiBxfordj2Dxji','CxDiuxrOugG','qJj6tumYDJb2mKXlrgDh','qMrUuxrLBvPdDNPLC012D3fnrg1ZtLaZBNzqnKvNmfzXwMOYDtnqm0jkyLDdmdLUCuPUuxmZudrbDeW1BtjqBuv4sfL0AfbnB3vizxLADMXftKHvC0C','q2H2u0mYDvr5D0TuqxC1v0r4Cq','EtbmshiYteP5DurqEtjMAenNrfL1zxjQEuTqy3OYEKfXmu9xC3Hmm3DLwgr0tMz1rxuXtxz1AM5eteXtrdi1D3flnvL0zwPVq3vmv3iWowHbD25iCJjmsNL1rfb5mMzOqxDUsg9Oue50zgPqEJi1Dev4sfv3tMjAquTiy3OZENPYz21yC3Hmm252DJzfz0X1CxHevxzlAMPbC1m','AwniBuf3nvj6D3fhre1msgLLCKHdmKHjqJjMwxPJsW','zMLSDgvYrhjVCgrVD25vC2vYCW','BMrLv210AJr1EhyYqZbP','Cgm5wKnNzLvWsLDwrgDXk2njyuDPy2fhAwnHr2LJyuDPzfGWEMq0oemZyKHcswjkqMDMwKnAmeL5D3juqxC0vemZCKHeAhzAAwe','CxDiww1LBK9cDhPtD3rmExj3sg10tK9zreS1y3r0DtbftuHvDeTMBKjkzMvbzZv6Cu1TmxDlCJr5s0G1DhD6quvoBtfZs2P4','ruSWnxD4AJn6s1bIExe','CMDdnuj1AvLcs0HJEJn6mxf4q1H0AhvAq0XmyKrADM8','rxrPnxz4ug50zKXJq1P2DNfmqW','EK05wuj3zJa','nhLVCZr5B3e0Ew9cnhLVCtr5B0C0Ew9wnhLVrdr5B3i0Ew9X','B25bDxrOu3rHDgvdAgfUz2u','ru1dnw0WAM53zNO1rdnMDuv1mu13tLaZruXIy3r4zNvfDtvzDNDym212EJz6mNP0','C3rVCfbYB3bHz2f0Aw9U','qxC1wNP4AJa','q05iuxD1AvPbDuq1BtjqBuv4sfL1zwPUCtbey3OWwgTftKmXD05qmhrx','BMHmvNrKCJvcmemWrxC5wg5Otfz0wNi1qJnLmev3otjUAeXwC2e','CxuXtw1otfP5DKXuq3e','B2DpuKmWovP5DeHKBtnQENfkAtf0tMjSDgz2zg0ZAMLXtur5C2vYtNrMEMnZD2OWCMDemNyWBKf0wKHtBti0v3eWmdv2EfbbBMrinxrns1jcEg0WCJnQtM90BMn0DKH3rxHewhiWCK5ZzvHqEJjMDNf1mu13EeXkEuSXyKqXsg1bD0q2D3vPww1LrgnTm3P6qxDizxrOtg9ctgjLEJn2DKnNrff3EgjRqxz2uhP0thHftKmWCJnmsKrlsgrbz2PSrxHiwxnNufPVzNzJrdbyDKvorfv3EeWZruPIu21kzNDftuHvCJjmtKvmEMn6m2PTCtblmg9Otg9bC1ruD3rYAennsff2s25kEuPIyNOZDMHftum1BtbQBNDMEJvem2PTru1UsxiYwg51zuHKDhDMAevlmw11m1bAEuXIy3roANDbD0HzDdnqwNLmCMnTtMPbqxDewxvLBM5es1bLELPmENj4BtbVAeXVqxnuvxLACMHez0rnBxvQBKjlovb6DgzXCuSXmNnlBM56sZfLEtjPwhfAAM12Efb6Exrizg0ZANPXsMKXDe5IBevlsdv0tvbXrxzmshDNwgTbDKHtC012EunNBtv3s3jpquX6y3r1BvjbD25Pqtnmnevlsfb6z0X5qxDiuxrLBJretgjKDhH6BeeZBta','q3H2uxPOAKXeturzBwviuKnAyNLctNjTEu5QmxrNntfetNO2rwHetxrLzLrZttbxqK5Ynw0YouTZvW','C3vW','CvPUwxzlBK15teXJBtjQAuvkAK1TzwyZB3z1','BMHmvNnKCJvcm2uWrxC5CM5Otfzezhi1qJn1mev3owjUAeXwrxDmvNOYCM1YD0rlDgC5tNPLovz6mNjWCNDes3r3ou56ztfwEJjYCemYCMLYwNzlC2vdmNflsgHUEhjPCLP2t3nLqZf5Cq','AuLIsennteHSD1HiEu12u3bZAq','Eu1yvNLh','CMHisxmZtdrds1HtrdnQCxfAAvH1zw1AqNzYnxroANy','ExDYvef3nfr6AhzzExHYueiYnfrdmNztENDUma','EMDmwNKYovL6yq','BxrisujNnu13DZa','CMDetxD4t1LesMe','CtaXmNzLAvPfs1C','CvPQAxvOug9dCq','BM90zq','q05iuxD1AvPbDuq2DhH5v0v0AML1zwPUCtbezefNuhDfsZfTDtnqnej0Eq','qZnYnujNDq','ChjPC20','Cgm5wKnNzLvWr09hAwnHr2LJyuDPy2fhAwnHr2LJyuDWAg5xExC0r3KYweHdm205Au52wNP4Avr6z0XAEti5wxPJmvb6y2KRCwe','EMDMwKfJnuLbDZvlCu5Yvq','qZnYserODLPStvHqEK12mef3muW','Cgm5wKnNzLvWsLDwrgDXk2njyuDPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDWAhjlCePywKrOALzctumR','qZjUwuiYwfnZz3zqEJjima','qZnYserODLPStMPmre05uNP3Cq','Cu5ivxrnwg9eteq2EJj5v0voDK1TtKWZDgzUnuqYuhrftMu','Awm4rW','qK05mhPX','nhLVqJr5B3u0Ew9dnhLVEtr5B0O','BMHmvKvkCJvcm2uWrxC5Ag5OtfzdwNi1qJnl','ExDYs3j4EKXctNjTqxHUmhP3nuXdrW','nJqZmdmWnhrAD3bhqG','CtaXmM1lAvL2zvG2Exe','CuSWnw1OufG','ExDYvef3nfrdAgPwqNC4vhPNzJvdwtfqqK5ImurH','pc90zd4kicaGicaGicaGicaGphrKpGOGicaGicaGicaGicaGicaGpgrPDIbJBgfZCZ0IywrTAw4Tywn0Aw9UCYi+cIaGicaGicaGicaGicaGicaGicaGpgj1DhrVBIb0ExbLpsjIDxr0B24IignSyxnZpsjIDg4Tywn0Aw9Uigj0BI1PBMzViIbVBMnSAwnRpsjZAg93tgLJzw5ZzurLDgfPBhmOjW','EJj2mhz4BKXds24XqZnYvKj1ueHds3PqqMD2vxL3muW','q2veChiYteP5DurqEtjMAef3BKHYmKXkExveuhKYzMHbD25iCJjms3DMugv0Dw5OCMrQBxmWCK5YwKXqC011v0f1teL0m1aZDgu1yKfOztvbDvbmBwDmANLkAMjem3LAq3uWnw5OyLPbDKrqEMDMAej1ufHYmJfRq3vmuhOZuhfXtur4B3DmBM52EMn0EhzQqxDivw1LBM5VDMO2rgrIAKv0BJj3Dw5UreX2zxP3nxDXtum1D3DmANLmugvbz1b3CxrQmxzLCvL0zvrLEJbdnuf1ufb2DZvAqxvezg0ZANPXsMP1DgDym3DMyMn0EhPRrxHisg93tg9bthPLrfP2Bef1teL3s3jpquX6yM1oDNvXturTDNHqm3vMEMjewNe1qxu1uxzlCJnUDvrqC3DQqxjNsg11m1aWBwvmy0qYENPfsMPTDNDynefmyJzTs0DxqJbmsg1LBK9YwKrqqwHqBxeWnvL1AeTzEKXUu0qYENrXEerLDNC5ANLmCMjem2PSCu1emw4YtgTUzeHKEJj5v3f3BKLZm2jAqu01vhnnDNzctM5iD3vYA0vlovneAfbvqNvqthz3mufdDururgH2DKjoCMvZzZeWExveverNzMHcD25iD2Dms3P2CLnZtNvAqMHYAhz3mufZzM5vq1PXwujms1DTD1HRrxrUuhn0r1jdz201D0TYBNfzvePZD2zOqxDUshiYteP5DurqEtjMAef3BKHYmKXkExveuhKYzMG','ru1etxDlzKPTDgzKBu56ENflmu12Afby','CuPQnNr1zJnctgi1rdfeAhfnre1TDwPUqKS5nKvNsW','rxHewxzLzJnUzNi1BtjqBuv4sfL0z1GZquPIy3jx','ruPUuxvLALG','Cu5emNDlBvL6sZu2q3e','yxzHDgfYx3vYBa','qwDMwKfH','qNHTmhD3mvPUzKHuq3e','Etn2wKrNovr4mM5tExDmvenx','mta1AvrQr01u','CtnQthL4CKX6y2jvENHdr21zmuT5EeThq012txP4ALL5D1DhqMDmsNP3nvP6C2jsENHlr3PnovLPAgPmEK12wunnDLLPyq','z2v0','ru1dnw0WAM53zNO1rdnL','rhrIBufOCMXetxy0BwrmmKrnzq','BdnQtemZCvzesMvwqMDmsNP3nvP6Eg0VqMDmsNP3nvP6DJLsENHloxP4zvu','rxHewxzLzJnUzNjKqwDqD3foqZv3tvG0q0Tinxr2sg1cAerrDK5qt3nx','rgvlnxLh','Cu5ivxrnwg9bs1G2CZi1D0vnrdj6m0WZDgzT','Cu5ivxrnwg95teXJBuPMD0nosgL2mgy0quTynNLX','CMHisxmZtdrds1HtrfP2D3jNrg10DwyZqKTizxOWwhDXs0m','qwD2nq','ExDYvef3nfv5D24WqxC5vxvnDJjcmLrm','rxrQExzlBvLetxy2rwHqCuv0AJjezwPoB3rImerAtgXfEer4','q2DTnxmWzJrfC1rkC3DMAef3BKHYmKXkExveuhKYzMHbD3j5D0TUtNPmDLb6mfHSq2HUuxn4tdnUDNy2rwDmDxjNrdjUzxjkqxnt','CtnimNrLBM90Ahi2rdfiBuv0BLL2s25SEKXUy3LX','rhHIs3L4CKW','BdnQtemZCvzesMvwEtjyuhP3ntb4m25mqZnUueiYnvPWm25mqMD2sKrKmffQttLzEMD2wxb3weHdm3jgqwD2senoCKL6D2yWBe1YtemYBu1cz0XuqxHXow10yvC','ywjJzgvMz2HPAMTSBw5VChfYC3r1DND4ExPbqKneruzhseLks0XntK9quvjtvfvwv1HzwJaXmJm0nty3odKRlZ0','qZjivKqWCKHdmKHjqJjMwxPH','qNDMnxLnDNrbDZvoqMD1','CxDeBxmZue5ethu','rhDiuxzoue9es1bLEMu5Aa','qZj6zufoAKT0mem','CtaXmNr4udrbteW1rdfeDuv0AtvZm1bABxuXy20Yuhu','CMDeAw5H','Cu5ivxrnwg9bs1G2CZi1D0vnrdjcmgLAq01ey20ZENzftwu','Du12txP4ALL6D3fhEu5lnG','q05iuxD1AvPbDuq2DhH5v0v0AML1zwPUCtbenuqYnfDXEeG2DgDmt0jlwgrTmJvXCuPPmxDnowG','Etjysef3mfreAgPqExDxvhLoCLu','rxHewxzLzJnUzNi1BuPmEhj4BvH1tLa0CZfYnxroANy','BMHmvNj0CJvcmemWrxC5zw5OtfzXsNi1qJbX','CvPPwhzlAvPdsZG','q012veiZEKW','ExHIv0jNteP5EhjqqJi0vKfoBLzcrW','Cu5dnxmZtdn2mxjKBtnQAxjNsdj3rW','nhLVDZr5B3q0Ew9XnhLVrZr5B0q0Ew92nhLVCq','CvPUmNnos1LetfbKDLC','DwDythL4BKXPz1HwELLIuejjyK1bEgPArge','qMD2vxOZCK8','Eu05vur4Bq','rhDiuxzlAJnVDvbJBu5QBuf3rfL0zwPorePInKqZzMHXwM4YC05lwurmugrTtK9yCu1eEw5X','qxDYtejoCLbeAeXgEMDMmhLX','Cgm5wKnNzLvWr09hAwnHr2LJyuDPy2fhAwnHogWYCLbesJrRAwnHr2LJyuDPy2e','qxC1sKjODKT6Eg0','CtaXmNr4udrbteW1rdfeDxfnrg12Dwz6BxzIy3rnAvHYz2u','ru1emM1lzJncs1C','Cu1etxDlCK1VDtK2rdj6ENjNrff0AeW0q3e','rhDiuxzoue9es1bLEMu5Aer3sdj1mg1zre1Yy3OWwg1XsZvyCJb6sNLnBMvfzvHTCtbqChjx','CJn2temZCq','nhLVqJr5B0q0Ew9cnhLVvtr5B0i0Ew9XnhLVrZr5B3u0Ew9YnhLVDtr5B0e0Ew9cnhLVCwLVz2rlB2DKtw9Nzfbvz2roC2fABevNzeSRz2rqvwDKtw9NzeTVz2roB2DKtwnKseC2CeHhnNrirZvKseC2AeHhntbhnhLVsdr5B3e0Ew9rnhLVDdr5B3u0Ew9bnhLVEwLVz2rnvwDKtw9Nzffvz2rmB2DKtM9NzeXvz2rnB2DKs2rpr3bNBLz6z3uR','ChjLDMvUDerLzMf1Bhq','AxnFywn0AxzL','BMHmvNrACJvcm3uWrxC5nw5Otfz0zhi1qJbPmev3owrUAeXwq3Dms3DMugvbz1b3CuSXzgTx','qMDmsNP3nvP6CZfqqK16vMX3mvz6z2zt','DgfIlwnVBNrLBNqTCMvKzwvT','CxHivxLlBM9bs0HMq3e','qu1MmNLX','qxDiEhiZAK50zLa1BuPmEKvnDM16DZLQExe','AwnisuvZyNfdttLuqJjUvNPNDtzPyq','C3rHDhvZlM5VDefJDgL2yxrLza','CNHQwuiZAuD6txyWEtjiuejnq0DdmNzAqZjmvKjjyMP1y2jjrxnIt0qYteTVrW','rhDeExrOtdrcs1HqEJfiD0vmteL1zwPQEuSXyKvNuefYz2u','C2vSzwn0','qMrUuxrLBvPdDNPLC012D3fnrg1ZtLaZBNzqnKvNma','nfbrEJC3sxbPzfHArgHQvKjnqYS0Ew92nhLVDtr5B0C0Ew9inhLVEtr5B3fPB2DKsYTNzeTJzeHhnvzirZuZseC1rKHhnJDirZuZseC1EeHhnvPirZv0seC1AeHhnuC2Cgm5wKrOALzctumRCgDQwxbvA2fpswjUqxC1thKZAKH6tNfhnhLVDJr5B3u0Ew9hnhLVsdr5B3K0Ew9XB0LHoemZCLLcmJvoCePLvw1kzvvTDgu4BdnUmennovv6wJq4Eu5PkZrpy0LPztfwEMnIBuiYzKT6EgK2AwrywKrOALzctumRCK1MsunntePPzvHwExDYtenkv1zdm3jzqJi1tNbjyu9TyZryBKK0v2TzsZH5tMKRne9JswLLueHetwvhnhLVDJr5B3u0Ew9hnhLVsdr5B3K0Ew9XB0LHoemZCLLcmJvoCeTqsernzuDTsMu4BdnUmennovv6wJrhA29Nze9Vz2rmB2DKtuvNze5fz2rnk2DKtg9Nze5Vz2rlk2DKtg9NzeTfz2rpk2DKtvvNze1Vz2rly2j1ENCXmunntfvPzvbire1Lr21kzuC0Ew9XnhLVq2LLovL5D25tENnIA3L4EKHPzgLyA3m0','Eti5vxPntfLcCZuWqxHYu3PX','ALLlswLOCLbez1HmChnP','CtjimNuWBvLeDNi1rdbuDuv0AMLZzxjkBxrUyKrADMXXsM5K','CMDiuxvOtdn2mxi1Bu16EKvnBvH0mgyZCMu5y3OWwg9XD0Hy','CxDiww1LBK9cDhPtD3rmA0vnqZb2EfboDgzqnw1kthPfturnDJbUsM51ugnTsMj3ru5dwhn4udndDNO1rwHqAxjNre13Dw56B2zeu3rnANzftem','Cu5ivxrnwg50zNzLDhD6Dhf4rfL6EeW0Dgzp','qZj2u3P3BJa','CvPQAxzlCvH5sMzKDhC1Cev4sfv0AhiZB3vunuqXqW','B2DpuNmWwgP5tvbqEJj6Duf3CNL3s3jpquX6y3r1BvjeD0GYDtbTwur1rfHeDvm0qMrUvw1LBM5VDNy2D0PYAg5LouPeD0XoEKX2uhP3ELfbD0HvBxvUt3LmEMr0tMzOrxHivxDlzJrcsMi1rfP1v0f3rdz2s25QEu5MzuqXsefftNzvDtbMm0rmDMv5wNjOqZnUsxnotdnUzurIEJn6DheYBKLZzwPVqKPUnKvNtgHXm0GYDgvTwKnmyMnTsNzbqxDetxn1AvPesMjqEJbyDNfABLLZzwPoD2vizxOWwhDXs0X4CJbLwurkDJv0DvH2ru1ivhuYte53zMi1Bu56DNfAAJfYmgvzreP2uhPAzMLXsZfnDe5qm211wgn0tMz0qxDeuw51BK56tfbKBu56qujNBKLZzwPUq3vezufNuhDYAerrDtnqnejlownTsKTxCxHdmxrntfG','rhD2tur4zvDYvW','rxHewxmZAJrfs1HJDe5Qvhf4sfvTAfaZBNvyzhjx','q012v0jNzKP6DM4WExHYta','quS1sxnOt1LeDeXuqZnqEevosffYs25oEKS1nKrKyNK','qMDmsNP3nvP6Eg1uqMDmwKrH','BxrHww5kCvDTmg5yD3vQwhzx','rgDMswX4AKX6txzzq01MuW','q3HewxzLzJnUyq','rxHewxzLzJnUzNi2Bu56DKvosffZzxjoreTuu0qXCM1YEgu','q3uXExzotgP5sZe2rwHQA3f3BKLZmgLACMz2y3PAtgLftw5jDhHmm3rMBJzem2z0qxDimNDlzJnUDtvqEJnqAxfnrhLZEeWZqKXQuhOZANDYzgKXDtbPwxPlvfb6mNP2rxrQAxzlBMT0vW','CMHivxrLBMG','Cu5ivxrnwg52zvHMrhr2D3jNDJz2s3iZBNvt','DgfIlxjLzgvLBq','CMDdnxrot1L3zvGXqwH6DhfAAJj5tM4XqKS5nuvOzq','BLPlng9KALnYEgPlrdf5','DLPXm3n1rff3txjOAZjushqWBLz6zKrZrxe','EtjyuenNALz5EgPl','Eti5vxPntfLcCZfkExC1sNP3v1r5tNjv','qxvmsxnLBM50zuHtrdfiAuv1mtj1m2jAqxe','Cgm5wKrOALzctumRCgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2e4rgDXr0mZCJvcz3u5Au1UvKjNovLVswiYExHPt2XZmtb6EeGWBhCXmurNDKTRDfnjCeC','qwDmwKrNovLfCq','rxHisxyWAK50zva1rwHQCxfkAtb2s2zVqKX6y3jx','qNHUtMXnALbctxjTqJjMs0f3nu4','CtjiuxzlCM50zvq2rwDl','ru1emNuZudrds1GXqwDqD3foqZvZs2Lzq0Tx','CtaXmNr4udrbteW1rdfd','qZn2sNKYDLPdvW','EK5QvKj1BLz6z3zXqJjmvurH','CtjimNuWBvLes3PKDhH6BKvosff3EeWZD2v6nNOWweffDgK1D3Hqtw92yJz5Cq','CMDetxn3wdncthPJDe5QBxflnvH2AfbUEKXh','qtj2nxeYouT6Cq','qZnYserODLPStxy0q2DmwxP3Cq','ywrKrxzLBNrmAxn0zw5LCG','Eu1mvxPH','CgvYAw9Ks2v5','rgC5DerOALbctum','EMC5m0jnwfz5D3e','qxHIrNL3CKTdtxzAq1C','q05iuxD1AvPbDuq1BtjqBuv4sfL1zwPUCtbezefNuhDXtKm1C0TPwunlwfzYvW','qMDmsNP3nvP6Eg0','Eu05ma','BMHmvNz0CJvcm2uWrxC5Ag5OtfzesNi1qJn1mev3otnUAeXwrxe','rdjiuhKYr0DcmJvm','rxrPnxmZufG','qK1MmMX4DLP6EgPvExCXta','DNC1uKjnotncrW','EtjysemZBM1bEg4W','mtGZodqWoePwu1zhtG','ruPQmM1OEK50zNi2q3e','CvPUwxnLBM9dtfaYBuTxv3f3zq','CtaXmNmZudnethiXqwDqD3foqZv6zwLzq0Tx','CvPUwxnLBM9ds1G2EKPmAxjNzq','Cu5ivxrnwg9bs1G2CZi1D0vnrdj5mhjoBMe','BuPHv21JmfDTCZbxBxzXv21Kt1DTze9xBwm0v21KyKe','DeK5yMLJsKHhnwrirZzHrZr5B3e0Ew9hnhLVEtr5B0HPB2DKuuvNzeTVz2rsB2DKtg9Nze9Vz2rnB2DKtvvNze1JsW','ogORqK9fkZrkwwe4qZnYwuiYnu5WvwDKs29Nze5Vz2rpvwDKtw9Nzfffz2rnB2DKtcTNzeXVz2rlrwDKtwnHtwLLovD1mNzkB0PxvKmZCLLcmJvoCePysunknxfeD1HAENvUu0f3DLvey2rirZvKseC2qKHhnJnirZzWseC2zeHhnxHirZvkseC1uKHhnuPirZvHrZr5B0G0Ew9fnhLVDtr5B1e0Ew95nhLVCtr5B0e0Ew9knhLVrZr5B3LPzfHArgHQvKjnqYT0m2j0ENDTr3r3ouTWyZLArgHQvKjnqYTSrwDKtw9NzeXzzeHhnxbirZvHr3r3zJbdtuW0Bdbewuf3mwjXwwrirZzkseC1DeHhnvzirZuZseC1EeHhnvjirZvkseC1rKHhnuDhnhLVCtr5B0e0Ew9ZnhLVrdr5B0C0Ew95nhLVEdr5B0i0Ew91nhLVCJr5B3K0Ew94BeLKseC2AeHhnLPirZuZseC2zeHhnuDhnhLVrtr5B3e0Ew9hnhLVCtr5B0i0Ew91nhLVstr5B0C0Ew91nhLVCJr5B3K0Ew94Aw9NzeWRz2rlB2DKtsTNzeTVz2rrB2DKtw9Nze9fz2rlB2DKt3nKseC1AeHhnwrirZvAseC1sKHhnMvhnhLVrZr5B3K0Ew9inhLVEJr5B3LPB2DKtsTNze1Vz2roB2DKtw9Nze0Rz2rlB2DKtvvNze8Rz2rpB2DKtw9NzeTJzq','ru1etxDlzKPUDuXIrfP2Ben1nvL2Cq','Cu5ivxrnwg5UDNOYrwC1BxeWnvq','CtjiuxvOs1L0zNy2D3r2BNeWmtj0yq','EK1yvKiZAq','BMHmvNnKCJvcm2uWrxC5yM5OtfzdDhi1qJbPmev3otu','zxjYB3i','Etn2wKrNovq','CMDdnxOWzJrZzvG2Exe','B3nFBMfTzq','qu5UvKjh','q01emNuZudrds1HqEJnqAxf4rhL0AfblDdbd','B2DpuNflvgP5DeHKBtnQENfkAtf0tMj2EJjYCeiYreT0s3zoEMvuDNOYCM9YD0rlDdjUs3nLqZjZs0HOBNHYAxjADJrZzumXC0TiAg5mEMLYwNzRC2vdmxDlsgHUDg5PCLP2zhjACJvcmguWrxC5nw5Otfz1Dhi1qJn1mev3owrUAeXwrfPYnuiZsZbfDZLyq2zqEhzlBvPdteXJBuP2B0nLuhLZDw5RBMziu3n3CMLYwNPRC2vdmurLsgHUDNPPCLP1wNnLqZfbzuHOBK1YAxjAENDZzumXEMviAg52ugLYwNzxC2vdmxnlsgHUDw5OBMHmvNvKCJvcm3KWrxC5mw5OtfzXwNi1qJbiuhPMsgLbD0rPD3Hqm0v0tffTs0DxCMDisxDnowPVzNO2EJbyquv0Atv3EfbkBNu1nND0thndEhy2D3CXBefmrgzfzuDAquXmsw1OtdrbsZu2rwHLnufkztvZDwPoEKX2yND1BMHXwM5zBNvQtKr0tffTttv3Cu1dnxD3owPcs0Hvrdjlv0vlmvrUmhjorePYzxLAzMXftKrvDKTUBNPkyMjewKX2qJa1mNz4ue5eteXJEJbyDKvoCNr0tMjSq0XIzg1nnxDXmdfyCLPYnuiWrZbfDZKXBMHmvNjACJvcm3KWrxC5mw5OtfzYwNi1qJndmev3otfdz201C2HIAM5Ksdv0tuTsqNvlmhjACJvcm20WrxC5wg5Otfz2Dhi1qJbhmev3otfUAeXwCvPYnuiZsZbfDZK0qxDUChv4EK50zvbIBu55v0eWthbYmK9xquPMzKmYzNDbD3PjBxvUBKjlotvfzZvTquXms3nLqZf6zuHOBK1YAxjAEtnZzumYC0TiAg51rhzdz0rrD3HIA0j2DLbcmKrlCZi5tNPLu1j6mNjUAZjes3r3ou56ztvwEJjYBKiYreT0mhzoEMu5DNOYCNbcmKrlCZi5tNPMzNz6mNjUqJjes3mYBKTZzumYEMviAg53CMLYwNz3C2vdmunLsgHUEhjPCLP2qxnLqZfZs0HOBNz6AxjADLHYwNi1qJfTmev3owTUAeXwrwrYnuiWodbfDZK1qxC5tNPLu1j6mNjSqJjes3mXDK56zvHwEJjYC3z3reT0C1roEMvuvNOYCNbcmKrlDgC5tNPLvgz6mNjSqJjes3rMteTZzumXqMviAg53CMLYwNzxC2vdmxPLsgHUsKrPCLP2v3nLqZf6zuHOBK1iAxjADKHYwNi1qJnXmev3ovHbDZLoEMvuDNOYCMXcmKrlDdb2tNPLvfz6mNjXDNDes3rNou56zvrMEJjYBKiYreT0m25lC2vdmxPLsgHUtKHPCLP6u3nLqZfZs0HOBNHiAxjADKTZzumYDuTiAg51ugLYwNzlC2vdmNnlsgHUDurP','rxHewxzLzJnUzNjLrwC1BxeWs1H3tLaZD2vynw0ZzNvYzg5rC2vUt3LlwgrYvW','qJnItejh','EK5QvKj1BK95EgPKqJjYta','qxrUsxD1zJnctgjJDhvUAejLnuL3DwyZqKXIy3r1BNvfDgPnD3Hqs3vMDMv6mer1rxrQAxvLAK5dDtG','Cgm5mhPKngTPy2fhAwnHr2LJyq','rxrPnxz4ug50zKXJq1PLv3f4sfL1m1by','BKPlwM50yLfdsZvPC3zH','CtaXmNDLCJn0zKW2rdnL','CtaXmNmZudnethjtrwDQENfkAvH2tvGZruX6zhr0yq','qNDMnhnNDLb6mKGW','B2DpuKmWovP5DeHKBtnQENfkAtf0tMj2EJjYBKiYreT0ttLoEMu5zNOYCNb2D0rlCZi5tNPLmxz6mNjSqJjes3v2DK56ztfwEJjYBKiYreT0m25lC2vdmxDlsgHUD3jPCLP2t3nLqZfZs0HOBKK5AxjADJbZzumXqwviAg51qZjdz201D0TYt0fmEMn0Dw1sq2DeuxD4yMT6DNzqqJjes3v1DK56zvrwEJjYBMSYreT0s3zoEMu5DNOYCM1YD0rlDhC5tNPLovz6mNjTAZjes3rNou56zvH6EuTeu3r2yMLXmdfiCLPYnuiWuZbfDZLyBMHmvKv0CJvcmguWrxC5nuf3ou56ztLMEJjYBeiYreT0DZLoEMu5DNOYCM5cmKrlC1LutNPLvfz6mNjVEtjMCer3sdzdD0XwEJjYBeiYreT0tw5jEtnmnejlwfb6EfbXCuSXwhvNwgT3zuXKC0PYEKjLteTZzumXqMviAg53CMLYwNKZC2vdmKfLsgHUEhjPCLP2qxnLqZfZs0HOBNvUAev3BJjZzw5pEuTunuvOAMLbtM00DNvQm3rMDJzemJv6rxHenM1Nv1LTDNO2qwC1Aef3ou56ztLMEJjYBeiYreT1zxzoEMvuvNOYCNf2D0rlCZi5tNPLmxz6mNjSAZjes3rNBtbVAeXVqxnuvhD0CMHUAeXwDwrYnuiZztbfDZLyBMHmvKnACJvcm3eWrxC5mw5Otfzfz0XwEJjYB0iYreTZmJLoEMu5zNOYCNbcmKrlDeT2tNPLmxz6mNjUEtjQAejLmxfZzw5UExvdmev3owXUAeXwq3rYnuiZsZbfDZLIBMHmvKv3tfz6mNjUAZjes3rlDK56zvnsEJjYBuiYreTZmhzoEMuXvNOYCNbdmNjPCLP6t3nLqZf6zuHOBK5iAxjADKTZzumYCuTiAg53CMLYwNzZC2vdmunLsgHUEhjPCLP6A3nLqZfYmxzxEJjqEKnLufH2D0XwEJjYCNj3reTZmJLoEMu5vNOYCM1RmKrlDgC5tNPLwhP5ttvIrfP2Buv0BLfZAfbVq3vev0fNnfDXmda1DNHqqw53rdvemLb6CxHevhiYmvPUzKXuq1PYEuj4CNH2s21Aq0Xmy21kDM9dzuXlC2vdmw4WsgHUtxjPCLP1wNnLqZjezuHOBNvqAxjADNnZzumXC0TiAg51BMHbmNzXC2vYBNP1rfrZtxz1BMHmvKv0CJvcm0Hsq1PX','rxHewxzLzJnUzNjJrdn6DNjOBvH1zxjoreXX','qNHUtMXnnvz0z0XkENC1wNP4Bq','qNvqsg53ovPTzKHuC3rIquj4ELH3DZfbDfPMvKrLofHcm20WDJiXs3Llzq','rgDisejnu0DfDZKX','q2Divw1ouhP5sM5IrdnPv3f3CvDZDZeWCJbmuhOWsg1XEerLDdbYs21LtfrezurQqxDinNvOudrYz25JBtbdnuf1ueHYmJfkExzmvxKYzNPctw5qCJnqBNrMBMn6zgjQCuSWnxz4ufPbDurKBtnQENfkANv0AgjAquTqzuvNuhPftKmXBwHLww92BMnTmKXQqxDivw1LBM5VDMO2q1PLwNf4rfLTzwzlBwvmvhD3tgHXwM5zD3vPwxzLwfnemuHXCuSXmNnotdr5DeXqDe1qD3jOqZfZmKXQEuXqzufNuhDXDgOXDMvQtNrMDJzemwj3CxHdmg93tg9bthPLrfP2Bef1tZbVAeTzDgzmnw1msg1bD0rvBMHIwKf2sfrZD0XOrxrUBg93tgT6DKXqC3DQEKnOBLb3zZfkqxnuv3LAtgTXEeHrC0TQtKrZvfD6muHXCuSXmxiWDKT6DeXqC012EKf1teLUDZeWBwvmverOtgPbD0HOD3HIwKf2sfrZD0XOCNHYug93tgT6DKXqC0PXnejKANL1zwPUrhnuv3OXshfXsZeXCJb2s3P0tfbZtxz6qxvmsw53mtbTzuXwEtjmAhj3CLbVD0XRENzmu3nnzNLbDuXjBNCXA21Ltfz5mKTsq2DTnxuWzJnUDvHxC0XeD3fABJz0tMjO','vZrWzLvTB2rxuwXKr1nRsvC0CgzvBw9Kv1fSzeDtA0XxnhbMvw1VzfDrBgrhu2TjvZrWzLvTB2rxuwXKr1nRuLC0CgzvBw9Kv1fSzeDtA0LxnhbMvw1VzfDrBgrhk2THu21VzfHcsMrhogTjvZrWy09dB2ryqKPKrZHRsvC0Cgnuu29KwejkzeC4A0LxnhbJufnVzfHcsMrhogTjvZrWy1rtB2ryqKPKrZHRsvC0Cgzlog9KwejkzeC4A0LxnhbJvLC','C29Tzq','EMC5m0jnwfz5D3fuqMDmvur4r1r5tNjvBhCXvNPNzLm','qwDMvxPNweX1AhztqZj2yNn2BJf5ttfqrge','rxrQExzlBvLetxzJBtbYDNfnqZvZAfbmBxz6nNOYENq','qK52vhP4ALb5vW','qxC1tujx','qJnIshKYtdbfCq','rxrUuxrOtdrds1G2EKPmAxjNzq','qNHYsg1oBJfcsMiWBtbitq','CMDdnxrot1L3zvC','AwDQnwLKBuD6z2y1q1K0','q01emNuZudrds1HqqwDQENfkAvH2tKTzB3vunKmYzq','CuPUsxrLAMXdthPLBuP2DhfkAK1Zm3iZB3vunuqXqW','EtnYwujLveXfCq','BMHmvKnACJvcmgKWrxC5wg5Otfzezhi1qJbLmev3owvUAeXwq0C','qZjyuhKYDq','qZnYserODLO','ru1eBxDos1LVDKW2Exe','CMvWBgfJzq','nhLVstr5B3u0Ew9inhLVsq','EMDmmG','CuPUsxDoudncCq','EtjyuhKYuW','CvPUwxD1zJnUDtvIrdnpmq','rgDMswX3CLzemJvtqJjMs0nx','rgDisejnvfO','EtnQthL4CKX6zJLirge','rxHewxzLzJnUzNjLELPlv0v4rhH2AeTzB3rMy3rozq','ru1emNuZudrds1C','EtbmshiYteP5DurqEtjMAef3BKHYmKXlD2zIy0qWBMHXwM5rC05IwKfX','CNHQwuiZAuDdtxzAENHYmef3nu5PzuH4C3vXnG','rhHUtenmovb6yq','Aw9NzfjVz2rmvW','BuKXs0f3rfbeyq','CMDetxn3wdndthPLBuP2DhfkAK1Zmg54','BMHmvKn0CJvcmerqqJjes3r3ou56zMP2EJjYChj3reT0ttLoEMvyvNOYCMXYD0rlCZjL','qNC5vurNsfnfCq','q05iuxD1AvPbDuq2DhH5v0v0AML1zwPUCtbenuqXshrbD0r5DwHlwurmDMrTtNPbqJbd','qNDMmhKYsgjcz1C','CMDeExnLCJnUDvbIEJn6EG','CuS1mNuWAKG','qtnUshz1BK9btgi1Bu51','CuSXtw1nwdn3zNO2BuPlwhjNBvHZDxjoBMe','CtaXmNDoudrdtNPKBu56EKmYsgv1Afbi','CxHewxrLAM9dtgjLEJbyBxeXqW','ExDYvef3nfrczZLoq1KXmhL3ALn6CZfjqJjYnq','BMHmvNrACJvcm3uWrxC5CM5Otfzezhi1qJbXmev3ownUAeXwq3e','otm1mZC1s1jQuLfe','ru1emM1lzJncs1HtrwC1DhfkBLH2zwOZB3vunuqXqW','Eu1MwNP3ELbctxe','Be5UuhPNDKL5EgLuqND2vurZyvvcD3zvrhmXuerNDLq','q2DTnw1OueTUz1rqEtjMAef3BKHYmKXkExveuhKYzMHdz0HzCZjmt0jkyMzemuHTq2HUuxr1AvLUDgjtrwvYBxf4rgv0mhjlDdbevxnnzNHcmuXqA1C','q2DTnw1OueTUz1rqEtjMAef3BKHYmKXkExe','EtjisenlzJa','qMDMmujnBK96EgK','y2XHC3nmAxn0','ExDytenoCvr5twzvqK12wwLH','q2HQvKj3ouPcmNjmq1C','rhHUtennnuHcD3u','qMu1wxD1zJn6tg5trdi1AxeWmvG','Eti5wKrH','Cu5ivxrnwg5btgjJDhHQmhjOrfvZtLa0qKXp','Cti5mujNCuDcttKWAwDUt3P3BLjPz3Pwq0LImunNCKHez3zAAwH6uhLZyMHbEhjPrhDPnG','ChvZAa','DwH2u0mYDMrcz0XmqK5X','rxHisxyWAK90AgzKDhvyA3f4qZf0tNjVreXYnxr4ENPXmum','qxDiEhiZDM5esZe2rwDqEKvorfHYm0XVC1P6uhLX','AwnisuvZyq','qNDUrKr4BKXdttviqND1','q2DewxvLCMP5s1bJEJj6qxeXt1DZDw5preXUzg1oDNvfEerSDMvQnejlnvnemK9yrxuXuxuZufPbC1m','Cu5etw54tg5etNjIrfP2B3fnrde','CtaXmNyWAK56s1a2re00v0v4sfL0yq','EMDmwKnNweHfCq','C2Dms3PNDLu','q2Divw1ouhP5sM5IrdnPv3f3CvDZDZeWCJbmuhOWsg1XEerLDdbYs21LtfrezurQqxDinNvOudrYz25JBtbdnuf1ueHYmJfkExzmvxKYzNPctw5qCJnqBNrMBMn6zgjQCuSWnxz4ufPbDurKBtnQENfkANv0AgjAquTqzuvNuhPftKmXBwHLww92BMnTmKXQqxDivw1LBM5VDMO2q1PLwNf4rfLTzwzlBwvmvhD3tgHXwM5zD3vPwxzLwfnemuHXCuSXmNnotdr5DeXqDe1qD3jOqZfZmKXQEuXqzufNuhDXDgOXDMvQtNrMDJzemwj3CxHdmg93tg9bthPLrfP2Bef1tZbVAeTzDgzmnw1msg1bD0rvBMHIwKf2sfrZD0XOrxrUBg93tgT6DKXqC3DQEKnOBLb3zZfkqxnuv3LAtgTXEeHrC0TQtKrZvfD6muHXCuSXmxiWDKT6DeXqC011wef1teLUDZeWBwvmvKmYtgHYD3jqB3DmA3mWtfbbzvr6q2HUuhDNnvPbC1rxEvPmDhf4qZf0AgjRD2zUyKrADM1bD0HOD2HIwKf0DLbZD2KXqNHXv3n3ovPbDurMEMDlnuf1ueXTD0XQEuP2vhnkyMPcEhiXC3HIA3yXEMn6mfH2ru5Xmg9Nv1PcsMO2D0PX','ogORqK9VkZrkwwe4qZnYwuiYnu5WvwDKtLvNze9Vz2rorwDKs0vNze1vz2rmB2DKtsTNze1Vz2rpC2rirZvwseC1m0HhnwXirZv4seC1zeHhnMrirZv0seC1AeHhnwfhA2zYwuiZDKLcz3zAqwC5vKrNtfv6wuS2Cgm5wKrOALzctumRCgDQwxbkzvvPB2DKsYTNzeTVz2rpB2DKuM9Nze0Rz2rpk2DKtM9NzeSRz2rnB2DKtfLKseC2zeHhntnirZvtrZr5B3m0Ew9XnhLVtdr5B3y0Ew94AwrywKrOALzctumRC01MmNLZyvLTDfDwqZnYwuiYnu5WswrirZvWseC1zeHhnKzirZv0seC1wKHhnxrirZvOseC2CeHhnvjirZvhvxbNALLWsMLvAw9NzffVz2rmB2DKs29Nze0Rz2rorwDKuM9Nze0Rz2rmB2DKtfLIz3L3ALLbD21hDgC5shPNDLLSrwDKtw9Nze9ZzeHhnxHirZv0seC2zeHhnMHirZvkseC1yuDRB2DKtYTNze5Vz2rlk2DKs2nKseC1sKHhnKzirZuZseC2zuDTyZryBKK0v2LVz2rlB2DKtMnKseC1zeHhnJDirZvKseC1uKHhnuDqBePysunknfPSswrirZvgseC2BuC0Ew9inhLVvtr5B3y0Ew9XAw9Nze0Rz2rorwDKsYTNzeXVz2rlrwDKtw9NzffjzeHhnwXirZvKseC2EeHhnxHirZvdr3LJnvrbDZvmEtnQshPoCvzcDZLlqZjHvdr5B080Ew95BgnKseC1CeHhnMrirZuZseC1DeHhnwHirZvkseC1q0C0Ew9XnhLVqJr5B0q0Ew95nhLVttr5B3u0Ew94AwnkseC1vKHhnwrirZvPnMLLovDez0XNqxC1tgLJoeDZEgPqq1LlvxbNALLWsNfvAw9NzeWRz2rpwwrirZvwseC1zeHhnuPirZvAseC2t0C0Ew9mnhLVrZr5B3e0Ew9pnhLVCtr5B3y0Ew9iBgnKseC1vKHhntnirZvSseC1EeHhnLPirZv0seC2zeHhnxrirZvdr3jNtfP5mJLzEMnIDuf3BLj6EhfunhLVtZr5B3LPB2DKsYTNzeTJzeHhnwXirZvKseC1vKHhntnirZvSseC1EeHhnuPirZvSseC1qKHhnwrirZv4seC1wKHhnxrirZvdr3LNweHez3zArgm1u0iYreDSrW','BMHmvKn0CJvcm3eWrxC5y25OtfzfDhi1qJbTmev3otvUAeXwC2rYnuiWsZbfDZLOBMHmvKn0CJvcmeSWrxC5zw5OtfzYwNi1qJnl','y0LHr2LJyuDPy2fhAwnHr2LKwdb6y2jArgHmu3P0meLemKHqrgD1vemZyKH5mNu2AwC1vKqZAKHdzfnhEti5u0iZAtzPAhPiq0LhvgX4CKXfAhfuqNH2mhP3CvbVwwKR','rdjMwujh','ENHiv0f4AKXdmtLirge','rxrQAxnLBMXcthO2EJn6sxjNzq','q012mKiYveX6yq','CvPQvxD1AvL3zM4YELPmtxfnrdj2AfaZBNrH','CxHdmxDoudrbsMe','q2DTnw1OueTUz1rqEtjMAef3BKHYmKXkExveuhKYzMHdz0HzCZnIAa','CxrQmM54ue5VDg5JCLC','DZfImujOBKXPzwzQAwzQthPnDLLdtwztAwvYthLoDK54C2jLrhDMu2X3zLn6mJLzqxHYt0jZyLr5EhjkqwD2s2LOAKX6txzzq012ww9h','q012v0jNzKP6Cq','EK05sKr4Bq','w1b1BhnLiefjifjLzMvYCMfSierLyNvNxsbqCM9MAwXLigXVB2T1Ccb3yxjUAw5NoG','EK12serNseXdrW','q2DiwxD4yMT3zgi2EtjQA3fkANL3s25oEKX2v0mYs1HbDuXjD0TYt3rMBJzezgjQCMDemM5LCKPTDuHJEJbyB3fluhbYm0TzreX2zxOZENPcmuXjC0TPwxDMEMrZsZLOCMuXtxD3vePTzNjLEJn5mhjNBvH2zxi0q0TynNKWuZnbD0HjC2HqtKnmyMn0Dw0YqxDYug1LBK9YwKrqC0P2vNfmteL2mg5UB3zYy21nnxDftuqYD01mtKvmEMvewNzSq2DTnw1OueTUzeHtBtnQEKnLqW','Cu5ivxrnwg9bs1HLDhrmC0voELvTEeTzqKTyzg0Yma','Cu5ivxrnwg9bs1G2CZi1D0vnrdjbs2PVruTiy3OWwgW','q2DTnxDlCK9bthPJDhvTuKf3ou56ztf2EJjYBKiYreT1DNzoEMvyvNOYCM9cmKrlDgz2tNPLmvz6mNjSqJjes3rMDK56zvHlDdbev3OYnxDftuqXA1C','nhLVDJr5B3u0Ew9hAw9Nze0Rz2rorwDKtw9NzfeRz2rmB2DKs0vNze5Vz2rlyq','ogORDuTjytHdm3jzqJi1tNblshHZDxfhAKLIzxP4ELb5mNzAB0PxvKmZCLLcmJvoCePysunknxPcm3zzAwDyuhKYDLvdmNvhExH2mejzmuLbDZvlq1LImejzyJvcm3zzAwzIzgLNseHdtxiZExHQtgLODLDcmJrhEK1mwumZCuDcz2yXqK1Ut2XjyMP6swi1qJn1r0r4yK5dtwzlENnInuiZDLLPzMjKBgnIwxP4zJf6Eg4WAwDLr3nMrgPYy2jzENHUterJyJjbD2vhCMDMwKfNALz5EgPlAwC5wwLLCLbdmM5wq01Xr0mZDLDdzZLzrgm0','rxrPnxz4ug50zKXJq1P1muvosfq','quTmvhyYmufZwKm','Cu5ivxrnwg5cthPKEJbyBuvnzq','4yoG4yoD4yoB4you4yoA4yoyiogdPUgdMogdMUgdKogdMEgdMogdLW','Cu1etxDlCK1VDMjKExe','EKPLwq','Aw5Uzxjive1m','Bxrlmw5lseT1m2PXDhe','mte1odG1ntC3mtaZmtG2nZqZmG','qND2wKmYzK56Cq','ruPQmM1OAJn3zvHJrdn6DNjNDLfUEg4Zq3e','y0LHr2LJyuDPy2fhAwnHr2LKweTbEhLhEtjysemZBtLPtvHqEvKXuNP4s1rbDZvnqLLPk2njyuDPy2fhAwnHr2LJyuDPy2fhAwnHoefKCsS','q3H2uxPOAKXeturzBwviuumWvhvcEhiXBNHImxPnELPeDgzzre56BxjOtdnesZL4qNHYuhDnnuTeDgPvD0Tdmq','Aw5KzxHpzG','CuPUsxrLAMXds1HLDhvyA0voELv1mgLAq001y21oAMLXtwu','pc90zd4kicaGicaGicaGicaGphrKihn0EwXLpsjMB250lxDLAwDODdOGnJaWoYi+','rgC5tNOYweW','ru5iuxD1AvPbCq','ExDYvef3nfr5m2PmExHYtgX3ELzdtta','ruSXmM1Os1LZz2O2ELPMCxflweL3DwLzBxz6nw1ktgXftKHu','quSXzw1NoxG','Eti5vurNDJrezZfmqK51','CxHivuiZtdfUyq','rhuXmNr4udrbteW1rdfeAen1mdv2Dxi0qNvenNr0thPbD0rTDNvYBNrKyMjewNzV','rxHewxzLzJnUzNjKBu56qxfAAM12s2PVqNzYnw1ks1HXsZvy','y2HHCKf0','q2DivxyZtdnUzurKBtnPmxfnrdfVD0XUq0XIzg0YANrfEeHSBKTMm252BMjewNzTqMHeuxuWAvLctgPwBtbYCuvnsfL0mJLRC2zezNPMCNbftKrTDeTMt0n0ELzbz2KWqLPQuxzlBM5ds1HKC3rMEKv4rfL1zxi0qNr6vurNzM1cwMPrC2HlwxzLnwr0DeTyCuSXwg5nteffs0XvD01lmej3CNv2AeW0quS1yKrACNvXmdfTDeTMt0n0ELv0twKWqJfmugSZyKPVDLbKEJj6DKnLqW','qxC1v0r4Cq','CuSXtw1nwdretfa2rwDmDxeYsff2tLbUDgzUnKnX','q012txP4ALL5D1DuEti5s3PZmvbctMiXrge','zgfZAc5IAw5KqNrU','qxrUwxnOtgPTyq','BMHmvNjACJvcm3uWrxC5Bg5OtfzeDhi1qJbdmev3ovHUAeXwCxDmvNOYCMXYD0rlDeT2tNPLnvz6mNjWAZjes3qWDK56ztfkExu5uNDnmwHUAeXwrgrYnuiWmdbfDZKXqtnL','EK5QvKjX','q2Divw1ouhP5sMPIrdn5wKn1mdvUAgjAqxzeuhPNzMHcDvbyCJiXA0n1tfb6m1bXCu1eEg93tg5UDNPJDhH2AKf3sfvTzw5UB3zQnKrKyMPfDg4YD3vUBKrmDMv6DZv3Cu1dnxD3tgP5tfbLqwDqD3f0AJf2zxfzDgvuzxOWqZvbDvbqDNC1wKf1rgrTm2P6CuPQDxrNwdn3zMjJDhH6A0v4seHVD0XVquX6zurADMXbDuXjD0TYt0fmEMjTtNz1Cu1eBxz4udn1zNPIrfPXnuf1nvf2s3iZBNvuuhnkCtrXturTDNHqwNLkCLrezgjQqNHYuhn3te9ZmuHxqZjlwef1teLUzZfRBwvmverNtgPbD0HSD3HIwKf2sfzdmKTsq2DTnxuWzJnUDvHxC0XiDhf4qZf0z0XpCJfiv0mYs1HbDuXjBNCXmg1Ltfrez0XQqxDiAhD4yLPbDKHwqZjmAhj4CLbVD0XRENzmuhnkCtrczgP5DwvQBKrZvfD5wKXbCMuXzgSYteG','BMHmvNf0CJvcm2uWrxC5A25OtfzXwNi1qJfHmev3otfUAeXwCLC','ExDYvef3nfrbmNy1BhHQtemZDLneyq','BMHmvKnACJvcm2uWrxC5y25OtfzdDhi1qJbdmev3oxDUAeXwCMrYnuiZAtbfDZLyqxHUs3yWndf6mLHqqJjes3rZve56zvHkEMviAg54sgLYwNzlC2vdmNL1rfDbzZrxCtaWnxz4uefUEgzLrdfiquvoBKL5tM4WDJf6zg0ZANPXsMKXDe5IANyWrdfbAhP0CvPQmNPLAK50zvHJDe5MDw5OtfzfDhi1qJbiueiYreT0s3zoEMzIvNOYCM5cmKrlDxz2tNPLmvz6mNjSqJjes3r2DK56ztHsEJjYCeiYreT0D25lC2vdmxPLsgHUtuHPCLP2A3nLqZjbzuHOBK1yAxjADJbZzumXD0TiAg5nwgLYwNzODNDmvNOYCNbcmKrlDhC5tNPLwhP6zuHOBKTqAxjADJbZzumXDKTiAg51ugLYwNP3C2vdmxvlsgHUDvbPCLP2shjACJvcm3eWrxC5wg5OtfzdwNi1qJn1mev3oxzUAeXwCuPYnuiZztbfDZLOBMHmvNjOyKf3zuXKC0PXnev1nvbRwNjWEtbmueiYreT0DxzoEMuXDNOYCM5cmKrlDgC5tNPLnvz6mNjWDNDes3r3ou56ztLAEMviAg5lnwLYwNzlC2vdmxzlsgHUDg5PCLP6u3nLqZffzuHOBNvqAxjAEKTZzumXCKTiAg54sgLYwNziCJjqANPLsgHUDvbPCLP2qxnLqZjbzuHOBK1yAxjADKTZzumXDuTiAg53CMLYwNPZC2vdmxnlsgHUD2u0rxu1ugTACNb5meXqqJjes3rZve56zvHwEJjYB0iYreT0DZLoEMu4uNOYCNbdmNjPCLP6y3nLqZfZs0HOBNzQAxjADKTZzumXDeTiAg54CMLYwNzpC2vdmxiWrfj6EeX5qNvmshznte1csZLIrdnpv0eZCNLZDw5RBJbmAeeYtgHUAeXwDfPYnuiZDtbfDZLZBMHmvKr0CJvcmg0WrxC5wef3BJvYwNi1qJbLmev3otvUAeXwDxrYnuiZDtbfDZLKBMHmvKrACJvcm0SWrxC5wenNrff3Egj2qtjMChn3ALbesMjTENDmvNOYCMXRmKrlCZjUs3nLqZfUmeHOBK1YAxjADvPZzumXqwviAg52AMLYwNyWC2vdmxzlsgHUEhjPCLP2t3nLqZfZs0HOBK12Ag5OtfzXsNi1qJbXmev3ovPUAeXwrePYnuiZztbfDZLOBMHmvKr0CJvcm2KWrxC5wa','ExDQwG','rxuXtxDoufP5sZfIrfP2Bevosfa','rhHUtenjmvP6D1HmEtnYueiYnfrcDZLlExDx','BMHmvNjACJvcmheWrxC5y25OtfzeDhi1qJbLmev3otvbDZLoEMvuDNOYCMXcmKrlC1LutNPLmfj6mNjVCNDes3rLDK56zMPwEJjYBuiYreT0mJLoEMu1wa','q2veChiYteP5DurqEtjMAef3BKHYmKXkExveuhKYzMHbD25iCJjmsNL1rfb5mMu0CvPUnNrnte9ftgi2rwvYsNfkBMHVD0XRExvevhKYzNPctw5iD3C1sKf1rdz0DvH0Cu1Xv3n1AM5VDNy2qZjmAhfABLL3DwLzDMvyv0mYugTYAeHrD3Hqm250yLHTsKX0CuPUuhn3te9csMjKDhrmC0voBvHTmgyZq0PIyNPKyMPcDuXqCJbTwKnmtgnTthjTqMHeExvLAM5es1a1rwDLnuf1nvf2s3iZBNvuuhn3AKfYz0HrDKTLwur2CMn6mfH2ru5eCxzlzJnUzeXqDe1qD3jOqZfZmKXRBMrizhOYEvDXD25jCZnIwKfnnvrZtxz2qK5UshD1CMTfsZLtrgHqvuj1ueX2DZfbq3veverODNzctNjLC2CXmhL1rfrez2zOqNDUshDNteT6DNjtC051wKjOCMH2DZfbC2zUvunACvLcteTxBxDyA0v0BLbZsNe0qMrUsxnLCK5YwvrxEvPmqxjLmwrRmM5QExveuhKYzMHbD25iCJjmsNL1rfb5mMzOqxDUshiYteP5DurxEvPmANjOsfLTzwLzBMnusNn3zMHbD25iCJjmsNL1rfb5mMzOqxDUshiYteP5DurqEtjMAenNrffTDxjpq0X6y3n3AvDYEeHjDgHIwKfltgvfAgLxCuPPmhn3te5ctg41rwC1qunOBLfZDxjoBMzYnuqYnfDXEem1DNDmtKfkyMnZDgz6ru5inNzlzvLeDuXqELPmDKv0ANL1AeTzDvPmuhrnug1Yzta1Du5qmxDMyJvTtNP2CvPQmxqYuhG','q2HQvKrnteT6EgPgqxDX','Cu1dnxnlzNG','BMHmvNnkCJvcmwuWrxC5zg5OtfzYzhi1qJnPmev3otu','rxHewxzLzJnUzNy1rdi0v3f4qZv2EhzUrePQy21mCM0','CuPUnNrLBM5ftg5JBtbT','nhLVCtr5B0W0Ew9jnhLVEtr5B0O0Ew9hnhLVEwLVz2rnvwDKtw9Nzffvz2rmB2DKtM9NzeXvz2rnB2DKs2nKseC1zeHhnMfhnhLVqJr5B0q0Ew95nhLVuJr5B3u0Ew9YnhLVqZr5B3e','rxHewxzLzJnUzNi2qwH6EKv4sfL1zwLzBMzYnw0ZEKfYz0m1DMe','CvPQtxr4ufG','CgHUv3L3neDdm3i1qMD1owLnCLbdm2jtExHlnKf3nvnbDZvmBhDQu0iYBLjVm0rqEMHYt29ksfDfzfrpENDmtKfOCtzVAgi0BZjQvKnnCKXdstfzExDYuer4BtzUDgfmBZjQshKYve5dttKXqK1XnMLAAvL5wNuXENruvhL4AK5bDZruq01mtKfOCtzUtMi0BZjQvKvJmvPbz2zlqJndnM1JyvDPzhPxrwnHsM1kAKPUDhzmB1LPk3bJovPdz2zvCeC','CxDemNuWAK5Vyq','Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhCgHYs2LNBLn5Eg5AChnQsKnnDKHezZLzBhDUtejNv0LWrW','Dg9mB3DLCKnHC2u','q012mer4ALvWEgPmq2HQtemYDLvez2yWqxC5vq','q2DivxyZtdnUzurKBtnPmxfnrdfVD0XUqKX6y3PAthPcmeXiC00XA0flufveAhPTqJfmsxr1AvLUDgjtrwvYBxf4rgv0mhjlDdbevxnnzNHcmuXqA1PYnuiWCtbfDZLKBMHmvNf0CJvcm2uWrxC5nw5OtfzXwNi1qJa4mev3otvUAeXwq3DmvKeWzNbezKr3CvPUsxnLAMTUyq','qxC5tNPLowz6mNjTD3DL','BMHmvNjACJvcm2zqqJjes3vMDK56ztfwEJjYCeiYreT0m2u','qNHUtMXoCLLbD2ztCxDUsKiZDLvezNjwqJa1terx','y29UDgv4Dg1LBNu','ruPQmM1OzJrdsMjKDhvyANjOsfL0yq','ne9ztZC3sxbPzfHArgHQvKjnqYT1AhztqZj2zejNteXctNfhCZj2nxLntfv6Ag02Cgm5wKrOALzctumRCgDQwxbvA2fpswe4qZnYwuiYnu5WtgiXqMHUtgLMyJj1y2jKqMDmtejoCtzWyZLArgHQvKjnqYTPztfmqK51r0iZyKXctM1hrdjmmefJytHdm3jzqJi1tNblEvHTsLDwqZnYwuiYnu5WswfpDdnImef3mvbftxzlAwv6Cxvzv0DZmKXtqMnIDunnte56mNzzA3m0ohLoAsS0t2njAwrywKrOALzctumRDwH2u0mYDuDXtwzAENnIz0f3nuTVsLDwqZnYwuiYnu5WswjUENC1mwLNovD6DZvAAwHeuerNr0DWAg4Wq005vxPAnxnbD0rprgnIDefNte1ezfDwqZnYwuiYnu5WswfpDhDMmenntdrSmerzqxCXyNfzyKLfEgjiqZnTugXh','rfPMsw11AK9cs1HqEND6uuf3ELf0AfbUreXmzhr3ENrbD3zzDgHmB0rlntrdmMPlq3H6wxPOBKP5s1HKDe1qD3eWuha','ExHIv3P3nuTXmKHqqMDX','qxvpmeeYteP5DurqEtjMAef3BKHYmKXkExveuhKYzMHbD2u','rxrPnxyWDLPTDKW2rdnqBxeWnvfZzwPkBxvmzxPACq','qZjiuhPoCMX6EeS','re12wumYtfzcrW','CxHdmxnlAK9es1q2rwCW','CvPUwxnLCK9etfbtDhr2D3jNDK1Zs3joDgrQnuvOAM1ftwu','CtaXmM1lAvL2zvGWEJbyA0voqZf3tLby','BMHmvNjACJvcm2zqqJjes3v3ou56zvHwEJjYBhz3reT0DZLoEMzLuNOYCM52D0rlDhC5tNPLveG','BMHmvNjACJvcmheWrxC5wM5OtfzYzhi1qJbeueiYreT1thzoEMvuvNOYCNb5Cq','qtj2nxPNotncrW','ruSXBxuWCK5eteXyrdnQDxf4qZfcDwyZqKTyy3rnnw1Xmum','ugXLyxnLigXVzYbPBIbMAxjZDa','rxHewxzLzJnUzNy1BtjqBuv4sfL0AgzVq0X1','qMDmuNPX','q0S1uxrOufG','CtjinNzx','BMHmvNjACJvcm3uWrxC5Bg5OtfzeDhi1qJbdmev3ovHUAeXwCxe','AK1MvenKuW','DwH2u0mYDMrcz0XmqK5XvhjnzKLdtuXkBhrLvw1kzvvTDgvvqu1Mwq','CvPUsxnLAMG','Dgv4DenVBNrLBNq','q2DTnxnlAvLds1HxCLC','mJK1odK0og1MDeL5sW','qZj2mhf4CJbdtuXjrhHYta','rxrUmND1BM5ethzLENziAxflmwq','BwvZC2fNzq','q2DTnxqYnuTUz1rqEtjMAef3BKHYmKXkExveuhKYzMHbD25iCJjms3DLugnTtMPTq2vd','CtaXtxz4ue5VDNe','CvPUwxnLCK9etfbtDhHQAxj4sfq','qNHTmhD3mvG','ENHishKZCq','AgLKzgvU','nhLVttr5B3K0Ew9hnhLVsa','ru1etxDlzK5bthO1rwDqBejOseLZAe9zrhe','qNHUtMXnweHdm3j2q2DYserNDKS','rfPMsw11AK9cs1HqEND6uuf3ELf0AfbUreXmzhr3ENrbD3zzDgHmB0rlntrdmMPqre16wun3te9csMi1rwHPwheXuha','B2DpuKiWrfP5DeHKBtnQENfkAtf0tMj2EJjYCgSYreT1zZLoEMvuvNOYCNbYD0rlDe5Us3nLqZfdzuHOBKTQAxjADJbZzumXrgviAg53sgLYwNzOCJjqANPLsgHUDerPCLP6s3nLqZfTmeHOBNz6AxjADvPZzumXDeTiAg50BMLYwNzxC2vdmurLsgHUD0HPCLP2Ag5oyKPVDLbLqwDqD3flmwrRm2joquXmv3z3veH0meXiB2vTwKnmtgnTsNzVq2z2tNPLovz6mNjTqJjes3vNou56zvHwEJjYCeiYreTZmJLoEMuXDNOYCNbRmKrlDdi5tNPLmuP6zuHOBK1iAxjADMTZzumYqwviAg5nwgLYwNyWC2vdmxzlsgHUD2uYq2DTnxDlCK9bthPJDhvTuKf3ou56zMzwEJjYBuiYreT0ttLoEMuXsNPLsgHUDerPCLP2A3nLqZj6zuHOBNDYAxjADLDZzumXCJbdmev3otzUAeXwCMrYnuiZCtbfDZK1qxC5tNPLnvz6mNjSqJjes3vmDK56zvHkEMviAg54yMLYwNyWC2vdmNnlsgHUD0HPCLP1wNnLqZj6zuHOBNHIAxjAEMTZzumXCJf2ueiYreT0mJLoEMu1zNOYCNj2D0rlCZjUs3nLqZf2s0HOBNHYAxjADLnZzumXBtbiAg53sgLYwNzlC2vdmNPLsgHUDurOBMHmvNrACJvcm3uWrxC5nw5Otfz0sNi1qJn5mev3ovHUAeXwCvPYnuiWsfbcmKrlDhnutNPLvfz6mNjWqZfeAenNsfvTzw5UB3z2nNDkrgLYwNvAC2vdmNPLsgHUDvbPCLP2nhnLqZfezuHOBK12Ag5Otfzezhi1qJnLmev3ovPUAeXwrhrYnuiWAtbfDZLyBMHmvNn0CJvcm3uWrxC5ww5OtfzdDhi1qJniuhKXBKfbDZLoEMu4uNOYCNfcmKrlCZi5tNPLowz6mNjVqZjYAxjADLDZzumYCuTiAg54ztrczg5vBwvUBM92DJz3sNjPq2DeuxD4yNzbmMzWC3DLnhfABLL3DwLzBNu1v3z3reT0thzoEMu5vNOYCM9YD0rlDhnutNPLnwz6mNjUCNDes3rlDK56zvnsEJjYBuiYreTZmhzoEMuXs3rAsfnTmJrxCtaWnxz4uefUzumWrxC5zM5OtfzYwNi1qJbXmev3ownUAeXwCMrYnuiZtZbfDZLLBMHmvKrKCJvcm0SWrxC5Auf3ou56zMzwEJjYBuiYreT0mhzoEMvuvNOYCNfRmKrlDgv2tNPLvfz6mNjVqJjes3mYou56zvr6EMviAg53wgLYwNzlC2vdmunLsgHUD3jPCLP2v3nLqZfYmemWrxC5mg5OtfzeDhi1qJa4mev3ovLUAeXwCMrYnuiWqZbfDZKWBMHmvNrACJvcm0XqEtbYwKvorfL0AfaZBwu1ueiYreT1DxzoEMvuvNOYCM9cmKrlCZi5tNPLovz6mNjTAZjes3rMDK56zvHkBMe','CvPUzxvLCK5csZLzEJj6qxf3ELLZAeXO','Bw9KywWTAxaTy29UDgfPBMvY','q05iuxD1AvPbDuq2DhH5v0v0AML1zwPUCtbenuqZANvXEemWCJbUt0fmEMnewKXRCuPQwxrNte5ds0HLEJj1mG','Etn2wunnDLvezNjiq01eterH','qNC5s3L3v1r5m2PmExHYvKnh','Cgm5wKnNzLvWr09hAwnHr2LJyuDPy2fhAwnHogWYCLbesJrRAwnHr2LJyuDPy2fhAwnHr3bNCLbeswjkqMDMwKnAmeLcz0XkBhDim0f3CvrbDZvnqLLPk2njyuDPy2fhAwnHr2LJyuDPy2fhAwnHoemZyKHcswjkqMDMwKnAmeLcz2zjENDxsxbh','qK1MmMX3zJj5Ehjiq0C','BMHmvNnACJvcm2uWrxC5Aw5OtfzfCq','nhLVqJr5B3e0Ew90nhLVqtr5B0q0Ew9YnhLVCq','q2DTnxDlCK9bthPJDhvTuKeZBKTZzumXDKTiAg50BMLYwNPbC2vdmuvLsgHUEhjPCLP2nhnLqZfZs0HOBK1iAxjADMDZzumXrwviAg51ugLYwNPmDNe','CtaXmNrX','rxrQExnLBvPcttK1rfPMBq','Cu5dnxmZtdn2mxi2rwviEhf4sff0zw54','qMC5sNL4CLbcmJq','nhLVsdr5B3e0Ew90Aw9Nzfffz2rlB2DKtevNzeTVz2rlvwDKsYTNze5X','qZjiuhPoCq','AwrLBNrPDhLFzgf0yq','Be1qsenh','rgzKB2jt','CtjiuxrLCM5ethzLENHQBuvlmu1TDwPpq3e','ihWGrhvYyxrPB246ia','quXmBhn3teG','CtjiuxzlAJnVDvbJBu5QBuvKBLf0AfboreXYzefOANfXsMKXD0C','rgDMswX3BLzctNjmqK5XvhPNotnctvHwExDYwG','BMHmvNnKCJvcmxuWrxC5mM5OtfzdDhi1qJbXmev3ovLUAeXwq3e','AgfUzgXLq3vZDg9Tq2XPzw50rg93BMXVywq','qNHUtMXnveXfDw5zENDMmhP1EKHbD1C','DxnLCL9Uyw1L','Cu5ivxrnwg5cteW2rdj5v3f4qZf0rW','EMH2wxL4CLbcmJvgEMDMnunx','ru5iAxyWzJrbs1G2Exe','rhHUtennnuHcD3u2','q2H2wxKYseHdmNu','quSXEw1NoxG','BMHmvNnkCJvcmfmWrxC5wg5OtfzZzhi1qJbX','4yoy4yoC4yoH4yoI4yoq4yoA4yoq4yoQ','qMDMwKrMou96D2zzrgDQthL4Cq','4yoy4yoI4yov4yoy4yoG4yox4you4yor4yoqlI4U','BMHmvKvkCJvcmheWrxC5y25OtfzYDhi1qJnlmev3owTUAeXwC3rYnuiZDtbfDZLO','qMDmtxP4CLbcD3u','rxHewxzLzJnUzNjJrfPmBev4rhH2zxi0qKTyzhn0zNDXmKHzDwvPww52ufnemuHXCvPUwa','yMLUzc1RzxKTAw5WDxq','rxjYB3iGChjVy2vZC2LUzYbYzwzLCNjHBcbIB251CZO','CtjiuxzlAJnVzNi1BuPmBevoBvH1zwPVEuPMzxLX','Ctjetw51BK56tg0','rgC5BuiZreXds25iqZj1','Bwf5yMvtAw5NBgu','ruSXBxuWCK5eteXyrdnQDxf4qZfcDwLzCMzp','CtaXmNmZudnethi2rdnQz0v4sfG','CuSWnhzLAK50zva2rfP2quvosfr2zxjUDgvyzxzx','qZj2mhn4CKXcCq','CgHYwxbkwdb6y2jkqJjywKnNzLvWC2KWAuLIwKrOtfn6DdbjrgD2nerJmuHcz0XoqKPpr3KYDLvez3zzB1LIsKiYwfzdsK9hre1MwwTJmfrez3y0rgmXver4CKX6y0S3AwHIshPNCLbctum2AwrPmenOrZDPsJDirZvKseC2EeHhnMXirZvkseC1EeHhntnirZvOseC1DeHhnwHirZvhrZr5B3e0Ew9hAw9Nze0Rz2rorwDKtw9NzfeRz2rmB2DKs0vNze5Vz2rlzfDwrgDXk3bJotbdsJq','qMDmsMXnveXfDvHiEu12uW','DwHQvKj3ouPcmNjmAwHQthPNDLrdAhjqqJi0r3PnzLbcz3zlB0C','AxbFywrKCMvZCW','y29Kzq','rgHQuhL3vW','Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhCgHYs2LOBJbfD1HmChnQtuiYntbSEg5qru11nMLKzvLdAeC3AuO0','BxrPnw5Ksfz3zxOXDMzP','EJj2mhrNouP5D1Hm','q05iuxD1AvPbDuq2DhH5v0v0AML1zwPUCtbey3OWwgTftKmXD05qnej0Eq','qMrUuxrLBvPdDNPLC012D0v0ANL1AfaZBNrIng0Ynw1XwM5vDwvPww52ufDTteHXrxrQmNz1BvLes3PIBu55munOrdj3z1HO','Bxrdng5nmuT2tvbbCLC','qxDYtejoCLbez0Xmq1C','Cu5etw5OBK5etgi2BuThvW','ruPQmM1ODvLetfbKBuTyD3flqW','C2XPy2u','BMHmvNrkCJvcm0SWrxC5mg5OtfzesNi1qJnL','q0PImKjX','q05iAw1OudnUDvq2rdnMAev4rfvTzwy0ruTyuhOXshffDgOYDNvTwur1rdz0DeX6qxDiuxrOug5eteXKDhH6EKf3zq','nhLVqtr5B3K0Ew9rnhLVDtr5B0m0Ew93nhLVEtr5B3K0Ew9iAw9NzeTvz2rlB2DKtYTNzfbfz2rnk2DKtg9NzeTfz2rlyq','qu1MmNL0AvG','qxHUrNL3BJbbEhPm','BMHmvNf0CJvcm0SWrxC5CM5OtfzeDhi1qJbTmev3otnUAeXwrxrYnuiZsZbfDZLPqxC5tNPMzLz6mNjTqJjes3vLDK56ztbsEJjYB0iYreTZmMu','rxHinNnLCK56teW0Btn6ENfnzq','quS1tw11AvPdDem','ogORB0DZytHdm3jzqJi1tNblELL6D3vhCMDMnunzyu1PzMjzqJiXvMLLBLz6z3zAB0PxvKmZCLLcmJvoCePysunkn0LhA2LhCgHUmennovv6wJvZEND6tenoAKHcy2j0rxHUmhP3mdzWyZLArgHQvKjnqYTPzxPqqK1Xr0v3otfdswjqqK56uerNDuD5mJLlENnIuejjyJbbz3vhEMDMwKfNALz5EgPlBeLIEefNDLvPz2vhEK5QuhP3nuTPAhzAENHTr0f4CvnPzfHArgHQvKjnqYT5ttKWqwnItNP4CuDRwM1hEu05vur4BuD6z2y1q1PxvKmZCLLcmJvoCeLLohLoAsS0t2njAwrywKrOALzctumRDwHQvKj3oeDXmJLlENHTnNbJovPeAgPwqK1dk2LMAKX6z3zmqNnIsKiYCKXdwwiXqK1YtenjyJbbz3vhAJfQthPNDKXcC0nhrgDMswLNtfvPAeXwrhHPr3PNzLPbz2PwExHQs2Xh','CuSXtxzOufG','qxDUAxn1DLP5tM42rdnqBxeWnvfZzwPkEu1Uy21kDvHXmuXjDhvPwKf1rgjewNvzCxHiwxvLAM5Xmem','Eti5mujoCLLfCq','EtjisenlBLz6z3zIrge','DNzUzq','CMHivxrLBM1VDNy1rfPMBq','rxrUuxrOtdrds1GXqwDqD3foqZv6zwLzq0TywxrnuhDXtNznCZbQm3rMDq','CMDdnuj1AvPYzvHKCZi1AxfAAJe','qZi5vhPX','q012veiZEKXXmKHqqMDX','qNHYwg0YntbcDhzvC05MEeiZCLbTzZvRExrYvKrNmfLctem','Cu1imNz4tdrbCq','4yoG4yoqiogdRUgdKogdOa','Bxrlmg1KyvDdmMzrC2u5Aa','rxrQExvOs1L1vW','rxrPnxz1CK9bthPJqwCW','ru1dnw0WAM53zNO1rdnMDxfore1ZtvGZquPIy3n0zNvXsMPzC2vQsa','BgvUz3rO','BMHmvKnACJvcm2uWrxC5y25OtfzYzhi1qJa0mev3otfUAeXwCvPYnuiZDtbfDZLzBMHmvNnkCJvcmgzqqJjes3r3ou56zMjMEJjYB0iYreTZmM5lC2vdmw4WsgHUtxjPCLP1wNnLqZf2s0HOBNrIAg5OtfzfsNi1qJbXmev3otbUAeXwrxC5ANL0sgrTm2P6CuPPmxroyMG','4yoK4yoq4yoy4yoA4yoy4yoHiogdKUgdKogdK+gdM+gdNEgdRogdLogdOogdKcdHG5pHG5dHG5JHG6ZHG6FHG506ia','ru1emM1Otdn0zM5KDLC','qMHUChv3vgP0mxjsC3u5CKeWs1D1D1rQDdfL','yM9KEq','q0PQBw1OBK9es0XqEND6wemZBKL3EeW0q0TyuhOXshfXtKrTBwDmtM92tfb6m3P6CtaWnxDX','ogORqKTjytHdm3jzqJi1tNblsfzewwiWqLLIsur4s0D5C2jtqxDUtejoBKXWwLDwqZnYwuiYnu5WsLHjq0O0wgXjyMTcmKXvAwC5munjytH5C2jpq012txbZre9eAhjxq1PpvMWYCLbdmM5wq01XvxOYq1zbmgzNq0PQy0nOtdrewunhrgDMwxOYDJbWC0rgEu1ysejnu05PAg4WrxDythbZrePcmLHwq0PpsNL0DKLUz3PkBZnYtevOCvr6z3zkqJnQserNtfzcsLaXqK1Ytennwfbctxu3ALO1zuf4BKPcm2PlAwzUtenoEKXdsLDwExq0vxbNALLWsMLvAwu5v3P3neD5C2frA0XYuhKYveXey09rAwDmvwLOCK96C2foCu52nwLJoeD1AhzzEtjisemYDu5Pz25pExC1vxP3v1vWz2PzCePTvwLMBJfdAgjwq05Xr0qYtfncy2jpENDyv2LOtfzeC2jkqJiXv0jNDJb6C2jxExHmvhP3ntbPz2zvEMnIshKZCLbetwyWENnInuiZDLLPz1rmrxnIuejjyLrbDZuXrgD2wMLX','re1Mu0r3Dq','zgfZAgjVyxjKlxbHz2u','Cu5ivxrnwg9bs1G2CZi1D0vnrdjeAfaZD2uW','q2HQvNPntfn6Eg0','CMDetxn3wdnfs0HKq3e','rxHevw1LzJrfs1C'];a0_0x195f=function(){return _0x46f8d5;};return a0_0x195f();}function showLicenseDetails(_0xd74a9d){const _0x247f3c=a0_0x390237,_0xeb665b=a0_0xe8aa85,_0x55fdd7=a0_0x563c76,_0x154878=adminLicenses[_0x55fdd7(0x1d5)](_0x3b6b80=>_0x3b6b80[_0x55fdd7(0x1aa)]===_0xd74a9d);if(!_0x154878)return;const {product:_0x3024f5,buyer:_0x3e2b01,createdBy:_0x1b65b}=parseLicenseNote(_0x154878[_0x55fdd7(0x20c)]);let _0x558187=t(_0xeb665b(0x3f5));_0x154878[_0x55fdd7(0x136)]?_0x154878[_0x55fdd7(0x36a)]&&new Date(_0x154878[_0xeb665b(0x317)])<new Date()&&(_0x558187=t(_0xeb665b(0x3bd))):_0x558187=t(_0x55fdd7(0x366)),modalKey[_0x55fdd7(0x27c)]=_0x154878[_0x55fdd7(0x1aa)],modalBuyer[_0x55fdd7(0x27c)]=_0x3e2b01,modalCreator&&(modalCreator[_0xeb665b(0x1fc)]=_0x1b65b),modalStatus[_0xeb665b(0x1fc)]=_0x558187,modalCreated[_0xeb665b(0x1fc)]=new Date(_0x154878[_0xeb665b(0x259)])[_0xeb665b(0x138)](getLocale());let _0x5d494c=t(_0x55fdd7(0x384));if(_0x154878[_0x55fdd7(0x36a)]){const _0x89cab=new Date(_0x154878[_0x55fdd7(0x36a)]),_0x11fb82=new Date();if(_0x89cab<_0x11fb82)_0x5d494c=t(_0x55fdd7(0x20d));else{const _0xe60e43=Math[_0x55fdd7(0x21f)](_0x89cab-_0x11fb82),_0x53fa98=Math[_0xeb665b(0x1ce)](_0xe60e43/0x5265c00);_0x5d494c=t(_0x55fdd7(0x1fa),{'n':_0x53fa98});}}modalExpires[_0x55fdd7(0x27c)]=_0x5d494c,modalHwid[_0x55fdd7(0x27c)]=_0x154878[_0xeb665b(0xd7)]||t(_0x55fdd7(0x306)),modalNote[_0xeb665b(0x1fc)]=_0x154878[_0x55fdd7(0x20c)]||'-';const _0x11db05=document[_0x55fdd7(0x38f)](_0x247f3c(0x312)),_0x141cf6=document[_0x55fdd7(0x38f)](_0x55fdd7(0x1ca));_0x11db05&&_0x141cf6&&(isAdmin()?(_0x11db05[_0x55fdd7(0x33b)][_0x55fdd7(0x271)]=_0x55fdd7(0x126),_0x141cf6[_0x55fdd7(0x27c)]=_0x247f3c(0x336),((async()=>{const _0x4ff703=_0x247f3c,_0x1d1404=_0xeb665b,_0x25cf1a=_0x55fdd7;let _0x132e6c=null;try{const _0x54bfb3=await fetch(supabaseUrl+_0x25cf1a(0x2d3)+encodeURIComponent(_0x154878[_0x25cf1a(0x1aa)])+_0x25cf1a(0x3a5),{'headers':{'apikey':supabaseKey,'Authorization':_0x25cf1a(0x2e6)+supabaseKey}});if(_0x54bfb3['ok']){const _0x41269b=await _0x54bfb3[_0x25cf1a(0x371)]();_0x41269b&&_0x41269b[_0x25cf1a(0x246)]>0x0&&_0x41269b[0x0][_0x25cf1a(0x1ae)]&&_0x1d1404(0x32e)!==_0x41269b[0x0][_0x4ff703(0x347)]&&_0x25cf1a(0x195)!==_0x41269b[0x0][_0x1d1404(0x2f4)]&&(_0x132e6c=_0x41269b[0x0][_0x1d1404(0x2f4)]);}}catch(_0x265da2){console[_0x25cf1a(0x1d1)](_0x25cf1a(0x3a4),_0x265da2);}if(!_0x132e6c&&_0x154878[_0x25cf1a(0x26e)]&&_0x4ff703(0x102)!==_0x154878[_0x25cf1a(0x26e)])try{const _0x3b5bb7=await fetch(supabaseUrl+_0x25cf1a(0x35a)+encodeURIComponent(_0x154878[_0x25cf1a(0x26e)])+_0x25cf1a(0x3a5),{'headers':{'apikey':supabaseKey,'Authorization':_0x25cf1a(0x2e6)+supabaseKey}});if(_0x3b5bb7['ok']){const _0x1a9f0c=await _0x3b5bb7[_0x1d1404(0x2f7)]();_0x1a9f0c&&_0x1a9f0c[_0x1d1404(0x205)]>0x0&&_0x1a9f0c[0x0][_0x4ff703(0x347)]&&_0x25cf1a(0x23e)!==_0x1a9f0c[0x0][_0x1d1404(0x2f4)]&&_0x1d1404(0x314)!==_0x1a9f0c[0x0][_0x25cf1a(0x1ae)]&&(_0x132e6c=_0x1a9f0c[0x0][_0x25cf1a(0x1ae)]);}}catch(_0x289140){console[_0x25cf1a(0x1d1)](_0x25cf1a(0x216),_0x289140);}if(!_0x132e6c&&_0x3e2b01){const _0x216feb=allUserProfiles[_0x25cf1a(0x1d5)](_0x29ef07=>_0x29ef07[_0x25cf1a(0x1f1)]===_0x3e2b01);_0x216feb&&_0x216feb[_0x25cf1a(0x38e)]&&(_0x132e6c=_0x216feb[_0x25cf1a(0x38e)]);}_0x141cf6[_0x25cf1a(0x27c)]=_0x132e6c||_0x25cf1a(0x22b);})())):_0x11db05[_0x55fdd7(0x33b)][_0x55fdd7(0x271)]=_0x55fdd7(0x19b)),licenseInfoModal[_0x55fdd7(0x14a)][_0xeb665b(0x284)](_0x55fdd7(0x27d));}function closeLicenseModal(){const _0x353196=a0_0x563c76;licenseInfoModal[_0x353196(0x14a)][_0x353196(0x390)](_0x353196(0x27d));}async function fetchLatestProfile(_0x3610c2){const _0x4bbdd7=a0_0xe8aa85,_0x201dce=a0_0x563c76;try{const {data:_0x15ba1c,error:_0x346ace}=await supabaseClient[_0x201dce(0x203)](_0x201dce(0x26a))[_0x201dce(0x15c)]('*')['eq']('id',_0x3610c2)[_0x4bbdd7(0x356)]();if(_0x346ace)throw _0x346ace;if(_0x15ba1c){console[_0x201dce(0x1d6)](_0x4bbdd7(0x30f),_0x15ba1c);const _0x5bcc92=cleanAvatarUrl(_0x15ba1c[_0x201dce(0x261)]);navAvatar&&(navAvatar[_0x201dce(0x211)]=_0x5bcc92),dashAvatar&&(dashAvatar[_0x201dce(0x211)]=_0x5bcc92);}}catch(_0x34a2fc){console[_0x4bbdd7(0x15c)](_0x201dce(0x200),_0x34a2fc[_0x201dce(0x20e)]);}}async function saveUserProfile(_0x2c9dee){const _0x15929f=a0_0xe8aa85,_0x282428=a0_0x563c76,_0x3ab077=_0x2c9dee[_0x15929f(0x1ea)],_0x568b2a=_0x3ab077[_0x282428(0x158)]||_0x3ab077[_0x282428(0x309)]?.[_0x282428(0x1f1)]||_0x3ab077[_0x282428(0x144)]||_0x3ab077[_0x282428(0x287)],_0x2b2898=cleanAvatarUrl(_0x3ab077[_0x15929f(0xfe)]),_0x3be51c=getDiscordId(_0x2c9dee);if(!_0x568b2a)return;let _0x169946=null;try{const _0x2a9c68=await fetch(_0x282428(0x343),{'cache':_0x282428(0x2e1)});_0x2a9c68['ok']&&(_0x169946=(await _0x2a9c68[_0x282428(0x371)]())['ip']);}catch(_0x486316){console[_0x282428(0x1d1)](_0x282428(0x288),_0x486316);}try{const _0x4a8c05={'id':_0x2c9dee['id'],'discord_id':String(_0x3be51c),'username':_0x568b2a,'avatar_url':_0x2b2898,'updated_at':new Date()[_0x282428(0x277)]()};_0x169946&&(_0x4a8c05[_0x282428(0x38e)]=_0x169946);const {error:_0x3f14cd}=await supabaseClient[_0x15929f(0x2a0)](_0x282428(0x26a))[_0x282428(0x20b)](_0x4a8c05,{'onConflict':'id'});if(_0x3f14cd)throw _0x3f14cd;}catch(_0x513518){console[_0x282428(0x1d1)](_0x15929f(0x2e8),_0x513518[_0x282428(0x20e)]);}}async function fetchProfilesForAdmin(){const _0x2f6051=a0_0xe8aa85,_0x229a96=a0_0x563c76;if(isAdmin())try{const _0x119cd9=await fetch(supabaseUrl+_0x229a96(0x2e3),{'headers':{'apikey':supabaseKey,'Authorization':_0x2f6051(0x14a)+supabaseKey,'Content-Type':_0x229a96(0x16f)}});if(!_0x119cd9['ok'])throw new Error(await _0x119cd9[_0x229a96(0x18d)]());allUserProfiles=await _0x119cd9[_0x229a96(0x371)](),renderDropdownUsers(allUserProfiles);}catch(_0x443cd5){console[_0x229a96(0x12e)](_0x229a96(0x27f),_0x443cd5[_0x229a96(0x20e)]);}}function renderDropdownUsers(_0x226ce8){const _0x1d2c07=a0_0x563c76;adminUserOptionsList&&(adminUserOptionsList[_0x1d2c07(0x229)]='',0x0!==_0x226ce8[_0x1d2c07(0x246)]?_0x226ce8[_0x1d2c07(0x137)](_0x11c849=>{const _0x3f85bf=a0_0x3834,_0x37aa8a=a0_0x20e0,_0x145ea6=_0x1d2c07,_0x38aba7=document[_0x145ea6(0x1b8)](_0x37aa8a(0x18e));_0x38aba7[_0x3f85bf(0x120)]=_0x145ea6(0x3a8);const _0x496b44=cleanAvatarUrl(_0x11c849[_0x145ea6(0x261)]);_0x38aba7[_0x145ea6(0x229)]=_0x145ea6(0x2fc)+_0x496b44+_0x37aa8a(0xfa)+_0x11c849[_0x37aa8a(0x189)]+_0x37aa8a(0x1e4)+_0x11c849[_0x145ea6(0x1f1)]+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20',_0x38aba7[_0x145ea6(0x31a)](_0x145ea6(0x217),_0x34b53d=>{const _0x4da16b=_0x145ea6;_0x34b53d[_0x4da16b(0x1cc)](),selectDropdownUser(_0x11c849[_0x4da16b(0x1f1)]);}),adminUserOptionsList[_0x145ea6(0x350)](_0x38aba7);}):adminUserOptionsList[_0x1d2c07(0x229)]=_0x1d2c07(0x128)+t(_0x1d2c07(0x34d))+_0x1d2c07(0x1b3));}function selectDropdownUser(_0x38c7f8){const _0x5939d5=a0_0x390237,_0x22f21=a0_0xe8aa85,_0x39e310=a0_0x563c76,_0xf9091a=allUserProfiles[_0x39e310(0x1d5)](_0x39c3d0=>_0x39c3d0[_0x39e310(0x1f1)]===_0x38c7f8);if(_0xf9091a){if(adminBuyerInput[_0x39e310(0x25f)]=_0xf9091a[_0x22f21(0x189)],adminUserSelectTrigger){const _0xd04725=cleanAvatarUrl(_0xf9091a[_0x5939d5(0x1a6)]);adminUserSelectTrigger[_0x39e310(0x230)](_0x39e310(0x2d8))[_0x39e310(0x229)]=_0x22f21(0x111)+_0xd04725+_0x39e310(0x17b)+_0xf9091a[_0x39e310(0x1f1)]+_0x22f21(0x1bb);}closeUserSelectionModal();}}function filterDropdownUsers(){const _0x3fd7e6=a0_0xe8aa85,_0x2eaee8=a0_0x563c76,_0x13c684=document[_0x2eaee8(0x38f)](_0x2eaee8(0x193)),_0x37fb2c=_0x13c684?_0x13c684[_0x2eaee8(0x25f)][_0x2eaee8(0x263)]()[_0x3fd7e6(0x280)]():'';renderDropdownUsers(allUserProfiles[_0x2eaee8(0x2e9)](_0x4d9e57=>_0x4d9e57[_0x2eaee8(0x1f1)][_0x2eaee8(0x263)]()[_0x2eaee8(0x35b)](_0x37fb2c)||_0x4d9e57[_0x2eaee8(0x1ed)]&&_0x4d9e57[_0x3fd7e6(0x390)][_0x2eaee8(0x263)]()[_0x2eaee8(0x35b)](_0x37fb2c)));}async function openUserSelectionModal(_0x28c29b){const _0x3fda86=a0_0xe8aa85,_0x350ab4=a0_0x563c76;_0x28c29b&&_0x28c29b[_0x350ab4(0x202)]();const _0x446d34=document[_0x3fda86(0x345)](_0x350ab4(0x139));if(!_0x446d34)return;0x0===allUserProfiles[_0x350ab4(0x246)]&&await fetchProfilesForAdmin(),_0x446d34[_0x350ab4(0x14a)][_0x350ab4(0x235)](_0x350ab4(0x27d)),document[_0x350ab4(0x3b4)][_0x350ab4(0x33b)][_0x350ab4(0x199)]=_0x350ab4(0x27d);const _0x208f84=document[_0x3fda86(0x345)](_0x350ab4(0x193));_0x208f84&&(_0x208f84[_0x3fda86(0x1eb)]='',setTimeout(()=>_0x208f84[_0x350ab4(0x31c)](),0x64)),renderDropdownUsers(allUserProfiles);}function closeUserSelectionModal(){const _0x3a88ab=a0_0x390237,_0x5c32dc=a0_0x563c76,_0x4591a4=document[a0_0xe8aa85(0x345)](_0x5c32dc(0x139));_0x4591a4&&(_0x4591a4[_0x3a88ab(0x281)][_0x5c32dc(0x390)](_0x5c32dc(0x27d)),document[_0x3a88ab(0x374)][_0x5c32dc(0x33b)][_0x5c32dc(0x199)]='');}function onLanguageChanged(){const _0x324489=a0_0x390237,_0x393bda=a0_0xe8aa85,_0x588c3d=a0_0x563c76;currentUser&&(fetchUserLicenses(),isAdmin()&&tabContentAdmin&&!tabContentAdmin[_0x588c3d(0x14a)][_0x588c3d(0x138)](_0x588c3d(0x27d))&&renderAdminLicenses(adminLicenses)),bindSubmitBtn&&!bindSubmitBtn[_0x324489(0x3b5)]&&(bindSubmitBtn[_0x588c3d(0x27c)]=t(_0x588c3d(0x1d3)));try{_0x393bda(0x180)==typeof applyPricingNumbers&&applyPricingNumbers();}catch(_0xa830e2){console[_0x588c3d(0x1d1)](_0x588c3d(0x314),_0xa830e2);}}async function redeemPromoCode(_0x5326dc){const _0x252b60=a0_0x390237,_0x3b6136=a0_0xe8aa85,_0x17be99=a0_0x563c76;if(_0x5326dc&&_0x5326dc[_0x17be99(0x202)]&&_0x5326dc[_0x17be99(0x202)](),!currentUser)return void showBanner(t(_0x17be99(0x2a7))+_0x3b6136(0x332),_0x17be99(0x12e));const _0xae9781=document[_0x17be99(0x38f)](_0x17be99(0x37d)),_0x1d2cb9=document[_0x3b6136(0x345)](_0x17be99(0x171)),_0x4bf5d8=_0xae9781[_0x17be99(0x25f)][_0x17be99(0x119)]()[_0x17be99(0x1d8)]();if(!_0x4bf5d8)return;_0x1d2cb9[_0x17be99(0x296)]=!0x0;const _0xca8cd6=_0x1d2cb9[_0x17be99(0x27c)];_0x1d2cb9[_0x17be99(0x27c)]=t(_0x17be99(0x22c));const _0x5aeab2=currentUser[_0x17be99(0x13b)],_0x1795d9=_0x5aeab2[_0x17be99(0x158)]||_0x5aeab2[_0x17be99(0x309)]?.[_0x17be99(0x1f1)]||_0x5aeab2[_0x17be99(0x144)]||_0x5aeab2[_0x17be99(0x287)],_0x4ed8fd=_0x5aeab2[_0x17be99(0x355)]||currentUser[_0x17be99(0x12c)]&&currentUser[_0x17be99(0x12c)][0x0]?.['id'];try{const {data:_0x39f068,error:_0x1204cd}=await supabaseClient[_0x17be99(0x203)](_0x17be99(0x3bc))[_0x17be99(0x15c)]('*')['eq'](_0x17be99(0x3af),_0x4bf5d8)['eq'](_0x252b60(0x1de),!0x0)[_0x17be99(0x23b)]();if(_0x1204cd)throw _0x1204cd;if(!_0x39f068)return void showBanner(t(_0x17be99(0x375)),_0x17be99(0x12e));const {data:_0x47a61c,error:_0x3d354a}=await supabaseClient[_0x17be99(0x203)](_0x3b6136(0x306))[_0x17be99(0x15c)]('*')['eq'](_0x17be99(0x3af),_0x4bf5d8)['eq'](_0x3b6136(0x31a),currentUser['id'])[_0x17be99(0x23b)]();if(_0x3d354a)throw _0x3d354a;if(_0x47a61c)return void showBanner(t(_0x17be99(0x334)),'error');if(null!==_0x39f068[_0x17be99(0x2ed)]){const {count:_0x97de0d,error:_0x3945ca}=await supabaseClient[_0x3b6136(0x2a0)](_0x3b6136(0x306))[_0x252b60(0x1e9)]('*',{'count':_0x17be99(0x1da),'head':!0x0})['eq'](_0x252b60(0x348),_0x4bf5d8);if(_0x3945ca)throw _0x3945ca;if(_0x97de0d>=_0x39f068[_0x3b6136(0xdd)])return void showBanner(t(_0x17be99(0x352)),_0x17be99(0x12e));}const {data:_0x4b628c,error:_0x4e940f}=await supabaseClient[_0x3b6136(0x2a0)](_0x17be99(0x36b))[_0x17be99(0x15c)]('*')[_0x3b6136(0x269)](_0x17be99(0x20c),_0x17be99(0x23f)+_0x1795d9+'%');if(_0x4e940f)throw _0x4e940f;const _0x4db6b8=_0x4b628c?_0x4b628c[_0x3b6136(0x172)](_0x215cb1=>_0x215cb1[_0x17be99(0x136)]&&(!_0x215cb1[_0x17be99(0x36a)]||new Date(_0x215cb1[_0x17be99(0x36a)])>new Date())):null;if(_0x4db6b8){let _0x43c946=null;if(_0x4db6b8[_0x17be99(0x36a)]){const _0x38a214=new Date(_0x4db6b8[_0x17be99(0x36a)]),_0x494ccd=_0x38a214>new Date()?_0x38a214:new Date();_0x43c946=new Date(_0x494ccd[_0x17be99(0x1bb)]()+0x18*_0x39f068['duration_days']*0x3c*0x3c*0x3e8)[_0x17be99(0x277)]();}const _0x35b4d4=(_0x4db6b8[_0x17be99(0x20c)]||'')+(_0x17be99(0x281)+_0x4bf5d8),{error:_0x1db8b3}=await supabaseClient[_0x3b6136(0x2a0)](_0x17be99(0x36b))[_0x17be99(0x123)]({'expires_at':_0x43c946,'note':_0x35b4d4})['eq']('id',_0x4db6b8['id']);if(_0x1db8b3)throw _0x1db8b3;}else{const _0x2d1849=generateLicenseKey(),_0x5e38bb=new Date(Date[_0x3b6136(0x2d4)]()+0x18*_0x39f068[_0x17be99(0x27a)]*0x3c*0x3c*0x3e8)[_0x17be99(0x277)](),_0x577619=_0x17be99(0x374)+_0x1795d9+_0x17be99(0x3b1)+_0x4ed8fd+_0x17be99(0x1f2)+_0x4bf5d8+')',{error:_0x18147a}=await supabaseClient[_0x17be99(0x203)](_0x17be99(0x36b))[_0x17be99(0x1f5)]({'license_key':_0x2d1849,'expires_at':_0x5e38bb,'is_active':!0x0,'note':_0x577619});if(_0x18147a)throw _0x18147a;}const {error:_0x513cfb}=await supabaseClient[_0x17be99(0x203)](_0x17be99(0x173))[_0x3b6136(0x31f)]({'code':_0x4bf5d8,'user_id':currentUser['id'],'username':_0x1795d9});if(_0x513cfb)throw _0x513cfb;showBanner(t(_0x17be99(0x2dc),{'n':_0x39f068[_0x17be99(0x27a)]}),_0x252b60(0x159)),_0xae9781[_0x17be99(0x25f)]='',fetchUserLicenses();}catch(_0x3f3886){console[_0x17be99(0x12e)](_0x17be99(0x29a),_0x3f3886[_0x17be99(0x20e)]),showBanner(t(_0x17be99(0x33f))+_0x3f3886[_0x17be99(0x20e)],_0x17be99(0x12e));}finally{_0x1d2cb9[_0x17be99(0x296)]=!0x1,_0x1d2cb9[_0x17be99(0x27c)]=_0xca8cd6;}}async function createPromoCodeFromAdmin(_0x21bfc0){const _0xa7d1d5=a0_0x390237,_0x139fc9=a0_0xe8aa85,_0x2dfab6=a0_0x563c76;if(_0x21bfc0&&_0x21bfc0[_0x2dfab6(0x202)]&&_0x21bfc0[_0x2dfab6(0x202)](),!isAdmin())return;const _0x2e32e9=document[_0x2dfab6(0x38f)](_0x139fc9(0x191)),_0x569088=document[_0x2dfab6(0x38f)](_0x2dfab6(0x2da)),_0x19c79a=document[_0x2dfab6(0x38f)](_0x139fc9(0x10d)),_0x7c7027=document[_0x139fc9(0x345)](_0x2dfab6(0x289)),_0x4b1af8=_0x2e32e9[_0x139fc9(0x1eb)][_0x2dfab6(0x119)]()[_0x2dfab6(0x1d8)](),_0x4b7660=parseInt(_0x569088[_0x2dfab6(0x25f)],0xa),_0x4961b7=_0x19c79a[_0x2dfab6(0x25f)][_0x2dfab6(0x119)](),_0x2d64a3=''!==_0x4961b7?parseInt(_0x4961b7,0xa):null;if(!_0x4b1af8||isNaN(_0x4b7660)||_0x4b7660<0x1)return;_0x7c7027[_0x2dfab6(0x296)]=!0x0;const _0x7a1292=_0x7c7027[_0x139fc9(0x1fc)];_0x7c7027[_0x139fc9(0x1fc)]=t(_0x2dfab6(0x160));const _0x1eb60a=currentUser[_0x2dfab6(0x13b)],_0xc872ca=_0x1eb60a[_0xa7d1d5(0x32c)]||_0x1eb60a[_0x2dfab6(0x309)]?.[_0x2dfab6(0x1f1)]||_0x1eb60a[_0x2dfab6(0x144)]||_0x139fc9(0xdb);try{const {error:_0x27c29c}=await supabaseClient[_0x2dfab6(0x203)](_0x2dfab6(0x3bc))[_0x2dfab6(0x1f5)]({'code':_0x4b1af8,'duration_days':_0x4b7660,'max_uses':_0x2d64a3,'is_active':!0x0,'created_by':_0xc872ca});if(_0x27c29c)throw _0x27c29c;showBanner(t(_0x139fc9(0x1da)),_0x139fc9(0x361)),_0x2e32e9[_0x2dfab6(0x25f)]='',_0x569088[_0x2dfab6(0x25f)]='',_0x19c79a[_0x139fc9(0x1eb)]='',fetchAdminPromocodes();}catch(_0x35be6d){console[_0x2dfab6(0x12e)](_0x2dfab6(0x36c),_0x35be6d[_0xa7d1d5(0x305)]),showBanner(t(_0x2dfab6(0x2a1))+_0x35be6d[_0x2dfab6(0x20e)],_0x2dfab6(0x12e));}finally{_0x7c7027[_0x2dfab6(0x296)]=!0x1,_0x7c7027[_0x2dfab6(0x27c)]=_0x7a1292;}}function a0_0x34a8(_0x247b06,_0x584cf9){const _0x2cc627=a0_0xe8aa85;_0x247b06-=0x10e;const _0x488a6b=a0_0x595f();let _0x418808=_0x488a6b[_0x247b06];void 0x0===a0_0x34a8[_0x2cc627(0x163)]&&(a0_0x34a8[_0x2cc627(0x294)]=function(_0x1b32db){const _0x3e7926=_0x2cc627;let _0x172d57='',_0x436810='';for(let _0x289c78,_0x5baba8,_0x5da490=0x0,_0x4ff108=0x0;_0x5baba8=_0x1b32db[_0x3e7926(0x3a1)](_0x4ff108++);~_0x5baba8&&(_0x289c78=_0x5da490%0x4?0x40*_0x289c78+_0x5baba8:_0x5baba8,_0x5da490++%0x4)?_0x172d57+=String[_0x3e7926(0x149)](0xff&_0x289c78>>(-0x2*_0x5da490&0x6)):0x0)_0x5baba8=_0x3e7926(0x3e0)[_0x3e7926(0x192)](_0x5baba8);for(let _0x6bc3c2=0x0,_0x2b66f8=_0x172d57[_0x3e7926(0x205)];_0x6bc3c2<_0x2b66f8;_0x6bc3c2++)_0x436810+='%'+('00'+_0x172d57[_0x3e7926(0x37e)](_0x6bc3c2)[_0x3e7926(0xed)](0x10))[_0x3e7926(0x288)](-0x2);return decodeURIComponent(_0x436810);},a0_0x34a8['lTZVEH']={},a0_0x34a8[_0x2cc627(0x163)]=!0x0);const _0x5b4b4f=_0x247b06+_0x488a6b[0x0],_0x2408ad=a0_0x34a8[_0x2cc627(0x282)][_0x5b4b4f];return _0x2408ad?_0x418808=_0x2408ad:(_0x418808=a0_0x34a8[_0x2cc627(0x294)](_0x418808),a0_0x34a8[_0x2cc627(0x282)][_0x5b4b4f]=_0x418808),_0x418808;}async function fetchAdminPromocodes(){const _0x418ba9=a0_0xe8aa85,_0xf1b896=a0_0x563c76;if(isAdmin())try{const {data:_0x2dec40,error:_0x2e9ad3}=await supabaseClient[_0x418ba9(0x2a0)](_0xf1b896(0x3bc))[_0xf1b896(0x15c)]('*')[_0xf1b896(0x2f1)](_0xf1b896(0x298),{'ascending':!0x1});if(_0x2e9ad3)throw _0x2e9ad3;const {data:_0x343af3,error:_0x1fe55f}=await supabaseClient[_0xf1b896(0x203)](_0xf1b896(0x173))[_0xf1b896(0x15c)]('*')[_0x418ba9(0x17d)](_0x418ba9(0x17e),{'ascending':!0x1});if(_0x1fe55f)throw _0x1fe55f;renderAdminPromocodes(_0x2dec40||[],_0x343af3||[]);}catch(_0x568f41){console[_0xf1b896(0x12e)](_0xf1b896(0x218),_0x568f41[_0xf1b896(0x20e)]);}}function a0_0x969b(){const _0x4e6bfa=a0_0x390237,_0x421bef=[_0x4e6bfa(0x3ad),'EtjyvKmYDM1bD25mqK5Uthr3ouT5D1C',_0x4e6bfa(0x1c0),'qNC5s3L3v1rbmNy1','BLPdmM90r1PTz3PzDdaXu3Dh',_0x4e6bfa(0x15a),'ExDYvef3nfrcDZLlExDxver4BKXdstfAENDMwxKYrW',_0x4e6bfa(0x3ed),_0x4e6bfa(0x285),_0x4e6bfa(0x338),_0x4e6bfa(0x2fb),_0x4e6bfa(0x1ee),_0x4e6bfa(0x2bb),_0x4e6bfa(0x129),_0x4e6bfa(0x38d),'DhjPBq',_0x4e6bfa(0x24c),'BfrAvKvi','ExDYvef3nfrdAgPwqNC4vhKZAKX5EhjmBhDQmejh',_0x4e6bfa(0x1cb),_0x4e6bfa(0x3c9),_0x4e6bfa(0x31c),_0x4e6bfa(0x375),_0x4e6bfa(0x259),_0x4e6bfa(0x3f8),'qZjUwuiYwfnZz3zqEJjima','Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhCgHYs3bkwfPdz2zvAwDUu3L4BLPWC2PsENHlvhKYDLncy2LhrgDmmejNDtLPrW',_0x4e6bfa(0x29f),_0x4e6bfa(0x1ff),_0x4e6bfa(0x28a),'pc90zd4kicaGicaGicaGicaGicaGia',_0x4e6bfa(0x394),'phrKignVBhnWyw49iJGIihn0EwXLpsj0zxH0lwfSAwDUoIbJzw50zxi7ignVBg9YoIb2yxiOls10zxH0lw11DgvKktSGCgfKzgLUzZOGmJrWEdSIpUgdKogdPEgdOUgdMogdO+gdOogdMcdHG6hHG5tHG6hHG5JHG5tHG5hHG5GG4yov4you4yoGiogdM+gdNEgdMogdQ+gdLogdKEgdNogdKdWVDgq+','qNHUtMXoyLLcmJfwCtnQthL4CKXYtwzqqMe',_0x4e6bfa(0x2e5),_0x4e6bfa(0x390),_0x4e6bfa(0x14f),_0x4e6bfa(0x309),'EtjysemZBM1bEg4W','CNHQwuiZAuD6txyWEtjiuejnq0DdmNzAqZjmvKjjyMP1y2jjrxnIuNP4sZy','pc9ZDhjVBMC+iogdMUgdMogdQUgdLogdNogdLUgdMogdKcdHG5VHG53HG5VHG67HG5VHG5dHG6dHG5tHG5hHG5RHG5JHG6hHG5FHG5xHG5JHG6e6idXZDhjVBMC+',_0x4e6bfa(0x1fb),_0x4e6bfa(0x237),_0x4e6bfa(0x296),_0x4e6bfa(0x112),'EK1MsunnteO',_0x4e6bfa(0x242),_0x4e6bfa(0x2cc),_0x4e6bfa(0x230),'DNHUtenh','zgLZywjSzwq',_0x4e6bfa(0x2e6),_0x4e6bfa(0x1cf),_0x4e6bfa(0x35d),_0x4e6bfa(0x2b7),'rdj2teeYwdu',_0x4e6bfa(0x18f),_0x4e6bfa(0x239),_0x4e6bfa(0x359),_0x4e6bfa(0x1c2),_0x4e6bfa(0x1b9),_0x4e6bfa(0x157),_0x4e6bfa(0x3d0),_0x4e6bfa(0x3e0),_0x4e6bfa(0x200),_0x4e6bfa(0xfe),_0x4e6bfa(0x3c3),_0x4e6bfa(0x17b),'4yoP4yoq4yos4yot4you4yor4yoq','ywrTAw4TC2vZC2LVBNmTBg9HzgLUzW','Du12txP4ALL6D3fhEu5lnG',_0x4e6bfa(0x196),_0x4e6bfa(0x3c1),_0x4e6bfa(0x255),_0x4e6bfa(0x1c3),_0x4e6bfa(0x23e),'Aw5ZDgfSBa',_0x4e6bfa(0x199),_0x4e6bfa(0x18b),_0x4e6bfa(0x13b),_0x4e6bfa(0xf3),_0x4e6bfa(0x349),_0x4e6bfa(0x3be),'Eti5vxPntfLcCZfuENHUwNL3reW',_0x4e6bfa(0x2f1),_0x4e6bfa(0x3e4),_0x4e6bfa(0x3ab),_0x4e6bfa(0x29a),_0x4e6bfa(0x30d),_0x4e6bfa(0x142),'rhDYnKjNteXdtxzAqxe',_0x4e6bfa(0x11e),_0x4e6bfa(0x246),_0x4e6bfa(0x267),'Dgv4Da',_0x4e6bfa(0x1a1),'qtj2nxLntfv6yq',_0x4e6bfa(0x35b),_0x4e6bfa(0x2c7),_0x4e6bfa(0x3eb),_0x4e6bfa(0x27e),_0x4e6bfa(0x2fa),_0x4e6bfa(0x1e2),_0x4e6bfa(0x3c2),_0x4e6bfa(0x308),_0x4e6bfa(0x315),'qZi5vhPX',_0x4e6bfa(0x3d5),'BxrMwhr1BLL1tM0',_0x4e6bfa(0x253),_0x4e6bfa(0x226),_0x4e6bfa(0x2ca),'BxrTmw1KDvPVzgfABNrTmg1kq1PUwNeWBxe','EJj2mhn4CKXcCq',_0x4e6bfa(0x328),_0x4e6bfa(0x1e4),_0x4e6bfa(0x164),_0x4e6bfa(0x3b4),'rgC5BuiYBKHcz3zLExHYthuZCLLbDZvo','rMfPBgvKihrVihvWC2vYDcb1C2vYihbYB2zPBguGkhrHyMXLig1Pz2H0ig5VDcbLEgLZDcb5zxqPoG',_0x4e6bfa(0x1b5),_0x4e6bfa(0x174),_0x4e6bfa(0x150),_0x4e6bfa(0x266),_0x4e6bfa(0x1b2),'Cgm5wKnNzLvWsLDwrgDXk2njyuDPy2fhAwnHr2LJyuDPzfGWEMq0',_0x4e6bfa(0x24d),_0x4e6bfa(0x25f),_0x4e6bfa(0x2ec),_0x4e6bfa(0x3f1),_0x4e6bfa(0x290),_0x4e6bfa(0x21a),_0x4e6bfa(0x1c8),'qK05vxPX',_0x4e6bfa(0x236),_0x4e6bfa(0x1c7),_0x4e6bfa(0x307),_0x4e6bfa(0x320),_0x4e6bfa(0x3a8),_0x4e6bfa(0x1f0),_0x4e6bfa(0x26a),_0x4e6bfa(0x3c0),_0x4e6bfa(0x181),_0x4e6bfa(0x363),_0x4e6bfa(0x1da),_0x4e6bfa(0x3f5),_0x4e6bfa(0x1b0),_0x4e6bfa(0x2e9),_0x4e6bfa(0x351),'ChjVBw9JB2rLx3jLzgvTChrPB25Z','Etn2wKrNovrSD25wqK16uennmfrcDZLlExDx','C3rVCfbYB3bHz2f0Aw9U',_0x4e6bfa(0x194),'ChvYy2HHC2uTAw5MBY1TB2rHBa','y0LHr2LJyuDPy2fhAwnHr2LKv1z6z0WYCeDpr2LJyuDPy2fhAwnHr2LJytH6z0WYAwDUu3L4BLPWC2PtqxDTvhP4sfDbEgO1BhDmvxPnoeLWr09hAwnHr2LJyuDPy2fhAwnHr2LJyuDWAg5xExC0r3KYweHdm205Au1yshLnDLnPsJq',_0x4e6bfa(0x160),_0x4e6bfa(0x339),_0x4e6bfa(0x2b9),'tgf0zxn0ihbYB2zPBguGzMv0y2HLzdO','q2HQvKj3oa','qNHUtMXnsdnbD3jKqJi1tuf4ALq','q2DMmefNnuHcD3u',_0x4e6bfa(0x1ad),_0x4e6bfa(0x222),_0x4e6bfa(0x19b),_0x4e6bfa(0x103),_0x4e6bfa(0x299),'q2HQuhKYtfv6wtvxENHPmW',_0x4e6bfa(0x20c),_0x4e6bfa(0x269),'CK1MuejNDKTPAhjwAwD6terNBK9Pz1HirgD2wKrJyLDdttLnqxDytg9h',_0x4e6bfa(0x1df),_0x4e6bfa(0x1a3),_0x4e6bfa(0x2ab),_0x4e6bfa(0x178),_0x4e6bfa(0x227),_0x4e6bfa(0x10d),_0x4e6bfa(0x261),_0x4e6bfa(0x2a7),'B25myw5NDwfNzunOyw5Nzwq',_0x4e6bfa(0x33e),_0x4e6bfa(0x3a1),_0x4e6bfa(0x23c),_0x4e6bfa(0x3ac),_0x4e6bfa(0x3f3),'Eti5v0vZmvL6D3Pmq05QsejJmuPcmNjmBhDQmejh',_0x4e6bfa(0x3df),_0x4e6bfa(0x113),_0x4e6bfa(0x260),_0x4e6bfa(0x293),_0x4e6bfa(0x13f),'rgDMswX3BLzctNjmqK5XvhPNotnctvHwExDYwG','qNHUtMXoAKXettLsENvUvKjnELbdtta',_0x4e6bfa(0x1d0),'BdnQtemZCvzesMvwq2HQvNPntfn6Eg0VqZj2u3P3BJbWC09nqJnQs3P4AtLeEg5mq001sej3Dvv5Eg5k',_0x4e6bfa(0x28c),_0x4e6bfa(0x128),_0x4e6bfa(0x3d3),'nhLVrZr5B0q0Ew9ZnhLVrdr5B0DPB2DKuuvNzeTVz2rmrwDKs29NzeTvz2rlk2DKtNe',_0x4e6bfa(0x3aa),'qZjUwuiYwfnZDZuWqJf6uhP4qW','C3r5Bgu','iJ4kicaGicaGicaGicaGicaGicaGicaGicaGicaGicaGica8C3zNihzPzxDcB3G9iJaGmcaYncaYnciGzMLSBd0IBM9UzsiGC3rYB2TLpsjJDxjYzw50q29SB3iIihn0CM9Rzs13Awr0Ad0ImIiGC3rYB2TLlwXPBMvJyxa9iNjVDw5KiIbZDhjVA2uTBgLUzwPVAw49iNjVDw5KiJ48Cg9SEwXPBMuGCg9PBNrZpsiZidyGnsa2idiXidyIpJWVCg9SEwXPBMu+phbHDgGGzd0Itte5idz2mtrHmIaYidaGmcaXltiGmKG3ytiGmIaWidaGms0YltjwnM0ZidbwngeYidiGmcaWideGmI0YAdrHmIaYidaGmcaXidiGmNyYiJ48l3bHDgG+pc9ZDMC+cIaGicaGicaGicaGicaGicaGicaGicaGicaGica8l2j1DhrVBJ4kicaGicaGicaGicaGicaGicaGicaGicaGpc9KAxy+cIaGicaGicaGicaGicaGicaGicaGpc90zd4kicaGicaGicaGicaGicaGia',_0x4e6bfa(0x35e),_0x4e6bfa(0x17f),_0x4e6bfa(0x198),'qNC5s3L3v1rbAerqEMe',_0x4e6bfa(0x240),_0x4e6bfa(0x15c),'nhLVDdr5B3e0Ew9hnhLVDtr5B3m0Ew95nhLVsdr5B0K0Ew9hnhLVEtr5B0C0Ew90nhLVCwLVz2rpB2DKtg9NzfbVz2rmB2DKt29NzeTVz2rnvwDKtYTNze9Vz2rny2rirZvOseC1vKHhnNbirZvsseC1sKHhnunvAw9Nze0Rz2rorwDKuM9NzeXfz2rmB2DKtevNzeTKt0DWAg4Wq005vxPAna',_0x4e6bfa(0x3e9),_0x4e6bfa(0x3d7),'z2v0rwXLBwvUDej5swq','C3rHCNrZv2L0Aa',_0x4e6bfa(0x29b),_0x4e6bfa(0x36d),_0x4e6bfa(0x32e),_0x4e6bfa(0x1c4),_0x4e6bfa(0x2d7),_0x4e6bfa(0x358),_0x4e6bfa(0x190),_0x4e6bfa(0x137),_0x4e6bfa(0x207),_0x4e6bfa(0x1c5),_0x4e6bfa(0x2ea),_0x4e6bfa(0x28b),'pc9JB2rLpG',_0x4e6bfa(0x2ff),_0x4e6bfa(0x301),_0x4e6bfa(0x1be),_0x4e6bfa(0x3b6),_0x4e6bfa(0x2e8),_0x4e6bfa(0x14b),_0x4e6bfa(0x3a4),_0x4e6bfa(0x3ea),_0x4e6bfa(0x26f),_0x4e6bfa(0xfa),_0x4e6bfa(0x2f2),'CK1MuejNDKTPAhjwAwHIsenoBKXPz3jqqZjUvKnnCuD5D25kqJn2vurJyKH6mNu2',_0x4e6bfa(0x127),_0x4e6bfa(0x20f),_0x4e6bfa(0xe4),_0x4e6bfa(0x324),'DZfImujOBKXPzwzQAwzQthPnDLLdtwztAwvYthLoDK54C2j0ENC1s0f3nu5Pz25wEMD1nG',_0x4e6bfa(0x350),_0x4e6bfa(0x1f8),'qZj2u3P3BJa',_0x4e6bfa(0x2af),'qMC5sNL4CLbcmJq',_0x4e6bfa(0x30f),_0x4e6bfa(0x22f),_0x4e6bfa(0x1fa),_0x4e6bfa(0x211),'BxnNlNrYAwfSu3vJy2vZCW',_0x4e6bfa(0x2f4),_0x4e6bfa(0x393),'nhLVCtr5B0C0Ew9XnhLVsZr5B0C0Ew95nhLVsgLZzfDonuLRAw9NzeWRz2rpwwrirZzKseC1zeHhnvzirZvXrZr5B3O0Ew95nhLVEdr5B1u0Ew92nhLVCwLVz2rlvwDKtg9Nzfbfz2roB2DKtg9NzeTfz2rly1DhnhLVqZr5B3u0Ew9YnhLVEtr5B0G0Ew9cnhLVEtr5B3u0Ew9hAw9NzeSRz2rpB2DKtKvNze9ZzeHhnvzirZuZseC1vKHhnLPirZv0seC2zeHhnxfvAw9NzfjVz2rlB2DKt29Nze0Rz2rlB2DKt1vNzeXVz2rlrwDKtYTNze1jzeHhnuzirZvKseC1vKHhnwrirZzkseC2zuC0Ew9ZnhLVEtr5B0G0Ew9knhLVrZr5B3y0Ew91nhLVCMLMyJfcAg5mCtjyuhP3ntbSrwDKtcTNzeTVz2roy2rirZv0seC2zeHhnuzirZvKseC1BuHPCgngtu9H',_0x4e6bfa(0x2ac),'y291BNrYEq',_0x4e6bfa(0x294),_0x4e6bfa(0x2a0),'C2LNBK91Da',_0x4e6bfa(0x26d),_0x4e6bfa(0x225),_0x4e6bfa(0x186),_0x4e6bfa(0x13a),_0x4e6bfa(0x3b9),_0x4e6bfa(0x35c),_0x4e6bfa(0x2cb),_0x4e6bfa(0x361),'q2HQuhKYDKz5mNzvrgHT',_0x4e6bfa(0x29c),'BgC1vKrNDvvcz0XsENm0',_0x4e6bfa(0x184),_0x4e6bfa(0x171),'y2XVC2vvC2vYu2vSzwn0Aw9Utw9KywW',_0x4e6bfa(0x329),_0x4e6bfa(0x244),'EtnQthL4CKX6zJLjrxe','DNC1uKjnotncrW',_0x4e6bfa(0x340),_0x4e6bfa(0x1f6),_0x4e6bfa(0x2a5),_0x4e6bfa(0x1c6),'qxHIrNL3CKTdtxzAq1C',_0x4e6bfa(0x2a4),'mJaWmc0Wms0Wmq',_0x4e6bfa(0x3ef),_0x4e6bfa(0x335),_0x4e6bfa(0x1b1),'u0LhtKvex0Lo',_0x4e6bfa(0x313),'tNvTyMvYrM9YBwf0',_0x4e6bfa(0x2ed),_0x4e6bfa(0x185),_0x4e6bfa(0x3e2),_0x4e6bfa(0x3f7),_0x4e6bfa(0x12b),'qu1Mwq','rgD2wKrH','lI4U','BuKXs0f3rfbeyq','C2vHCMnO',_0x4e6bfa(0x3e3),'y2HHCKf0',_0x4e6bfa(0x387),_0x4e6bfa(0x2ad),_0x4e6bfa(0x12d),_0x4e6bfa(0x1dc),_0x4e6bfa(0x2f5),'BxnNlMXPy0XVywrgywLS',_0x4e6bfa(0x2d0),_0x4e6bfa(0x274),_0x4e6bfa(0x1bf),_0x4e6bfa(0x203),_0x4e6bfa(0x355),_0x4e6bfa(0x139),_0x4e6bfa(0x2a8),_0x4e6bfa(0x166),_0x4e6bfa(0x170),_0x4e6bfa(0x318),_0x4e6bfa(0x149),_0x4e6bfa(0x2d4),_0x4e6bfa(0x3c5),_0x4e6bfa(0x1cc),_0x4e6bfa(0x22a),'nhLVttr5B3K0Ew9bnhLVCtr5B3O',_0x4e6bfa(0x187),'Cgm5wKnNzLvWr09hAwnHr2LJyuDPy2fhAwnHr2LJyuDWAg5xExC0r3KYweHdm205Au56sejJAsS',_0x4e6bfa(0x37d),_0x4e6bfa(0x3bb),'DgfIlwnVBNrLBNqTywrTAw4',_0x4e6bfa(0x214),_0x4e6bfa(0x362),_0x4e6bfa(0x10c),'AK05wxPNDLLWD1HiqZnYrKfNDKHdtNjjENDMmgXnCKXdmM1nqMDmvef4CtLTCq',_0x4e6bfa(0x163),'zxjYB3i','y0LHr2LJyuDPy2fhAwnHr2LJyuDPy2fhAwnHr3bOCKTWsLHAq2DMvwLNBLn5Eg5AChnQv0nnovrcwtfkqJjYtgX3AKH6z0rmAuO0',_0x4e6bfa(0x189),'Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2e4rgDXk2njyuDPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2fhAwrys0f4EuD5mLHiqZnTowLnzKTcD0XvBhDMsKrNtfzctM1jCeDpr2LJyuDPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2fhAwnHr3bNAJfeAhjwqKLImev4yKXWC2PjrhHYmeiYneLPz25tExHUwNbZAKLezZruExDUmef3ovvPz2OWqKKXwxP4ELzbmNvjAwC5vxKYwfb5mLm5Au1YtejNDJb6DMjzqJiXvNKYouT6C0Do','zM9YrwfJAa',_0x4e6bfa(0x3b3),'rdjiserJyKHdtxvhrxC5mq',_0x4e6bfa(0x3bc),'q2HQvNLnweXcCq',_0x4e6bfa(0x34f),_0x4e6bfa(0x3dd),'ChjLDMvUDerLzMf1Bhq',_0x4e6bfa(0x213),'B3jPz2LU','BxrQv0vH','EtnQthL4CKX0mMPrENDUmhz2AM0',_0x4e6bfa(0x22e),'nhLVCZr5B3e0Ew94nhLVEtr5B080Ew92nhLVCq','ndqXu0PNuxbL','DNzUzq',_0x4e6bfa(0x1fc),'Eu1MvujnDLL2z0XuENC5murH',_0x4e6bfa(0x2dc),'CNHQwuiZAuDdtxyYqJjuuejnq0Dcz0XkENC1wNP0tW',_0x4e6bfa(0x123),_0x4e6bfa(0x373),_0x4e6bfa(0x2ee),_0x4e6bfa(0x2d5),_0x4e6bfa(0x37f),_0x4e6bfa(0x169),'ywjJzgvMz2HPAMTSBw5VChfYC3r1DND4ExPbqKneruzhseLks0XntK9quvjtvfvwv1HzwJaXmJm0nty3odKRlZ0',_0x4e6bfa(0x19c),_0x4e6bfa(0x14e),_0x4e6bfa(0x265),_0x4e6bfa(0x104),_0x4e6bfa(0x3a9),'rgHQuejX',_0x4e6bfa(0x1e8),'qNDMmhKYrW',_0x4e6bfa(0x271),_0x4e6bfa(0x167),_0x4e6bfa(0x2e4),_0x4e6bfa(0x270),'DgfIlwnVBNrLBNqTzMfX','qNC5s3L3v1r5tNy1ENHP',_0x4e6bfa(0x165),_0x4e6bfa(0x2c1),'qNC5s3L3v1r5mLHwqZj1vhLoCLu',_0x4e6bfa(0x13d),'ExC1mef3BK96D2yW','rhHUtenjmvzdAhjqqJi0','C3rHDhvZlMfJDgL2zq',_0x4e6bfa(0x396),_0x4e6bfa(0x172),_0x4e6bfa(0x39e),_0x4e6bfa(0x1ef),_0x4e6bfa(0x17c),_0x4e6bfa(0x342),'nhLVDdr5B3e0Ew9onhLVDtr5B0m0Ew91nhLVCG',_0x4e6bfa(0x398),_0x4e6bfa(0x11c),_0x4e6bfa(0xea),_0x4e6bfa(0x168),_0x4e6bfa(0x147),_0x4e6bfa(0x3a3),_0x4e6bfa(0x10b),'qZnYserODLPStwzkrgDmmNPX',_0x4e6bfa(0x3cf),_0x4e6bfa(0x1d7),'y29UzMLYBs50AxrSzq',_0x4e6bfa(0x193),_0x4e6bfa(0x337),_0x4e6bfa(0x356),_0x4e6bfa(0x12f),_0x4e6bfa(0x2f3),_0x4e6bfa(0x110),_0x4e6bfa(0x3b8),_0x4e6bfa(0x365),_0x4e6bfa(0xe7),_0x4e6bfa(0x367),_0x4e6bfa(0x134),_0x4e6bfa(0x218),'EK1mvxPH',_0x4e6bfa(0x3bd),_0x4e6bfa(0x2fc),'EtjyuhP3ntbSD3jwrdi1u0iYzKTSDZfwEMDMuW',_0x4e6bfa(0x2a6),_0x4e6bfa(0x332),_0x4e6bfa(0x2a2),_0x4e6bfa(0x2bf),'nhLVsdr5B3K0Ew9inhLVstr5B3u0Ew9cnhLVCq',_0x4e6bfa(0x31a),_0x4e6bfa(0xed),'BvPTmw5AztvTzKrbCNHmDunH','iIbHBhq9iKf2yxrHCIiGB25LCNjVCJ0IDgHPCY5VBMvYCM9Ypw51BgW7ihrOAxmUC3jJpsDODhrWCZOVl2nKBI5KAxnJB3jKyxbWlMnVBs9LBwjLzc9HDMf0yxjZlZaUCg5NjZSIpGOGicaGicaGicaGica8zgL2ignSyxnZpsj1C2vYlw9WDgLVBI10zxH0iJ4kicaGicaGicaGicaGicaGidXZCgfUignSyxnZpsj1C2vYlw5HBwuIpG',_0x4e6bfa(0x2f8),_0x4e6bfa(0x231),'nhLVCtr5B0DPB2DKs29Nze9Vz2rnB2DKt3nKseC1vKHhnuPirZvOseC1vKHhnNbirZvsseC1rW',_0x4e6bfa(0x13e),_0x4e6bfa(0x2a1),_0x4e6bfa(0x3a5),_0x4e6bfa(0x2d6),'DwHQvKj3ouPcmNjmB0LH',_0x4e6bfa(0x176),'q012veiZEKXXmKHqqMDX',_0x4e6bfa(0x34e),_0x4e6bfa(0x188),_0x4e6bfa(0x109),_0x4e6bfa(0x3de),'qNHUtMXnsdnbD3jNExDmuW','Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhCgHYs2LOBJbfD1HmChnQtuiYntbSEg5qru11nMLKzvLdAeC3AwDUvKjNovLVswiYExHPt2XZmtb6EeGWBhCXmurNDKTRDfnjCeC',_0x4e6bfa(0x114),_0x4e6bfa(0x379),'ywrTAw4TChjVBw8TDxnLCY1PBNb1Da',_0x4e6bfa(0x327),_0x4e6bfa(0x273),_0x4e6bfa(0x234),_0x4e6bfa(0x3c8),'y2fYza','EK1yvKiZAq',_0x4e6bfa(0x24e),'qZj2u3P3BJb6D3e',_0x4e6bfa(0x118),_0x4e6bfa(0x22d),_0x4e6bfa(0x35f),_0x4e6bfa(0x326),_0x4e6bfa(0x197),_0x4e6bfa(0x158),'q2H2u0mYDvr5D0TuqNHUtMLH',_0x4e6bfa(0x34c),_0x4e6bfa(0x32f),_0x4e6bfa(0x3d9),_0x4e6bfa(0x111),_0x4e6bfa(0x223),_0x4e6bfa(0x33c),_0x4e6bfa(0x1cd),_0x4e6bfa(0x38b),_0x4e6bfa(0x310),_0x4e6bfa(0x3c4),_0x4e6bfa(0x276),_0x4e6bfa(0x1c9),_0x4e6bfa(0x26c),_0x4e6bfa(0x3c6),_0x4e6bfa(0x39b),_0x4e6bfa(0x29e),_0x4e6bfa(0x1a9),'CdnQthPkma',_0x4e6bfa(0x1d8),'CgHUv3L3ncS',_0x4e6bfa(0x1a8),_0x4e6bfa(0x1f1),'nhLVtJr5B3K0Ew90nhLVDG',_0x4e6bfa(0x3bf),_0x4e6bfa(0x34a),_0x4e6bfa(0x385),'qNC5s3L3v1rcttKWENe','Dg9mB2nHBgvtDhjPBMC',_0x4e6bfa(0x2b5),_0x4e6bfa(0xeb),_0x4e6bfa(0x3e1),_0x4e6bfa(0x341),_0x4e6bfa(0x354),_0x4e6bfa(0x16a),_0x4e6bfa(0x291),_0x4e6bfa(0x1b7),_0x4e6bfa(0x131),'BxnNlMrHDgfmB2fKrMfPBa','nhLVrtr5B0C0Ew9enhLVCJr5B0e0Ew91nhLVqJr5B3e',_0x4e6bfa(0x20d),_0x4e6bfa(0x229),_0x4e6bfa(0x15e),'y29WEunYzwf0zwrlzxK','CxvLCNLtzwXLy3rVCG',_0x4e6bfa(0x23b),'qMvHCMvYia','qNHUtMXoyLLcmJfwDu12s3P3DLr6D3e','CK5QthPZyNvdtuXiqMe',_0x4e6bfa(0x36c),_0x4e6bfa(0x2e0),'DgvZDa',_0x4e6bfa(0x287),_0x4e6bfa(0x254),'CgDYuerjyLPeAeXtENqWsunNzKT6z0XvELPpr210yLDfzfnhrgD2nerJmuHcz0XoqKPpr3KYDLvez3zzB1LIsKiYwfzdsK9hre1MwwTJmfrez3y0rgmXver4CKX6y0S3AwD6vKjoCvrdmKW2ENrpr210BLDfzfnjCeC','ChvSC2vFzgLZBwLZC2vKx3vWzgf0zv9ZAge',_0x4e6bfa(0x38e),_0x4e6bfa(0x2ce),_0x4e6bfa(0x3a2),_0x4e6bfa(0x3e5),_0x4e6bfa(0x1f2),_0x4e6bfa(0x31b),_0x4e6bfa(0x16f),_0x4e6bfa(0x352),_0x4e6bfa(0x298),_0x4e6bfa(0x383),_0x4e6bfa(0x182),'AwHxr3vnDK16EgPzExDxr3fnovveEg1hEK05wwLNtfvetuWWqxC1tMLH','ExDYvef3nfr5tNy1ENHPvef3nvDeEhe',_0x4e6bfa(0x384),_0x4e6bfa(0x33d),'svHrrhvV',_0x4e6bfa(0x1b3),_0x4e6bfa(0x27a),_0x4e6bfa(0x1db),_0x4e6bfa(0x2cd),'ogORs0XjzeHhnvzirZvXrZr5B3y0Ew9XnhLVr2LKwfPeAgPwqK1dk3vODLndmNvhCxvlogWZBJbdttLvELO0rZrpy3vPB2DKuLvNzeXVz2rnvwDKtKvNzeXfz2roB2DKtYTNze9Vz2rny2rirZvkseC1wKHhnMXirZv0seC1uKHhnxrirZz4seC2BeHhnuPirZzLrZr5B3e0Ew9inhLVEtr5B0G0Ew9jnhLVDtr5B0m0Ew9jnhLVEwXjzeHhnKPirZv0seC1vKHhnuPirZzwseC1uKHhnuPirZvHrZr5B0u0Ew9XnhLVsdr5B0O0Ew9vnhLVEwLVz2rlvwDKs29NzeXfz2rrvwDKtgnKseC2sKHhnxrirZvAseC2zuC0Ew9dnhLVDtr5B3i0Ew95nhLVsdr5B0i0Ew95nhLVDtr5B0DPB2DKtuvNze1Vz2rmk2DKuLvNzeXfz2rlB2DKt3nICur3wfP6Dw5tqxD2vurJm0HhnuPirZzLu2LVz2rnB2DKtM9Nze9fz2rpvwDKs29Nze1vz2rlB2DKuvvNze1Vz2rnB2DKt3nxrZr5B000Ew95nhLVqtr5B3e0Ew96nhLVDtr5B3i0Ew95nhLVsgXJzeHhnvjirZvkseC2uKHhnxrirZvAseC1qKHhnuPirZvkseC2zvnPB2DKs29Nze5Vz2rpvwDKtw9Nze1fz2rnvwDKtw9NzeXVz2roB2DKt1vNze1Vz2rpC2rirZzkseC1DeHhnvzirZuZseC1EeHhnvjirZv0seC1AeHhnuPirZzOseC1yuC0Ew90nhLVCwLVz2rsvwDKs29Nze9Vz2rmrwDKtg9NzeXvz2rmB2DKs0vNze1Vz2rpC2rirZzkseC1DeHhnMHirZvKseC2n0HhnxrirZvLsa',_0x4e6bfa(0x3b0),_0x4e6bfa(0x21e),_0x4e6bfa(0x395),'Bg9N',_0x4e6bfa(0x220),_0x4e6bfa(0x12e),_0x4e6bfa(0x21b),'EMDMwKfJmuHetwyWExHP',_0x4e6bfa(0x2fd),_0x4e6bfa(0xee),_0x4e6bfa(0x2c3),_0x4e6bfa(0x304),_0x4e6bfa(0x130),_0x4e6bfa(0x3ae),'qu5UvKjh',_0x4e6bfa(0x3da),'qNDMnhGZDLP6Eg0',_0x4e6bfa(0x2be),_0x4e6bfa(0x368),_0x4e6bfa(0x1ca),_0x4e6bfa(0x119),'CMvKzwvTzwrFyxq','re1Mu0r3Dq',_0x4e6bfa(0x12c),_0x4e6bfa(0x357),_0x4e6bfa(0x3ee),_0x4e6bfa(0x3a7),_0x4e6bfa(0x251),_0x4e6bfa(0x381),'AwHxrW',_0x4e6bfa(0xe3),_0x4e6bfa(0x3af),_0x4e6bfa(0x284),_0x4e6bfa(0x135),_0x4e6bfa(0x23d),_0x4e6bfa(0x2d9),_0x4e6bfa(0x248),_0x4e6bfa(0x25e),_0x4e6bfa(0x3b7),_0x4e6bfa(0x399),_0x4e6bfa(0x124),'Aw5KzxHpzG',_0x4e6bfa(0x1b8),'EMDmwNKYovL6zuXlB0C','Eu1Mvq',_0x4e6bfa(0x3a6),_0x4e6bfa(0xfb),_0x4e6bfa(0x23f),_0x4e6bfa(0x252),'Etn2wunnDLv5m0S',_0x4e6bfa(0x31e),'ANvQmuv3DLLVswe','BKPLnw50rZnUs3jsCu1izhfh','ENHQwuiZAtbTzhe','AgLKzgvU',_0x4e6bfa(0x38a),_0x4e6bfa(0x1a0),_0x4e6bfa(0x3d8),'qwHeuhPH',_0x4e6bfa(0x2a9),'qNC5s3L3v1r5m2PmExHYthPH','BxnNlMjPBMrgywLS',_0x4e6bfa(0x2c0),_0x4e6bfa(0x3f2),_0x4e6bfa(0x364),'C3rHDhvZ',_0x4e6bfa(0xef),_0x4e6bfa(0x145),_0x4e6bfa(0x2f0),_0x4e6bfa(0xf7),_0x4e6bfa(0x24b),_0x4e6bfa(0x2b4),_0x4e6bfa(0x2dd),'rgC5DKnOyKXds25iqZj1',_0x4e6bfa(0x3cc),'C2v0Dxa',_0x4e6bfa(0x219),_0x4e6bfa(0x25b),_0x4e6bfa(0x272),_0x4e6bfa(0x179),'qZjmtKjltfv2mKWWqwu5yKr4CK8','y3jLyxrLrwXLBwvUDa',_0x4e6bfa(0x1d5),_0x4e6bfa(0x249),_0x4e6bfa(0x2b2),_0x4e6bfa(0x3e8),_0x4e6bfa(0x31d),_0x4e6bfa(0xf9),_0x4e6bfa(0x1ce),_0x4e6bfa(0x2b6),_0x4e6bfa(0x2df),_0x4e6bfa(0x14d),_0x4e6bfa(0x3ce),_0x4e6bfa(0x2f6),_0x4e6bfa(0x26b),_0x4e6bfa(0x138),_0x4e6bfa(0x1a2),_0x4e6bfa(0x2d8),_0x4e6bfa(0x1a7),'Cgm5s0f4EsS','tgLUA2vKihzPysbeyxnOyM9HCMq','y2vPBa','Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhCgHYs3bkwePcmNjmAwHUmev3weXWC2PnqJi1mgX4BLbftxu2AwrLwenOrZDPz2PiEtjutKnnotfctxe2AwHQtNLnzu9VDeTtBxrHwwXKAtbTC1DxBePLug9zyLD5D3jlqxC1tM9jyvLdAeDhBK5Ing9zyKLcm2PlENHPvennzKTbEhzAB0LHmenOrZDPsJq','y0LHr2LJyuDPy2fhAwnHr2LJyuDPy2e4BdjQmurOCLzcsJrRAwnHr2LJyuDPy2fhAwnHr3bJouTbEhKRy0LHr2LJyuDPy2fh','qNDMmenntdq',_0x4e6bfa(0x37a),_0x4e6bfa(0x257),_0x4e6bfa(0x210),_0x4e6bfa(0x245),_0x4e6bfa(0x36e),_0x4e6bfa(0x2eb),_0x4e6bfa(0x37c),'nfbrDZC3sxbPzfHArgHQvKjnqYT2mKHqEtjhr0rnDLLdmKXwqKLImejzyLDbD25sCfPxvKmZCLLcmJvoCePysunkn0LhA2LhCgHUmennovv6wJvXrhDywNPZyNfetgfhCtjyuhP3ntbVsLDwqZnYwuiYnu5WswjJENHUmgLNELzdswjkqJiXsxL4CvnPzZfirwnIz3vMBvnPzvrqqMDxr3zOALb6mKrmq0LHtwLLovD1mNzkAwniCenNDLvdwwiZqxHYt2LKwfPeAgPwqK1dk3jkzvLWyZLArgHQvKjnqYTRCZq4Eu5PkZrpy0LPzfHArgHQvKjnqYT1AhztqZj1r3fnzLP6C2jNqxC1s29kv1zdm3jzqJi1tNbjyMneD0XtrgnItuiZAuD5twzAENnImennzKPbmKXvELLIm0f4CK9PztfirgHQuevJyu1PzurzqxCXyNfzyKLfEgjiqZnUtenzyu90m2jmqK5Tr0qYtdbby2e4qZnYwuiYnu5WtgPqEJjimgLMBK9bD3OWCgm5wKrOALzctumRA3m0','BxnNlNbYB21Vq3jLyxrLza','EMDmwNL3ALn6D3e','Etjysef3mfreAgPqExDxvhLoCLu','C2zeANjKt0C0Ew9bnhLVEtr5B1e0Ew91nhLVqZr5B3C0Ew95nhLVCwLVz2rlB2DKt2nKseC1vKHhntnirZvkseC2vKHhnxrirZvOseC1wKHhnwe',_0x4e6bfa(0x20a),_0x4e6bfa(0x39a),_0x4e6bfa(0x205),'Aw5Uzxjive1m',_0x4e6bfa(0x247),_0x4e6bfa(0x228),_0x4e6bfa(0x18e),_0x4e6bfa(0x1ae),'qMDmsMXnDJrdz0XzrxvyshLnDLm',_0x4e6bfa(0x35a),_0x4e6bfa(0x389),_0x4e6bfa(0x1c1),_0x4e6bfa(0x11f),_0x4e6bfa(0x377),'ChvYy2HHC2uTBw9KywWTy2XVC2uTyNrU','BvPhnw50Atj0AgPuC3zYua',_0x4e6bfa(0x34d),_0x4e6bfa(0x2c5),'qMC5tG',_0x4e6bfa(0x1f4),_0x4e6bfa(0x2e3),_0x4e6bfa(0x2d2),_0x4e6bfa(0x3d6),_0x4e6bfa(0x2c2),_0x4e6bfa(0x278),_0x4e6bfa(0x1fe),_0x4e6bfa(0x306),_0x4e6bfa(0x1a4),_0x4e6bfa(0x391),_0x4e6bfa(0x256),_0x4e6bfa(0x3d1),'rgDMswX4AKX6z3zmqNe',_0x4e6bfa(0x1fd),_0x4e6bfa(0x25d),_0x4e6bfa(0x37b),'Be52v3PNzJb6D3fuEMDMmhPX',_0x4e6bfa(0x262),_0x4e6bfa(0x32d),_0x4e6bfa(0x183),_0x4e6bfa(0x1d1),_0x4e6bfa(0x153),_0x4e6bfa(0x204),'vZzSBeHtDYS',_0x4e6bfa(0x1b4),_0x4e6bfa(0x2fe),_0x4e6bfa(0x34b),_0x4e6bfa(0x1a5),_0x4e6bfa(0x27d),_0x4e6bfa(0x140),'qNDMvW',_0x4e6bfa(0x303),_0x4e6bfa(0x1b6),'Cu12sennDLLPyq','z2v0sxrLBq','jYKIihrPDgXLpsi',_0x4e6bfa(0x101),_0x4e6bfa(0x2c8),_0x4e6bfa(0x275),_0x4e6bfa(0x39d),_0x4e6bfa(0x333),_0x4e6bfa(0x3ba),_0x4e6bfa(0xe6),'4yoH4yoq4yoz4yoJ4yox4yoq4yoG4yoyiogdMEgdNEgdK+gdMogdOq',_0x4e6bfa(0x17d),'ExDYsW','EMH2wxL4CLbcmJvgqNDmvur4CKXdvW',_0x4e6bfa(0xf2),_0x4e6bfa(0x202),_0x4e6bfa(0x2b0),_0x4e6bfa(0x1f7),_0x4e6bfa(0x16d),_0x4e6bfa(0x29d),'BgLJzw5Zzv9RzxK','Dg9vChbLCKnHC2u','qxHUDer4yKXdsZKZqK12wq',_0x4e6bfa(0xec),_0x4e6bfa(0x28f),_0x4e6bfa(0x15d),'CMvMzxjYywWTy29Kzs1ZDwjTAxqTyNrU',_0x4e6bfa(0x32b),_0x4e6bfa(0x21f),_0x4e6bfa(0x16e),_0x4e6bfa(0x20e),_0x4e6bfa(0xe9),_0x4e6bfa(0x11a),'CMu5BNeYovvez3zvrgvyvNL3CKX6yq','zgfZAc50CMLHBej0BG','EtnQnunOCLy',_0x4e6bfa(0x286),'DgLJA2v0','rgDMswX3zKTcD0Xv','EK05u3PNDLK',_0x4e6bfa(0x369),_0x4e6bfa(0x1d3),'ExH2mefH','rdnQuerNDNv6EeGW',_0x4e6bfa(0x2bc),_0x4e6bfa(0xf6),_0x4e6bfa(0x3f6),'AwrLBNrPDhLFzgf0yq',_0x4e6bfa(0x24f),_0x4e6bfa(0x144),_0x4e6bfa(0x212),_0x4e6bfa(0x372),_0x4e6bfa(0x388),_0x4e6bfa(0x1d9),_0x4e6bfa(0x258),_0x4e6bfa(0x180),'y3jLyxrLq2XPzw50',_0x4e6bfa(0xfc),'CxvLCNLtzwXLy3rVCKfSBa',_0x4e6bfa(0x1f3),'qNHUtMXoAKX6s25wEMD2yKjOAKX5D3i1DNHUthPH',_0x4e6bfa(0x3b1),_0x4e6bfa(0x1ea),_0x4e6bfa(0x2da),'Cgm5mhPKngTPy2fhAwnHr2LJyuDPy2fhAwnHr2LJyuDPy2e4rgDXkW',_0x4e6bfa(0x366),_0x4e6bfa(0x162),'y29Kzq',_0x4e6bfa(0x250),_0x4e6bfa(0x370),_0x4e6bfa(0x192),_0x4e6bfa(0x264),_0x4e6bfa(0x238),_0x4e6bfa(0x1f5),'nhLVrtr5B0C0Ew9enhLVqJr5B0rPB2DKtuvNze5fz2rlk2DKtw9Nze9ZzeHhnwXirZvKseC1vKHhntnirZzgseC1DeHhnvPirZv0seC1AeHhnwe',_0x4e6bfa(0x1d6),'qNHUtMXoAKXettLsENv6sef3vW',_0x4e6bfa(0x15b),_0x4e6bfa(0x16b),_0x4e6bfa(0x311),'C2Dms3PNDLu',_0x4e6bfa(0x233),_0x4e6bfa(0x146),_0x4e6bfa(0x11d),_0x4e6bfa(0x17a),_0x4e6bfa(0x345),_0x4e6bfa(0xff),'BgLRzq',_0x4e6bfa(0x3f0),_0x4e6bfa(0x241),_0x4e6bfa(0x133),_0x4e6bfa(0x243),'q3H2tenothr6D1HmEtnYvKnh',_0x4e6bfa(0x15f),_0x4e6bfa(0x38c)];return(a0_0x969b=function(){return _0x421bef;})();}function renderAdminPromocodes(_0x48b4f0,_0x560e9a){const _0x573bf5=a0_0xe8aa85,_0x4647e6=a0_0x563c76,_0x3efebf=document[_0x4647e6(0x38f)](_0x4647e6(0x262)),_0x47764c=document[_0x4647e6(0x38f)](_0x4647e6(0x1eb));_0x3efebf&&(_0x3efebf[_0x4647e6(0x229)]='',0x0===_0x48b4f0[_0x4647e6(0x246)]?_0x3efebf[_0x4647e6(0x229)]=_0x4647e6(0x2a6):_0x48b4f0[_0x4647e6(0x137)](_0x114ed9=>{const _0x207443=a0_0x3834,_0x3eb744=a0_0x20e0,_0x4a0930=_0x4647e6,_0x50ea26=_0x560e9a[_0x4a0930(0x2e9)](_0x1209f3=>_0x1209f3[_0x4a0930(0x3af)]===_0x114ed9[_0x4a0930(0x3af)])[_0x4a0930(0x246)],_0xa20536=null!==_0x114ed9[_0x4a0930(0x2ed)]?_0x114ed9[_0x4a0930(0x2ed)]:_0x4a0930(0x252),_0xd1db4e=document[_0x4a0930(0x1b8)]('tr');_0xd1db4e[_0x3eb744(0x1e1)]=_0x4a0930(0x2ec)+_0x114ed9[_0x4a0930(0x3af)]+_0x207443(0x13c)+t(_0x4a0930(0x1fa),{'n':_0x114ed9[_0x3eb744(0x349)]})+_0x207443(0xf4)+_0x50ea26+_0x4a0930(0x361)+_0xa20536+_0x4a0930(0x398)+(_0x114ed9[_0x4a0930(0x1fc)]||_0x4a0930(0x117))+_0x4a0930(0x2f5)+_0x114ed9[_0x4a0930(0x3af)]+_0x4a0930(0x1e8)+t(_0x4a0930(0x351))+_0x4a0930(0x385)+t(_0x3eb744(0x211))+_0x3eb744(0x33b),_0x3efebf[_0x3eb744(0x1d7)](_0xd1db4e);})),_0x47764c&&(_0x47764c[_0x4647e6(0x229)]='',0x0===_0x560e9a[_0x4647e6(0x246)]?_0x47764c[_0x573bf5(0x1e1)]=_0x4647e6(0x2ce):_0x560e9a[_0x4647e6(0x137)](_0x2717ab=>{const _0x1285a1=_0x573bf5,_0x5715a7=_0x4647e6,_0xb9725b=document[_0x5715a7(0x1b8)]('tr'),_0x1f11e7=new Date(_0x2717ab[_0x5715a7(0x1e5)])[_0x5715a7(0x17c)](getLocale());_0xb9725b[_0x5715a7(0x229)]=_0x5715a7(0x2ec)+_0x2717ab[_0x5715a7(0x3af)]+_0x5715a7(0x1ab)+_0x2717ab[_0x5715a7(0x1f1)]+_0x5715a7(0x292)+_0x1f11e7+_0x1285a1(0x28f),_0x47764c[_0x1285a1(0x1d7)](_0xb9725b);}));}async function deletePromocode(_0xe40f7e){const _0x4a8f4a=a0_0xe8aa85,_0x2925cf=a0_0x563c76;if(isAdmin()&&await showCustomConfirm(t(_0x4a8f4a(0xe1)),_0x2925cf(0x17f)+_0xe40f7e+'?'))try{const {error:_0x2eb8ec}=await supabaseClient[_0x2925cf(0x203)](_0x2925cf(0x3bc))[_0x2925cf(0x1c5)]()['eq'](_0x4a8f4a(0x255),_0xe40f7e);if(_0x2eb8ec)throw _0x2eb8ec;showBanner(_0x2925cf(0x294),_0x2925cf(0x389)),fetchAdminPromocodes();}catch(_0x5929dd){console[_0x2925cf(0x12e)](_0x2925cf(0x347),_0x5929dd[_0x2925cf(0x20e)]),showBanner(_0x2925cf(0x1c9)+_0x5929dd[_0x4a8f4a(0x1b0)],_0x2925cf(0x12e));}}function togglePulseAIChat(){const _0x29bdaf=a0_0xe8aa85,_0x309134=a0_0x563c76,_0x3b4d1b=document[_0x29bdaf(0x345)](_0x309134(0x129));if(_0x3b4d1b&&(_0x3b4d1b[_0x309134(0x14a)][_0x309134(0x20a)](_0x309134(0x27d)),!_0x3b4d1b[_0x309134(0x14a)][_0x309134(0x138)](_0x309134(0x27d)))){const _0x430109=document[_0x309134(0x38f)](_0x309134(0x359));_0x430109&&_0x430109[_0x29bdaf(0xf4)](),scrollPulseAIMessages();}}function scrollPulseAIMessages(){const _0x577b90=a0_0xe8aa85,_0x452552=a0_0x563c76,_0x203086=document[_0x452552(0x38f)](_0x452552(0x3b7));_0x203086&&(_0x203086[_0x452552(0x2b1)]=_0x203086[_0x577b90(0x258)]);}function askPulseAIQuick(_0xe83f94){const _0x1093d0=a0_0xe8aa85,_0x2e8622=a0_0x563c76,_0x496c29=document[_0x2e8622(0x38f)](_0x2e8622(0x359));_0x496c29&&(_0x496c29[_0x1093d0(0x1eb)]=_0xe83f94,handlePulseAISubmit(new Event(_0x2e8622(0x37a))));}function escapePulseHTML(_0x122f52){const _0x1c1019=a0_0x563c76;return _0x122f52?_0x122f52[_0x1c1019(0x190)](/[&<>"']/g,function(_0x34c9ca){const _0x157741=_0x1c1019;return{'&':a0_0x20e0(0x171),'<':_0x157741(0x24d),'>':_0x157741(0x159),'\x22':_0x157741(0x311),'\x27':_0x157741(0x367)}[_0x34c9ca];}):'';}function handlePulseAISubmit(_0x2a924d){const _0x37e73f=a0_0x390237,_0x279673=a0_0xe8aa85,_0x12c685=a0_0x563c76;_0x2a924d&&_0x2a924d[_0x12c685(0x202)]();const _0x3628cc=document[_0x279673(0x345)](_0x279673(0x3df));if(!_0x3628cc)return;const _0x1b97ee=_0x3628cc[_0x12c685(0x25f)][_0x279673(0x280)]();_0x1b97ee&&(appendPulseAIMessage(_0x12c685(0x24b),escapePulseHTML(_0x1b97ee)),_0x3628cc[_0x37e73f(0x107)]='',setTimeout(()=>{appendPulseAIMessage(_0x12c685(0x18f),generatePulseAIResponse(_0x1b97ee));},0x15e));}function appendPulseAIMessage(_0x47c43f,_0x24e575){const _0x54e561=a0_0xe8aa85,_0x5db4e2=a0_0x563c76,_0x9e911=document[_0x5db4e2(0x38f)](_0x5db4e2(0x3b7));if(!_0x9e911)return;const _0x33641b=document[_0x5db4e2(0x1b8)](_0x54e561(0x18e));_0x33641b[_0x5db4e2(0x18e)]=_0x5db4e2(0x357)+_0x47c43f,_0x33641b[_0x5db4e2(0x229)]=_0x5db4e2(0x325)+_0x24e575+_0x5db4e2(0x1b3),_0x9e911[_0x5db4e2(0x350)](_0x33641b),scrollPulseAIMessages();}function generatePulseAIResponse(_0x9f4c6c){const _0x4f2a4e=a0_0x390237,_0xb94fa2=a0_0xe8aa85,_0x27a6c0=a0_0x563c76,_0x217028=_0x9f4c6c[_0xb94fa2(0x325)]()[_0x27a6c0(0x119)](),_0x5acb8b=/[\u10A0-\u10FF]/[_0x27a6c0(0x369)](_0x9f4c6c),_0x30e78e=_0x3110d2=>_0x3110d2[_0x4f2a4e(0x24a)](_0x172005=>_0x217028[_0x4f2a4e(0xf1)](_0x172005));return _0x30e78e([_0xb94fa2(0x2ea),_0x27a6c0(0x220),_0xb94fa2(0x1c1),_0x27a6c0(0x1de),_0x27a6c0(0x2d9),'hi',_0xb94fa2(0x2e9),_0x4f2a4e(0x17e),'yo',_0x27a6c0(0x337),_0x27a6c0(0x1f0)])?_0x5acb8b?_0x27a6c0(0x16a):'Hello!\x20👋\x20I\x20am\x20<strong>Pulse\x20AI</strong>,\x20the\x20official\x20PulseClient\x20support\x20bot.\x20How\x20can\x20I\x20help\x20you\x20today?<br><br>•\x20Client\x20Download\x20&\x20Installation<br>•\x20Keybinds\x20(F12\x20/\x20Shift)<br>•\x20Purchase\x20&\x20Licensing<br>•\x20HWID\x20&\x20Troubleshooting':_0x30e78e([_0x27a6c0(0x172),_0x4f2a4e(0x36a),_0x27a6c0(0x39f),_0x27a6c0(0x233),_0x27a6c0(0x302),_0x27a6c0(0x346)])?_0x27a6c0(_0x5acb8b?0x16c:0x2f4):_0x30e78e([_0xb94fa2(0x222),_0x27a6c0(0x1bf),'right\x20shift',_0x27a6c0(0x1d7),_0xb94fa2(0x11a),_0x27a6c0(0x28e),_0x27a6c0(0x315),_0x27a6c0(0x37f),_0x27a6c0(0x383),_0x27a6c0(0x2dd),_0x27a6c0(0x16d),_0x27a6c0(0x221),_0x4f2a4e(0x2ae)])?_0x5acb8b?_0x27a6c0(0x1b1):_0xb94fa2(0x304):_0x30e78e([_0x4f2a4e(0x334),_0x27a6c0(0x127),_0xb94fa2(0x2b5),_0x27a6c0(0x31f),_0x27a6c0(0x178),_0xb94fa2(0x2bd),_0xb94fa2(0x1b4),_0x4f2a4e(0xe8),_0x27a6c0(0x20f),_0x27a6c0(0x14c),_0x27a6c0(0x36d)])?_0x27a6c0(_0x5acb8b?0x3ba:0x143):_0x30e78e([_0x27a6c0(0x180),_0x27a6c0(0x349),_0x27a6c0(0x310),_0x27a6c0(0x1a1),_0x27a6c0(0x256),_0x27a6c0(0x23c),_0xb94fa2(0x34c)])?_0x27a6c0(_0x5acb8b?0x39a:0x33a):_0x30e78e([_0x27a6c0(0x2cf),_0x27a6c0(0x30f),_0xb94fa2(0x38e),_0x4f2a4e(0x18d),_0x27a6c0(0x31b),_0x27a6c0(0x168),_0x27a6c0(0x19e),_0x27a6c0(0x3b3),_0x27a6c0(0x291)])?_0x27a6c0(_0x5acb8b?0x38c:0x28c):_0x30e78e([_0x27a6c0(0x269),_0x27a6c0(0x39c),_0x27a6c0(0x29e),_0x27a6c0(0x397),_0x27a6c0(0x247),_0x4f2a4e(0x14a),_0xb94fa2(0x22e),_0x27a6c0(0x340)])?_0x27a6c0(_0x5acb8b?0x24c:0x10e):_0x30e78e([_0x27a6c0(0x1fb),_0x27a6c0(0x381),_0x27a6c0(0x21b),_0x27a6c0(0x37e),_0x27a6c0(0x29c),_0x27a6c0(0x2e4),_0x27a6c0(0x267),_0xb94fa2(0x236),_0x27a6c0(0x329),_0xb94fa2(0x237),_0x27a6c0(0x35d),_0x27a6c0(0x258),_0xb94fa2(0x112),_0x27a6c0(0x254)])?_0x27a6c0(_0x5acb8b?0x1ba:0x336):_0x30e78e([_0x27a6c0(0x28d),_0x27a6c0(0x2e5),_0x27a6c0(0x2fb),_0x27a6c0(0x270),_0x27a6c0(0x378),'free',_0x27a6c0(0x32c),_0x27a6c0(0x2b7),_0x27a6c0(0x316),_0xb94fa2(0x2c2),_0xb94fa2(0x1ff)])?_0x5acb8b?_0x27a6c0(0x1c3):_0xb94fa2(0x2a6):_0x30e78e([_0xb94fa2(0xd7),'pc',_0x27a6c0(0x12d),_0x27a6c0(0x111),_0x27a6c0(0x295),_0x27a6c0(0x1a7),_0x27a6c0(0x339)])?_0x27a6c0(_0x5acb8b?0x23d:0x241):_0x30e78e([_0x27a6c0(0x301),_0x27a6c0(0x391),_0x27a6c0(0x12e),_0xb94fa2(0x2c7),_0x27a6c0(0x1bc),_0x27a6c0(0x15d),_0x27a6c0(0x2c3),_0x27a6c0(0x2a9),_0x27a6c0(0x110),_0x27a6c0(0x239)])?_0x27a6c0(_0x5acb8b?0x396:0x38d):_0x30e78e([_0x27a6c0(0x155),_0x27a6c0(0x184),_0x27a6c0(0x14d),_0x27a6c0(0x11c),_0x27a6c0(0x27b),_0x27a6c0(0x148),_0xb94fa2(0x35d),_0x27a6c0(0x12a),_0x27a6c0(0x2f8),_0x27a6c0(0x208)])?_0x27a6c0(_0x5acb8b?0x2aa:0x2e7):_0x30e78e([_0x27a6c0(0x1e7),_0x27a6c0(0x228),_0x27a6c0(0x253),_0xb94fa2(0x1e2),_0x27a6c0(0x35c),'kk',_0x27a6c0(0x285),_0x27a6c0(0x162)])?_0x27a6c0(_0x5acb8b?0x224:0x3ac):_0x5acb8b?_0xb94fa2(0x343):_0x27a6c0(0x13d);}window[a0_0x563c76(0x242)]=isSuperOwner,window[a0_0x563c76(0x165)]=filterAdminLogs,window[a0_0x563c76(0x2b6)]=renderAdminLogs,window[a0_0x563c76(0x1a9)]=showLicenseDetails,window[a0_0x563c76(0x1df)]=resetLicenseHwid,window[a0_0x563c76(0x1f4)]=resetUserHwid,window[a0_0x563c76(0x207)]=revokeLicense,window[a0_0x563c76(0x179)]=closeLicenseModal,window[a0_0xe8aa85(0x147)]=copyCreatedKey,window[a0_0x563c76(0x36f)]=filterAdminLicenses,window[a0_0x390237(0x16c)]=filterDropdownUsers,window[a0_0x563c76(0x21e)]=openUserSelectionModal,window[a0_0xe8aa85(0x384)]=closeUserSelectionModal,window[a0_0xe8aa85(0x324)]=onLanguageChanged,window[a0_0x563c76(0x3a3)]=redeemPromoCode,window[a0_0x563c76(0x353)]=createPromoCodeFromAdmin,window[a0_0x563c76(0x1a0)]=fetchAdminPromocodes,window[a0_0x563c76(0x3a1)]=renderAdminPromocodes,window[a0_0x563c76(0x13a)]=deletePromocode,window[a0_0x563c76(0x37c)]=togglePulseAIChat,window[a0_0x563c76(0x194)]=askPulseAIQuick,window[a0_0xe8aa85(0x281)]=handlePulseAISubmit;function a0_0x3834(_0x3fcf91,_0x5bfe77){_0x3fcf91=_0x3fcf91-0xe2;const _0x195fc6=a0_0x195f();let _0x38342f=_0x195fc6[_0x3fcf91];if(a0_0x3834['bZXEBi']===undefined){var _0x42d083=function(_0x14ee2c){const _0xd25ed='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x58461b='',_0x7f4de7='';for(let _0x229e81=0x0,_0x189ef3,_0x5d206e,_0x1f37de=0x0;_0x5d206e=_0x14ee2c['charAt'](_0x1f37de++);~_0x5d206e&&(_0x189ef3=_0x229e81%0x4?_0x189ef3*0x40+_0x5d206e:_0x5d206e,_0x229e81++%0x4)?_0x58461b+=String['fromCharCode'](0xff&_0x189ef3>>(-0x2*_0x229e81&0x6)):0x0){_0x5d206e=_0xd25ed['indexOf'](_0x5d206e);}for(let _0x141517=0x0,_0x3a3ae3=_0x58461b['length'];_0x141517<_0x3a3ae3;_0x141517++){_0x7f4de7+='%'+('00'+_0x58461b['charCodeAt'](_0x141517)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x7f4de7);};a0_0x3834['OEGowl']=_0x42d083,a0_0x3834['PGIZoj']={},a0_0x3834['bZXEBi']=!![];}const _0x2673a5=_0x195fc6[0x0],_0x1ac572=_0x3fcf91+_0x2673a5,_0x2d3ad6=a0_0x3834['PGIZoj'][_0x1ac572];return!_0x2d3ad6?(_0x38342f=a0_0x3834['OEGowl'](_0x38342f),a0_0x3834['PGIZoj'][_0x1ac572]=_0x38342f):_0x38342f=_0x2d3ad6,_0x38342f;}const downloadLinuxBtn=document[a0_0xe8aa85(0x345)](a0_0xe8aa85(0x1af)),downloadMacBtn=document[a0_0xe8aa85(0x345)](a0_0x563c76(0x38b));function openDeviceSlotModal(){const _0x1b2b76=a0_0xe8aa85,_0x5eb18c=a0_0x563c76,_0x35fb95=document[_0x5eb18c(0x38f)](_0x5eb18c(0x372));_0x35fb95&&(_0x35fb95[_0x5eb18c(0x14a)][_0x5eb18c(0x235)](_0x1b2b76(0x19f)),updateDeviceSlotModalInfo());}function closeDeviceSlotModal(){const _0xe06364=a0_0x563c76,_0x3d2a55=document[_0xe06364(0x38f)](_0xe06364(0x372));_0x3d2a55&&_0x3d2a55[_0xe06364(0x14a)][_0xe06364(0x390)](_0xe06364(0x27d));}function updateDeviceSlotModalInfo(){const _0x5941aa=a0_0x390237,_0x3f1e18=a0_0xe8aa85,_0x39dda0=a0_0x563c76,_0x3e9a02=document[_0x39dda0(0x38f)](_0x39dda0(0x380));if(_0x3e9a02){if(userLicenses&&userLicenses[_0x5941aa(0x36f)]>0x0){const _0x3605c4=userLicenses[_0x39dda0(0x1d5)](_0x2bc33e=>_0x2bc33e[_0x3f1e18(0x2ab)])||userLicenses[0x0],_0x87a36=_0x3605c4[_0x39dda0(0x26e)]&&_0x39dda0(0x2bf)!==_0x3605c4[_0x39dda0(0x26e)]?_0x3605c4[_0x39dda0(0x26e)]:_0x39dda0(0x2ff);_0x3e9a02[_0x5941aa(0x300)]=_0x39dda0(0x341)+_0x87a36;}else _0x3e9a02[_0x39dda0(0x27c)]=_0x39dda0(0x30a);}}async function resetDeviceSlotHwid(){const _0x1950f3=a0_0xe8aa85,_0x12fa17=a0_0x563c76;if(!userLicenses||0x0===userLicenses[_0x1950f3(0x205)])return void showBanner(_0x12fa17(0x363),_0x12fa17(0x12e));const _0x5a2fe0=userLicenses[_0x12fa17(0x1d5)](_0x43d9a5=>_0x43d9a5[_0x12fa17(0x136)])||userLicenses[0x0];await resetUserHwid(_0x5a2fe0[_0x1950f3(0x226)]),updateDeviceSlotModalInfo();}function getUserCustomJarFilename(){const _0x38f71f=a0_0x390237,_0x1d2503=a0_0xe8aa85,_0x37c162=a0_0x563c76;let _0xd1615=_0x1d2503(0x166);if(currentUser){const _0x482ecd=currentUser[_0x37c162(0x13b)]||{};_0xd1615=_0x482ecd[_0x37c162(0x158)]||_0x482ecd[_0x37c162(0x309)]?.[_0x37c162(0x1f1)]||_0x482ecd[_0x1d2503(0x271)]||_0x482ecd[_0x37c162(0x287)]||_0xd1615;}return _0x37c162(0x225)+(_0xd1615[_0x38f71f(0x25c)](/[^a-zA-Z0-9_\-]/g,'_')[_0x1d2503(0xff)](/_+/g,'_')[_0x1d2503(0x280)]()||_0x37c162(0x28a))+_0x37c162(0x112);}async function handleCustomClientDownload(_0x2c687d){const _0x134478=a0_0x390237,_0x3e16aa=a0_0xe8aa85,_0x5edb6f=a0_0x563c76;_0x2c687d&&(_0x2c687d[_0x5edb6f(0x202)](),_0x2c687d[_0x5edb6f(0x1cc)]());const _0x5cd8c9=getUserCustomJarFilename();showBanner(_0x134478(0x371)+_0x5cd8c9,_0x3e16aa(0x242));try{const _0xb59997=await fetch(GITHUB_CLIENT_DOWNLOAD_URL);if(!_0xb59997['ok'])throw new Error(_0x3e16aa(0xe7)+_0xb59997[_0x3e16aa(0x1aa)]);const _0x1c00bf=await _0xb59997[_0x3e16aa(0x15e)](),_0x185575=URL[_0x5edb6f(0x2f0)](_0x1c00bf),_0xce6593=document[_0x3e16aa(0x1ba)]('a');_0xce6593[_0x3e16aa(0x13a)]=_0x185575,_0xce6593[_0x5edb6f(0x28b)]=_0x5cd8c9,document[_0x5edb6f(0x3b4)][_0x3e16aa(0x1d7)](_0xce6593),_0xce6593[_0x5edb6f(0x217)](),document[_0x5edb6f(0x3b4)][_0x5edb6f(0x2f9)](_0xce6593),setTimeout(()=>URL[_0x5edb6f(0x2f3)](_0x185575),0x3a98),closeDownloadModal();}catch(_0x2aa8f5){console[_0x5edb6f(0x1d1)](_0x5edb6f(0x2fe),_0x2aa8f5);const _0x4c0a15=document[_0x3e16aa(0x1ba)]('a');_0x4c0a15[_0x5edb6f(0x282)]=GITHUB_CLIENT_DOWNLOAD_URL,_0x4c0a15[_0x5edb6f(0x28b)]=_0x5cd8c9,_0x4c0a15[_0x5edb6f(0x35e)](_0x5edb6f(0x28b),_0x5cd8c9),document[_0x5edb6f(0x3b4)][_0x5edb6f(0x350)](_0x4c0a15),_0x4c0a15[_0x3e16aa(0x32d)](),document[_0x5edb6f(0x3b4)][_0x3e16aa(0xeb)](_0x4c0a15),closeDownloadModal();}}[downloadPvpBtn,downloadBasefindBtn,downloadLinuxBtn,downloadMacBtn][a0_0x563c76(0x137)](_0xfde78a=>{const _0x4adff1=a0_0xe8aa85,_0xf86828=a0_0x563c76;_0xfde78a&&(_0xfde78a[_0xf86828(0x282)]=GITHUB_BASEFIND_DOWNLOAD_URL,_0xfde78a[_0xf86828(0x35e)](_0x4adff1(0x1b5),GITHUB_BASEFIND_JAR_FILE));}),window[a0_0x563c76(0x36e)]=openDeviceSlotModal,window[a0_0x563c76(0x2bd)]=closeDeviceSlotModal,window[a0_0x563c76(0x174)]=resetDeviceSlotHwid,window[a0_0x563c76(0x2cb)]=getUserCustomJarFilename,window[a0_0x390237(0x32a)]=handleCustomClientDownload;
+// Initialize Supabase Client
+const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
+
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// DOM Elements
+const navLoginBtn = document.getElementById('nav-login-btn');
+const navUserProfile = document.getElementById('nav-user-profile');
+const navAvatar = document.getElementById('nav-avatar');
+const navUsername = document.getElementById('nav-username');
+const navLogoutBtn = document.getElementById('nav-logout-btn');
+
+const landingPage = document.getElementById('landing-page');
+const dashboardPage = document.getElementById('dashboard-page');
+
+const dashAvatar = document.getElementById('dash-avatar');
+const dashUsername = document.getElementById('dash-username');
+const dashLicenseCount = document.getElementById('dash-license-count');
+const dashLogoutBtn = document.getElementById('dash-logout-btn');
+
+const dashMessageBanner = document.getElementById('dash-message-banner');
+const bannerText = document.getElementById('banner-text');
+
+const licensesLoading = document.getElementById('licenses-loading');
+const noLicensesView = document.getElementById('no-licenses-view');
+const licensesList = document.getElementById('licenses-list');
+const refreshLicensesBtn = document.getElementById('refresh-licenses-btn');
+
+const bindLicenseForm = document.getElementById('bind-license-form');
+const bindKeyInput = document.getElementById('bind-key-input');
+const bindSubmitBtn = document.getElementById('bind-submit-btn');
+const downloadPvpBtn = document.getElementById('download-pvp-btn-modal');
+const downloadBasefindBtn = document.getElementById('download-basefind-btn-modal');
+
+const GITHUB_REPO_OWNER = 'Error404Missing';
+const GITHUB_REPO_NAME = 'PulseClient';
+const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
+const GITHUB_PVP_JAR_FILE = GITHUB_JAR_FILE;
+const GITHUB_BASEFIND_JAR_FILE = GITHUB_JAR_FILE;
+
+const GITHUB_CLIENT_DOWNLOAD_URL = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_JAR_FILE}`;
+const GITHUB_PVP_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
+const GITHUB_BASEFIND_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
+
+// Admin DOM Elements
+const adminMenuItem = document.getElementById('admin-menu-item');
+const tabContentAdmin = document.getElementById('tab-content-admin');
+const adminCreateForm = document.getElementById('admin-create-form');
+const adminBuyerInput = document.getElementById('admin-buyer-input');
+const adminProductSelect = document.getElementById('admin-product-select');
+const adminDurationSelect = document.getElementById('admin-duration-select');
+const adminDurationCustom = document.getElementById('admin-duration-custom');
+const adminKeyResult = document.getElementById('admin-key-result');
+const adminGeneratedKey = document.getElementById('admin-generated-key');
+const adminCopyKeyBtn = document.getElementById('admin-copy-key-btn');
+const adminSearchInput = document.getElementById('admin-search-input');
+const adminFilterSelect = document.getElementById('admin-filter-select');
+const adminLicensesLoading = document.getElementById('admin-licenses-loading');
+const adminLicensesTableBody = document.getElementById('admin-licenses-table-body');
+const adminTotalCount = document.getElementById('admin-total-count');
+const adminLogsTableBody = document.getElementById('admin-logs-table-body');
+const adminLogsSearchInput = document.getElementById('admin-logs-search-input');
+const adminSessionsTableBody = document.getElementById('admin-sessions-table-body');
+const adminSessionsLoading = document.getElementById('admin-sessions-loading');
+const adminSessionsCount = document.getElementById('admin-sessions-count');
+
+const licenseInfoModal = document.getElementById('license-info-modal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalKey = document.getElementById('modal-key');
+const modalBuyer = document.getElementById('modal-buyer');
+const modalCreator = document.getElementById('modal-creator');
+const modalStatus = document.getElementById('modal-status');
+const modalCreated = document.getElementById('modal-created');
+const modalExpires = document.getElementById('modal-expires');
+const modalHwid = document.getElementById('modal-hwid');
+const modalNote = document.getElementById('modal-note');
+
+const adminUserSelectWrapper = document.getElementById('admin-user-select-wrapper');
+const adminUserSelectTrigger = document.getElementById('admin-user-select-trigger');
+const adminUserSearch = document.getElementById('admin-modal-user-search');
+const adminUserOptionsList = document.getElementById('admin-modal-user-options-list');
+
+const ADMIN_DISCORD_IDS = ["1475396409246089367", "386205109069152257", "1158855771031867432","","1350538035342737441"];
+let currentUser = null;
+let adminLicenses = [];
+let allUserProfiles = [];
+
+// -----------------------------
+// PRICING: centralized plan data & formatter
+// -----------------------------
+const PRICING_PLANS = [
+  // cardIndex corresponds to DOM nth-child() inside #pricing .pricing-grid
+  { cardIndex: 2, planId: 'weekly', price_cents: 199, currency: 'USD', periodKey: 'pricing.per7' },
+  { cardIndex: 3, planId: 'lifetime', price_cents: 999, currency: 'USD', periodKey: 'pricing.once' },
+  { cardIndex: 4, planId: 'monthly', price_cents: 499, currency: 'USD', periodKey: 'pricing.per30' }
+];
+
+function formatCurrency(cents, currency = 'USD') {
+  if (cents === 0) return window.t ? window.t("pricing.free") : "Free";
+  const locale = (typeof window.getLocale === "function") ? window.getLocale() : "en-US";
+  try {
+    return new Intl.NumberFormat(locale, { style: 'currency', currency, maximumFractionDigits: 2 }).format(cents / 100);
+  } catch (err) {
+    if (currency === 'GEL') return `${(cents / 100).toFixed(2)} â‚¾`;
+    return `$${(cents / 100).toFixed(2)}`;
+  }
+}
+
+function applyPricingNumbers() {
+  PRICING_PLANS.forEach(p => {
+    try {
+      const priceEl = document.querySelector(`#pricing .pricing-card:nth-child(${p.cardIndex}) .price`);
+      if (!priceEl) return;
+      const periodText = (typeof window.t === "function") ? window.t(p.periodKey) : "";
+      priceEl.innerHTML = `${formatCurrency(p.price_cents, p.currency)}<span>${periodText}</span>`;
+    } catch (e) {
+      // non-fatal
+    }
+  });
+}
+window.applyPricingNumbers = applyPricingNumbers;
+
+function showPurchaseModal(event) {
+    if (event) event.preventDefault();
+    const purchaseInfoModal = document.getElementById('purchase-info-modal');
+    if (purchaseInfoModal) {
+        purchaseInfoModal.classList.remove('hidden');
+    }
+}
+window.showPurchaseModal = showPurchaseModal;
+
+function goToFreeTrial(event) {
+    if (event) event.preventDefault();
+    if (!currentUser) {
+        signInWithDiscord();
+    } else {
+        showDashboard();
+        switchDashTab(null, 'tab-redeem');
+        const trialCard = document.querySelector('.trial-card');
+        if (trialCard) {
+            trialCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            trialCard.classList.remove('trial-card-highlight');
+            void trialCard.offsetWidth; // trigger reflow
+            trialCard.classList.add('trial-card-highlight');
+        }
+    }
+}
+window.goToFreeTrial = goToFreeTrial;
+
+
+// App Initialization
+document.addEventListener('DOMContentLoaded', async () => {
+    // Capture referral ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const refId = urlParams.get('ref');
+    if (refId && refId.trim() !== "") {
+        localStorage.setItem('pulse_referral_discord_id', refId.trim());
+        // Clean URL to keep it neat
+        if (window.history.replaceState) {
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        }
+    }
+
+    // Check active session
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
+    if (session) {
+        handleUserSignIn(session.user);
+    } else {
+        handleUserSignOut();
+    }
+
+    // Set up OAuth redirect listener
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+            handleUserSignIn(session.user);
+        } else if (event === 'SIGNED_OUT') {
+            handleUserSignOut();
+        }
+    });
+
+    // Event Listeners
+    if (navLoginBtn) navLoginBtn.addEventListener('click', signInWithDiscord);
+    if (navLogoutBtn) navLogoutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        signOut();
+    });
+    if (dashLogoutBtn) dashLogoutBtn.addEventListener('click', signOut);
+    if (refreshLicensesBtn) refreshLicensesBtn.addEventListener('click', fetchUserLicenses);
+    if (bindLicenseForm) bindLicenseForm.addEventListener('submit', bindLicenseKey);
+    const claimTrialBtn = document.getElementById('claim-trial-btn');
+    if (claimTrialBtn) claimTrialBtn.addEventListener('click', claimFreeTrial);
+
+    const redeemPromoForm = document.getElementById('redeem-promo-form');
+    if (redeemPromoForm) redeemPromoForm.addEventListener('submit', redeemPromoCode);
+
+    const adminPromoCreateForm = document.getElementById('admin-promo-create-form');
+    if (adminPromoCreateForm) adminPromoCreateForm.addEventListener('submit', createPromoCodeFromAdmin);
+
+    // Admin Event Listeners
+    if (adminCreateForm) adminCreateForm.addEventListener('submit', createLicenseFromAdmin);
+    if (adminCopyKeyBtn) adminCopyKeyBtn.addEventListener('click', copyCreatedKey);
+    if (adminSearchInput) adminSearchInput.addEventListener('input', filterAdminLicenses);
+    if (adminFilterSelect) adminFilterSelect.addEventListener('change', filterAdminLicenses);
+    if (adminLogsSearchInput) adminLogsSearchInput.addEventListener('input', filterAdminLogs);
+    if (adminDurationSelect) adminDurationSelect.addEventListener('change', toggleCustomDurationInput);
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLicenseModal);
+    if (licenseInfoModal) {
+        licenseInfoModal.addEventListener('click', (e) => {
+            if (e.target === licenseInfoModal) closeLicenseModal();
+        });
+    }
+
+    const userSelectionModal = document.getElementById('user-selection-modal');
+    if (userSelectionModal) {
+        userSelectionModal.addEventListener('click', (e) => {
+            if (e.target === userSelectionModal) closeUserSelectionModal();
+        });
+    }
+
+
+
+    if (currentUser) {
+        checkForUpdates();
+    }
+
+    // Set default download links
+    if (downloadPvpBtn) {
+        downloadPvpBtn.href = GITHUB_PVP_DOWNLOAD_URL;
+        downloadPvpBtn.setAttribute('download', GITHUB_PVP_JAR_FILE);
+    }
+    if (downloadBasefindBtn) {
+        downloadBasefindBtn.href = GITHUB_BASEFIND_DOWNLOAD_URL;
+        downloadBasefindBtn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
+    }
+    if (updateDownloadBtn) {
+        updateDownloadBtn.href = GITHUB_PVP_DOWNLOAD_URL;
+        updateDownloadBtn.setAttribute('download', GITHUB_PVP_JAR_FILE);
+    }
+
+    // Apply saved language after all listeners are attached
+    if (typeof initLanguage === "function") initLanguage();
+
+    // Purchase Modal Event Listeners
+    const purchaseInfoModal = document.getElementById('purchase-info-modal');
+    const purchaseModalCloseBtn = document.getElementById('purchase-modal-close-btn');
+    if (purchaseModalCloseBtn && purchaseInfoModal) {
+        purchaseModalCloseBtn.addEventListener('click', () => {
+            purchaseInfoModal.classList.add('hidden');
+        });
+    }
+    if (purchaseInfoModal) {
+        purchaseInfoModal.addEventListener('click', (e) => {
+            if (e.target === purchaseInfoModal) {
+                purchaseInfoModal.classList.add('hidden');
+            }
+        });
+    }
+
+    // Apply pricing numbers after i18n initialization
+    try { applyPricingNumbers(); } catch (e) {}
+
+    // Ensure correct sidebar tab switching handlers are registered
+    try {
+        document.querySelectorAll('.sidebar-menu .menu-item').forEach((el) => {
+            el.addEventListener('click', (ev) => {
+                const href = el.getAttribute('href') || '';
+                if (href.startsWith('#tab-')) {
+                    ev.preventDefault();
+                    const target = href.replace('#', '');
+                    switchDashTab(ev, target);
+                }
+            });
+        });
+    } catch (e) {}
+
+});
+
+// Update Notification DOM Elements
+const updateNotification = document.getElementById('update-notification');
+const updateDateText = document.getElementById('update-date-text');
+const updateDownloadBtn = document.getElementById('update-download-btn');
+const updateDismissBtn = document.getElementById('update-dismiss-btn');
+
+// GitHub update check
+async function checkForUpdates() {
+    try {
+        // Fetch commits for the current jar file to know the last update time
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/commits?path=${encodeURIComponent(GITHUB_JAR_FILE)}&page=1&per_page=1`);
+        if (!res.ok) throw new Error("GitHub API rate limit or error");
+        const commits = await res.json();
+        if (commits && commits.length > 0) {
+            const latestCommitSha = commits[0].sha;
+            const latestCommitDate = commits[0].commit.committer.date;
+            const latestDateObj = new Date(latestCommitDate);
+            
+            // Update local download link date display on downloads tab if needed
+            const updatedDateEl = document.querySelector('.updated-date');
+            if (updatedDateEl) {
+                updatedDateEl.textContent = t("msg.lastUpdated") + latestDateObj.toLocaleDateString(getLocale()) + " " + latestDateObj.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit' });
+            }
+
+            // Check if user dismissed this update
+            const dismissedSha = localStorage.getItem('pulse_dismissed_update_sha');
+            if (dismissedSha !== latestCommitSha) {
+                // Show update notification
+                if (updateNotification) {
+                    updateNotification.classList.remove('hidden');
+                    if (updateDateText) {
+                        updateDateText.textContent = t("msg.updateAvailable", { date: latestDateObj.toLocaleDateString(getLocale()) });
+                    }
+                }
+
+                if (updateDismissBtn) {
+                    updateDismissBtn.onclick = () => {
+                        localStorage.setItem('pulse_dismissed_update_sha', latestCommitSha);
+                        updateNotification.classList.add('hidden');
+                    };
+                }
+            }
+        }
+    } catch (err) {
+        console.warn("Could not check for updates via GitHub:", err.message);
+    }
+}
+
+// Auth Functions
+async function signInWithDiscord() {
+    try {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'discord',
+            options: {
+                redirectTo: window.location.origin + window.location.pathname
+            }
+        });
+        if (error) throw error;
+    } catch (err) {
+        console.error("Login failed:", err.message);
+        alert(t("msg.loginFail") + err.message);
+    }
+}
+
+async function signOut() {
+    await supabaseClient.auth.signOut();
+}
+
+function cleanAvatarUrl(url) {
+    if (!url) return "https://cdn.discordapp.com/embed/avatars/0.png";
+    if (url.includes('?')) {
+        return url.split('?')[0];
+    }
+    return url;
+}
+
+function handleUserSignIn(user) {
+    currentUser = user;
+    
+    // Get Discord Profile Details
+    const metadata = user.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "ÃŸÃ¢Â¢ÃŸÃ¢Â¥ÃŸÃ¢Â¢ÃŸÃ¢Â«ÃŸÃ¢Â¢ÃŸÃ¢Ã‰ÃŸÃ¢Ã¡ÃŸÃ¢Ã¶ÃŸÃ¢Ã¦ÃŸÃ¢Ã¶ÃŸÃ¢ÃœÃŸÃ¢Ã¿";
+    const avatar = cleanAvatarUrl(metadata.avatar_url);
+
+    // Update Nav
+    navLoginBtn.classList.add('hidden');
+    navUserProfile.classList.remove('hidden');
+    navAvatar.src = avatar;
+    navUsername.textContent = username;
+
+    // Update Dashboard Profile
+    dashAvatar.src = avatar;
+    dashUsername.textContent = username;
+
+    // Switch Views only if dashboard tab explicitly requested
+    if (window.location.hash === '#dashboard' || window.location.hash.startsWith('#tab-')) {
+        landingPage.classList.add('hidden');
+        dashboardPage.classList.remove('hidden');
+    } else {
+        landingPage.classList.remove('hidden');
+        dashboardPage.classList.add('hidden');
+    }
+
+    // Show/Hide Admin menu item
+    if (isAdmin()) {
+        if (adminMenuItem) adminMenuItem.classList.remove('hidden');
+    } else {
+        if (adminMenuItem) adminMenuItem.classList.add('hidden');
+    }
+    // Save/Update user profile
+    saveUserProfile(user);
+
+    // Asynchronously fetch latest profile from DB in case it was synced by bot
+    fetchLatestProfile(user.id);
+
+    // Set up referral link for the logged in user
+    const discordId = getDiscordId(user);
+    const refLinkInput = document.getElementById('referral-link-input');
+    if (refLinkInput && discordId) {
+        refLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${discordId}`;
+    }
+    const copyRefBtn = document.getElementById('copy-referral-btn');
+    if (copyRefBtn && refLinkInput) {
+        copyRefBtn.onclick = () => {
+            navigator.clipboard.writeText(refLinkInput.value).then(() => {
+                const origText = copyRefBtn.textContent;
+                copyRefBtn.textContent = t("msg.copied");
+                setTimeout(() => { copyRefBtn.textContent = origText; }, 2000);
+            });
+        };
+    }
+
+    // Set up referral code display for the logged in user
+    const refCodeDisplay = document.getElementById('referral-code-display');
+    if (refCodeDisplay && discordId) {
+        refCodeDisplay.value = generateReferralCodeFromDiscordId(String(discordId));
+    }
+    const copyRefCodeBtn = document.getElementById('copy-referral-code-btn');
+    if (copyRefCodeBtn && refCodeDisplay) {
+        copyRefCodeBtn.onclick = () => {
+            navigator.clipboard.writeText(refCodeDisplay.value).then(() => {
+                const origText = copyRefCodeBtn.textContent;
+                copyRefCodeBtn.textContent = t("msg.copied");
+                setTimeout(() => { copyRefCodeBtn.textContent = origText; }, 2000);
+            });
+        };
+    }
+
+    // Set up referral code redemption form
+    const refCodeForm = document.getElementById('referral-code-form');
+    if (refCodeForm) {
+        refCodeForm.onsubmit = async (e) => {
+            e.preventDefault();
+            await redeemReferralCode();
+        };
+    }
+
+    // Fetch Licenses
+    fetchUserLicenses();
+
+    // Check for mod updates
+    checkForUpdates();
+}
+
+function handleUserSignOut() {
+    currentUser = null;
+
+    // Update Nav
+    navLoginBtn.classList.remove('hidden');
+    navUserProfile.classList.add('hidden');
+
+    // Switch Views
+    landingPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+
+    // Hide Admin menu item
+    if (adminMenuItem) {
+        adminMenuItem.classList.add('hidden');
+    }
+}
+
+// Database / Licenses Functions
+async function fetchUserLicenses() {
+    if (!currentUser) return;
+
+    licensesLoading.classList.remove('hidden');
+    noLicensesView.classList.add('hidden');
+    licensesList.classList.add('hidden');
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+
+    try {
+        // Query licenses matching "Buyer: <username>" in the note column
+        const { data, error } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+
+        if (error) throw error;
+
+        licensesLoading.classList.add('hidden');
+        dashLicenseCount.textContent = data.length;
+
+        if (data.length === 0) {
+            noLicensesView.classList.remove('hidden');
+        } else {
+            renderLicenses(data);
+        }
+    } catch (err) {
+        console.error("Error fetching licenses:", err.message);
+        showBanner(t("msg.licLoadFail") + err.message, "error");
+        licensesLoading.classList.add('hidden');
+    }
+}
+
+function renderLicenses(licenses) {
+    licensesList.innerHTML = '';
+    
+    licenses.forEach(lic => {
+        const item = document.createElement('div');
+        item.className = 'license-item';
+
+        // Format expiry date
+        let expiryDisplay = t("status.lifetime");
+        if (lic.expires_at) {
+            if (lic.expires_at.startsWith("2000-01-01")) {
+                expiryDisplay = t("status.notActivated");
+            } else {
+                const expDate = new Date(lic.expires_at);
+                const now = new Date();
+                if (expDate < now) {
+                    expiryDisplay = t("status.expiredShort");
+                } else {
+                const diffTime = Math.abs(expDate - now);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (diffDays > 365 * 10) {
+                    expiryDisplay = t("status.lifetime");
+                } else {
+                    expiryDisplay = t("status.daysLeft", { n: diffDays });
+                }
+                }
+            }
+        }
+
+        const statusClass = lic.is_active ? 'active' : 'revoked';
+        const statusText = lic.is_active ? t('status.active') : t('status.revoked');
+
+        const hwidText = lic.hwid && lic.hwid !== 'null' ? (lic.hwid.length > 14 ? lic.hwid.substring(0, 14) + '...' : lic.hwid) : t('status.notActivated');
+        const hwidTooltip = lic.hwid && lic.hwid !== 'null' ? lic.hwid : '';
+        const hasHwid = lic.hwid && lic.hwid !== 'null';
+
+        item.innerHTML = `
+            <div class="lic-key-info">
+                <h4>${t('lic.keyLabel')}</h4>
+                <code>${lic.license_key}</code>
+            </div>
+            <div class="lic-status-badge ${statusClass}">
+                ${statusText}
+            </div>
+            <div class="lic-expiry-info">
+                <span class="label">${t('lic.expiryLabel')}</span>
+                <span class="val">${expiryDisplay}</span>
+            </div>
+            <div class="lic-hwid-info">
+                <span class="label">${t('lic.hwidLabel')}</span>
+                <span class="val mono" title="${hwidTooltip}">${hwidText}</span>
+            </div>
+            <div class="lic-actions-info">
+                <button class="btn reset-hwid-btn" onclick="resetUserHwid('${lic.license_key}')" ${hasHwid && lic.is_active ? '' : 'disabled'}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                    ${t('dash.resetHwidBtn')}
+                </button>
+            </div>
+        `;
+        licensesList.appendChild(item);
+    });
+
+    licensesList.classList.remove('hidden');
+}
+
+// Bind License Key to User
+async function bindLicenseKey(e) {
+    e.preventDefault();
+    const key = bindKeyInput.value.trim();
+    if (!key) return;
+
+    bindSubmitBtn.disabled = true;
+    bindSubmitBtn.textContent = t("msg.bindLoading");
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+
+    try {
+        // 1. Check if the key exists in database
+        const { data: license, error: fetchError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .eq('license_key', key)
+            .maybeSingle();
+
+        if (fetchError) throw fetchError;
+
+        if (!license) {
+            showBanner(t("msg.keyNotFound"), "error");
+            bindSubmitBtn.disabled = false;
+            bindSubmitBtn.textContent = t("dash.bindBtn");
+            return;
+        }
+
+        // 2. Check if key is already linked to someone else
+        if (license.note && license.note.includes("Buyer:") && !license.note.includes(username)) {
+            // Note contains another buyer name
+            showBanner(t("msg.keyTaken"), "error");
+            bindSubmitBtn.disabled = false;
+            bindSubmitBtn.textContent = t("dash.bindBtn");
+            return;
+        }
+
+        // 3. Check if user has already triggered a referral
+        const { data: userLicenses } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+        const hasTriggeredRef = userLicenses && userLicenses.some(l => l.note && l.note.includes("Referred by:"));
+
+        let referrerName = null;
+        if (!hasTriggeredRef) {
+            referrerName = await processReferralBonus(username);
+        }
+
+        // 4. Update the note column to associate with current user, preserving original creator/metadata info
+        const originalNote = license.note || "";
+        let newNote = originalNote;
+        let expiresAtUpdate = license.expires_at;
+
+        // If the license has not been activated/timed yet, and has a Duration: X in its note:
+        if ((!license.expires_at || license.expires_at.startsWith("2000-01-01")) && /Duration:\s*(\d+)/i.test(originalNote)) {
+            const durationMatch = originalNote.match(/Duration:\s*(\d+)/i);
+            if (durationMatch) {
+                const days = parseInt(durationMatch[1], 10);
+                expiresAtUpdate = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+            }
+        }
+
+        // Replace or add Buyer in the note dynamically while keeping other metadata intact
+        if (/Buyer:\s*([^|()]+)/i.test(newNote)) {
+            newNote = newNote.replace(/Buyer:\s*([^|()]+)/i, `Buyer: ${username} `);
+        } else {
+            newNote = `Product: PulseClient | Buyer: ${username} | ${newNote}`;
+        }
+
+        // Append Linked via Dashboard if not already present
+        if (!newNote.includes("Linked via Dashboard")) {
+            newNote += ` (Linked via Dashboard)`;
+        }
+
+        if (referrerName && expiresAtUpdate && !expiresAtUpdate.startsWith("2000-01-01")) {
+            const currentExpiry = new Date(expiresAtUpdate);
+            expiresAtUpdate = new Date(currentExpiry.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString();
+        }
+
+        if (referrerName && !newNote.includes("Referred by:")) {
+            newNote += ` | Referred by: ${referrerName}`;
+        }
+
+        const { error: updateError } = await supabaseClient
+            .from('licenses')
+            .update({ note: newNote, expires_at: expiresAtUpdate })
+            .eq('license_key', key);
+
+        if (updateError) throw updateError;
+
+        showBanner(t("msg.bindSuccess"), "success");
+        bindKeyInput.value = '';
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Binding failed:", err.message);
+        showBanner(t("msg.bindFail") + err.message, "error");
+    } finally {
+        bindSubmitBtn.disabled = false;
+        bindSubmitBtn.textContent = t("dash.bindBtn");
+    }
+}
+
+// Alert Banner helper functions
+function showBanner(message, type = "info") {
+    // Select icon based on type
+    let iconSvg = '';
+    if (type === 'success') {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+    } else if (type === 'error') {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+    } else {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+    }
+
+    // Set structure
+    dashMessageBanner.innerHTML = `
+        <div class="alert-banner-content">
+            <div class="alert-banner-icon">${iconSvg}</div>
+            <span id="banner-text">${message}</span>
+        </div>
+        <button onclick="hideBanner()" class="close-banner" aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    `;
+
+    dashMessageBanner.className = `alert-banner ${type}`;
+    dashMessageBanner.classList.remove('hidden', 'banner-hide');
+
+    // Auto hide after 5 seconds
+    if (window.bannerTimeout) clearTimeout(window.bannerTimeout);
+    window.bannerTimeout = setTimeout(hideBanner, 5000);
+}
+
+function hideBanner() {
+    if (dashMessageBanner.classList.contains('hidden')) return;
+    dashMessageBanner.classList.add('banner-hide');
+    setTimeout(() => {
+        dashMessageBanner.classList.add('hidden');
+        dashMessageBanner.classList.remove('banner-hide');
+    }, 300);
+}
+
+// Utility smooth scroll
+function scrollToAuth() {
+    if (currentUser) {
+        document.getElementById('dashboard-page').scrollIntoView();
+    } else {
+        signInWithDiscord();
+    }
+}
+window.scrollToAuth = scrollToAuth;
+// Sidebar Dashboard Tab Switcher
+function switchDashTab(event, tabId) {
+    if (event) event.preventDefault();
+    
+    // Hide all tabs
+    document.getElementById('tab-content-downloads').classList.add('hidden');
+    document.getElementById('tab-content-redeem').classList.add('hidden');
+    document.getElementById('tab-content-faq').classList.add('hidden');
+    if (document.getElementById('tab-content-referral')) {
+        document.getElementById('tab-content-referral').classList.add('hidden');
+    }
+    if (document.getElementById('tab-content-promo')) {
+        document.getElementById('tab-content-promo').classList.add('hidden');
+    }
+    if (document.getElementById('tab-content-admin')) {
+        document.getElementById('tab-content-admin').classList.add('hidden');
+    }
+    
+    // Show active tab
+    if (tabId === 'tab-downloads') {
+        document.getElementById('tab-content-downloads').classList.remove('hidden');
+    } else if (tabId === 'tab-redeem') {
+        document.getElementById('tab-content-redeem').classList.remove('hidden');
+    } else if (tabId === 'tab-referral') {
+        if (document.getElementById('tab-content-referral')) {
+            document.getElementById('tab-content-referral').classList.remove('hidden');
+        }
+    } else if (tabId === 'tab-promo') {
+        if (document.getElementById('tab-content-promo')) {
+            document.getElementById('tab-content-promo').classList.remove('hidden');
+        }
+    } else if (tabId === 'tab-faq') {
+        document.getElementById('tab-content-faq').classList.remove('hidden');
+    } else if (tabId === 'tab-admin') {
+        if (document.getElementById('tab-content-admin')) {
+            document.getElementById('tab-content-admin').classList.remove('hidden');
+        }
+        fetchAllLicenses();
+        fetchProfilesForAdmin();
+        fetchAdminPromocodes();
+        fetchActiveSessions();
+    }    
+    // Deactivate all menu items
+    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    menuItems.forEach(item => item.classList.remove('active'));
+    
+    // Activate clicked menu item
+    if (event) {
+        event.currentTarget.classList.add('active');
+    }
+
+    // Scroll smoothly to dashboard top
+    const dbPage = document.getElementById('dashboard-page');
+    if (dbPage) {
+        dbPage.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+window.switchDashTab = switchDashTab;
+
+// Scroll to specific section
+function scrollToElement(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+window.scrollToElement = scrollToElement;
+
+// Client Download Modal Actions
+function openDownloadModal() {
+    const modal = document.getElementById('client-download-modal');
+    if (modal) modal.classList.remove('hidden');
+    // Re-apply translations to modal elements
+    if (typeof applyLanguage === 'function') applyLanguage(window.currentLang || 'ka');
+}
+function closeDownloadModal() {
+    const modal = document.getElementById('client-download-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.openDownloadModal = openDownloadModal;
+window.closeDownloadModal = closeDownloadModal;
+
+// Toggle FAQ item expansion
+function toggleFaq(event) {
+    const item = event.currentTarget;
+    item.classList.toggle('active');
+    
+    const p = item.querySelector('p');
+    if (p) {
+        if (item.classList.contains('active')) {
+            p.style.maxHeight = p.scrollHeight + 'px';
+            p.style.marginTop = '12px';
+            p.style.opacity = '1';
+        } else {
+            p.style.maxHeight = '0';
+            p.style.marginTop = '0';
+            p.style.opacity = '0';
+        }
+    }
+}
+window.toggleFaq = toggleFaq;
+
+// Navigate to landing page sections from navbar/logo
+function navigateToLandingSection(event, sectionId) {
+    if (event) event.preventDefault();
+    
+    // Switch views to show landing page
+    landingPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+    
+    // Scroll to section
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if (window.history.replaceState) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+}
+window.navigateToLandingSection = navigateToLandingSection;
+
+// Show dashboard view
+function showDashboard() {
+    landingPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
+    // Default to downloads tab
+    switchDashTab(null, 'tab-downloads');
+}
+window.showDashboard = showDashboard;
+
+// ==========================================
+// ADMIN PANEL FUNCTIONS
+// ==========================================
+
+
+const OWNER_DISCORD_ID = "1475396409246089367";
+
+function isSuperOwner() {
+    if (!currentUser) return false;
+    const providerId = String(currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id));
+    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "").toLowerCase();
+    return providerId === OWNER_DISCORD_ID || username === "errora" || username.includes("error404") || username.includes("udzlieresi");
+}
+window.isSuperOwner = isSuperOwner;
+
+function isAdmin() {
+    if (!currentUser) return false;
+    const providerId = currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+    return ADMIN_DISCORD_IDS.includes(String(providerId));
+}
+
+function parseLicenseNote(note) {
+    let product = "PulseClient";
+    let buyer = "Unknown";
+    let createdBy = "Î“Ã‡Ã¶";
+    
+    if (note) {
+        const prodMatch = note.match(/Product:\s*([^|]+)/i);
+        if (prodMatch) product = prodMatch[1].trim();
+        
+        const buyerMatch = note.match(/Buyer:\s*([^|(]+)/i);
+        if (buyerMatch) buyer = buyerMatch[1].trim();
+
+        const byMatch = note.match(/\(by\s+([^)]+)\)/i);
+        const promoMatch = note.match(/Promocode:\s*([^|)]+)/i);
+        
+        if (byMatch) {
+            createdBy = byMatch[1].trim();
+        } else if (promoMatch) {
+            createdBy = `Promocode: ${promoMatch[1].trim()}`;
+        } else if (/Free Trial/i.test(note)) {
+            createdBy = "Free Trial";
+        } else if (/Linked via Dashboard/i.test(note)) {
+            createdBy = t("creator.dashboard");
+        }
+    }
+    
+    return { product, buyer, createdBy };
+}
+
+function generateLicenseKey() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const segment = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    return `${segment()}-${segment()}-${segment()}-${segment()}`;
+}
+
+async function fetchAllLicenses() {
+    if (!isAdmin()) return;
+
+    adminLicensesLoading.classList.remove('hidden');
+    adminLicensesTableBody.innerHTML = '';
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?select=*&order=created_at.desc`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+
+        adminLicenses = data || [];
+        renderAdminLicenses(adminLicenses);
+        renderAdminLogs(adminLicenses);
+    } catch (err) {
+        console.error("Error fetching all licenses:", err.message);
+        showBanner(t("msg.dataLoadFail") + err.message, "error");
+    } finally {
+        adminLicensesLoading.classList.add('hidden');
+    }
+}
+
+// ========== Active Sessions Telemetry ==========
+
+async function fetchActiveSessions() {
+    if (!isAdmin()) return;
+
+    if (adminSessionsLoading) adminSessionsLoading.classList.remove('hidden');
+    if (adminSessionsTableBody) adminSessionsTableBody.innerHTML = '';
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+        renderActiveSessions(data || []);
+    } catch (err) {
+        console.error("Error fetching active sessions:", err.message);
+    } finally {
+        if (adminSessionsLoading) adminSessionsLoading.classList.add('hidden');
+    }
+}
+
+function renderActiveSessions(sessions) {
+    if (!adminSessionsTableBody) return;
+    adminSessionsTableBody.innerHTML = '';
+
+    const now = Date.now();
+    let onlineCount = 0;
+
+    if (sessions.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td>`;
+        adminSessionsTableBody.appendChild(row);
+        if (adminSessionsCount) adminSessionsCount.textContent = '0';
+        return;
+    }
+
+    const formatTime = (dateStr) => {
+        if (!dateStr) return 'N/A';
+        const d = new Date(dateStr);
+        return d.toLocaleString('ka-GE', {
+            day: '2-digit', month: '2-digit',
+            hour: '2-digit', minute: '2-digit'
+        });
+    };
+
+    sessions.forEach(session => {
+        const lastHb = new Date(session.last_heartbeat);
+        const diffMs = now - lastHb.getTime();
+        const isOnline = diffMs < 15 * 60 * 1000;
+        if (isOnline) onlineCount++;
+
+        // Format duration
+        const totalMinutes = session.duration_minutes || 0;
+        let durationStr;
+        if (totalMinutes < 60) {
+            durationStr = `${totalMinutes} წთ`;
+        } else {
+            const hours = Math.floor(totalMinutes / 60);
+            const mins = totalMinutes % 60;
+            durationStr = `${hours} სთ ${mins} წთ`;
+        }
+
+        // Status dot
+        const statusDot = isOnline
+            ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;box-shadow:0 0 6px #22c55e;"></span>'
+            : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6b7280;margin-right:6px;"></span>';
+
+        // Mask license key
+        const maskedKey = session.license_key
+            ? session.license_key.substring(0, 4) + '-****-****-****'
+            : 'N/A';
+
+        // Country flag emoji
+        const countryCode = session.country && session.country !== 'Unknown' ? session.country : null;
+        let countryDisplay = session.country || 'N/A';
+        if (countryCode && countryCode.length === 2) {
+            const flag = String.fromCodePoint(
+                ...countryCode.toUpperCase().split('').map(c => 0x1F1E6 + c.charCodeAt(0) - 65)
+            );
+            countryDisplay = `${flag} ${countryCode}`;
+        }
+
+        // Started at
+        const startedStr = formatTime(session.started_at);
+        // Finished at (last heartbeat) — if online, show "ახლა ონლაინშია"
+        const finishedStr = isOnline
+            ? '<span style="color: #22c55e; font-weight: 600;">ონლაინშია ⚡</span>'
+            : formatTime(session.last_heartbeat);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
+            <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
+            <td>${session.os_name || 'N/A'}</td>
+            <td>${countryDisplay}</td>
+            <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
+            <td style="font-weight: 600;">${durationStr}</td>
+            <td style="font-size: 12px;">${finishedStr}</td>
+        `;
+        adminSessionsTableBody.appendChild(row);
+    });
+
+    if (adminSessionsCount) adminSessionsCount.textContent = onlineCount.toString();
+}
+
+function renderAdminLicenses(licenses) {
+    adminLicensesTableBody.innerHTML = '';
+    adminTotalCount.textContent = licenses.length;
+
+    if (licenses.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">${t("msg.noLicenses")}</td>`;
+        adminLicensesTableBody.appendChild(row);
+        return;
+    }
+
+    licenses.forEach(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+
+        let status = 'active';
+        let statusText = t('status.active');
+        
+        if (!lic.is_active) {
+            status = 'revoked';
+            statusText = t('status.revoked');
+        } else if (lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) < new Date()) {
+            status = 'expired';
+            statusText = t('status.expired');
+        }
+
+        let expiryDisplay = t("status.lifetime");
+        if (lic.expires_at) {
+            if (lic.expires_at.startsWith("2000-01-01")) {
+                expiryDisplay = t("status.notActivated");
+            } else {
+                const expDate = new Date(lic.expires_at);
+                expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
+            }
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="product-cell">${product}</td>
+            <td class="buyer-cell">${buyer}</td>
+            <td class="creator-cell">${createdBy}</td>
+            <td><span class="key-cell" title="${lic.license_key}">${lic.license_key}</span></td>
+            <td><span class="admin-status ${status}">${statusText}</span></td>
+            <td>${expiryDisplay}</td>
+            <td>
+                <div class="admin-actions">
+                    <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="${t('admin.actionInfo')}" aria-label="${t('admin.actionInfo')}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </button>
+                    <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" title="${t('admin.actionHwid')}" aria-label="${t('admin.actionHwid')}" ${lic.hwid ? '' : 'disabled'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                    </button>
+                    <button type="button" class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" title="${t('admin.actionRevoke')}" aria-label="${t('admin.actionRevoke')}" ${lic.is_active ? '' : 'disabled'}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                    </button>
+                </div>
+            </td>
+        `;
+        adminLicensesTableBody.appendChild(tr);
+    });
+}
+
+function filterAdminLicenses() {
+    const query = adminSearchInput.value.toLowerCase().trim();
+    const filter = adminFilterSelect.value;
+
+    const filtered = adminLicenses.filter(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        const matchesQuery = 
+            lic.license_key.toLowerCase().includes(query) ||
+            buyer.toLowerCase().includes(query) ||
+            createdBy.toLowerCase().includes(query) ||
+            product.toLowerCase().includes(query) ||
+            (lic.note && lic.note.toLowerCase().includes(query));
+
+        let matchesFilter = true;
+        if (filter === 'active') {
+            matchesFilter = lic.is_active && (!lic.expires_at || lic.expires_at.startsWith("2000-01-01") || new Date(lic.expires_at) >= new Date());
+        } else if (filter === 'revoked') {
+            matchesFilter = !lic.is_active;
+        } else if (filter === 'expired') {
+            matchesFilter = lic.is_active && lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) < new Date();
+        }
+
+        return matchesQuery && matchesFilter;
+    });
+
+    renderAdminLicenses(filtered);
+}
+
+function renderAdminLogs(licenses) {
+    if (!adminLogsTableBody) return;
+    adminLogsTableBody.innerHTML = '';
+
+    // Transform licenses data into individual activities/events
+    const logs = [];
+
+    licenses.forEach(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        const timestamp = new Date(lic.created_at).toLocaleString(getLocale());
+
+        // 1. Generation event
+        let action = "ლიცენზიის შექმნა";
+        let details = `შეიქმნა <strong>${product}</strong> ლიცენზია მომხმარებლისთვის: <strong>${buyer}</strong>. ლიცენზია: <code>${lic.license_key}</code>`;
+        
+        if (lic.note && lic.note.includes("Free Trial")) {
+            action = "საცდელი ვერსიის აღება";
+            details = `მომხმარებელმა აიღო 3-დღიანი უფასო საცდელი ლიცენზია: <code>${lic.license_key}</code>`;
+        }
+
+        logs.push({
+            dateObj: new Date(lic.created_at),
+            date: timestamp,
+            user: createdBy || "სისტემა",
+            action: action,
+            details: details
+        });
+
+        // 2. Referral event if present in note
+        if (lic.note && lic.note.includes("Referred by:")) {
+            const refMatch = lic.note.match(/Referred by:\s*([^|]+)/i);
+            const referrer = refMatch ? refMatch[1].trim() : "უცნობი";
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: buyer,
+                action: "რეფერალის გამოყენება",
+                details: `დარეგისტრირდა რეფერალური ბმულით. მოწვევა: <strong>${referrer}</strong>`
+            });
+        }
+
+        // 3. Referral Bonus event
+        if (lic.note && lic.note.includes("Referral Bonus for inviting")) {
+            const matches = [...lic.note.matchAll(/Referral Bonus for inviting\s+([^|)]+)/gi)];
+            matches.forEach(match => {
+                const invited = match[1].trim();
+                logs.push({
+                    dateObj: new Date(lic.created_at),
+                    date: timestamp,
+                    user: buyer,
+                    action: "რეფერალ ბონუსი (+3 დღე)",
+                    details: `დაემატა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
+                });
+            });
+        }
+
+        // 3.5 Promocode redemption event
+        if (lic.note && lic.note.includes("Promocode:")) {
+            const promoMatches = [...lic.note.matchAll(/Promocode:\s*([^|)]+)/gi)];
+            promoMatches.forEach(match => {
+                const pCode = match[1].trim();
+                logs.push({
+                    dateObj: new Date(lic.created_at),
+                    date: timestamp,
+                    user: buyer,
+                    action: "პრომო კოდის გამოყენება",
+                    details: `გამოყენებულ იქნა პრომო კოდი: <strong>${pCode}</strong> ლიცენზიაზე: <code>${lic.license_key}</code>`
+                });
+            });
+        }
+
+        // 4. Revocation event if inactive
+        if (!lic.is_active) {
+            // Estimate revocation time as a bit after creation or use updated_at if we had one, but we'll use created_at as reference
+            logs.push({
+                dateObj: new Date(lic.created_at),
+                date: timestamp,
+                user: "ადმინისტრატორი",
+                action: "ლიცენზიის გაუქმება",
+                details: `გაუქმდა ლიცენზია: <code>${lic.license_key}</code>`
+            });
+        }
+    });
+
+    // Sort logs descending by timestamp
+    logs.sort((a, b) => b.dateObj - a.dateObj);
+
+    if (logs.length === 0) {
+        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტივობები არ მოიძებნა</td></tr>`;
+        return;
+    }
+
+    logs.forEach(log => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td style="white-space: nowrap; color: var(--text-muted);">${log.date}</td>
+            <td style="font-weight: 600;">${log.user}</td>
+            <td><span class="admin-status info" style="background: rgba(124, 77, 255, 0.1); color: #7C4DFF;">${log.action}</span></td>
+            <td>${log.details}</td>
+        `;
+        adminLogsTableBody.appendChild(tr);
+    });
+}
+
+function filterAdminLogs() {
+    if (!adminLogsSearchInput) return;
+    const query = adminLogsSearchInput.value.toLowerCase().trim();
+
+    const filteredLicenses = adminLicenses.filter(lic => {
+        const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+        return lic.license_key.toLowerCase().includes(query) ||
+               buyer.toLowerCase().includes(query) ||
+               createdBy.toLowerCase().includes(query) ||
+               (lic.note && lic.note.toLowerCase().includes(query));
+    });
+
+    renderAdminLogs(filteredLicenses);
+}
+
+window.filterAdminLogs = filterAdminLogs;
+window.renderAdminLogs = renderAdminLogs;
+
+function toggleCustomDurationInput() {
+    if (!adminDurationCustom || !adminDurationSelect) return;
+    const isCustom = adminDurationSelect.value === 'custom';
+    adminDurationCustom.classList.toggle('hidden', !isCustom);
+    adminDurationCustom.required = isCustom;
+    if (isCustom) {
+        adminDurationCustom.focus();
+    } else {
+        adminDurationCustom.value = '';
+    }
+}
+
+function getSelectedDurationDays() {
+    const duration = adminDurationSelect.value;
+    if (duration === 'lifetime') return null;
+    if (duration === 'custom') {
+        const days = parseInt(adminDurationCustom?.value, 10);
+        if (!days || days < 1) return NaN;
+        return days;
+    }
+    return parseInt(duration, 10);
+}
+
+async function createLicenseFromAdmin(e) {
+    e.preventDefault();
+    if (!isAdmin()) return;
+
+    const buyer = adminBuyerInput.value.trim();
+    const product = adminProductSelect.value;
+    const durationDays = getSelectedDurationDays();
+
+    if (!buyer) return;
+
+    if (Number.isNaN(durationDays)) {
+        showBanner(t("msg.invalidDays"), "error");
+        return;
+    }
+
+    const createBtn = document.getElementById('admin-create-btn');
+    createBtn.disabled = true;
+    createBtn.textContent = t("msg.creating");
+
+    const key = generateLicenseKey();
+    
+    let expiresAt = "2000-01-01T00:00:00.000Z"; // Default placeholder meaning "Not Activated" (bypasses DB NOT NULL constraint)
+    if (durationDays === null) {
+        expiresAt = "2099-12-31T23:59:59.000Z"; // Lifetime indicator
+    }
+    const adminMetadata = currentUser.user_metadata;
+    const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
+    let note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
+    if (durationDays !== null) {
+        note += ` | Duration: ${durationDays}`;
+    }
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses`, {
+            method: "POST",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json",
+                "Prefer": "return=representation"
+            },
+            body: JSON.stringify({
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        // Show result card
+        adminGeneratedKey.textContent = key;
+        adminKeyResult.classList.remove('hidden');
+
+        // Reset input
+        adminBuyerInput.value = '';
+        const options = adminUserOptionsList.querySelectorAll('.user-option');
+        options.forEach(opt => opt.classList.remove('selected'));
+
+        showBanner(t("msg.keyCreated"), "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error creating license:", err.message);
+        showBanner(t("msg.keyCreateFail") + err.message, "error");
+    } finally {
+        createBtn.disabled = false;
+        createBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> ${t("admin.createBtn")}`;
+    }
+}
+
+function copyCreatedKey() {
+    const keyText = adminGeneratedKey.textContent;
+    navigator.clipboard.writeText(keyText).then(() => {
+        const copyBtn = document.getElementById('admin-copy-key-btn');
+        const origText = copyBtn.textContent;
+        copyBtn.textContent = t("msg.copied");
+        setTimeout(() => { copyBtn.textContent = origText; }, 2000);
+    });
+}
+
+async function revokeLicense(key) {
+    if (!isAdmin()) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.revokeConfirm") + key);
+    if (!confirmed) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
+            method: "PATCH",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ is_active: false })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        showBanner(t("msg.revokeSuccess"), "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error revoking license:", err.message);
+        showBanner(t("msg.revokeFail") + err.message, "error");
+    }
+}
+
+async function resetLicenseHwid(key) {
+    if (!isAdmin()) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.hwidConfirm") + key);
+    if (!confirmed) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${key}`, {
+            method: "PATCH",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ hwid: null })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        showBanner(t("msg.hwidSuccess"), "success");
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error resetting HWID:", err.message);
+        showBanner(t("msg.hwidFail") + err.message, "error");
+    }
+}
+
+async function resetUserHwid(key) {
+    const confirmed = await showCustomConfirm(t("confirm.title"), t("msg.hwidResetConfirm") || "ნამდვილად გსურთ მოწყობილობის (HWID) განულება ამ ლიცენზიისთვის?");
+    if (!confirmed) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('licenses')
+            .update({ hwid: null })
+            .eq('license_key', key);
+
+        if (error) throw error;
+
+        showBanner(t("msg.hwidSuccess"), "success");
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Error resetting HWID:", err.message);
+        showBanner(t("msg.hwidFail") + err.message, "error");
+    }
+}
+
+
+// Custom Confirmation Modal Helper using Promises
+function showCustomConfirm(title, message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-confirm-modal');
+        const titleEl = document.getElementById('confirm-title');
+        const messageEl = document.getElementById('confirm-message');
+        const cancelBtn = document.getElementById('confirm-cancel-btn');
+        const okBtn = document.getElementById('confirm-ok-btn');
+
+        if (!modal || !titleEl || !messageEl || !cancelBtn || !okBtn) {
+            resolve(confirm(message));
+            return;
+        }
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        
+        cancelBtn.textContent = t("confirm.no");
+        okBtn.textContent = t("confirm.yes");
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        const onCancel = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const onConfirm = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const cleanup = () => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            cancelBtn.removeEventListener('click', onCancel);
+            okBtn.removeEventListener('click', onConfirm);
+            modal.removeEventListener('click', onOverlayClick);
+        };
+
+        const onOverlayClick = (e) => {
+            if (e.target === modal) {
+                onCancel();
+            }
+        };
+
+        cancelBtn.addEventListener('click', onCancel);
+        okBtn.addEventListener('click', onConfirm);
+        modal.addEventListener('click', onOverlayClick);
+    });
+}
+
+// Free Trial Claiming Logic
+async function claimFreeTrial() {
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") + "Please log in first", "error");
+        return;
+    }
+
+    const claimTrialBtn = document.getElementById('claim-trial-btn');
+    if (claimTrialBtn) {
+        claimTrialBtn.disabled = true;
+        claimTrialBtn.textContent = t("msg.creating");
+    }
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+
+    try {
+        // 1. Age check on Discord account using snowflake creation date
+        if (discordId) {
+            try {
+                const snowflake = BigInt(discordId);
+                const createdAtMs = Number((snowflake >> 22n) + 1420070400000n);
+                const diffDays = (Date.now() - createdAtMs) / (1000 * 60 * 60 * 24);
+                if (diffDays < 30) {
+                    showBanner(t("msg.trialAccountTooNew"), "error");
+                    return;
+                }
+            } catch (err) {
+                console.error("Failed to parse discord account age:", err);
+            }
+        }
+
+        // 2. Check if user already has a key associated with their DiscordID or username in the licenses table
+        const queryDiscordId = `%DiscordID: ${discordId}%`;
+        const queryUsername = `%Buyer: ${username}%`;
+        
+        const { data: existingLicenses, error: queryError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .or(`note.like.${queryDiscordId},note.like.${queryUsername}`);
+
+        if (queryError) throw queryError;
+
+        if (existingLicenses && existingLicenses.length > 0) {
+            const hasClaimedTrial = existingLicenses.some(l => l.note && l.note.includes("Free Trial"));
+            const hasOtherLicense = existingLicenses.some(l => l.note && !l.note.includes("Free Trial") && !l.note.includes("Referral Bonus"));
+            if (hasClaimedTrial || hasOtherLicense) {
+                showBanner(t("msg.trialAlreadyClaimed"), "error");
+                return;
+            }
+        }
+
+        // 3. Process referral bonus if this is their first license
+        const hasTriggeredRef = existingLicenses && existingLicenses.some(l => l.note && l.note.includes("Referred by:"));
+        let referrerName = null;
+        if (!hasTriggeredRef) {
+            referrerName = await processReferralBonus(username);
+        }
+
+        // 4. Generate a key and save it (6 days if referred, 3 days standard)
+        const key = generateLicenseKey();
+        const trialDays = referrerName ? 6 : 3;
+        const expiresAt = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000).toISOString();
+        let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
+        if (referrerName) {
+            note += ` | Referred by: ${referrerName}`;
+        }
+
+        const { error: insertError } = await supabaseClient
+            .from('licenses')
+            .insert({
+                license_key: key,
+                expires_at: expiresAt,
+                is_active: true,
+                note: note
+            });
+
+        if (insertError) throw insertError;
+
+        showBanner(t("msg.trialSuccess"), "success");
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Error claiming trial key:", err.message);
+        showBanner(t("msg.keyCreateFail") + err.message, "error");
+    } finally {
+        if (claimTrialBtn) {
+            claimTrialBtn.disabled = false;
+            claimTrialBtn.textContent = t("dash.trialBtn");
+        }
+    }
+}
+
+// Process referral bonus if applicable
+async function processReferralBonus(referredUsername) {
+    const refDiscordId = localStorage.getItem('pulse_referral_discord_id');
+    if (!refDiscordId) return null;
+
+    try {
+        // Find referrer's profile using discord_id
+        const { data: referrerProfile, error: profileError } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('discord_id', refDiscordId)
+            .maybeSingle();
+
+        if (profileError || !referrerProfile) {
+            console.warn("Referrer profile not found or error:", profileError);
+            return null;
+        }
+
+        const referrerUsername = referrerProfile.username;
+
+        // Fetch referrer's licenses
+        const { data: licenses, error: licError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${referrerUsername}%`);
+
+        if (licError) throw licError;
+
+        // Find an active license to extend
+        const activeLicense = licenses.find(l => l.is_active && (!l.expires_at || new Date(l.expires_at) > new Date()));
+        
+        if (activeLicense && activeLicense.expires_at) {
+            // Extend by 3 days
+            const currentExpiry = new Date(activeLicense.expires_at);
+            const newExpiry = new Date(currentExpiry.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            const currentNote = activeLicense.note || "";
+            const newNote = currentNote + ` | Referral Bonus for inviting ${referredUsername}`;
+            
+            const { error: updateError } = await supabaseClient
+                .from('licenses')
+                .update({ 
+                    expires_at: newExpiry,
+                    note: newNote
+                })
+                .eq('id', activeLicense.id);
+                
+            if (updateError) throw updateError;
+            console.log(`Extended active license for referrer ${referrerUsername} by 3 days.`);
+        } else {
+            // Create a new 3-day license for referrer
+            const newKey = generateLicenseKey();
+            const expiresAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+            const note = `Product: PulseClient | Buyer: ${referrerUsername} (by Referral Bonus for inviting ${referredUsername})`;
+            
+            const { error: insertError } = await supabaseClient
+                .from('licenses')
+                .insert({
+                    license_key: newKey,
+                    expires_at: expiresAt,
+                    is_active: true,
+                    note: note
+                });
+                
+            if (insertError) throw insertError;
+            console.log(`Created new 3-day referral license key for referrer ${referrerUsername}.`);
+        }
+
+        // Clean up localStorage after successful processing
+        localStorage.removeItem('pulse_referral_discord_id');
+        return referrerUsername;
+    } catch (err) {
+        console.error("Error processing referral bonus:", err.message);
+        return null;
+    }
+}
+
+function getDiscordId(user) {
+    if (!user) return '';
+    const meta = user.user_metadata || {};
+    if (meta.provider_id) return String(meta.provider_id).trim();
+    if (meta.sub && /^\d+$/.test(meta.sub)) return String(meta.sub).trim();
+    if (user.identities && Array.isArray(user.identities)) {
+        const discordIdentity = user.identities.find(i => i.provider === 'discord' || (i.identity_data && i.identity_data.provider_id));
+        if (discordIdentity) {
+            return String(discordIdentity.id || discordIdentity.identity_data?.provider_id || '').trim();
+        }
+        if (user.identities[0] && user.identities[0].id) {
+            return String(user.identities[0].id).trim();
+        }
+    }
+    return '';
+}
+
+// Generate a deterministic referral code from discordId (aligned 100% with backend Python logic)
+function generateReferralCodeFromDiscordId(discordId) {
+    if (!discordId) return '';
+    let hash = 0;
+    discordId = String(discordId).trim();
+    for (let i = 0; i < discordId.length; i++) {
+        const char = discordId.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash; // Convert to 32-bit signed integer
+    }
+    // Match Python unsigned 32-bit conversion (h if h >= 0 else h + 0x100000000)
+    if (hash < 0) {
+        hash += 4294967296;
+    }
+    
+    // Map to 7 characters using a 32-character alphabet (excludes confusing 0, O, 1, I)
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    let temp = hash;
+    for (let i = 0; i < 7; i++) {
+        code += alphabet.charAt(temp % alphabet.length);
+        temp = Math.floor(temp / alphabet.length);
+    }
+    return code;
+}
+
+function generateOldReferralCodeFromDiscordId(discordId) {
+    if (!discordId) return '';
+    let hash = 0;
+    discordId = String(discordId).trim();
+    for (let i = 0; i < discordId.length; i++) {
+        const char = discordId.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;
+    }
+    hash = Math.abs(hash);
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    let temp = hash;
+    for (let i = 0; i < 7; i++) {
+        code += alphabet.charAt(temp % alphabet.length);
+        temp = Math.floor(temp / alphabet.length);
+    }
+    return code;
+}
+
+// Redeem a referral code (7-character random format)
+async function redeemReferralCode() {
+    const codeInput = document.getElementById('referral-code-input');
+    const submitBtn = document.getElementById('referral-code-submit-btn');
+    if (!codeInput || !submitBtn) return;
+
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") || "Please log in first", "error");
+        return;
+    }
+
+    const code = codeInput.value.trim().toUpperCase();
+    if (!code) return;
+
+    // Validate format (7 characters, alphanumeric using our alphabet)
+    if (code.length !== 7 || !/^[A-Z2-9]{7}$/.test(code)) {
+        showBanner(t("msg.refCodeInvalid"), "error");
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "⏳";
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = getDiscordId(currentUser);
+
+    let codeToSend = code;
+
+    // Dual-algorithm referral resolution: check profiles table for old or new code match
+    try {
+        const { data: profiles } = await supabaseClient
+            .from('profiles')
+            .select('discord_id, username');
+
+        if (profiles && profiles.length > 0) {
+            const matchedReferrer = profiles.find(p => 
+                generateReferralCodeFromDiscordId(p.discord_id) === code ||
+                generateOldReferralCodeFromDiscordId(p.discord_id) === code
+            );
+            if (matchedReferrer) {
+                codeToSend = generateReferralCodeFromDiscordId(matchedReferrer.discord_id);
+                console.log("[Pulse AI Referral Debug] Dual-algorithm matched referrer:", matchedReferrer.username, "sending server code:", codeToSend);
+            }
+        }
+    } catch (profileErr) {
+        console.warn("[Pulse AI Referral Debug] Profile lookup warning:", profileErr.message);
+    }
+
+    console.log("[Pulse AI Referral Debug] Sending code:", codeToSend, "discordId:", discordId, "username:", username);
+
+    try {
+        // Call the backend endpoint — it uses the service_role key to bypass RLS
+        const response = await fetch('https://errormissing-pulse-bot.hf.space/referral/redeem', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: codeToSend, discord_id: String(discordId), username })
+        });
+
+        console.log("[Pulse AI Referral Debug] HTTP status:", response.status, "ok:", response.ok);
+        const result = await response.json();
+        console.log("[Pulse AI Referral Debug] Server result:", JSON.stringify(result));
+
+        if (result.status === 'success') {
+            showBanner(t("msg.refCodeSuccess") || result.message, "success");
+            codeInput.value = '';
+            // Clean up localStorage if it contained this referral
+            localStorage.removeItem('pulse_referral_discord_id');
+            fetchUserLicenses();
+        } else {
+            // Map known Georgian/backend messages to i18n keys if available
+            const msg = result.message || '';
+            if (msg.includes('საკუთარი კოდის')) showBanner(t("msg.refCodeSelf"), "error");
+            else if (msg.includes('უკვე გამოიყენეთ')) showBanner(t("msg.refCodeAlreadyUsed") || msg, "error");
+            else if (msg.includes('ვერ მოიძებნა')) showBanner(t("msg.refCodeNotFound"), "error");
+            else showBanner(t("msg.refCodeFail") + msg, "error");
+        }
+    } catch (err) {
+        console.error("[Pulse AI Referral Debug] CATCH error:", err);
+        showBanner(t("msg.refCodeFail") + err.message, "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
+    }
+}
+
+function showLicenseDetails(key) {
+    const lic = adminLicenses.find(l => l.license_key === key);
+    if (!lic) return;
+
+    const { product, buyer, createdBy } = parseLicenseNote(lic.note);
+
+    let statusText = t("status.active");
+    if (!lic.is_active) {
+        statusText = t("status.revoked");
+    } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
+        statusText = t("status.expired");
+    }
+
+    modalKey.textContent = lic.license_key;
+    modalBuyer.textContent = buyer;
+    if (modalCreator) modalCreator.textContent = createdBy;
+    modalStatus.textContent = statusText;
+    modalCreated.textContent = new Date(lic.created_at).toLocaleString(getLocale());
+    
+    let expiryDisplay = t("status.lifetime");
+    if (lic.expires_at) {
+        const expDate = new Date(lic.expires_at);
+        const now = new Date();
+        if (expDate < now) {
+            expiryDisplay = t("status.expiredShort");
+        } else {
+            const diffTime = Math.abs(expDate - now);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            expiryDisplay = t("status.days", { n: diffDays });
+        }
+    }
+    modalExpires.textContent = expiryDisplay;
+    modalHwid.textContent = lic.hwid || t("status.notActivated");
+    modalNote.textContent = lic.note || "-";
+
+    const modalIpContainer = document.getElementById('modal-ip-container');
+    const modalIp = document.getElementById('modal-ip');
+    if (modalIpContainer && modalIp) {
+        if (isAdmin()) {
+            modalIpContainer.style.display = 'block';
+            modalIp.textContent = "იტვირთება...";
+
+            (async () => {
+                let foundIp = null;
+
+                // 1. Query client_sessions by license key
+                try {
+                    const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?license_key=eq.${encodeURIComponent(lic.license_key)}&order=last_heartbeat.desc&limit=1`, {
+                        headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                    });
+                    if (res.ok) {
+                        const sessions = await res.json();
+                        if (sessions && sessions.length > 0 && sessions[0].ip_address && sessions[0].ip_address !== 'Hidden' && sessions[0].ip_address !== 'Unknown') {
+                            foundIp = sessions[0].ip_address;
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Error fetching session IP by key:", e);
+                }
+
+                // 2. Query client_sessions by HWID if key query had no IP
+                if (!foundIp && lic.hwid && lic.hwid !== 'null') {
+                    try {
+                        const res2 = await fetch(`${supabaseUrl}/rest/v1/client_sessions?hwid=eq.${encodeURIComponent(lic.hwid)}&order=last_heartbeat.desc&limit=1`, {
+                            headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                        });
+                        if (res2.ok) {
+                            const sessions2 = await res2.json();
+                            if (sessions2 && sessions2.length > 0 && sessions2[0].ip_address && sessions2[0].ip_address !== 'Hidden' && sessions2[0].ip_address !== 'Unknown') {
+                                foundIp = sessions2[0].ip_address;
+                            }
+                        }
+                    } catch (e2) {
+                        console.warn("Error fetching session IP by hwid:", e2);
+                    }
+                }
+
+                // 3. Fallback to profiles table match
+                if (!foundIp && buyer) {
+                    const matchedProfile = allUserProfiles.find(p => p.username === buyer);
+                    if (matchedProfile && matchedProfile.last_ip) {
+                        foundIp = matchedProfile.last_ip;
+                    }
+                }
+
+                modalIp.textContent = foundIp || "N/A (არ არის ჩაწერილი)";
+            })();
+        } else {
+            modalIpContainer.style.display = 'none';
+        }
+    }
+
+    licenseInfoModal.classList.remove('hidden');
+}
+
+function closeLicenseModal() {
+    licenseInfoModal.classList.add('hidden');
+}
+
+// Attach functions to window scope for onclick handlers in dynamically generated HTML
+window.showLicenseDetails = showLicenseDetails;
+window.resetLicenseHwid = resetLicenseHwid;
+window.resetUserHwid = resetUserHwid;
+window.revokeLicense = revokeLicense;
+window.closeLicenseModal = closeLicenseModal;
+window.copyCreatedKey = copyCreatedKey;
+window.filterAdminLicenses = filterAdminLicenses;
+
+// User Profiles sync and dropdown logic
+async function fetchLatestProfile(userId) {
+    try {
+        const { data, error } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .maybeSingle();
+        if (error) throw error;
+        if (data) {
+            console.log("Latest profile fetched:", data);
+            const cleanedAvatar = cleanAvatarUrl(data.avatar_url);
+            if (navAvatar) navAvatar.src = cleanedAvatar;
+            if (dashAvatar) dashAvatar.src = cleanedAvatar;
+        }
+    } catch (err) {
+        console.warn("Failed to fetch latest profile:", err.message);
+    }
+}
+
+// User Profiles sync and dropdown logic
+async function saveUserProfile(user) {
+    const metadata = user.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const avatar = cleanAvatarUrl(metadata.avatar_url);
+    const discordId = getDiscordId(user);
+
+    if (!username) return;
+
+    let userIp = null;
+    try {
+        const ipRes = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
+        if (ipRes.ok) {
+            const ipData = await ipRes.json();
+            userIp = ipData.ip;
+        }
+    } catch (ipErr) {
+        console.warn("Could not fetch user IP:", ipErr);
+    }
+
+    try {
+        const upsertPayload = {
+            id: user.id,
+            discord_id: String(discordId),
+            username: username,
+            avatar_url: avatar,
+            updated_at: new Date().toISOString()
+        };
+        if (userIp) {
+            upsertPayload.last_ip = userIp;
+        }
+
+        const { error } = await supabaseClient
+            .from('profiles')
+            .upsert(upsertPayload, { onConflict: 'id' });
+
+        if (error) throw error;
+    } catch (err) {
+        console.warn("Failed to upsert user profile (table might not exist yet):", err.message);
+    }
+}
+
+async function fetchProfilesForAdmin() {
+    if (!isAdmin()) return;
+
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/profiles?select=*&order=username.asc`, {
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        allUserProfiles = await res.json();
+        renderDropdownUsers(allUserProfiles);
+    } catch (err) {
+        console.error("Error fetching profiles:", err.message);
+    }
+}
+
+function renderDropdownUsers(profiles) {
+    if (!adminUserOptionsList) return;
+    adminUserOptionsList.innerHTML = '';
+    
+    if (profiles.length === 0) {
+        adminUserOptionsList.innerHTML = `<div style="padding: 10px; text-align: center; color: var(--text-muted); font-size: 13px;">${t("msg.noUsers")}</div>`;
+        return;
+    }
+
+    profiles.forEach(profile => {
+        const option = document.createElement('div');
+        option.className = 'user-option';
+        const cleanedAvatar = cleanAvatarUrl(profile.avatar_url);
+        option.innerHTML = `
+            <img src="${cleanedAvatar}" alt="Avatar" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
+            <div class="user-option-text">
+                <span class="user-name">${profile.username}</span>
+                <span class="user-discord-id">@${profile.username}</span>
+            </div>
+        `;
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectDropdownUser(profile.username);
+        });
+        adminUserOptionsList.appendChild(option);
+    });
+}
+
+function selectDropdownUser(username) {
+    const profile = allUserProfiles.find(p => p.username === username);
+    if (!profile) return;
+
+    adminBuyerInput.value = profile.username;
+    
+    // Update trigger UI text
+    if (adminUserSelectTrigger) {
+        const cleanedAvatar = cleanAvatarUrl(profile.avatar_url);
+        adminUserSelectTrigger.querySelector('span').innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="${cleanedAvatar}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
+                <span>${profile.username}</span>
+            </div>
+        `;
+    }
+    
+    closeUserSelectionModal();
+}
+
+function filterDropdownUsers() {
+    const searchInput = document.getElementById('admin-modal-user-search');
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const filtered = allUserProfiles.filter(p => 
+        p.username.toLowerCase().includes(query) ||
+        (p.discord_id && p.discord_id.toLowerCase().includes(query))
+    );
+    renderDropdownUsers(filtered);
+}
+
+async function openUserSelectionModal(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('user-selection-modal');
+    if (!modal) return;
+
+    if (allUserProfiles.length === 0) {
+        await fetchProfilesForAdmin();
+    }
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const searchInput = document.getElementById('admin-modal-user-search');
+    if (searchInput) {
+        searchInput.value = '';
+        setTimeout(() => searchInput.focus(), 100);
+    }
+    renderDropdownUsers(allUserProfiles);
+}
+
+function closeUserSelectionModal() {
+    const modal = document.getElementById('user-selection-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+window.filterDropdownUsers = filterDropdownUsers;
+window.openUserSelectionModal = openUserSelectionModal;
+window.closeUserSelectionModal = closeUserSelectionModal;
+
+function onLanguageChanged() {
+    if (currentUser) {
+        fetchUserLicenses();
+        if (isAdmin() && tabContentAdmin && !tabContentAdmin.classList.contains('hidden')) {
+            renderAdminLicenses(adminLicenses);
+        }
+    }
+    if (bindSubmitBtn && !bindSubmitBtn.disabled) {
+        bindSubmitBtn.textContent = t("dash.bindBtn");
+    }
+    try {
+        if (typeof applyPricingNumbers === "function") applyPricingNumbers();
+    } catch (err) {
+        console.warn("applyPricingNumbers failed:", err);
+    }
+}
+window.onLanguageChanged = onLanguageChanged;
+
+// ==========================================
+// PROMOCODE FUNCTIONS
+// ==========================================
+
+async function redeemPromoCode(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!currentUser) {
+        showBanner(t("msg.loginFail") + "Please log in first", "error");
+        return;
+    }
+
+    const promoInput = document.getElementById('promo-code-input');
+    const submitBtn = document.getElementById('promo-submit-btn');
+    const code = promoInput.value.trim().toUpperCase();
+
+    if (!code) return;
+
+    submitBtn.disabled = true;
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = t("msg.bindLoading");
+
+    const metadata = currentUser.user_metadata;
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
+
+    try {
+        // 1. Fetch promocode details
+        const { data: promo, error: promoError } = await supabaseClient
+            .from('promocodes')
+            .select('*')
+            .eq('code', code)
+            .eq('is_active', true)
+            .maybeSingle();
+
+        if (promoError) throw promoError;
+
+        if (!promo) {
+            showBanner(t("msg.promoNotFound"), "error");
+            return;
+        }
+
+        // 2. Check if user already redeemed this code
+        const { data: existingRedemption, error: redError } = await supabaseClient
+            .from('promocode_redemptions')
+            .select('*')
+            .eq('code', code)
+            .eq('user_id', currentUser.id)
+            .maybeSingle();
+
+        if (redError) throw redError;
+
+        if (existingRedemption) {
+            showBanner(t("msg.promoAlreadyUsed"), "error");
+            return;
+        }
+
+        // 3. Check usage limit
+        if (promo.max_uses !== null) {
+            const { count, error: countError } = await supabaseClient
+                .from('promocode_redemptions')
+                .select('*', { count: 'exact', head: true })
+                .eq('code', code);
+
+            if (countError) throw countError;
+
+            if (count >= promo.max_uses) {
+                showBanner(t("msg.promoExpired"), "error");
+                return;
+            }
+        }
+
+        // 4. Check if user already has an active license to extend
+        const { data: userLicenses, error: licFetchError } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+
+        if (licFetchError) throw licFetchError;
+
+        const activeLicense = userLicenses ? userLicenses.find(l => l.is_active && (!l.expires_at || new Date(l.expires_at) > new Date())) : null;
+
+        if (activeLicense) {
+            // Extend active license
+            let newExpiry = null;
+            if (activeLicense.expires_at) {
+                const currentExpiry = new Date(activeLicense.expires_at);
+                const baseDate = currentExpiry > new Date() ? currentExpiry : new Date();
+                newExpiry = new Date(baseDate.getTime() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
+            }
+
+            const currentNote = activeLicense.note || "";
+            const newNote = currentNote + ` | Promocode: ${code}`;
+
+            const { error: updateLicError } = await supabaseClient
+                .from('licenses')
+                .update({
+                    expires_at: newExpiry,
+                    note: newNote
+                })
+                .eq('id', activeLicense.id);
+
+            if (updateLicError) throw updateLicError;
+        } else {
+            // Create a new license key
+            const key = generateLicenseKey();
+            const expiresAt = new Date(Date.now() + promo.duration_days * 24 * 60 * 60 * 1000).toISOString();
+            const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (by Promocode: ${code})`;
+
+            const { error: insertLicError } = await supabaseClient
+                .from('licenses')
+                .insert({
+                    license_key: key,
+                    expires_at: expiresAt,
+                    is_active: true,
+                    note: note
+                });
+
+            if (insertLicError) throw insertLicError;
+        }
+
+        // 5. Save redemption
+        const { error: insertRedError } = await supabaseClient
+            .from('promocode_redemptions')
+            .insert({
+                code: code,
+                user_id: currentUser.id,
+                username: username
+            });
+
+        if (insertRedError) throw insertRedError;
+
+        showBanner(t("msg.promoRedeemed", { n: promo.duration_days }), "success");
+        promoInput.value = '';
+        fetchUserLicenses();
+    } catch (err) {
+        console.error("Promocode redemption failed:", err.message);
+        showBanner(t("msg.promoRedeemFail") + err.message, "error");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+    }
+}
+window.redeemPromoCode = redeemPromoCode;
+
+async function createPromoCodeFromAdmin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!isAdmin()) return;
+
+    const codeInput = document.getElementById('admin-promo-code-input');
+    const daysInput = document.getElementById('admin-promo-days-input');
+    const usesInput = document.getElementById('admin-promo-uses-input');
+    const createBtn = document.getElementById('admin-promo-create-btn');
+
+    const code = codeInput.value.trim().toUpperCase();
+    const durationDays = parseInt(daysInput.value, 10);
+    const maxUsesVal = usesInput.value.trim();
+    const maxUses = maxUsesVal !== "" ? parseInt(maxUsesVal, 10) : null;
+
+    if (!code || isNaN(durationDays) || durationDays < 1) return;
+
+    createBtn.disabled = true;
+    const origBtnText = createBtn.textContent;
+    createBtn.textContent = t("msg.creating");
+
+    const adminMetadata = currentUser.user_metadata;
+    const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
+
+    try {
+        const { error } = await supabaseClient
+            .from('promocodes')
+            .insert({
+                code: code,
+                duration_days: durationDays,
+                max_uses: maxUses,
+                is_active: true,
+                created_by: adminName
+            });
+
+        if (error) throw error;
+
+        showBanner(t("msg.promoCreated"), "success");
+        codeInput.value = '';
+        daysInput.value = '';
+        usesInput.value = '';
+
+        fetchAdminPromocodes();
+    } catch (err) {
+        console.error("Error creating promocode:", err.message);
+        showBanner(t("msg.promoCreateFail") + err.message, "error");
+    } finally {
+        createBtn.disabled = false;
+        createBtn.textContent = origBtnText;
+    }
+}
+window.createPromoCodeFromAdmin = createPromoCodeFromAdmin;
+
+async function fetchAdminPromocodes() {
+    if (!isAdmin()) return;
+
+    try {
+        // 1. Fetch promocodes
+        const { data: promocodes, error: promoError } = await supabaseClient
+            .from('promocodes')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (promoError) throw promoError;
+
+        // 2. Fetch redemptions
+        const { data: redemptions, error: redError } = await supabaseClient
+            .from('promocode_redemptions')
+            .select('*')
+            .order('redeemed_at', { ascending: false });
+
+        if (redError) throw redError;
+
+        renderAdminPromocodes(promocodes || [], redemptions || []);
+    } catch (err) {
+        console.error("Error fetching admin promocode data:", err.message);
+    }
+}
+window.fetchAdminPromocodes = fetchAdminPromocodes;
+
+function renderAdminPromocodes(promocodes, redemptions) {
+    const promosBody = document.getElementById('admin-promos-table-body');
+    const redemptionsBody = document.getElementById('admin-promo-redemptions-table-body');
+
+    if (promosBody) {
+        promosBody.innerHTML = '';
+        if (promocodes.length === 0) {
+            promosBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">No promocodes found</td></tr>`;
+        } else {
+            promocodes.forEach(p => {
+                const codeRedemptions = redemptions.filter(r => r.code === p.code);
+                const count = codeRedemptions.length;
+                const limitDisplay = p.max_uses !== null ? p.max_uses : 'âˆž';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="promo-code-badge">${p.code}</span></td>
+                    <td>${t("status.days", { n: p.duration_days })}</td>
+                    <td>${count} / ${limitDisplay}</td>
+                    <td>${p.created_by || "Admin"}</td>
+                    <td>
+                        <div class="admin-actions">
+                            <button type="button" class="btn-action btn-revoke" onclick="deletePromocode('${p.code}')" title="${t('admin.actionRevoke')}" aria-label="${t('admin.actionRevoke')}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                promosBody.appendChild(tr);
+            });
+        }
+    }
+
+    if (redemptionsBody) {
+        redemptionsBody.innerHTML = '';
+        if (redemptions.length === 0) {
+            redemptionsBody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 24px;">No redemptions found</td></tr>`;
+        } else {
+            redemptions.forEach(r => {
+                const tr = document.createElement('tr');
+                const timestamp = new Date(r.redeemed_at).toLocaleString(getLocale());
+                tr.innerHTML = `
+                    <td><span class="promo-code-badge">${r.code}</span></td>
+                    <td><strong>${r.username}</strong></td>
+                    <td style="color: var(--text-muted);">${timestamp}</td>
+                `;
+                redemptionsBody.appendChild(tr);
+            });
+        }
+    }
+}
+window.renderAdminPromocodes = renderAdminPromocodes;
+
+async function deletePromocode(code) {
+    if (!isAdmin()) return;
+    const confirmed = await showCustomConfirm(t("confirm.title"), "Delete promocode " + code + "?");
+    if (!confirmed) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('promocodes')
+            .delete()
+            .eq('code', code);
+
+        if (error) throw error;
+
+        showBanner("Promocode deleted successfully", "success");
+        fetchAdminPromocodes();
+    } catch (err) {
+        console.error("Error deleting promocode:", err.message);
+        showBanner("Delete failed: " + err.message, "error");
+    }
+}
+window.deletePromocode = deletePromocode;
+
+// ==========================================
+// PULSE AI ASSISTANT ENGINE
+// ==========================================
+
+function togglePulseAIChat() {
+    const win = document.getElementById('pulse-ai-chat-window');
+    if (!win) return;
+    win.classList.toggle('hidden');
+    if (!win.classList.contains('hidden')) {
+        const input = document.getElementById('pulse-ai-input');
+        if (input) input.focus();
+        scrollPulseAIMessages();
+    }
+}
+window.togglePulseAIChat = togglePulseAIChat;
+
+function scrollPulseAIMessages() {
+    const area = document.getElementById('pulse-ai-messages');
+    if (area) {
+        area.scrollTop = area.scrollHeight;
+    }
+}
+
+function askPulseAIQuick(questionText) {
+    const input = document.getElementById('pulse-ai-input');
+    if (input) {
+        input.value = questionText;
+        handlePulseAISubmit(new Event('submit'));
+    }
+}
+window.askPulseAIQuick = askPulseAIQuick;
+
+function escapePulseHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, function(m) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[m];
+    });
+}
+
+function handlePulseAISubmit(event) {
+    if (event) event.preventDefault();
+    const input = document.getElementById('pulse-ai-input');
+    if (!input) return;
+    const query = input.value.trim();
+    if (!query) return;
+
+    // Append User Message
+    appendPulseAIMessage('user', escapePulseHTML(query));
+    input.value = '';
+
+    // Show Typing indicator / response
+    setTimeout(() => {
+        const reply = generatePulseAIResponse(query);
+        appendPulseAIMessage('bot', reply);
+    }, 350);
+}
+window.handlePulseAISubmit = handlePulseAISubmit;
+
+function appendPulseAIMessage(sender, text) {
+    const area = document.getElementById('pulse-ai-messages');
+    if (!area) return;
+
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `pulse-ai-msg ${sender}`;
+    msgDiv.innerHTML = `<div class="pulse-ai-msg-bubble">${text}</div>`;
+    area.appendChild(msgDiv);
+    scrollPulseAIMessages();
+}
+
+function generatePulseAIResponse(input) {
+    const lower = input.toLowerCase().trim();
+    const isGeorgian = /[\u10A0-\u10FF]/.test(input);
+
+    const hasAny = (keywords) => keywords.some(k => lower.includes(k));
+
+    // 1. Greetings / Conversational
+    if (hasAny(['გამარჯობა', 'სალამი', 'ზდაროვა', 'გამარჯობათ', 'hello', 'hi', 'hey', 'sup', 'yo', 'როგორ ხარ', 'როგორ ხართ'])) {
+        if (isGeorgian) {
+            return "გამარჯობა! 👋 მე ვარ <strong>Pulse AI</strong>, PulseClient-ის ოფიციალური ასისტენტი. რით შემიძლია დაგეხმარო?<br><br>• კლიენტის ჩამოტვირთვა & ინსტალაცია<br>• მენიუს ღილაკები (F12 / Shift)<br>• შეძენა & ლიცენზია<br>• HWID და პრობლემების მოგვარება";
+        }
+        return "Hello! 👋 I am <strong>Pulse AI</strong>, the official PulseClient support bot. How can I help you today?<br><br>• Client Download & Installation<br>• Keybinds (F12 / Shift)<br>• Purchase & Licensing<br>• HWID & Troubleshooting";
+    }
+
+    // 2. Identity / Capabilities
+    if (hasAny(['ვინ ხარ', 'რა ხარ', 'რა შეგიძლია', 'who are you', 'what are you', 'what can you do'])) {
+        if (isGeorgian) {
+            return "🤖 მე ვარ <strong>Pulse AI</strong> — ხელოვნური ინტელექტის ასისტენტი. შემიძლია პასუხი გავცე შენს ნებისმიერ კითხვას PulseClient-ის, ინსტალაციის, ღილაკების, ლიცენზიის, ანტიკლიენტის შემოვლებისა და ხარვეზების შესახებ!";
+        }
+        return "🤖 I am <strong>Pulse AI</strong> — an AI support assistant for PulseClient. I can help answer questions about installation, keybinds, license key management, bypasses, and troubleshooting!";
+    }
+
+    // 3. Keybinds & Menu Triggers
+    if (hasAny(['f12', 'shift', 'right shift', 'ღილაკ', 'მენიუ', 'გახსნა', 'როგორ გავხსნა', 'keybind', 'bind', 'menu', 'open', 'controls', 'რომელი ღილაკით'])) {
+        if (isGeorgian) {
+            return "⌨️ <strong>PulseClient მენიუს ღილაკები:</strong><br>• <strong>Pulse PvP Client:</strong> მენიუ იხსნება <strong>F12</strong> ღილაკით (ოპტიმიზირებული FPS, Kill Trigger, Watermark fix).<br>• <strong>Pulse Base Find:</strong> მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით (Matrix/GrimAC bypass).";
+        }
+        return "⌨️ <strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client:</strong> Menu opens with <strong>F12</strong> (Optimized FPS, Kill Trigger).<br>• <strong>Pulse Base Find:</strong> Menu opens with <strong>Right Shift</strong> (Matrix/GrimAC bypass).";
+    }
+
+    // 4. Installation & Mods folder
+    if (hasAny(['ინსტალაც', 'დაყენებ', 'ჩაგდება', 'როგორ ჩავაგდო', 'სად ჩავაგდო', 'install', 'setup', 'mods', 'folder', 'fabric', 'jar'])) {
+        if (isGeorgian) {
+            return "💡 <strong>ინსტალაციის ნაბიჯები:</strong><br>1. ჩამოტვირთეთ `.jar` ფაილი საიტიდან (PvP ან Base Find).<br>2. გახსენით `%appdata%/.minecraft/mods` საქაღალდე.<br>3. ჩააგდეთ ნასროლი `.jar` ფაილი მოდების საქაღალდეში.<br>4. ჩართეთ Minecraft <strong>Fabric 1.21.11</strong> პროფილით (Java 21-ით).";
+        }
+        return "💡 <strong>Installation Steps:</strong><br>1. Download the `.jar` file from our website.<br>2. Open `%appdata%/.minecraft/mods` folder.<br>3. Drop the downloaded `.jar` file into the mods directory.<br>4. Launch Minecraft using <strong>Fabric 1.21.11</strong> (Java 21 required).";
+    }
+
+    // 5. Version & Java Requirements
+    if (hasAny(['1.21', '1.21.11', 'ვერსია', 'version', 'java', 'java 21', 'java21'])) {
+        if (isGeorgian) {
+            return "⚙️ <strong>ვერსია და მოთხოვნები:</strong><br>• Minecraft ვერსია: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java ვერსია: <strong>Java 21</strong> (რეკომენდებულია Temurin Java 21 ან Oracle Java 21).";
+        }
+        return "⚙️ <strong>Versions & Requirements:</strong><br>• Minecraft Version: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java Version: <strong>Java 21</strong> (Temurin/Oracle Java 21 recommended).";
+    }
+
+    // 6. Launchers Compatibility
+    if (hasAny(['tlauncher', 'lunar', 'feather', 'prism', 'curseforge', 'modrinth', 'official launcher', 'ლაუნჩერ', 'launcher'])) {
+        if (isGeorgian) {
+            return "🚀 <strong>თავსებადი ლაუნჩერები:</strong><br>PulseClient მუშაობს თითქმის ყველა ლაუნჩერზე, სადაც Fabric 1.21.11-ის ჩართვა შეიძლება:<br>• TLauncher (აირჩიეთ Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Lunar Client (Fabric-ის მოდულით)<br>• ოფიციალური Minecraft Launcher.";
+        }
+        return "🚀 <strong>Compatible Launchers:</strong><br>PulseClient works with any launcher supporting Fabric 1.21.11:<br>• TLauncher (Select Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Official Minecraft Launcher";
+    }
+
+    // 7. PvP vs Base Finder differences
+    if (hasAny(['განსხვავება', 'სხვაობა', 'pvp', 'basefind', 'base finder', 'difference', 'which one', 'რომელი გადმოვწერო'])) {
+        if (isGeorgian) {
+            return "⚖️ <strong>რომელი ვერსია ავირჩიო?</strong><br>• <strong>Pulse PvP Client:</strong> საუკეთესოა PvP ბრძოლებისთვის, გაზრდილი FPS, Kill Trigger, OpSec უსაფრთხოება. (იხსნება <strong>F12</strong>-ით).<br>• <strong>Pulse Base Find:</strong> სპეციალურად ბაზების საპოვნელად და სათვალთვალოდ, Matrix & GrimAC შემოვლით. (იხსნება <strong>Right Shift</strong>-ით).";
+        }
+        return "⚖️ <strong>Which version to pick?</strong><br>• <strong>Pulse PvP Client:</strong> Best for combat, max FPS, Kill Trigger & OpSec (Opens with <strong>F12</strong>).<br>• <strong>Pulse Base Find:</strong> Built for base tracking with Matrix & GrimAC bypasses (Opens with <strong>Right Shift</strong>).";
+    }
+
+    // 8. Purchasing & Price
+    if (hasAny(['ყიდვა', 'ყიდვ', 'ფასი', 'ღირს', 'რა ღირს', 'buy', 'price', 'cost', 'purchase', 'ticket', 'discord', 'paypal', 'card', 'crypto'])) {
+        if (isGeorgian) {
+            return "🛒 <strong>როგორ შევიძინოთ ლიცენზია?</strong><br>1. შემობრძანდით ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით **Ticket** 'Buy / Purchase' არხში.<br>3. ადმინისტრაცია რამდენიმე წუთში დაგეხმარებათ გადახდასა და გასაღების აქტივაციაში!";
+        }
+        return "🛒 <strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a **Ticket** in the 'Buy / Purchase' channel.<br>3. Support will help you complete payment and activate your key in minutes!";
+    }
+
+    // 9. Promocodes & Referrals & Free trial
+    if (hasAny(['პრომო', 'პრომოკოდი', 'კოდი', 'რეფერალ', 'უფასო', 'free', 'promo', 'referral', 'bonus', 'trial', 'ტესტ'])) {
+        if (isGeorgian) {
+            return "🎁 <strong>უფასო დღეები & პრომოკოდები:</strong><br>• <strong>რეფერალური სისტემა:</strong> შენი პირადი კოდი ნახე დეშბორდში. როცა მეგობარი შეიყვანს მას, <strong>ორივეს დაგემატებათ +3 უფასო დღე</strong>!<br>• <strong>პრომოკოდები:</strong> პრომოკოდის შესაყვანად გადადი დეშბორდში 'Redeem' ჩანართზე.";
+        }
+        return "🎁 <strong>Free Days & Promo Codes:</strong><br>• <strong>Referral System:</strong> Find your invite code in the dashboard. When a friend uses it, <strong>both get +3 bonus days</strong>!<br>• <strong>Promo Codes:</strong> Redeem codes under the 'Redeem' tab in your dashboard.";
+    }
+
+    // 10. HWID & PC Lock
+    if (hasAny(['hwid', 'pc', 'კომპიუტერ', 'შეცვლა', 'reset', 'lock', 'device'])) {
+        if (isGeorgian) {
+            return "🔒 <strong>HWID და მოწყობილობები:</strong><br>თქვენი ლიცენზია პირველივე ჩართვისას ავტომატურად უკავშირდება თქვენს PC-ს. თუ კომპიუტერი შეცვალეთ, დეშბორდიდან შეგიძლიათ მოითხოვოთ HWID Reset ან მოგვწეროთ Discord-ზე.";
+        }
+        return "🔒 <strong>HWID & Devices:</strong><br>Your license auto-binds to your PC hardware upon first launch. If you upgrade your PC, request a HWID reset via Dashboard or Discord support.";
+    }
+
+    // 11. Crashing & Troubleshooting
+    if (hasAny(['ქრაშავს', 'არ იხსნება', 'error', 'crash', 'problem', 'პრობლემა', 'ხარვეზი', 'არ რთავს', 'გათიშვა', 'შეცდომა'])) {
+        if (isGeorgian) {
+            return "🛠️ <strong>პრობლემის მოგვარება (Troubleshooting):</strong><br>1. დარწმუნდით რომ გაქვთ <strong>Java 21</strong> დაყენებული.<br>2. შეამოწმეთ Fabric Loader-ის ვერსია (უნდა იყოს 0.16.0 ან ახალი).<br>3. თუ სხვა მოდებიც გაქვთ `.minecraft/mods`-ში, დროებით ამოიღეთ (მაგ: OptiFine / Iris).<br>4. თუ მაინც ქრაშავს, მოგვწერეთ Discord Ticket-ში და გამოგვიგზავნეთ `latest.log`.";
+        }
+        return "🛠️ <strong>Troubleshooting Guide:</strong><br>1. Ensure you have <strong>Java 21</strong> installed.<br>2. Verify Fabric Loader is version 0.16.0 or newer.<br>3. Try removing conflicting mods from `.minecraft/mods`.<br>4. If crashes persist, send your `latest.log` in a Discord Ticket!";
+    }
+
+    // 12. Ban Safety / Anticheat / OpSec
+    if (hasAny(['ban', 'ბანი', 'დამბანენ', 'anticheat', 'safe', 'უსაფრთხო', 'undetected', 'opsec', 'grim', 'matrix'])) {
+        if (isGeorgian) {
+            return "🛡️ <strong>ანტიჩითები & OpSec:</strong><br>PulseClient აღჭურვილია სპეციალური <strong>OpSec Mod</strong>-ით და Matrix/GrimAC შემოვლითი ალგორითმებით. სწორი პარამეტრებით თამაშისას ბანის რისკი მინიმალურია!";
+        }
+        return "🛡️ <strong>Anticheat Safety & OpSec:</strong><br>PulseClient includes an advanced <strong>OpSec Mod</strong> and Matrix/GrimAC bypass features designed to keep your gameplay safe and undetected.";
+    }
+
+    // 13. Gratitude / Thanks
+    if (hasAny(['მადლობა', 'გმადლობ', 'thanks', 'thank you', 'thx', 'kk', 'კაი', 'კარგი'])) {
+        if (isGeorgian) {
+            return "არაფრის! 😊 თუ რამე კითხვა გექნება, ნებისმიერ დროს მომწერე. წარმატებულ თამაშს გისურვებ PulseClient-თან ერთად! 🚀";
+        }
+        return "You're welcome! 😊 If you have any other questions, feel free to ask anytime. Enjoy gaming with PulseClient! 🚀";
+    }
+
+    // Default Smart Fallback
+    if (isGeorgian) {
+        return "🤖 <strong>Pulse AI:</strong> ვერ მივხვდი ზუსტად რას გულისხმობ. შეგიძლია იკითხო მაგალითად:<br>• <em>\"რომელი ღილაკით იხსნება მენიუ?\"</em><br>• <em>\"როგორ დავაინსტალირო მოდი?\"</em><br>• <em>\"როგორ შევიძინო ლიცენზია?\"</em><br>• <em>\"როგორ გავასწორო ქრაში?\"</em><br><br>ან მოგვწერე <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord-ზე</a>!";
+    }
+    return "🤖 <strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
+}
+
+
+// Register OS download button handlers
+const downloadLinuxBtn = document.getElementById('download-linux-btn-modal');
+const downloadMacBtn = document.getElementById('download-mac-btn-modal');
+
+[downloadPvpBtn, downloadBasefindBtn, downloadLinuxBtn, downloadMacBtn].forEach(btn => {
+    if (btn) {
+        btn.href = GITHUB_BASEFIND_DOWNLOAD_URL;
+        btn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
+    }
+});
+
+
+// Device Slot Modal functions
+function openDeviceSlotModal() {
+    const modal = document.getElementById('device-slot-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        updateDeviceSlotModalInfo();
+    }
+}
+window.openDeviceSlotModal = openDeviceSlotModal;
+
+function closeDeviceSlotModal() {
+    const modal = document.getElementById('device-slot-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.closeDeviceSlotModal = closeDeviceSlotModal;
+
+function updateDeviceSlotModalInfo() {
+    const hwidEl = document.getElementById('device-modal-hwid-text');
+    if (!hwidEl) return;
+    if (userLicenses && userLicenses.length > 0) {
+        const activeLic = userLicenses.find(l => l.is_active) || userLicenses[0];
+        const hwid = activeLic.hwid && activeLic.hwid !== 'null' ? activeLic.hwid : 'არ არის მიბმული';
+        hwidEl.textContent = 'HWID: ' + hwid;
+    } else {
+        hwidEl.textContent = 'HWID: ლიცენზია არ მოიძებნა';
+    }
+}
+
+async function resetDeviceSlotHwid() {
+    if (!userLicenses || userLicenses.length === 0) {
+        showBanner("აქტიური ლიცენზია არ მოიძებნა", "error");
+        return;
+    }
+    const activeLic = userLicenses.find(l => l.is_active) || userLicenses[0];
+    await resetUserHwid(activeLic.license_key);
+    updateDeviceSlotModalInfo();
+}
+window.resetDeviceSlotHwid = resetDeviceSlotHwid;
+
+
+// Custom User Discord Username JAR Download Handler
+function getUserCustomJarFilename() {
+    let username = "Guest";
+    if (currentUser) {
+        const metadata = currentUser.user_metadata || {};
+        username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || username;
+    }
+    // Sanitize username for safe OS filename (alphanumeric, underscore, dash)
+    const cleanUser = username.replace(/[^a-zA-Z0-9_\-]/g, "_").replace(/_+/g, "_").trim() || "User";
+    return `PulseClient-Fabric.1.21.11-${cleanUser}.jar`;
+}
+window.getUserCustomJarFilename = getUserCustomJarFilename;
+
+async function handleCustomClientDownload(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    const customFilename = getUserCustomJarFilename();
+    showBanner(`ფაილის გადმოწერა დაიწყო: ${customFilename}`, "info");
+
+    try {
+        const response = await fetch(GITHUB_CLIENT_DOWNLOAD_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = customFilename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+        closeDownloadModal();
+    } catch (err) {
+        console.warn("Blob fetch download failed, using fallback download anchor:", err);
+        const a = document.createElement('a');
+        a.href = GITHUB_CLIENT_DOWNLOAD_URL;
+        a.download = customFilename;
+        a.setAttribute('download', customFilename);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        closeDownloadModal();
+    }
+}
+window.handleCustomClientDownload = handleCustomClientDownload;
