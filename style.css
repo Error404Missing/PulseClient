@@ -1,4 +1,89 @@
 
+:root {
+    --bg-dark: #040406;
+    --bg-surface: #09090e;
+    --card-bg: rgba(14, 14, 20, 0.82);
+    --card-border: rgba(255, 0, 60, 0.2);
+    --card-hover-border: rgba(255, 0, 60, 0.65);
+    
+    --accent: #ff003c;           
+    --accent-light: #ff2a55;     
+    --accent-glow: rgba(255, 0, 60, 0.45);
+    --accent-gradient: linear-gradient(135deg, #ff003c 0%, #990024 100%);
+    --accent-text-gradient: linear-gradient(135deg, #ffffff 0%, #ff4d6d 55%, #ff003c 100%);
+    
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.75);
+    --text-muted: rgba(255, 255, 255, 0.45);
+    
+    --font-heading: 'Space Grotesk', 'Outfit', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    
+    --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    --ios-blur: blur(28px) saturate(210%);
+}
+
+body {
+    background-color: var(--bg-dark) !important;
+    background-image: 
+        radial-gradient(circle at 50% -10%, rgba(255, 0, 60, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 85% 30%, rgba(147, 51, 234, 0.08) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px !important;
+}
+
+.cyber-grid-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(4, 4, 6, 0.8) 100%);
+}
+
+h1, h2, h3, .hero-title, .section-title, .brand-name, .logo text, .pricing-header h3 {
+    font-family: var(--font-heading) !important;
+    letter-spacing: -0.02em;
+}
+
+.hero-title, .section-title {
+    background: var(--accent-text-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 10px 30px rgba(255, 0, 60, 0.25);
+}
+
+.feature-card, .krypton-download-card, .pricing-card, .modal-content, .update-notification-bar {
+    background: linear-gradient(145deg, rgba(20, 20, 28, 0.82) 0%, rgba(10, 10, 15, 0.9) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    transition: var(--transition) !important;
+}
+
+.feature-card:hover, .pricing-card:hover, .krypton-download-card:hover {
+    border-color: rgba(255, 0, 60, 0.45) !important;
+    transform: translateY(-4px) scale(1.008) !important;
+    box-shadow: 0 25px 60px rgba(255, 0, 60, 0.2) !important;
+}
+
+.btn-primary, .btn-glow, .btn-krypton-download {
+    background: var(--accent-gradient) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.03em !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 8px 25px rgba(255, 0, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transition: var(--transition) !important;
+}
+
+.btn-primary:hover, .btn-glow:hover, .btn-krypton-download:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 14px 35px rgba(255, 0, 60, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
 
 :root {
     --bg-dark: #000000;
