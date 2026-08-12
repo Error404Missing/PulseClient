@@ -1,11 +1,7 @@
-// i18n.js — merged translations loader (safe for multiple loads)
-// Paste entire file as project/i18n.js and hard-refresh the page.
 
 (function () {
-  // Ensure a single global translations container
   window.TRANSLATIONS = window.TRANSLATIONS || {};
 
-  // New translations to merge (ka + en) — sanitized to avoid truncated tokens.
   const NEW = {
     ka: {
       "meta.title": "PulseClient - პრემიუმ Minecraft საბრძოლო და სტელს უპირატესობა",
@@ -512,7 +508,6 @@
     }
   };
 
-  // Merge NEW into window.TRANSLATIONS (always overwrite with latest)
   Object.keys(NEW).forEach(lang => {
     window.TRANSLATIONS[lang] = window.TRANSLATIONS[lang] || {};
     Object.keys(NEW[lang]).forEach(k => {
@@ -520,7 +515,6 @@
     });
   });
 
-  // Local alias
   const TRANSLATIONS = window.TRANSLATIONS;
 
   const SELECTOR_BINDINGS = [
@@ -622,14 +616,11 @@
     ["admin.modalNote", "modal-note"]
   ];
 
-  // Language state
   let currentLang = window.currentLang || localStorage.getItem("pulse_lang") || "ka";
   window.currentLang = currentLang;
 
-  // Helper: single-time missing keys set
   if (!window.__missingI18nKeys) window.__missingI18nKeys = new Set();
 
-  // t() function (fallback: currentLang -> ka -> en -> key)
   function t(key, vars = {}) {
     const str =
       (TRANSLATIONS && TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) ??
@@ -646,7 +637,6 @@
     return replaced;
   }
 
-  // Minimal setElementText/apply functions copied for compatibility
   function setElementText(el, key, mode = "text") {
     if (!el) return;
     const val = t(key);
@@ -740,7 +730,6 @@
     if (discordFloat) discordFloat.setAttribute("aria-label", t("discord.aria"));
   }
 
-  // applyLanguage/getLocale/initLanguage/toggleLanguage implementations
   function getLocale() { return currentLang === "en" ? "en-US" : "ka-GE"; }
 
   function applyLanguage(lang) {
@@ -801,13 +790,11 @@
     applyLanguage(currentLang);
   }
 
-  // Expose APIs
   window.t = t;
   window.getLocale = getLocale;
   window.applyLanguage = applyLanguage;
   window.toggleLanguage = toggleLanguage;
   window.initLanguage = initLanguage;
 
-  // Mark loaded
   window.__i18n_safe_loaded = true;
 })();

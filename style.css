@@ -1,6 +1,4 @@
-/* ==========================================
-   iOS 26 Glassmorphic Design System (style.css)
-   ========================================== */
+
 
 :root {
     --bg-dark: #000000;
@@ -9,8 +7,8 @@
     --card-border: rgba(255, 0, 0, 0.25);
     --card-hover-border: rgba(255, 0, 0, 0.65);
     
-    --accent: #ff0000;           /* Pure Neon Blood Red */
-    --accent-light: #ff3333;     /* Bright Red */
+    --accent: #ff0000;           
+    --accent-light: #ff3333;     
     --accent-glow: rgba(255, 0, 0, 0.55);
     --accent-gradient: linear-gradient(135deg, #ff0000 0%, #b30000 100%);
     
@@ -29,7 +27,6 @@
     --ios-blur: blur(25px) saturate(200%);
 }
 
-/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -77,7 +74,6 @@ body {
     position: relative;
 }
 
-/* Animated iOS Background Blobs */
 .bg-blobs {
     position: fixed;
     top: 0;
@@ -93,7 +89,7 @@ body {
     position: absolute;
     border-radius: 50%;
     filter: blur(140px);
-    opacity: 0.18 !important; /* Low opacity so black color dominates! */
+    opacity: 0.18 !important; 
     mix-blend-mode: screen;
     animation: floatDarkRed 24s infinite alternate ease-in-out;
 }
@@ -118,7 +114,6 @@ body {
     100% { transform: translate(-30px, -45px) scale(0.92); }
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -133,7 +128,6 @@ body {
     background: rgba(255, 255, 255, 0.24);
 }
 
-/* Glass View Layout */
 .view {
     flex: 1;
     width: 100%;
@@ -152,7 +146,6 @@ body {
     display: none !important;
 }
 
-/* iOS glass panel */
 .glass-panel {
     position: relative;
     background: rgba(10, 10, 12, 0.9) !important;
@@ -167,7 +160,6 @@ body {
     isolation: isolate;
 }
 
-/* Hover only on interactive cards — no global shimmer sweep */
 .feature-card:hover,
 .pricing-card:hover,
 .faq-item:hover {
@@ -177,7 +169,6 @@ body {
     transform: translateY(-4px) scale(1.005);
 }
 
-/* Typography & Visual Details */
 h1 {
     font-size: 54px;
     font-weight: 800;
@@ -204,7 +195,6 @@ h3 {
     font-weight: 800;
 }
 
-/* Buttons (iOS-like Rounded Pill) */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -266,7 +256,6 @@ h3 {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Navbar */
 .navbar {
     position: fixed;
     top: 15px;
@@ -432,7 +421,6 @@ h3 {
     color: var(--danger);
 }
 
-/* Hero Section */
 .hero {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
@@ -478,7 +466,6 @@ h3 {
     gap: 16px;
 }
 
-/* Quick Setup Tutorial */
 .setup-tutorial {
     margin-top: 48px;
     display: flex;
@@ -616,7 +603,6 @@ h3 {
     font-weight: 700;
 }
 
-/* Floating Discord Button */
 .discord-float {
     position: fixed;
     bottom: 28px;
@@ -650,7 +636,6 @@ h3 {
     transform: translateY(-1px) scale(1.01);
 }
 
-/* Hero Widget Preview */
 .hero-visual {
     display: flex;
     justify-content: center;
@@ -747,7 +732,6 @@ h3 {
     animation: pulse 1.8s infinite;
 }
 
-/* Sections */
 .section-header {
     text-align: center;
     margin-bottom: 56px;
@@ -763,7 +747,6 @@ h3 {
     font-size: 15px;
 }
 
-/* Features Grid */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -808,7 +791,6 @@ h3 {
     line-height: 1.6;
 }
 
-/* Pricing Grid */
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -915,7 +897,6 @@ h3 {
     width: 100%;
 }
 
-/* FAQ */
 .faq-list {
     max-width: 760px;
     margin: 0 auto;
@@ -978,7 +959,6 @@ h3 {
     color: var(--krypton-yellow);
 }
 
-/* Footer */
 .footer {
     text-align: center;
     padding: 48px 24px;
@@ -990,14 +970,8 @@ h3 {
     backdrop-filter: var(--ios-blur);
 }
 
-/* ==========================================
-   DASHBOARD (iOS Control Center style)
-   ========================================== */
-/* ==========================================
-   DASHBOARD (iOS 26 Purple Theme)
-   ========================================== */
 :root {
-    --krypton-yellow: #ff003c; /* iOS Purple/Indigo */
+    --krypton-yellow: #ff003c; 
     --krypton-yellow-glow: rgba(255, 0, 60, 0.45);
     --krypton-bg-card: rgba(255, 255, 255, 0.03);
     --krypton-border: rgba(255, 255, 255, 0.08);
@@ -1017,7 +991,6 @@ h3 {
     min-width: 0;
 }
 
-/* Sidebar Logo */
 .sidebar-logo {
     font-size: 22px;
     font-weight: 900;
@@ -1027,14 +1000,13 @@ h3 {
 }
 
 .logo-red {
-    color: #ff003c; /* purple/indigo */
+    color: #ff003c; 
 }
 
 .logo-white {
     color: #ffffff;
 }
 
-/* Device Status Card */
 .device-status-card {
     background: var(--krypton-bg-card);
     border: 1px solid var(--krypton-border);
@@ -1085,7 +1057,7 @@ h3 {
 
 .btn-device-slot {
     background-color: transparent;
-    border: 1px dashed #3f3f46; /* zinc-700 */
+    border: 1px dashed #3f3f46; 
     color: var(--text-secondary);
     font-size: 12.5px;
     font-weight: 600;
@@ -1101,7 +1073,6 @@ h3 {
     background-color: rgba(255,255,255,0.02);
 }
 
-/* Sidebar Menu */
 .sidebar-menu {
     display: flex;
     flex-direction: column;
@@ -1208,7 +1179,6 @@ h3 {
     color: #ff8888;
 }
 
-/* Tabs */
 .tab-pane {
     animation: fadeIn 0.4s ease-out;
 }
@@ -1217,7 +1187,6 @@ h3 {
     display: none !important;
 }
 
-/* Main Download Card */
 .krypton-download-card {
     background: var(--krypton-bg-card);
     border: 1px solid var(--krypton-border);
@@ -1318,7 +1287,6 @@ h3 {
     box-shadow: 0 6px 25px var(--krypton-yellow-glow);
 }
 
-/* Sections */
 .quick-start-section, .launchers-section {
     background: var(--krypton-bg-card);
     border: 1px solid var(--krypton-border);
@@ -1344,7 +1312,6 @@ h3 {
     letter-spacing: 0.06em;
 }
 
-/* Quick start step cards */
 .quick-start-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1391,7 +1358,6 @@ h3 {
     line-height: 1.5;
 }
 
-/* Launcher cards */
 .launchers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1447,7 +1413,6 @@ h3 {
     font-style: italic;
 }
 
-/* Licenses List & Bind Form adjustments */
 .panel-header {
     display: flex;
     justify-content: space-between;
@@ -1615,9 +1580,6 @@ h3 {
     transform: translateY(-1px);
 }
 
-/* ===================== ADMIN PANEL ===================== */
-
-/* Admin Menu Badge */
 .admin-badge {
     font-size: 9px;
     font-weight: 800;
@@ -1631,7 +1593,6 @@ h3 {
     margin-left: auto;
 }
 
-/* Admin Create Form Card */
 .admin-create-card h3 {
     font-size: 18px;
     font-weight: 700;
@@ -1712,7 +1673,6 @@ h3 {
     height: 16px;
 }
 
-/* Admin Licenses Card */
 .admin-licenses-card {
     border-radius: 16px;
     overflow: visible;
@@ -1786,7 +1746,6 @@ h3 {
     padding-right: 28px;
 }
 
-/* Admin Table */
 .admin-table-wrapper {
     overflow-x: auto;
     overflow-y: visible;
@@ -1903,7 +1862,6 @@ h3 {
     font-weight: 500;
 }
 
-/* Admin Table Status Badges */
 .admin-status {
     font-size: 11px;
     font-weight: 700;
@@ -1931,7 +1889,6 @@ h3 {
     color: #fbbf24;
 }
 
-/* Admin Action Buttons */
 .admin-actions {
     display: flex;
     gap: 6px;
@@ -1998,7 +1955,6 @@ h3 {
     border-color: rgba(251, 191, 36, 0.4);
 }
 
-/* Admin License Count */
 .admin-count {
     margin-top: 16px;
     font-size: 12.5px;
@@ -2006,7 +1962,6 @@ h3 {
     font-weight: 500;
 }
 
-/* Created Key Success Display */
 .admin-key-result {
     margin-top: 16px;
     padding: 16px 20px;
@@ -2050,7 +2005,6 @@ h3 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Info Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -2124,7 +2078,6 @@ h3 {
     color: #fff;
 }
 
-/* Update Notification Banner Style */
 .update-notification {
     background: linear-gradient(135deg, rgba(255, 0, 60, 0.15), rgba(168, 85, 247, 0.08));
     border: 1px solid rgba(255, 0, 60, 0.25);
@@ -2248,7 +2201,6 @@ h3 {
     color: #c4b5fd;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
     .navbar {
         top: 10px;
@@ -2356,7 +2308,6 @@ h3 {
     }
 }
 
-/* Custom Select Dropdown for Admin Panel */
 .custom-select-wrapper {
     position: relative;
     user-select: none;
@@ -2394,7 +2345,6 @@ h3 {
     transform: rotate(180deg);
 }
 
-/* Custom Select Dropdown for Admin Panel */
 .custom-select-wrapper.static-select {
     position: relative;
     user-select: none;
@@ -2471,7 +2421,6 @@ h3 {
     margin-left: auto;
 }
 
-/* User Selector Modal Styles */
 .user-selector-modal-content {
     max-width: 640px !important;
     width: 92% !important;
@@ -2552,7 +2501,6 @@ h3 {
     background-color: rgba(255, 0, 60, 0.08);
 }
 
-/* Custom scrollbar for user grid */
 .modal-user-grid::-webkit-scrollbar {
     width: 6px;
 }
@@ -2571,7 +2519,6 @@ h3 {
     background: rgba(255, 0, 60, 0.5);
 }
 
-/* Custom Trial Card styles */
 .trial-card {
     position: relative;
     overflow: hidden;
@@ -2601,7 +2548,6 @@ h3 {
     100% { box-shadow: 0 0 0 0 rgba(255, 0, 60, 0); }
 }
 
-/* Free trial pricing card on landing page */
 .trial-pricing-card {
     border: 1px solid rgba(16, 185, 129, 0.25) !important;
 }
@@ -2625,7 +2571,6 @@ h3 {
     letter-spacing: 0.05em;
 }
 
-/* Custom Confirm Modal styles & animations */
 .confirm-modal-content {
     background: rgba(15, 15, 20, 0.7) !important;
     backdrop-filter: blur(16px) !important;
@@ -2658,7 +2603,6 @@ h3 {
     transform: translateY(1px);
 }
 
-/* Purchase / Discord Ticket Modal */
 .purchase-modal-content {
     max-width: 460px !important;
     align-items: center;
@@ -2783,7 +2727,6 @@ h3 {
     }
 }
 
-/* Custom Referral Card styles */
 .referral-card {
     position: relative;
     overflow: hidden;
@@ -2813,7 +2756,6 @@ h3 {
     }
 }
 
-/* Referral section labels */
 .referral-section-label {
     display: block;
     font-size: 13px;
@@ -2824,7 +2766,6 @@ h3 {
     letter-spacing: 0.5px;
 }
 
-/* Referral Code Redeem Card */
 .referral-code-redeem-card {
     position: relative;
     overflow: hidden;
@@ -2844,8 +2785,6 @@ h3 {
     transform: translateY(-2px);
 }
 
-
-/* Promocode Card Styling & Glow Effects */
 #tab-content-promo .bind-card {
     position: relative;
     overflow: hidden;
@@ -2868,7 +2807,6 @@ h3 {
     transform: translateY(-2px);
 }
 
-/* Premium input glow for promo codes */
 #promo-code-input {
     transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
     letter-spacing: 0.1em;
@@ -2881,7 +2819,6 @@ h3 {
     transform: scale(1.01);
 }
 
-/* Admin Promo Creation Form Input Effects */
 #admin-promo-code-input {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     font-weight: 700;
@@ -2893,7 +2830,6 @@ h3 {
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.2) !important;
 }
 
-/* Glowing green badge for promo codes inside tables */
 .promo-code-badge {
     background: rgba(16, 185, 129, 0.1);
     color: #10b981;
@@ -2913,7 +2849,6 @@ h3 {
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
 }
 
-/* Premium Glassmorphic Alert Banner */
 .alert-banner {
     display: flex;
     align-items: center;
@@ -2952,7 +2887,6 @@ h3 {
     display: none !important;
 }
 
-/* Success Alert (Green theme) */
 .alert-banner.success {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.05));
     border-color: rgba(16, 185, 129, 0.3);
@@ -2971,7 +2905,6 @@ h3 {
     box-shadow: 0 0 10px #10b981;
 }
 
-/* Error Alert (Red theme) */
 .alert-banner.error {
     background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.05));
     border-color: rgba(239, 68, 68, 0.3);
@@ -2990,7 +2923,6 @@ h3 {
     box-shadow: 0 0 10px #ef4444;
 }
 
-/* Info Alert (Blue/Purple theme) */
 .alert-banner.info {
     background: linear-gradient(135deg, rgba(255, 0, 60, 0.15), rgba(168, 85, 247, 0.05));
     border-color: rgba(255, 0, 60, 0.3);
@@ -3009,7 +2941,6 @@ h3 {
     box-shadow: 0 0 10px #ff003c;
 }
 
-/* Alert Content Elements */
 .alert-banner-content {
     display: flex;
     align-items: center;
@@ -3051,7 +2982,6 @@ h3 {
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* Animation classes */
 .alert-banner.banner-hide {
     opacity: 0 !important;
     transform: translateY(-15px) scale(0.97) !important;
@@ -3064,7 +2994,6 @@ h3 {
     box-shadow: none !important;
 }
 
-/* User HWID reset button style */
 .reset-hwid-btn {
     padding: 8px 16px !important;
     font-size: 12px !important;
@@ -3120,10 +3049,6 @@ h3 {
     max-width: fit-content;
 }
 
-/* ==========================================================================
-   PREMIUM AESTHETICS & INTERACTIVE HOVER ANIMATION ENGINE (iOS 26 VIBES)
-   ========================================================================== */
-
 :root {
     --spring-transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     --hover-spring: transform 0.5s cubic-bezier(0.34, 1.65, 0.66, 1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
@@ -3133,7 +3058,6 @@ h3 {
     --light-shimmer: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.08) 60%, transparent 70%);
 }
 
-/* 1. Global Reset for Spring Transitions */
 .btn,
 .logo,
 .nav-links button,
@@ -3163,7 +3087,6 @@ h3 {
     transition: var(--spring-transition) !important;
 }
 
-/* 2. Sleek Background Blob Enhancements */
 .blob {
     opacity: 0.28 !important;
     mix-blend-mode: screen;
@@ -3175,7 +3098,6 @@ h3 {
 .blob-3 { background: radial-gradient(circle, #cc0000 0%, transparent 80%) !important; }
 .blob-4 { background: radial-gradient(circle, #660000 0%, transparent 80%) !important; }
 
-/* 3. Hero Visual Preview Sway (Gentle Floating Animation) */
 .main-preview {
     animation: gentleFloat 6s ease-in-out infinite alternate !important;
     will-change: transform;
@@ -3187,7 +3109,6 @@ h3 {
     border-color: rgba(255, 0, 60, 0.4) !important;
 }
 
-/* 4. Logo Hover Effect */
 .logo:hover {
     transform: scale(1.04) !important;
 }
@@ -3203,7 +3124,6 @@ h3 {
     transition: var(--transition);
 }
 
-/* 5. Navbar Hover Enhancement */
 .navbar:hover {
     border-color: rgba(255, 255, 255, 0.16) !important;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(255, 0, 60, 0.05) !important;
@@ -3219,7 +3139,6 @@ h3 {
     transform: scale(0.95) !important;
 }
 
-/* 6. Language Switcher Bounce */
 .lang-switcher .lang-btn:hover {
     transform: scale(1.08) !important;
 }
@@ -3227,7 +3146,6 @@ h3 {
     box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4) !important;
 }
 
-/* 7. Buttons spring-glow & Magnetic feel overrides */
 .btn-primary:hover {
     background-color: #ffffff !important;
     transform: translateY(-4px) scale(1.04) !important;
@@ -3247,7 +3165,6 @@ h3 {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* 8. Setup flow steps animations */
 .setup-flow-item:hover {
     transform: translateY(-6px) scale(1.12) rotate(4deg) !important;
 }
@@ -3256,7 +3173,6 @@ h3 {
     animation: heartbeat 1.2s infinite alternate ease-in-out;
 }
 
-/* 9. Feature Cards Premium Scale & Glowing border */
 .feature-card:hover {
     transform: translateY(-8px) scale(1.03) rotateX(1.5deg) rotateY(1.5deg) !important;
     border-color: rgba(255, 0, 60, 0.35) !important;
@@ -3281,7 +3197,6 @@ h3 {
     transition: var(--spring-transition);
 }
 
-/* 10. Pricing Cards Spark & Zoom */
 .pricing-card:hover {
     transform: translateY(-10px) scale(1.03) !important;
     box-shadow: 0 35px 70px rgba(0, 0, 0, 0.65), var(--purple-glow) !important;
@@ -3306,7 +3221,6 @@ h3 {
     animation: shimmerSweep 1.5s infinite;
 }
 
-/* 11. FAQ item hover slide chevron */
 .faq-item:hover {
     transform: translateY(-3px) scale(1.01) !important;
     background-color: rgba(255, 255, 255, 0.065) !important;
@@ -3329,7 +3243,6 @@ h3 {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 4px 0 0 var(--krypton-yellow) !important;
 }
 
-/* 12. Dashboard Elements Micro-interactions */
 .device-status-card:hover {
     transform: translateY(-4px) scale(1.02) !important;
     border-color: rgba(255, 0, 60, 0.3) !important;
@@ -3348,7 +3261,6 @@ h3 {
     box-shadow: 0 8px 20px rgba(255, 0, 60, 0.15) !important;
 }
 
-/* Sidebar Menu Item Shift on hover */
 .menu-item:hover {
     transform: translateX(6px) scale(1.02) !important;
     background-color: rgba(255, 255, 255, 0.06) !important;
@@ -3365,7 +3277,6 @@ h3 {
     transform: translateX(4px) scale(1.02) !important;
 }
 
-/* Main Download Card */
 .krypton-download-card:hover {
     transform: translateY(-5px) scale(1.015) !important;
     border-color: rgba(255, 0, 60, 0.35) !important;
@@ -3378,7 +3289,6 @@ h3 {
     filter: brightness(1.15) !important;
 }
 
-/* Step cards & Launcher Cards */
 .step-card:hover,
 .launcher-card:hover {
     transform: translateY(-6px) scale(1.03) !important;
@@ -3387,7 +3297,6 @@ h3 {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Input Fields hover & focus dynamic glow */
 .bind-form input:hover,
 .referral-code-redeem-card input:hover,
 .admin-create-card input:hover,
@@ -3406,14 +3315,12 @@ h3 {
     outline: none;
 }
 
-/* Form Submit Buttons */
 .bind-form button:hover,
 .referral-code-redeem-card button:hover {
     transform: translateY(-2px) scale(1.03) !important;
     box-shadow: 0 10px 20px rgba(255, 0, 60, 0.2) !important;
 }
 
-/* Interactive tables rows */
 .admin-table tbody tr {
     transition: var(--spring-transition);
 }
@@ -3422,20 +3329,17 @@ h3 {
     transform: scale(1.002);
 }
 
-/* User Selection Options */
 .user-option:hover {
     transform: translateX(4px) scale(1.01) !important;
     background-color: rgba(255, 0, 60, 0.1) !important;
     color: #fff !important;
 }
 
-/* Alert Banner Close Button */
 .close-banner:hover {
     transform: scale(1.15) !important;
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Refresh Button Spin */
 .btn-refresh:hover {
     transform: scale(1.08) !important;
 }
@@ -3443,14 +3347,12 @@ h3 {
     transform: rotate(180deg) !important;
 }
 
-/* Key result copy btn */
 .admin-key-result .copy-btn:hover {
     transform: scale(1.05) !important;
     background-color: #fff !important;
     color: #000 !important;
 }
 
-/* Card hover shimmers */
 .referral-card:hover,
 .referral-code-redeem-card:hover,
 .trial-card:hover,
@@ -3459,10 +3361,6 @@ h3 {
     border-color: rgba(255, 0, 60, 0.3) !important;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 0, 60, 0.08) !important;
 }
-
-/* ==========================================
-   KEYFRAMES DEFINITIONS
-   ========================================== */
 
 @keyframes gentleFloat {
     0% { transform: translateY(0px) rotate(0deg); }
@@ -3482,9 +3380,6 @@ h3 {
     100% { left: 150%; }
 }
 
-/* ==========================================================================
-   UNIFIED DOWNLOAD MODAL STYLES
-   ========================================================================== */
 .download-modal-content {
     background: rgba(10, 10, 10, 0.75) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -3584,7 +3479,6 @@ h3 {
     z-index: 1;
 }
 
-/* Hover States for Modal Options */
 .modal-download-card-item:hover {
     transform: translateY(-5px) scale(1.025);
     border-color: rgba(255, 0, 60, 0.3);
@@ -3629,10 +3523,6 @@ h3 {
     100% { transform: translateY(3px); }
 }
 
-/* ==========================================
-   PULSE AI ASSISTANT WIDGET STYLES
-   ========================================== */
-
 .pulse-ai-container {
     position: fixed;
     bottom: 24px;
@@ -3641,7 +3531,6 @@ h3 {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Floating Launcher Button */
 .pulse-ai-launcher-btn {
     display: flex;
     align-items: center;
@@ -3704,7 +3593,6 @@ h3 {
     -webkit-text-fill-color: transparent;
 }
 
-/* Chat Card Container */
 .pulse-ai-chat-card {
     position: absolute;
     bottom: 60px;
@@ -3735,7 +3623,6 @@ h3 {
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Header */
 .pulse-ai-header {
     display: flex;
     align-items: center;
@@ -3803,7 +3690,6 @@ h3 {
     border-color: rgba(239, 68, 68, 0.4);
 }
 
-/* Quick Suggestion Chips */
 .pulse-ai-chips-scroll {
     display: flex;
     gap: 8px;
@@ -3839,7 +3725,6 @@ h3 {
     transform: translateY(-1px);
 }
 
-/* Messages Area */
 .pulse-ai-messages-area {
     flex: 1;
     padding: 16px;
@@ -3900,7 +3785,6 @@ h3 {
     color: #ffffff;
 }
 
-/* Input Form */
 .pulse-ai-input-form {
     display: flex;
     align-items: center;
@@ -3949,8 +3833,6 @@ h3 {
     box-shadow: 0 6px 18px rgba(255, 0, 60, 0.5);
 }
 
-
-
 body, html {
     background-color: #000000 !important;
     color: #ffffff !important;
@@ -3961,7 +3843,7 @@ body, html {
 }
 
 .blob {
-    opacity: 0.12 !important; /* Low opacity so pure black background dominates! */
+    opacity: 0.12 !important; 
 }
 
 .glass-panel,
@@ -4003,7 +3885,6 @@ body, html {
     border: 1px solid rgba(255, 0, 0, 0.2) !important;
 }
 
-
 body, html {
     background-color: #000000 !important;
     color: #ffffff !important;
@@ -4014,7 +3895,7 @@ body, html {
 }
 
 .blob {
-    opacity: 0.08 !important; /* Ultra low blob opacity so jet black dominates! */
+    opacity: 0.08 !important; 
 }
 
 .modal-content {
