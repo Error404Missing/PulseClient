@@ -851,8 +851,11 @@ window.showDashboard = showDashboard;
 
 function isAdmin() {
     if (!currentUser) return false;
-    const providerId = currentUser.user_metadata?.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
-    return ADMIN_DISCORD_IDS.includes(String(providerId));
+    const discordId = String(getDiscordId(currentUser) || "");
+    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
+    if (ADMIN_DISCORD_IDS.includes(discordId)) return true;
+    if (username === "sticky._.1" || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+    return false;
 }
 
 function parseLicenseNote(note) {
@@ -1827,26 +1830,40 @@ function showLicenseDetails(key) {
     const modalIpContainer = document.getElementById('modal-ip-container');
     const modalIp = document.getElementById('modal-ip');
     if (modalIpContainer && modalIp) {
+        // Show IP container for admin / owner
         if (isAdmin()) {
             modalIpContainer.style.display = 'block';
             modalIp.textContent = "იტვირთება...";
 
             (async () => {
                 let foundIp = null;
-                try {
-                    const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?license_key=eq.${encodeURIComponent(lic.license_key)}&order=last_heartbeat.desc&limit=1`, {
-                        headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
-                    });
-                    if (res.ok) {
-                        const sessions = await res.json();
-                        if (sessions && sessions.length > 0 && sessions[0].ip_address && sessions[0].ip_address !== 'Hidden' && sessions[0].ip_address !== 'Unknown') {
-                            foundIp = sessions[0].ip_address;
-                        }
+
+                // 1. Check in-memory adminSessions
+                if (typeof adminSessions !== 'undefined' && adminSessions.length > 0) {
+                    const s = adminSessions.find(x => x.license_key === lic.license_key || (lic.hwid && x.hwid === lic.hwid));
+                    if (s && s.ip_address && s.ip_address !== 'Hidden' && s.ip_address !== 'Unknown') {
+                        foundIp = s.ip_address;
                     }
-                } catch (e) {
-                    console.warn("Error fetching session IP by key:", e);
                 }
 
+                // 2. Fetch directly from client_sessions by license key
+                if (!foundIp) {
+                    try {
+                        const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?license_key=eq.${encodeURIComponent(lic.license_key)}&order=last_heartbeat.desc&limit=1`, {
+                            headers: { "apikey": supabaseKey, "Authorization": `Bearer ${supabaseKey}` }
+                        });
+                        if (res.ok) {
+                            const sessions = await res.json();
+                            if (sessions && sessions.length > 0 && sessions[0].ip_address && sessions[0].ip_address !== 'Hidden' && sessions[0].ip_address !== 'Unknown') {
+                                foundIp = sessions[0].ip_address;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn("Error fetching session IP by key:", e);
+                    }
+                }
+
+                // 3. Fetch directly from client_sessions by HWID
                 if (!foundIp && lic.hwid && lic.hwid !== 'null') {
                     try {
                         const res2 = await fetch(`${supabaseUrl}/rest/v1/client_sessions?hwid=eq.${encodeURIComponent(lic.hwid)}&order=last_heartbeat.desc&limit=1`, {
@@ -1863,6 +1880,7 @@ function showLicenseDetails(key) {
                     }
                 }
 
+                // 4. Fallback to profiles table match
                 if (!foundIp && buyer) {
                     const matchedProfile = allUserProfiles.find(p => p.username === buyer);
                     if (matchedProfile && matchedProfile.last_ip) {
