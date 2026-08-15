@@ -2,7 +2,7 @@
 // ==========================================
 // BEAUTIFUL DISCORD AUDIT WEBHOOK LOGGING
 // ==========================================
-const DISCORD_AUDIT_WEBHOOK_URL = ""; // Paste your Discord Webhook URL here
+const DISCORD_AUDIT_WEBHOOK_URL = "https://discord.com/api/webhooks/1538215324325781566/_PXXbrAPEb1XU9m0pLoT2Q1spB5HdarsSuMAwYljqQSb9UOSbJzIJZXfuqpTky4xkmhO"; // Paste your Discord Webhook URL here
 
 async function sendDiscordAuditLog(eventTitle, eventDescription, colorHex = 0xff003c, fields = []) {
     if (!DISCORD_AUDIT_WEBHOOK_URL || !DISCORD_AUDIT_WEBHOOK_URL.startsWith("http")) return;
