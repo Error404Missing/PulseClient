@@ -1,3 +1,40 @@
+
+// ==========================================
+// BEAUTIFUL DISCORD AUDIT WEBHOOK LOGGING
+// ==========================================
+const DISCORD_AUDIT_WEBHOOK_URL = ""; // Paste your Discord Webhook URL here
+
+async function sendDiscordAuditLog(eventTitle, eventDescription, colorHex = 0xff003c, fields = []) {
+    if (!DISCORD_AUDIT_WEBHOOK_URL || !DISCORD_AUDIT_WEBHOOK_URL.startsWith("http")) return;
+    
+    const embed = {
+        title: eventTitle,
+        description: eventDescription,
+        color: colorHex,
+        fields: fields,
+        author: {
+            name: "PulseClient Audit System",
+            icon_url: "https://raw.githubusercontent.com/Error404Missing/PulseClient/main/Website/assets/water/icon.png"
+        },
+        footer: {
+            text: "PulseClient v5 Web Telemetry",
+            icon_url: "https://raw.githubusercontent.com/Error404Missing/PulseClient/main/Website/assets/water/icon.png"
+        },
+        timestamp: new Date().toISOString()
+    };
+
+    try {
+        await fetch(DISCORD_AUDIT_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ embeds: [embed] })
+        });
+    } catch (e) {
+        console.warn("Discord Audit Webhook error:", e);
+    }
+}
+window.sendDiscordAuditLog = sendDiscordAuditLog;
+
 // Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
@@ -391,6 +428,18 @@ function handleUserSignIn(user) {
 
     // Asynchronously fetch latest profile from DB in case it was synced by bot
     fetchLatestProfile(user.id);
+    const auditUser = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "Guest";
+    const auditDiscordId = getDiscordId(user) || "Unknown";
+    sendDiscordAuditLog(
+        "🔑 მომხმარებელი შევიდა საიტზე",
+        `მომხმარებელმა **${auditUser}** წარმატებით გაიარა Discord ავტორიზაცია.`,
+        0x10b981,
+        [
+            { name: "👤 მომხმარებელი", value: auditUser, inline: true },
+            { name: "🆔 Discord ID", value: String(auditDiscordId), inline: true },
+            { name: "👑 როლი", value: isAdmin() ? "Admin / Owner ⚡" : "User 🎮", inline: true }
+        ]
+    );
 
     // Set up referral link for the logged in user
     const discordId = getDiscordId(user);
@@ -1328,6 +1377,18 @@ async function createLicenseFromAdmin(e) {
         options.forEach(opt => opt.classList.remove('selected'));
 
         showBanner(t("msg.keyCreated"), "success");
+        sendDiscordAuditLog(
+            "🆕 ახალი ლიცენზია შეიქმნა (Admin)",
+            `ადმინმა **${adminName}** შექმნა ახალი ლიცენზია მომხმარებლისთვის **${buyer}**.`,
+            0x3b82f6,
+            [
+                { name: "👑 ადმინი", value: adminName, inline: true },
+                { name: "👤 მყიდველი", value: buyer, inline: true },
+                { name: "📦 პროდუქტი", value: product, inline: true },
+                { name: "🔑 გასაღები", value: key, inline: false },
+                { name: "⏰ ხანგრძლივობა", value: durationDays === null ? "♾️ Lifetime" : `${durationDays} დღე`, inline: true }
+            ]
+        );
         fetchAllLicenses();
     } catch (err) {
         console.error("Error creating license:", err.message);
@@ -1367,6 +1428,16 @@ async function revokeLicense(key) {
         if (!res.ok) throw new Error(await res.text());
 
         showBanner(t("msg.revokeSuccess"), "success");
+        const revokerName = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Admin") : "Admin";
+        sendDiscordAuditLog(
+            "🚫 ლიცენზია გაუქმებულია",
+            `ადმინმა **${revokerName}** გააუქმა ლიცენზია.`,
+            0xff0000,
+            [
+                { name: "👑 ადმინი", value: revokerName, inline: true },
+                { name: "🔑 გასაღები", value: key, inline: false }
+            ]
+        );
         fetchAllLicenses();
     } catch (err) {
         console.error("Error revoking license:", err.message);
@@ -1555,6 +1626,18 @@ async function claimFreeTrial() {
         if (insertError) throw insertError;
 
         showBanner(t("msg.trialSuccess"), "success");
+        sendDiscordAuditLog(
+            "🎮 უფასო Trial აღებულია",
+            `მომხმარებელმა **${username}** აიღო **${trialDays} დღიანი** უფასო საცდელი ვერსია.`,
+            0x10b981,
+            [
+                { name: "👤 მომხმარებელი", value: username || "Unknown", inline: true },
+                { name: "🆔 Discord ID", value: String(discordId || "N/A"), inline: true },
+                { name: "🔑 გასაღები", value: key, inline: false },
+                { name: "⏰ ხანგრძლივობა", value: `${trialDays} დღე`, inline: true },
+                { name: "📝 რეფერალი", value: referrerName ? `კი (${referrerName})` : "არა", inline: true }
+            ]
+        );
         fetchUserLicenses();
     } catch (err) {
         console.error("Error claiming trial key:", err.message);
@@ -2217,6 +2300,16 @@ async function redeemPromoCode(e) {
         if (insertRedError) throw insertRedError;
 
         showBanner(t("msg.promoRedeemed", { n: promo.duration_days }), "success");
+        sendDiscordAuditLog(
+            "🎁 პრომოკოდი გამოყენებულია",
+            `მომხმარებელმა **${username}** გამოიყენა პრომოკოდი **${code}**.`,
+            0xa855f7,
+            [
+                { name: "👤 მომხმარებელი", value: username || "Unknown", inline: true },
+                { name: "🎟️ კოდი", value: code, inline: true },
+                { name: "⏰ დამატებული", value: `${promo.duration_days} დღე`, inline: true }
+            ]
+        );
         promoInput.value = '';
         fetchUserLicenses();
     } catch (err) {
@@ -2623,6 +2716,16 @@ async function resetDeviceSlotHwid() {
     }
     const activeLic = userLicenses.find(l => l.is_active) || userLicenses[0];
     await resetUserHwid(activeLic.license_key);
+    const resetUser = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "User") : "User";
+    sendDiscordAuditLog(
+        "🖥️ HWID Reset-ის მოთხოვნა",
+        `მომხმარებელმა **${resetUser}** გაასუფთავა მოწყობილობის სლოტი (HWID).`,
+        0xf59e0b,
+        [
+            { name: "👤 მომხმარებელი", value: resetUser, inline: true },
+            { name: "🔑 გასაღები", value: activeLic.license_key, inline: true }
+        ]
+    );
     updateDeviceSlotModalInfo();
 }
 window.resetDeviceSlotHwid = resetDeviceSlotHwid;
@@ -2648,6 +2751,16 @@ async function handleCustomClientDownload(e) {
     }
     
     const customFilename = getUserCustomJarFilename();
+    const currentUsername = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Guest") : "Guest";
+    sendDiscordAuditLog(
+        "📦 კლიენტის (.jar) გადმოწერა",
+        `მომხმარებელმა ჩამოტვირთა კლიენტის ფაილი **${customFilename}**.`,
+        0x38bdf8,
+        [
+            { name: "👤 მომხმარებელი", value: currentUsername, inline: true },
+            { name: "📄 ფაილი", value: customFilename, inline: true }
+        ]
+    );
     showBanner(`ფაილის გადმოწერა დაიწყო: ${customFilename}`, "info");
 
     try {
