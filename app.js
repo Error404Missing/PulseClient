@@ -23,14 +23,30 @@ async function sendDiscordAuditLog(eventTitle, eventDescription, colorHex = 0xff
         timestamp: new Date().toISOString()
     };
 
+    // 1. Direct Webhook send
     try {
-        await fetch(DISCORD_AUDIT_WEBHOOK_URL, {
+        const res = await fetch(DISCORD_AUDIT_WEBHOOK_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ embeds: [embed] })
         });
-    } catch (e) {
-        console.warn("Discord Audit Webhook error:", e);
+        if (res.ok) return;
+    } catch (directErr) {
+        console.warn("Direct Webhook fetch failed (might be blocked by adblocker), routing through backend proxy:", directErr);
+    }
+
+    // 2. Server-side Relay Fallback (Bypasses browser adblockers and CORS restrictions)
+    try {
+        await fetch("https://errormissing-pulse-bot.hf.space/audit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                webhook_url: DISCORD_AUDIT_WEBHOOK_URL,
+                embed: embed
+            })
+        });
+    } catch (proxyErr) {
+        console.warn("Audit relay proxy error:", proxyErr);
     }
 }
 window.sendDiscordAuditLog = sendDiscordAuditLog;
