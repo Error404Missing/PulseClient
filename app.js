@@ -92,7 +92,7 @@ const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
 const GITHUB_PVP_JAR_FILE = GITHUB_JAR_FILE;
 const GITHUB_BASEFIND_JAR_FILE = GITHUB_JAR_FILE;
 
-const GITHUB_CLIENT_DOWNLOAD_URL = `./${GITHUB_JAR_FILE}`;
+const GITHUB_CLIENT_DOWNLOAD_URL = "./PulseClient-Fabric-1.21.11.jar";
 const GITHUB_PVP_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 const GITHUB_BASEFIND_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 
@@ -2768,6 +2768,7 @@ async function handleCustomClientDownload(e) {
     
     const customFilename = getUserCustomJarFilename();
     const currentUsername = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Guest") : "Guest";
+    
     sendDiscordAuditLog(
         "📦 კლიენტის (.jar) გადმოწერა",
         `მომხმარებელმა ჩამოტვირთა კლიენტის ფაილი **${customFilename}**.`,
@@ -2779,40 +2780,26 @@ async function handleCustomClientDownload(e) {
     );
     showBanner(`ფაილის გადმოწერა დაიწყო: ${customFilename}`, "info");
 
-    const candidateUrls = [
-        `./${GITHUB_JAR_FILE}`,
-        `${window.location.origin}${window.location.pathname.replace(/\/[^\/]*$/, '')}/${GITHUB_JAR_FILE}`,
-        `https://errormissing-pulse-bot.hf.space/download`,
-        `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/main/${GITHUB_JAR_FILE}`
-    ];
+    const jarLocalPath = `./${GITHUB_JAR_FILE}`;
+    try {
+        const response = await fetch(jarLocalPath, { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
 
-    let success = false;
-    for (const url of candidateUrls) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) continue;
-            const blob = await response.blob();
-            const blobUrl = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = customFilename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
-            closeDownloadModal();
-            success = true;
-            break;
-        } catch (err) {
-            console.warn(`Download candidate fetch failed for ${url}:`, err);
-        }
-    }
-
-    if (!success) {
         const a = document.createElement('a');
-        a.href = `./${GITHUB_JAR_FILE}`;
+        a.href = blobUrl;
+        a.download = customFilename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
+        closeDownloadModal();
+    } catch (err) {
+        console.warn("Direct blob fetch failed, falling back to local static download anchor:", err);
+        const a = document.createElement('a');
+        a.href = jarLocalPath;
         a.download = customFilename;
         a.setAttribute('download', customFilename);
         document.body.appendChild(a);
