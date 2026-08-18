@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=240.0.0">
+    <link rel="stylesheet" href="style.css?v=250.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -883,68 +883,7 @@
                             </div>
                         </div>
 
-                        <!-- Admin Create Promocode Card -->
-                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
-                            <h3 data-i18n="admin.promoTitle">პრომო კოდების შექმნა</h3>
-                            <form id="admin-promo-create-form" class="admin-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoCode">პრომო კოდი</label>
-                                        <input type="text" id="admin-promo-code-input" data-i18n-placeholder="admin.promoCodePh" placeholder="მაგ: PULSE100" required style="text-transform: uppercase;">
-                                    </div>
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoDays">დღეები</label>
-                                        <input type="number" id="admin-promo-days-input" data-i18n-placeholder="admin.promoDaysPh" placeholder="დღეების რაოდენობა" min="1" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label data-i18n="admin.colPromoUses">ლიმიტი</label>
-                                        <input type="number" id="admin-promo-uses-input" data-i18n-placeholder="admin.promoUsesPh" placeholder="ლიმიტი (ცარიელი = ულიმიტო)" min="1">
-                                    </div>
-                                </div>
-                                <button type="submit" id="admin-promo-create-btn" class="btn btn-glow btn-primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    <span data-i18n="admin.promoCreateBtn">კოდის შექმნა</span>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Active Client Sessions -->
-                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
-                            <div class="admin-header">
-                                <h3 data-i18n="admin.telemetryTitle">აქტიური სესიები (Active Telemetry)</h3>
-                                <div class="admin-controls">
-                                    <button type="button" class="btn btn-secondary" onclick="fetchActiveSessions()" style="padding: 8px 16px; font-size: 13px;" data-i18n="dash.refresh">
-                                        განახლება
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="admin-sessions-loading" class="loading-state" data-i18n="admin.loading">
-                                მონაცემები იტვირთება...
-                            </div>
-                            <div class="admin-table-wrapper">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th data-i18n="telemetry.mcUser">Minecraft იუზერი</th>
-                                            <th data-i18n="telemetry.key">გასაღები</th>
-                                            <th data-i18n="telemetry.os">OS</th>
-                                            <th data-i18n="telemetry.country">ქვეყანა</th>
-                                            <th data-i18n="telemetry.started">ჩაირთო</th>
-                                            <th data-i18n="telemetry.duration">ხანგრძლივობა</th>
-                                            <th data-i18n="telemetry.ended">დასრულდა</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="admin-sessions-table-body">
-                                        <!-- Active sessions rendered dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="admin-count" data-i18n-html="admin.totalOnlineHtml">
-                                სულ ონლაინშია: <span id="admin-sessions-count">0</span>
-                            </div>
-                        </div>
-
-                        <!-- All Licenses List -->
+                        <!-- All Licenses List (Priority at top) -->
                         <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
                             <div class="admin-header">
                                 <h3 data-i18n="admin.manageTitle">ყველა ლიცენზიის მართვა</h3>
@@ -987,6 +926,31 @@
                             </div>
                         </div>
 
+                        <!-- Admin Create Promocode Card -->
+                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
+                            <h3 data-i18n="admin.promoTitle">პრომო კოდების შექმნა</h3>
+                            <form id="admin-promo-create-form" class="admin-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label data-i18n="admin.colPromoCode">პრომო კოდი</label>
+                                        <input type="text" id="admin-promo-code-input" data-i18n-placeholder="admin.promoCodePh" placeholder="მაგ: PULSE100" required style="text-transform: uppercase;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="admin.colPromoDays">დღეები</label>
+                                        <input type="number" id="admin-promo-days-input" data-i18n-placeholder="admin.promoDaysPh" placeholder="დღეების რაოდენობა" min="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="admin.colPromoUses">ლიმიტი</label>
+                                        <input type="number" id="admin-promo-uses-input" data-i18n-placeholder="admin.promoUsesPh" placeholder="ლიმიტი (ცარიელი = ულიმიტო)" min="1">
+                                    </div>
+                                </div>
+                                <button type="submit" id="admin-promo-create-btn" class="btn btn-glow btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span data-i18n="admin.promoCreateBtn">კოდის შექმნა</span>
+                                </button>
+                            </form>
+                        </div>
+
                         <!-- Admin Promocodes List Card -->
                         <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
                             <h3 data-i18n="admin.promoList">პრომო კოდების მართვა</h3>
@@ -1005,6 +969,42 @@
                                         <!-- Promo codes rendered dynamically -->
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+
+                        <!-- Active Client Sessions (Moved down below licenses and promocodes) -->
+                        <div class="glass-panel admin-licenses-card" style="margin-bottom: 28px;">
+                            <div class="admin-header">
+                                <h3 data-i18n="admin.telemetryTitle">აქტიური სესიები (Active Telemetry)</h3>
+                                <div class="admin-controls">
+                                    <button type="button" class="btn btn-secondary" onclick="fetchActiveSessions()" style="padding: 8px 16px; font-size: 13px;" data-i18n="dash.refresh">
+                                        განახლება
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="admin-sessions-loading" class="loading-state" data-i18n="admin.loading">
+                                მონაცემები იტვირთება...
+                            </div>
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th data-i18n="telemetry.mcUser">Minecraft იუზერი</th>
+                                            <th data-i18n="telemetry.key">გასაღები</th>
+                                            <th data-i18n="telemetry.os">OS</th>
+                                            <th data-i18n="telemetry.country">ქვეყანა</th>
+                                            <th data-i18n="telemetry.started">ჩაირთო</th>
+                                            <th data-i18n="telemetry.duration">ხანგრძლივობა</th>
+                                            <th data-i18n="telemetry.ended">დასრულდა</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-sessions-table-body">
+                                        <!-- Active sessions rendered dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="admin-count" data-i18n-html="admin.totalOnlineHtml">
+                                სულ ონლაინშია: <span id="admin-sessions-count">0</span>
                             </div>
                         </div>
 
@@ -1405,7 +1405,7 @@
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=240.0.0"></script>
-    <script src="app.js?v=240.0.0"></script>
+    <script src="i18n.js?v=250.0.0"></script>
+    <script src="app.js?v=250.0.0"></script>
 </body>
 </html>
