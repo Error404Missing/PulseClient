@@ -4085,3 +4085,17 @@ body, html {
 .custom-dark-textarea::placeholder {
     color: #64748b !important;
 }
+
+
+.setup-minecraft {
+    background: linear-gradient(145deg, rgba(92, 184, 92, 0.2) 0%, rgba(61, 139, 61, 0.35) 100%) !important;
+    border: 1px solid rgba(92, 184, 92, 0.5) !important;
+    box-shadow: 0 10px 25px rgba(92, 184, 92, 0.25) !important;
+    color: #fff !important;
+}
+
+.setup-minecraft:hover {
+    box-shadow: 0 14px 35px rgba(92, 184, 92, 0.45), 0 0 20px rgba(92, 184, 92, 0.3) !important;
+    border-color: #5cb85c !important;
+    transform: translateY(-4px) scale(1.05) !important;
+}
