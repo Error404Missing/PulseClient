@@ -784,38 +784,34 @@ function switchDashTab(event, tabId) {
     if (event) event.preventDefault();
     
     // Hide all tabs
-    document.getElementById('tab-content-downloads').classList.add('hidden');
-    document.getElementById('tab-content-redeem').classList.add('hidden');
-    document.getElementById('tab-content-faq').classList.add('hidden');
-    if (document.getElementById('tab-content-referral')) {
-        document.getElementById('tab-content-referral').classList.add('hidden');
-    }
-    if (document.getElementById('tab-content-promo')) {
-        document.getElementById('tab-content-promo').classList.add('hidden');
-    }
-    if (document.getElementById('tab-content-admin')) {
-        document.getElementById('tab-content-admin').classList.add('hidden');
-    }
+    const allTabPanes = document.querySelectorAll('.dashboard-main .tab-pane');
+    allTabPanes.forEach(pane => pane.classList.add('hidden'));
     
     // Show active tab
     if (tabId === 'tab-downloads') {
-        document.getElementById('tab-content-downloads').classList.remove('hidden');
+        const pane = document.getElementById('tab-content-downloads');
+        if (pane) pane.classList.remove('hidden');
     } else if (tabId === 'tab-redeem') {
-        document.getElementById('tab-content-redeem').classList.remove('hidden');
+        const pane = document.getElementById('tab-content-redeem');
+        if (pane) pane.classList.remove('hidden');
     } else if (tabId === 'tab-referral') {
-        if (document.getElementById('tab-content-referral')) {
-            document.getElementById('tab-content-referral').classList.remove('hidden');
-        }
+        const pane = document.getElementById('tab-content-referral');
+        if (pane) pane.classList.remove('hidden');
     } else if (tabId === 'tab-promo') {
-        if (document.getElementById('tab-content-promo')) {
-            document.getElementById('tab-content-promo').classList.remove('hidden');
+        const pane = document.getElementById('tab-content-promo');
+        if (pane) pane.classList.remove('hidden');
+    } else if (tabId === 'tab-configs') {
+        const pane = document.getElementById('tab-content-configs');
+        if (pane) pane.classList.remove('hidden');
+        if (typeof renderCommunityConfigs === 'function') {
+            renderCommunityConfigs();
         }
     } else if (tabId === 'tab-faq') {
-        document.getElementById('tab-content-faq').classList.remove('hidden');
+        const pane = document.getElementById('tab-content-faq');
+        if (pane) pane.classList.remove('hidden');
     } else if (tabId === 'tab-admin') {
-        if (document.getElementById('tab-content-admin')) {
-            document.getElementById('tab-content-admin').classList.remove('hidden');
-        }
+        const pane = document.getElementById('tab-content-admin');
+        if (pane) pane.classList.remove('hidden');
         fetchAllLicenses();
         fetchProfilesForAdmin();
         fetchAdminPromocodes();
