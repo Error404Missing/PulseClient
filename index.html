@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=190.0.0">
+    <link rel="stylesheet" href="style.css?v=200.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -428,7 +428,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                             <span data-i18n="dash.promocodes">პრომო კოდები</span>
                         </a>
-                        <a href="#tab-configs" class="menu-item" onclick="switchDashTab(event, 'tab-configs')">
+                        <a href="#tab-configs" class="menu-item" onclick="switchDashTab(event, 'tab-configs'); const p = document.getElementById('tab-content-configs'); if (p) p.classList.remove('hidden');">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             <span>კონფიგები (Presets)</span>
                         </a>
@@ -1421,7 +1421,7 @@
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=190.0.0"></script>
-    <script src="app.js?v=190.0.0"></script>
+    <script src="i18n.js?v=200.0.0"></script>
+    <script src="app.js?v=200.0.0"></script>
 </body>
 </html>
