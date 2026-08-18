@@ -2903,3 +2903,215 @@ function copyPresetConfig(presetKey, btnElement) {
     });
 }
 window.copyPresetConfig = copyPresetConfig;
+
+
+// ==========================================
+// COMMUNITY CONFIG SHARING & UPLOAD LOGIC
+// ==========================================
+
+function handleConfigFileSelect(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const content = e.target.result;
+        const textarea = document.getElementById('share-config-json');
+        if (textarea) {
+            textarea.value = content;
+        }
+    };
+    reader.readAsText(file);
+}
+window.handleConfigFileSelect = handleConfigFileSelect;
+
+async function handleShareConfigSubmit(event) {
+    if (event) event.preventDefault();
+
+    if (!currentUser) {
+        showBanner("გთხოვთ გაიაროთ ავტორიზაცია Discord-ით!", "error");
+        return;
+    }
+
+    // Check if user has an active license
+    const metadata = currentUser.user_metadata || {};
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
+    const discordId = getDiscordId(currentUser) || "N/A";
+
+    const nameInput = document.getElementById('share-config-name');
+    const descInput = document.getElementById('share-config-desc');
+    const jsonInput = document.getElementById('share-config-json');
+    const submitBtn = document.getElementById('share-config-btn');
+
+    const configName = (nameInput.value || '').trim();
+    const configDesc = (descInput.value || '').trim();
+    const jsonCode = (jsonInput.value || '').trim();
+
+    if (!configName || !jsonCode) {
+        showBanner("გთხოვთ შეავსოთ ყველა ველი!", "error");
+        return;
+    }
+
+    // Validate JSON
+    let parsedJson = null;
+    try {
+        parsedJson = JSON.parse(jsonCode);
+    } catch (e) {
+        showBanner("JSON კოდის ფორმატი არასწორია!", "error");
+        return;
+    }
+
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "მოწმდება ლიცენზია...";
+    }
+
+    try {
+        // Query user licenses to verify active license key
+        const { data: licenses, error: licErr } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`);
+
+        const now = new Date();
+        const hasActiveLicense = licenses && licenses.some(l => {
+            if (!l.is_active) return false;
+            if (!l.expires_at) return true;
+            if (l.expires_at.startsWith("2000-01-01")) return false; // not activated yet
+            return new Date(l.expires_at) > now;
+        });
+
+        if (!hasActiveLicense && !isAdmin()) {
+            showBanner("კონფიგის გასაზიარებლად საჭიროა გქონდეთ აქტიური PulseClient ლიცენზია!", "error");
+            return;
+        }
+
+        // Save community config
+        const configItem = {
+            id: 'cfg_' + Date.now(),
+            name: configName,
+            description: configDesc || "Community preset",
+            author: username,
+            discord_id: discordId,
+            config_data: parsedJson,
+            created_at: new Date().toISOString()
+        };
+
+        // 1. Try Supabase insert
+        try {
+            await supabaseClient.from('community_configs').insert(configItem);
+        } catch (dbErr) {
+            console.warn("Supabase community_configs table fallback:", dbErr);
+        }
+
+        // 2. Cache in LocalStorage
+        let localConfigs = [];
+        try {
+            localConfigs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]');
+        } catch (e) {}
+        localConfigs.unshift(configItem);
+        localStorage.setItem('pulse_community_configs', JSON.stringify(localConfigs));
+
+        // 3. Discord Audit Log Notification
+        sendDiscordAuditLog(
+            "☁️ ახალი კონფიგი გაზიარდა",
+            `მომხმარებელმა **${username}** გააზიარა ახალი კონფიგი: **${configName}**.`,
+            0x38bdf8,
+            [
+                { name: "👤 ავტორი", value: username, inline: true },
+                { name: "📝 სახელი", value: configName, inline: true },
+                { name: "📋 აღწერა", value: configDesc || "N/A", inline: false }
+            ]
+        );
+
+        showBanner("თქვენი კონფიგი წარმატებით გაზიარდა!", "success");
+        nameInput.value = '';
+        descInput.value = '';
+        jsonInput.value = '';
+        renderCommunityConfigs();
+    } catch (err) {
+        console.error("Config share error:", err);
+        showBanner("კონფიგის გაზიარებისას დაფიქსირდა შეცდომა: " + err.message, "error");
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "კონფიგის გაზიარება";
+        }
+    }
+}
+window.handleShareConfigSubmit = handleShareConfigSubmit;
+
+function renderCommunityConfigs() {
+    const container = document.getElementById('community-configs-list');
+    if (!container) return;
+
+    let configs = [];
+    try {
+        configs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]');
+    } catch (e) {}
+
+    if (configs.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">საზოგადოების მიერ გაზიარებული კონფიგები ჯერ არ არის. იყავით პირველი!</div>`;
+        return;
+    }
+
+    container.innerHTML = configs.map(c => `
+        <div class="glass-panel preset-card" style="padding: 20px; border: 1px solid rgba(255, 0, 60, 0.2); background: rgba(14, 14, 18, 0.7);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                <h4 style="font-size: 1.05rem; color: #fff; font-weight: 700;">${c.name}</h4>
+                <span style="background: rgba(255, 0, 60, 0.15); color: #ff003c; border: 1px solid rgba(255, 0, 60, 0.3); font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">USER</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4;">${c.description}</p>
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;">ავტორი: <strong style="color: #ff3366;">${c.author}</strong></div>
+            <div style="display: flex; gap: 8px;">
+                <button type="button" class="btn btn-primary" onclick="downloadCustomConfigById('${c.id}')" style="flex: 1; padding: 6px 10px; font-size: 11px;">ჩამოტვირთვა</button>
+                <button type="button" class="btn btn-secondary" onclick="copyCustomConfigById('${c.id}', this)" style="padding: 6px 12px; font-size: 11px;">კოპირება</button>
+            </div>
+        </div>
+    `).join('');
+}
+window.renderCommunityConfigs = renderCommunityConfigs;
+
+function downloadCustomConfigById(configId) {
+    let configs = [];
+    try { configs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]'); } catch (e) {}
+    const found = configs.find(c => c.id === configId);
+    if (!found) return;
+
+    const safeName = found.name.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    const filename = `PulseClient_${safeName}.json`;
+    const jsonStr = JSON.stringify(found.config_data, null, 4);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    showBanner(`კონფიგი გადმოწერილია: ${filename}`, "success");
+}
+window.downloadCustomConfigById = downloadCustomConfigById;
+
+function copyCustomConfigById(configId, btnEl) {
+    let configs = [];
+    try { configs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]'); } catch (e) {}
+    const found = configs.find(c => c.id === configId);
+    if (!found) return;
+
+    const jsonStr = JSON.stringify(found.config_data, null, 4);
+    navigator.clipboard.writeText(jsonStr).then(() => {
+        if (btnEl) {
+            const orig = btnEl.textContent;
+            btnEl.textContent = "კოპირებულია!";
+            setTimeout(() => { btnEl.textContent = orig; }, 2000);
+        }
+        showBanner("კონფიგის JSON კოდი დაკოპირდა ბუფერში!", "success");
+    });
+}
+window.copyCustomConfigById = copyCustomConfigById;
+
+// Call render on init
+setTimeout(renderCommunityConfigs, 500);

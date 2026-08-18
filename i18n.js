@@ -10,6 +10,7 @@
     ka: {
       "meta.title": "PulseClient - პრემიუმ Minecraft საბრძოლო და სტელს უპირატესობა",
       "nav.features": "მახასიათებლები",
+      "nav.bypasses": "შემოვლები",
       "nav.pricing": "ფასები",
       "nav.faq": "კითხვები",
       "nav.login": "შესვლა",
@@ -287,6 +288,7 @@
     en: {
       "meta.title": "PulseClient - Premium Minecraft Combat & Stealth Advantage",
       "nav.features": "Features",
+      "nav.bypasses": "Bypasses",
       "nav.pricing": "Pricing",
       "nav.faq": "FAQ",
       "nav.login": "Login",
