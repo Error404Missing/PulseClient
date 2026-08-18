@@ -2809,3 +2809,97 @@ async function handleCustomClientDownload(e) {
     }
 }
 window.handleCustomClientDownload = handleCustomClientDownload;
+
+
+// ==========================================
+// PULSECLIENT CONFIG CLOUD LOGIC
+// ==========================================
+const PULSE_PRESETS = {
+    "donutsmp_basefinder": {
+        "name": "DonutSMP BaseFinder",
+        "author": "Pulse Official",
+        "version": "1.21.11",
+        "modules": {
+            "ChunkRadar": { "enabled": true, "radius": 32, "highlightNewChunks": true },
+            "StorageInspector": { "enabled": true, "chests": true, "shulkers": true, "barrels": true, "minValuableCount": 1 },
+            "HoleESP": { "enabled": true, "mode": "CustomGradient", "opacity": 0.65 },
+            "AutoWebhook": { "enabled": true, "sendCoords": true, "sendItemSummary": true },
+            "Speed": { "enabled": false },
+            "OpSecGuard": { "enabled": true, "hidePlayerNames": true, "spoofLogs": true }
+        }
+    },
+    "grimac_safe_pvp": {
+        "name": "GrimAC / Matrix Safe PvP",
+        "author": "Pulse Official",
+        "version": "1.21.11",
+        "modules": {
+            "AimAssist": { "enabled": true, "smoothness": 4.5, "fov": 65.0 },
+            "Reach": { "enabled": true, "distance": 3.12 },
+            "Velocity": { "enabled": true, "horizontal": 85, "vertical": 100 },
+            "AutoClicker": { "enabled": true, "minCps": 12, "maxCps": 16, "jitter": true },
+            "PlayerChams": { "enabled": true, "color": "#ff003c" },
+            "OpSecGuard": { "enabled": true }
+        }
+    },
+    "blatant_anarchy": {
+        "name": "Blatant Anarchy PvP",
+        "author": "Pulse Official",
+        "version": "1.21.11",
+        "modules": {
+            "Killaura": { "enabled": true, "range": 4.8, "target": "Players", "autoBlock": true },
+            "AutoTotem": { "enabled": true, "slot": "Offhand", "fastSwitch": true },
+            "CrystalAura": { "enabled": true, "placeSpeed": 20, "breakSpeed": 20 },
+            "Velocity": { "enabled": true, "horizontal": 0, "vertical": 0 },
+            "Tracers": { "enabled": true, "color": "#ff003c" }
+        }
+    },
+    "hypixel_duel": {
+        "name": "Hypixel / Minemen Duel",
+        "author": "Pulse Official",
+        "version": "1.21.11",
+        "modules": {
+            "AutoClicker": { "enabled": true, "minCps": 11, "maxCps": 15, "rightClick": false },
+            "WTap": { "enabled": true, "mode": "Packet" },
+            "Eagle": { "enabled": true, "edgeDistance": 0.1 },
+            "Sprint": { "enabled": true, "omni": false },
+            "BoxESP": { "enabled": true, "lineWidth": 1.5 }
+        }
+    }
+};
+
+function downloadPresetConfig(presetKey) {
+    const config = PULSE_PRESETS[presetKey];
+    if (!config) return;
+
+    const filename = `PulseClient_${presetKey}.json`;
+    const jsonStr = JSON.stringify(config, null, 4);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+    showBanner(`კონფიგი გადმოწერილია: ${filename}`, "success");
+}
+window.downloadPresetConfig = downloadPresetConfig;
+
+function copyPresetConfig(presetKey, btnElement) {
+    const config = PULSE_PRESETS[presetKey];
+    if (!config) return;
+
+    const jsonStr = JSON.stringify(config, null, 4);
+    navigator.clipboard.writeText(jsonStr).then(() => {
+        if (btnElement) {
+            const originalText = btnElement.textContent;
+            btnElement.textContent = "კოპირებულია!";
+            setTimeout(() => { btnElement.textContent = originalText; }, 2000);
+        }
+        showBanner("კონფიგის JSON კოდი დაკოპირდა ბუფერში!", "success");
+    });
+}
+window.copyPresetConfig = copyPresetConfig;
