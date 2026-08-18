@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=160.0.0">
+    <link rel="stylesheet" href="style.css?v=170.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -783,41 +783,44 @@
 
                     
                             <!-- User Config Upload / Share Section (Active License Guarded) -->
-                            <div class="glass-panel" style="padding: 24px; margin-top: 24px; border: 1px solid rgba(255, 0, 60, 0.25); background: rgba(14, 14, 18, 0.8);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
-                                    <h4 style="font-size: 1.15rem; color: #fff; font-weight: 700;">გააზიარე შენი კონფიგი</h4>
+                            <div class="glass-panel config-share-panel" style="padding: 26px; margin-top: 26px; border: 1px solid rgba(255, 0, 60, 0.25); background: rgba(14, 14, 18, 0.85); border-radius: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                                    <h4 style="font-size: 1.15rem; color: #fff; font-weight: 700; margin: 0;">გააზიარე შენი კონფიგი</h4>
                                     <span id="config-share-license-badge" style="font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; background: rgba(255, 0, 60, 0.15); color: #ff003c; border: 1px solid rgba(255, 0, 60, 0.3);">ლიცენზია საჭიროა</span>
                                 </div>
-                                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 18px;">თუ გაქვთ აქტიური PulseClient ლიცენზია, შეგიძლიათ გაუზიაროთ თქვენი საუკეთესო პარამეტრები საზოგადოებას.</p>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5;">თუ გაქვთ აქტიური PulseClient ლიცენზია, შეგიძლიათ გაუზიაროთ თქვენი საუკეთესო პარამეტრები საზოგადოებას.</p>
 
                                 <form id="share-config-form" onsubmit="handleShareConfigSubmit(event)">
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
                                         <div>
-                                            <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">კონფიგის სახელი</label>
-                                            <input type="text" id="share-config-name" class="bind-input" placeholder="მაგ: My DonutSMP Scanner" required style="width: 100%; box-sizing: border-box;">
+                                            <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">კონფიგის სახელი</label>
+                                            <input type="text" id="share-config-name" class="custom-dark-input" placeholder="მაგ: My DonutSMP Scanner" required>
                                         </div>
                                         <div>
-                                            <label style="display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">სერვერი / აღწერა</label>
-                                            <input type="text" id="share-config-desc" class="bind-input" placeholder="მაგ: DonutSMP / Legit Safe" required style="width: 100%; box-sizing: border-box;">
+                                            <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">სერვერი / აღწერა</label>
+                                            <input type="text" id="share-config-desc" class="custom-dark-input" placeholder="მაგ: DonutSMP / Legit Safe" required>
                                         </div>
                                     </div>
-                                    <div style="margin-bottom: 16px;">
-                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                            <label style="font-size: 12px; color: var(--text-muted);">კონფიგის JSON კოდი (ან აირჩიეთ .json ფაილი)</label>
+                                    <div style="margin-bottom: 18px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                            <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">კონფიგის JSON კოდი (ან აირჩიეთ .json ფაილი)</label>
                                             <input type="file" id="share-config-file" accept=".json" onchange="handleConfigFileSelect(event)" style="display: none;">
-                                            <button type="button" onclick="document.getElementById('share-config-file').click()" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px; border-radius: 6px;">📁 ფაილის არჩევა</button>
+                                            <button type="button" onclick="document.getElementById('share-config-file').click()" class="btn btn-secondary" style="padding: 5px 12px; font-size: 11px; border-radius: 6px; gap: 4px;">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                ფაილის არჩევა
+                                            </button>
                                         </div>
-                                        <textarea id="share-config-json" class="bind-input" placeholder='{\n    "modules": { ... }\n}' required rows="4" style="width: 100%; box-sizing: border-box; font-family: monospace; font-size: 12px; resize: vertical;"></textarea>
+                                        <textarea id="share-config-json" class="custom-dark-textarea" placeholder='{"modules": { "ChunkRadar": { "enabled": true } }}' required rows="4"></textarea>
                                     </div>
-                                    <button type="submit" id="share-config-btn" class="btn btn-glow" style="width: 100%; border-radius: 10px; padding: 12px;">
+                                    <button type="submit" id="share-config-btn" class="btn btn-glow" style="width: 100%; border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 700;">
                                         კონფიგის გაზიარება
                                     </button>
                                 </form>
                             </div>
 
                             <!-- Community Shared Configs List -->
-                            <div style="margin-top: 30px;">
-                                <h4 style="font-size: 1.2rem; color: #fff; font-weight: 700; margin-bottom: 16px;">საზოგადოების კონფიგები (Community Configs)</h4>
+                            <div style="margin-top: 36px; padding-bottom: 20px;">
+                                <h4 style="font-size: 1.25rem; color: #fff; font-weight: 700; margin-bottom: 18px;">საზოგადოების კონფიგები (Community Configs)</h4>
                                 <div id="community-configs-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
                                     <!-- Dynamic community configs render here -->
                                 </div>
@@ -1420,7 +1423,7 @@
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=160.0.0"></script>
-    <script src="app.js?v=160.0.0"></script>
+    <script src="i18n.js?v=170.0.0"></script>
+    <script src="app.js?v=170.0.0"></script>
 </body>
 </html>
