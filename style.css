@@ -1978,6 +1978,16 @@ h3 {
     cursor: not-allowed;
 }
 
+.admin-actions .btn-activate {
+    color: #34d399;
+    border-color: rgba(52, 211, 153, 0.2);
+}
+
+.admin-actions .btn-activate:hover {
+    background-color: rgba(52, 211, 153, 0.1);
+    border-color: rgba(52, 211, 153, 0.4);
+}
+
 .admin-actions .btn-info {
     color: #60a5fa;
     border-color: rgba(96, 165, 250, 0.2);

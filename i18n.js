@@ -209,6 +209,9 @@
       "msg.revokeConfirm": "ნამდვილად გსურთ გასაღების გაუქმება?\n",
       "msg.revokeSuccess": "ლიცენზია გაუქმდა წარმატებით",
       "msg.revokeFail": "გაუქმება ვერ მოხერხდა: ",
+      "msg.activateConfirm": "ნამდვილად გსურთ ლიცენზიის ხელახლა გააქტიურება?\n",
+      "msg.activateSuccess": "ლიცენზია გააქტიურდა წარმატებით",
+      "msg.activateFail": "გააქტიურება ვერ მოხერხდა: ",
       "msg.hwidConfirm": "ნამდვილად გსურთ მოწყობილობის (HWID) განულება?\n",
       "msg.hwidSuccess": "მოწყობილობა (HWID) განულდა წარმატებით",
       "msg.hwidFail": "განულება ვერ მოხერხდა: ",
@@ -218,6 +221,7 @@
       "admin.actionInfo": "ინფო",
       "admin.actionHwid": "HWID განულება",
       "admin.actionRevoke": "გაუქმება",
+      "admin.actionActivate": "გააქტიურება",
       "dash.trialTitle": "უფასო 3-დღიანი საცდელი პერიოდი",
       "dash.trialDesc": "თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ მიიღოთ 3-დღიანი საცდელი გასაღები.",
       "dash.trialBtn": "უფასო გასაღების აღება",
@@ -522,7 +526,17 @@
       "log.date": "Date",
       "log.user": "User / Admin",
       "log.action": "Action",
-      "log.details": "Details"
+      "log.details": "Details",
+      "admin.actionInfo": "Info",
+      "admin.actionHwid": "Reset HWID",
+      "admin.actionRevoke": "Revoke",
+      "admin.actionActivate": "Activate",
+      "msg.activateConfirm": "Are you sure you want to reactivate this license?\n",
+      "msg.activateSuccess": "License reactivated successfully",
+      "msg.activateFail": "Failed to reactivate license: ",
+      "msg.revokeConfirm": "Are you sure you want to revoke this license?\n",
+      "msg.revokeSuccess": "License revoked successfully",
+      "msg.revokeFail": "Failed to revoke license: "
     }
   };
 
