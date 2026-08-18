@@ -447,7 +447,7 @@ function handleUserSignIn(user) {
     const auditUser = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "Guest";
     const auditDiscordId = getDiscordId(user) || "Unknown";
     sendDiscordAuditLog(
-        "🔑 მომხმარებელი შევიდა საიტზე",
+        "მომხმარებელი შევიდა საიტზე",
         `მომხმარებელმა **${auditUser}** წარმატებით გაიარა Discord ავტორიზაცია.`,
         0x10b981,
         [
@@ -1401,7 +1401,7 @@ async function createLicenseFromAdmin(e) {
                 { name: "👑 ადმინი", value: adminName, inline: true },
                 { name: "👤 მყიდველი", value: buyer, inline: true },
                 { name: "📦 პროდუქტი", value: product, inline: true },
-                { name: "🔑 გასაღები", value: key, inline: false },
+                { name: "გასაღები", value: key, inline: false },
                 { name: "⏰ ხანგრძლივობა", value: durationDays === null ? "♾️ Lifetime" : `${durationDays} დღე`, inline: true }
             ]
         );
@@ -1451,7 +1451,7 @@ async function revokeLicense(key) {
             0xff0000,
             [
                 { name: "👑 ადმინი", value: revokerName, inline: true },
-                { name: "🔑 გასაღები", value: key, inline: false }
+                { name: "გასაღები", value: key, inline: false }
             ]
         );
         fetchAllLicenses();
@@ -1649,7 +1649,7 @@ async function claimFreeTrial() {
             [
                 { name: "👤 მომხმარებელი", value: username || "Unknown", inline: true },
                 { name: "🆔 Discord ID", value: String(discordId || "N/A"), inline: true },
-                { name: "🔑 გასაღები", value: key, inline: false },
+                { name: "გასაღები", value: key, inline: false },
                 { name: "⏰ ხანგრძლივობა", value: `${trialDays} დღე`, inline: true },
                 { name: "📝 რეფერალი", value: referrerName ? `კი (${referrerName})` : "არა", inline: true }
             ]
@@ -2317,7 +2317,7 @@ async function redeemPromoCode(e) {
 
         showBanner(t("msg.promoRedeemed", { n: promo.duration_days }), "success");
         sendDiscordAuditLog(
-            "🎁 პრომოკოდი გამოყენებულია",
+            " პრომოკოდი გამოყენებულია",
             `მომხმარებელმა **${username}** გამოიყენა პრომოკოდი **${code}**.`,
             0xa855f7,
             [
@@ -2584,9 +2584,9 @@ function generatePulseAIResponse(input) {
     // 2. Identity / Capabilities
     if (hasAny(['ვინ ხარ', 'რა ხარ', 'რა შეგიძლია', 'who are you', 'what are you', 'what can you do'])) {
         if (isGeorgian) {
-            return "🤖 მე ვარ <strong>Pulse AI</strong> — ხელოვნური ინტელექტის ასისტენტი. შემიძლია პასუხი გავცე შენს ნებისმიერ კითხვას PulseClient-ის, ინსტალაციის, ღილაკების, ლიცენზიის, ანტიკლიენტის შემოვლებისა და ხარვეზების შესახებ!";
+            return "მე ვარ <strong>Pulse AI</strong> — ხელოვნური ინტელექტის ასისტენტი. შემიძლია პასუხი გავცე შენს ნებისმიერ კითხვას PulseClient-ის, ინსტალაციის, ღილაკების, ლიცენზიის, ანტიკლიენტის შემოვლებისა და ხარვეზების შესახებ!";
         }
-        return "🤖 I am <strong>Pulse AI</strong> — an AI support assistant for PulseClient. I can help answer questions about installation, keybinds, license key management, bypasses, and troubleshooting!";
+        return "I am <strong>Pulse AI</strong> — an AI support assistant for PulseClient. I can help answer questions about installation, keybinds, license key management, bypasses, and troubleshooting!";
     }
 
     // 3. Keybinds & Menu Triggers
@@ -2608,17 +2608,17 @@ function generatePulseAIResponse(input) {
     // 5. Version & Java Requirements
     if (hasAny(['1.21', '1.21.11', 'ვერსია', 'version', 'java', 'java 21', 'java21'])) {
         if (isGeorgian) {
-            return "⚙️ <strong>ვერსია და მოთხოვნები:</strong><br>• Minecraft ვერსია: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java ვერსია: <strong>Java 21</strong> (რეკომენდებულია Temurin Java 21 ან Oracle Java 21).";
+            return "<strong>ვერსია და მოთხოვნები:</strong><br>• Minecraft ვერსია: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java ვერსია: <strong>Java 21</strong> (რეკომენდებულია Temurin Java 21 ან Oracle Java 21).";
         }
-        return "⚙️ <strong>Versions & Requirements:</strong><br>• Minecraft Version: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java Version: <strong>Java 21</strong> (Temurin/Oracle Java 21 recommended).";
+        return "<strong>Versions & Requirements:</strong><br>• Minecraft Version: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java Version: <strong>Java 21</strong> (Temurin/Oracle Java 21 recommended).";
     }
 
     // 6. Launchers Compatibility
     if (hasAny(['tlauncher', 'lunar', 'feather', 'prism', 'curseforge', 'modrinth', 'official launcher', 'ლაუნჩერ', 'launcher'])) {
         if (isGeorgian) {
-            return "🚀 <strong>თავსებადი ლაუნჩერები:</strong><br>PulseClient მუშაობს თითქმის ყველა ლაუნჩერზე, სადაც Fabric 1.21.11-ის ჩართვა შეიძლება:<br>• TLauncher (აირჩიეთ Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Lunar Client (Fabric-ის მოდულით)<br>• ოფიციალური Minecraft Launcher.";
+            return " <strong>თავსებადი ლაუნჩერები:</strong><br>PulseClient მუშაობს თითქმის ყველა ლაუნჩერზე, სადაც Fabric 1.21.11-ის ჩართვა შეიძლება:<br>• TLauncher (აირჩიეთ Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Lunar Client (Fabric-ის მოდულით)<br>• ოფიციალური Minecraft Launcher.";
         }
-        return "🚀 <strong>Compatible Launchers:</strong><br>PulseClient works with any launcher supporting Fabric 1.21.11:<br>• TLauncher (Select Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Official Minecraft Launcher";
+        return " <strong>Compatible Launchers:</strong><br>PulseClient works with any launcher supporting Fabric 1.21.11:<br>• TLauncher (Select Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Official Minecraft Launcher";
     }
 
     // 7. PvP vs Base Finder differences
@@ -2640,48 +2640,48 @@ function generatePulseAIResponse(input) {
     // 9. Promocodes & Referrals & Free trial
     if (hasAny(['პრომო', 'პრომოკოდი', 'კოდი', 'რეფერალ', 'უფასო', 'free', 'promo', 'referral', 'bonus', 'trial', 'ტესტ'])) {
         if (isGeorgian) {
-            return "🎁 <strong>უფასო დღეები & პრომოკოდები:</strong><br>• <strong>რეფერალური სისტემა:</strong> შენი პირადი კოდი ნახე დეშბორდში. როცა მეგობარი შეიყვანს მას, <strong>ორივეს დაგემატებათ +3 უფასო დღე</strong>!<br>• <strong>პრომოკოდები:</strong> პრომოკოდის შესაყვანად გადადი დეშბორდში 'Redeem' ჩანართზე.";
+            return " <strong>უფასო დღეები & პრომოკოდები:</strong><br>• <strong>რეფერალური სისტემა:</strong> შენი პირადი კოდი ნახე დეშბორდში. როცა მეგობარი შეიყვანს მას, <strong>ორივეს დაგემატებათ +3 უფასო დღე</strong>!<br>• <strong>პრომოკოდები:</strong> პრომოკოდის შესაყვანად გადადი დეშბორდში 'Redeem' ჩანართზე.";
         }
-        return "🎁 <strong>Free Days & Promo Codes:</strong><br>• <strong>Referral System:</strong> Find your invite code in the dashboard. When a friend uses it, <strong>both get +3 bonus days</strong>!<br>• <strong>Promo Codes:</strong> Redeem codes under the 'Redeem' tab in your dashboard.";
+        return " <strong>Free Days & Promo Codes:</strong><br>• <strong>Referral System:</strong> Find your invite code in the dashboard. When a friend uses it, <strong>both get +3 bonus days</strong>!<br>• <strong>Promo Codes:</strong> Redeem codes under the 'Redeem' tab in your dashboard.";
     }
 
     // 10. HWID & PC Lock
     if (hasAny(['hwid', 'pc', 'კომპიუტერ', 'შეცვლა', 'reset', 'lock', 'device'])) {
         if (isGeorgian) {
-            return "🔒 <strong>HWID და მოწყობილობები:</strong><br>თქვენი ლიცენზია პირველივე ჩართვისას ავტომატურად უკავშირდება თქვენს PC-ს. თუ კომპიუტერი შეცვალეთ, დეშბორდიდან შეგიძლიათ მოითხოვოთ HWID Reset ან მოგვწეროთ Discord-ზე.";
+            return "<strong>HWID და მოწყობილობები:</strong><br>თქვენი ლიცენზია პირველივე ჩართვისას ავტომატურად უკავშირდება თქვენს PC-ს. თუ კომპიუტერი შეცვალეთ, დეშბორდიდან შეგიძლიათ მოითხოვოთ HWID Reset ან მოგვწეროთ Discord-ზე.";
         }
-        return "🔒 <strong>HWID & Devices:</strong><br>Your license auto-binds to your PC hardware upon first launch. If you upgrade your PC, request a HWID reset via Dashboard or Discord support.";
+        return "<strong>HWID & Devices:</strong><br>Your license auto-binds to your PC hardware upon first launch. If you upgrade your PC, request a HWID reset via Dashboard or Discord support.";
     }
 
     // 11. Crashing & Troubleshooting
     if (hasAny(['ქრაშავს', 'არ იხსნება', 'error', 'crash', 'problem', 'პრობლემა', 'ხარვეზი', 'არ რთავს', 'გათიშვა', 'შეცდომა'])) {
         if (isGeorgian) {
-            return "🛠️ <strong>პრობლემის მოგვარება (Troubleshooting):</strong><br>1. დარწმუნდით რომ გაქვთ <strong>Java 21</strong> დაყენებული.<br>2. შეამოწმეთ Fabric Loader-ის ვერსია (უნდა იყოს 0.16.0 ან ახალი).<br>3. თუ სხვა მოდებიც გაქვთ `.minecraft/mods`-ში, დროებით ამოიღეთ (მაგ: OptiFine / Iris).<br>4. თუ მაინც ქრაშავს, მოგვწერეთ Discord Ticket-ში და გამოგვიგზავნეთ `latest.log`.";
+            return "<strong>პრობლემის მოგვარება (Troubleshooting):</strong><br>1. დარწმუნდით რომ გაქვთ <strong>Java 21</strong> დაყენებული.<br>2. შეამოწმეთ Fabric Loader-ის ვერსია (უნდა იყოს 0.16.0 ან ახალი).<br>3. თუ სხვა მოდებიც გაქვთ `.minecraft/mods`-ში, დროებით ამოიღეთ (მაგ: OptiFine / Iris).<br>4. თუ მაინც ქრაშავს, მოგვწერეთ Discord Ticket-ში და გამოგვიგზავნეთ `latest.log`.";
         }
-        return "🛠️ <strong>Troubleshooting Guide:</strong><br>1. Ensure you have <strong>Java 21</strong> installed.<br>2. Verify Fabric Loader is version 0.16.0 or newer.<br>3. Try removing conflicting mods from `.minecraft/mods`.<br>4. If crashes persist, send your `latest.log` in a Discord Ticket!";
+        return "<strong>Troubleshooting Guide:</strong><br>1. Ensure you have <strong>Java 21</strong> installed.<br>2. Verify Fabric Loader is version 0.16.0 or newer.<br>3. Try removing conflicting mods from `.minecraft/mods`.<br>4. If crashes persist, send your `latest.log` in a Discord Ticket!";
     }
 
     // 12. Ban Safety / Anticheat / OpSec
     if (hasAny(['ban', 'ბანი', 'დამბანენ', 'anticheat', 'safe', 'უსაფრთხო', 'undetected', 'opsec', 'grim', 'matrix'])) {
         if (isGeorgian) {
-            return "🛡️ <strong>ანტიჩითები & OpSec:</strong><br>PulseClient აღჭურვილია სპეციალური <strong>OpSec Mod</strong>-ით და Matrix/GrimAC შემოვლითი ალგორითმებით. სწორი პარამეტრებით თამაშისას ბანის რისკი მინიმალურია!";
+            return "<strong>ანტიჩითები & OpSec:</strong><br>PulseClient აღჭურვილია სპეციალური <strong>OpSec Mod</strong>-ით და Matrix/GrimAC შემოვლითი ალგორითმებით. სწორი პარამეტრებით თამაშისას ბანის რისკი მინიმალურია!";
         }
-        return "🛡️ <strong>Anticheat Safety & OpSec:</strong><br>PulseClient includes an advanced <strong>OpSec Mod</strong> and Matrix/GrimAC bypass features designed to keep your gameplay safe and undetected.";
+        return "<strong>Anticheat Safety & OpSec:</strong><br>PulseClient includes an advanced <strong>OpSec Mod</strong> and Matrix/GrimAC bypass features designed to keep your gameplay safe and undetected.";
     }
 
     // 13. Gratitude / Thanks
     if (hasAny(['მადლობა', 'გმადლობ', 'thanks', 'thank you', 'thx', 'kk', 'კაი', 'კარგი'])) {
         if (isGeorgian) {
-            return "არაფრის! 😊 თუ რამე კითხვა გექნება, ნებისმიერ დროს მომწერე. წარმატებულ თამაშს გისურვებ PulseClient-თან ერთად! 🚀";
+            return "არაფრის!  თუ რამე კითხვა გექნება, ნებისმიერ დროს მომწერე. წარმატებულ თამაშს გისურვებ PulseClient-თან ერთად! ";
         }
-        return "You're welcome! 😊 If you have any other questions, feel free to ask anytime. Enjoy gaming with PulseClient! 🚀";
+        return "You're welcome!  If you have any other questions, feel free to ask anytime. Enjoy gaming with PulseClient! ";
     }
 
     // Default Smart Fallback
     if (isGeorgian) {
-        return "🤖 <strong>Pulse AI:</strong> ვერ მივხვდი ზუსტად რას გულისხმობ. შეგიძლია იკითხო მაგალითად:<br>• <em>\"რომელი ღილაკით იხსნება მენიუ?\"</em><br>• <em>\"როგორ დავაინსტალირო მოდი?\"</em><br>• <em>\"როგორ შევიძინო ლიცენზია?\"</em><br>• <em>\"როგორ გავასწორო ქრაში?\"</em><br><br>ან მოგვწერე <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord-ზე</a>!";
+        return "<strong>Pulse AI:</strong> ვერ მივხვდი ზუსტად რას გულისხმობ. შეგიძლია იკითხო მაგალითად:<br>• <em>\"რომელი ღილაკით იხსნება მენიუ?\"</em><br>• <em>\"როგორ დავაინსტალირო მოდი?\"</em><br>• <em>\"როგორ შევიძინო ლიცენზია?\"</em><br>• <em>\"როგორ გავასწორო ქრაში?\"</em><br><br>ან მოგვწერე <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord-ზე</a>!";
     }
-    return "🤖 <strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
+    return "<strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 }
 
 
@@ -2739,7 +2739,7 @@ async function resetDeviceSlotHwid() {
         0xf59e0b,
         [
             { name: "👤 მომხმარებელი", value: resetUser, inline: true },
-            { name: "🔑 გასაღები", value: activeLic.license_key, inline: true }
+            { name: "გასაღები", value: activeLic.license_key, inline: true }
         ]
     );
     updateDeviceSlotModalInfo();
