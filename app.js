@@ -59,6 +59,7 @@ const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // DOM Elements
 const authGatePage = document.getElementById('auth-gate-page');
+const vpnBlockPage = document.getElementById('vpn-block-page');
 const navLinks = document.querySelector('.nav-links');
 const navLoginBtn = document.getElementById('nav-login-btn');
 const navUserProfile = document.getElementById('nav-user-profile');
@@ -203,9 +204,47 @@ function goToFreeTrial(event) {
 }
 window.goToFreeTrial = goToFreeTrial;
 
+let isVpnBlocked = false;
+
+async function checkVpnProxy() {
+    if (isAdmin()) return false;
+
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        if (res.ok) {
+            const data = await res.json();
+            if (data.proxy || data.hosting || (data.org && /vpn|proxy|datacenter|hosting|m247|ovh|digitalocean|linode|hetzner|vultr|leaseweb|choopa|packetexchange|hydra/i.test(data.org))) {
+                return true;
+            }
+        }
+    } catch (e) {
+        try {
+            const res2 = await fetch('https://ipwho.is/');
+            if (res2.ok) {
+                const data2 = await res2.json();
+                if (data2.security && (data2.security.vpn || data2.security.proxy || data2.security.tor || data2.security.hosting)) {
+                    return true;
+                }
+            }
+        } catch (e2) {}
+    }
+    return false;
+}
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
+    // Check for VPN / Proxy in background
+    checkVpnProxy().then(isVpn => {
+        if (isVpn && !isAdmin()) {
+            isVpnBlocked = true;
+            if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
+            if (authGatePage) authGatePage.classList.add('hidden');
+            landingPage.classList.add('hidden');
+            dashboardPage.classList.add('hidden');
+            if (navLinks) navLinks.classList.add('hidden');
+        }
+    });
+
     // Capture referral ID from URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const refId = urlParams.get('ref');

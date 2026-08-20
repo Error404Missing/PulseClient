@@ -229,6 +229,10 @@
       "authGate.perk2": "მყისიერი ლიცენზირება & მართვა",
       "authGate.perk3": "დაცული Discord ავტორიზაცია",
       "authGate.btn": "Discord-ით შესვლა",
+      "vpnBlock.badge": "🚫 VPN / Proxy დაფიქსირებულია",
+      "vpnBlock.title": "გთხოვთ გათიშოთ VPN / Proxy",
+      "vpnBlock.desc": "უსაფრთხოების წესებიდან გამომდინარე, PulseClient-ის საიტზე VPN-ის, Proxy-ის ან Datacenter IP-ის გამოყენება აკრძალულია. საიტზე წვდომის მისაღებად გთხოვთ გათიშოთ VPN და დააჭიროთ განახლებას.",
+      "vpnBlock.btn": "გადატვირთვა (გავთიშე VPN)",
       "dash.trialTitle": "უფასო 3-დღიანი საცდელი პერიოდი",
       "dash.trialDesc": "თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ მიიღოთ 3-დღიანი საცდელი გასაღები.",
       "dash.trialBtn": "უფასო გასაღების აღება",
@@ -550,7 +554,11 @@
       "authGate.perk1": "3-Day Free Trial Available",
       "authGate.perk2": "Instant Licensing & Dashboard",
       "authGate.perk3": "Secure Discord OAuth2 Login",
-      "authGate.btn": "Sign in with Discord"
+      "authGate.btn": "Sign in with Discord",
+      "vpnBlock.badge": "🚫 VPN / Proxy Detected",
+      "vpnBlock.title": "Please Disable VPN / Proxy",
+      "vpnBlock.desc": "For security reasons, using a VPN, Proxy, or Datacenter IP is prohibited on PulseClient. Please turn off your VPN and reload the page to continue.",
+      "vpnBlock.btn": "Reload (VPN Disabled)"
     }
   };
 
