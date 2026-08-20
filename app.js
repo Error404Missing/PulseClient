@@ -2078,18 +2078,41 @@ async function saveUserProfile(user) {
 
     if (!username) return;
 
+    let userIp = null;
     try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        if (ipRes.ok) {
+            const ipData = await ipRes.json();
+            userIp = ipData.ip;
+        }
+    } catch (e) {
+        console.warn("Could not determine client IP:", e);
+    }
+
+    try {
+        const payload = {
+            id: user.id,
+            discord_id: String(discordId),
+            username: username,
+            avatar_url: avatar,
+            updated_at: new Date().toISOString()
+        };
+        if (userIp) {
+            payload.last_ip = userIp;
+        }
+
         const { error } = await supabaseClient
             .from('profiles')
-            .upsert({
-                id: user.id,
-                discord_id: String(discordId),
-                username: username,
-                avatar_url: avatar,
-                updated_at: new Date().toISOString()
-            }, { onConflict: 'id' });
+            .upsert(payload, { onConflict: 'id' });
 
-        if (error) throw error;
+        if (error) {
+            if (error.message && error.message.includes('last_ip')) {
+                delete payload.last_ip;
+                await supabaseClient.from('profiles').upsert(payload, { onConflict: 'id' });
+            } else {
+                throw error;
+            }
+        }
     } catch (err) {
         console.warn("Failed to upsert user profile (table might not exist yet):", err.message);
     }
