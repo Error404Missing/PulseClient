@@ -222,6 +222,13 @@
       "admin.actionHwid": "HWID განულება",
       "admin.actionRevoke": "გაუქმება",
       "admin.actionActivate": "გააქტიურება",
+      "authGate.badge": "🔒 საჭიროა ავტორიზაცია",
+      "authGate.title": "გაიარე ავტორიზაცია Discord-ით",
+      "authGate.desc": "საიტზე და PulseClient-ის ფუნქციებზე წვდომის მისაღებად, გთხოვთ გაიაროთ ავტორიზაცია თქვენი Discord ანგარიშით.",
+      "authGate.perk1": "3-დღიანი უფასო საცდელი ვერსია",
+      "authGate.perk2": "მყისიერი ლიცენზირება & მართვა",
+      "authGate.perk3": "დაცული Discord ავტორიზაცია",
+      "authGate.btn": "Discord-ით შესვლა",
       "dash.trialTitle": "უფასო 3-დღიანი საცდელი პერიოდი",
       "dash.trialDesc": "თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ მიიღოთ 3-დღიანი საცდელი გასაღები.",
       "dash.trialBtn": "უფასო გასაღების აღება",
@@ -536,7 +543,14 @@
       "msg.activateFail": "Failed to reactivate license: ",
       "msg.revokeConfirm": "Are you sure you want to revoke this license?\n",
       "msg.revokeSuccess": "License revoked successfully",
-      "msg.revokeFail": "Failed to revoke license: "
+      "msg.revokeFail": "Failed to revoke license: ",
+      "authGate.badge": "🔒 Authentication Required",
+      "authGate.title": "Login with Discord",
+      "authGate.desc": "To access the website features, dashboard, and licenses, please sign in with your Discord account.",
+      "authGate.perk1": "3-Day Free Trial Available",
+      "authGate.perk2": "Instant Licensing & Dashboard",
+      "authGate.perk3": "Secure Discord OAuth2 Login",
+      "authGate.btn": "Sign in with Discord"
     }
   };
 

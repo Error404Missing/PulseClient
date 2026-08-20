@@ -58,6 +58,8 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // DOM Elements
+const authGatePage = document.getElementById('auth-gate-page');
+const navLinks = document.querySelector('.nav-links');
 const navLoginBtn = document.getElementById('nav-login-btn');
 const navUserProfile = document.getElementById('nav-user-profile');
 const navAvatar = document.getElementById('nav-avatar');
@@ -424,6 +426,10 @@ function handleUserSignIn(user) {
     dashAvatar.src = avatar;
     dashUsername.textContent = username;
 
+    // Hide Auth Gate Barrier & Show Nav Links
+    if (authGatePage) authGatePage.classList.add('hidden');
+    if (navLinks) navLinks.classList.remove('hidden');
+
     // Switch Views only if dashboard tab explicitly requested
     if (window.location.hash === '#dashboard' || window.location.hash.startsWith('#tab-')) {
         landingPage.classList.add('hidden');
@@ -512,9 +518,11 @@ function handleUserSignOut() {
     // Update Nav
     navLoginBtn.classList.remove('hidden');
     navUserProfile.classList.add('hidden');
+    if (navLinks) navLinks.classList.add('hidden');
 
-    // Switch Views
-    landingPage.classList.remove('hidden');
+    // Show Auth Gate Barrier and hide all internal pages
+    if (authGatePage) authGatePage.classList.remove('hidden');
+    landingPage.classList.add('hidden');
     dashboardPage.classList.add('hidden');
 
     // Hide Admin menu item
@@ -881,6 +889,14 @@ window.toggleFaq = toggleFaq;
 function navigateToLandingSection(event, sectionId) {
     if (event) event.preventDefault();
     
+    if (!currentUser) {
+        if (authGatePage) authGatePage.classList.remove('hidden');
+        landingPage.classList.add('hidden');
+        dashboardPage.classList.add('hidden');
+        return;
+    }
+
+    if (authGatePage) authGatePage.classList.add('hidden');
     // Switch views to show landing page
     landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
@@ -899,6 +915,13 @@ window.navigateToLandingSection = navigateToLandingSection;
 
 // Show dashboard view
 function showDashboard() {
+    if (!currentUser) {
+        if (authGatePage) authGatePage.classList.remove('hidden');
+        landingPage.classList.add('hidden');
+        dashboardPage.classList.add('hidden');
+        return;
+    }
+    if (authGatePage) authGatePage.classList.add('hidden');
     landingPage.classList.add('hidden');
     dashboardPage.classList.remove('hidden');
     // Default to downloads tab
