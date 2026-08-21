@@ -1096,14 +1096,39 @@ function renderActiveSessions(sessions) {
         });
     };
 
-    sessions.forEach(session => {
-        const lastHb = new Date(session.last_heartbeat);
+    // Prepare sessions with online status (90 seconds threshold since client heartbeat runs every 30s)
+    const enrichedSessions = sessions.map(session => {
+        const lastHb = new Date(session.last_heartbeat || session.started_at);
         const diffMs = now - lastHb.getTime();
-        const isOnline = diffMs < 15 * 60 * 1000;
+        const isOnline = diffMs < 90 * 1000;
         if (isOnline) onlineCount++;
 
-        // Format duration
-        const totalMinutes = session.duration_minutes || 0;
+        // Calculate live duration
+        let totalMinutes = session.duration_minutes || 0;
+        const startTs = new Date(session.started_at || session.last_heartbeat).getTime();
+        if (!isNaN(startTs)) {
+            const calculatedMins = Math.max(0, Math.floor(( (isOnline ? now : lastHb.getTime()) - startTs ) / (60 * 1000)));
+            if (calculatedMins > totalMinutes) {
+                totalMinutes = calculatedMins;
+            }
+        }
+
+        return {
+            ...session,
+            isOnline,
+            totalMinutes
+        };
+    });
+
+    // Sort: Online sessions first, then most recently active
+    enrichedSessions.sort((a, b) => {
+        if (a.isOnline && !b.isOnline) return -1;
+        if (!a.isOnline && b.isOnline) return 1;
+        return new Date(b.last_heartbeat || 0).getTime() - new Date(a.last_heartbeat || 0).getTime();
+    });
+
+    enrichedSessions.forEach(session => {
+        const totalMinutes = session.totalMinutes;
         let durationStr;
         if (totalMinutes < 60) {
             durationStr = `${totalMinutes} წთ`;
@@ -1114,8 +1139,8 @@ function renderActiveSessions(sessions) {
         }
 
         // Status dot
-        const statusDot = isOnline
-            ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;box-shadow:0 0 6px #22c55e;"></span>'
+        const statusDot = session.isOnline
+            ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;box-shadow:0 0 8px #22c55e;animation:pulse 1.5s infinite alternate;"></span>'
             : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6b7280;margin-right:6px;"></span>';
 
         // Mask license key
@@ -1124,7 +1149,7 @@ function renderActiveSessions(sessions) {
             : 'N/A';
 
         // Country flag emoji
-        const countryCode = session.country && session.country !== 'Unknown' ? session.country : null;
+        const countryCode = session.country && session.country !== 'Unknown' && session.country !== 'Hidden' ? session.country : null;
         let countryDisplay = session.country || 'N/A';
         if (countryCode && countryCode.length === 2) {
             const flag = String.fromCodePoint(
@@ -1135,9 +1160,9 @@ function renderActiveSessions(sessions) {
 
         // Started at
         const startedStr = formatTime(session.started_at);
-        // Finished at (last heartbeat) — if online, show "ახლა ონლაინშია"
-        const finishedStr = isOnline
-            ? '<span style="color: #22c55e; font-weight: 600;">ონლაინშია ⚡</span>'
+        // Finished at (last heartbeat) — if online, show "ონლაინშია ⚡"
+        const finishedStr = session.isOnline
+            ? '<span style="color: #22c55e; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">ონლაინშია ⚡</span>'
             : formatTime(session.last_heartbeat);
 
         const row = document.createElement('tr');
