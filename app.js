@@ -1096,8 +1096,25 @@ function renderActiveSessions(sessions) {
         });
     };
 
+    // Deduplicate: Keep only the latest session per license_key / device
+    const uniqueSessionsMap = new Map();
+    sessions.forEach(s => {
+        const uniqueKey = s.license_key || s.hwid || s.id;
+        if (!uniqueSessionsMap.has(uniqueKey)) {
+            uniqueSessionsMap.set(uniqueKey, s);
+        } else {
+            const existing = uniqueSessionsMap.get(uniqueKey);
+            const existingTime = new Date(existing.last_heartbeat || 0).getTime();
+            const currentTime = new Date(s.last_heartbeat || 0).getTime();
+            if (currentTime > existingTime) {
+                uniqueSessionsMap.set(uniqueKey, s);
+            }
+        }
+    });
+    const uniqueSessions = Array.from(uniqueSessionsMap.values());
+
     // Prepare sessions with online status (90 seconds threshold since client heartbeat runs every 30s)
-    const enrichedSessions = sessions.map(session => {
+    const enrichedSessions = uniqueSessions.map(session => {
         const lastHb = new Date(session.last_heartbeat || session.started_at);
         const diffMs = now - lastHb.getTime();
         const isOnline = diffMs < 90 * 1000;
