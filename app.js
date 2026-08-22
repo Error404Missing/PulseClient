@@ -220,7 +220,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Set up OAuth redirect listener
     supabaseClient.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_IN' && session) {
-            handleUserSignIn(session.user);
+            if (!currentUser || currentUser.id !== session.user.id) {
+                handleUserSignIn(session.user);
+            }
         } else if (event === 'SIGNED_OUT') {
             handleUserSignOut();
         }
@@ -428,13 +430,22 @@ async function handleUserSignIn(user) {
     if (authGatePage) authGatePage.classList.add('hidden');
     if (navLinks) navLinks.classList.remove('hidden');
 
-    // Switch Views only if dashboard tab explicitly requested
-    if (window.location.hash === '#dashboard' || window.location.hash.startsWith('#tab-')) {
+    // Switch Views while preserving user's current view and tab
+    const savedView = localStorage.getItem('pulse_current_view');
+    const isDashboardAlreadyVisible = dashboardPage && !dashboardPage.classList.contains('hidden');
+    const isDashboardHash = window.location.hash === '#dashboard' || window.location.hash.startsWith('#tab-');
+
+    if (isDashboardAlreadyVisible || savedView === 'dashboard' || isDashboardHash) {
         landingPage.classList.add('hidden');
         dashboardPage.classList.remove('hidden');
+        localStorage.setItem('pulse_current_view', 'dashboard');
+        
+        const savedTab = localStorage.getItem('pulse_current_tab') || (window.location.hash.startsWith('#tab-') ? window.location.hash.replace('#', '') : 'tab-downloads');
+        switchDashTab(null, savedTab, false);
     } else {
         landingPage.classList.remove('hidden');
         dashboardPage.classList.add('hidden');
+        localStorage.setItem('pulse_current_view', 'landing');
     }
 
     // Show/Hide Admin menu item
@@ -792,9 +803,14 @@ function scrollToAuth() {
 }
 window.scrollToAuth = scrollToAuth;
 // Sidebar Dashboard Tab Switcher
-function switchDashTab(event, tabId) {
-    if (event) event.preventDefault();
+function switchDashTab(event, tabId, shouldScroll = true) {
+    if (event && event.preventDefault) event.preventDefault();
+    if (!tabId) tabId = 'tab-downloads';
     
+    // Save to localStorage so state is preserved across minimize/unfocus/refresh
+    localStorage.setItem('pulse_current_view', 'dashboard');
+    localStorage.setItem('pulse_current_tab', tabId);
+
     // Hide all tabs
     const allTabPanes = document.querySelectorAll('.dashboard-main .tab-pane');
     allTabPanes.forEach(pane => pane.classList.add('hidden'));
@@ -824,24 +840,43 @@ function switchDashTab(event, tabId) {
     } else if (tabId === 'tab-admin') {
         const pane = document.getElementById('tab-content-admin');
         if (pane) pane.classList.remove('hidden');
-        fetchAllLicenses();
+        fetchAdminLicenses();
         fetchProfilesForAdmin();
         fetchAdminPromocodes();
         fetchActiveSessions();
+        fetchBlacklistEntries();
+
+        // Restore saved admin sub-panel if any
+        const savedSubtab = localStorage.getItem('pulse_admin_subtab') || 'admin-subpanel-licenses';
+        if (typeof switchAdminSubTab === 'function') {
+            switchAdminSubTab(null, savedSubtab);
+        }
     }    
     // Deactivate all menu items
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
-    menuItems.forEach(item => item.classList.remove('active'));
+    menuItems.forEach(item => {
+        const href = item.getAttribute('href') || '';
+        if (href === '#' + tabId) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
     
     // Activate clicked menu item
-    if (event) {
+    if (event && event.currentTarget) {
         event.currentTarget.classList.add('active');
     }
 
-    // Scroll smoothly to dashboard top
-    const dbPage = document.getElementById('dashboard-page');
-    if (dbPage) {
-        dbPage.scrollIntoView({ behavior: 'smooth' });
+    if (window.history.replaceState) {
+        window.history.replaceState(null, '', '#' + tabId);
+    }
+
+    if (shouldScroll) {
+        const dbPage = document.getElementById('dashboard-page');
+        if (dbPage) {
+            dbPage.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 }
 window.switchDashTab = switchDashTab;
@@ -891,7 +926,7 @@ window.toggleFaq = toggleFaq;
 
 // Navigate to landing page sections from navbar/logo
 function navigateToLandingSection(event, sectionId) {
-    if (event) event.preventDefault();
+    if (event && event.preventDefault) event.preventDefault();
     
     if (!currentUser) {
         if (authGatePage) authGatePage.classList.remove('hidden');
@@ -904,11 +939,14 @@ function navigateToLandingSection(event, sectionId) {
     // Switch views to show landing page
     landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
+    localStorage.setItem('pulse_current_view', 'landing');
     
     // Scroll to section
-    const target = document.getElementById(sectionId);
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+    if (sectionId) {
+        const target = document.getElementById(sectionId);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     if (window.history.replaceState) {
@@ -928,8 +966,10 @@ function showDashboard() {
     if (authGatePage) authGatePage.classList.add('hidden');
     landingPage.classList.add('hidden');
     dashboardPage.classList.remove('hidden');
-    // Default to downloads tab
-    switchDashTab(null, 'tab-downloads');
+    localStorage.setItem('pulse_current_view', 'dashboard');
+
+    const savedTab = localStorage.getItem('pulse_current_tab') || 'tab-downloads';
+    switchDashTab(null, savedTab);
 }
 window.showDashboard = showDashboard;
 
@@ -2581,13 +2621,17 @@ window.fetchBlacklistEntries = fetchBlacklistEntries;
 
 function switchAdminSubTab(e, panelId) {
     if (e && e.preventDefault) e.preventDefault();
+    if (!panelId) panelId = 'admin-subpanel-licenses';
+
+    localStorage.setItem('pulse_admin_subtab', panelId);
 
     // Remove active class from all subtab buttons
     document.querySelectorAll('.admin-subtab-btn').forEach(btn => btn.classList.remove('active'));
     
-    // Add active class to clicked button
-    if (e && e.currentTarget) {
-        e.currentTarget.classList.add('active');
+    // Add active class to clicked or matching button
+    const targetBtn = (e && e.currentTarget) || document.querySelector(`[onclick*="${panelId}"]`);
+    if (targetBtn) {
+        targetBtn.classList.add('active');
     }
 
     // Hide all admin subpanels
