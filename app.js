@@ -440,6 +440,9 @@ async function handleUserSignIn(user) {
     // Show/Hide Admin menu item
     if (isAdmin()) {
         if (adminMenuItem) adminMenuItem.classList.remove('hidden');
+        fetchAdminLicenses();
+        fetchActiveSessions();
+        fetchProfilesForAdmin();
         fetchBlacklistEntries();
     } else {
         if (adminMenuItem) adminMenuItem.classList.add('hidden');
@@ -587,6 +590,8 @@ function renderLicenses(licenses) {
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 if (diffDays > 365 * 10) {
                     expiryDisplay = t("status.lifetime");
+                } else if (diffDays <= 2 && diffDays > 0) {
+                    expiryDisplay = `<span style="color: #fbbf24; font-weight: 700;">${t("status.daysLeft", { n: diffDays })} ⚠️</span>`;
                 } else {
                     expiryDisplay = t("status.daysLeft", { n: diffDays });
                 }
@@ -997,6 +1002,7 @@ async function fetchAllLicenses() {
         adminLicenses = data || [];
         renderAdminLicenses(adminLicenses);
         renderAdminLogs(adminLicenses);
+        updateAdminKpiStats();
     } catch (err) {
         console.error("Error fetching all licenses:", err.message);
         showBanner(t("msg.dataLoadFail") + err.message, "error");
@@ -1156,6 +1162,7 @@ function renderActiveSessions(sessions) {
     });
 
     if (adminSessionsCount) adminSessionsCount.textContent = onlineCount.toString();
+    updateAdminKpiStats();
 }
 
 function renderAdminLicenses(licenses) {
@@ -1202,7 +1209,8 @@ function renderAdminLicenses(licenses) {
             <td><span class="admin-status ${status}">${statusText}</span></td>
             <td>${expiryDisplay}</td>
             <td>
-                <div class="admin-actions">
+                    <button type="button" class="extend-btn" onclick="extendLicenseDays('${lic.license_key}', 7)" title="+7 დღის დამატება">+7d</button>
+                    <button type="button" class="extend-btn" onclick="extendLicenseDays('${lic.license_key}', 30)" title="+30 დღის დამატება">+30d</button>
                     <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="${t('admin.actionInfo')}" aria-label="${t('admin.actionInfo')}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                     </button>
@@ -2308,6 +2316,7 @@ async function fetchProfilesForAdmin() {
         if (!res.ok) throw new Error(await res.text());
         allUserProfiles = await res.json();
         renderDropdownUsers(allUserProfiles);
+        updateAdminKpiStats();
     } catch (err) {
         console.error("Error fetching profiles:", err.message);
     }
@@ -2476,6 +2485,7 @@ async function fetchBlacklistEntries() {
         if (error) throw error;
         adminBlacklist = data || [];
         renderBlacklistEntries(adminBlacklist);
+        updateAdminKpiStats();
     } catch (e) {
         console.warn("Failed to fetch blacklist:", e.message);
         tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">შავი სია ცარიელია ან ცხრილი არ არსებობს</td></tr>`;
@@ -2564,6 +2574,95 @@ async function handleRemoveBan(id) {
 window.handleAddBan = handleAddBan;
 window.handleRemoveBan = handleRemoveBan;
 window.fetchBlacklistEntries = fetchBlacklistEntries;
+
+// ==========================================
+// ADMIN SUB-TABS & KPI STATS
+// ==========================================
+
+function switchAdminSubTab(e, panelId) {
+    if (e && e.preventDefault) e.preventDefault();
+
+    // Remove active class from all subtab buttons
+    document.querySelectorAll('.admin-subtab-btn').forEach(btn => btn.classList.remove('active'));
+    
+    // Add active class to clicked button
+    if (e && e.currentTarget) {
+        e.currentTarget.classList.add('active');
+    }
+
+    // Hide all admin subpanels
+    document.querySelectorAll('.admin-subpanel').forEach(panel => panel.classList.add('hidden'));
+
+    // Show target panel
+    const targetPanel = document.getElementById(panelId);
+    if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+    }
+
+    // Refresh specific panel data
+    if (panelId === 'admin-subpanel-sessions') {
+        fetchActiveSessions();
+    } else if (panelId === 'admin-subpanel-blacklist') {
+        fetchBlacklistEntries();
+    } else if (panelId === 'admin-subpanel-promos') {
+        fetchPromocodes();
+        fetchPromocodeRedemptions();
+    } else if (panelId === 'admin-subpanel-licenses') {
+        fetchAdminLicenses();
+    }
+}
+window.switchAdminSubTab = switchAdminSubTab;
+
+async function extendLicenseDays(key, days) {
+    if (!isAdmin()) return;
+    try {
+        const lic = adminLicenses.find(l => l.license_key === key);
+        if (!lic) return;
+
+        let baseDate = new Date();
+        if (lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) > baseDate) {
+            baseDate = new Date(lic.expires_at);
+        }
+
+        const newExpiry = new Date(baseDate.getTime() + days * 24 * 60 * 60 * 1000).toISOString();
+
+        const { error } = await supabaseClient
+            .from('licenses')
+            .update({ expires_at: newExpiry, is_active: true })
+            .eq('license_key', key);
+
+        if (error) throw error;
+        showBanner(`ლიცენზიას წარმატებით დაემატა +${days} დღე!`, "success");
+        await fetchAdminLicenses();
+        updateAdminKpiStats();
+    } catch (err) {
+        showBanner("შეცდომა ვადის გაგრძელებისას: " + err.message, "error");
+    }
+}
+window.extendLicenseDays = extendLicenseDays;
+
+function updateAdminKpiStats() {
+    const onlineEl = document.getElementById('admin-stat-online');
+    const licensesEl = document.getElementById('admin-stat-licenses');
+    const usersEl = document.getElementById('admin-stat-users');
+    const bansEl = document.getElementById('admin-stat-bans');
+
+    if (onlineEl) {
+        const onlineCount = document.getElementById('admin-sessions-count')?.textContent || '0';
+        onlineEl.textContent = onlineCount;
+    }
+    if (licensesEl && adminLicenses) {
+        const activeCount = adminLicenses.filter(l => l.is_active && (!l.expires_at || l.expires_at.startsWith("2000-01-01") || new Date(l.expires_at) >= new Date())).length;
+        licensesEl.textContent = activeCount;
+    }
+    if (usersEl && allUserProfiles) {
+        usersEl.textContent = allUserProfiles.length;
+    }
+    if (bansEl && adminBlacklist) {
+        bansEl.textContent = adminBlacklist.length;
+    }
+}
+window.updateAdminKpiStats = updateAdminKpiStats;
 
 function onLanguageChanged() {
     if (currentUser) {

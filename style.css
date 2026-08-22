@@ -4285,3 +4285,62 @@ body, html {
     color: #fbbf24;
     border: 1px solid rgba(245, 158, 11, 0.3);
 }
+
+/* ==========================================================================
+   Admin Subtabs & KPI Grid
+   ========================================================================== */
+.admin-subtab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.admin-subtab-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.admin-subtab-btn.active {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(255, 0, 60, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
+    border: 1px solid rgba(255, 0, 60, 0.45);
+    box-shadow: 0 4px 15px rgba(255, 0, 60, 0.2);
+}
+
+.kpi-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.extend-btn {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.extend-btn:hover {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: rgba(34, 197, 94, 0.5);
+    transform: scale(1.05);
+}
