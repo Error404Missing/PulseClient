@@ -1249,6 +1249,7 @@ function renderAdminLicenses(licenses) {
             <td><span class="admin-status ${status}">${statusText}</span></td>
             <td>${expiryDisplay}</td>
             <td>
+                <div class="admin-actions" style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">
                     <button type="button" class="extend-btn" onclick="extendLicenseDays('${lic.license_key}', 7)" title="+7 დღის დამატება">+7d</button>
                     <button type="button" class="extend-btn" onclick="extendLicenseDays('${lic.license_key}', 30)" title="+30 დღის დამატება">+30d</button>
                     <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="${t('admin.actionInfo')}" aria-label="${t('admin.actionInfo')}">
