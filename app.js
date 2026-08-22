@@ -1024,8 +1024,8 @@ function generateLicenseKey() {
 async function fetchAllLicenses() {
     if (!isAdmin()) return;
 
-    adminLicensesLoading.classList.remove('hidden');
-    adminLicensesTableBody.innerHTML = '';
+    if (adminLicensesLoading) adminLicensesLoading.classList.remove('hidden');
+    if (adminLicensesTableBody) adminLicensesTableBody.innerHTML = '';
 
     try {
         const res = await fetch(`${supabaseUrl}/rest/v1/licenses?select=*&order=created_at.desc`, {
@@ -1047,9 +1047,13 @@ async function fetchAllLicenses() {
         console.error("Error fetching all licenses:", err.message);
         showBanner(t("msg.dataLoadFail") + err.message, "error");
     } finally {
-        adminLicensesLoading.classList.add('hidden');
+        if (adminLicensesLoading) adminLicensesLoading.classList.add('hidden');
     }
 }
+
+const fetchAdminLicenses = fetchAllLicenses;
+window.fetchAllLicenses = fetchAllLicenses;
+window.fetchAdminLicenses = fetchAdminLicenses;
 
 // ========== Active Sessions Telemetry ==========
 
@@ -2650,13 +2654,13 @@ function switchAdminSubTab(e, panelId) {
     } else if (panelId === 'admin-subpanel-blacklist') {
         fetchBlacklistEntries();
     } else if (panelId === 'admin-subpanel-promos') {
-        fetchPromocodes();
-        fetchPromocodeRedemptions();
+        fetchAdminPromocodes();
     } else if (panelId === 'admin-subpanel-licenses') {
-        fetchAdminLicenses();
+        fetchAllLicenses();
     }
 }
 window.switchAdminSubTab = switchAdminSubTab;
+window.fetchPromocodes = fetchAdminPromocodes;
 
 async function extendLicenseDays(key, days) {
     if (!isAdmin()) return;
