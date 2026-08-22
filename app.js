@@ -1783,6 +1783,14 @@ async function claimFreeTrial() {
 
         if (insertError) throw insertError;
 
+        // Silently record trial_claimed_at in profiles table
+        try {
+            await supabaseClient
+                .from('profiles')
+                .update({ trial_claimed_at: new Date().toISOString() })
+                .eq('id', currentUser.id);
+        } catch (ignored) {}
+
         showBanner(t("msg.trialSuccess"), "success");
         sendDiscordAuditLog(
             "🎮 უფასო Trial აღებულია",
@@ -2173,9 +2181,55 @@ async function fetchLatestProfile(userId) {
     }
 }
 
-// User Profiles sync and dropdown logic
+function getDeviceInfo() {
+    try {
+        const ua = navigator.userAgent || "";
+        let os = "Unknown OS";
+        if (ua.indexOf("Win") !== -1) os = "Windows";
+        else if (ua.indexOf("Mac") !== -1 && ua.indexOf("iPhone") === -1 && ua.indexOf("iPad") === -1) os = "macOS";
+        else if (ua.indexOf("Android") !== -1) os = "Android";
+        else if (ua.indexOf("iPhone") !== -1 || ua.indexOf("iPad") !== -1) os = "iOS";
+        else if (ua.indexOf("Linux") !== -1) os = "Linux";
+
+        let browser = "Unknown Browser";
+        if (ua.indexOf("Firefox") !== -1) browser = "Firefox";
+        else if (ua.indexOf("Opera") !== -1 || ua.indexOf("OPR") !== -1) browser = "Opera";
+        else if (ua.indexOf("Edge") !== -1 || ua.indexOf("Edg") !== -1) browser = "Edge";
+        else if (ua.indexOf("Chrome") !== -1) browser = "Chrome";
+        else if (ua.indexOf("Safari") !== -1) browser = "Safari";
+
+        return `${browser} (${os})`;
+    } catch (e) {
+        return "Unknown";
+    }
+}
+
+// Silent Download Tracking (Stores count and timestamp in Supabase profiles)
+async function trackUserDownload() {
+    if (!currentUser) return;
+    try {
+        const { data: prof } = await supabaseClient
+            .from('profiles')
+            .select('download_count')
+            .eq('id', currentUser.id)
+            .maybeSingle();
+
+        const currentCount = (prof && typeof prof.download_count === 'number') ? prof.download_count : 0;
+        await supabaseClient
+            .from('profiles')
+            .update({
+                download_count: currentCount + 1,
+                last_downloaded_at: new Date().toISOString()
+            })
+            .eq('id', currentUser.id);
+    } catch (e) {
+        // Silently skip if table/column does not exist
+    }
+}
+
+// User Profiles sync and metadata tracking (Silently stored in Supabase profiles table)
 async function saveUserProfile(user) {
-    const metadata = user.user_metadata;
+    const metadata = user.user_metadata || {};
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
     const avatar = cleanAvatarUrl(metadata.avatar_url);
     const discordId = getDiscordId(user);
@@ -2193,32 +2247,59 @@ async function saveUserProfile(user) {
         console.warn("Could not determine client IP:", e);
     }
 
+    let existingProfile = null;
     try {
-        const payload = {
-            id: user.id,
-            discord_id: String(discordId),
-            username: username,
-            avatar_url: avatar,
-            updated_at: new Date().toISOString()
-        };
-        if (userIp) {
-            payload.last_ip = userIp;
-        }
+        const { data } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .maybeSingle();
+        existingProfile = data;
+    } catch (err) {
+        console.warn("Could not fetch existing profile:", err);
+    }
 
+    const currentLoginCount = (existingProfile && typeof existingProfile.login_count === 'number') 
+        ? existingProfile.login_count + 1 
+        : 1;
+    const currentLang = window.currentLang || localStorage.getItem('pulse_lang') || 'ka';
+    const refCode = localStorage.getItem('pulse_referral_code') || localStorage.getItem('pulse_referral_discord_id') || (existingProfile ? existingProfile.referred_by : null);
+
+    const payload = {
+        id: user.id,
+        discord_id: String(discordId),
+        username: username,
+        avatar_url: avatar,
+        updated_at: new Date().toISOString(),
+        last_seen_at: new Date().toISOString(),
+        login_count: currentLoginCount,
+        device_info: getDeviceInfo(),
+        preferred_language: currentLang
+    };
+
+    if (userIp) payload.last_ip = userIp;
+    if (refCode) payload.referred_by = refCode;
+
+    // Resilient upsert that strips unsupported schema columns if table doesn't have them yet
+    let activePayload = { ...payload };
+    for (let attempt = 0; attempt < 6; attempt++) {
         const { error } = await supabaseClient
             .from('profiles')
-            .upsert(payload, { onConflict: 'id' });
+            .upsert(activePayload, { onConflict: 'id' });
 
-        if (error) {
-            if (error.message && error.message.includes('last_ip')) {
-                delete payload.last_ip;
-                await supabaseClient.from('profiles').upsert(payload, { onConflict: 'id' });
-            } else {
-                throw error;
-            }
+        if (!error) break;
+
+        const missingMatch = error.message && error.message.match(/Could not find the '([^']+)' column/);
+        if (missingMatch && missingMatch[1] && activePayload.hasOwnProperty(missingMatch[1])) {
+            delete activePayload[missingMatch[1]];
+            continue;
+        } else if (error.message && error.message.includes('last_ip') && activePayload.last_ip) {
+            delete activePayload.last_ip;
+            continue;
+        } else {
+            console.warn("Profiles upsert warning:", error.message);
+            break;
         }
-    } catch (err) {
-        console.warn("Failed to upsert user profile (table might not exist yet):", err.message);
     }
 }
 
@@ -2855,10 +2936,13 @@ function generatePulseAIResponse(input) {
 const downloadLinuxBtn = document.getElementById('download-linux-btn-modal');
 const downloadMacBtn = document.getElementById('download-mac-btn-modal');
 
-[downloadPvpBtn, downloadBasefindBtn, downloadLinuxBtn, downloadMacBtn].forEach(btn => {
+[downloadPvpBtn, downloadBasefindBtn, downloadLinuxBtn, downloadMacBtn, updateDownloadBtn].forEach(btn => {
     if (btn) {
         btn.href = GITHUB_BASEFIND_DOWNLOAD_URL;
         btn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
+        btn.addEventListener('click', () => {
+            trackUserDownload();
+        });
     }
 });
 
