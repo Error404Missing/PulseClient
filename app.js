@@ -1,54 +1,6 @@
 
-// ==========================================
-// BEAUTIFUL DISCORD AUDIT WEBHOOK LOGGING
-// ==========================================
-const DISCORD_AUDIT_WEBHOOK_URL = "https://discord.com/api/webhooks/1538215324325781566/_PXXbrAPEb1XU9m0pLoT2Q1spB5HdarsSuMAwYljqQSb9UOSbJzIJZXfuqpTky4xkmhO"; // Paste your Discord Webhook URL here
-
-async function sendDiscordAuditLog(eventTitle, eventDescription, colorHex = 0xff003c, fields = []) {
-    if (!DISCORD_AUDIT_WEBHOOK_URL || !DISCORD_AUDIT_WEBHOOK_URL.startsWith("http")) return;
-    
-    const embed = {
-        title: eventTitle,
-        description: eventDescription,
-        color: colorHex,
-        fields: fields,
-        author: {
-            name: "PulseClient Audit System",
-            icon_url: "https://raw.githubusercontent.com/Error404Missing/PulseClient/main/Website/assets/water/icon.png"
-        },
-        footer: {
-            text: "PulseClient v5 Web Telemetry",
-            icon_url: "https://raw.githubusercontent.com/Error404Missing/PulseClient/main/Website/assets/water/icon.png"
-        },
-        timestamp: new Date().toISOString()
-    };
-
-    // 1. Direct Webhook send
-    try {
-        const res = await fetch(DISCORD_AUDIT_WEBHOOK_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ embeds: [embed] })
-        });
-        if (res.ok) return;
-    } catch (directErr) {
-        console.warn("Direct Webhook fetch failed (might be blocked by adblocker), routing through backend proxy:", directErr);
-    }
-
-    // 2. Server-side Relay Fallback (Bypasses browser adblockers and CORS restrictions)
-    try {
-        await fetch("https://errormissing-pulse-bot.hf.space/audit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                webhook_url: DISCORD_AUDIT_WEBHOOK_URL,
-                embed: embed
-            })
-        });
-    } catch (proxyErr) {
-        console.warn("Audit relay proxy error:", proxyErr);
-    }
-}
+// Webhook logging disabled
+async function sendDiscordAuditLog() {}
 window.sendDiscordAuditLog = sendDiscordAuditLog;
 
 // Initialize Supabase Client
