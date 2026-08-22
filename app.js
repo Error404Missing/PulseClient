@@ -495,9 +495,6 @@ async function handleUserSignIn(user) {
     // Save/Update user profile
     saveUserProfile(user);
 
-    // Load active broadcast announcement
-    fetchActiveBroadcast();
-
     // Asynchronously fetch latest profile from DB in case it was synced by bot
     fetchLatestProfile(user.id);
     const auditUser = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "Guest";
@@ -2612,125 +2609,9 @@ async function handleRemoveBan(id) {
     }
 }
 
-// ==========================================
-// BROADCAST ANNOUNCEMENTS SYSTEM
-// ==========================================
-
-async function fetchActiveBroadcast() {
-    const banner = document.getElementById('dash-broadcast-banner');
-    const msgText = document.getElementById('broadcast-message-text');
-    const tagText = document.getElementById('broadcast-tag');
-    const iconEl = document.getElementById('broadcast-icon');
-    const adminStatus = document.getElementById('current-broadcast-status');
-    if (!banner || !msgText) return;
-
-    try {
-        const { data, error } = await supabaseClient
-            .from('site_announcements')
-            .select('*')
-            .eq('is_active', true)
-            .order('created_at', { ascending: false })
-            .limit(1);
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-            const ann = data[0];
-            const type = ann.type || 'info';
-            banner.className = `broadcast-banner type-${type}`;
-            banner.classList.remove('hidden');
-            msgText.textContent = ann.message;
-
-            if (type === 'update') {
-                if (iconEl) iconEl.textContent = '🚀';
-                if (tagText) tagText.textContent = 'განახლება';
-            } else if (type === 'promo') {
-                if (iconEl) iconEl.textContent = '🎉';
-                if (tagText) tagText.textContent = 'აქცია / ფასდაკლება';
-            } else if (type === 'warning') {
-                if (iconEl) iconEl.textContent = '⚠️';
-                if (tagText) tagText.textContent = 'გაფრთხილება';
-            } else {
-                if (iconEl) iconEl.textContent = 'ℹ️';
-                if (tagText) tagText.textContent = 'სიახლე';
-            }
-
-            if (adminStatus) {
-                adminStatus.textContent = `აქტიური (${type})`;
-                adminStatus.style.background = 'rgba(34, 197, 94, 0.2)';
-                adminStatus.style.color = '#4ade80';
-            }
-        } else {
-            banner.classList.add('hidden');
-            if (adminStatus) {
-                adminStatus.textContent = 'არააქტიური';
-                adminStatus.style.background = 'rgba(148, 163, 184, 0.15)';
-                adminStatus.style.color = '#94a3b8';
-            }
-        }
-    } catch (e) {
-        banner.classList.add('hidden');
-    }
-}
-
-function dismissBroadcast() {
-    const banner = document.getElementById('dash-broadcast-banner');
-    if (banner) banner.classList.add('hidden');
-}
-
-async function handlePublishBroadcast(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    if (!isAdmin()) return;
-
-    const text = document.getElementById('admin-broadcast-text').value.trim();
-    const type = document.getElementById('admin-broadcast-type').value;
-    if (!text) return;
-
-    try {
-        // Deactivate all older announcements
-        await supabaseClient
-            .from('site_announcements')
-            .update({ is_active: false })
-            .eq('is_active', true);
-
-        // Insert new active announcement
-        const { error } = await supabaseClient
-            .from('site_announcements')
-            .insert({
-                message: text,
-                type: type,
-                is_active: true
-            });
-
-        if (error) throw error;
-        showBanner("შეტყობინება წარმატებით გამოქვეყნდა!", "success");
-        fetchActiveBroadcast();
-    } catch (err) {
-        showBanner("გამოქვეყნების შეცდომა: " + err.message, "error");
-    }
-}
-
-async function handleClearBroadcast() {
-    if (!isAdmin()) return;
-    try {
-        await supabaseClient
-            .from('site_announcements')
-            .update({ is_active: false })
-            .eq('is_active', true);
-
-        showBanner("შეტყობინება გათიშულია!", "success");
-        fetchActiveBroadcast();
-    } catch (err) {
-        showBanner("გათიშვის შეცდომა: " + err.message, "error");
-    }
-}
-
 window.handleAddBan = handleAddBan;
 window.handleRemoveBan = handleRemoveBan;
 window.fetchBlacklistEntries = fetchBlacklistEntries;
-window.handlePublishBroadcast = handlePublishBroadcast;
-window.handleClearBroadcast = handleClearBroadcast;
-window.dismissBroadcast = dismissBroadcast;
 
 function onLanguageChanged() {
     if (currentUser) {

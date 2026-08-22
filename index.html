@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=330.0.0">
+    <link rel="stylesheet" href="style.css?v=331.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -564,10 +564,6 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                             კითხვები
                         </a>
-                        <a href="#tab-changelog" class="menu-item" onclick="switchDashTab(event, 'tab-changelog')">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            <span>განახლებები (Changelog)</span>
-                        </a>
                         <a href="#tab-admin" id="admin-menu-item" class="menu-item hidden" onclick="switchDashTab(event, 'tab-admin')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             ადმინ პანელი
@@ -591,23 +587,6 @@
 
                 <!-- Main Content Area -->
                 <div class="dashboard-main">
-                    <!-- Live Admin Broadcast Announcement Banner -->
-                    <div id="dash-broadcast-banner" class="broadcast-banner hidden">
-                        <div class="broadcast-content">
-                            <div class="broadcast-icon" id="broadcast-icon">🚀</div>
-                            <div class="broadcast-text">
-                                <span class="broadcast-tag" id="broadcast-tag">სიახლე</span>
-                                <span id="broadcast-message-text">შეტყობინება</span>
-                            </div>
-                        </div>
-                        <button onclick="dismissBroadcast()" class="close-banner" style="background: none; border: none; color: inherit; cursor: pointer; display: flex; align-items: center;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
-
                     <!-- Alert Banner -->
                     <div id="dash-message-banner" class="alert-banner hidden">
                         <span id="banner-text">შეტყობინება</span>
@@ -970,89 +949,6 @@
                         </div>
                     </div>
 
-                    <!-- TAB: Changelog -->
-                    <div id="tab-content-changelog" class="tab-pane hidden">
-                        <div class="glass-panel" style="margin-bottom: 24px; padding: 24px;">
-                            <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin: 0 0 6px 0;">PulseClient განახლებების ისტორია (Changelog)</h3>
-                            <p style="color: var(--text-secondary); font-size: 13.5px; margin: 0;">გაეცანით ყოველ ახალ ვერსიაში დამატებულ მოდულებს, ბაიპასებს და გაუმჯობესებებს.</p>
-                        </div>
-
-                        <!-- Version 1.0.4 -->
-                        <div class="glass-panel changelog-card">
-                            <div class="changelog-header">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span class="changelog-version-badge">⚡ v1.0.4</span>
-                                    <span style="font-weight: 700; color: #fff; font-size: 15px;">Force-Update & Telemetry Overhaul</span>
-                                </div>
-                                <span class="changelog-date">2026 წლის აგვისტო</span>
-                            </div>
-                            <ul class="changelog-list">
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-new">NEW</span>
-                                    <span><strong>სავალდებულო განახლების სისტემა (Force-Update):</strong> ძველი `.jar` ვერსიები ავტომატურად ითხოვენ ახალ განახლებას.</span>
-                                </li>
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-new">NEW</span>
-                                    <span><strong>დინამიური In-Game Account Switcher:</strong> თამაშის შიგნით ნიკის შეცვლისას ახალი სახელი მომენტალურად ფიქსირდება.</span>
-                                </li>
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-fix">FIX</span>
-                                    <span><strong>რეალური დროის ხანგრძლივობა (Live Duration):</strong> სესიების ხანგრძლივობა ითვლება წამობრივი სიზუსტით.</span>
-                                </li>
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-sec">SEC</span>
-                                    <span><strong>Anti-Alt Multi-Account Trial დაცვა:</strong> ერთი და იგივე მოწყობილობიდან საცდელი ვერსიის განმეორებით აღება სრულად დაიბლოკა.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Version 1.0.3 -->
-                        <div class="glass-panel changelog-card">
-                            <div class="changelog-header">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span class="changelog-version-badge">🛡️ v1.0.3</span>
-                                    <span style="font-weight: 700; color: #fff; font-size: 15px;">Matrix & GrimAC Bypass Release</span>
-                                </div>
-                                <span class="changelog-date">2026 წლის ივლისი</span>
-                            </div>
-                            <ul class="changelog-list">
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-new">NEW</span>
-                                    <span><strong>Chunk Radar & Storage Inspector:</strong> მიწისქვეშა სკივრებისა და ბაზების უსწრაფესი ამოცნობა.</span>
-                                </li>
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-new">NEW</span>
-                                    <span><strong>Discord Webhook Auto-Coordinates:</strong> ნაპოვნი ბაზის კოორდინატების ავტომატური გაგზავნა პირად Discord არხზე.</span>
-                                </li>
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-sec">SEC</span>
-                                    <span><strong>OpSec Mod Trace Cleaner:</strong> თამაშის კვალის სრული გასუფთავება Screenshare-ის დროს.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Version 1.0.0 -->
-                        <div class="glass-panel changelog-card">
-                            <div class="changelog-header">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <span class="changelog-version-badge">🚀 v1.0.0</span>
-                                    <span style="font-weight: 700; color: #fff; font-size: 15px;">Initial Launch</span>
-                                </div>
-                                <span class="changelog-date">2026 წლის ივნისი</span>
-                            </div>
-                            <ul class="changelog-list">
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-new">NEW</span>
-                                    <span>PulseClient-ის პირველი ოფიციალური რელიზი Fabric 1.21.11-ზე.</span>
-                                </li>
-                                <li class="changelog-item">
-                                    <span class="changelog-item-tag tag-sec">SEC</span>
-                                    <span>ECDSA + HWID Hardware-Lock კრიპტოგრაფიული დაცვა.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
                     <!-- TAB: Admin Panel -->
                     <div id="tab-content-admin" class="tab-pane hidden">
                         <!-- Create License Key Form -->
@@ -1268,37 +1164,11 @@
                                             <th data-i18n="admin.colPromoDate">თარიღი</th>
                                         </tr>
                                     </thead>
-                        <!-- Admin Broadcast Announcements Card -->
-                        <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
-                            <div class="admin-header" style="margin-bottom: 16px;">
-                                <h3>📢 საიტის შეტყობინების გამოქვეყნება (Broadcast Announcement)</h3>
-                                <span id="current-broadcast-status" style="font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; background: rgba(148, 163, 184, 0.15); color: #94a3b8;">არააქტიური</span>
+                                    <tbody id="admin-promo-redemptions-table-body">
+                                        <!-- Redemptions rendered dynamically -->
+                                    </tbody>
+                                </table>
                             </div>
-                            <form id="admin-broadcast-form" onsubmit="handlePublishBroadcast(event)" class="admin-form">
-                                <div class="form-row">
-                                    <div class="form-group" style="flex: 2;">
-                                        <label>შეტყობინების ტექსტი</label>
-                                        <input type="text" id="admin-broadcast-text" placeholder="მაგ: 🚀 გამოვიდა PulseClient v1.0.4 - განაახლეთ საიტიდან!" required>
-                                    </div>
-                                    <div class="form-group" style="flex: 1;">
-                                        <label>ტიპი</label>
-                                        <select id="admin-broadcast-type" required>
-                                            <option value="update">🚀 განახლება (Update)</option>
-                                            <option value="promo">🎉 ფასდაკლება / აქცია (Promo)</option>
-                                            <option value="info">ℹ️ ინფორმაცია (Info)</option>
-                                            <option value="warning">⚠️ გაფრთხილება (Warning)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div style="display: flex; gap: 12px; margin-top: 8px;">
-                                    <button type="submit" class="btn btn-glow btn-primary" style="flex: 1;">
-                                        გამოქვეყნება (Live)
-                                    </button>
-                                    <button type="button" onclick="handleClearBroadcast()" class="btn btn-secondary" style="border-radius: 12px; padding: 12px 20px;">
-                                        შეტყობინების გათიშვა
-                                    </button>
-                                </div>
-                            </form>
                         </div>
 
                         <!-- Admin Blacklist & Bans Card -->
@@ -1709,7 +1579,7 @@
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=330.0.0"></script>
-    <script src="app.js?v=330.0.0"></script>
+    <script src="i18n.js?v=331.0.0"></script>
+    <script src="app.js?v=331.0.0"></script>
 </body>
 </html>
