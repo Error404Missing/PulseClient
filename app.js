@@ -93,6 +93,7 @@ const ADMIN_DISCORD_IDS = ["1475396409246089367", "", "1158855771031867432","","
 let currentUser = null;
 let adminLicenses = [];
 let allUserProfiles = [];
+let activeOnlineUsersCount = 0;
 
 // -----------------------------
 // PRICING: centralized plan data & formatter
@@ -1205,7 +1206,10 @@ function renderActiveSessions(sessions) {
         adminSessionsTableBody.appendChild(row);
     });
 
+    activeOnlineUsersCount = onlineCount;
     if (adminSessionsCount) adminSessionsCount.textContent = onlineCount.toString();
+    const onlineKpiEl = document.getElementById('admin-stat-online');
+    if (onlineKpiEl) onlineKpiEl.textContent = onlineCount.toString();
     updateAdminKpiStats();
 }
 
@@ -2697,18 +2701,17 @@ function updateAdminKpiStats() {
     const bansEl = document.getElementById('admin-stat-bans');
 
     if (onlineEl) {
-        const onlineCount = document.getElementById('admin-sessions-count')?.textContent || '0';
-        onlineEl.textContent = onlineCount;
+        onlineEl.textContent = activeOnlineUsersCount.toString();
     }
-    if (licensesEl && adminLicenses) {
+    if (licensesEl && adminLicenses && adminLicenses.length > 0) {
         const activeCount = adminLicenses.filter(l => l.is_active && (!l.expires_at || l.expires_at.startsWith("2000-01-01") || new Date(l.expires_at) >= new Date())).length;
-        licensesEl.textContent = activeCount;
+        licensesEl.textContent = activeCount.toString();
     }
-    if (usersEl && allUserProfiles) {
-        usersEl.textContent = allUserProfiles.length;
+    if (usersEl && allUserProfiles && allUserProfiles.length > 0) {
+        usersEl.textContent = allUserProfiles.length.toString();
     }
     if (bansEl && adminBlacklist) {
-        bansEl.textContent = adminBlacklist.length;
+        bansEl.textContent = adminBlacklist.length.toString();
     }
 }
 window.updateAdminKpiStats = updateAdminKpiStats;
@@ -2728,7 +2731,13 @@ function onLanguageChanged() {
     } catch (err) {
         console.warn("applyPricingNumbers failed:", err);
     }
-}
+// Auto-refresh active sessions and telemetry every 20 seconds for real-time online count
+setInterval(() => {
+    if (typeof isAdmin === "function" && isAdmin() && currentUser) {
+        fetchActiveSessions();
+    }
+}, 20000);
+
 window.onLanguageChanged = onLanguageChanged;
 
 // ==========================================
