@@ -393,6 +393,8 @@ async function signInWithDiscord() {
 async function signOut() {
     await supabaseClient.auth.signOut();
 }
+window.signInWithDiscord = signInWithDiscord;
+window.signOut = signOut;
 
 function cleanAvatarUrl(url) {
     if (!url) return "https://cdn.discordapp.com/embed/avatars/0.png";
@@ -2731,6 +2733,8 @@ function onLanguageChanged() {
     } catch (err) {
         console.warn("applyPricingNumbers failed:", err);
     }
+}
+
 // Auto-refresh active sessions and telemetry every 20 seconds for real-time online count
 setInterval(() => {
     if (typeof isAdmin === "function" && isAdmin() && currentUser) {
