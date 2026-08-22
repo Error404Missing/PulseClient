@@ -447,12 +447,19 @@ function cleanAvatarUrl(url) {
     return url;
 }
 
-function handleUserSignIn(user) {
+async function handleUserSignIn(user) {
+    // Check Blacklist first
+    const banRecord = await checkUserBlacklist(user);
+    if (banRecord) {
+        handleUserBanEnforcement(banRecord);
+        return;
+    }
+
     currentUser = user;
     
     // Get Discord Profile Details
-    const metadata = user.user_metadata;
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "ÃŸÃ¢Â¢ÃŸÃ¢Â¥ÃŸÃ¢Â¢ÃŸÃ¢Â«ÃŸÃ¢Â¢ÃŸÃ¢Ã‰ÃŸÃ¢Ã¡ÃŸÃ¢Ã¶ÃŸÃ¢Ã¦ÃŸÃ¢Ã¶ÃŸÃ¢ÃœÃŸÃ¢Ã¿";
+    const metadata = user.user_metadata || {};
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
     const avatar = cleanAvatarUrl(metadata.avatar_url);
 
     // Update Nav
@@ -481,11 +488,15 @@ function handleUserSignIn(user) {
     // Show/Hide Admin menu item
     if (isAdmin()) {
         if (adminMenuItem) adminMenuItem.classList.remove('hidden');
+        fetchBlacklistEntries();
     } else {
         if (adminMenuItem) adminMenuItem.classList.add('hidden');
     }
     // Save/Update user profile
     saveUserProfile(user);
+
+    // Load active broadcast announcement
+    fetchActiveBroadcast();
 
     // Asynchronously fetch latest profile from DB in case it was synced by bot
     fetchLatestProfile(user.id);
@@ -1721,6 +1732,36 @@ async function claimFreeTrial() {
     const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
 
     try {
+        // 0. IP-based Multi-Account Trial Abuse check
+        let clientIp = null;
+        try {
+            const ipRes = await fetch('https://api.ipify.org?format=json');
+            if (ipRes.ok) {
+                const ipJson = await ipRes.json();
+                clientIp = ipJson.ip;
+            }
+        } catch (ignored) {}
+
+        if (clientIp) {
+            try {
+                const { data: ipProfiles } = await supabaseClient
+                    .from('profiles')
+                    .select('id, username, discord_id, trial_claimed_at')
+                    .eq('last_ip', clientIp)
+                    .not('trial_claimed_at', 'is', null);
+
+                if (ipProfiles && ipProfiles.length > 0) {
+                    const otherProfile = ipProfiles.find(p => p.id !== currentUser.id && p.discord_id !== String(discordId));
+                    if (otherProfile) {
+                        showBanner("🚫 ამ IP მისამართიდან უფასო საცდელი ვერსია უკვე აღებულია!", "error");
+                        return;
+                    }
+                }
+            } catch (ipCheckErr) {
+                console.warn("IP trial abuse check skipped:", ipCheckErr);
+            }
+        }
+
         // 1. Age check on Discord account using snowflake creation date
         if (discordId) {
             try {
@@ -2412,6 +2453,284 @@ function closeUserSelectionModal() {
 window.filterDropdownUsers = filterDropdownUsers;
 window.openUserSelectionModal = openUserSelectionModal;
 window.closeUserSelectionModal = closeUserSelectionModal;
+
+// ==========================================
+// BLACKLIST & BANS SYSTEM
+// ==========================================
+
+let adminBlacklist = [];
+
+async function checkUserBlacklist(user) {
+    if (!user) return null;
+    try {
+        const discordId = getDiscordId(user);
+        let userIp = null;
+        try {
+            const ipRes = await fetch('https://api.ipify.org?format=json');
+            if (ipRes.ok) {
+                const ipData = await ipRes.json();
+                userIp = ipData.ip;
+            }
+        } catch (ignored) {}
+
+        const filters = [];
+        if (discordId) filters.push(`value.eq.${discordId}`);
+        if (userIp) filters.push(`value.eq.${userIp}`);
+
+        if (filters.length === 0) return null;
+
+        const { data, error } = await supabaseClient
+            .from('blacklist')
+            .select('*')
+            .or(filters.join(','))
+            .limit(1);
+
+        if (!error && data && data.length > 0) {
+            return data[0];
+        }
+    } catch (e) {
+        console.warn("Blacklist check skipped:", e);
+    }
+    return null;
+}
+
+function handleUserBanEnforcement(ban) {
+    const bannedPage = document.getElementById('banned-page');
+    const banReasonText = document.getElementById('ban-reason-text');
+    if (banReasonText && ban.reason) {
+        banReasonText.textContent = ban.reason;
+    }
+    if (bannedPage) {
+        bannedPage.classList.remove('hidden');
+    }
+    if (landingPage) landingPage.classList.add('hidden');
+    if (dashboardPage) dashboardPage.classList.add('hidden');
+    if (authGatePage) authGatePage.classList.add('hidden');
+    if (navLinks) navLinks.classList.add('hidden');
+    if (navUserProfile) navUserProfile.classList.add('hidden');
+    
+    // Sign out
+    supabaseClient.auth.signOut();
+}
+
+async function fetchBlacklistEntries() {
+    if (!isAdmin()) return;
+    const tableBody = document.getElementById('admin-blacklist-table-body');
+    if (!tableBody) return;
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('blacklist')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        adminBlacklist = data || [];
+        renderBlacklistEntries(adminBlacklist);
+    } catch (e) {
+        console.warn("Failed to fetch blacklist:", e.message);
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">შავი სია ცარიელია ან ცხრილი არ არსებობს</td></tr>`;
+    }
+}
+
+function renderBlacklistEntries(entries) {
+    const tableBody = document.getElementById('admin-blacklist-table-body');
+    if (!tableBody) return;
+    tableBody.innerHTML = '';
+
+    if (!entries || entries.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">დაბლოკილი ჩანაწერები არ მოიძებნა</td></tr>`;
+        return;
+    }
+
+    entries.forEach(item => {
+        let badgeClass = 'type-ip';
+        let typeName = 'IP მისამართი';
+        if (item.type === 'discord_id') { badgeClass = 'type-discord'; typeName = 'Discord ID'; }
+        else if (item.type === 'hwid') { badgeClass = 'type-hwid'; typeName = 'HWID'; }
+
+        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('ka-GE') : 'N/A';
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><span class="ban-badge ${badgeClass}">${typeName}</span></td>
+            <td><code style="font-size: 12px; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px;">${item.value}</code></td>
+            <td style="color: #fca5a5; font-size: 13px;">${item.reason || 'წესების დარღვევა'}</td>
+            <td style="font-size: 12px; color: var(--text-muted);">${dateStr}</td>
+            <td style="text-align: right;">
+                <button type="button" onclick="handleRemoveBan('${item.id}')" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px; color: #4ade80; border-color: rgba(34, 197, 94, 0.3);">
+                    განბლოკვა
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+async function handleAddBan(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!isAdmin()) return;
+
+    const type = document.getElementById('admin-ban-type').value;
+    const value = document.getElementById('admin-ban-value').value.trim();
+    const reason = document.getElementById('admin-ban-reason').value.trim() || 'Terms of Service Violation';
+
+    if (!value) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('blacklist')
+            .insert({
+                type: type,
+                value: value,
+                reason: reason,
+                banned_by: currentUser ? (currentUser.user_metadata?.user_name || 'Admin') : 'Admin'
+            });
+
+        if (error) throw error;
+        showBanner("მომხმარებელი წარმატებით დაიბლოკა!", "success");
+        document.getElementById('admin-ban-value').value = '';
+        document.getElementById('admin-ban-reason').value = '';
+        fetchBlacklistEntries();
+    } catch (err) {
+        showBanner("ბლოკირების შეცდომა: " + err.message, "error");
+    }
+}
+
+async function handleRemoveBan(id) {
+    if (!isAdmin()) return;
+    try {
+        const { error } = await supabaseClient
+            .from('blacklist')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+        showBanner("ბლოკი მოხსნილია!", "success");
+        fetchBlacklistEntries();
+    } catch (err) {
+        showBanner("განბლოკვის შეცდომა: " + err.message, "error");
+    }
+}
+
+// ==========================================
+// BROADCAST ANNOUNCEMENTS SYSTEM
+// ==========================================
+
+async function fetchActiveBroadcast() {
+    const banner = document.getElementById('dash-broadcast-banner');
+    const msgText = document.getElementById('broadcast-message-text');
+    const tagText = document.getElementById('broadcast-tag');
+    const iconEl = document.getElementById('broadcast-icon');
+    const adminStatus = document.getElementById('current-broadcast-status');
+    if (!banner || !msgText) return;
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('site_announcements')
+            .select('*')
+            .eq('is_active', true)
+            .order('created_at', { ascending: false })
+            .limit(1);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+            const ann = data[0];
+            const type = ann.type || 'info';
+            banner.className = `broadcast-banner type-${type}`;
+            banner.classList.remove('hidden');
+            msgText.textContent = ann.message;
+
+            if (type === 'update') {
+                if (iconEl) iconEl.textContent = '🚀';
+                if (tagText) tagText.textContent = 'განახლება';
+            } else if (type === 'promo') {
+                if (iconEl) iconEl.textContent = '🎉';
+                if (tagText) tagText.textContent = 'აქცია / ფასდაკლება';
+            } else if (type === 'warning') {
+                if (iconEl) iconEl.textContent = '⚠️';
+                if (tagText) tagText.textContent = 'გაფრთხილება';
+            } else {
+                if (iconEl) iconEl.textContent = 'ℹ️';
+                if (tagText) tagText.textContent = 'სიახლე';
+            }
+
+            if (adminStatus) {
+                adminStatus.textContent = `აქტიური (${type})`;
+                adminStatus.style.background = 'rgba(34, 197, 94, 0.2)';
+                adminStatus.style.color = '#4ade80';
+            }
+        } else {
+            banner.classList.add('hidden');
+            if (adminStatus) {
+                adminStatus.textContent = 'არააქტიური';
+                adminStatus.style.background = 'rgba(148, 163, 184, 0.15)';
+                adminStatus.style.color = '#94a3b8';
+            }
+        }
+    } catch (e) {
+        banner.classList.add('hidden');
+    }
+}
+
+function dismissBroadcast() {
+    const banner = document.getElementById('dash-broadcast-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
+async function handlePublishBroadcast(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!isAdmin()) return;
+
+    const text = document.getElementById('admin-broadcast-text').value.trim();
+    const type = document.getElementById('admin-broadcast-type').value;
+    if (!text) return;
+
+    try {
+        // Deactivate all older announcements
+        await supabaseClient
+            .from('site_announcements')
+            .update({ is_active: false })
+            .eq('is_active', true);
+
+        // Insert new active announcement
+        const { error } = await supabaseClient
+            .from('site_announcements')
+            .insert({
+                message: text,
+                type: type,
+                is_active: true
+            });
+
+        if (error) throw error;
+        showBanner("შეტყობინება წარმატებით გამოქვეყნდა!", "success");
+        fetchActiveBroadcast();
+    } catch (err) {
+        showBanner("გამოქვეყნების შეცდომა: " + err.message, "error");
+    }
+}
+
+async function handleClearBroadcast() {
+    if (!isAdmin()) return;
+    try {
+        await supabaseClient
+            .from('site_announcements')
+            .update({ is_active: false })
+            .eq('is_active', true);
+
+        showBanner("შეტყობინება გათიშულია!", "success");
+        fetchActiveBroadcast();
+    } catch (err) {
+        showBanner("გათიშვის შეცდომა: " + err.message, "error");
+    }
+}
+
+window.handleAddBan = handleAddBan;
+window.handleRemoveBan = handleRemoveBan;
+window.fetchBlacklistEntries = fetchBlacklistEntries;
+window.handlePublishBroadcast = handlePublishBroadcast;
+window.handleClearBroadcast = handleClearBroadcast;
+window.dismissBroadcast = dismissBroadcast;
 
 function onLanguageChanged() {
     if (currentUser) {
