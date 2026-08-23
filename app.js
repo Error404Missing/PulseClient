@@ -1178,8 +1178,8 @@ function renderActiveSessions(sessions) {
             ? session.license_key.substring(0, 4) + '-****-****-****'
             : 'N/A';
 
-        // Server Badge
-        let serverName = session.mc_server || session.server || session.ip_address || 'Main Menu';
+        // Server Badge (Minecraft server)
+        let serverName = session.country || session.mc_server || session.server || 'Main Menu';
         if (!serverName || serverName === 'Hidden' || serverName === 'Unknown') {
             serverName = 'Main Menu';
         }
@@ -1193,15 +1193,10 @@ function renderActiveSessions(sessions) {
             serverBadge = `<span class="server-badge multiplayer" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>${serverName}</span>`;
         }
 
-        // Country flag emoji
-        const countryCode = session.country && session.country !== 'Unknown' && session.country !== 'Hidden' ? session.country : null;
-        let countryDisplay = session.country || 'N/A';
-        if (countryCode && countryCode.length === 2) {
-            const flag = String.fromCodePoint(
-                ...countryCode.toUpperCase().split('').map(c => 0x1F1E6 + c.charCodeAt(0) - 65)
-            );
-            countryDisplay = `${flag} ${countryCode}`;
-        }
+        // User Real Public IP
+        const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown'
+            ? session.ip_address
+            : 'Hidden';
 
         // Started at
         const startedStr = formatTime(session.started_at);
@@ -1215,8 +1210,8 @@ function renderActiveSessions(sessions) {
             <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
             <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
             <td>${serverBadge}</td>
+            <td><code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc;">${userIp}</code></td>
             <td>${session.os_name || 'N/A'}</td>
-            <td>${countryDisplay}</td>
             <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
             <td style="font-weight: 600;">${durationStr}</td>
             <td style="font-size: 12px;">${finishedStr}</td>
