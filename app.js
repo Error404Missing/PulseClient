@@ -2053,11 +2053,13 @@ async function redeemReferralCode() {
         console.warn("[Pulse AI Referral Debug] Profile lookup warning:", profileErr.message);
     }
 
-    console.log("[Pulse AI Referral Debug] Sending code:", codeToSend, "discordId:", discordId, "username:", username);
-
     try {
-        // Call the backend endpoint — it uses the service_role key to bypass RLS
-        const response = await fetch('https://errormissing-pulse-bot.hf.space/referral/redeem', {
+        // Call the backend endpoint via our own pulseclient.xyz/api rewrite
+        const apiUrl = window.location.hostname.includes('pulseclient.xyz') || window.location.hostname.includes('vercel.app') 
+            ? '/api/referral/redeem' 
+            : 'https://errormissing-pulse-bot.hf.space/referral/redeem';
+
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code: codeToSend, discord_id: String(discordId), username })
