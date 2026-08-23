@@ -89,7 +89,8 @@ const adminUserSelectTrigger = document.getElementById('admin-user-select-trigge
 const adminUserSearch = document.getElementById('admin-modal-user-search');
 const adminUserOptionsList = document.getElementById('admin-modal-user-options-list');
 
-const ADMIN_DISCORD_IDS = ["1475396409246089367", "", "1158855771031867432","",""];
+const OWNER_DISCORD_IDS = ["1475396409246089367"];
+const ADMIN_DISCORD_IDS = ["1475396409246089367", "1158855771031867432"];
 let currentUser = null;
 let adminLicenses = [];
 let allUserProfiles = [];
@@ -980,8 +981,18 @@ window.showDashboard = showDashboard;
 // ADMIN PANEL FUNCTIONS
 // ==========================================
 
+function isOwner() {
+    if (!currentUser) return false;
+    const discordId = String(getDiscordId(currentUser) || "");
+    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
+    if (OWNER_DISCORD_IDS.includes(discordId)) return true;
+    if (username === "sticky._.1" || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+    return false;
+}
+
 function isAdmin() {
     if (!currentUser) return false;
+    if (isOwner()) return true;
     const discordId = String(getDiscordId(currentUser) || "");
     const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
     if (ADMIN_DISCORD_IDS.includes(discordId)) return true;
@@ -1104,8 +1115,10 @@ function renderActiveSessions(sessions) {
         if (!dateStr) return 'N/A';
         const d = new Date(dateStr);
         return d.toLocaleString('ka-GE', {
+            timeZone: 'Asia/Tbilisi',
             day: '2-digit', month: '2-digit',
-            hour: '2-digit', minute: '2-digit'
+            hour: '2-digit', minute: '2-digit',
+            hour12: false
         });
     };
 
@@ -1193,10 +1206,16 @@ function renderActiveSessions(sessions) {
             serverBadge = `<span class="server-badge multiplayer" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>${serverName}</span>`;
         }
 
-        // User Real Public IP
-        const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown'
-            ? session.ip_address
-            : 'Hidden';
+        // User Real Public IP (Strictly restricted to Owner)
+        let userIpCell = '';
+        if (isOwner()) {
+            const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown'
+                ? session.ip_address
+                : 'Hidden';
+            userIpCell = `<code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc;">${userIp}</code>`;
+        } else {
+            userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">🔒 დაცულია</span>`;
+        }
 
         // Started at
         const startedStr = formatTime(session.started_at);
@@ -1210,7 +1229,7 @@ function renderActiveSessions(sessions) {
             <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
             <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
             <td>${serverBadge}</td>
-            <td><code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc;">${userIp}</code></td>
+            <td>${userIpCell}</td>
             <td>${session.os_name || 'N/A'}</td>
             <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
             <td style="font-weight: 600;">${durationStr}</td>
@@ -2137,8 +2156,8 @@ function showLicenseDetails(key) {
     const modalIpContainer = document.getElementById('modal-ip-container');
     const modalIp = document.getElementById('modal-ip');
     if (modalIpContainer && modalIp) {
-        // Show IP container for admin / owner
-        if (isAdmin()) {
+        // Show IP container ONLY for owner
+        if (isOwner()) {
             modalIpContainer.style.display = 'block';
             modalIp.textContent = "იტვირთება...";
 
