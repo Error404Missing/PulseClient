@@ -1178,6 +1178,21 @@ function renderActiveSessions(sessions) {
             ? session.license_key.substring(0, 4) + '-****-****-****'
             : 'N/A';
 
+        // Server Badge
+        let serverName = session.mc_server || session.server || session.ip_address || 'Main Menu';
+        if (!serverName || serverName === 'Hidden' || serverName === 'Unknown') {
+            serverName = 'Main Menu';
+        }
+
+        let serverBadge = '';
+        if (serverName.toLowerCase() === 'singleplayer') {
+            serverBadge = `<span class="server-badge singleplayer" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">🎮 Singleplayer</span>`;
+        } else if (serverName.toLowerCase() === 'main menu' || serverName.toLowerCase() === 'menu') {
+            serverBadge = `<span class="server-badge menu" style="background: rgba(107, 114, 128, 0.15); color: #9ca3af; border: 1px solid rgba(107, 114, 128, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">🏠 Main Menu</span>`;
+        } else {
+            serverBadge = `<span class="server-badge multiplayer" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>${serverName}</span>`;
+        }
+
         // Country flag emoji
         const countryCode = session.country && session.country !== 'Unknown' && session.country !== 'Hidden' ? session.country : null;
         let countryDisplay = session.country || 'N/A';
@@ -1199,6 +1214,7 @@ function renderActiveSessions(sessions) {
         row.innerHTML = `
             <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
             <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
+            <td>${serverBadge}</td>
             <td>${session.os_name || 'N/A'}</td>
             <td>${countryDisplay}</td>
             <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
