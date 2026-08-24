@@ -1003,7 +1003,7 @@ function isAdmin() {
 function parseLicenseNote(note) {
     let product = "PulseClient";
     let buyer = "Unknown";
-    let createdBy = "Î“Ã‡Ã¶";
+    let createdBy = "—";
     
     if (note) {
         const prodMatch = note.match(/Product:\s*([^|]+)/i);
@@ -1014,15 +1014,20 @@ function parseLicenseNote(note) {
 
         const byMatch = note.match(/\(by\s+([^)]+)\)/i);
         const promoMatch = note.match(/Promocode:\s*([^|)]+)/i);
+        const refByMatch = note.match(/Referred by:\s*([^|)]+)/i);
         
         if (byMatch) {
             createdBy = byMatch[1].trim();
         } else if (promoMatch) {
             createdBy = `Promocode: ${promoMatch[1].trim()}`;
+        } else if (refByMatch) {
+            createdBy = `Referral (${refByMatch[1].trim()})`;
+        } else if (/Referral Bonus/i.test(note)) {
+            createdBy = "Referral Bonus";
         } else if (/Free Trial/i.test(note)) {
             createdBy = "Free Trial";
         } else if (/Linked via Dashboard/i.test(note)) {
-            createdBy = t("creator.dashboard");
+            createdBy = t("creator.dashboard") || "Dashboard";
         }
     }
     
