@@ -648,6 +648,33 @@ function renderLicenses(licenses) {
     });
 
     licensesList.classList.remove('hidden');
+
+    // Single-use referral protection: check if user already redeemed a referral code
+    const hasUsedReferral = licenses.some(l => l.note && l.note.includes('Referred by:'));
+    updateReferralRedeemUI(hasUsedReferral);
+}
+
+function updateReferralRedeemUI(hasUsedReferral) {
+    const codeInput = document.getElementById('referral-code-input');
+    const submitBtn = document.getElementById('referral-code-submit-btn');
+    if (!codeInput || !submitBtn) return;
+
+    if (hasUsedReferral) {
+        codeInput.value = '';
+        codeInput.disabled = true;
+        codeInput.placeholder = "თქვენ უკვე გამოიყენეთ რეფერალური კოდი (1/1) ✅";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "გამოყენებულია ✅";
+        submitBtn.style.opacity = "0.5";
+        submitBtn.style.cursor = "not-allowed";
+    } else {
+        codeInput.disabled = false;
+        codeInput.placeholder = t("dash.referralRedeemPlaceholder") || "მაგ: RFGS313";
+        submitBtn.disabled = false;
+        submitBtn.textContent = t("dash.referralRedeemBtn") || "გააქტიურება";
+        submitBtn.style.opacity = "1";
+        submitBtn.style.cursor = "pointer";
+    }
 }
 
 // Bind License Key to User
