@@ -1056,6 +1056,48 @@ async function fetchUserLicenses() {
         } else {
             renderLicenses(data);
         }
+
+        // Calculate and render user's lifetime total playtime and top server
+        try {
+            const userKeys = (data || []).map(l => l.license_key);
+            if (userKeys.length > 0) {
+                const keysFilter = userKeys.map(k => `license_key.eq.${k}`).join(',');
+                const { data: userSessions } = await supabaseClient
+                    .from('client_sessions')
+                    .select('*')
+                    .or(keysFilter);
+
+                if (userSessions && userSessions.length > 0) {
+                    let totalMins = 0;
+                    const serverCounts = {};
+                    userSessions.forEach(s => {
+                        totalMins += (s.duration_minutes || 0);
+                        const srv = s.country || 'Main Menu';
+                        if (srv && srv !== 'Hidden' && srv !== 'Unknown') {
+                            serverCounts[srv] = (serverCounts[srv] || 0) + (s.duration_minutes || 1);
+                        }
+                    });
+
+                    const hours = Math.floor(totalMins / 60);
+                    const mins = totalMins % 60;
+                    const playtimeEl = document.getElementById('dash-user-playtime-text');
+                    if (playtimeEl) playtimeEl.textContent = `${hours} სთ ${mins} წთ`;
+
+                    let topSrv = 'Main Menu';
+                    let maxCount = 0;
+                    for (const [srv, count] of Object.entries(serverCounts)) {
+                        if (count > maxCount) {
+                            maxCount = count;
+                            topSrv = srv;
+                        }
+                    }
+                    const topServerEl = document.getElementById('dash-user-top-server-text');
+                    if (topServerEl) topServerEl.textContent = topSrv;
+                }
+            }
+        } catch (playtimeErr) {
+            console.warn("User playtime computation warning:", playtimeErr);
+        }
     } catch (err) {
         console.error("Error fetching licenses:", err.message);
         showBanner(t("msg.licLoadFail") + err.message, "error");
@@ -1557,7 +1599,9 @@ const fetchAdminLicenses = fetchAllLicenses;
 window.fetchAllLicenses = fetchAllLicenses;
 window.fetchAdminLicenses = fetchAdminLicenses;
 
-// ========== Active Sessions Telemetry ==========
+// ========== Active Sessions Telemetry & Anti-Alt System ==========
+let adminAltsData = {};
+window.lastFetchedSessions = [];
 
 async function fetchActiveSessions() {
     if (!isAdmin()) return;
@@ -1566,17 +1610,32 @@ async function fetchActiveSessions() {
     if (adminSessionsTableBody) adminSessionsTableBody.innerHTML = '';
 
     try {
-        const res = await fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100`, {
-            headers: {
-                "apikey": supabaseKey,
-                "Authorization": `Bearer ${supabaseKey}`,
-                "Content-Type": "application/json"
-            }
-        });
+        // Parallel fetch for sessions and alts/playtime intelligence
+        const [sessRes, altsRes] = await Promise.allSettled([
+            fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100`, {
+                headers: {
+                    "apikey": supabaseKey,
+                    "Authorization": `Bearer ${supabaseKey}`,
+                    "Content-Type": "application/json"
+                }
+            }),
+            fetch('https://errormissing-pulse-bot.hf.space/admin/alts-detect')
+        ]);
 
-        if (!res.ok) throw new Error(await res.text());
-        const data = await res.json();
-        renderActiveSessions(data || []);
+        if (altsRes.status === 'fulfilled' && altsRes.value.ok) {
+            try {
+                const altsJson = await altsRes.value.json();
+                if (altsJson && altsJson.status === 'success') {
+                    adminAltsData = altsJson.users || {};
+                }
+            } catch (e) {}
+        }
+
+        if (sessRes.status === 'fulfilled' && sessRes.value.ok) {
+            const data = await sessRes.value.json();
+            window.lastFetchedSessions = data || [];
+            renderActiveSessions(data || []);
+        }
     } catch (err) {
         console.error("Error fetching active sessions:", err.message);
     } finally {
@@ -1627,14 +1686,13 @@ function renderActiveSessions(sessions) {
     });
     const uniqueSessions = Array.from(uniqueSessionsMap.values());
 
-    // Prepare sessions with online status (90 seconds threshold since client heartbeat runs every 30s)
+    // Prepare sessions with online status (90 seconds threshold)
     const enrichedSessions = uniqueSessions.map(session => {
         const lastHb = new Date(session.last_heartbeat || session.started_at);
         const diffMs = now - lastHb.getTime();
         const isOnline = diffMs < 90 * 1000;
         if (isOnline) onlineCount++;
 
-        // Calculate live duration
         let totalMinutes = session.duration_minutes || 0;
         const startTs = new Date(session.started_at || session.last_heartbeat).getTime();
         if (!isNaN(startTs)) {
@@ -1651,7 +1709,6 @@ function renderActiveSessions(sessions) {
         };
     });
 
-    // Sort: Online sessions first, then most recently active
     enrichedSessions.sort((a, b) => {
         if (a.isOnline && !b.isOnline) return -1;
         if (!a.isOnline && b.isOnline) return 1;
@@ -1660,13 +1717,57 @@ function renderActiveSessions(sessions) {
 
     enrichedSessions.forEach(session => {
         const totalMinutes = session.totalMinutes;
-        let durationStr;
-        if (totalMinutes < 60) {
-            durationStr = `${totalMinutes} წთ`;
-        } else {
-            const hours = Math.floor(totalMinutes / 60);
-            const mins = totalMinutes % 60;
-            durationStr = `${hours} სთ ${mins} წთ`;
+        let durationStr = totalMinutes < 60 ? `${totalMinutes} წთ` : `${Math.floor(totalMinutes / 60)} სთ ${totalMinutes % 60} წთ`;
+
+        // Match buyer from licenses
+        const lic = (adminLicenses || []).find(l => l.license_key === session.license_key);
+        const { buyer } = lic ? parseLicenseNote(lic.note) : { buyer: session.mc_username || 'Unknown' };
+        const altInfo = adminAltsData ? adminAltsData[buyer] : null;
+
+        // Parse launcher and hardware specs from os_name
+        const osField = session.os_name || 'Windows (Standard)';
+        const parts = osField.split(' | ');
+        const osClean = parts[0] || 'Windows';
+        const launcherName = parts.length > 1 ? parts[1] : 'Fabric';
+        
+        let launcherClass = 'launcher-default';
+        let launcherIcon = '🎮';
+        const lnLower = launcherName.toLowerCase();
+        if (lnLower.includes('tlauncher')) {
+            launcherClass = 'launcher-tlauncher';
+            launcherIcon = '🚀';
+        } else if (lnLower.includes('prism')) {
+            launcherClass = 'launcher-prism';
+            launcherIcon = '⚡';
+        } else if (lnLower.includes('modrinth')) {
+            launcherClass = 'launcher-modrinth';
+            launcherIcon = '🟢';
+        } else if (lnLower.includes('official')) {
+            launcherClass = 'launcher-official';
+            launcherIcon = '⛏️';
+        } else if (lnLower.includes('feather')) {
+            launcherClass = 'launcher-feather';
+            launcherIcon = '🪶';
+        }
+
+        const launcherBadge = `<span class="launcher-badge ${launcherClass}">${launcherIcon} ${launcherName}</span>`;
+
+        // Specs summary chip
+        const cpuSpec = parts.length > 2 ? parts[2].replace(' Processor', '').replace(' 6-Core', '').replace(' 8-Core', '') : osClean;
+        const gpuSpec = parts.length > 3 ? parts[3].replace('NVIDIA GeForce ', '').replace('AMD Radeon ', '') : '';
+        const specsLabel = gpuSpec ? `${cpuSpec} • ${gpuSpec}` : cpuSpec;
+        const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="სრული აპარატურის ნახვა">💻 ${specsLabel}</button>`;
+
+        // Trust & Anti-Alt Badge
+        let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა">🛡️ 100%</span>`;
+        if (altInfo) {
+            if (altInfo.trust_score <= 20) {
+                const altNames = (altInfo.shared_hwid_alts || []).join(', ');
+                trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}">🚨 ალტი (${altInfo.shared_hwid_alts.length})</span>`;
+            } else if (altInfo.trust_score <= 70) {
+                const ipNames = (altInfo.shared_ip_alts || []).join(', ');
+                trustBadge = `<span class="trust-badge trust-warn" title="საერთო IP: ${ipNames}">⚠️ საერთო IP (${altInfo.shared_ip_alts.length})</span>`;
+            }
         }
 
         // Status dot
@@ -1675,15 +1776,11 @@ function renderActiveSessions(sessions) {
             : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6b7280;margin-right:6px;"></span>';
 
         // Mask license key
-        const maskedKey = session.license_key
-            ? session.license_key.substring(0, 4) + '-****-****-****'
-            : 'N/A';
+        const maskedKey = session.license_key ? session.license_key.substring(0, 4) + '-****-****-****' : 'N/A';
 
-        // Server Badge (Minecraft server)
+        // Server Badge
         let serverName = session.country || session.mc_server || session.server || 'Main Menu';
-        if (!serverName || serverName === 'Hidden' || serverName === 'Unknown') {
-            serverName = 'Main Menu';
-        }
+        if (!serverName || serverName === 'Hidden' || serverName === 'Unknown') serverName = 'Main Menu';
 
         let serverBadge = '';
         if (serverName.toLowerCase() === 'singleplayer') {
@@ -1694,34 +1791,36 @@ function renderActiveSessions(sessions) {
             serverBadge = `<span class="server-badge multiplayer" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>${serverName}</span>`;
         }
 
-        // User Real Public IP (Strictly restricted to Owner)
+        // IP Column
         let userIpCell = '';
         if (isOwner()) {
-            const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown'
-                ? session.ip_address
-                : 'Hidden';
+            const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown' ? session.ip_address : 'Hidden';
             userIpCell = `<code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc;">${userIp}</code>`;
         } else {
             userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">🔒 დაცულია</span>`;
         }
 
-        // Started at
-        const startedStr = formatTime(session.started_at);
-        // Finished at (last heartbeat) — if online, show "ონლაინშია ⚡"
-        const finishedStr = session.isOnline
-            ? '<span style="color: #22c55e; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">ონლაინშია ⚡</span>'
-            : formatTime(session.last_heartbeat);
+        // Playtime Display (Session + Lifetime)
+        const lifetimePlaytime = altInfo && altInfo.total_playtime_hours > 0 ? `<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">სულ: <span style="color:#38bdf8; font-weight:600;">${altInfo.total_playtime_hours} სთ</span></div>` : '';
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td style="font-weight: 600;">${statusDot}${session.mc_username || 'Unknown'}</td>
+            <td>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 700; color: #fff; font-size: 13.5px;">${statusDot}${session.mc_username || 'Unknown'}</span>
+                    <span style="font-size: 11px; color: var(--text-muted); padding-left: 14px;">@${buyer}</span>
+                </div>
+            </td>
             <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
             <td>${serverBadge}</td>
+            <td>${launcherBadge}</td>
+            <td>${specsChip}</td>
+            <td>${trustBadge}</td>
+            <td>
+                <div style="font-weight: 600;">${durationStr}</div>
+                ${lifetimePlaytime}
+            </td>
             <td>${userIpCell}</td>
-            <td>${session.os_name || 'N/A'}</td>
-            <td style="font-size: 12px; color: var(--text-muted);">${startedStr}</td>
-            <td style="font-weight: 600;">${durationStr}</td>
-            <td style="font-size: 12px;">${finishedStr}</td>
         `;
         adminSessionsTableBody.appendChild(row);
     });
@@ -1732,6 +1831,80 @@ function renderActiveSessions(sessions) {
     if (onlineKpiEl) onlineKpiEl.textContent = onlineCount.toString();
     updateAdminKpiStats();
 }
+
+function showAdminHardwareModal(sessionId) {
+    const session = (window.lastFetchedSessions || []).find(s => s.id === sessionId);
+    if (!session) return;
+
+    const modal = document.getElementById('admin-hardware-modal');
+    if (!modal) return;
+
+    const lic = (adminLicenses || []).find(l => l.license_key === session.license_key);
+    const { buyer } = lic ? parseLicenseNote(lic.note) : { buyer: session.mc_username || 'Unknown' };
+    const altInfo = adminAltsData ? adminAltsData[buyer] : null;
+
+    const osField = session.os_name || 'Windows (Standard)';
+    const parts = osField.split(' | ');
+    const osName = parts[0] || 'Windows';
+    const launcher = parts.length > 1 ? parts[1] : 'Official / Fabric';
+    const cpu = parts.length > 2 ? parts[2] : (session.cpu_name || 'N/A');
+    const gpu = parts.length > 3 ? parts[3] : (session.gpu_name || 'N/A');
+    const ram = parts.length > 4 ? parts[4] : (session.ram_mb ? `${Math.round(session.ram_mb/1024)}GB RAM` : 'N/A');
+
+    const modalUserEl = document.getElementById('modal-hw-user');
+    if (modalUserEl) modalUserEl.textContent = `${buyer} (${session.mc_username || 'In-Game'})`;
+    
+    const modalLauncherEl = document.getElementById('modal-hw-launcher');
+    if (modalLauncherEl) modalLauncherEl.textContent = launcher;
+
+    const modalCpuEl = document.getElementById('modal-hw-cpu');
+    if (modalCpuEl) modalCpuEl.textContent = cpu;
+
+    const modalGpuEl = document.getElementById('modal-hw-gpu');
+    if (modalGpuEl) modalGpuEl.textContent = gpu;
+
+    const modalRamEl = document.getElementById('modal-hw-ram');
+    if (modalRamEl) modalRamEl.textContent = ram;
+
+    const modalOsEl = document.getElementById('modal-hw-os');
+    if (modalOsEl) modalOsEl.textContent = osName;
+
+    const modalPlaytimeEl = document.getElementById('modal-hw-playtime');
+    const playtimeHours = altInfo ? `${altInfo.total_playtime_hours} სთ (${altInfo.total_playtime_minutes} წთ)` : `${session.duration_minutes || 0} წთ`;
+    if (modalPlaytimeEl) modalPlaytimeEl.textContent = playtimeHours;
+
+    const trustEl = document.getElementById('modal-hw-trust');
+    const altsBox = document.getElementById('modal-hw-alts-box');
+    const altsList = document.getElementById('modal-hw-alts-list');
+
+    if (altInfo && altInfo.trust_score < 100) {
+        if (trustEl) {
+            trustEl.innerHTML = altInfo.trust_score <= 20
+                ? `<span class="trust-badge trust-alt">🚨 ${altInfo.trust_score}% (მაღალი რისკი / ალტი)</span>`
+                : `<span class="trust-badge trust-warn">⚠️ ${altInfo.trust_score}% (საერთო ქსელი / IP)</span>`;
+        }
+
+        const allAlts = [...(altInfo.shared_hwid_alts || []), ...(altInfo.shared_ip_alts || [])];
+        if (allAlts.length > 0 && altsBox && altsList) {
+            altsBox.classList.remove('hidden');
+            altsList.innerHTML = allAlts.map(a => `<span class="badge-jar" style="margin-right: 6px; margin-bottom: 4px; display: inline-block;">@${a}</span>`).join(' ');
+        } else if (altsBox) {
+            altsBox.classList.add('hidden');
+        }
+    } else {
+        if (trustEl) trustEl.innerHTML = `<span class="trust-badge trust-clean">🛡️ 100% (სანდო / უნიკალური)</span>`;
+        if (altsBox) altsBox.classList.add('hidden');
+    }
+
+    modal.classList.remove('hidden');
+}
+window.showAdminHardwareModal = showAdminHardwareModal;
+
+function closeAdminHardwareModal() {
+    const modal = document.getElementById('admin-hardware-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.closeAdminHardwareModal = closeAdminHardwareModal;
 
 function renderAdminLicenses(licenses) {
     adminLicensesTableBody.innerHTML = '';

@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=357.0.0">
+    <link rel="stylesheet" href="style.css?v=358.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -801,6 +801,28 @@
                             <div id="licenses-list" class="licenses-list hidden">
                                 <!-- Licenses will be rendered dynamically here -->
                             </div>
+
+                            <!-- User Playtime & Top Server Widget -->
+                            <div id="user-playtime-card" class="user-playtime-card" style="margin-top: 18px; padding: 14px 18px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                                        🎮
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;" data-i18n="dash.totalPlaytimeLabel">სულ ნათამაშებია</div>
+                                        <div id="dash-user-playtime-text" style="font-size: 15px; font-weight: 700; color: #fff;">0 სთ 0 წთ</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(251, 191, 36, 0.12); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                                        🏆
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;" data-i18n="dash.topServerLabel">საყვარელი სერვერი</div>
+                                        <div id="dash-user-top-server-text" style="font-size: 15px; font-weight: 700; color: #fbbf24;">-</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Bind License Form -->
@@ -1198,14 +1220,14 @@
                                     <table class="admin-table">
                                         <thead>
                                             <tr>
-                                                <th data-i18n="telemetry.mcUser">Minecraft იუზერი</th>
+                                                <th data-i18n="telemetry.mcUser">მომხმარებელი / MC</th>
                                                 <th data-i18n="telemetry.key">გასაღები</th>
                                                 <th data-i18n="telemetry.server">სერვერი</th>
-                                                <th data-i18n="telemetry.ip">IP მისამართი</th>
-                                                <th data-i18n="telemetry.os">OS</th>
-                                                <th data-i18n="telemetry.started">ჩაირთო</th>
+                                                <th data-i18n="telemetry.launcher">ლაუნჩერი</th>
+                                                <th data-i18n="telemetry.specs">აპარატურა (Specs)</th>
+                                                <th data-i18n="telemetry.antiAlt">Anti-Alt / Trust</th>
                                                 <th data-i18n="telemetry.duration">ხანგრძლივობა</th>
-                                                <th data-i18n="telemetry.ended">დასრულდა</th>
+                                                <th data-i18n="telemetry.ip">IP მისამართი</th>
                                             </tr>
                                         </thead>
                                         <tbody id="admin-sessions-table-body">
@@ -1828,11 +1850,73 @@
                     </svg>
                 </button>
             </form>
+    <!-- Hardware & Session Details Modal -->
+    <div id="admin-hardware-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 580px; padding: 26px;">
+            <button class="modal-close" onclick="closeAdminHardwareModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;">
+                <div style="width: 50px; height: 50px; border-radius: 14px; background: rgba(0, 240, 255, 0.12); color: #00f0ff; display: inline-flex; align-items: center; justify-content: center; font-size: 22px;">
+                    💻
+                </div>
+                <div>
+                    <h3 id="modal-hw-title" style="margin: 0; font-size: 18px;">მოთამაშის აპარატურა & სესია</h3>
+                    <p id="modal-hw-subtitle" style="color: var(--text-secondary); font-size: 13px; margin: 4px 0 0 0;">სრული სისტემური და Anti-Alt მონაცემები</p>
+                </div>
+            </div>
+
+            <div class="modal-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">👤 მომხმარებელი</label>
+                    <div id="modal-hw-user" class="info-value" style="font-size: 14px; font-weight: 600; color: #fff;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🚀 ლაუნჩერი</label>
+                    <div id="modal-hw-launcher" class="info-value" style="font-size: 14px; color: #fff;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🖥️ პროცესორი (CPU)</label>
+                    <div id="modal-hw-cpu" class="info-value" style="font-size: 13px; color: #fff;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🎮 ვიდეობარათი (GPU)</label>
+                    <div id="modal-hw-gpu" class="info-value" style="font-size: 13px; color: #fff;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">💾 მეხსიერება (RAM)</label>
+                    <div id="modal-hw-ram" class="info-value" style="font-size: 13px; color: #fff;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">☕ ოპერაციული სისტემა</label>
+                    <div id="modal-hw-os" class="info-value" style="font-size: 13px; color: #fff;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">⏱️ სულ ნათამაშებია</label>
+                    <div id="modal-hw-playtime" class="info-value" style="color: #38bdf8; font-weight: 700; font-size: 14px;">...</div>
+                </div>
+                <div class="info-group">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🛡️ Anti-Alt & Trust Score</label>
+                    <div id="modal-hw-trust" class="info-value" style="font-size: 13px;">...</div>
+                </div>
+            </div>
+
+            <div id="modal-hw-alts-box" class="hidden" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 18px;">
+                <div style="font-weight: 600; color: #ef4444; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                    ⚠️ დაკავშირებული ალტ-ექაუნთები (Shared HWID / IP):
+                </div>
+                <div id="modal-hw-alts-list" style="font-size: 13px; color: var(--text-primary);"></div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" onclick="closeAdminHardwareModal()" style="width: 100%; border-radius: 12px; padding: 10px;">დახურვა</button>
         </div>
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=357.0.0"></script>
-    <script src="app.js?v=357.0.0"></script>
+    <script src="i18n.js?v=358.0.0"></script>
+    <script src="app.js?v=358.0.0"></script>
 </body>
 </html>
