@@ -4948,94 +4948,111 @@ body, html {
    ========================================================================== */
 
 .launcher-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 99px;
-    white-space: nowrap;
-    letter-spacing: 0.3px;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 4px 10px !important;
+    border-radius: 99px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.3px !important;
 }
 .launcher-tlauncher {
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12) !important;
+    border: 1px solid rgba(56, 189, 248, 0.3) !important;
+    color: #38bdf8 !important;
 }
 .launcher-prism {
-    background: rgba(168, 85, 247, 0.12);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    color: #a855f7;
+    background: rgba(168, 85, 247, 0.12) !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+    color: #a855f7 !important;
 }
 .launcher-modrinth {
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #10b981;
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    color: #10b981 !important;
 }
 .launcher-official {
-    background: rgba(251, 191, 36, 0.12);
-    border: 1px solid rgba(251, 191, 36, 0.3);
-    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12) !important;
+    border: 1px solid rgba(251, 191, 36, 0.3) !important;
+    color: #fbbf24 !important;
 }
 .launcher-feather {
-    background: rgba(244, 114, 182, 0.12);
-    border: 1px solid rgba(244, 114, 182, 0.3);
-    color: #f472b6;
+    background: rgba(244, 114, 182, 0.12) !important;
+    border: 1px solid rgba(244, 114, 182, 0.3) !important;
+    color: #f472b6 !important;
 }
 .launcher-default {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-secondary);
+    background: rgba(147, 51, 234, 0.12) !important;
+    border: 1px solid rgba(147, 51, 234, 0.28) !important;
+    color: #c084fc !important;
 }
 
+button.specs-chip,
 .specs-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    background: rgba(0, 240, 255, 0.06);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 8px;
-    font-size: 11px;
-    color: #00f0ff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    max-width: 170px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 10px !important;
+    background: rgba(0, 240, 255, 0.08) !important;
+    border: 1px solid rgba(0, 240, 255, 0.25) !important;
+    border-radius: 8px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    color: #00f0ff !important;
+    cursor: pointer !important;
+    outline: none !important;
+    transition: all 0.2s ease !important;
+    max-width: 170px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-family: inherit !important;
 }
+button.specs-chip:hover,
 .specs-chip:hover {
-    background: rgba(0, 240, 255, 0.15);
-    border-color: rgba(0, 240, 255, 0.4);
-    transform: translateY(-1px);
+    background: rgba(0, 240, 255, 0.18) !important;
+    border-color: rgba(0, 240, 255, 0.5) !important;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.25) !important;
+    transform: translateY(-1px) !important;
 }
 
 .trust-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 99px;
-    white-space: nowrap;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 4px 10px !important;
+    border-radius: 99px !important;
+    white-space: nowrap !important;
 }
 .trust-clean {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    color: #10b981;
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    color: #10b981 !important;
 }
 .trust-warn {
-    background: rgba(251, 191, 36, 0.1);
-    border: 1px solid rgba(251, 191, 36, 0.25);
-    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12) !important;
+    border: 1px solid rgba(251, 191, 36, 0.3) !important;
+    color: #fbbf24 !important;
 }
 .trust-alt {
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid rgba(239, 68, 68, 0.35);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.35) !important;
+    color: #ef4444 !important;
+}
+.trust-owner {
+    background: rgba(234, 179, 8, 0.15) !important;
+    border: 1px solid rgba(234, 179, 8, 0.35) !important;
+    color: #facc15 !important;
+}
+
+/* Active sessions table row adjustments */
+#admin-sessions-table-body td {
+    vertical-align: middle !important;
+    white-space: nowrap !important;
 }
 
 .playtime-chip {

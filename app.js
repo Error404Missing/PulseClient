@@ -1759,8 +1759,11 @@ function renderActiveSessions(sessions) {
         const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="სრული აპარატურის ნახვა">💻 ${specsLabel}</button>`;
 
         // Trust & Anti-Alt Badge
+        const isOwnerDevice = buyer === 'sticky._.1' || buyer === 'Error404Missing';
         let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა">🛡️ 100%</span>`;
-        if (altInfo) {
+        if (isOwnerDevice) {
+            trustBadge = `<span class="trust-badge trust-owner" title="Owner / Developer Device">👑 Owner</span>`;
+        } else if (altInfo) {
             if (altInfo.trust_score <= 20) {
                 const altNames = (altInfo.shared_hwid_alts || []).join(', ');
                 trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}">🚨 ალტი (${altInfo.shared_hwid_alts.length})</span>`;
@@ -1795,7 +1798,7 @@ function renderActiveSessions(sessions) {
         let userIpCell = '';
         if (isOwner()) {
             const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown' ? session.ip_address : 'Hidden';
-            userIpCell = `<code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc;">${userIp}</code>`;
+            userIpCell = `<code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc; white-space: nowrap;">${userIp}</code>`;
         } else {
             userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">🔒 დაცულია</span>`;
         }
@@ -1807,17 +1810,17 @@ function renderActiveSessions(sessions) {
         row.innerHTML = `
             <td>
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 700; color: #fff; font-size: 13.5px;">${statusDot}${session.mc_username || 'Unknown'}</span>
-                    <span style="font-size: 11px; color: var(--text-muted); padding-left: 14px;">@${buyer}</span>
+                    <span style="font-weight: 700; color: #fff; font-size: 13.5px; white-space: nowrap;">${statusDot}${session.mc_username || 'Unknown'}</span>
+                    <span style="font-size: 11px; color: var(--text-muted); padding-left: 14px; white-space: nowrap;">@${buyer}</span>
                 </div>
             </td>
-            <td><code style="font-size: 11px; background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;">${maskedKey}</code></td>
+            <td><code style="font-size: 11.5px; background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25); color: #a5b4fc; padding: 4px 8px; border-radius: 6px; font-family: monospace; white-space: nowrap; letter-spacing: 0.5px;">${maskedKey}</code></td>
             <td>${serverBadge}</td>
             <td>${launcherBadge}</td>
             <td>${specsChip}</td>
             <td>${trustBadge}</td>
             <td>
-                <div style="font-weight: 600;">${durationStr}</div>
+                <div style="font-weight: 600; white-space: nowrap;">${durationStr}</div>
                 ${lifetimePlaytime}
             </td>
             <td>${userIpCell}</td>
@@ -1849,10 +1852,10 @@ function showAdminHardwareModal(sessionId) {
     const launcher = parts.length > 1 ? parts[1] : 'Official / Fabric';
     const cpu = parts.length > 2 ? parts[2] : (session.cpu_name || 'N/A');
     const gpu = parts.length > 3 ? parts[3] : (session.gpu_name || 'N/A');
-    const ram = parts.length > 4 ? parts[4] : (session.ram_mb ? `${Math.round(session.ram_mb/1024)}GB RAM` : 'N/A');
+    const ram = parts.length > 4 ? parts[4] : (session.ram_mb ? (Math.round(session.ram_mb / 1024) + 'GB RAM') : 'N/A');
 
     const modalUserEl = document.getElementById('modal-hw-user');
-    if (modalUserEl) modalUserEl.textContent = `${buyer} (${session.mc_username || 'In-Game'})`;
+    if (modalUserEl) modalUserEl.textContent = buyer + ' (' + (session.mc_username || 'In-Game') + ')';
     
     const modalLauncherEl = document.getElementById('modal-hw-launcher');
     if (modalLauncherEl) modalLauncherEl.textContent = launcher;
@@ -1870,29 +1873,35 @@ function showAdminHardwareModal(sessionId) {
     if (modalOsEl) modalOsEl.textContent = osName;
 
     const modalPlaytimeEl = document.getElementById('modal-hw-playtime');
-    const playtimeHours = altInfo ? `${altInfo.total_playtime_hours} სთ (${altInfo.total_playtime_minutes} წთ)` : `${session.duration_minutes || 0} წთ`;
+    const playtimeHours = altInfo ? (altInfo.total_playtime_hours + ' სთ (' + altInfo.total_playtime_minutes + ' წთ)') : ((session.duration_minutes || 0) + ' წთ');
     if (modalPlaytimeEl) modalPlaytimeEl.textContent = playtimeHours;
 
     const trustEl = document.getElementById('modal-hw-trust');
     const altsBox = document.getElementById('modal-hw-alts-box');
     const altsList = document.getElementById('modal-hw-alts-list');
 
-    if (altInfo && altInfo.trust_score < 100) {
+    const isOwnerDev = buyer === 'sticky._.1' || buyer === 'Error404Missing';
+    if (isOwnerDev) {
+        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-owner">👑 Owner / Developer Device</span>';
+        if (altsBox) altsBox.classList.add('hidden');
+    } else if (altInfo && altInfo.trust_score < 100) {
         if (trustEl) {
             trustEl.innerHTML = altInfo.trust_score <= 20
-                ? `<span class="trust-badge trust-alt">🚨 ${altInfo.trust_score}% (მაღალი რისკი / ალტი)</span>`
-                : `<span class="trust-badge trust-warn">⚠️ ${altInfo.trust_score}% (საერთო ქსელი / IP)</span>`;
+                ? ('<span class="trust-badge trust-alt">🚨 ' + altInfo.trust_score + '% (მაღალი რისკი / ალტი)</span>')
+                : ('<span class="trust-badge trust-warn">⚠️ ' + altInfo.trust_score + '% (საერთო ქსელი / IP)</span>');
         }
 
-        const allAlts = [...(altInfo.shared_hwid_alts || []), ...(altInfo.shared_ip_alts || [])];
+        const allAlts = (altInfo.shared_hwid_alts || []).concat(altInfo.shared_ip_alts || []);
         if (allAlts.length > 0 && altsBox && altsList) {
             altsBox.classList.remove('hidden');
-            altsList.innerHTML = allAlts.map(a => `<span class="badge-jar" style="margin-right: 6px; margin-bottom: 4px; display: inline-block;">@${a}</span>`).join(' ');
+            altsList.innerHTML = allAlts.map(function(a) {
+                return '<span class="badge-jar" style="margin-right: 6px; margin-bottom: 4px; display: inline-block;">@' + a + '</span>';
+            }).join(' ');
         } else if (altsBox) {
             altsBox.classList.add('hidden');
         }
     } else {
-        if (trustEl) trustEl.innerHTML = `<span class="trust-badge trust-clean">🛡️ 100% (სანდო / უნიკალური)</span>`;
+        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-clean">🛡️ 100% (სანდო / უნიკალური)</span>';
         if (altsBox) altsBox.classList.add('hidden');
     }
 
@@ -1912,7 +1921,7 @@ function renderAdminLicenses(licenses) {
 
     if (licenses.length === 0) {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">${t("msg.noLicenses")}</td>`;
+        row.innerHTML = '<td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">' + t("msg.noLicenses") + '</td>';
         adminLicensesTableBody.appendChild(row);
         return;
     }
@@ -1933,36 +1942,33 @@ function renderAdminLicenses(licenses) {
             }
         }
 
+        const actionRevokeBtn = lic.is_active
+            ? '<button type="button" class="btn-action btn-revoke" onclick="revokeLicense(\'' + lic.license_key + '\')" title="' + t('admin.actionRevoke') + '" aria-label="' + t('admin.actionRevoke') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></button>'
+            : '<button type="button" class="btn-action btn-activate" onclick="activateLicense(\'' + lic.license_key + '\')" title="' + t('admin.actionActivate') + '" aria-label="' + t('admin.actionActivate') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></button>';
+
+        const hwidDisabled = lic.hwid ? '' : 'disabled';
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="product-cell">${product}</td>
-            <td class="buyer-cell">${buyer}</td>
-            <td class="creator-cell">${createdBy}</td>
-            <td><span class="key-cell" title="${lic.license_key}">${lic.license_key}</span></td>
-            <td><span class="admin-status ${status}">${statusText}</span></td>
-            <td>${expiryDisplay}</td>
-            <td>
-                <div class="admin-actions" style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">
-                    <button type="button" class="extend-btn" onclick="extendLicenseDays('${lic.license_key}', 7)" title="+7 დღის დამატება">+7d</button>
-                    <button type="button" class="extend-btn" onclick="extendLicenseDays('${lic.license_key}', 30)" title="+30 დღის დამატება">+30d</button>
-                    <button type="button" class="btn-action btn-info" onclick="showLicenseDetails('${lic.license_key}')" title="${t('admin.actionInfo')}" aria-label="${t('admin.actionInfo')}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    </button>
-                    <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid('${lic.license_key}')" title="${t('admin.actionHwid')}" aria-label="${t('admin.actionHwid')}" ${lic.hwid ? '' : 'disabled'}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-                    </button>
-                    ${lic.is_active ? `
-                    <button type="button" class="btn-action btn-revoke" onclick="revokeLicense('${lic.license_key}')" title="${t('admin.actionRevoke')}" aria-label="${t('admin.actionRevoke')}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                    </button>
-                    ` : `
-                    <button type="button" class="btn-action btn-activate" onclick="activateLicense('${lic.license_key}')" title="${t('admin.actionActivate')}" aria-label="${t('admin.actionActivate')}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    </button>
-                    `}
-                </div>
-            </td>
-        `;
+        tr.innerHTML = [
+            '<td class="product-cell">' + product + '</td>',
+            '<td class="buyer-cell">' + buyer + '</td>',
+            '<td class="creator-cell">' + createdBy + '</td>',
+            '<td><span class="key-cell" title="' + lic.license_key + '">' + lic.license_key + '</span></td>',
+            '<td><span class="admin-status ' + status + '">' + statusText + '</span></td>',
+            '<td>' + expiryDisplay + '</td>',
+            '<td>',
+            '    <div class="admin-actions" style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">',
+            '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 7)" title="+7 დღის დამატება">+7d</button>',
+            '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 30)" title="+30 დღის დამატება">+30d</button>',
+            '        <button type="button" class="btn-action btn-info" onclick="showLicenseDetails(\'' + lic.license_key + '\')" title="' + t('admin.actionInfo') + '" aria-label="' + t('admin.actionInfo') + '">',
+            '            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+            '        </button>',
+            '        <button type="button" class="btn-action btn-hwid-reset" onclick="resetLicenseHwid(\'' + lic.license_key + '\')" title="' + t('admin.actionHwid') + '" aria-label="' + t('admin.actionHwid') + '" ' + hwidDisabled + '>',
+            '            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>',
+            '        </button>',
+            '        ' + actionRevokeBtn,
+            '    </div>',
+            '</td>'
+        ].join('');
         adminLicensesTableBody.appendChild(tr);
     });
 }
