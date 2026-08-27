@@ -5088,21 +5088,38 @@ button.specs-chip:hover,
 }
 
 .remote-preset-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 6px;
-    padding: 4px 9px;
-    font-size: 11px;
-    font-family: monospace;
-    color: #e2e8f0;
-    cursor: pointer;
-    transition: all 0.15s ease;
+    background: rgba(0, 240, 255, 0.08) !important;
+    border: 1px solid rgba(0, 240, 255, 0.28) !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+    font-weight: 600 !important;
+    color: #38bdf8 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
 }
 .remote-preset-btn:hover {
-    background: rgba(0, 240, 255, 0.12);
-    border-color: rgba(0, 240, 255, 0.35);
-    color: #00f0ff;
-    transform: translateY(-1px);
+    background: rgba(0, 240, 255, 0.22) !important;
+    border-color: rgba(0, 240, 255, 0.6) !important;
+    color: #00f0ff !important;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.35) !important;
+    transform: translateY(-1px) !important;
+}
+.remote-preset-btn.btn-danger-preset {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+    color: #ef4444 !important;
+}
+.remote-preset-btn.btn-danger-preset:hover {
+    background: rgba(239, 68, 68, 0.25) !important;
+    border-color: rgba(239, 68, 68, 0.7) !important;
+    color: #f87171 !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4) !important;
 }
 
 #remote-terminal-screen::-webkit-scrollbar {
