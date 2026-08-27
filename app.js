@@ -836,7 +836,85 @@ function handleUserSignOut() {
     }
 }
 
-// Database / Licenses Functions
+// Database / Licenses Helper Functions
+function parseLicenseExpiryDate(dateStr) {
+    if (!dateStr || typeof dateStr !== 'string') return null;
+    const clean = dateStr.trim();
+    if (!clean || clean.startsWith("2000-01-01")) return null;
+    
+    // Normalize date string for cross-browser parsing
+    let iso = clean.replace(' ', 'T');
+    if (!iso.endsWith('Z') && !/[+-]\d{2}:?\d{2}$/.test(iso)) {
+        iso += 'Z';
+    }
+    
+    const d = new Date(iso);
+    if (!isNaN(d.getTime())) return d;
+    
+    const fallback = new Date(clean);
+    return !isNaN(fallback.getTime()) ? fallback : null;
+}
+
+function getLicenseStatus(lic) {
+    if (!lic) {
+        return { status: 'revoked', text: t('status.revoked'), isExpired: false, isLifetime: false, isUnactivated: false, expDate: null };
+    }
+    
+    if (!lic.is_active) {
+        return { status: 'revoked', text: t('status.revoked'), isExpired: false, isLifetime: false, isUnactivated: false, expDate: null };
+    }
+    
+    if (!lic.expires_at) {
+        return { status: 'active', text: t('status.active'), isExpired: false, isLifetime: true, isUnactivated: false, expDate: null };
+    }
+    
+    if (typeof lic.expires_at === 'string' && lic.expires_at.startsWith("2000-01-01")) {
+        return { status: 'active', text: t('status.active'), isExpired: false, isLifetime: false, isUnactivated: true, expDate: null };
+    }
+    
+    const expDate = parseLicenseExpiryDate(lic.expires_at);
+    if (!expDate) {
+        return { status: 'active', text: t('status.active'), isExpired: false, isLifetime: false, isUnactivated: false, expDate: null };
+    }
+    
+    const now = Date.now();
+    if (expDate.getTime() <= now) {
+        return { status: 'expired', text: t('status.expired'), isExpired: true, isLifetime: false, isUnactivated: false, expDate: expDate };
+    }
+    
+    return { status: 'active', text: t('status.active'), isExpired: false, isLifetime: false, isUnactivated: false, expDate: expDate };
+}
+
+function formatLicenseExpiryDisplay(lic) {
+    if (!lic.expires_at) {
+        return t("status.lifetime");
+    }
+    if (typeof lic.expires_at === 'string' && lic.expires_at.startsWith("2000-01-01")) {
+        return t("status.notActivated");
+    }
+    
+    const expDate = parseLicenseExpiryDate(lic.expires_at);
+    if (!expDate) {
+        return t("status.lifetime");
+    }
+    
+    const now = new Date();
+    if (expDate.getTime() <= now.getTime()) {
+        return `<span style="color: #fbbf24; font-weight: 700;">${t("status.expiredShort")}</span>`;
+    }
+    
+    const diffTime = expDate.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays > 365 * 10) {
+        return t("status.lifetime");
+    } else if (diffDays <= 2 && diffDays > 0) {
+        return `<span style="color: #fbbf24; font-weight: 700;">${t("status.daysLeft", { n: diffDays })} ⚠️</span>`;
+    } else {
+        return t("status.daysLeft", { n: diffDays });
+    }
+}
+
 async function fetchUserLicenses() {
     if (!currentUser) return;
 
@@ -857,9 +935,10 @@ async function fetchUserLicenses() {
         if (error) throw error;
 
         licensesLoading.classList.add('hidden');
-        dashLicenseCount.textContent = data.length;
+        const activeCount = (data || []).filter(l => getLicenseStatus(l).status === 'active').length;
+        dashLicenseCount.textContent = activeCount;
 
-        if (data.length === 0) {
+        if (!data || data.length === 0) {
             noLicensesView.classList.remove('hidden');
         } else {
             renderLicenses(data);
@@ -878,32 +957,8 @@ function renderLicenses(licenses) {
         const item = document.createElement('div');
         item.className = 'license-item';
 
-        // Format expiry date
-        let expiryDisplay = t("status.lifetime");
-        if (lic.expires_at) {
-            if (lic.expires_at.startsWith("2000-01-01")) {
-                expiryDisplay = t("status.notActivated");
-            } else {
-                const expDate = new Date(lic.expires_at);
-                const now = new Date();
-                if (expDate < now) {
-                    expiryDisplay = t("status.expiredShort");
-                } else {
-                const diffTime = Math.abs(expDate - now);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                if (diffDays > 365 * 10) {
-                    expiryDisplay = t("status.lifetime");
-                } else if (diffDays <= 2 && diffDays > 0) {
-                    expiryDisplay = `<span style="color: #fbbf24; font-weight: 700;">${t("status.daysLeft", { n: diffDays })} ⚠️</span>`;
-                } else {
-                    expiryDisplay = t("status.daysLeft", { n: diffDays });
-                }
-                }
-            }
-        }
-
-        const statusClass = lic.is_active ? 'active' : 'revoked';
-        const statusText = lic.is_active ? t('status.active') : t('status.revoked');
+        const { status, text: statusText, isExpired } = getLicenseStatus(lic);
+        const expiryDisplay = formatLicenseExpiryDisplay(lic);
 
         const hwidText = lic.hwid && lic.hwid !== 'null' ? (lic.hwid.length > 14 ? lic.hwid.substring(0, 14) + '...' : lic.hwid) : t('status.notActivated');
         const hwidTooltip = lic.hwid && lic.hwid !== 'null' ? lic.hwid : '';
@@ -914,7 +969,7 @@ function renderLicenses(licenses) {
                 <h4>${t('lic.keyLabel')}</h4>
                 <code>${lic.license_key}</code>
             </div>
-            <div class="lic-status-badge ${statusClass}">
+            <div class="lic-status-badge ${status}">
                 ${statusText}
             </div>
             <div class="lic-expiry-info">
@@ -926,7 +981,7 @@ function renderLicenses(licenses) {
                 <span class="val mono" title="${hwidTooltip}">${hwidText}</span>
             </div>
             <div class="lic-actions-info">
-                <button class="btn reset-hwid-btn" onclick="resetUserHwid('${lic.license_key}')" ${hasHwid && lic.is_active ? '' : 'disabled'}>
+                <button class="btn reset-hwid-btn" onclick="resetUserHwid('${lic.license_key}')" ${hasHwid && lic.is_active && !isExpired ? '' : 'disabled'}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
                     ${t('dash.resetHwidBtn')}
                 </button>
@@ -1578,25 +1633,17 @@ function renderAdminLicenses(licenses) {
 
     licenses.forEach(lic => {
         const { product, buyer, createdBy } = parseLicenseNote(lic.note);
-
-        let status = 'active';
-        let statusText = t('status.active');
-        
-        if (!lic.is_active) {
-            status = 'revoked';
-            statusText = t('status.revoked');
-        } else if (lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) < new Date()) {
-            status = 'expired';
-            statusText = t('status.expired');
-        }
+        const { status, text: statusText } = getLicenseStatus(lic);
 
         let expiryDisplay = t("status.lifetime");
         if (lic.expires_at) {
-            if (lic.expires_at.startsWith("2000-01-01")) {
+            if (typeof lic.expires_at === 'string' && lic.expires_at.startsWith("2000-01-01")) {
                 expiryDisplay = t("status.notActivated");
             } else {
-                const expDate = new Date(lic.expires_at);
-                expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
+                const expDate = parseLicenseExpiryDate(lic.expires_at);
+                if (expDate) {
+                    expiryDisplay = expDate.toLocaleDateString(getLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' });
+                }
             }
         }
 
@@ -1640,20 +1687,23 @@ function filterAdminLicenses() {
 
     const filtered = adminLicenses.filter(lic => {
         const { product, buyer, createdBy } = parseLicenseNote(lic.note);
-        const matchesQuery = 
+        const { status } = getLicenseStatus(lic);
+
+        const matchesQuery = !query || (
             lic.license_key.toLowerCase().includes(query) ||
             buyer.toLowerCase().includes(query) ||
             createdBy.toLowerCase().includes(query) ||
             product.toLowerCase().includes(query) ||
-            (lic.note && lic.note.toLowerCase().includes(query));
+            (lic.note && lic.note.toLowerCase().includes(query))
+        );
 
         let matchesFilter = true;
         if (filter === 'active') {
-            matchesFilter = lic.is_active && (!lic.expires_at || lic.expires_at.startsWith("2000-01-01") || new Date(lic.expires_at) >= new Date());
+            matchesFilter = (status === 'active');
         } else if (filter === 'revoked') {
-            matchesFilter = !lic.is_active;
+            matchesFilter = (status === 'revoked');
         } else if (filter === 'expired') {
-            matchesFilter = lic.is_active && lic.expires_at && !lic.expires_at.startsWith("2000-01-01") && new Date(lic.expires_at) < new Date();
+            matchesFilter = (status === 'expired');
         }
 
         return matchesQuery && matchesFilter;
@@ -2443,30 +2493,31 @@ function showLicenseDetails(key) {
     if (!lic) return;
 
     const { product, buyer, createdBy } = parseLicenseNote(lic.note);
-
-    let statusText = t("status.active");
-    if (!lic.is_active) {
-        statusText = t("status.revoked");
-    } else if (lic.expires_at && new Date(lic.expires_at) < new Date()) {
-        statusText = t("status.expired");
-    }
+    const { status, text: statusText } = getLicenseStatus(lic);
 
     modalKey.textContent = lic.license_key;
     modalBuyer.textContent = buyer;
     if (modalCreator) modalCreator.textContent = createdBy;
     modalStatus.textContent = statusText;
+    modalStatus.className = `info-value admin-status ${status}`;
     modalCreated.textContent = new Date(lic.created_at).toLocaleString(getLocale());
     
     let expiryDisplay = t("status.lifetime");
     if (lic.expires_at) {
-        const expDate = new Date(lic.expires_at);
-        const now = new Date();
-        if (expDate < now) {
-            expiryDisplay = t("status.expiredShort");
+        if (typeof lic.expires_at === 'string' && lic.expires_at.startsWith("2000-01-01")) {
+            expiryDisplay = t("status.notActivated");
         } else {
-            const diffTime = Math.abs(expDate - now);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            expiryDisplay = t("status.days", { n: diffDays });
+            const expDate = parseLicenseExpiryDate(lic.expires_at);
+            if (expDate) {
+                const now = new Date();
+                if (expDate.getTime() <= now.getTime()) {
+                    expiryDisplay = t("status.expiredShort");
+                } else {
+                    const diffTime = expDate.getTime() - now.getTime();
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    expiryDisplay = t("status.days", { n: diffDays });
+                }
+            }
         }
     }
     modalExpires.textContent = expiryDisplay;
@@ -3054,7 +3105,7 @@ function updateAdminKpiStats() {
         onlineEl.textContent = activeOnlineUsersCount.toString();
     }
     if (licensesEl && adminLicenses && adminLicenses.length > 0) {
-        const activeCount = adminLicenses.filter(l => l.is_active && (!l.expires_at || l.expires_at.startsWith("2000-01-01") || new Date(l.expires_at) >= new Date())).length;
+        const activeCount = adminLicenses.filter(l => getLicenseStatus(l).status === 'active').length;
         licensesEl.textContent = activeCount.toString();
     }
     if (usersEl && allUserProfiles && allUserProfiles.length > 0) {

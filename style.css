@@ -1545,6 +1545,12 @@ h3 {
     color: var(--danger);
 }
 
+.lic-status-badge.expired {
+    background-color: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+
 .lic-expiry-info {
     text-align: right;
 }
