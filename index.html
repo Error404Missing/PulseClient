@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=362.0.0">
+    <link rel="stylesheet" href="style.css?v=363.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1917,7 +1917,7 @@
     </div>
 
     <!-- Admin Remote Game Console Modal -->
-    <div id="admin-remote-modal" class="modal-overlay hidden">
+    <div id="admin-remote-modal" class="modal-overlay hidden" onclick="if(event.target===this) closeAdminRemoteModal()" style="z-index: 10005;">
         <div class="modal-content glass-modal" style="max-width: 680px; width: 95%; padding: 24px;">
             <button class="modal-close" onclick="closeAdminRemoteModal()" aria-label="Close">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2015,7 +2015,7 @@
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=362.0.0"></script>
-    <script src="app.js?v=362.0.0"></script>
+    <script src="i18n.js?v=363.0.0"></script>
+    <script src="app.js?v=363.0.0"></script>
 </body>
 </html>

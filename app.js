@@ -1940,36 +1940,62 @@ window.closeAdminHardwareModal = closeAdminHardwareModal;
 // ==========================================
 
 function openAdminRemoteModal(sessionId, targetMc, targetKey) {
-    if (!isAdmin()) return;
+    console.log("[Remote Console] Opening modal with target:", { sessionId, targetMc, targetKey });
     const modal = document.getElementById('admin-remote-modal');
-    if (!modal) return;
+    if (!modal) {
+        console.error("Modal #admin-remote-modal not found in DOM!");
+        return;
+    }
 
     const selectEl = document.getElementById('remote-target-select');
     if (selectEl) {
         selectEl.innerHTML = '<option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>';
         const sessions = window.lastFetchedSessions || [];
+        let found = false;
+
         sessions.forEach(s => {
             const lic = (adminLicenses || []).find(l => l.license_key === s.license_key);
             const { buyer } = lic ? parseLicenseNote(lic.note) : { buyer: s.mc_username || 'Unknown' };
             const opt = document.createElement('option');
-            opt.value = s.id;
+            opt.value = s.id || s.license_key || s.mc_username;
             opt.dataset.mc = s.mc_username || 'Unknown';
             opt.dataset.key = s.license_key || '';
             opt.dataset.buyer = buyer;
             opt.dataset.server = s.country || s.mc_server || 'Main Menu';
             opt.textContent = (s.mc_username || 'Player') + ' (@' + buyer + ') — ' + opt.dataset.server;
+            
+            if ((sessionId && s.id === sessionId) || (targetMc && s.mc_username === targetMc) || (targetKey && s.license_key === targetKey)) {
+                opt.selected = true;
+                found = true;
+            }
             selectEl.appendChild(opt);
         });
 
-        if (sessionId) {
-            selectEl.value = sessionId;
-        } else if (selectEl.options.length > 1) {
+        // If target was passed but not yet in lastFetchedSessions list
+        if (!found && (targetMc || targetKey)) {
+            const opt = document.createElement('option');
+            opt.value = sessionId || targetKey || targetMc;
+            opt.dataset.mc = targetMc || 'Player';
+            opt.dataset.key = targetKey || '';
+            opt.dataset.buyer = targetMc || 'Player';
+            opt.dataset.server = 'Active Session';
+            opt.textContent = (targetMc || 'Player') + ' — Active Session';
+            opt.selected = true;
+            selectEl.appendChild(opt);
+        } else if (!sessionId && selectEl.options.length > 1) {
             selectEl.selectedIndex = 1;
         }
     }
 
-    onRemoteTargetChange();
+    try {
+        onRemoteTargetChange();
+    } catch (e) {
+        console.warn("onRemoteTargetChange error:", e);
+    }
+
     modal.classList.remove('hidden');
+    modal.style.setProperty('display', 'flex', 'important');
+
     const inputEl = document.getElementById('remote-cmd-input');
     if (inputEl) {
         setTimeout(() => inputEl.focus(), 150);
@@ -1979,7 +2005,10 @@ window.openAdminRemoteModal = openAdminRemoteModal;
 
 function closeAdminRemoteModal() {
     const modal = document.getElementById('admin-remote-modal');
-    if (modal) modal.classList.add('hidden');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.setProperty('display', 'none', 'important');
+    }
 }
 window.closeAdminRemoteModal = closeAdminRemoteModal;
 
