@@ -1842,7 +1842,7 @@ function renderActiveSessions(sessions) {
             </td>
             <td>${userIpCell}</td>
             <td style="text-align: right;">
-                <button type="button" class="btn-remote-cmd" onclick="openAdminRemoteModal('${session.id}', '${session.mc_username || ''}', '${session.license_key || ''}')" title="🎮 დისტანციური მართვა">🎮 Remote</button>
+                <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="🎮 დისტანციური მართვა">🎮 Remote</button>
             </td>
         `;
         adminSessionsTableBody.appendChild(row);
