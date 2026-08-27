@@ -1733,43 +1733,60 @@ function renderActiveSessions(sessions) {
         let launcherClass = 'launcher-default';
         let launcherIcon = '🎮';
         const lnLower = launcherName.toLowerCase();
+        let launcherStyle = 'background: rgba(147, 51, 234, 0.12) !important; border: 1px solid rgba(147, 51, 234, 0.28) !important; color: #c084fc !important;';
         if (lnLower.includes('tlauncher')) {
             launcherClass = 'launcher-tlauncher';
             launcherIcon = '🚀';
+            launcherStyle = 'background: rgba(56, 189, 248, 0.12) !important; border: 1px solid rgba(56, 189, 248, 0.3) !important; color: #38bdf8 !important;';
         } else if (lnLower.includes('prism')) {
             launcherClass = 'launcher-prism';
             launcherIcon = '⚡';
+            launcherStyle = 'background: rgba(168, 85, 247, 0.12) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important;';
         } else if (lnLower.includes('modrinth')) {
             launcherClass = 'launcher-modrinth';
             launcherIcon = '🟢';
+            launcherStyle = 'background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important;';
         } else if (lnLower.includes('official')) {
             launcherClass = 'launcher-official';
             launcherIcon = '⛏️';
+            launcherStyle = 'background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important;';
         } else if (lnLower.includes('feather')) {
             launcherClass = 'launcher-feather';
             launcherIcon = '🪶';
+            launcherStyle = 'background: rgba(244, 114, 182, 0.12) !important; border: 1px solid rgba(244, 114, 182, 0.3) !important; color: #f472b6 !important;';
         }
 
-        const launcherBadge = `<span class="launcher-badge ${launcherClass}">${launcherIcon} ${launcherName}</span>`;
+        const launcherBadge = `<span class="launcher-badge ${launcherClass}" style="${launcherStyle} display: inline-flex !important; align-items: center !important; gap: 6px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">${launcherIcon} ${launcherName}</span>`;
+
+        // OS / Specs icon detection
+        let osIcon = '💻';
+        const osLower = osClean.toLowerCase();
+        if (osLower.includes('windows 11') || osLower.includes('windows 10') || osLower.includes('win')) {
+            osIcon = '🪟';
+        } else if (osLower.includes('linux')) {
+            osIcon = '🐧';
+        } else if (osLower.includes('mac') || osLower.includes('darwin') || osLower.includes('apple')) {
+            osIcon = '🍎';
+        }
 
         // Specs summary chip
         const cpuSpec = parts.length > 2 ? parts[2].replace(' Processor', '').replace(' 6-Core', '').replace(' 8-Core', '') : osClean;
         const gpuSpec = parts.length > 3 ? parts[3].replace('NVIDIA GeForce ', '').replace('AMD Radeon ', '') : '';
         const specsLabel = gpuSpec ? `${cpuSpec} • ${gpuSpec}` : cpuSpec;
-        const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="სრული აპარატურის ნახვა">💻 ${specsLabel}</button>`;
+        const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="სრული აპარატურის ნახვა" style="background: rgba(0, 240, 255, 0.08) !important; color: #00f0ff !important; border: 1px solid rgba(0, 240, 255, 0.28) !important; padding: 4px 10px !important; border-radius: 8px !important; font-size: 11.5px !important; font-weight: 600 !important; cursor: pointer !important; outline: none !important; display: inline-flex !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important; text-shadow: none !important; font-family: inherit !important; box-shadow: none !important;">${osIcon} ${specsLabel}</button>`;
 
         // Trust & Anti-Alt Badge
         const isOwnerDevice = buyer === 'sticky._.1' || buyer === 'Error404Missing';
-        let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა">🛡️ 100%</span>`;
+        let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა" style="background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">🛡️ 100%</span>`;
         if (isOwnerDevice) {
-            trustBadge = `<span class="trust-badge trust-owner" title="Owner / Developer Device">👑 Owner</span>`;
+            trustBadge = `<span class="trust-badge trust-owner" title="Owner / Developer Device" style="background: rgba(234, 179, 8, 0.15) !important; border: 1px solid rgba(234, 179, 8, 0.35) !important; color: #facc15 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">👑 Owner</span>`;
         } else if (altInfo) {
             if (altInfo.trust_score <= 20) {
                 const altNames = (altInfo.shared_hwid_alts || []).join(', ');
-                trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}">🚨 ალტი (${altInfo.shared_hwid_alts.length})</span>`;
+                trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}" style="background: rgba(239, 68, 68, 0.15) !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">🚨 ალტი (${altInfo.shared_hwid_alts.length})</span>`;
             } else if (altInfo.trust_score <= 70) {
                 const ipNames = (altInfo.shared_ip_alts || []).join(', ');
-                trustBadge = `<span class="trust-badge trust-warn" title="საერთო IP: ${ipNames}">⚠️ საერთო IP (${altInfo.shared_ip_alts.length})</span>`;
+                trustBadge = `<span class="trust-badge trust-warn" title="საერთო IP: ${ipNames}" style="background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">⚠️ საერთო IP (${altInfo.shared_ip_alts.length})</span>`;
             }
         }
 
