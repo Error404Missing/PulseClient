@@ -685,13 +685,113 @@ async function signOut() {
 window.signInWithDiscord = signInWithDiscord;
 window.signOut = signOut;
 
-function cleanAvatarUrl(url) {
-    if (!url) return "https://cdn.discordapp.com/embed/avatars/0.png";
-    if (url.includes('?')) {
-        return url.split('?')[0];
+// ==========================================
+// LIVE DISCORD AVATAR SYSTEM
+// ==========================================
+const liveAvatarCache = new Map();
+
+function getDefaultDiscordAvatar(discordId) {
+    if (!discordId) return "https://cdn.discordapp.com/embed/avatars/0.png";
+    try {
+        const id = BigInt(String(discordId).trim());
+        const index = Number((id >> 22n) % 6n);
+        return `https://cdn.discordapp.com/embed/avatars/${index}.png`;
+    } catch (e) {
+        return "https://cdn.discordapp.com/embed/avatars/0.png";
+    }
+}
+window.getDefaultDiscordAvatar = getDefaultDiscordAvatar;
+
+function cleanAvatarUrl(url, discordId = null) {
+    if (!url || url.includes('embed/avatars/0.png')) {
+        if (discordId) return getDefaultDiscordAvatar(discordId);
+        return "https://cdn.discordapp.com/embed/avatars/0.png";
+    }
+    // Standardize Discord CDN URL with size=128
+    if (url.includes('cdn.discordapp.com/avatars/')) {
+        const base = url.split('?')[0];
+        return `${base}?size=128`;
     }
     return url;
 }
+window.cleanAvatarUrl = cleanAvatarUrl;
+
+function updatePageAvatars(discordId, avatarUrl) {
+    if (!discordId || !avatarUrl) return;
+    const imgs = document.querySelectorAll(`img[data-discord-id="${discordId}"]`);
+    imgs.forEach(img => {
+        if (img.src !== avatarUrl) {
+            img.src = avatarUrl;
+        }
+    });
+
+    if (currentUser && String(getDiscordId(currentUser)) === String(discordId)) {
+        if (navAvatar && navAvatar.src !== avatarUrl) navAvatar.src = avatarUrl;
+        if (dashAvatar && dashAvatar.src !== avatarUrl) dashAvatar.src = avatarUrl;
+    }
+}
+
+async function fetchLiveDiscordAvatar(discordId) {
+    if (!discordId) return null;
+    const strId = String(discordId).trim();
+    if (liveAvatarCache.has(strId)) {
+        return liveAvatarCache.get(strId);
+    }
+
+    const defaultColorAvatar = getDefaultDiscordAvatar(strId);
+
+    try {
+        // 1. Try our backend live resolver
+        const res = await fetch(`https://errormissing-pulse-bot.hf.space/discord/avatar/${strId}`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data && data.avatar_url) {
+                liveAvatarCache.set(strId, data.avatar_url);
+                updatePageAvatars(strId, data.avatar_url);
+                return data.avatar_url;
+            }
+        }
+    } catch (e) {
+        console.warn(`[Live Avatar] Backend lookup fallback for ${strId}:`, e);
+    }
+
+    try {
+        // 2. Direct JAPI fallback
+        const res2 = await fetch(`https://japi.rest/discord/v1/user/${strId}`);
+        if (res2.ok) {
+            const d2 = await res2.json();
+            const avatarHash = d2.data?.avatar;
+            if (avatarHash) {
+                const ext = String(avatarHash).startsWith('a_') ? 'gif' : 'png';
+                const liveUrl = `https://cdn.discordapp.com/avatars/${strId}/${avatarHash}.${ext}?size=128`;
+                liveAvatarCache.set(strId, liveUrl);
+                updatePageAvatars(strId, liveUrl);
+                return liveUrl;
+            }
+        }
+    } catch (e2) {
+        console.warn(`[Live Avatar] Direct JAPI fallback error for ${strId}:`, e2);
+    }
+
+    liveAvatarCache.set(strId, defaultColorAvatar);
+    return defaultColorAvatar;
+}
+window.fetchLiveDiscordAvatar = fetchLiveDiscordAvatar;
+
+function handleAvatarError(img, discordId = null) {
+    if (!img) return;
+    img.onerror = null;
+    const defaultAvatar = getDefaultDiscordAvatar(discordId);
+    img.src = defaultAvatar;
+    if (discordId) {
+        fetchLiveDiscordAvatar(discordId).then(liveUrl => {
+            if (liveUrl && liveUrl !== defaultAvatar) {
+                img.src = liveUrl;
+            }
+        }).catch(() => {});
+    }
+}
+window.handleAvatarError = handleAvatarError;
 
 async function handleUserSignIn(user) {
     // Check Blacklist first
@@ -706,17 +806,31 @@ async function handleUserSignIn(user) {
     // Get Discord Profile Details
     const metadata = user.user_metadata || {};
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
-    const avatar = cleanAvatarUrl(metadata.avatar_url);
+    const discordId = getDiscordId(user);
+    const avatar = cleanAvatarUrl(metadata.avatar_url, discordId);
 
     // Update Nav
     navLoginBtn.classList.add('hidden');
     navUserProfile.classList.remove('hidden');
-    navAvatar.src = avatar;
-    navUsername.textContent = username;
+    if (navAvatar) {
+        navAvatar.setAttribute('data-discord-id', discordId || '');
+        navAvatar.src = avatar;
+        navAvatar.onerror = () => handleAvatarError(navAvatar, discordId);
+    }
+    if (navUsername) navUsername.textContent = username;
 
     // Update Dashboard Profile
-    dashAvatar.src = avatar;
-    dashUsername.textContent = username;
+    if (dashAvatar) {
+        dashAvatar.setAttribute('data-discord-id', discordId || '');
+        dashAvatar.src = avatar;
+        dashAvatar.onerror = () => handleAvatarError(dashAvatar, discordId);
+    }
+    if (dashUsername) dashUsername.textContent = username;
+
+    // Fetch live Discord avatar in real-time
+    if (discordId) {
+        fetchLiveDiscordAvatar(discordId);
+    }
 
     // Hide Auth Gate Barrier & Show Nav Links
     if (authGatePage) authGatePage.classList.add('hidden');
@@ -769,7 +883,6 @@ async function handleUserSignIn(user) {
     );
 
     // Set up referral link for the logged in user
-    const discordId = getDiscordId(user);
     const refLinkInput = document.getElementById('referral-link-input');
     if (refLinkInput && discordId) {
         refLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${discordId}`;
@@ -2619,10 +2732,19 @@ async function fetchLatestProfile(userId) {
             .maybeSingle();
         if (error) throw error;
         if (data) {
-            console.log("Latest profile fetched:", data);
-            const cleanedAvatar = cleanAvatarUrl(data.avatar_url);
-            if (navAvatar) navAvatar.src = cleanedAvatar;
-            if (dashAvatar) dashAvatar.src = cleanedAvatar;
+            const did = data.discord_id || (currentUser ? getDiscordId(currentUser) : null);
+            const cleanedAvatar = cleanAvatarUrl(data.avatar_url, did);
+            if (navAvatar) {
+                navAvatar.setAttribute('data-discord-id', did || '');
+                navAvatar.src = cleanedAvatar;
+            }
+            if (dashAvatar) {
+                dashAvatar.setAttribute('data-discord-id', did || '');
+                dashAvatar.src = cleanedAvatar;
+            }
+            if (did) {
+                fetchLiveDiscordAvatar(did);
+            }
         }
     } catch (err) {
         console.warn("Failed to fetch latest profile:", err.message);
@@ -2679,10 +2801,19 @@ async function trackUserDownload() {
 async function saveUserProfile(user) {
     const metadata = user.user_metadata || {};
     const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-    const avatar = cleanAvatarUrl(metadata.avatar_url);
     const discordId = getDiscordId(user);
+    const avatar = cleanAvatarUrl(metadata.avatar_url, discordId);
 
     if (!username) return;
+
+    // Trigger background live Discord avatar lookup
+    if (discordId) {
+        fetchLiveDiscordAvatar(discordId).then(liveUrl => {
+            if (liveUrl && liveUrl !== avatar) {
+                supabaseClient.from('profiles').update({ avatar_url: liveUrl, updated_at: new Date().toISOString() }).eq('id', user.id);
+            }
+        }).catch(() => {});
+    }
 
     let userIp = null;
     try {
@@ -2784,9 +2915,10 @@ function renderDropdownUsers(profiles) {
     profiles.forEach(profile => {
         const option = document.createElement('div');
         option.className = 'user-option';
-        const cleanedAvatar = cleanAvatarUrl(profile.avatar_url);
+        const did = profile.discord_id || '';
+        const initialAvatar = cleanAvatarUrl(profile.avatar_url, did);
         option.innerHTML = `
-            <img src="${cleanedAvatar}" alt="Avatar" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
+            <img src="${initialAvatar}" alt="Avatar" data-discord-id="${did}" onerror="handleAvatarError(this, '${did}')">
             <div class="user-option-text">
                 <span class="user-name">${profile.username}</span>
                 <span class="user-discord-id">@${profile.username}</span>
@@ -2797,6 +2929,11 @@ function renderDropdownUsers(profiles) {
             selectDropdownUser(profile.username);
         });
         adminUserOptionsList.appendChild(option);
+
+        // Fetch live avatar in real-time
+        if (did) {
+            fetchLiveDiscordAvatar(did);
+        }
     });
 }
 
@@ -2808,13 +2945,15 @@ function selectDropdownUser(username) {
     
     // Update trigger UI text
     if (adminUserSelectTrigger) {
-        const cleanedAvatar = cleanAvatarUrl(profile.avatar_url);
+        const did = profile.discord_id || '';
+        const initialAvatar = cleanAvatarUrl(profile.avatar_url, did);
         adminUserSelectTrigger.querySelector('span').innerHTML = `
             <div style="display: flex; align-items: center; gap: 8px;">
-                <img src="${cleanedAvatar}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
+                <img src="${initialAvatar}" data-discord-id="${did}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="handleAvatarError(this, '${did}')">
                 <span>${profile.username}</span>
             </div>
         `;
+        if (did) fetchLiveDiscordAvatar(did);
     }
     
     closeUserSelectionModal();
