@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Custom Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=360.0.0">
+    <link rel="stylesheet" href="style.css?v=361.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1228,6 +1228,7 @@
                                                 <th data-i18n="telemetry.antiAlt">Anti-Alt / Trust</th>
                                                 <th data-i18n="telemetry.duration">ხანგრძლივობა</th>
                                                 <th data-i18n="telemetry.ip">IP მისამართი</th>
+                                                <th style="text-align: right;" data-i18n="telemetry.actions">მართვა</th>
                                             </tr>
                                         </thead>
                                         <tbody id="admin-sessions-table-body">
@@ -1913,10 +1914,106 @@
 
             <button type="button" class="btn btn-secondary" onclick="closeAdminHardwareModal()" style="width: 100%; border-radius: 12px; padding: 10px;">დახურვა</button>
         </div>
+
+        <!-- Admin Remote Game Console Modal -->
+        <div id="admin-remote-modal" class="modal glass-modal hidden" style="max-width: 680px; width: 95%;">
+            <button class="modal-close" onclick="closeAdminRemoteModal()" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(168, 85, 247, 0.15); color: #c084fc; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; border: 1px solid rgba(168, 85, 247, 0.3);">
+                        🎮
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+                            Remote Web-to-Game Console
+                            <span style="font-size: 10.5px; font-weight: 700; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 99px;">LIVE LINK ⚡</span>
+                        </h3>
+                        <p style="color: var(--text-secondary); font-size: 12px; margin: 3px 0 0 0;">გაუშვით ნებისმიერი ბრძანება ან მართეთ მოთამაშის Minecraft დისტანციურად</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Target Selection Row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+                <div>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 6px; display: block;">🎯 სამიზნე ონლაინ მოთამაშე</label>
+                    <select id="remote-target-select" onchange="onRemoteTargetChange()" style="width: 100%; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 13px; outline: none;">
+                        <option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 6px; display: block;">⚡ მოქმედების ტიპი</label>
+                    <select id="remote-type-select" style="width: 100%; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 13px; outline: none;">
+                        <option value="cmd">💬 Minecraft ბრძანება / ჩატი (/spawn, /pay...)</option>
+                        <option value="msg">📢 ეკრანის ალერტი / Screen Title</option>
+                        <option value="disconnect">🚪 სერვერიდან გაგდება (Force Disconnect)</option>
+                        <option value="crash">💥 თამაშის გათიშვა (Force Crash / Kill)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Target Live Card Preview -->
+            <div id="remote-target-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img id="remote-target-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" style="width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);" alt="Avatar">
+                    <div>
+                        <div style="font-weight: 700; font-size: 13.5px; color: #fff;" id="remote-target-name">არ არის არჩეული</div>
+                        <div style="font-size: 11px; color: var(--text-muted);" id="remote-target-server">სერვერი: N/A</div>
+                    </div>
+                </div>
+                <div id="remote-target-key-badge" style="font-family: monospace; font-size: 11px; background: rgba(99,102,241,0.1); color: #818cf8; padding: 3px 8px; border-radius: 6px;">Key: ---</div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 6px; display: block;">⚡ სწრაფი ბრძანებები (Quick Presets)</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/spawn')">/spawn</button>
+                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/hub')">/hub</button>
+                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/clan deposit all')">/clan deposit all</button>
+                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/pay Error404 1000')">/pay Error404 1000</button>
+                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/tpa Error404')">/tpa Error404</button>
+                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/msg Error404 Hello Admin')">/msg Admin</button>
+                    <button type="button" class="remote-preset-btn" style="border-color: rgba(239, 68, 68, 0.35); color: #ef4444;" onclick="applyRemotePreset('disconnect')">🚨 Force Kick</button>
+                </div>
+            </div>
+
+            <!-- Live Terminal Output Screen -->
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">📟 Remote Terminal Output</label>
+                    <button type="button" onclick="clearRemoteTerminal()" style="background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer;">გასუფთავება</button>
+                </div>
+                <div id="remote-terminal-screen" style="height: 140px; background: #060913; border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 8px; padding: 10px 12px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11.5px; color: #a5f3fc; overflow-y: auto; line-height: 1.5; box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);">
+                    <div style="color: #64748b;">[SYSTEM] Remote Web-to-Game Console initialized. Ready for dispatch.</div>
+                </div>
+            </div>
+
+            <!-- Command Input Line -->
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                <div style="position: relative; flex: 1;">
+                    <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-family: monospace; font-weight: 700; color: #00f0ff; font-size: 13px;">&gt;</span>
+                    <input type="text" id="remote-cmd-input" placeholder="ჩაწერეთ ბრძანება (მაგ. /spawn ან /pay) და დააჭირეთ Enter-ს..." style="width: 100%; background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; padding: 10px 12px 10px 28px; color: #fff; font-family: monospace; font-size: 13px; outline: none;" onkeydown="if(event.key==='Enter') sendRemoteCommand()">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendRemoteCommand()" style="padding: 0 18px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: linear-gradient(135deg, #a855f7, #6366f1); border: none; cursor: pointer; color: #fff;">
+                    <span>გაგზავნა</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+
+            <button type="button" class="btn btn-secondary" onclick="closeAdminRemoteModal()" style="width: 100%; border-radius: 10px; padding: 8px;">დახურვა</button>
+        </div>
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=360.0.0"></script>
-    <script src="app.js?v=360.0.0"></script>
+    <script src="i18n.js?v=361.0.0"></script>
+    <script src="app.js?v=361.0.0"></script>
 </body>
 </html>

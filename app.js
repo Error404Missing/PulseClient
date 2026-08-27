@@ -1841,6 +1841,9 @@ function renderActiveSessions(sessions) {
                 ${lifetimePlaytime}
             </td>
             <td>${userIpCell}</td>
+            <td style="text-align: right;">
+                <button type="button" class="btn-remote-cmd" onclick="openAdminRemoteModal('${session.id}', '${session.mc_username || ''}', '${session.license_key || ''}')" title="🎮 დისტანციური მართვა">🎮 Remote</button>
+            </td>
         `;
         adminSessionsTableBody.appendChild(row);
     });
@@ -1931,6 +1934,185 @@ function closeAdminHardwareModal() {
     if (modal) modal.classList.add('hidden');
 }
 window.closeAdminHardwareModal = closeAdminHardwareModal;
+
+// ==========================================
+// REMOTE WEB-TO-GAME CONSOLE LOGIC
+// ==========================================
+
+function openAdminRemoteModal(sessionId, targetMc, targetKey) {
+    if (!isAdmin()) return;
+    const modal = document.getElementById('admin-remote-modal');
+    if (!modal) return;
+
+    const selectEl = document.getElementById('remote-target-select');
+    if (selectEl) {
+        selectEl.innerHTML = '<option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>';
+        const sessions = window.lastFetchedSessions || [];
+        sessions.forEach(s => {
+            const lic = (adminLicenses || []).find(l => l.license_key === s.license_key);
+            const { buyer } = lic ? parseLicenseNote(lic.note) : { buyer: s.mc_username || 'Unknown' };
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.dataset.mc = s.mc_username || 'Unknown';
+            opt.dataset.key = s.license_key || '';
+            opt.dataset.buyer = buyer;
+            opt.dataset.server = s.country || s.mc_server || 'Main Menu';
+            opt.textContent = (s.mc_username || 'Player') + ' (@' + buyer + ') — ' + opt.dataset.server;
+            selectEl.appendChild(opt);
+        });
+
+        if (sessionId) {
+            selectEl.value = sessionId;
+        } else if (selectEl.options.length > 1) {
+            selectEl.selectedIndex = 1;
+        }
+    }
+
+    onRemoteTargetChange();
+    modal.classList.remove('hidden');
+    const inputEl = document.getElementById('remote-cmd-input');
+    if (inputEl) {
+        setTimeout(() => inputEl.focus(), 150);
+    }
+}
+window.openAdminRemoteModal = openAdminRemoteModal;
+
+function closeAdminRemoteModal() {
+    const modal = document.getElementById('admin-remote-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.closeAdminRemoteModal = closeAdminRemoteModal;
+
+function onRemoteTargetChange() {
+    const selectEl = document.getElementById('remote-target-select');
+    if (!selectEl) return;
+    const selectedOpt = selectEl.options[selectEl.selectedIndex];
+    
+    const nameEl = document.getElementById('remote-target-name');
+    const serverEl = document.getElementById('remote-target-server');
+    const keyEl = document.getElementById('remote-target-key-badge');
+    const avatarEl = document.getElementById('remote-target-avatar');
+
+    if (selectedOpt && selectedOpt.value) {
+        const mc = selectedOpt.dataset.mc;
+        const buyer = selectedOpt.dataset.buyer;
+        const srv = selectedOpt.dataset.server;
+        const key = selectedOpt.dataset.key;
+
+        if (nameEl) nameEl.textContent = mc + ' (@' + buyer + ')';
+        if (serverEl) serverEl.textContent = 'სერვერი: ' + srv;
+        if (keyEl) keyEl.textContent = key ? (key.substring(0, 4) + '-****-****') : 'No Key';
+        if (avatarEl) {
+            avatarEl.src = 'https://mc-heads.net/avatar/' + encodeURIComponent(mc) + '/64';
+            avatarEl.onerror = () => { avatarEl.src = 'https://cdn.discordapp.com/embed/avatars/0.png'; };
+        }
+    } else {
+        if (nameEl) nameEl.textContent = 'არ არის არჩეული';
+        if (serverEl) serverEl.textContent = 'სერვერი: N/A';
+        if (keyEl) keyEl.textContent = 'Key: ---';
+        if (avatarEl) avatarEl.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
+    }
+}
+window.onRemoteTargetChange = onRemoteTargetChange;
+
+function applyRemotePreset(preset) {
+    const typeSelect = document.getElementById('remote-type-select');
+    const inputEl = document.getElementById('remote-cmd-input');
+    if (!inputEl) return;
+
+    if (preset === 'disconnect') {
+        if (typeSelect) typeSelect.value = 'disconnect';
+        inputEl.value = 'Disconnected by Pulse Administrator';
+    } else {
+        if (typeSelect) typeSelect.value = 'cmd';
+        inputEl.value = preset;
+    }
+    inputEl.focus();
+}
+window.applyRemotePreset = applyRemotePreset;
+
+function logToRemoteTerminal(msg, level) {
+    const screen = document.getElementById('remote-terminal-screen');
+    if (!screen) return;
+    const line = document.createElement('div');
+    const timeStr = new Date().toLocaleTimeString('ka-GE', { hour12: false });
+    
+    let color = '#a5f3fc';
+    if (level === 'success') color = '#22c55e';
+    else if (level === 'error') color = '#ef4444';
+    else if (level === 'warn') color = '#fbbf24';
+
+    line.style.color = color;
+    line.style.marginBottom = '3px';
+    line.innerHTML = '<span style="color:#64748b;">[' + timeStr + ']</span> ' + msg;
+    screen.appendChild(line);
+    screen.scrollTop = screen.scrollHeight;
+}
+window.logToRemoteTerminal = logToRemoteTerminal;
+
+function clearRemoteTerminal() {
+    const screen = document.getElementById('remote-terminal-screen');
+    if (screen) {
+        screen.innerHTML = '<div style="color: #64748b;">[SYSTEM] Terminal buffer cleared.</div>';
+    }
+}
+window.clearRemoteTerminal = clearRemoteTerminal;
+
+async function sendRemoteCommand() {
+    const selectEl = document.getElementById('remote-target-select');
+    const typeSelect = document.getElementById('remote-type-select');
+    const inputEl = document.getElementById('remote-cmd-input');
+
+    if (!selectEl || !inputEl) return;
+    const selectedOpt = selectEl.options[selectEl.selectedIndex];
+    if (!selectedOpt || !selectedOpt.value) {
+        showBanner("გთხოვთ ჯერ აირჩიოთ სამიზნე ონლაინ მოთამაშე!", "error");
+        logToRemoteTerminal("ERROR: No target player selected.", "error");
+        return;
+    }
+
+    const payload = inputEl.value.trim();
+    const cmdType = typeSelect ? typeSelect.value : 'cmd';
+    const targetMc = selectedOpt.dataset.mc || '';
+    const targetKey = selectedOpt.dataset.key || '';
+
+    if (!payload && (cmdType === 'cmd' || cmdType === 'msg')) {
+        showBanner("გთხოვთ ჩაწეროთ გასაგზავნი ბრძანება!", "error");
+        return;
+    }
+
+    const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
+
+    logToRemoteTerminal('DISPATCHING -> Target: @' + targetMc + ' | Type: ' + cmdType.toUpperCase() + ' | Payload: "' + payload + '" ...', 'warn');
+
+    try {
+        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/remote-command', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                target_key: targetKey,
+                target_mc: targetMc,
+                type: cmdType,
+                payload: payload,
+                admin_user: adminUser
+            })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+            logToRemoteTerminal('SUCCESS: Command queued [ID: ' + data.command.id + ']. Dispatched to client queue! 🚀', 'success');
+            showBanner('ბრძანება წარმატებით გაიგზავნა მოთამაშესთან (@' + targetMc + ')!', 'success');
+            inputEl.value = '';
+        } else {
+            throw new Error(data.message || 'Failed to dispatch command');
+        }
+    } catch (err) {
+        console.error("Remote command error:", err);
+        logToRemoteTerminal('FAILED: ' + err.message, 'error');
+        showBanner('ხარვეზი ბრძანების გაგზავნისას: ' + err.message, 'error');
+    }
+}
+window.sendRemoteCommand = sendRemoteCommand;
 
 function renderAdminLicenses(licenses) {
     adminLicensesTableBody.innerHTML = '';
