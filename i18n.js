@@ -307,7 +307,16 @@
       "log.date": "თარიღი",
       "log.user": "მომხმარებელი / ადმინი",
       "log.action": "მოქმედება",
-      "log.details": "დეტალები"
+      "log.details": "დეტალები",
+      "crypto.modalTitle": "PulseClient-ის შეძენა",
+      "crypto.modalSubtitle": "გადაიხადეთ მომენტალურად Litecoin-ით ან გახსენით Ticket Discord-ზე",
+      "crypto.choosePlan": "აირჩიეთ ტარიფი:",
+      "crypto.exactAmount": "გადასარიცხი ზუსტი თანხა:",
+      "crypto.addressLabel": "Litecoin (LTC) მისამართი (Exodus):",
+      "crypto.networkTip": "გადარიცხეთ მხოლოდ Litecoin (LTC) ქსელით. თანხის გამოგზავნისთანავე სისტემა ავტომატურად გააქტიურებს გასაღებს.",
+      "crypto.awaitingPayment": "ველოდებით ტრანზაქციას...",
+      "crypto.detected": "ტრანზაქცია დაფიქსირდა!",
+      "crypto.confirmed": "გადახდა დადასტურდა!"
     },
     en: {
       "meta.title": "PulseClient - Premium Minecraft Combat & Stealth Advantage",
@@ -560,7 +569,16 @@
       "vpnBlock.badge": "🚫 VPN / Proxy Detected",
       "vpnBlock.title": "Please Disable VPN / Proxy",
       "vpnBlock.desc": "For security reasons, using a VPN, Proxy, or Datacenter IP is prohibited on PulseClient. Please turn off your VPN and reload the page to continue.",
-      "vpnBlock.btn": "Reload (VPN Disabled)"
+      "vpnBlock.btn": "Reload (VPN Disabled)",
+      "crypto.modalTitle": "Purchase PulseClient",
+      "crypto.modalSubtitle": "Pay instantly with Litecoin (LTC) or open a Ticket on Discord",
+      "crypto.choosePlan": "Choose Plan:",
+      "crypto.exactAmount": "Exact Amount to Send:",
+      "crypto.addressLabel": "Litecoin (LTC) Address (Exodus):",
+      "crypto.networkTip": "Send only via Litecoin (LTC) network. License key will be delivered automatically upon payment.",
+      "crypto.awaitingPayment": "Awaiting transaction...",
+      "crypto.detected": "Transaction detected!",
+      "crypto.confirmed": "Payment confirmed!"
     }
   };
 
