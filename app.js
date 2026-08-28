@@ -2143,6 +2143,203 @@ async function sendRemoteCommand() {
 }
 window.sendRemoteCommand = sendRemoteCommand;
 
+// ==========================================
+// ADMIN CRASH REPORTS & DIAGNOSTICS LOGIC
+// ==========================================
+let adminCrashReports = [];
+let adminCrashReportsLoading = false;
+
+async function fetchAdminCrashReports(showFeedback = false) {
+    try {
+        adminCrashReportsLoading = true;
+        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/crash-reports");
+        if (res.ok) {
+            const data = await res.json();
+            adminCrashReports = data.reports || [];
+            updateCrashBadges(adminCrashReports.length);
+            renderAdminCrashReports();
+            if (showFeedback && typeof showToast === 'function') {
+                showToast("კრაშ რეპორტები წარმატებით განახლდა", "success");
+            }
+        }
+    } catch (err) {
+        console.error("Error fetching crash reports:", err);
+    } finally {
+        adminCrashReportsLoading = false;
+    }
+}
+window.fetchAdminCrashReports = fetchAdminCrashReports;
+
+function updateCrashBadges(count) {
+    const badge = document.getElementById('admin-crash-badge');
+    const tag = document.getElementById('admin-crashes-count-tag');
+    if (badge) {
+        badge.textContent = count.toString();
+        if (count > 0) {
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+    if (tag) {
+        tag.textContent = count + " კრაში";
+    }
+}
+
+function renderAdminCrashReports() {
+    const tbody = document.getElementById('admin-crashes-table-body');
+    if (!tbody) return;
+
+    const searchInput = document.getElementById('admin-crashes-search-input');
+    const filterText = (searchInput ? searchInput.value : "").toLowerCase().trim();
+
+    let filtered = adminCrashReports;
+    if (filterText) {
+        filtered = adminCrashReports.filter(r => 
+            (r.mc_username || '').toLowerCase().includes(filterText) ||
+            (r.license_key || '').toLowerCase().includes(filterText) ||
+            (r.error_title || '').toLowerCase().includes(filterText) ||
+            (r.os_name || '').toLowerCase().includes(filterText) ||
+            (r.stack_trace || '').toLowerCase().includes(filterText)
+        );
+    }
+
+    if (!filtered || filtered.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 32px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🛡️</div>
+                    <div>კრაშ რეპორტები ვერ მოიძებნა</div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = '';
+    filtered.forEach(report => {
+        const row = document.createElement('tr');
+        const timeStr = report.created_at ? new Date(report.created_at).toLocaleString('ka-GE') : 'Unknown';
+        const maskedKey = report.license_key && report.license_key.length > 8 ? 
+            (report.license_key.substring(0, 4) + '-****-****') : (report.license_key || 'No Key');
+
+        const titleEscaped = (report.error_title || 'Unknown Error').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const mcUser = (report.mc_username || 'Unknown').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const osName = (report.os_name || 'Windows (x64)').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const modVer = (report.mod_version || 'v1.0.6').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        row.innerHTML = `
+            <td>
+                <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap;">${timeStr}</span>
+            </td>
+            <td>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 700; color: #fff; font-size: 13.5px;">${mcUser}</span>
+                    <code style="font-size: 11px; color: #a5b4fc; font-family: monospace;">${maskedKey}</code>
+                </div>
+            </td>
+            <td>
+                <div style="max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <span class="badge-jar" style="background: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); margin-right: 6px;">ERROR</span>
+                    <strong style="color: #fca5a5; font-size: 12.5px;">${titleEscaped}</strong>
+                </div>
+            </td>
+            <td>
+                <div style="display: flex; flex-direction: column; font-size: 12px;">
+                    <span style="color: #e2e8f0;">${osName}</span>
+                    <span style="font-size: 11px; color: #38bdf8; font-weight: 600;">Pulse ${modVer}</span>
+                </div>
+            </td>
+            <td style="text-align: right;">
+                <button type="button" class="btn-remote-cmd" style="background: rgba(239, 68, 68, 0.12) !important; border-color: rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important;" data-id="${report.id}" onclick="openAdminCrashDetailModal(this.getAttribute('data-id'))">
+                    📜 Stack Trace
+                </button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+window.renderAdminCrashReports = renderAdminCrashReports;
+
+let activeViewingCrashReport = null;
+
+function openAdminCrashDetailModal(reportId) {
+    const report = adminCrashReports.find(r => r.id === reportId);
+    if (!report) return;
+    activeViewingCrashReport = report;
+
+    const modal = document.getElementById('admin-crash-detail-modal');
+    if (!modal) return;
+
+    const titleEl = document.getElementById('crash-modal-title');
+    const subtitleEl = document.getElementById('crash-modal-subtitle');
+    const metaEl = document.getElementById('crash-modal-meta');
+    const traceEl = document.getElementById('crash-modal-trace');
+
+    if (titleEl) titleEl.textContent = report.error_title || 'Crash Report';
+    if (subtitleEl) subtitleEl.textContent = (report.mc_username || 'Player') + ' — ' + (new Date(report.created_at).toLocaleString('ka-GE'));
+
+    if (metaEl) {
+        metaEl.innerHTML = `
+            <span class="badge-jar" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; padding: 4px 10px;">👤 ${(report.mc_username || 'Unknown')}</span>
+            <span class="badge-jar" style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #10b981; padding: 4px 10px;">🔑 ${(report.license_key || 'No Key')}</span>
+            <span class="badge-jar" style="background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; padding: 4px 10px;">💻 ${(report.os_name || 'OS Unknown')}</span>
+            <span class="badge-jar" style="background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #facc15; padding: 4px 10px;">⚡ Version: ${(report.mod_version || 'v1.0.6')}</span>
+            <span class="badge-jar" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; padding: 4px 10px;">🌐 IP: ${(report.ip_address || 'Unknown')}</span>
+        `;
+    }
+
+    if (traceEl) {
+        const fullContent = report.stack_trace || report.crash_report_text || 'No stack trace provided.';
+        traceEl.textContent = fullContent;
+    }
+
+    modal.classList.remove('hidden');
+    modal.style.setProperty('display', 'flex', 'important');
+}
+window.openAdminCrashDetailModal = openAdminCrashDetailModal;
+
+function closeAdminCrashDetailModal() {
+    const modal = document.getElementById('admin-crash-detail-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.setProperty('display', 'none', 'important');
+    }
+    activeViewingCrashReport = null;
+}
+window.closeAdminCrashDetailModal = closeAdminCrashDetailModal;
+
+function copyCrashStackTrace() {
+    if (!activeViewingCrashReport) return;
+    const content = activeViewingCrashReport.stack_trace || activeViewingCrashReport.crash_report_text || '';
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(content).then(() => {
+            if (typeof showToast === 'function') showToast("Stack Trace დაკოპირდა ბუფერში!", "success");
+            else alert("Stack Trace დაკოპირდა!");
+        }).catch(() => {});
+    }
+}
+window.copyCrashStackTrace = copyCrashStackTrace;
+
+async function clearAdminCrashReports() {
+    if (!confirm("დარწმუნებული ხართ რომ გსურთ ყველა კრაშ რეპორტის გასუფთავება?")) return;
+    try {
+        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/crash-reports/clear", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        });
+        if (res.ok) {
+            adminCrashReports = [];
+            updateCrashBadges(0);
+            renderAdminCrashReports();
+            if (typeof showToast === 'function') showToast("კრაშ რეპორტები გასუფთავდა", "success");
+        }
+    } catch (e) {
+        console.error("Error clearing crash reports:", e);
+    }
+}
+window.clearAdminCrashReports = clearAdminCrashReports;
+
 function renderAdminLicenses(licenses) {
     adminLicensesTableBody.innerHTML = '';
     adminTotalCount.textContent = licenses.length;
@@ -3608,6 +3805,8 @@ function switchAdminSubTab(e, panelId) {
         fetchAdminPromocodes();
     } else if (panelId === 'admin-subpanel-licenses') {
         fetchAllLicenses();
+    } else if (panelId === 'admin-subpanel-crashes') {
+        fetchAdminCrashReports();
     }
 }
 window.switchAdminSubTab = switchAdminSubTab;
@@ -3680,10 +3879,11 @@ function onLanguageChanged() {
     }
 }
 
-// Auto-refresh active sessions and telemetry every 20 seconds for real-time online count
+// Auto-refresh active sessions, telemetry, and crash reports every 20 seconds
 setInterval(() => {
     if (typeof isAdmin === "function" && isAdmin() && currentUser) {
         fetchActiveSessions();
+        fetchAdminCrashReports();
     }
 }, 20000);
 
