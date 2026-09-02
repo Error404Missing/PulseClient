@@ -4895,10 +4895,10 @@ function initLiquidCanvas() {
         reset() {
             this.x = Math.random() * width;
             this.y = height + 10 + Math.random() * 50;
-            this.size = Math.random() * 4.5 + 2.0;
+            this.size = Math.random() * 3.0 + 1.2;
             this.speedY = Math.random() * 0.45 + 0.2;
             this.speedX = (Math.random() - 0.5) * 0.25;
-            this.opacity = Math.random() * 0.6 + 0.4;
+            this.opacity = Math.random() * 0.35 + 0.15;
             this.pulse = Math.random() * Math.PI;
         }
         update() {
@@ -4933,7 +4933,7 @@ function initLiquidCanvas() {
         }
     }
 
-    const count = Math.min(Math.floor(width / 20), 75);
+    const count = Math.min(Math.floor(width / 28), 40);
     const droplets = [];
     for (let i = 0; i < count; i++) {
         droplets.push(new Droplet());

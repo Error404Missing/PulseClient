@@ -1,5 +1,5 @@
 /* ==========================================
-   Ultra-Vibrant Liquid Glass Background & Cyber Mesh
+   Balanced Liquid Glass Background (Clean & Refined)
    ========================================== */
 .bg-blobs {
     position: fixed;
@@ -9,21 +9,21 @@
     bottom: 0;
     z-index: 1;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 25%, #2a050d 0%, #120206 50%, #030102 100%) !important;
+    background: radial-gradient(ellipse at 50% 15%, #180306 0%, #0a0204 40%, #030305 100%) !important;
     pointer-events: none;
 }
 
-/* High-Definition Cyber Water Grid */
+/* Refined Subtle Cyber Grid */
 .bg-grid-overlay {
     position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
     background-image: 
-        radial-gradient(circle at 50% 35%, rgba(255, 0, 60, 0.35) 0%, rgba(255, 0, 60, 0.1) 45%, transparent 70%),
-        linear-gradient(rgba(255, 0, 60, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 0, 60, 0.12) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
+        radial-gradient(circle at 50% 25%, rgba(255, 0, 60, 0.14) 0%, transparent 60%),
+        linear-gradient(rgba(255, 0, 60, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 60, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 48px 48px, 48px 48px;
 }
 
 #liquid-canvas {
@@ -38,50 +38,50 @@
 
 .blob {
     position: absolute;
-    filter: blur(65px);
-    opacity: 0.85 !important;
+    filter: blur(110px);
+    opacity: 0.38 !important;
     mix-blend-mode: screen;
     will-change: transform, border-radius;
 }
 
 .blob-1 {
-    width: 750px;
-    height: 750px;
-    top: -100px;
-    left: 15%;
-    background: radial-gradient(circle, #ff003c 0%, rgba(255, 0, 60, 0.8) 35%, rgba(180, 0, 40, 0.35) 65%, transparent 80%) !important;
+    width: 650px;
+    height: 650px;
+    top: -120px;
+    left: 10%;
+    background: radial-gradient(circle, #ff003c 0%, rgba(255, 0, 60, 0.5) 35%, rgba(180, 0, 40, 0.15) 65%, transparent 80%) !important;
     border-radius: 62% 38% 70% 30% / 30% 65% 35% 70%;
-    animation: morphLiquid 12s ease-in-out infinite alternate, floatDarkRed1 18s ease-in-out infinite alternate;
+    animation: morphLiquid 16s ease-in-out infinite alternate, floatDarkRed1 24s ease-in-out infinite alternate;
 }
 
 .blob-2 {
-    width: 800px;
-    height: 800px;
-    top: 20%;
-    right: -100px;
-    background: radial-gradient(circle, #ff1a4f 0%, rgba(220, 20, 60, 0.75) 40%, rgba(140, 0, 30, 0.3) 70%, transparent 85%) !important;
+    width: 700px;
+    height: 700px;
+    top: 25%;
+    right: -120px;
+    background: radial-gradient(circle, #ff1a4f 0%, rgba(220, 20, 60, 0.45) 40%, rgba(140, 0, 30, 0.15) 70%, transparent 85%) !important;
     border-radius: 35% 65% 42% 58% / 55% 35% 65% 45%;
-    animation: morphLiquid 15s ease-in-out infinite alternate-reverse, floatDarkRed2 22s ease-in-out infinite alternate;
+    animation: morphLiquid 20s ease-in-out infinite alternate-reverse, floatDarkRed2 28s ease-in-out infinite alternate;
 }
 
 .blob-3 {
-    width: 700px;
-    height: 700px;
-    bottom: -50px;
-    left: -50px;
-    background: radial-gradient(circle, #ff003c 0%, rgba(255, 30, 70, 0.7) 35%, rgba(160, 0, 40, 0.25) 65%, transparent 80%) !important;
+    width: 580px;
+    height: 580px;
+    bottom: -60px;
+    left: -60px;
+    background: radial-gradient(circle, #ff003c 0%, rgba(255, 30, 70, 0.45) 35%, rgba(160, 0, 40, 0.15) 65%, transparent 80%) !important;
     border-radius: 70% 30% 55% 45% / 40% 70% 30% 60%;
-    animation: morphLiquid 14s ease-in-out infinite alternate, floatDarkRed3 20s ease-in-out infinite alternate;
+    animation: morphLiquid 18s ease-in-out infinite alternate, floatDarkRed3 26s ease-in-out infinite alternate;
 }
 
 .blob-4 {
-    width: 600px;
-    height: 600px;
-    top: 50%;
-    left: 30%;
-    background: radial-gradient(circle, #dc2626 0%, rgba(255, 0, 60, 0.65) 40%, rgba(120, 0, 25, 0.2) 70%, transparent 85%) !important;
+    width: 500px;
+    height: 500px;
+    top: 60%;
+    right: 25%;
+    background: radial-gradient(circle, #dc2626 0%, rgba(255, 0, 60, 0.4) 40%, rgba(120, 0, 25, 0.12) 70%, transparent 85%) !important;
     border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-    animation: morphLiquid 16s ease-in-out infinite alternate-reverse, floatDarkRed4 24s ease-in-out infinite alternate;
+    animation: morphLiquid 22s ease-in-out infinite alternate-reverse, floatDarkRed4 30s ease-in-out infinite alternate;
 }
 
 @keyframes morphLiquid {
@@ -142,7 +142,7 @@
 /* iOS Liquid Glass Panel (Water Droplet Effect) */
 .glass-panel {
     position: relative;
-    background: rgba(10, 10, 14, 0.78) !important;
+    background: rgba(12, 12, 16, 0.94) !important;
     border: 1px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: var(--ios-blur);
     -webkit-backdrop-filter: var(--ios-blur);
@@ -169,7 +169,7 @@
 .feature-card,
 .pricing-card,
 .faq-item {
-    background: rgba(10, 10, 14, 0.76) !important;
+    background: rgba(14, 14, 18, 0.92) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: var(--ios-blur) !important;
     -webkit-backdrop-filter: var(--ios-blur) !important;
@@ -198,7 +198,7 @@
 .pricing-card:hover,
 .faq-item:hover {
     border-color: var(--card-hover-border) !important;
-    background: rgba(18, 14, 20, 0.88) !important;
+    background: rgba(20, 16, 22, 0.96) !important;
     box-shadow: var(--liquid-glass-hover-shadow) !important;
     transform: translateY(-6px) scale(1.012) !important;
 }
