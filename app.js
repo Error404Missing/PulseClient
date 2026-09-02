@@ -4865,3 +4865,100 @@ function copyOpSecCleaner(btnEl) {
     });
 }
 window.copyOpSecCleaner = copyOpSecCleaner;
+
+// ==========================================
+// LIQUID WATER DROPLET & AMBIENT CANVAS
+// ==========================================
+function initLiquidCanvas() {
+    const canvas = document.getElementById("liquid-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+    let mouse = { x: width / 2, y: height / 2, radius: 180 };
+
+    window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    class Droplet {
+        constructor() {
+            this.reset();
+            this.y = Math.random() * height;
+        }
+        reset() {
+            this.x = Math.random() * width;
+            this.y = height + 10 + Math.random() * 50;
+            this.size = Math.random() * 2.8 + 1.2;
+            this.speedY = Math.random() * 0.45 + 0.2;
+            this.speedX = (Math.random() - 0.5) * 0.25;
+            this.opacity = Math.random() * 0.4 + 0.2;
+            this.pulse = Math.random() * Math.PI;
+        }
+        update() {
+            this.y -= this.speedY;
+            this.x += this.speedX + Math.sin(this.pulse) * 0.2;
+            this.pulse += 0.02;
+
+            // Mouse repulsion/attraction
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < mouse.radius) {
+                const angle = Math.atan2(dy, dx);
+                this.x -= Math.cos(angle) * 1.2;
+                this.y -= Math.sin(angle) * 1.2;
+            }
+
+            if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+                this.reset();
+            }
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            // Liquid droplet specular glow
+            const grad = ctx.createRadialGradient(this.x - this.size * 0.3, this.y - this.size * 0.3, this.size * 0.1, this.x, this.y, this.size);
+            grad.addColorStop(0, `rgba(255, 120, 140, ${this.opacity + 0.2})`);
+            grad.addColorStop(0.5, `rgba(255, 0, 60, ${this.opacity})`);
+            grad.addColorStop(1, `rgba(180, 0, 30, 0)`);
+            ctx.fillStyle = grad;
+            ctx.fill();
+        }
+    }
+
+    const count = Math.min(Math.floor(width / 32), 45);
+    const droplets = [];
+    for (let i = 0; i < count; i++) {
+        droplets.push(new Droplet());
+    }
+
+    function render() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Ambient liquid cursor spotlight
+        const spotGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 320);
+        spotGrad.addColorStop(0, "rgba(255, 0, 50, 0.06)");
+        spotGrad.addColorStop(0.6, "rgba(255, 0, 50, 0.02)");
+        spotGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = spotGrad;
+        ctx.fillRect(0, 0, width, height);
+
+        // Render floating droplets
+        for (let i = 0; i < droplets.length; i++) {
+            droplets[i].update();
+            droplets[i].draw();
+        }
+        requestAnimationFrame(render);
+    }
+    render();
+}
+document.addEventListener("DOMContentLoaded", () => {
+    initLiquidCanvas();
+});

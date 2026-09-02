@@ -79,65 +79,92 @@ body {
     position: relative;
 }
 
-/* Animated iOS Liquid Background Blobs */
+/* ==========================================
+   Vibrant Liquid Water Droplet & Mesh Background
+   ========================================== */
 .bg-blobs {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;
+    z-index: -2;
     overflow: hidden;
-    background-color: #000000 !important;
+    background: radial-gradient(ellipse at 50% 0%, #1a0509 0%, #080204 45%, #000000 100%) !important;
+    pointer-events: none;
+}
+
+/* Subtle Cyber Water Grid Overlay */
+.bg-grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(circle at 50% 30%, rgba(255, 0, 50, 0.12) 0%, transparent 65%),
+        linear-gradient(rgba(255, 0, 50, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 50, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 48px 48px, 48px 48px;
+    mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 95%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 95%);
+}
+
+#liquid-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
     pointer-events: none;
 }
 
 .blob {
     position: absolute;
-    filter: blur(120px);
-    opacity: 0.28 !important;
+    filter: blur(85px);
+    opacity: 0.58 !important;
     mix-blend-mode: screen;
     will-change: transform, border-radius;
 }
 
 .blob-1 {
-    width: 600px;
-    height: 600px;
-    top: -150px;
-    left: 10%;
-    background: radial-gradient(circle, #ff0000 0%, rgba(255, 0, 0, 0.3) 50%, transparent 80%) !important;
+    width: 650px;
+    height: 650px;
+    top: -120px;
+    left: 8%;
+    background: radial-gradient(circle, #ff003c 0%, rgba(255, 0, 0, 0.6) 40%, rgba(180, 0, 30, 0.2) 70%, transparent 85%) !important;
     border-radius: 62% 38% 70% 30% / 30% 65% 35% 70%;
-    animation: morphLiquid 18s ease-in-out infinite alternate, floatDarkRed1 24s ease-in-out infinite alternate;
+    animation: morphLiquid 14s ease-in-out infinite alternate, floatDarkRed1 20s ease-in-out infinite alternate;
 }
 
 .blob-2 {
-    width: 700px;
-    height: 700px;
-    top: 35%;
-    right: -200px;
-    background: radial-gradient(circle, #cc0000 0%, rgba(180, 0, 0, 0.25) 50%, transparent 80%) !important;
+    width: 750px;
+    height: 750px;
+    top: 25%;
+    right: -150px;
+    background: radial-gradient(circle, #e11d48 0%, rgba(220, 20, 60, 0.5) 45%, rgba(130, 0, 25, 0.2) 75%, transparent 90%) !important;
     border-radius: 35% 65% 42% 58% / 55% 35% 65% 45%;
-    animation: morphLiquid 22s ease-in-out infinite alternate-reverse, floatDarkRed2 28s ease-in-out infinite alternate;
+    animation: morphLiquid 18s ease-in-out infinite alternate-reverse, floatDarkRed2 24s ease-in-out infinite alternate;
 }
 
 .blob-3 {
-    width: 550px;
-    height: 550px;
-    bottom: -100px;
-    left: -100px;
-    background: radial-gradient(circle, #ff1a40 0%, rgba(200, 0, 50, 0.2) 50%, transparent 80%) !important;
+    width: 600px;
+    height: 600px;
+    bottom: -80px;
+    left: -60px;
+    background: radial-gradient(circle, #ff0000 0%, rgba(255, 20, 60, 0.55) 40%, rgba(160, 0, 40, 0.15) 70%, transparent 85%) !important;
     border-radius: 70% 30% 55% 45% / 40% 70% 30% 60%;
-    animation: morphLiquid 20s ease-in-out infinite alternate, floatDarkRed3 26s ease-in-out infinite alternate;
+    animation: morphLiquid 16s ease-in-out infinite alternate, floatDarkRed3 22s ease-in-out infinite alternate;
 }
 
 .blob-4 {
-    width: 450px;
-    height: 450px;
-    top: 70%;
-    right: 25%;
-    background: radial-gradient(circle, #990000 0%, rgba(120, 0, 0, 0.2) 50%, transparent 80%) !important;
+    width: 500px;
+    height: 500px;
+    top: 60%;
+    right: 20%;
+    background: radial-gradient(circle, #b91c1c 0%, rgba(255, 0, 50, 0.45) 40%, rgba(100, 0, 20, 0.1) 70%, transparent 85%) !important;
     border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-    animation: morphLiquid 25s ease-in-out infinite alternate-reverse, floatDarkRed4 30s ease-in-out infinite alternate;
+    animation: morphLiquid 20s ease-in-out infinite alternate-reverse, floatDarkRed4 26s ease-in-out infinite alternate;
 }
 
 @keyframes morphLiquid {
