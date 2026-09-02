@@ -69,14 +69,24 @@ a.btn-secondary:visited {
     color: var(--text-primary);
 }
 
+html {
+    background: #040407 !important;
+}
+
 body {
-    background-color: #000000 !important;
+    background: transparent !important;
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Main content wrapper above background */
+.navbar, .view, main, footer, .modal {
+    position: relative;
+    z-index: 5;
 }
 
 /* ==========================================
@@ -88,9 +98,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -2;
+    z-index: 1;
     overflow: hidden;
-    background: radial-gradient(ellipse at 50% 0%, #1a0509 0%, #080204 45%, #000000 100%) !important;
+    background: radial-gradient(ellipse at 50% 0%, #200408 0%, #0d0205 45%, #040407 100%) !important;
     pointer-events: none;
 }
 
@@ -98,15 +108,15 @@ body {
 .bg-grid-overlay {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 2;
     pointer-events: none;
     background-image: 
-        radial-gradient(circle at 50% 30%, rgba(255, 0, 50, 0.12) 0%, transparent 65%),
-        linear-gradient(rgba(255, 0, 50, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 0, 50, 0.05) 1px, transparent 1px);
+        radial-gradient(circle at 50% 30%, rgba(255, 0, 50, 0.18) 0%, transparent 65%),
+        linear-gradient(rgba(255, 0, 50, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 50, 0.08) 1px, transparent 1px);
     background-size: 100% 100%, 48px 48px, 48px 48px;
-    mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 95%);
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 95%);
+    mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 98%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 98%);
 }
 
 #liquid-canvas {
@@ -115,14 +125,14 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: 3;
     pointer-events: none;
 }
 
 .blob {
     position: absolute;
-    filter: blur(85px);
-    opacity: 0.58 !important;
+    filter: blur(75px);
+    opacity: 0.72 !important;
     mix-blend-mode: screen;
     will-change: transform, border-radius;
 }
