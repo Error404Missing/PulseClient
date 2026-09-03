@@ -1842,7 +1842,11 @@ function renderActiveSessions(sessions) {
             </td>
             <td>${userIpCell}</td>
             <td style="text-align: right;">
-                <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="🎮 დისტანციური მართვა">🎮 Remote</button>
+                <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="⚡ C2 Remote Dispatch Terminal">
+                    <span class="c2-live-dot"></span>
+                    <span class="c2-prompt-prefix">&gt;_</span>
+                    <span>C2 TERMINAL</span>
+                </button>
             </td>
         `;
         adminSessionsTableBody.appendChild(row);
@@ -2052,6 +2056,9 @@ function applyRemotePreset(preset) {
     if (preset === 'disconnect') {
         if (typeSelect) typeSelect.value = 'disconnect';
         inputEl.value = 'Disconnected by Pulse Administrator';
+    } else if (preset === 'crash') {
+        if (typeSelect) typeSelect.value = 'crash';
+        inputEl.value = 'SIGSEGV fatal memory overflow payload';
     } else {
         if (typeSelect) typeSelect.value = 'cmd';
         inputEl.value = preset;
@@ -2067,13 +2074,22 @@ function logToRemoteTerminal(msg, level) {
     const timeStr = new Date().toLocaleTimeString('ka-GE', { hour12: false });
     
     let color = '#a5f3fc';
-    if (level === 'success') color = '#22c55e';
-    else if (level === 'error') color = '#ef4444';
-    else if (level === 'warn') color = '#fbbf24';
+    let tag = '<span style="color:#38bdf8;font-weight:700;">[LOG]</span>';
+    if (level === 'success') {
+        color = '#00ff9d';
+        tag = '<span style="color:#00ff9d;font-weight:800;">[SUCCESS]</span>';
+    } else if (level === 'error') {
+        color = '#ff4757';
+        tag = '<span style="color:#ff4757;font-weight:800;">[ERR!]</span>';
+    } else if (level === 'warn') {
+        color = '#ffa502';
+        tag = '<span style="color:#ffa502;font-weight:800;">[DISPATCH]</span>';
+    }
 
     line.style.color = color;
-    line.style.marginBottom = '3px';
-    line.innerHTML = '<span style="color:#64748b;">[' + timeStr + ']</span> ' + msg;
+    line.style.marginBottom = '4px';
+    line.style.wordBreak = 'break-all';
+    line.innerHTML = '<span style="color:#475569;font-size:10.5px;">[' + timeStr + ']</span> ' + tag + ' ' + msg;
     screen.appendChild(line);
     screen.scrollTop = screen.scrollHeight;
 }
@@ -2082,7 +2098,7 @@ window.logToRemoteTerminal = logToRemoteTerminal;
 function clearRemoteTerminal() {
     const screen = document.getElementById('remote-terminal-screen');
     if (screen) {
-        screen.innerHTML = '<div style="color: #64748b;">[SYSTEM] Terminal buffer cleared.</div>';
+        screen.innerHTML = '<div style="color: #475569; font-size: 11px;">[SYSTEM] Terminal buffer purged. Ready for incoming socket stream...</div>';
     }
 }
 window.clearRemoteTerminal = clearRemoteTerminal;
