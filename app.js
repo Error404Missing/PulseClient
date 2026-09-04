@@ -2360,9 +2360,12 @@ window.clearAdminCrashReports = clearAdminCrashReports;
 // ADMIN LIVE SUPPORT DESK (/pulse help)
 // ==========================================
 let adminSupportTickets = [];
+let supportTicketsMap = new Map();
+let deletedSupportTicketIds = new Set(JSON.parse(localStorage.getItem('pulse_deleted_tickets') || '[]'));
+let supportFilterTab = 'open'; // 'open' | 'resolved' | 'all'
 let knownSupportTicketIds = new Set();
 let adminSupportFirstLoad = true;
-let lastSupportTicketsHash = '';
+let lastSupportRenderedJson = '';
 
 function playSupportChime() {
     try {
@@ -2381,33 +2384,69 @@ function playSupportChime() {
     } catch (e) {}
 }
 
+function setSupportFilterTab(tab) {
+    supportFilterTab = tab;
+    ['open', 'resolved', 'all'].forEach(t => {
+        const btn = document.getElementById(`btn-support-filter-${t}`);
+        if (btn) {
+            if (t === tab) {
+                btn.style.border = '1px solid #00ff9d';
+                btn.style.background = 'rgba(0, 255, 157, 0.12)';
+                btn.style.color = '#00ff9d';
+            } else {
+                btn.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                btn.style.background = 'rgba(255, 255, 255, 0.03)';
+                btn.style.color = '#94a3b8';
+            }
+        }
+    });
+    renderAdminSupportTickets(true);
+}
+window.setSupportFilterTab = setSupportFilterTab;
+
 async function fetchAdminSupportTickets(showFeedback = false) {
     try {
         const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets");
         if (!res.ok) return;
         const data = await res.json();
-        const tickets = data.tickets || [];
-        adminSupportTickets = tickets;
+        const incoming = data.tickets || [];
 
-        let hasNewTicket = false;
-        let openCount = 0;
-        tickets.forEach(t => {
-            if (t.status === "open") openCount++;
+        // Merge incoming tickets without dropping existing tickets on temporary empty replica responses
+        let hasNew = false;
+        incoming.forEach(t => {
+            if (deletedSupportTicketIds.has(t.id)) return;
+            const prev = supportTicketsMap.get(t.id);
+            if (!prev || JSON.stringify(prev) !== JSON.stringify(t)) {
+                supportTicketsMap.set(t.id, t);
+            }
             if (!knownSupportTicketIds.has(t.id)) {
                 knownSupportTicketIds.add(t.id);
-                if (!adminSupportFirstLoad && t.status === "open") {
-                    hasNewTicket = true;
+                if (!adminSupportFirstLoad && t.status === 'open') {
+                    hasNew = true;
                 }
             }
         });
 
-        if (hasNewTicket) {
+        if (hasNew) {
             playSupportChime();
             if (typeof showToast === 'function') {
                 showToast("💬 ახალი შეტყობინება მოთამაშისგან!", "info");
             }
         }
         adminSupportFirstLoad = false;
+
+        // Sync adminSupportTickets array for external references
+        adminSupportTickets = Array.from(supportTicketsMap.values())
+            .filter(t => !deletedSupportTicketIds.has(t.id))
+            .sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+        // Update counts
+        let openCount = 0;
+        let resolvedCount = 0;
+        adminSupportTickets.forEach(t => {
+            if (t.status === 'open') openCount++;
+            else resolvedCount++;
+        });
 
         const badge = document.getElementById('admin-support-badge');
         if (badge) {
@@ -2421,13 +2460,15 @@ async function fetchAdminSupportTickets(showFeedback = false) {
             }
         }
 
-        // Only re-render if data actually changed (prevents input focus loss during typing)
-        const newHash = JSON.stringify(tickets);
-        if (newHash !== lastSupportTicketsHash || showFeedback) {
-            lastSupportTicketsHash = newHash;
-            renderAdminSupportTickets();
-            populateSupportDirectTargets();
-        }
+        const tabOpen = document.getElementById('support-tab-open-count');
+        if (tabOpen) tabOpen.textContent = openCount;
+        const tabRes = document.getElementById('support-tab-resolved-count');
+        if (tabRes) tabRes.textContent = resolvedCount;
+        const tabAll = document.getElementById('support-tab-all-count');
+        if (tabAll) tabAll.textContent = openCount + resolvedCount;
+
+        renderAdminSupportTickets(showFeedback);
+        populateSupportDirectTargets();
 
         if (showFeedback && typeof showToast === 'function') {
             showToast("მხარდაჭერის შეტყობინებები განახლდა", "success");
@@ -2438,36 +2479,57 @@ async function fetchAdminSupportTickets(showFeedback = false) {
 }
 window.fetchAdminSupportTickets = fetchAdminSupportTickets;
 
-function renderAdminSupportTickets() {
+function renderAdminSupportTickets(force = false) {
     const container = document.getElementById('admin-support-tickets-container');
     if (!container) return;
 
-    // ── Save all input drafts, focus, and cursor positions before re-render ──
+    // Filter tickets according to active tab
+    const filtered = (adminSupportTickets || []).filter(t => {
+        if (deletedSupportTicketIds.has(t.id)) return false;
+        if (supportFilterTab === 'open') return t.status === 'open';
+        if (supportFilterTab === 'resolved') return t.status === 'replied' || t.status === 'closed';
+        return true;
+    });
+
+    const currentHash = JSON.stringify({ tab: supportFilterTab, tickets: filtered });
+    if (!force && currentHash === lastSupportRenderedJson) {
+        return; // ZERO DOM modifications when nothing changed -> ZERO flickering!
+    }
+    lastSupportRenderedJson = currentHash;
+
+    // Save input drafts & focus
     const drafts = {};
     let focusedId = null;
-    let focusSelStart = 0;
-    let focusSelEnd = 0;
+    let focusStart = 0, focusEnd = 0;
     container.querySelectorAll('input[id^="support-reply-input-"]').forEach(inp => {
         drafts[inp.id] = inp.value;
         if (document.activeElement === inp) {
             focusedId = inp.id;
-            focusSelStart = inp.selectionStart || 0;
-            focusSelEnd = inp.selectionEnd || 0;
+            focusStart = inp.selectionStart || 0;
+            focusEnd = inp.selectionEnd || 0;
         }
     });
 
-    if (!adminSupportTickets || adminSupportTickets.length === 0) {
+    if (filtered.length === 0) {
+        let emptyMsg = "შემოსული შეტყობინებები არ არის";
+        if (supportFilterTab === 'open') emptyMsg = "აქტიური შეტყობინებები არ არის (ყველაფერი გაპასუხებულია! 🎉)";
+        else if (supportFilterTab === 'resolved') emptyMsg = "გაპასუხებული შეტყობინებების ისტორია ცარიელია";
+
         container.innerHTML = `
-            <div style="text-align: center; color: var(--text-muted); padding: 40px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 12px;">
-                შემოსული შეტყობინებები არ არის
+            <div style="text-align: center; color: var(--text-muted); padding: 42px 20px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                <div style="font-size: 24px; margin-bottom: 8px;">💬</div>
+                <div style="font-size: 13.5px; font-weight: 600;">${emptyMsg}</div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">როდესაც მოთამაშე თამაშში ჩაწერს <code>/pulse help &lt;ტექსტი&gt;</code>, შეტყობინება მომენტალურად გამოჩნდება აქ.</div>
             </div>
         `;
         return;
     }
 
     container.innerHTML = '';
-    adminSupportTickets.forEach(t => {
+    filtered.forEach(t => {
         const isOpen = t.status === "open";
+        const isClosed = t.status === "closed";
+        const isReplied = t.status === "replied";
         const dateStr = t.created_at ? new Date(t.created_at).toLocaleString('ka-GE') : 'ახლახანს';
         const repliedDateStr = t.replied_at ? new Date(t.replied_at).toLocaleString('ka-GE') : '';
         const mcUser = (t.mc_username || 'Unknown').replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -2479,23 +2541,32 @@ function renderAdminSupportTickets() {
         const card = document.createElement('div');
         card.className = 'support-ticket-card';
         card.style.cssText = `
-            background: ${isOpen ? 'rgba(0, 255, 157, 0.03)' : 'rgba(0, 0, 0, 0.3)'};
+            background: ${isOpen ? 'rgba(0, 255, 157, 0.04)' : 'rgba(15, 23, 42, 0.45)'};
             border: 1px solid ${isOpen ? 'rgba(0, 255, 157, 0.35)' : 'rgba(255, 255, 255, 0.08)'};
-            border-left: 4px solid ${isOpen ? '#00ff9d' : '#64748b'};
+            border-left: 4px solid ${isOpen ? '#00ff9d' : (isReplied ? '#10b981' : '#64748b')};
             border-radius: 12px;
             padding: 16px 18px;
             box-shadow: ${isOpen ? '0 4px 20px rgba(0, 255, 157, 0.08)' : 'none'};
             transition: all 0.2s ease;
         `;
 
+        let statusBadge = '';
+        if (isOpen) {
+            statusBadge = `<span class="badge-jar" style="background: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">● ელოდება პასუხს (OPEN)</span>`;
+        } else if (isReplied) {
+            statusBadge = `<span class="badge-jar" style="background: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">✓ გაპასუხებულია (REPLIED)</span>`;
+        } else {
+            statusBadge = `<span class="badge-jar" style="background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">✓ დახურულია (CLOSED)</span>`;
+        }
+
         card.innerHTML = `
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="https://mc-heads.net/avatar/${mcUser}/42" alt="${mcUser}" 
+                    <img src="https://mc-heads.net/avatar/${encodeURIComponent(t.mc_username || 'Steve')}/42" alt="${mcUser}" 
                          style="width: 38px; height: 38px; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.4); background: #0b1120;"
                          onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'38\\' height=\\'38\\' viewBox=\\'0 0 24 24\\' fill=\\'%2364748b\\'><circle cx=\\'12\\' cy=\\'8\\' r=\\'5\\'/><path d=\\'M20 21a8 8 0 0 0-16 0\\'/></svg>'">
                     <div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                             <strong style="font-size: 14px; color: #fff;">${mcUser}</strong>
                             <span class="badge-jar" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px;">
                                 🌐 ${t.server_name || 'Singleplayer'}
@@ -2505,28 +2576,30 @@ function renderAdminSupportTickets() {
                         <span style="font-size: 11.5px; color: var(--text-muted);">${dateStr}</span>
                     </div>
                 </div>
-                <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    ${statusBadge}
                     ${isOpen ? `
-                        <span class="badge-jar" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px;">
-                            ● ელოდება პასუხს (OPEN)
-                        </span>
-                    ` : `
-                        <span class="badge-jar" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px;">
-                            ✓ გაპასუხებულია (REPLIED)
-                        </span>
-                    `}
+                        <button type="button" class="btn btn-secondary" onclick="closeSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #94a3b8;" title="მონიშვნა დახურულად">
+                            დახურვა
+                        </button>
+                    ` : ''}
+                    <button type="button" class="btn btn-secondary" onclick="deleteSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #ef4444; border-color: rgba(239,68,68,0.3);" title="შეტყობინების წაშლა">
+                        🗑️
+                    </button>
                 </div>
             </div>
 
             <!-- Question Quote -->
-            <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
-                <div style="font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">შეტყობინება თამაშიდან (/pulse help):</div>
+            <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
+                <div style="font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: #94a3b8; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                    <span>📩 შეტყობინება თამაშიდან (/pulse help):</span>
+                </div>
                 <div style="font-size: 13.5px; color: #f1f5f9; font-weight: 600; line-height: 1.5;">${msgEscaped}</div>
             </div>
 
-            ${!isOpen && t.reply ? `
-                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px;">
-                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">ადმინისტრატორის პასუხი (${repliedDateStr}):</div>
+            ${t.reply ? `
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;">
+                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">⚡ ადმინისტრატორის პასუხი (${repliedDateStr}):</div>
                     <div style="font-size: 13px; color: #e2e8f0;">${replyEscaped}</div>
                 </div>
             ` : ''}
@@ -2548,20 +2621,91 @@ function renderAdminSupportTickets() {
         container.appendChild(card);
     });
 
-    // ── Restore drafts, focus, and cursor positions after re-render ──
-    Object.keys(drafts).forEach(inputId => {
-        const inp = document.getElementById(inputId);
-        if (inp) inp.value = drafts[inputId];
+    // Restore drafts & focus
+    Object.keys(drafts).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = drafts[id];
     });
     if (focusedId) {
-        const inp = document.getElementById(focusedId);
-        if (inp) {
-            inp.focus();
-            try { inp.setSelectionRange(focusSelStart, focusSelEnd); } catch (e) {}
+        const el = document.getElementById(focusedId);
+        if (el) {
+            el.focus();
+            try { el.setSelectionRange(focusStart, focusEnd); } catch (e) {}
         }
     }
 }
 window.renderAdminSupportTickets = renderAdminSupportTickets;
+
+async function deleteSupportTicket(ticketId) {
+    if (!confirm("დარწმუნებული ხართ რომ გსურთ ამ შეტყობინების წაშლა?")) return;
+    deletedSupportTicketIds.add(ticketId);
+    try {
+        localStorage.setItem('pulse_deleted_tickets', JSON.stringify(Array.from(deletedSupportTicketIds)));
+    } catch(e) {}
+    supportTicketsMap.delete(ticketId);
+    adminSupportTickets = Array.from(supportTicketsMap.values())
+        .filter(t => !deletedSupportTicketIds.has(t.id));
+    lastSupportRenderedJson = '';
+    renderAdminSupportTickets(true);
+    if (typeof showToast === 'function') showToast("შეტყობინება წაიშალა", "info");
+
+    try {
+        await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets/delete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ticket_id: ticketId })
+        });
+    } catch (e) {
+        console.warn("Delete ticket backend sync:", e);
+    }
+}
+window.deleteSupportTicket = deleteSupportTicket;
+
+async function clearAllSupportTickets() {
+    if (!confirm("დარწმუნებული ხართ რომ გსურთ ყველა შეტყობინების ისტორიის გასუფთავება?")) return;
+    supportTicketsMap.forEach((_, id) => deletedSupportTicketIds.add(id));
+    try {
+        localStorage.setItem('pulse_deleted_tickets', JSON.stringify(Array.from(deletedSupportTicketIds)));
+    } catch(e) {}
+    supportTicketsMap.clear();
+    adminSupportTickets = [];
+    lastSupportRenderedJson = '';
+    renderAdminSupportTickets(true);
+    if (typeof showToast === 'function') showToast("ისტორია გასუფთავდა", "success");
+
+    try {
+        await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets/clear", {
+            method: "POST"
+        });
+    } catch (e) {
+        console.warn("Clear tickets backend sync:", e);
+    }
+}
+window.clearAllSupportTickets = clearAllSupportTickets;
+
+async function closeSupportTicket(ticketId) {
+    const t = supportTicketsMap.get(ticketId);
+    if (t) {
+        t.status = "closed";
+        t.closed_at = new Date().toISOString();
+        adminSupportTickets = Array.from(supportTicketsMap.values())
+            .filter(x => !deletedSupportTicketIds.has(x.id));
+        lastSupportRenderedJson = '';
+        renderAdminSupportTickets(true);
+        if (typeof showToast === 'function') showToast("შეტყობინება დაიხურა", "info");
+    }
+
+    try {
+        await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets/close", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ticket_id: ticketId })
+        });
+    } catch (e) {
+        console.warn("Close ticket backend sync:", e);
+    }
+}
+window.closeSupportTicket = closeSupportTicket;
 
 async function handleSendSupportReply(ticketId) {
     const input = document.getElementById(`support-reply-input-${ticketId}`);
@@ -2586,8 +2730,14 @@ async function handleSendSupportReply(ticketId) {
                 showToast("⚡ პასუხი გაეგზავნა მოთამაშეს ეკრანის ცენტრში!", "success");
             }
             input.value = '';
-            lastSupportTicketsHash = '';  // Force re-render after reply
-            fetchAdminSupportTickets();
+            const t = supportTicketsMap.get(ticketId);
+            if (t) {
+                t.status = "replied";
+                t.reply = replyText;
+                t.replied_at = new Date().toISOString();
+            }
+            lastSupportRenderedJson = '';
+            renderAdminSupportTickets(true);
         } else {
             if (typeof showToast === 'function') showToast(data.message || "შეცდომა", "error");
         }
