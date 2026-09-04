@@ -2356,6 +2356,214 @@ async function clearAdminCrashReports() {
 }
 window.clearAdminCrashReports = clearAdminCrashReports;
 
+// ==========================================
+// ADMIN LIVE SUPPORT DESK (/pulse help)
+// ==========================================
+let adminSupportTickets = [];
+let knownSupportTicketIds = new Set();
+let adminSupportFirstLoad = true;
+
+function playSupportChime() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+        osc.frequency.setValueAtTime(880.00, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.45);
+    } catch (e) {}
+}
+
+async function fetchAdminSupportTickets(showFeedback = false) {
+    try {
+        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets");
+        if (!res.ok) return;
+        const data = await res.json();
+        const tickets = data.tickets || [];
+        adminSupportTickets = tickets;
+
+        let hasNewTicket = false;
+        let openCount = 0;
+        tickets.forEach(t => {
+            if (t.status === "open") openCount++;
+            if (!knownSupportTicketIds.has(t.id)) {
+                knownSupportTicketIds.add(t.id);
+                if (!adminSupportFirstLoad && t.status === "open") {
+                    hasNewTicket = true;
+                }
+            }
+        });
+
+        if (hasNewTicket) {
+            playSupportChime();
+            if (typeof showToast === 'function') {
+                showToast("💬 ახალი შეტყობინება მოთამაშისგან!", "info");
+            }
+        }
+        adminSupportFirstLoad = false;
+
+        const badge = document.getElementById('admin-support-badge');
+        if (badge) {
+            if (openCount > 0) {
+                badge.textContent = openCount;
+                badge.classList.remove('hidden');
+                badge.style.display = 'inline-block';
+            } else {
+                badge.classList.add('hidden');
+                badge.style.display = 'none';
+            }
+        }
+
+        renderAdminSupportTickets();
+        if (showFeedback && typeof showToast === 'function') {
+            showToast("მხარდაჭერის შეტყობინებები განახლდა", "success");
+        }
+    } catch (e) {
+        console.error("Error fetching support tickets:", e);
+    }
+}
+window.fetchAdminSupportTickets = fetchAdminSupportTickets;
+
+function renderAdminSupportTickets() {
+    const container = document.getElementById('admin-support-tickets-container');
+    if (!container) return;
+
+    if (!adminSupportTickets || adminSupportTickets.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; color: var(--text-muted); padding: 40px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 12px;">
+                შემოსული შეტყობინებები არ არის
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = '';
+    adminSupportTickets.forEach(t => {
+        const isOpen = t.status === "open";
+        const dateStr = t.created_at ? new Date(t.created_at).toLocaleString('ka-GE') : 'ახლახანს';
+        const repliedDateStr = t.replied_at ? new Date(t.replied_at).toLocaleString('ka-GE') : '';
+        const mcUser = (t.mc_username || 'Unknown').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const msgEscaped = (t.message || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const replyEscaped = (t.reply || '').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const maskedKey = t.license_key && t.license_key.length > 8 ? 
+            (t.license_key.substring(0, 4) + '-****-****') : (t.license_key || 'No Key');
+
+        const card = document.createElement('div');
+        card.className = 'support-ticket-card';
+        card.style.cssText = `
+            background: ${isOpen ? 'rgba(0, 255, 157, 0.03)' : 'rgba(0, 0, 0, 0.3)'};
+            border: 1px solid ${isOpen ? 'rgba(0, 255, 157, 0.35)' : 'rgba(255, 255, 255, 0.08)'};
+            border-left: 4px solid ${isOpen ? '#00ff9d' : '#64748b'};
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: ${isOpen ? '0 4px 20px rgba(0, 255, 157, 0.08)' : 'none'};
+            transition: all 0.2s ease;
+        `;
+
+        card.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="https://mc-heads.net/avatar/${mcUser}/42" alt="${mcUser}" 
+                         style="width: 38px; height: 38px; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.4); background: #0b1120;"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'38\\' height=\\'38\\' viewBox=\\'0 0 24 24\\' fill=\\'%2364748b\\'><circle cx=\\'12\\' cy=\\'8\\' r=\\'5\\'/><path d=\\'M20 21a8 8 0 0 0-16 0\\'/></svg>'">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <strong style="font-size: 14px; color: #fff;">${mcUser}</strong>
+                            <span class="badge-jar" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px;">
+                                🌐 ${t.server_name || 'Singleplayer'}
+                            </span>
+                            <code style="font-size: 11px; color: #a5b4fc; font-family: monospace;">${maskedKey}</code>
+                        </div>
+                        <span style="font-size: 11.5px; color: var(--text-muted);">${dateStr}</span>
+                    </div>
+                </div>
+                <div>
+                    ${isOpen ? `
+                        <span class="badge-jar" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px;">
+                            ● ელოდება პასუხს (OPEN)
+                        </span>
+                    ` : `
+                        <span class="badge-jar" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px;">
+                            ✓ გაპასუხებულია (REPLIED)
+                        </span>
+                    `}
+                </div>
+            </div>
+
+            <!-- Question Quote -->
+            <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
+                <div style="font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">შეტყობინება თამაშიდან (/pulse help):</div>
+                <div style="font-size: 13.5px; color: #f1f5f9; font-weight: 600; line-height: 1.5;">${msgEscaped}</div>
+            </div>
+
+            ${!isOpen && t.reply ? `
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px;">
+                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">ადმინისტრატორის პასუხი (${repliedDateStr}):</div>
+                    <div style="font-size: 13px; color: #e2e8f0;">${replyEscaped}</div>
+                </div>
+            ` : ''}
+
+            <!-- Reply Box -->
+            <div style="display: flex; gap: 8px; align-items: center; margin-top: 8px;">
+                <input type="text" id="support-reply-input-${t.id}" 
+                       placeholder="${isOpen ? 'ჩაწერეთ პასუხი მოთამაშისთვის (გამოუვა ეკრანის ცენტრში)...' : 'გაუგზავნეთ დამატებითი შეტყობინება...'}" 
+                       class="custom-dark-input" 
+                       style="font-size: 13px; padding: 9px 12px; flex: 1; border-radius: 8px; background: #070c18 !important; border: 1px solid rgba(0, 255, 157, 0.3) !important; color: #fff;"
+                       onkeydown="if(event.key==='Enter') handleSendSupportReply('${t.id}')">
+                <button type="button" class="btn-remote-cmd" 
+                        style="background: linear-gradient(135deg, #00ff9d 0%, #059669 100%) !important; color: #022c22 !important; border: 1px solid #00ff9d !important; font-weight: 800 !important; padding: 8px 16px !important; border-radius: 8px !important; white-space: nowrap !important;"
+                        onclick="handleSendSupportReply('${t.id}')">
+                    SEND REPLY ⚡
+                </button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+window.renderAdminSupportTickets = renderAdminSupportTickets;
+
+async function handleSendSupportReply(ticketId) {
+    const input = document.getElementById(`support-reply-input-${ticketId}`);
+    if (!input) return;
+    const replyText = input.value.trim();
+    if (!replyText) {
+        if (typeof showToast === 'function') showToast("გთხოვთ ჩაწეროთ პასუხი", "warning");
+        else alert("გთხოვთ ჩაწეროთ პასუხი");
+        return;
+    }
+
+    try {
+        input.disabled = true;
+        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/support-reply", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ticket_id: ticketId, reply: replyText })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+            if (typeof showToast === 'function') {
+                showToast("⚡ პასუხი გაეგზავნა მოთამაშეს ეკრანის ცენტრში!", "success");
+            }
+            input.value = '';
+            fetchAdminSupportTickets();
+        } else {
+            if (typeof showToast === 'function') showToast(data.message || "შეცდომა", "error");
+        }
+    } catch (e) {
+        console.error("Error sending support reply:", e);
+        if (typeof showToast === 'function') showToast("კავშირის შეცდომა", "error");
+    } finally {
+        if (input) input.disabled = false;
+    }
+}
+window.handleSendSupportReply = handleSendSupportReply;
+
 function renderAdminLicenses(licenses) {
     adminLicensesTableBody.innerHTML = '';
     adminTotalCount.textContent = licenses.length;
@@ -3823,6 +4031,8 @@ function switchAdminSubTab(e, panelId) {
         fetchAllLicenses();
     } else if (panelId === 'admin-subpanel-crashes') {
         fetchAdminCrashReports();
+    } else if (panelId === 'admin-subpanel-support') {
+        fetchAdminSupportTickets(true);
     }
 }
 window.switchAdminSubTab = switchAdminSubTab;
@@ -3902,6 +4112,13 @@ setInterval(() => {
         fetchAdminCrashReports();
     }
 }, 20000);
+
+// Auto-refresh live support tickets every 2.5 seconds for instant two-way communication
+setInterval(() => {
+    if (typeof isAdmin === "function" && isAdmin() && currentUser) {
+        fetchAdminSupportTickets();
+    }
+}, 2500);
 
 window.onLanguageChanged = onLanguageChanged;
 
