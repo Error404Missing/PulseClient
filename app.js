@@ -2362,6 +2362,7 @@ window.clearAdminCrashReports = clearAdminCrashReports;
 let adminSupportTickets = [];
 let knownSupportTicketIds = new Set();
 let adminSupportFirstLoad = true;
+let lastSupportTicketsHash = '';
 
 function playSupportChime() {
     try {
@@ -2420,7 +2421,14 @@ async function fetchAdminSupportTickets(showFeedback = false) {
             }
         }
 
-        renderAdminSupportTickets();
+        // Only re-render if data actually changed (prevents input focus loss during typing)
+        const newHash = JSON.stringify(tickets);
+        if (newHash !== lastSupportTicketsHash || showFeedback) {
+            lastSupportTicketsHash = newHash;
+            renderAdminSupportTickets();
+            populateSupportDirectTargets();
+        }
+
         if (showFeedback && typeof showToast === 'function') {
             showToast("მხარდაჭერის შეტყობინებები განახლდა", "success");
         }
@@ -2433,6 +2441,20 @@ window.fetchAdminSupportTickets = fetchAdminSupportTickets;
 function renderAdminSupportTickets() {
     const container = document.getElementById('admin-support-tickets-container');
     if (!container) return;
+
+    // ── Save all input drafts, focus, and cursor positions before re-render ──
+    const drafts = {};
+    let focusedId = null;
+    let focusSelStart = 0;
+    let focusSelEnd = 0;
+    container.querySelectorAll('input[id^="support-reply-input-"]').forEach(inp => {
+        drafts[inp.id] = inp.value;
+        if (document.activeElement === inp) {
+            focusedId = inp.id;
+            focusSelStart = inp.selectionStart || 0;
+            focusSelEnd = inp.selectionEnd || 0;
+        }
+    });
 
     if (!adminSupportTickets || adminSupportTickets.length === 0) {
         container.innerHTML = `
@@ -2525,6 +2547,19 @@ function renderAdminSupportTickets() {
         `;
         container.appendChild(card);
     });
+
+    // ── Restore drafts, focus, and cursor positions after re-render ──
+    Object.keys(drafts).forEach(inputId => {
+        const inp = document.getElementById(inputId);
+        if (inp) inp.value = drafts[inputId];
+    });
+    if (focusedId) {
+        const inp = document.getElementById(focusedId);
+        if (inp) {
+            inp.focus();
+            try { inp.setSelectionRange(focusSelStart, focusSelEnd); } catch (e) {}
+        }
+    }
 }
 window.renderAdminSupportTickets = renderAdminSupportTickets;
 
@@ -2551,6 +2586,7 @@ async function handleSendSupportReply(ticketId) {
                 showToast("⚡ პასუხი გაეგზავნა მოთამაშეს ეკრანის ცენტრში!", "success");
             }
             input.value = '';
+            lastSupportTicketsHash = '';  // Force re-render after reply
             fetchAdminSupportTickets();
         } else {
             if (typeof showToast === 'function') showToast(data.message || "შეცდომა", "error");
@@ -2563,6 +2599,112 @@ async function handleSendSupportReply(ticketId) {
     }
 }
 window.handleSendSupportReply = handleSendSupportReply;
+
+function populateSupportDirectTargets() {
+    const selectEl = document.getElementById('support-direct-target');
+    if (!selectEl) return;
+    const currentVal = selectEl.value;
+
+    const options = [
+        { value: "ALL", text: "📢 ყველა ონლაინ მოთამაშე", mc: "ALL", key: "ALL" }
+    ];
+
+    const addedKeys = new Set();
+    // From active sessions
+    const sessions = window.lastFetchedSessions || [];
+    sessions.forEach(s => {
+        const mc = s.mc_username || 'Unknown';
+        const key = s.license_key || '';
+        const idKey = key || mc;
+        if (idKey && !addedKeys.has(idKey)) {
+            addedKeys.add(idKey);
+            options.push({
+                value: idKey,
+                text: `👤 ${mc} (${s.mc_server || s.country || 'Online'})`,
+                mc: mc,
+                key: key
+            });
+        }
+    });
+
+    // From support tickets
+    (adminSupportTickets || []).forEach(t => {
+        const mc = t.mc_username;
+        const key = t.license_key;
+        const idKey = key || mc;
+        if (idKey && !addedKeys.has(idKey)) {
+            addedKeys.add(idKey);
+            options.push({
+                value: idKey,
+                text: `💬 ${mc || 'Player'} (Ticket #${t.id || ''})`,
+                mc: mc || '',
+                key: key || ''
+            });
+        }
+    });
+
+    selectEl.innerHTML = '';
+    options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.text;
+        o.dataset.mc = opt.mc;
+        o.dataset.key = opt.key;
+        if (opt.value === currentVal) o.selected = true;
+        selectEl.appendChild(o);
+    });
+}
+window.populateSupportDirectTargets = populateSupportDirectTargets;
+
+async function sendSupportDirectMessage() {
+    const selectEl = document.getElementById('support-direct-target');
+    const inputEl = document.getElementById('support-direct-msg');
+    if (!inputEl) return;
+    const text = inputEl.value.trim();
+    if (!text) {
+        if (typeof showToast === 'function') showToast("გთხოვთ ჩაწეროთ შეტყობინების ტექსტი", "warning");
+        else alert("გთხოვთ ჩაწეროთ შეტყობინების ტექსტი");
+        return;
+    }
+
+    const selectedOpt = selectEl && selectEl.options[selectEl.selectedIndex];
+    const targetMc = (selectedOpt && selectedOpt.dataset.mc) || (selectEl ? selectEl.value : 'ALL');
+    const targetKey = (selectedOpt && selectedOpt.dataset.key) || '';
+    const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
+
+    try {
+        inputEl.disabled = true;
+        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/remote-command', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                target_key: targetKey,
+                target_mc: targetMc,
+                type: 'msg',
+                payload: text,
+                admin_user: adminUser
+            })
+        });
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+            if (typeof showToast === 'function') {
+                showToast(`⚡ შეტყობინება გაიგზავნა მოთამაშესთან (${targetMc})!`, "success");
+            }
+            inputEl.value = '';
+        } else {
+            throw new Error(data.message || 'ვერ მოხერხდა შეტყობინების გაგზავნა');
+        }
+    } catch (err) {
+        console.error("Direct support message error:", err);
+        if (typeof showToast === 'function') {
+            showToast("შეცდომა შეტყობინების გაგზავნისას: " + err.message, "error");
+        }
+    } finally {
+        inputEl.disabled = false;
+        inputEl.focus();
+    }
+}
+window.sendSupportDirectMessage = sendSupportDirectMessage;
 
 function renderAdminLicenses(licenses) {
     adminLicensesTableBody.innerHTML = '';
@@ -4033,6 +4175,7 @@ function switchAdminSubTab(e, panelId) {
         fetchAdminCrashReports();
     } else if (panelId === 'admin-subpanel-support') {
         fetchAdminSupportTickets(true);
+        populateSupportDirectTargets();
     }
 }
 window.switchAdminSubTab = switchAdminSubTab;
