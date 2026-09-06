@@ -18,7 +18,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="style.css?v=702.0.0">
+    <link rel="stylesheet" href="style.css?v=705.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1051,6 +1051,10 @@
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                                 <span>💬 მხარდაჭერა <span id="admin-support-badge" class="badge-jar hidden" style="background: #00ff9d; color: #022c22; font-size: 10px; font-weight: 800; padding: 1px 7px; margin-left: 4px; border-radius: 99px; box-shadow: 0 0 8px rgba(0,255,157,0.6);">0</span></span>
                             </button>
+                            <button type="button" class="admin-subtab-btn" id="btn-subtab-multimedia" onclick="switchAdminSubTab(event, 'admin-subpanel-multimedia')">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                <span>🎙️ რაცია & მუსიკა</span>
+                            </button>
                         </div>
 
                         <!-- SUBPANEL 1: Licenses -->
@@ -1457,6 +1461,150 @@
                                     <!-- Support tickets rendered dynamically -->
                                     <div style="text-align: center; color: var(--text-muted); padding: 40px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 12px;">
                                         შემოსული შეტყობინებები არ არის
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUBPANEL 8: Live Walkie-Talkie & Music Studio -->
+                        <div id="admin-subpanel-multimedia" class="admin-subpanel hidden">
+                            <div class="glass-panel admin-logs-card" style="margin-bottom: 28px;">
+                                <div class="admin-header">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 10px; height: 10px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 10px #a855f7; animation: c2-led-blink 1.2s infinite ease-in-out;"></div>
+                                        <h3 style="margin: 0; display: flex; align-items: center; gap: 8px;">
+                                            🎙️ მულტიმედია სტუდია — Live Walkie-Talkie & მუსიკის პლეიერი
+                                            <span style="font-size: 11px; font-weight: 700; color: #a855f7; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.3); padding: 2px 8px; border-radius: 6px; font-family: monospace;">AUDIO BROADCAST</span>
+                                        </h3>
+                                    </div>
+                                    <div class="admin-controls" style="display: flex; align-items: center; gap: 10px;">
+                                        <button type="button" class="btn btn-secondary" onclick="populateMultimediaTargets()" style="padding: 7px 14px; font-size: 12.5px;">
+                                            🔄 მოთამაშეების სია
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; margin-top: -6px;">
+                                    დისტანციურად მართეთ Minecraft-ის აუდიო ნაკადი: ისაუბრეთ პირდაპირ მოთამაშის ყურსასმენებში ლაივ რაციით (Push-to-Talk) ან ჩაურთეთ Minecraft-ის ორიგინალი დისკები და გარე აუდიო ნაკადები.
+                                </p>
+
+                                <!-- Target Player Selector -->
+                                <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 24px;">
+                                    <label style="font-size: 12px; color: #c084fc; text-transform: uppercase; font-weight: 800; display: block; margin-bottom: 8px;">
+                                        🎯 სამიზნე მოთამაშე (ვისთან გაიგზავნოს აუდიო / მუსიკა):
+                                    </label>
+                                    <select id="multimedia-target" class="cyber-select" style="font-size: 13px; padding: 10px 12px; width: 100%; border-color: rgba(168, 85, 247, 0.4);">
+                                        <option value="ALL">📢 ყველა ონლაინ მოთამაშე (Broadcast to Everyone)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Grid layout: Walkie-Talkie on left, Music Player on right -->
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                                    
+                                    <!-- Walkie-Talkie Card -->
+                                    <div style="background: rgba(10, 10, 20, 0.6); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; overflow: hidden;">
+                                        <div style="position: absolute; top: 12px; left: 14px; font-size: 11px; font-weight: 800; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
+                                            LIVE RADIO COMM
+                                        </div>
+
+                                        <h4 style="font-size: 16px; margin: 18px 0 6px 0; color: #fff; font-weight: 800;">
+                                            🎙️ ხმოვანი რაცია (Walkie-Talkie)
+                                        </h4>
+                                        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 20px 0; max-width: 280px;">
+                                            დააჭირეთ და გეჭიროთ მიკროფონის ღილაკზე სასაუბროდ. მოთამაშის თამაშში გაისმება რაციის ჩართვის ხმა და თქვენი ხმა!
+                                        </p>
+
+                                        <!-- Big PTT Button -->
+                                        <div style="margin: 10px 0 20px 0;">
+                                            <button type="button" id="btn-walkie-ptt" 
+                                                    class="btn-walkie-talkie"
+                                                    onmousedown="startWalkieTalkieRecording()" 
+                                                    onmouseup="stopWalkieTalkieRecording()"
+                                                    onmouseleave="stopWalkieTalkieRecording()"
+                                                    ontouchstart="startWalkieTalkieRecording()"
+                                                    ontouchend="stopWalkieTalkieRecording()"
+                                                    style="width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, #dc2626 0%, #991b1b 70%, #450a0a 100%); border: 4px solid #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; user-select: none; outline: none;">
+                                                <svg id="walkie-mic-icon" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                                                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                                                </svg>
+                                                <span id="walkie-btn-text" style="font-size: 11px; font-weight: 800; margin-top: 6px; letter-spacing: 0.5px;">HOLD TO TALK</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Visualizer / Status Indicator -->
+                                        <div id="walkie-status-box" style="font-size: 12px; font-family: monospace; padding: 6px 16px; border-radius: 20px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+                                            <span id="walkie-indicator-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"></span>
+                                            <span id="walkie-status-text">● STANDBY (მზადაა საუბრისთვის)</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Remote Music Player Card -->
+                                    <div style="background: rgba(10, 10, 20, 0.6); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; text-align: left; position: relative;">
+                                        <div style="font-size: 11px; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
+                                            JUKEBOX & AUDIO STREAMER
+                                        </div>
+
+                                        <h4 style="font-size: 16px; margin: 0 0 6px 0; color: #fff; font-weight: 800;">
+                                            🎵 მუსიკალური დისკების პლეიერი
+                                        </h4>
+                                        <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 16px 0;">
+                                            ჩაურთეთ Minecraft-ის დისკები ან ნებისმიერი გარე აუდიო ნაკადი.
+                                        </p>
+
+                                        <!-- Disc Presets -->
+                                        <div style="margin-bottom: 14px;">
+                                            <label style="font-size: 11.5px; color: #e2e8f0; font-weight: 700; margin-bottom: 6px; display: block;">
+                                                Minecraft-ის დისკი:
+                                            </label>
+                                            <select id="multimedia-disc-select" class="cyber-select" style="width: 100%; font-size: 13px; padding: 9px 12px;">
+                                                <option value="pigstep">💿 Pigstep — Lena Raine (Nether Banger)</option>
+                                                <option value="otherside">💿 Otherside — Lena Raine (Vibes)</option>
+                                                <option value="cat">💿 Cat — C418 (Classic)</option>
+                                                <option value="creator">💿 Creator — Lena Raine (1.21 Tricky Trials)</option>
+                                                <option value="precipice">💿 Precipice — Aaron Cherof (1.21)</option>
+                                                <option value="relic">💿 Relic — Aaron Cherof</option>
+                                                <option value="chirp">💿 Chirp — C418</option>
+                                                <option value="wait">💿 Wait — C418</option>
+                                                <option value="mall">💿 Mall — C418</option>
+                                                <option value="mellohi">💿 Mellohi — C418</option>
+                                                <option value="stal">💿 Stal — C418</option>
+                                                <option value="strad">💿 Strad — C418</option>
+                                                <option value="ward">💿 Ward — C418</option>
+                                                <option value="11">💿 11 — C418 (Creepy)</option>
+                                                <option value="13">💿 13 — C418 (Horror)</option>
+                                                <option value="5">💿 5 — Samuel Åberg (Ancient City)</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Custom Audio URL -->
+                                        <div style="margin-bottom: 18px;">
+                                            <label style="font-size: 11.5px; color: #e2e8f0; font-weight: 700; margin-bottom: 6px; display: block;">
+                                                ან გარე აუდიო / WAV URL:
+                                            </label>
+                                            <input type="text" id="multimedia-custom-url" placeholder="https://example.com/sound.wav" class="custom-dark-input" style="width: 100%; font-size: 12.5px; padding: 9px 12px; border-radius: 8px; background: #070c18 !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #fff;">
+                                        </div>
+
+                                        <!-- Play & Stop Controls -->
+                                        <div style="display: flex; gap: 10px; margin-top: auto;">
+                                            <button type="button" class="btn btn-primary" onclick="sendAdminPlayMusic()" style="flex: 1; padding: 11px 16px; font-weight: 800; font-size: 13px; background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); border-color: #a855f7; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                <span>ჩართვა (Play)</span>
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" onclick="sendAdminStopMusic()" style="flex: 1; padding: 11px 16px; font-weight: 800; font-size: 13px; color: #ef4444; border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.1); display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>
+                                                <span>გათიშვა (Stop)</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Now Playing Badge -->
+                                        <div id="multimedia-music-status" class="hidden" style="margin-top: 14px; font-size: 12px; color: #c084fc; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 8px 12px; text-align: center; font-family: monospace;">
+                                            🎵 ახლა უკრავს: —
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2153,7 +2301,7 @@
 
     <!-- App Configuration and Logic script -->
     <script src="i18n.js?v=370.0.0"></script>
-    <script src="app.js?v=704.0.0"></script>
+    <script src="app.js?v=705.0.0"></script>
 </body>
 </html>
 <!-- Deploy trigger timestamp: 1788361520 -->

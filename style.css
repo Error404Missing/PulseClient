@@ -5520,5 +5520,38 @@ button.specs-chip:hover,
     box-shadow: 0 0 12px rgba(255, 0, 60, 0.25) !important;
 }
 
+/* ==========================================
+   Walkie-Talkie & Multimedia Studio Styling
+   ========================================== */
+.btn-walkie-talkie {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease !important;
+}
+
+.btn-walkie-talkie:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 35px rgba(239, 68, 68, 0.6) !important;
+}
+
+.btn-walkie-talkie:active,
+.btn-walkie-talkie.recording {
+    animation: walkie-live-pulse 0.7s infinite ease-in-out !important;
+    background: radial-gradient(circle, #f87171 0%, #dc2626 60%, #7f1d1d 100%) !important;
+    border-color: #ffffff !important;
+    transform: scale(1.08) !important;
+}
+
+@keyframes walkie-live-pulse {
+    0% {
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(239, 68, 68, 1), 0 0 80px rgba(239, 68, 68, 0.5), inset 0 0 25px rgba(255, 255, 255, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+}
+
+
 
 

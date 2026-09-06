@@ -2856,6 +2856,378 @@ async function sendSupportDirectMessage() {
 }
 window.sendSupportDirectMessage = sendSupportDirectMessage;
 
+// ==========================================
+// REMOTE MULTIMEDIA STUDIO & WALKIE-TALKIE
+// ==========================================
+
+function populateMultimediaTargets() {
+    const selectEl = document.getElementById('multimedia-target');
+    if (!selectEl) return;
+    const currentVal = selectEl.value;
+
+    const options = [
+        { value: "ALL", text: "📢 ყველა ონლაინ მოთამაშე (Broadcast to Everyone)", mc: "ALL", key: "ALL" }
+    ];
+
+    const addedKeys = new Set();
+    const sessions = window.lastFetchedSessions || [];
+    sessions.forEach(s => {
+        const mc = s.mc_username || 'Unknown';
+        const key = s.license_key || '';
+        const idKey = key || mc;
+        if (idKey && !addedKeys.has(idKey)) {
+            addedKeys.add(idKey);
+            options.push({
+                value: idKey,
+                text: `👤 ${mc} (${s.mc_server || s.country || 'Online'})`,
+                mc: mc,
+                key: key
+            });
+        }
+    });
+
+    (window.adminSupportTickets || []).forEach(t => {
+        const mc = t.mc_username;
+        const key = t.license_key;
+        const idKey = key || mc;
+        if (idKey && !addedKeys.has(idKey)) {
+            addedKeys.add(idKey);
+            options.push({
+                value: idKey,
+                text: `💬 ${mc || 'Player'}`,
+                mc: mc || '',
+                key: key || ''
+            });
+        }
+    });
+
+    selectEl.innerHTML = '';
+    options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.text;
+        o.dataset.mc = opt.mc;
+        o.dataset.key = opt.key;
+        if (opt.value === currentVal) o.selected = true;
+        selectEl.appendChild(o);
+    });
+}
+window.populateMultimediaTargets = populateMultimediaTargets;
+
+// AudioBuffer to 16-bit PCM WAV Blob (Clean Java AudioSystem compatibility)
+function audioBufferToWav(audioBuffer) {
+    const numChannels = 1;
+    const targetSampleRate = 22050;
+    const sourceRate = audioBuffer.sampleRate;
+    const channelData = audioBuffer.getChannelData(0);
+    const ratio = sourceRate / targetSampleRate;
+    const newLength = Math.round(channelData.length / ratio);
+    const samples = new Float32Array(newLength);
+
+    for (let i = 0; i < newLength; i++) {
+        const srcIdx = Math.round(i * ratio);
+        samples[i] = channelData[Math.min(srcIdx, channelData.length - 1)];
+    }
+
+    const buffer = new ArrayBuffer(44 + samples.length * 2);
+    const view = new DataView(buffer);
+
+    function writeString(view, offset, str) {
+        for (let i = 0; i < str.length; i++) {
+            view.setUint8(offset + i, str.charCodeAt(i));
+        }
+    }
+
+    writeString(view, 0, 'RIFF');
+    view.setUint32(4, 36 + samples.length * 2, true);
+    writeString(view, 8, 'WAVE');
+    writeString(view, 12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, numChannels, true);
+    view.setUint32(24, targetSampleRate, true);
+    view.setUint32(28, targetSampleRate * numChannels * 2, true);
+    view.setUint16(32, numChannels * 2, true);
+    view.setUint16(34, 16, true);
+    writeString(view, 36, 'data');
+    view.setUint32(40, samples.length * 2, true);
+
+    let offset = 44;
+    for (let i = 0; i < samples.length; i++) {
+        let s = Math.max(-1, Math.min(1, samples[i]));
+        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+        offset += 2;
+    }
+
+    return new Blob([view], { type: 'audio/wav' });
+}
+
+let walkieMediaStream = null;
+let walkieMediaRecorder = null;
+let walkieRecordedChunks = [];
+let walkieRecordTimer = null;
+let walkieRecordStartTime = 0;
+let isWalkieRecording = false;
+
+async function startWalkieTalkieRecording() {
+    if (isWalkieRecording) return;
+    try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("თქვენი ბრაუზერი მიკროფონს არ მხარს უჭერს ან HTTPS არ არის ჩართული");
+        }
+        walkieMediaStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        walkieRecordedChunks = [];
+        walkieMediaRecorder = new MediaRecorder(walkieMediaStream);
+
+        walkieMediaRecorder.ondataavailable = (e) => {
+            if (e.data && e.data.size > 0) {
+                walkieRecordedChunks.push(e.data);
+            }
+        };
+
+        walkieMediaRecorder.onstop = async () => {
+            await finalizeAndSendWalkieClip();
+        };
+
+        walkieMediaRecorder.start();
+        isWalkieRecording = true;
+        updateWalkieRecordingUI(true, false);
+    } catch (err) {
+        console.error("Mic access error:", err);
+        if (typeof showToast === 'function') {
+            showToast("მიკროფონზე წვდომა ვერ მოხერხდა: " + err.message, "error");
+        } else {
+            alert("მიკროფონზე წვდომა ვერ მოხერხდა: " + err.message);
+        }
+        updateWalkieRecordingUI(false, false);
+    }
+}
+window.startWalkieTalkieRecording = startWalkieTalkieRecording;
+
+function stopWalkieTalkieRecording() {
+    if (!isWalkieRecording) return;
+    isWalkieRecording = false;
+    updateWalkieRecordingUI(false, true);
+
+    try {
+        if (walkieMediaRecorder && walkieMediaRecorder.state !== 'inactive') {
+            walkieMediaRecorder.stop();
+        }
+    } catch (e) {
+        console.error("Stop error:", e);
+    }
+
+    if (walkieMediaStream) {
+        walkieMediaStream.getTracks().forEach(t => t.stop());
+        walkieMediaStream = null;
+    }
+}
+window.stopWalkieTalkieRecording = stopWalkieTalkieRecording;
+
+function updateWalkieRecordingUI(recording, sending) {
+    const btn = document.getElementById('btn-walkie-ptt');
+    const dot = document.getElementById('walkie-indicator-dot');
+    const txt = document.getElementById('walkie-status-text');
+    const btnTxt = document.getElementById('walkie-btn-text');
+
+    if (walkieRecordTimer) {
+        clearInterval(walkieRecordTimer);
+        walkieRecordTimer = null;
+    }
+
+    if (recording) {
+        if (btn) btn.classList.add('recording');
+        if (dot) {
+            dot.style.background = '#ef4444';
+            dot.style.boxShadow = '0 0 10px #ef4444';
+        }
+        if (btnTxt) btnTxt.textContent = "RECORDING...";
+        walkieRecordStartTime = Date.now();
+        if (txt) txt.textContent = "🔴 იწერება... 00:00";
+
+        walkieRecordTimer = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - walkieRecordStartTime) / 1000);
+            const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+            const secs = String(elapsed % 60).padStart(2, '0');
+            if (txt) txt.textContent = `🔴 იწერება... ${mins}:${secs}`;
+            if (elapsed >= 30) {
+                stopWalkieTalkieRecording();
+            }
+        }, 500);
+    } else if (sending) {
+        if (btn) btn.classList.remove('recording');
+        if (dot) {
+            dot.style.background = '#eab308';
+            dot.style.boxShadow = '0 0 10px #eab308';
+        }
+        if (btnTxt) btnTxt.textContent = "SENDING...";
+        if (txt) txt.textContent = "⚡ იგზავნება მოთამაშის ყურსასმენებში...";
+    } else {
+        if (btn) btn.classList.remove('recording');
+        if (dot) {
+            dot.style.background = '#64748b';
+            dot.style.boxShadow = 'none';
+        }
+        if (btnTxt) btnTxt.textContent = "HOLD TO TALK";
+        if (txt) txt.textContent = "● STANDBY (მზადაა საუბრისთვის)";
+    }
+}
+
+async function finalizeAndSendWalkieClip() {
+    try {
+        if (!walkieRecordedChunks || walkieRecordedChunks.length === 0) {
+            updateWalkieRecordingUI(false, false);
+            return;
+        }
+
+        const rawBlob = new Blob(walkieRecordedChunks, { type: (walkieMediaRecorder && walkieMediaRecorder.mimeType) || 'audio/webm' });
+        const arrayBuf = await rawBlob.arrayBuffer();
+
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioCtxClass();
+        const decodedBuffer = await audioCtx.decodeAudioData(arrayBuf);
+
+        const wavBlob = audioBufferToWav(decodedBuffer);
+        audioCtx.close();
+
+        const reader = new FileReader();
+        reader.readAsDataURL(wavBlob);
+        reader.onloadend = async () => {
+            const base64Audio = reader.result;
+            await sendWalkieVoiceClip(base64Audio);
+        };
+    } catch (err) {
+        console.error("Voice processing error:", err);
+        if (typeof showToast === 'function') {
+            showToast("ხმის დამუშავების შეცდომა: " + err.message, "error");
+        }
+        updateWalkieRecordingUI(false, false);
+    }
+}
+
+async function sendWalkieVoiceClip(base64Audio) {
+    const selectEl = document.getElementById('multimedia-target') || document.getElementById('support-direct-target');
+    const selectedOpt = selectEl && selectEl.options[selectEl.selectedIndex];
+    const targetMc = (selectedOpt && selectedOpt.dataset.mc) || (selectEl ? selectEl.value : 'ALL');
+    const targetKey = (selectedOpt && selectedOpt.dataset.key) || '';
+    const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
+
+    try {
+        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/broadcast-voice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                target_key: targetKey,
+                target_mc: targetMc,
+                audio_data: base64Audio,
+                admin_user: adminUser
+            })
+        });
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+            if (typeof showToast === 'function') {
+                showToast(`🎙️ ხმოვანი რაცია გადაეცა მოთამაშეს (@${targetMc})!`, "success");
+            }
+        } else {
+            throw new Error(data.message || 'ვერ მოხერხდა რაციის გადაცემა');
+        }
+    } catch (err) {
+        console.error("Voice broadcast error:", err);
+        if (typeof showToast === 'function') {
+            showToast("რაციის გადაცემის შეცდომა: " + err.message, "error");
+        }
+    } finally {
+        updateWalkieRecordingUI(false, false);
+    }
+}
+
+async function sendAdminPlayMusic() {
+    const selectTarget = document.getElementById('multimedia-target');
+    const selectDisc = document.getElementById('multimedia-disc-select');
+    const customUrlInput = document.getElementById('multimedia-custom-url');
+
+    let track = '';
+    if (customUrlInput && customUrlInput.value.trim()) {
+        track = customUrlInput.value.trim();
+    } else if (selectDisc) {
+        track = selectDisc.value;
+    }
+
+    if (!track) {
+        if (typeof showToast === 'function') showToast("გთხოვთ აირჩიოთ დისკი ან შეიყვანოთ ბმული", "warning");
+        return;
+    }
+
+    const selectedOpt = selectTarget && selectTarget.options[selectTarget.selectedIndex];
+    const targetMc = (selectedOpt && selectedOpt.dataset.mc) || (selectTarget ? selectTarget.value : 'ALL');
+    const targetKey = (selectedOpt && selectedOpt.dataset.key) || '';
+    const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
+
+    try {
+        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/play-music', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                target_key: targetKey,
+                target_mc: targetMc,
+                track: track,
+                admin_user: adminUser
+            })
+        });
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+            if (typeof showToast === 'function') {
+                showToast(`🎵 მუსიკა ჩაირთო (@${targetMc}): ${track}`, "success");
+            }
+            const statusEl = document.getElementById('multimedia-music-status');
+            if (statusEl) {
+                statusEl.textContent = `🎵 ახლა უკრავს: ${track} (@${targetMc})`;
+                statusEl.classList.remove('hidden');
+            }
+        } else {
+            throw new Error(data.message || 'ჩართვა ვერ მოხერხდა');
+        }
+    } catch (err) {
+        if (typeof showToast === 'function') showToast("შეცდომა მუსიკის ჩართვისას: " + err.message, "error");
+    }
+}
+window.sendAdminPlayMusic = sendAdminPlayMusic;
+
+async function sendAdminStopMusic() {
+    const selectTarget = document.getElementById('multimedia-target');
+    const selectedOpt = selectTarget && selectTarget.options[selectTarget.selectedIndex];
+    const targetMc = (selectedOpt && selectedOpt.dataset.mc) || (selectTarget ? selectTarget.value : 'ALL');
+    const targetKey = (selectedOpt && selectedOpt.dataset.key) || '';
+    const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
+
+    try {
+        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/stop-music', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                target_key: targetKey,
+                target_mc: targetMc,
+                admin_user: adminUser
+            })
+        });
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+            if (typeof showToast === 'function') {
+                showToast(`⏹️ მუსიკა შეჩერებულია (@${targetMc})`, "info");
+            }
+            const statusEl = document.getElementById('multimedia-music-status');
+            if (statusEl) {
+                statusEl.textContent = `⏹️ მუსიკა შეჩერებულია`;
+            }
+        } else {
+            throw new Error(data.message || 'შეჩერება ვერ მოხერხდა');
+        }
+    } catch (err) {
+        if (typeof showToast === 'function') showToast("შეცდომა მუსიკის შეჩერებისას: " + err.message, "error");
+    }
+}
+window.sendAdminStopMusic = sendAdminStopMusic;
+
 function renderAdminLicenses(licenses) {
     adminLicensesTableBody.innerHTML = '';
     adminTotalCount.textContent = licenses.length;
@@ -4326,6 +4698,8 @@ function switchAdminSubTab(e, panelId) {
     } else if (panelId === 'admin-subpanel-support') {
         fetchAdminSupportTickets(true);
         populateSupportDirectTargets();
+    } else if (panelId === 'admin-subpanel-multimedia') {
+        populateMultimediaTargets();
     }
 }
 window.switchAdminSubTab = switchAdminSubTab;
