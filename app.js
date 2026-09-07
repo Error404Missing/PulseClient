@@ -731,50 +731,48 @@ function updatePageAvatars(discordId, avatarUrl) {
     }
 }
 
+const liveAvatarRequests = new Map();
+
 async function fetchLiveDiscordAvatar(discordId) {
     if (!discordId) return null;
     const strId = String(discordId).trim();
     if (liveAvatarCache.has(strId)) {
         return liveAvatarCache.get(strId);
     }
+    if (liveAvatarRequests.has(strId)) {
+        return liveAvatarRequests.get(strId);
+    }
 
     const defaultColorAvatar = getDefaultDiscordAvatar(strId);
 
-    try {
-        // 1. Try our backend live resolver
-        const res = await fetch(`https://errormissing-pulse-bot.hf.space/discord/avatar/${strId}`);
-        if (res.ok) {
-            const data = await res.json();
-            if (data && data.avatar_url) {
-                liveAvatarCache.set(strId, data.avatar_url);
-                updatePageAvatars(strId, data.avatar_url);
-                return data.avatar_url;
+    const promise = (async () => {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            const res = await fetch(`https://errormissing-pulse-bot.hf.space/discord/avatar/${strId}`, {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.avatar_url) {
+                    liveAvatarCache.set(strId, data.avatar_url);
+                    updatePageAvatars(strId, data.avatar_url);
+                    return data.avatar_url;
+                }
             }
+        } catch (e) {
+            // Silently fall back to default avatar
+        } finally {
+            liveAvatarRequests.delete(strId);
         }
-    } catch (e) {
-        console.warn(`[Live Avatar] Backend lookup fallback for ${strId}:`, e);
-    }
 
-    try {
-        // 2. Direct JAPI fallback
-        const res2 = await fetch(`https://japi.rest/discord/v1/user/${strId}`);
-        if (res2.ok) {
-            const d2 = await res2.json();
-            const avatarHash = d2.data?.avatar;
-            if (avatarHash) {
-                const ext = String(avatarHash).startsWith('a_') ? 'gif' : 'png';
-                const liveUrl = `https://cdn.discordapp.com/avatars/${strId}/${avatarHash}.${ext}?size=128`;
-                liveAvatarCache.set(strId, liveUrl);
-                updatePageAvatars(strId, liveUrl);
-                return liveUrl;
-            }
-        }
-    } catch (e2) {
-        console.warn(`[Live Avatar] Direct JAPI fallback error for ${strId}:`, e2);
-    }
+        liveAvatarCache.set(strId, defaultColorAvatar);
+        return defaultColorAvatar;
+    })();
 
-    liveAvatarCache.set(strId, defaultColorAvatar);
-    return defaultColorAvatar;
+    liveAvatarRequests.set(strId, promise);
+    return promise;
 }
 window.fetchLiveDiscordAvatar = fetchLiveDiscordAvatar;
 
@@ -4421,11 +4419,6 @@ function renderDropdownUsers(profiles) {
             selectDropdownUser(profile.username);
         });
         adminUserOptionsList.appendChild(option);
-
-        // Fetch live avatar in real-time
-        if (did) {
-            fetchLiveDiscordAvatar(did);
-        }
     });
 }
 
