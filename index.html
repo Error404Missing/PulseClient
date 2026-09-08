@@ -831,6 +831,47 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- User Daily Streak & Bonus Rewards Card -->
+                            <div id="user-streak-card" class="user-streak-card" style="margin-top: 16px; padding: 16px 20px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.03) 100%); border: 1px solid rgba(249, 115, 22, 0.25); border-radius: 14px; position: relative; overflow: hidden;">
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #f97316, #eab308);"></div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(249, 115, 22, 0.18); color: #f97316; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3);">
+                                            🔥
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 11px; color: #fb923c; text-transform: uppercase; font-weight: 800; letter-spacing: 0.8px;">DAILY LOGIN STREAK</div>
+                                            <div style="font-size: 17px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px;">
+                                                <span id="dash-streak-days-text">1 დღიანი სტრიქი</span>
+                                                <span id="dash-streak-badge" style="font-size: 11px; padding: 2px 8px; border-radius: 99px; background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.4); font-weight: 700;">აქტიური 🔥</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 11.5px; color: var(--text-muted);">შემდეგი ბონუსი</div>
+                                        <div id="dash-streak-next-bonus" style="font-size: 14px; font-weight: 700; color: #4ade80;">3 დღე (+12 სთ)</div>
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; font-size: 11.5px; text-align: center;">
+                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                        <div style="color: #94a3b8; font-size: 10px;">1 დღე</div>
+                                        <div style="color: #fdba74; font-weight: 800;">+3 საათი</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                        <div style="color: #94a3b8; font-size: 10px;">3 დღე</div>
+                                        <div style="color: #fdba74; font-weight: 800;">+12 საათი</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                        <div style="color: #94a3b8; font-size: 10px;">1 კვირა (7დ)</div>
+                                        <div style="color: #4ade80; font-weight: 800;">+3 დღე 🎉</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                        <div style="color: #94a3b8; font-size: 10px;">1 თვე (30დ)</div>
+                                        <div style="color: #a855f7; font-weight: 800;">+2 კვირა 👑</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Bind License Form -->
@@ -1947,7 +1988,7 @@
                 </svg>
             </button>
                         <div style="text-align: center; margin-bottom: 24px;">
-                <h3 style="margin-bottom: 6px;">PulseClient v2.0.1</h3>
+                <h3 style="margin-bottom: 6px;">PulseClient v2.0.2</h3>
                 <p style="color: var(--text-secondary); font-size: 14px;">აირჩიეთ თქვენი ოპერაციული სისტემა</p>
             </div>
             
@@ -2304,7 +2345,7 @@
 
     <!-- App Configuration and Logic script -->
     <script src="i18n.js?v=370.0.0"></script>
-    <script src="app.js?v=705.0.0"></script>
+    <script src="app.js?v=706.0.0"></script>
 </body>
 </html>
-<!-- Deploy trigger timestamp: 1788361520 -->
+<!-- Deploy trigger timestamp: 1788798200 -->

@@ -1051,6 +1051,7 @@ async function fetchUserLicenses() {
 
         if (!data || data.length === 0) {
             noLicensesView.classList.remove('hidden');
+            updateDailyStreakUI([]);
         } else {
             renderLicenses(data);
         }
@@ -1148,6 +1149,76 @@ function renderLicenses(licenses) {
     // Single-use referral protection: check if user already redeemed a referral code
     const hasUsedReferral = licenses.some(l => l.note && l.note.includes('Referred by:'));
     updateReferralRedeemUI(hasUsedReferral);
+    updateDailyStreakUI(licenses);
+}
+
+function updateDailyStreakUI(licenses) {
+    const streakDaysEl = document.getElementById('dash-streak-days-text');
+    const streakBadgeEl = document.getElementById('dash-streak-badge');
+    const streakNextEl = document.getElementById('dash-streak-next-bonus');
+    if (!streakDaysEl || !streakBadgeEl || !streakNextEl) return;
+
+    let maxStreak = 0;
+    let lastDateStr = null;
+
+    if (Array.isArray(licenses)) {
+        licenses.forEach(lic => {
+            if (lic.note) {
+                const m = lic.note.match(/\[Streak:\s*days=(\d+),\s*last=([0-9-]+)\]/i);
+                if (m) {
+                    const days = parseInt(m[1], 10);
+                    if (days >= maxStreak) {
+                        maxStreak = days;
+                        lastDateStr = m[2];
+                    }
+                }
+            }
+        });
+    }
+
+    const nowUtc = new Date();
+    const todayUtc = nowUtc.toISOString().slice(0, 10);
+    const yesterdayUtc = new Date(nowUtc.getTime() - 86400000).toISOString().slice(0, 10);
+
+    let isActive = false;
+    if (lastDateStr) {
+        if (lastDateStr === todayUtc || lastDateStr === yesterdayUtc) {
+            isActive = true;
+        }
+    }
+
+    if (maxStreak > 0) {
+        streakDaysEl.textContent = `${maxStreak} დღიანი სტრიქი`;
+        if (isActive) {
+            streakBadgeEl.textContent = 'აქტიური 🔥';
+            streakBadgeEl.style.background = 'rgba(249, 115, 22, 0.2)';
+            streakBadgeEl.style.color = '#fdba74';
+            streakBadgeEl.style.borderColor = 'rgba(249, 115, 22, 0.4)';
+        } else {
+            streakBadgeEl.textContent = 'შეწყდა ⚠️';
+            streakBadgeEl.style.background = 'rgba(239, 68, 68, 0.15)';
+            streakBadgeEl.style.color = '#fca5a5';
+            streakBadgeEl.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+        }
+    } else {
+        streakDaysEl.textContent = '0 დღე';
+        streakBadgeEl.textContent = 'დაიწყე დღეს ✨';
+        streakBadgeEl.style.background = 'rgba(59, 130, 246, 0.15)';
+        streakBadgeEl.style.color = '#93c5fd';
+        streakBadgeEl.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+    }
+
+    if (maxStreak < 1) {
+        streakNextEl.textContent = '1 დღე (+3 სთ)';
+    } else if (maxStreak < 3) {
+        streakNextEl.textContent = '3 დღე (+12 სთ)';
+    } else if (maxStreak < 7) {
+        streakNextEl.textContent = '7 დღე (+3 დღე)';
+    } else if (maxStreak < 30) {
+        streakNextEl.textContent = '30 დღე (+2 კვირა)';
+    } else {
+        streakNextEl.textContent = '30+ დღე (+1 სთ/დღე)';
+    }
 }
 
 function updateReferralRedeemUI(hasUsedReferral) {
