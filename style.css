@@ -1,3 +1,197 @@
+
+/* ==========================================================================
+   Core Layout & View Constraints (Crucial for Clean Pro Design)
+   ========================================================================== */
+
+/* Universal SVG Size Safety Guard */
+svg {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/* Base Body Flex */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Master View Container */
+.view {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 110px 24px 60px;
+  flex: 1;
+}
+
+/* Floating Clean Navbar */
+.navbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: 1120px;
+  height: 60px;
+  background: rgba(14, 16, 23, 0.78);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: all var(--trans-smooth);
+}
+
+/* Setup Flow & SVG Icon Constraints (Fixes Giant Windows Logo) */
+.setup-tutorial {
+  max-width: 900px;
+  margin: 40px auto 20px;
+  padding: 0 20px;
+}
+
+.setup-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 36px 32px;
+  text-align: center;
+}
+
+.setup-header {
+  margin-bottom: 24px;
+}
+
+.setup-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.setup-steps-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px 28px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.setup-steps-label {
+  text-align: left;
+}
+
+.setup-steps-label h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.setup-steps-label span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.setup-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.setup-flow-item {
+  width: 54px !important;
+  height: 54px !important;
+  max-width: 54px !important;
+  max-height: 54px !important;
+  border-radius: var(--radius-md);
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--trans-fast);
+}
+
+.setup-flow-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+}
+
+.setup-flow-item svg {
+  width: 26px !important;
+  height: 26px !important;
+  max-width: 26px !important;
+  max-height: 26px !important;
+}
+
+.setup-discord {
+  background: rgba(88, 101, 242, 0.12) !important;
+  border-color: rgba(88, 101, 242, 0.25) !important;
+  color: #5865f2 !important;
+}
+
+.setup-windows {
+  background: rgba(0, 120, 212, 0.12) !important;
+  border-color: rgba(0, 120, 212, 0.25) !important;
+  color: #0078d4 !important;
+}
+
+.setup-minecraft {
+  background: rgba(92, 184, 92, 0.12) !important;
+  border-color: rgba(92, 184, 92, 0.25) !important;
+  color: #5cb85c !important;
+}
+
+.setup-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.setup-chevron svg {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+}
+
+.setup-footer {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+/* Anticheat Cards Clean Look (No Red Borders) */
+.anticheat-card {
+  border: 1px solid var(--border-subtle) !important;
+  background: var(--bg-card) !important;
+  box-shadow: none !important;
+}
+
+.anticheat-card:hover {
+  border-color: var(--border-hover) !important;
+  background: var(--bg-card-hover) !important;
+}
+
 /* ==========================================================================
    PulseClient 3.0 — Ultra-Clean Minimalist Luxury Design System
    Inspired by Linear.app, Raycast, and Apple Dark Mode
