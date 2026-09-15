@@ -1426,6 +1426,9 @@ function switchDashTab(event, tabId, shouldScroll = true) {
     } else if (tabId === 'tab-promo') {
         const pane = document.getElementById('tab-content-promo');
         if (pane) pane.classList.remove('hidden');
+        if (typeof fetchUserPromoHistory === 'function') {
+            fetchUserPromoHistory();
+        }
     } else if (tabId === 'tab-configs') {
         const pane = document.getElementById('tab-content-configs');
         if (pane) pane.classList.remove('hidden');
@@ -5417,6 +5420,9 @@ async function redeemPromoCode(e) {
         );
         promoInput.value = '';
         fetchUserLicenses();
+        if (typeof fetchUserPromoHistory === 'function') {
+            fetchUserPromoHistory();
+        }
     } catch (err) {
         console.error("Promocode redemption failed:", err.message);
         showBanner(t("msg.promoRedeemFail") + err.message, "error");
@@ -5426,6 +5432,159 @@ async function redeemPromoCode(e) {
     }
 }
 window.redeemPromoCode = redeemPromoCode;
+
+// Paste from clipboard into promo input
+async function pastePromoFromClipboard() {
+    try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+            const input = document.getElementById('promo-code-input');
+            if (input) {
+                input.value = text.trim().toUpperCase();
+                input.focus();
+                showBanner(t("msg.promoPasted") || "კოდი ჩასმულია ბუფერიდან!", "success");
+            }
+        }
+    } catch (e) {
+        console.warn("Clipboard read error:", e);
+        const input = document.getElementById('promo-code-input');
+        if (input) {
+            input.focus();
+            showBanner("გთხოვთ გამოიყენოთ Ctrl+V ჩასასმელად", "info");
+        }
+    }
+}
+window.pastePromoFromClipboard = pastePromoFromClipboard;
+
+// User Promo Statistics and Redemption History
+async function fetchUserPromoHistory() {
+    if (!currentUser) return;
+    const historyList = document.getElementById('user-promo-history-list');
+    const countEl = document.getElementById('user-promo-count');
+    const daysEl = document.getElementById('user-promo-days');
+    const licStatusEl = document.getElementById('user-promo-lic-status');
+    const licSubEl = document.getElementById('user-promo-lic-sub');
+
+    const metadata = currentUser.user_metadata || {};
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+
+    try {
+        // 1. Fetch user redemptions from Supabase
+        const { data: redemptions, error: redError } = await supabaseClient
+            .from('promocode_redemptions')
+            .select('*')
+            .eq('user_id', currentUser.id)
+            .order('redeemed_at', { ascending: false });
+
+        if (redError) throw redError;
+
+        // 2. Fetch promocodes metadata to calculate duration_days
+        const { data: allPromos } = await supabaseClient
+            .from('promocodes')
+            .select('code, duration_days');
+
+        const promoMap = {};
+        if (allPromos) {
+            allPromos.forEach(p => {
+                if (p.code) promoMap[p.code.trim().toUpperCase()] = p.duration_days;
+            });
+        }
+
+        const redList = redemptions || [];
+        if (countEl) countEl.textContent = redList.length;
+
+        let totalDays = 0;
+        redList.forEach(r => {
+            const codeKey = (r.code || "").trim().toUpperCase();
+            totalDays += (promoMap[codeKey] || 0);
+        });
+        if (daysEl) daysEl.textContent = `+${totalDays} დღე`;
+
+        // 3. User's active license status
+        try {
+            const { data: userLicenses } = await supabaseClient
+                .from('licenses')
+                .select('*')
+                .like('note', `%Buyer: ${username}%`);
+
+            const activeLicense = userLicenses ? userLicenses.find(l => l.is_active && (!l.expires_at || new Date(l.expires_at) > new Date())) : null;
+
+            if (licStatusEl) {
+                if (activeLicense) {
+                    licStatusEl.textContent = "აქტიური";
+                    licStatusEl.className = "stat-card-value status-active";
+                    if (licSubEl) {
+                        if (activeLicense.expires_at) {
+                            const diffDays = Math.ceil((new Date(activeLicense.expires_at) - new Date()) / (1000 * 60 * 60 * 24));
+                            licSubEl.textContent = `${diffDays} დღე დარჩენილი`;
+                        } else {
+                            licSubEl.textContent = "სამუდამო ლიცენზია";
+                        }
+                    }
+                } else {
+                    licStatusEl.textContent = "არააქტიური";
+                    licStatusEl.className = "stat-card-value status-inactive";
+                    if (licSubEl) licSubEl.textContent = "გაააქტიურეთ კოდი დღეების მისაღებად";
+                }
+            }
+        } catch (licErr) {
+            console.warn("License check error:", licErr);
+        }
+
+        // 4. Render redemption history items
+        if (historyList) {
+            historyList.innerHTML = '';
+            if (redList.length === 0) {
+                historyList.innerHTML = `
+                    <div class="promo-history-empty">
+                        <div class="empty-icon-bubble">🎟️</div>
+                        <h5>ჯერ არ გაქვთ გამოყენებული პრომო კოდი</h5>
+                        <p>შეიყვანეთ პრომო კოდი ზემოთ მოცემულ ველში, ან ეწვიეთ ჩვენს Discord-ს ახალი ბონუსების მისაღებად.</p>
+                    </div>
+                `;
+            } else {
+                redList.forEach(r => {
+                    const codeKey = (r.code || "").trim().toUpperCase();
+                    const days = promoMap[codeKey] || 0;
+                    const dateStr = r.redeemed_at ? new Date(r.redeemed_at).toLocaleDateString(getLocale(), {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : "აქტივირებულია";
+
+                    const item = document.createElement('div');
+                    item.className = 'promo-history-item';
+                    item.innerHTML = `
+                        <div class="history-item-left">
+                            <span class="history-code-badge">${r.code}</span>
+                            <span class="history-days-badge">+${days} დღე</span>
+                        </div>
+                        <div class="history-item-right">
+                            <span class="history-date">${dateStr}</span>
+                            <span class="history-status-pill">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                გააქტიურებულია
+                            </span>
+                        </div>
+                    `;
+                    historyList.appendChild(item);
+                });
+            }
+        }
+    } catch (err) {
+        console.error("Error fetching user promo history:", err.message);
+        if (historyList) {
+            historyList.innerHTML = `
+                <div class="promo-history-empty">
+                    <p style="color: var(--text-muted);">ისტორიის ჩატვირთვა ვერ მოხერხდა</p>
+                </div>
+            `;
+        }
+    }
+}
+window.fetchUserPromoHistory = fetchUserPromoHistory;
 
 async function createPromoCodeFromAdmin(e) {
     if (e && e.preventDefault) e.preventDefault();
