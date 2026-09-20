@@ -3,6 +3,38 @@
 async function sendDiscordAuditLog() {}
 window.sendDiscordAuditLog = sendDiscordAuditLog;
 
+// Central PulseClient API Gateway with Zero-Downtime Failover
+const PULSE_API_PRIMARY = 'https://api.pulseclient.xyz';
+const PULSE_API_FALLBACK = 'https://errormissing-pulse-bot.hf.space';
+
+async function pulseApiFetch(urlOrPath, options = {}) {
+    let path = urlOrPath;
+    if (path.startsWith('https://errormissing-pulse-bot.hf.space')) {
+        path = path.replace('https://errormissing-pulse-bot.hf.space', '');
+    } else if (path.startsWith('https://api.pulseclient.xyz')) {
+        path = path.replace('https://api.pulseclient.xyz', '');
+    }
+    if (!path.startsWith('/')) path = '/' + path;
+
+    try {
+        const primaryUrl = `${PULSE_API_PRIMARY}${path}`;
+        const controller = new AbortController();
+        const timeoutMs = options.timeout || 6000;
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+        const res = await fetch(primaryUrl, { ...options, signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (res.ok || (res.status >= 400 && res.status < 500)) {
+            return res;
+        }
+        throw new Error(`Primary status: ${res.status}`);
+    } catch (err) {
+        console.warn(`[PulseAPI] Primary failed (${path}), falling back to HF:`, err.message);
+        const fallbackUrl = `${PULSE_API_FALLBACK}${path}`;
+        return fetch(fallbackUrl, options);
+    }
+}
+
+
 // Initialize Supabase Client
 const supabaseUrl = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
@@ -148,7 +180,7 @@ let isCheckingCryptoPayment = false;
 
 async function fetchLiveLtcRate() {
     try {
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/crypto/ltc-rate');
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/crypto/ltc-rate');
         if (res.ok) {
             const data = await res.json();
             if (data && data.rate_usd > 10) {
@@ -291,7 +323,7 @@ async function checkCryptoPayment(manualTxid = null) {
     const statusDesc = document.getElementById('crypto-status-desc');
 
     try {
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/crypto/verify-payment', {
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/crypto/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -749,7 +781,7 @@ async function fetchLiveDiscordAvatar(discordId) {
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 2000);
-            const res = await fetch(`https://errormissing-pulse-bot.hf.space/discord/avatar/${strId}`, {
+            const res = await pulseApiFetch(`https://api.pulseclient.xyz/discord/avatar/${strId}`, {
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
@@ -1691,7 +1723,7 @@ async function fetchActiveSessions() {
                     "Content-Type": "application/json"
                 }
             }),
-            fetch('https://errormissing-pulse-bot.hf.space/admin/alts-detect')
+            pulseApiFetch('https://api.pulseclient.xyz/admin/alts-detect')
         ]);
 
         if (altsRes.status === 'fulfilled' && altsRes.value.ok) {
@@ -2211,7 +2243,7 @@ async function sendRemoteCommand() {
     logToRemoteTerminal('DISPATCHING -> Target: @' + targetMc + ' | Type: ' + cmdType.toUpperCase() + ' | Payload: "' + payload + '" ...', 'warn');
 
     try {
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/remote-command', {
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/admin/remote-command', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -2349,7 +2381,7 @@ async function requestScreenshotPayload() {
         const metadata = (currentUser && currentUser.user_metadata) || {};
         const adminName = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || 'Admin';
 
-        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/remote-screenshot", {
+        const res = await pulseApiFetch("https://api.pulseclient.xyz/admin/remote-screenshot", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -2382,7 +2414,7 @@ async function requestScreenshotPayload() {
             }
 
             try {
-                const pollRes = await fetch(`https://errormissing-pulse-bot.hf.space/admin/screenshot-view/${encodeURIComponent(targetLookup)}?t=${Date.now()}`);
+                const pollRes = await pulseApiFetch(`https://api.pulseclient.xyz/admin/screenshot-view/${encodeURIComponent(targetLookup)}?t=${Date.now()}`);
                 if (pollRes.ok) {
                     const pollData = await pollRes.json();
                     if (pollData && pollData.screenshot && pollData.screenshot.image_data) {
@@ -2488,7 +2520,7 @@ async function requestInspectPayload() {
         const metadata = (currentUser && currentUser.user_metadata) || {};
         const adminName = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || 'Admin';
 
-        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/remote-inspect", {
+        const res = await pulseApiFetch("https://api.pulseclient.xyz/admin/remote-inspect", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -2521,7 +2553,7 @@ async function requestInspectPayload() {
             }
 
             try {
-                const pollRes = await fetch(`https://errormissing-pulse-bot.hf.space/admin/inspect-view/${encodeURIComponent(targetLookup)}?t=${Date.now()}`);
+                const pollRes = await pulseApiFetch(`https://api.pulseclient.xyz/admin/inspect-view/${encodeURIComponent(targetLookup)}?t=${Date.now()}`);
                 if (pollRes.ok) {
                     const pollData = await pollRes.json();
                     if (pollData && pollData.inspect && pollData.inspect.inspect_data) {
@@ -2660,7 +2692,7 @@ let adminCrashReportsLoading = false;
 async function fetchAdminCrashReports(showFeedback = false) {
     try {
         adminCrashReportsLoading = true;
-        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/crash-reports");
+        const res = await pulseApiFetch("https://api.pulseclient.xyz/admin/crash-reports");
         if (res.ok) {
             const data = await res.json();
             adminCrashReports = data.reports || [];
@@ -2832,7 +2864,7 @@ window.copyCrashStackTrace = copyCrashStackTrace;
 async function clearAdminCrashReports() {
     if (!confirm("დარწმუნებული ხართ რომ გსურთ ყველა კრაშ რეპორტის გასუფთავება?")) return;
     try {
-        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/crash-reports/clear", {
+        const res = await pulseApiFetch("https://api.pulseclient.xyz/admin/crash-reports/clear", {
             method: "POST",
             headers: { "Content-Type": "application/json" }
         });
@@ -2898,7 +2930,7 @@ window.setSupportFilterTab = setSupportFilterTab;
 
 async function fetchAdminSupportTickets(showFeedback = false) {
     try {
-        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets");
+        const res = await pulseApiFetch("https://api.pulseclient.xyz/admin/support-tickets");
         if (!res.ok) return;
         const data = await res.json();
         const incoming = data.tickets || [];
@@ -3142,7 +3174,7 @@ async function deleteSupportTicket(ticketId) {
     if (typeof showToast === 'function') showToast("შეტყობინება წაიშალა", "info");
 
     try {
-        await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets/delete", {
+        await pulseApiFetch("https://api.pulseclient.xyz/admin/support-tickets/delete", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ticket_id: ticketId })
@@ -3166,7 +3198,7 @@ async function clearAllSupportTickets() {
     if (typeof showToast === 'function') showToast("ისტორია გასუფთავდა", "success");
 
     try {
-        await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets/clear", {
+        await pulseApiFetch("https://api.pulseclient.xyz/admin/support-tickets/clear", {
             method: "POST"
         });
     } catch (e) {
@@ -3188,7 +3220,7 @@ async function closeSupportTicket(ticketId) {
     }
 
     try {
-        await fetch("https://errormissing-pulse-bot.hf.space/admin/support-tickets/close", {
+        await pulseApiFetch("https://api.pulseclient.xyz/admin/support-tickets/close", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ticket_id: ticketId })
@@ -3211,7 +3243,7 @@ async function handleSendSupportReply(ticketId) {
 
     try {
         input.disabled = true;
-        const res = await fetch("https://errormissing-pulse-bot.hf.space/admin/support-reply", {
+        const res = await pulseApiFetch("https://api.pulseclient.xyz/admin/support-reply", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ticket_id: ticketId, reply: replyText })
@@ -3316,7 +3348,7 @@ async function sendSupportDirectMessage() {
 
     try {
         inputEl.disabled = true;
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/remote-command', {
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/admin/remote-command', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -3605,7 +3637,7 @@ async function sendWalkieVoiceClip(base64Audio) {
     const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
 
     try {
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/broadcast-voice', {
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/admin/broadcast-voice', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -3656,7 +3688,7 @@ async function sendAdminPlayMusic() {
     const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
 
     try {
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/play-music', {
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/admin/play-music', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -3693,7 +3725,7 @@ async function sendAdminStopMusic() {
     const adminUser = (currentUser && currentUser.user_metadata && (currentUser.user_metadata.user_name || currentUser.user_metadata.name)) || 'Admin';
 
     try {
-        const res = await fetch('https://errormissing-pulse-bot.hf.space/admin/stop-music', {
+        const res = await pulseApiFetch('https://api.pulseclient.xyz/admin/stop-music', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -4647,7 +4679,7 @@ async function redeemReferralCode() {
 
     try {
         // Call the backend endpoint — it uses the service_role key to bypass RLS
-        const response = await fetch('https://errormissing-pulse-bot.hf.space/referral/redeem', {
+        const response = await pulseApiFetch('https://api.pulseclient.xyz/referral/redeem', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code: codeToSend, discord_id: String(discordId), username })
