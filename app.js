@@ -899,7 +899,7 @@ async function handleUserSignIn(user) {
     // Set up referral code display for the logged in user
     const refCodeDisplay = document.getElementById('referral-code-display');
     if (refCodeDisplay && discordId) {
-        refCodeDisplay.value = generateReferralCodeFromDiscordId(String(discordId));
+        refCodeDisplay.value = generateOldReferralCodeFromDiscordId(String(discordId));
     }
     const copyRefCodeBtn = document.getElementById('copy-referral-code-btn');
     if (copyRefCodeBtn && refCodeDisplay) {
@@ -4368,12 +4368,24 @@ async function processReferralBonus(referredUsername) {
     if (!refDiscordId) return null;
 
     try {
-        // Find referrer's profile using discord_id
-        const { data: referrerProfile, error: profileError } = await supabaseClient
+        // Find referrer's profile using discord_id or referral code
+        let referrerProfile = null;
+        const { data: profiles, error: profileError } = await supabaseClient
             .from('profiles')
-            .select('*')
-            .eq('discord_id', refDiscordId)
-            .maybeSingle();
+            .select('*');
+
+        if (profiles && profiles.length > 0) {
+            const cleanRef = String(refDiscordId).trim().toUpperCase();
+            referrerProfile = profiles.find(p => {
+                if (!p.discord_id) return false;
+                const dId = String(p.discord_id).trim();
+                return (
+                    dId === String(refDiscordId).trim() ||
+                    generateReferralCodeFromDiscordId(dId) === cleanRef ||
+                    generateOldReferralCodeFromDiscordId(dId) === cleanRef
+                );
+            });
+        }
 
         if (profileError || !referrerProfile) {
             console.warn("Referrer profile not found or error:", profileError);
@@ -4501,7 +4513,7 @@ function generateOldReferralCodeFromDiscordId(discordId) {
     return code;
 }
 
-// Redeem a referral code (7-character random format)
+// Redeem a referral code (supports 7-character referral code, Discord ID, link, or username)
 async function redeemReferralCode() {
     const codeInput = document.getElementById('referral-code-input');
     const submitBtn = document.getElementById('referral-code-submit-btn');
@@ -4512,42 +4524,125 @@ async function redeemReferralCode() {
         return;
     }
 
-    const code = codeInput.value.trim().toUpperCase();
-    if (!code) return;
+    let inputVal = codeInput.value.trim();
+    if (!inputVal) return;
 
-    // Validate format (7 characters, alphanumeric using our alphabet)
-    if (code.length !== 7 || !/^[A-Z2-9]{7}$/.test(code)) {
-        showBanner(t("msg.refCodeInvalid"), "error");
+    // Handle full URL or ref parameter if pasted
+    if (inputVal.includes('ref=')) {
+        try {
+            const urlObj = new URL(inputVal.startsWith('http') ? inputVal : `https://pulseclient.com/${inputVal.startsWith('?') ? inputVal : '?' + inputVal}`);
+            const refParam = urlObj.searchParams.get('ref');
+            if (refParam) inputVal = refParam.trim();
+        } catch (e) {
+            const m = inputVal.match(/[?&]ref=([a-zA-Z0-9_-]+)/);
+            if (m) inputVal = m[1].trim();
+        }
+    }
+
+    const code = inputVal.toUpperCase();
+    const discordId = getDiscordId(currentUser);
+    const metadata = currentUser.user_metadata || {};
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+
+    // Check if user is trying to use their own Discord ID
+    if (discordId && (inputVal === String(discordId) || code === String(discordId))) {
+        showBanner(t("msg.refCodeSelf") || "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.", "error");
         return;
+    }
+
+    // Check if user is trying to use their own referral code
+    if (discordId) {
+        const ownCanonical = generateOldReferralCodeFromDiscordId(String(discordId));
+        const ownUnsigned = generateReferralCodeFromDiscordId(String(discordId));
+        if (code === ownCanonical || code === ownUnsigned) {
+            showBanner(t("msg.refCodeSelf") || "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.", "error");
+            return;
+        }
     }
 
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳";
 
-    const metadata = currentUser.user_metadata;
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-    const discordId = getDiscordId(currentUser);
-
     let codeToSend = code;
+    let matchedReferrer = null;
 
-    // Dual-algorithm referral resolution: check profiles table for old or new code match
+    // 1. Dual-algorithm referral resolution across profiles
     try {
         const { data: profiles } = await supabaseClient
             .from('profiles')
             .select('discord_id, username');
 
         if (profiles && profiles.length > 0) {
-            const matchedReferrer = profiles.find(p => 
-                generateReferralCodeFromDiscordId(p.discord_id) === code ||
-                generateOldReferralCodeFromDiscordId(p.discord_id) === code
-            );
-            if (matchedReferrer) {
-                codeToSend = generateReferralCodeFromDiscordId(matchedReferrer.discord_id);
-                console.log("[Pulse AI Referral Debug] Dual-algorithm matched referrer:", matchedReferrer.username, "sending server code:", codeToSend);
-            }
+            matchedReferrer = profiles.find(p => {
+                if (!p.discord_id) return false;
+                const dId = String(p.discord_id).trim();
+                const uName = String(p.username || '').trim().toLowerCase();
+                return (
+                    dId === inputVal ||
+                    generateReferralCodeFromDiscordId(dId) === code ||
+                    generateOldReferralCodeFromDiscordId(dId) === code ||
+                    (inputVal.length >= 3 && uName === inputVal.toLowerCase())
+                );
+            });
         }
     } catch (profileErr) {
-        console.warn("[Pulse AI Referral Debug] Profile lookup warning:", profileErr.message);
+        console.warn("[Pulse Referral] Profile lookup warning:", profileErr.message);
+    }
+
+    // 2. Fallback: check licenses table if not found in profiles
+    if (!matchedReferrer) {
+        try {
+            const { data: licRows } = await supabaseClient
+                .from('licenses')
+                .select('note')
+                .limit(200);
+
+            if (licRows && licRows.length > 0) {
+                for (const row of licRows) {
+                    const note = row.note || '';
+                    const idMatch = note.match(/DiscordID:\s*(\d+)/i);
+                    const userMatch = note.match(/Buyer:\s*([^|)]+)/i);
+                    const dId = idMatch ? idMatch[1].trim() : '';
+                    const uName = userMatch ? userMatch[1].trim().toLowerCase() : '';
+
+                    if (dId) {
+                        if (
+                            dId === inputVal ||
+                            generateReferralCodeFromDiscordId(dId) === code ||
+                            generateOldReferralCodeFromDiscordId(dId) === code ||
+                            (inputVal.length >= 3 && uName && uName === inputVal.toLowerCase())
+                        ) {
+                            matchedReferrer = { discord_id: dId, username: userMatch ? userMatch[1].trim() : 'User' };
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (licErr) {
+            console.warn("[Pulse Referral] Licenses lookup warning:", licErr.message);
+        }
+    }
+
+    if (matchedReferrer && matchedReferrer.discord_id) {
+        // Prevent self-referral
+        if (String(matchedReferrer.discord_id) === String(discordId)) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
+            showBanner(t("msg.refCodeSelf") || "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.", "error");
+            return;
+        }
+        // ALWAYS send server canonical code (abs algorithm) that Python backend evaluates!
+        codeToSend = generateOldReferralCodeFromDiscordId(matchedReferrer.discord_id);
+        console.log("[Pulse Referral] Matched referrer:", matchedReferrer.username, "sending server canonical code:", codeToSend);
+    } else {
+        // If neither profile nor license matched, check if it's a valid 7-char code format
+        const is7Char = code.length === 7 && /^[A-Z2-9]{7}$/.test(code);
+        if (!is7Char) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
+            showBanner(t("msg.refCodeNotFound") || "მოცემული რეფერალური კოდი ვერ მოიძებნა.", "error");
+            return;
+        }
     }
 
     try {
@@ -4558,9 +4653,9 @@ async function redeemReferralCode() {
             body: JSON.stringify({ code: codeToSend, discord_id: String(discordId), username })
         });
 
-        console.log("[Pulse AI Referral Debug] HTTP status:", response.status, "ok:", response.ok);
+        console.log("[Pulse Referral] HTTP status:", response.status, "ok:", response.ok);
         const result = await response.json();
-        console.log("[Pulse AI Referral Debug] Server result:", JSON.stringify(result));
+        console.log("[Pulse Referral] Server result:", JSON.stringify(result));
 
         if (result.status === 'success') {
             showBanner(t("msg.refCodeSuccess") || result.message, "success");
@@ -4572,13 +4667,13 @@ async function redeemReferralCode() {
             // Map known Georgian/backend messages to i18n keys if available
             const msg = result.message || '';
             if (msg.includes('საკუთარი კოდის')) showBanner(t("msg.refCodeSelf"), "error");
-            else if (msg.includes('უკვე გამოიყენეთ')) showBanner(t("msg.refCodeAlreadyUsed") || msg, "error");
+            else if (msg.includes('უკვე გამოიყენეთ') || msg.includes('უკვე გამოყენებული')) showBanner(t("msg.refCodeAlreadyUsed") || msg, "error");
             else if (msg.includes('ვერ მოიძებნა')) showBanner(t("msg.refCodeNotFound"), "error");
-            else showBanner(t("msg.refCodeFail") + msg, "error");
+            else showBanner((t("msg.refCodeFail") || "შეცდომა: ") + msg, "error");
         }
     } catch (err) {
-        console.error("[Pulse AI Referral Debug] CATCH error:", err);
-        showBanner(t("msg.refCodeFail") + err.message, "error");
+        console.error("[Pulse Referral] CATCH error:", err);
+        showBanner((t("msg.refCodeFail") || "შეცდომა: ") + err.message, "error");
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
