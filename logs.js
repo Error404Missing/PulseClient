@@ -5,7 +5,7 @@
 const SUPABASE_URL = "https://qxyggegnnxdsgjcutsrl.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eWdnZWdubnhkc2dqY3V0c3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzQ0ODIsImV4cCI6MjA5NTExMDQ4Mn0.mKywX8VuzrSJs8cijweg2jdKboYupE2GZUWX_LY9CMg";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const PULSE_API_PRIMARY = 'https://api.pulseclient.xyz';
 const PULSE_API_FALLBACK = 'https://errormissing-pulse-bot.hf.space';
@@ -123,7 +123,7 @@ function isOwner(user) {
 async function checkAuthGate(passedUser) {
     let user = passedUser;
     if (user === undefined) {
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session } } = await supabaseClient.auth.getSession();
         user = session?.user;
     }
 
@@ -167,7 +167,7 @@ async function checkAuthGate(passedUser) {
 
 // Global Auth State Change Listener
 try {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
         console.log("[Auth] Event:", event);
         if (event === 'SIGNED_IN' && session) {
             checkAuthGate(session.user);
@@ -208,7 +208,7 @@ async function fetchAuditLogs() {
     } catch (err) {
         console.warn("[AuditPortal] API fetch failed, trying direct Supabase query:", err.message);
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('audit_logs')
                 .select('*')
                 .order('created_at', { ascending: false })
@@ -696,7 +696,7 @@ async function loginWithDiscord() {
         const targetRedirect = window.location.origin + window.location.pathname;
         console.log("[Auth] Redirect target:", targetRedirect);
 
-        const { data, error } = await supabase.auth.signInWithOAuth({
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'discord',
             options: {
                 redirectTo: targetRedirect
@@ -721,7 +721,7 @@ window.loginWithDiscord = loginWithDiscord;
 
 async function handleLogout() {
     try {
-        await supabase.auth.signOut();
+        await supabaseClient.auth.signOut();
     } catch (e) {}
     window.location.href = window.location.origin + '/logs';
 }
