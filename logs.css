@@ -30,6 +30,14 @@
     padding: 0;
 }
 
+.hidden {
+    display: none !important;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);

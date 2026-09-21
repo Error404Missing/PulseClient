@@ -120,16 +120,19 @@ function isOwner(user) {
 }
 
 // Authentication Check
-async function checkAuthGate() {
-    const { data: { session } } = await supabase.auth.getSession();
-    const user = session?.user;
+async function checkAuthGate(passedUser) {
+    let user = passedUser;
+    if (user === undefined) {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user;
+    }
 
     if (!user) {
         // Not logged in -> Show Discord Login Prompt
-        authGateModal.classList.remove('hidden');
-        authGateLogin.classList.remove('hidden');
-        authGateDenied.classList.add('hidden');
-        mainDashboard.classList.add('hidden');
+        if (authGateModal) authGateModal.classList.remove('hidden');
+        if (authGateLogin) authGateLogin.classList.remove('hidden');
+        if (authGateDenied) authGateDenied.classList.add('hidden');
+        if (mainDashboard) mainDashboard.classList.add('hidden');
         return;
     }
 
@@ -137,29 +140,43 @@ async function checkAuthGate() {
         // Logged in, but NOT the Owner -> STRICT BLOCK
         const username = user.user_metadata?.user_name || user.user_metadata?.name || "User";
         const discId = getDiscordId(user) || user.id;
-        authGateModal.classList.remove('hidden');
-        authGateLogin.classList.add('hidden');
-        authGateDenied.classList.remove('hidden');
-        mainDashboard.classList.add('hidden');
-        deniedUserInfo.textContent = `მომხმარებელი: ${username} (Discord ID: ${discId})`;
+        if (authGateModal) authGateModal.classList.remove('hidden');
+        if (authGateLogin) authGateLogin.classList.add('hidden');
+        if (authGateDenied) authGateDenied.classList.remove('hidden');
+        if (mainDashboard) mainDashboard.classList.add('hidden');
+        if (deniedUserInfo) deniedUserInfo.textContent = `მომხმარებელი: ${username} (Discord ID: ${discId})`;
         return;
     }
 
     // Owner verified!
     currentOwner = user;
-    authGateModal.classList.add('hidden');
-    mainDashboard.classList.remove('hidden');
+    if (authGateModal) authGateModal.classList.add('hidden');
+    if (mainDashboard) mainDashboard.classList.remove('hidden');
 
     const meta = user.user_metadata || {};
     const avatar = meta.avatar_url || meta.picture || "logo.png";
     const username = meta.user_name || meta.custom_claims?.username || meta.full_name || "sticky._.1";
 
-    headerAvatar.src = avatar;
-    headerUsername.textContent = username;
+    if (headerAvatar) headerAvatar.src = avatar;
+    if (headerUsername) headerUsername.textContent = username;
 
     // Start fetching logs
     loadAllAuditData();
     setupAutoRefresh();
+}
+
+// Global Auth State Change Listener
+try {
+    supabase.auth.onAuthStateChange((event, session) => {
+        console.log("[Auth] Event:", event);
+        if (event === 'SIGNED_IN' && session) {
+            checkAuthGate(session.user);
+        } else if (event === 'SIGNED_OUT') {
+            checkAuthGate(null);
+        }
+    });
+} catch (e) {
+    console.warn("[Auth] Listener init error:", e);
 }
 
 // Fetch Logs and Stats
@@ -605,9 +622,7 @@ function escapeHtml(str) {
 }
 
 // Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    checkAuthGate();
-
+function setupListeners() {
     // Tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -662,25 +677,77 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Export
     if (btnExportCsv) {
         btnExportCsv.addEventListener('click', exportLogsToCsv);
     }
+}
 
-    // Login & Logout
-    if (btnDiscordLogin) {
-        btnDiscordLogin.addEventListener('click', async () => {
-            await supabase.auth.signInWithOAuth({
-                provider: 'discord',
-                options: { redirectTo: window.location.href }
-            });
-        });
+// Global Login With Discord Handler
+async function loginWithDiscord() {
+    console.log("[Auth] Initiating Discord OAuth...");
+    const btn = document.getElementById('btn-discord-login');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span style="display:inline-block;animation:spin 1s linear infinite;">⏳</span> გადამისამართება...`;
     }
 
-    const handleLogout = async () => {
-        await supabase.auth.signOut();
-        window.location.reload();
-    };
+    try {
+        const targetRedirect = window.location.origin + window.location.pathname;
+        console.log("[Auth] Redirect target:", targetRedirect);
 
-    if (btnLogout) btnLogout.addEventListener('click', handleLogout);
-    if (btnGateLogout) btnGateLogout.addEventListener('click', handleLogout);
-});
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'discord',
+            options: {
+                redirectTo: targetRedirect
+            }
+        });
+
+        if (error) {
+            console.warn("[Auth] Primary redirect rejected, attempting origin redirect:", error.message);
+            const fallbackRes = await supabase.auth.signInWithOAuth({
+                provider: 'discord',
+                options: {
+                    redirectTo: window.location.origin
+                }
+            });
+            if (fallbackRes.error) throw fallbackRes.error;
+            if (fallbackRes.data && fallbackRes.data.url) {
+                window.location.assign(fallbackRes.data.url);
+                return;
+            }
+        }
+
+        if (data && data.url) {
+            window.location.assign(data.url);
+        }
+    } catch (err) {
+        console.error("[Auth] Login error:", err);
+        alert("Discord ავტორიზაციის შეცდომა: " + (err.message || err));
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `<svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg> Discord-ით შესვლა`;
+        }
+    }
+}
+window.loginWithDiscord = loginWithDiscord;
+
+async function handleLogout() {
+    try {
+        await supabase.auth.signOut();
+    } catch (e) {}
+    window.location.href = window.location.origin + '/logs';
+}
+window.handleLogout = handleLogout;
+
+// Initializer
+function initApp() {
+    setupListeners();
+    checkAuthGate();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
