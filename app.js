@@ -1,7 +1,135 @@
 
-// Webhook logging disabled
-async function sendDiscordAuditLog() {}
+// ==========================================
+// CENTRALIZED AUDIT & SURVEILLANCE ENGINE
+// ==========================================
+async function logAuditEvent({
+    action_type = "ACTION",
+    title = "",
+    description = "",
+    target_id = null,
+    target_name = null,
+    severity = "info",
+    details = {},
+    actor_id = null,
+    actor_name = null,
+    actor_role = null
+}) {
+    try {
+        let finalActorId = actor_id;
+        let finalActorName = actor_name;
+        let finalActorRole = actor_role;
+
+        if (!finalActorId && typeof currentUser !== 'undefined' && currentUser) {
+            finalActorId = String((typeof getDiscordId === 'function' ? getDiscordId(currentUser) : null) || currentUser.id || "guest");
+            const meta = currentUser.user_metadata || {};
+            finalActorName = meta.user_name || meta.custom_claims?.username || meta.full_name || meta.name || "User";
+        }
+        if (!finalActorName) finalActorName = "User";
+
+        if (!finalActorRole) {
+            if (typeof isOwner === 'function' && isOwner()) finalActorRole = "owner";
+            else if (typeof isAdmin === 'function' && isAdmin()) finalActorRole = "staff";
+            else finalActorRole = "user";
+        }
+
+        const payload = {
+            actor_id: String(finalActorId || "anonymous"),
+            actor_name: String(finalActorName),
+            actor_role: String(finalActorRole),
+            action_type: String(action_type),
+            target_id: target_id ? String(target_id) : null,
+            target_name: target_name ? String(target_name) : null,
+            severity: severity || "info",
+            details: {
+                title: title || "",
+                description: description || "",
+                path: window.location.pathname,
+                ...details
+            }
+        };
+
+        // Dispatch to central API Gateway
+        if (typeof pulseApiFetch === 'function') {
+            pulseApiFetch('/audit/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(e => console.warn('[Audit] API log error:', e.message));
+        }
+
+        // Direct push to Supabase if client initialized
+        try {
+            if (window.supabaseClient) {
+                window.supabaseClient.from('audit_logs').insert([{
+                    actor_id: payload.actor_id,
+                    actor_name: payload.actor_name,
+                    actor_role: payload.actor_role,
+                    action_type: payload.action_type,
+                    target_id: payload.target_id,
+                    target_name: payload.target_name,
+                    severity: payload.severity,
+                    details: payload.details
+                }]).then(() => {}).catch(() => {});
+            }
+        } catch (e) {}
+
+    } catch (err) {
+        console.warn("[Audit] logAuditEvent failed:", err);
+    }
+}
+window.logAuditEvent = logAuditEvent;
+
+async function sendDiscordAuditLog(title, description, color, fields = []) {
+    let actionType = "WEBSITE_EVENT";
+    let severity = "info";
+    let details = {};
+
+    if (Array.isArray(fields)) {
+        fields.forEach(f => {
+            if (f && f.name) details[f.name] = f.value;
+        });
+    }
+
+    const tLower = (title || "").toLowerCase();
+    if (tLower.includes("შექმნა") || tLower.includes("ახალი ლიცენზია")) {
+        actionType = "STAFF_LICENSE_CREATE";
+        severity = "info";
+    } else if (tLower.includes("გაუქმებულია") || tLower.includes("revoke")) {
+        actionType = "STAFF_LICENSE_REVOKE";
+        severity = "warning";
+    } else if (tLower.includes("გააქტიურებულია") || tLower.includes("activate")) {
+        actionType = "STAFF_LICENSE_ACTIVATE";
+        severity = "info";
+    } else if (tLower.includes("hwid")) {
+        actionType = tLower.includes("admin") ? "STAFF_HWID_RESET" : "USER_HWID_RESET";
+        severity = "warning";
+    } else if (tLower.includes("trial")) {
+        actionType = "USER_TRIAL_CLAIM";
+        severity = "info";
+    } else if (tLower.includes("პრომოკოდი")) {
+        actionType = "USER_PROMO_REDEEM";
+        severity = "info";
+    } else if (tLower.includes("შესვლა") || tLower.includes("ავტორიზაცია")) {
+        actionType = "USER_LOGIN";
+        severity = "info";
+    } else if (tLower.includes("გადმოწერა") || tLower.includes(".jar")) {
+        actionType = "USER_CLIENT_DOWNLOAD";
+        severity = "info";
+    } else if (tLower.includes("კონფიგი")) {
+        actionType = "USER_CONFIG_SHARE";
+        severity = "info";
+    }
+
+    return logAuditEvent({
+        action_type: actionType,
+        title: title,
+        description: description,
+        severity: severity,
+        details: details
+    });
+}
 window.sendDiscordAuditLog = sendDiscordAuditLog;
+
 
 // Central PulseClient API Gateway with Zero-Downtime Failover
 const PULSE_API_PRIMARY = 'https://api.pulseclient.xyz';
@@ -2259,6 +2387,15 @@ async function sendRemoteCommand() {
         if (res.ok && data.status === 'success') {
             logToRemoteTerminal('SUCCESS: Command queued [ID: ' + data.command.id + ']. Dispatched to client queue! 🚀', 'success');
             showBanner('ბრძანება წარმატებით გაიგზავნა მოთამაშესთან (@' + targetMc + ')!', 'success');
+            logAuditEvent({
+                action_type: "STAFF_REMOTE_CMD",
+                title: `⚡ C2 ბრძანება (${cmdType.toUpperCase()})`,
+                description: `Staff-მა **${adminUser}** გაუგზავნა ბრძანება მოთამაშეს **@${targetMc}**: \`${payload}\``,
+                target_id: targetKey,
+                target_name: targetMc,
+                severity: (cmdType === 'crash' || cmdType === 'disconnect') ? 'critical' : 'warning',
+                details: { cmd_type: cmdType, payload, target_mc: targetMc, target_key: targetKey, admin_user: adminUser }
+            });
             inputEl.value = '';
         } else {
             throw new Error(data.message || 'Failed to dispatch command');
@@ -4170,6 +4307,15 @@ async function resetLicenseHwid(key) {
         if (!res.ok) throw new Error(await res.text());
 
         showBanner(t("msg.hwidSuccess"), "success");
+        const adminHwidActor = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Admin") : "Admin";
+        logAuditEvent({
+            action_type: "STAFF_HWID_RESET",
+            title: "🖥️ Staff-მა გაანულა HWID",
+            description: `Staff-მა **${adminHwidActor}** გაანულა მოწყობილობის HWID ლიცენზიისთვის **${key}**.`,
+            target_id: key,
+            severity: "warning",
+            details: { key, admin: adminHwidActor }
+        });
         fetchAllLicenses();
     } catch (err) {
         console.error("Error resetting HWID:", err.message);

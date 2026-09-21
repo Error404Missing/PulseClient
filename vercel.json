@@ -1,0 +1,19 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "logs.pulseclient.xyz"
+        }
+      ],
+      "destination": "/logs.html"
+    },
+    {
+      "source": "/logs",
+      "destination": "/logs.html"
+    }
+  ]
+}

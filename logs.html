@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseClient &bull; Sentinel Audit & Surveillance Matrix</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="logs.css">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <!-- ======================================================= -->
+    <!-- AUTHENTICATION & ACCESS CONTROL GATE (STRICT OWNER ONLY) -->
+    <!-- ======================================================= -->
+    <div id="auth-gate-modal" class="auth-gate-modal hidden">
+        <div id="auth-gate-login" class="auth-gate-card glass-panel">
+            <div class="gate-icon">🛡️</div>
+            <h2>Pulse Sentinel Matrix</h2>
+            <p>სისტემაში შესასვლელად და Staff-ის/მომხმარებელთა აუდიტის სანახავად საჭიროა Discord ავტორიზაცია.</p>
+            <button type="button" id="btn-discord-login" class="btn-discord-login">
+                <svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="currentColor">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+                </svg>
+                Discord-ით შესვლა
+            </button>
+            <div style="margin-top: 18px; font-size: 11px; color: var(--text-dim);">
+                🔒 წვდომა დაცულია ორმაგი ავთენტიფიკაციითა და როლების შემოწმებით
+            </div>
+        </div>
+
+        <div id="auth-gate-denied" class="auth-gate-card glass-panel gate-denied hidden">
+            <div class="gate-icon">⛔</div>
+            <h2>წვდომა შეზღუდულია!</h2>
+            <p>თქვენ არ ფლობთ <strong>Owner-ის</strong> უფლებამოსილებას. Staff-ისა და სისტემის აუდიტზე წვდომა მკაცრად დაცულია.</p>
+            <div id="denied-user-info" style="margin-bottom: 20px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);"></div>
+            <button type="button" id="btn-gate-logout" class="btn-cyber" style="width: 100%; justify-content: center;">
+                გასვლა / ანგარიშის შეცვლა
+            </button>
+        </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- MAIN DASHBOARD VIEW (OWNER ACCESSIBLE ONLY)             -->
+    <!-- ======================================================= -->
+    <div id="main-dashboard" class="hidden">
+
+        <!-- Top Header Navigation -->
+        <header class="sentinel-header">
+            <div class="logo-group">
+                <div class="pulse-radar-dot"></div>
+                <div class="logo-text">
+                    <h1>PULSE <span>SENTINEL</span></h1>
+                </div>
+                <span class="sentinel-badge">SURVEILLANCE MATRIX</span>
+                <div class="header-status-pill">
+                    <span class="status-dot-green"></span>
+                    <span id="live-indicator-text">LIVE REALTIME</span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">ავტო-განახლება:</span>
+                    <select id="auto-refresh-select" class="auto-refresh-select">
+                        <option value="5000">5 წამი</option>
+                        <option value="10000" selected>10 წამი</option>
+                        <option value="30000">30 წამი</option>
+                        <option value="0">გამორთული</option>
+                    </select>
+                </div>
+
+                <button type="button" id="btn-refresh-now" class="btn-cyber" title="ხელით განახლება">
+                    🔄 განახლება
+                </button>
+
+                <button type="button" id="btn-export-csv" class="btn-cyber" title="ექსპორტი CSV ფორმატში">
+                    📥 CSV
+                </button>
+
+                <a href="https://pulseclient.xyz" class="btn-cyber" target="_blank" title="მთავარ საიტზე გადასვლა">
+                    🌐 საიტი
+                </a>
+
+                <!-- Owner Profile Badge -->
+                <div class="user-profile-badge">
+                    <img id="header-avatar" src="logo.png" alt="Owner Avatar">
+                    <div class="user-profile-info">
+                        <span id="header-username" class="username">sticky._.1</span>
+                        <span class="role-tag">👑 OWNER</span>
+                    </div>
+                    <button type="button" id="btn-logout" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; margin-left: 4px;" title="გასვლა">
+                        🚪
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Body Container -->
+        <main class="sentinel-container">
+
+            <!-- KPI Row -->
+            <section class="kpi-row">
+                <div class="kpi-card glass-panel" style="--accent-color: var(--neon-purple);">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Staff-ის მოქმედებები (24სთ)</span>
+                        <span class="kpi-icon">🛡️</span>
+                    </div>
+                    <div id="stat-staff-actions" class="kpi-value">0</div>
+                    <div class="kpi-sub">
+                        <span>ადმინისტრატორების აქტივობა</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel" style="--accent-color: var(--neon-cyan);">
+                    <div class="kpi-header">
+                        <span class="kpi-title">აქტიური Staff წევრები</span>
+                        <span class="kpi-icon">⚡</span>
+                    </div>
+                    <div id="stat-active-staff" class="kpi-value">0</div>
+                    <div class="kpi-sub">
+                        <span>მონიტორინგის ქვეშ მყოფი Staff</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel" style="--accent-color: var(--neon-rose);">
+                    <div class="kpi-header">
+                        <span class="kpi-title">კრიტიკული მოვლენები</span>
+                        <span class="kpi-icon">🚨</span>
+                    </div>
+                    <div id="stat-critical-events" class="kpi-value" style="color: var(--neon-rose);">0</div>
+                    <div class="kpi-sub">
+                        <span>გასაღების გაუქმება / C2 Crash</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel" style="--accent-color: var(--neon-blue);">
+                    <div class="kpi-header">
+                        <span class="kpi-title">მომხმარებელთა მოვლენები</span>
+                        <span class="kpi-icon">👥</span>
+                    </div>
+                    <div id="stat-user-events" class="kpi-value">0</div>
+                    <div class="kpi-sub">
+                        <span>შესვლები / სტრიკები / კრიპტო</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel" style="--accent-color: var(--neon-emerald);">
+                    <div class="kpi-header">
+                        <span class="kpi-title">კლიენტის ვერიფიკაციები</span>
+                        <span class="kpi-icon">🎮</span>
+                    </div>
+                    <div id="stat-client-verifies" class="kpi-value" style="color: var(--neon-emerald);">0</div>
+                    <div class="kpi-sub">
+                        <span>Minecraft გაშვებები</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Tabs -->
+            <nav class="tabs-navigation">
+                <button type="button" class="tab-btn active" data-tab="all">
+                    📡 ლაივ ნაკადი (Live Feed) <span id="tab-count-all" class="tab-count">0</span>
+                </button>
+                <button type="button" class="tab-btn" data-tab="staff">
+                    🛡️ Staff-ის კონტროლი (Surveillance) <span id="tab-count-staff" class="tab-count">0</span>
+                </button>
+                <button type="button" class="tab-btn" data-tab="users">
+                    👥 მომხმარებლები (User Activity) <span id="tab-count-users" class="tab-count">0</span>
+                </button>
+                <button type="button" class="tab-btn" data-tab="client">
+                    🎮 კლიენტი & C2 (Game Terminal) <span id="tab-count-client" class="tab-count">0</span>
+                </button>
+                <button type="button" class="tab-btn" data-tab="security">
+                    🚨 უსაფრთხოება & ანომალიები <span id="tab-count-security" class="tab-count">0</span>
+                </button>
+            </nav>
+
+            <!-- Staff Leaderboard Overview (visible on staff tab) -->
+            <section id="staff-leaderboard-section" class="staff-leaderboard hidden">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                    <h2 style="font-size: 16px; font-weight: 700; color: #fff;">🛡️ Staff წევრების აქტივობისა და პასუხისმგებლობის რეიტინგი</h2>
+                    <span style="font-size: 12px; color: var(--text-muted);">დააჭირეთ ბარათს მხოლოდ მისი ლოგების გამოსაყოფად</span>
+                </div>
+                <div id="staff-cards-container" class="staff-cards-grid">
+                    <!-- Dynamic staff cards injected here -->
+                </div>
+            </section>
+
+            <!-- Search & Filters Toolbar -->
+            <section class="toolbar-card glass-panel">
+                <div class="filter-group">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="filter-search" placeholder="ძებნა: სახელი, ID, გასაღები, IP, ბრძანება...">
+                    </div>
+
+                    <select id="filter-role" class="filter-select">
+                        <option value="">ყველა როლი (Roles)</option>
+                        <option value="staff">🛡️ Staff წევრები</option>
+                        <option value="owner">👑 Owner</option>
+                        <option value="user">🎮 Users</option>
+                        <option value="client">⛏️ Minecraft Mod</option>
+                        <option value="system">🤖 System Gateway</option>
+                    </select>
+
+                    <select id="filter-action" class="filter-select">
+                        <option value="">ყველა მოქმედება (Actions)</option>
+                        <option value="STAFF_LICENSE_CREATE">🔑 ლიცენზიის შექმნა</option>
+                        <option value="STAFF_LICENSE_REVOKE">🚫 ლიცენზიის გაუქმება</option>
+                        <option value="STAFF_LICENSE_ACTIVATE">✅ ლიცენზიის გააქტიურება</option>
+                        <option value="STAFF_HWID_RESET">🖥️ Staff HWID Reset</option>
+                        <option value="STAFF_REMOTE_CMD">⚡ C2 Remote Command</option>
+                        <option value="STAFF_REMOTE_SCREENSHOT">📸 Screenshot მოთხოვნა</option>
+                        <option value="STAFF_REMOTE_INSPECT">🎒 მოთამაშის ინსპექცია</option>
+                        <option value="USER_LOGIN">🚪 Discord Login</option>
+                        <option value="USER_TRIAL_CLAIM">🎁 Trial აღება</option>
+                        <option value="USER_PROMO_REDEEM">🎟️ პრომოკოდის გამოყენება</option>
+                        <option value="CLIENT_VERIFY_SUCCESS">🎮 Mod Verification (Online)</option>
+                    </select>
+
+                    <select id="filter-severity" class="filter-select">
+                        <option value="">სერიოზულობა (Severity)</option>
+                        <option value="info">🟢 Info</option>
+                        <option value="warning">🟡 Warning</option>
+                        <option value="critical">🔴 Critical / Danger</option>
+                    </select>
+
+                    <select id="filter-timeframe" class="filter-select">
+                        <option value="all">სრული ისტორია (All)</option>
+                        <option value="1h">ბოლო 1 საათი</option>
+                        <option value="24h" selected>ბოლო 24 საათი</option>
+                        <option value="7d">ბოლო 7 დღე</option>
+                        <option value="30d">ბოლო 30 დღე</option>
+                    </select>
+
+                    <button type="button" id="btn-reset-filters" class="btn-cyber" style="padding: 8px 12px;">
+                        ✕ გასუფთავება
+                    </button>
+                </div>
+
+                <div style="font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono);">
+                    ნაჩვენებია: <strong id="filter-results-count" style="color: var(--neon-cyan);">0</strong> ჩანაწერი
+                </div>
+            </section>
+
+            <!-- Main Audit Events Table -->
+            <section class="audit-table-card glass-panel">
+                <div class="table-responsive">
+                    <table class="audit-table">
+                        <thead>
+                            <tr>
+                                <th>დრო (თბილისი)</th>
+                                <th>შემსრულებელი (Actor)</th>
+                                <th>როლი</th>
+                                <th>მოქმედება</th>
+                                <th>სამიზნე (Target)</th>
+                                <th>აღწერა & დეტალები</th>
+                                <th>IP / ქსელი</th>
+                                <th>დონე</th>
+                                <th style="text-align: right;">დეტალები</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body">
+                            <!-- Dynamic rows injected here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="audit-empty-state" class="empty-state hidden">
+                    <div class="icon">📡</div>
+                    <h3>ჩანაწერები ვერ მოიძებნა</h3>
+                    <p>მოცემული ფილტრების შესაბამისი აუდიტ ლოგები ბაზაში არ ფიქსირდება.</p>
+                </div>
+
+                <!-- Loading State -->
+                <div id="audit-loading-state" class="empty-state">
+                    <div class="icon">⚡</div>
+                    <h3>ლოგები იტვირთება...</h3>
+                    <p>მიმდინარეობს Sentinel Matrix მონაცემების სინქრონიზაცია.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Slide-Out Event Inspector Drawer -->
+        <aside id="event-drawer" class="event-drawer">
+            <div class="drawer-header">
+                <h2>📋 მოვლენის დეტალური ინსპექტორი</h2>
+                <button type="button" id="btn-close-drawer" class="drawer-close-btn">✕</button>
+            </div>
+            <div class="drawer-body">
+                <div class="drawer-section">
+                    <div class="drawer-section-title">ინფორმაცია ივენთზე</div>
+                    <div class="drawer-card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: var(--text-muted); font-size: 12px;">ივენთის ID:</span>
+                            <code id="drawer-event-id" style="color: var(--neon-cyan); font-size: 11.5px;">-</code>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: var(--text-muted); font-size: 12px;">თბილისის დრო:</span>
+                            <span id="drawer-event-time" style="font-weight: 600; font-size: 12.5px;">-</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-muted); font-size: 12px;">სერიოზულობა:</span>
+                            <span id="drawer-event-severity" class="severity-pill severity-info">INFO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">შემსრულებელი (Actor Profile)</div>
+                    <div class="drawer-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                            <img id="drawer-actor-avatar" src="logo.png" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-color);" alt="Actor">
+                            <div>
+                                <div id="drawer-actor-name" style="font-weight: 700; font-size: 14px;">Unknown</div>
+                                <div id="drawer-actor-id" style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">ID: -</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">
+                            <div>IP მისამართი: <code id="drawer-actor-ip" style="color: #a5b4fc;">-</code></div>
+                            <div style="margin-top: 4px; word-break: break-all;">User-Agent: <span id="drawer-actor-ua" style="font-size: 11px; color: var(--text-dim);">-</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">სამიზნე ობიექტი (Target)</div>
+                    <div class="drawer-card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span style="color: var(--text-muted); font-size: 12px;">Target Identifier:</span>
+                            <strong id="drawer-target-name">-</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-muted); font-size: 12px;">Target ID / Key:</span>
+                            <code id="drawer-target-id" class="key-code">-</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drawer-section">
+                    <div class="drawer-section-title">მონაცემების სრული JSON</div>
+                    <pre id="drawer-json" class="json-viewer">{}</pre>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Core Sentinel Controller Logic -->
+    <script src="logs.js"></script>
+</body>
+</html>
