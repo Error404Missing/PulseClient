@@ -6777,4 +6777,400 @@ function initLiquidCanvas() {
 }
 document.addEventListener("DOMContentLoaded", () => {
     initLiquidCanvas();
+    initEvilaClicker();
 });
+
+// ==========================================
+// EVILA CLICKER MINI-GAME & ANTICHEAT ENGINE
+// ==========================================
+(function() {
+    const DAILY_LIMIT = 360; // 6 hours = 360 minutes / 360 clicks per day
+    const AUDIO_POOL_SIZE = 10;
+    const EVILA_AUDIO_PATH = 'evila.mp3';
+
+    // Audio pool for zero-latency overlapping audio playback
+    const audioPool = [];
+    let audioIndex = 0;
+    try {
+        for (let i = 0; i < AUDIO_POOL_SIZE; i++) {
+            const aud = new Audio(EVILA_AUDIO_PATH);
+            aud.preload = 'auto';
+            audioPool.push(aud);
+        }
+    } catch (e) {
+        console.warn("[EvilaClicker] Audio init error:", e);
+    }
+
+    function playEvilaSound() {
+        try {
+            if (audioPool.length > 0) {
+                const snd = audioPool[audioIndex];
+                audioIndex = (audioIndex + 1) % audioPool.length;
+                snd.currentTime = 0;
+                const p = snd.play();
+                if (p && typeof p.catch === 'function') {
+                    p.catch(() => {
+                        try { new Audio(EVILA_AUDIO_PATH).play().catch(() => {}); } catch (err) {}
+                    });
+                }
+            } else {
+                new Audio(EVILA_AUDIO_PATH).play().catch(() => {});
+            }
+        } catch (err) {
+            console.warn("[EvilaClicker] Sound playback failed:", err);
+        }
+    }
+
+    // Anticheat Tracking State
+    const clickTimestamps = [];
+    const clickPositions = [];
+    let isFrozen = false;
+    let freezeTimer = null;
+    let freezeSecondsLeft = 20;
+
+    // License Synchronization State
+    let uncommittedMinutes = 0;
+    let syncTimer = null;
+
+    function getTodayKey() {
+        const d = new Date();
+        return `pulse_evila_${d.getFullYear()}_${String(d.getMonth() + 1).padStart(2, '0')}_${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function getTodayClicks() {
+        return parseInt(localStorage.getItem(getTodayKey()) || '0', 10);
+    }
+
+    function setTodayClicks(val) {
+        localStorage.setItem(getTodayKey(), String(val));
+    }
+
+    function getUnclaimedMinutes() {
+        return parseInt(localStorage.getItem('pulse_evila_unclaimed_mins') || '0', 10);
+    }
+
+    function setUnclaimedMinutes(val) {
+        localStorage.setItem('pulse_evila_unclaimed_mins', String(val));
+    }
+
+    // Autoclicker & Bot Detection
+    function checkAutoclicker(e) {
+        // 1. Synthetic event check
+        if (e.isTrusted === false) {
+            console.warn("[Anticheat] Untrusted event flagged (isTrusted: false)");
+            return true;
+        }
+
+        const now = performance.now();
+        clickTimestamps.push(now);
+        if (clickTimestamps.length > 10) clickTimestamps.shift();
+
+        clickPositions.push({ x: e.clientX, y: e.clientY });
+        if (clickPositions.length > 10) clickPositions.shift();
+
+        // 2. Click interval speed check (< 68ms -> > 14.7 CPS)
+        if (clickTimestamps.length >= 2) {
+            const lastInterval = clickTimestamps[clickTimestamps.length - 1] - clickTimestamps[clickTimestamps.length - 2];
+            if (lastInterval < 68) {
+                console.warn("[Anticheat] Superhuman CPS flagged (interval:", lastInterval, "ms)");
+                return true;
+            }
+        }
+
+        // 3. Interval Consistency / Standard Deviation Check (Fixed delay macros)
+        if (clickTimestamps.length >= 7) {
+            const intervals = [];
+            for (let i = 1; i < clickTimestamps.length; i++) {
+                intervals.push(clickTimestamps[i] - clickTimestamps[i - 1]);
+            }
+            const mean = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+            if (mean < 220) { // Only check jitter if clicking fast
+                const variance = intervals.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / (intervals.length - 1);
+                const stdDev = Math.sqrt(variance);
+                if (stdDev < 6.5) { // Unnatural machine consistency
+                    console.warn("[Anticheat] Jitter variance violation flagged (stdDev:", stdDev, "ms, mean:", mean, "ms)");
+                    return true;
+                }
+            }
+        }
+
+        // 4. Exact Pixel Stagnation Check (Fixed coordinate macros)
+        if (clickPositions.length >= 7) {
+            const first = clickPositions[0];
+            const allSame = clickPositions.every(p => p.x === first.x && p.y === first.y);
+            if (allSame) {
+                console.warn("[Anticheat] Zero-pixel deviation macro flagged at:", first);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function triggerFreezePenalty() {
+        if (isFrozen) return;
+        isFrozen = true;
+        freezeSecondsLeft = 20;
+
+        const overlay = document.getElementById('evila-anticheat-overlay');
+        const timerVal = document.getElementById('evila-freeze-seconds');
+        const card = document.getElementById('evila-clicker-card');
+
+        if (overlay) overlay.classList.remove('hidden');
+        if (timerVal) timerVal.textContent = String(freezeSecondsLeft);
+        if (card) card.classList.add('evila-shaking');
+
+        if (freezeTimer) clearInterval(freezeTimer);
+        freezeTimer = setInterval(() => {
+            freezeSecondsLeft--;
+            if (timerVal) timerVal.textContent = String(freezeSecondsLeft);
+            if (freezeSecondsLeft <= 0) {
+                clearInterval(freezeTimer);
+                freezeTimer = null;
+                isFrozen = false;
+                if (overlay) overlay.classList.add('hidden');
+                if (card) card.classList.remove('evila-shaking');
+                clickTimestamps.length = 0;
+                clickPositions.length = 0;
+            }
+        }, 1000);
+    }
+
+    function spawnParticle(cardX, cardY) {
+        const container = document.getElementById('evila-floating-container');
+        if (!container) return;
+
+        const particle = document.createElement('div');
+        particle.className = 'evila-particle';
+        
+        const badges = ['+1 წთ 🍆', '+1 წთ ⚡', '+1 წუთი! 🍆', '+1 წთ 🔥'];
+        particle.textContent = badges[Math.floor(Math.random() * badges.length)];
+        
+        // Random slight horizontal wobble
+        const wobbleX = (Math.random() - 0.5) * 40;
+        particle.style.left = `${cardX + wobbleX}px`;
+        particle.style.top = `${cardY}px`;
+
+        container.appendChild(particle);
+        setTimeout(() => {
+            if (particle.parentNode) particle.parentNode.removeChild(particle);
+        }, 900);
+    }
+
+    function updateUI() {
+        const count = getTodayClicks();
+        const countEl = document.getElementById('evila-today-count');
+        const barEl = document.getElementById('evila-progress-bar');
+        const limitBanner = document.getElementById('evila-limit-banner');
+        const statusText = document.getElementById('evila-status-text');
+        const targetContainer = document.getElementById('evila-click-target');
+
+        if (countEl) countEl.textContent = String(count);
+        
+        const pct = Math.min(100, Math.round((count / DAILY_LIMIT) * 100));
+        if (barEl) barEl.style.width = `${pct}%`;
+
+        if (count >= DAILY_LIMIT) {
+            if (limitBanner) limitBanner.classList.remove('hidden');
+            if (targetContainer) {
+                targetContainer.style.opacity = '0.7';
+                targetContainer.style.cursor = 'not-allowed';
+            }
+            if (statusText) statusText.textContent = "დღიური 6 საათიანი ლიმიტი ამოწურულია!";
+        } else {
+            if (limitBanner) limitBanner.classList.add('hidden');
+            if (targetContainer) {
+                targetContainer.style.opacity = '1';
+                targetContainer.style.cursor = 'pointer';
+            }
+            if (statusText) {
+                if (typeof currentUser !== 'undefined' && currentUser) {
+                    statusText.textContent = `⚡ PulseClient-ის ვადა გაიზარდა (+${count} წთ დღეს)`;
+                } else {
+                    const unclaimed = getUnclaimedMinutes();
+                    if (unclaimed > 0) {
+                        statusText.innerHTML = `💡 დაგროვილია <strong>${unclaimed} წთ</strong> — შედი Discord-ით გასააქტიურებლად!`;
+                    } else {
+                        statusText.textContent = "დააკლიკე და გაახანგრძლივე PulseClient";
+                    }
+                }
+            }
+        }
+    }
+
+    async function syncToSupabase() {
+        if (uncommittedMinutes <= 0) return;
+        const minsToSync = uncommittedMinutes;
+        uncommittedMinutes = 0;
+
+        // If not logged in, accumulate in unclaimed local pool
+        if (typeof currentUser === 'undefined' || !currentUser) {
+            const currentUnclaimed = getUnclaimedMinutes();
+            setUnclaimedMinutes(currentUnclaimed + minsToSync);
+            updateUI();
+            return;
+        }
+
+        try {
+            const metadata = currentUser.user_metadata || {};
+            const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
+            const discordId = typeof getDiscordId === 'function' ? getDiscordId(currentUser) : (metadata.sub || currentUser.id);
+
+            const queryDiscordId = `%DiscordID: ${discordId}%`;
+            const queryUsername = `%Buyer: ${username}%`;
+
+            // Query existing user licenses
+            const { data: licenses, error } = await supabaseClient
+                .from('licenses')
+                .select('*')
+                .or(`note.like.${queryDiscordId},note.like.${queryUsername}`)
+                .order('expires_at', { ascending: false });
+
+            if (error) throw error;
+
+            if (licenses && licenses.length > 0) {
+                // Extend the most relevant active license
+                const lic = licenses[0];
+                const currentExpiry = new Date(lic.expires_at).getTime();
+                const baseTime = Math.max(Date.now(), currentExpiry);
+                const newExpiry = new Date(baseTime + minsToSync * 60 * 1000).toISOString();
+
+                const { error: updateErr } = await supabaseClient
+                    .from('licenses')
+                    .update({
+                        expires_at: newExpiry,
+                        is_active: true
+                    })
+                    .eq('id', lic.id);
+
+                if (updateErr) throw updateErr;
+                console.log(`[EvilaClicker] Extended license ${lic.license_key} by +${minsToSync} mins. New expiry:`, newExpiry);
+            } else {
+                // User has no license yet: generate a new trial key with the accumulated time!
+                const newKey = typeof generateLicenseKey === 'function' ? generateLicenseKey() : `PULSE-EVLA-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+                const newExpiry = new Date(Date.now() + minsToSync * 60 * 1000).toISOString();
+                const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Evila Clicker Reward)`;
+
+                const { error: insertErr } = await supabaseClient
+                    .from('licenses')
+                    .insert({
+                        license_key: newKey,
+                        expires_at: newExpiry,
+                        is_active: true,
+                        note: note
+                    });
+
+                if (insertErr) throw insertErr;
+                console.log(`[EvilaClicker] Generated new PulseClient license ${newKey} with +${minsToSync} mins!`);
+            }
+
+            // Silently refresh dashboard licenses if visible
+            if (typeof fetchUserLicenses === 'function') {
+                fetchUserLicenses().catch(() => {});
+            }
+        } catch (err) {
+            console.error("[EvilaClicker] Failed to sync minutes to Supabase:", err);
+            uncommittedMinutes += minsToSync; // Retry next time
+        } finally {
+            updateUI();
+        }
+    }
+
+    function queueSync(minutes) {
+        uncommittedMinutes += minutes;
+        if (syncTimer) clearTimeout(syncTimer);
+
+        if (uncommittedMinutes >= 15) {
+            syncToSupabase();
+        } else {
+            syncTimer = setTimeout(syncToSupabase, 2500);
+        }
+    }
+
+    // Called on Discord login to claim any offline accumulated clicks
+    async function claimPendingMinutesOnSignIn() {
+        const unclaimed = getUnclaimedMinutes();
+        if (unclaimed > 0) {
+            console.log(`[EvilaClicker] Claiming ${unclaimed} pending minutes on login...`);
+            setUnclaimedMinutes(0);
+            uncommittedMinutes += unclaimed;
+            await syncToSupabase();
+            if (typeof showBanner === 'function') {
+                showBanner(`🎉 შენ მიიღე +${unclaimed} წუთი PulseClient-ზე ევილას დაკლიკვისთვის!`, 'success');
+            }
+        }
+    }
+
+    function handleEvilaClick(e) {
+        if (isFrozen) {
+            e.preventDefault();
+            return;
+        }
+
+        const currentCount = getTodayClicks();
+        if (currentCount >= DAILY_LIMIT) {
+            updateUI();
+            return;
+        }
+
+        // Run Autoclicker Anticheat
+        if (checkAutoclicker(e)) {
+            triggerFreezePenalty();
+            e.preventDefault();
+            return;
+        }
+
+        // Play Sound
+        playEvilaSound();
+
+        // Bounce Animation
+        const targetImg = document.getElementById('evila-target-img');
+        if (targetImg) {
+            targetImg.classList.add('clicked');
+            setTimeout(() => targetImg.classList.remove('clicked'), 90);
+        }
+
+        // Spawn Particle
+        const card = document.getElementById('evila-clicker-card');
+        if (card) {
+            const rect = card.getBoundingClientRect();
+            const relX = (e.clientX && e.clientX > 0) ? (e.clientX - rect.left) : (rect.width / 2);
+            const relY = (e.clientY && e.clientY > 0) ? (e.clientY - rect.top) : (rect.height / 2 - 20);
+            spawnParticle(relX, relY);
+        }
+
+        // Increment Day Quota
+        setTodayClicks(currentCount + 1);
+        queueSync(1);
+        updateUI();
+    }
+
+    function initEvilaClicker() {
+        const target = document.getElementById('evila-click-target');
+        if (!target) return;
+
+        target.addEventListener('click', handleEvilaClick);
+        target.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleEvilaClick(e);
+            }
+        });
+
+        // Listen for Supabase login to credit pending minutes
+        if (typeof supabaseClient !== 'undefined' && supabaseClient.auth) {
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (event === 'SIGNED_IN' && session) {
+                    setTimeout(claimPendingMinutesOnSignIn, 1500);
+                }
+                updateUI();
+            });
+        }
+
+        updateUI();
+        console.log("[EvilaClicker] Initialized successfully. Daily limit:", DAILY_LIMIT, "mins. Sound pool ready.");
+    }
+
+    window.initEvilaClicker = initEvilaClicker;
+    window.claimPendingMinutesOnSignIn = claimPendingMinutesOnSignIn;
+})();
