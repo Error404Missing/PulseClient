@@ -995,11 +995,9 @@ async function handleUserSignIn(user) {
     if (navLinks) navLinks.classList.remove('hidden');
 
     // Switch Views while preserving user's current view and tab
-    const savedView = localStorage.getItem('pulse_current_view');
-    const isDashboardAlreadyVisible = dashboardPage && !dashboardPage.classList.contains('hidden');
     const isDashboardHash = window.location.hash === '#dashboard' || window.location.hash.startsWith('#tab-');
 
-    if (isDashboardAlreadyVisible || savedView === 'dashboard' || isDashboardHash) {
+    if (isDashboardHash) {
         landingPage.classList.add('hidden');
         dashboardPage.classList.remove('hidden');
         localStorage.setItem('pulse_current_view', 'dashboard');
@@ -1094,11 +1092,11 @@ function handleUserSignOut() {
     // Update Nav
     navLoginBtn.classList.remove('hidden');
     navUserProfile.classList.add('hidden');
-    if (navLinks) navLinks.classList.add('hidden');
+    if (navLinks) navLinks.classList.remove('hidden');
 
-    // Show Auth Gate Barrier and hide all internal pages
-    if (authGatePage) authGatePage.classList.remove('hidden');
-    landingPage.classList.add('hidden');
+    // Show Landing page to all visitors by default
+    if (authGatePage) authGatePage.classList.add('hidden');
+    landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
 
     // Hide Admin menu item
@@ -1689,25 +1687,19 @@ window.toggleFaq = toggleFaq;
 function navigateToLandingSection(event, sectionId) {
     if (event && event.preventDefault) event.preventDefault();
     
-    if (!currentUser) {
-        if (authGatePage) authGatePage.classList.remove('hidden');
-        landingPage.classList.add('hidden');
-        dashboardPage.classList.add('hidden');
-        return;
-    }
-
     if (authGatePage) authGatePage.classList.add('hidden');
-    // Switch views to show landing page
     landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
     localStorage.setItem('pulse_current_view', 'landing');
     
     // Scroll to section
-    if (sectionId) {
+    if (sectionId && sectionId !== 'landing-page') {
         const target = document.getElementById(sectionId);
         if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
         }
+    } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     if (window.history.replaceState) {
@@ -1715,6 +1707,15 @@ function navigateToLandingSection(event, sectionId) {
     }
 }
 window.navigateToLandingSection = navigateToLandingSection;
+
+function showLanding() {
+    if (authGatePage) authGatePage.classList.add('hidden');
+    if (landingPage) landingPage.classList.remove('hidden');
+    if (dashboardPage) dashboardPage.classList.add('hidden');
+    localStorage.setItem('pulse_current_view', 'landing');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.showLanding = showLanding;
 
 // Show dashboard view
 function showDashboard() {
