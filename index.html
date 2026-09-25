@@ -572,7 +572,7 @@
                 <!-- User Profile & Sidebar Navigation (Similar to screenshot) -->
                 <div class="dashboard-sidebar">
                     <!-- Client Logo Header -->
-                    <div class="sidebar-logo">
+                    <div class="sidebar-logo" style="cursor: pointer;" onclick="showLanding()" title="მთავარ გვერდზე დაბრუნება">
                         <span class="logo-red">PULSE</span><span class="logo-white">CLIENT</span>
                     </div>
 
@@ -594,22 +594,17 @@
 
                     <!-- Navigation Sidebar Links -->
                     <nav class="sidebar-menu">
-                        <a href="javascript:void(0)" class="menu-item" onclick="showLanding()" style="background: rgba(255, 0, 85, 0.14) !important; border: 1px solid rgba(255, 0, 85, 0.4) !important; color: #ff3366 !important; font-weight: 700 !important; margin-bottom: 8px;">
-                            <span style="font-size: 16px;">🍆</span>
-                            <span>ევილას Clicker (+1 წთ)</span>
-                            <span style="background: #ff0055; color: #fff; font-size: 9px; padding: 2px 7px; border-radius: 99px; margin-left: auto;">CLICK</span>
-                        </a>
                         <a href="#tab-downloads" class="menu-item active" onclick="switchDashTab(event, 'tab-downloads')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            ჩამოტვირთვები
+                            <span data-i18n="dash.downloads">ჩამოტვირთვები</span>
                         </a>
                         <a href="#tab-redeem" class="menu-item" onclick="switchDashTab(event, 'tab-redeem')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-                            ლიცენზიები & გასაღები
+                            <span data-i18n="dash.licenses">ლიცენზიები & გასაღები</span>
                         </a>
                         <a href="#tab-referral" class="menu-item" onclick="switchDashTab(event, 'tab-referral')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                            რეფერალები
+                            <span data-i18n="dash.referral">რეფერალები</span>
                         </a>
                         <a href="#tab-promo" class="menu-item" onclick="switchDashTab(event, 'tab-promo')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
@@ -617,15 +612,15 @@
                         </a>
                         <a href="#tab-configs" class="menu-item" onclick="switchDashTab(event, 'tab-configs'); const p = document.getElementById('tab-content-configs'); if (p) p.classList.remove('hidden');">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            <span>კონფიგები (Presets)</span>
+                            <span data-i18n="dash.configs">კონფიგები (Presets)</span>
                         </a>
                         <a href="#tab-faq" class="menu-item" onclick="switchDashTab(event, 'tab-faq')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                            კითხვები
+                            <span data-i18n="dash.faq">კითხვები</span>
                         </a>
                         <a href="#tab-admin" id="admin-menu-item" class="menu-item hidden" onclick="switchDashTab(event, 'tab-admin')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            ადმინ პანელი
+                            <span data-i18n="dash.admin">ადმინ პანელი</span>
                             <span class="admin-badge">Admin</span>
                         </a>
                         
@@ -639,7 +634,7 @@
 
                         <a href="#" class="menu-item logout-item" id="dash-logout-btn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            გამოსვლა
+                            <span data-i18n="dash.logout">გამოსვლა</span>
                         </a>
                     </nav>
                 </div>
@@ -2754,8 +2749,8 @@
     </div>
 
     <!-- App Configuration and Logic script -->
-    <script src="i18n.js?v=371.0.0"></script>
-    <script src="app.js?v=712.0.0"></script>
+    <script src="i18n.js?v=373.0.0"></script>
+    <script src="app.js?v=714.0.0"></script>
 </body>
 </html>
-<!-- Deploy trigger timestamp: 1790264000 -->
+<!-- Deploy trigger timestamp: 1790272000 -->
