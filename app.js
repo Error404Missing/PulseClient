@@ -6822,12 +6822,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Anticheat Tracking State
+    // Anticheat Tracking & Cooldown State
     const clickTimestamps = [];
-    const clickPositions = [];
     let isFrozen = false;
     let freezeTimer = null;
-    let freezeSecondsLeft = 20;
 
     // License Synchronization State
     let uncommittedMinutes = 0;
@@ -6854,87 +6852,129 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('pulse_evila_unclaimed_mins', String(val));
     }
 
-    // Autoclicker & Bot Detection
-    function checkAutoclicker(e) {
-        // 1. Synthetic event check
-        if (e.isTrusted === false) {
-            console.warn("[Anticheat] Untrusted event flagged (isTrusted: false)");
+    // Freeze & Cooldown Management (Persistent across refresh)
+    function checkAndSyncFreezeState() {
+        const freezeUntilStr = localStorage.getItem('pulse_evila_freeze_until');
+        if (!freezeUntilStr) {
+            clearFreezeUI();
+            return false;
+        }
+        const freezeUntil = parseInt(freezeUntilStr, 10);
+        const now = Date.now();
+        if (now < freezeUntil) {
+            startFreezeCountdown(freezeUntil);
             return true;
+        } else {
+            localStorage.removeItem('pulse_evila_freeze_until');
+            clearFreezeUI();
+            return false;
         }
-
-        const now = performance.now();
-        clickTimestamps.push(now);
-        if (clickTimestamps.length > 10) clickTimestamps.shift();
-
-        clickPositions.push({ x: e.clientX, y: e.clientY });
-        if (clickPositions.length > 10) clickPositions.shift();
-
-        // 2. Click interval speed check (< 68ms -> > 14.7 CPS)
-        if (clickTimestamps.length >= 2) {
-            const lastInterval = clickTimestamps[clickTimestamps.length - 1] - clickTimestamps[clickTimestamps.length - 2];
-            if (lastInterval < 68) {
-                console.warn("[Anticheat] Superhuman CPS flagged (interval:", lastInterval, "ms)");
-                return true;
-            }
-        }
-
-        // 3. Interval Consistency / Standard Deviation Check (Fixed delay macros)
-        if (clickTimestamps.length >= 7) {
-            const intervals = [];
-            for (let i = 1; i < clickTimestamps.length; i++) {
-                intervals.push(clickTimestamps[i] - clickTimestamps[i - 1]);
-            }
-            const mean = intervals.reduce((a, b) => a + b, 0) / intervals.length;
-            if (mean < 220) { // Only check jitter if clicking fast
-                const variance = intervals.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / (intervals.length - 1);
-                const stdDev = Math.sqrt(variance);
-                if (stdDev < 6.5) { // Unnatural machine consistency
-                    console.warn("[Anticheat] Jitter variance violation flagged (stdDev:", stdDev, "ms, mean:", mean, "ms)");
-                    return true;
-                }
-            }
-        }
-
-        // 4. Exact Pixel Stagnation Check (Fixed coordinate macros)
-        if (clickPositions.length >= 7) {
-            const first = clickPositions[0];
-            const allSame = clickPositions.every(p => p.x === first.x && p.y === first.y);
-            if (allSame) {
-                console.warn("[Anticheat] Zero-pixel deviation macro flagged at:", first);
-                return true;
-            }
-        }
-
-        return false;
     }
 
-    function triggerFreezePenalty() {
-        if (isFrozen) return;
-        isFrozen = true;
-        freezeSecondsLeft = 20;
+    function clearFreezeUI() {
+        isFrozen = false;
+        if (freezeTimer) {
+            clearInterval(freezeTimer);
+            freezeTimer = null;
+        }
+        const overlay = document.getElementById('evila-anticheat-overlay');
+        const card = document.getElementById('evila-clicker-card');
+        if (overlay) overlay.classList.add('hidden');
+        if (card) card.classList.remove('evila-shaking');
+        clickTimestamps.length = 0;
+    }
 
+    function startFreezeCountdown(freezeUntil) {
+        isFrozen = true;
         const overlay = document.getElementById('evila-anticheat-overlay');
         const timerVal = document.getElementById('evila-freeze-seconds');
         const card = document.getElementById('evila-clicker-card');
 
         if (overlay) overlay.classList.remove('hidden');
-        if (timerVal) timerVal.textContent = String(freezeSecondsLeft);
         if (card) card.classList.add('evila-shaking');
 
-        if (freezeTimer) clearInterval(freezeTimer);
-        freezeTimer = setInterval(() => {
-            freezeSecondsLeft--;
-            if (timerVal) timerVal.textContent = String(freezeSecondsLeft);
-            if (freezeSecondsLeft <= 0) {
-                clearInterval(freezeTimer);
-                freezeTimer = null;
-                isFrozen = false;
-                if (overlay) overlay.classList.add('hidden');
-                if (card) card.classList.remove('evila-shaking');
-                clickTimestamps.length = 0;
-                clickPositions.length = 0;
+        const updateTimer = () => {
+            const now = Date.now();
+            const remaining = Math.max(0, Math.ceil((freezeUntil - now) / 1000));
+            if (timerVal) timerVal.textContent = String(remaining);
+            if (remaining <= 0) {
+                clearFreezeUI();
+                localStorage.removeItem('pulse_evila_freeze_until');
             }
-        }, 1000);
+        };
+
+        updateTimer();
+        if (freezeTimer) clearInterval(freezeTimer);
+        freezeTimer = setInterval(updateTimer, 500);
+    }
+
+    function triggerFreezePenalty(reason = "autoclicker") {
+        console.warn(`[Anticheat] Freeze penalty triggered: ${reason}`);
+        const freezeUntil = Date.now() + 20000;
+        localStorage.setItem('pulse_evila_freeze_until', String(freezeUntil));
+        startFreezeCountdown(freezeUntil);
+    }
+
+    // Autoclicker & Bot Detection (Zero false-positive tuned)
+    function checkAutoclicker(e) {
+        // 1. Synthetic event check (Programmatic .click() / untrusted events)
+        if (e.isTrusted === false) {
+            console.warn("[Anticheat] Synthetic event detected (isTrusted: false)");
+            return true;
+        }
+
+        const now = performance.now();
+        clickTimestamps.push(now);
+
+        // Keep rolling timestamps from the last 1500ms
+        while (clickTimestamps.length > 0 && (now - clickTimestamps[0]) > 1500) {
+            clickTimestamps.shift();
+        }
+
+        // 2. Rolling CPS Check (over the last 1000ms)
+        // Legitimate humans can burst/butterfly click ~12-16 CPS; > 22 CPS in 1 second is definitely an autoclicker
+        const clicksInLastSecond = clickTimestamps.filter(t => (now - t) <= 1000).length;
+        if (clicksInLastSecond > 22) {
+            console.warn(`[Anticheat] Superhuman CPS flagged: ${clicksInLastSecond} clicks in 1000ms`);
+            return true;
+        }
+
+        // 3. Consecutive impossible click intervals (< 35ms -> > 28.5 CPS)
+        // Single fast interval can happen due to mouse switch bounce or browser frame delay;
+        // Require 3 consecutive impossible intervals (< 35ms) to avoid false positives
+        if (clickTimestamps.length >= 4) {
+            const len = clickTimestamps.length;
+            const i1 = clickTimestamps[len - 1] - clickTimestamps[len - 2];
+            const i2 = clickTimestamps[len - 2] - clickTimestamps[len - 3];
+            const i3 = clickTimestamps[len - 3] - clickTimestamps[len - 4];
+            if (i1 < 35 && i2 < 35 && i3 < 35) {
+                console.warn(`[Anticheat] Impossible burst intervals flagged: ${i1.toFixed(1)}ms, ${i2.toFixed(1)}ms, ${i3.toFixed(1)}ms`);
+                return true;
+            }
+        }
+
+        // 4. Fixed-Interval Macro / Machine Rhythm Check (Standard deviation)
+        // Autoclickers use a fixed sleep/delay timer (e.g., 50ms, 100ms) with stdDev < 1.5ms
+        // Human hands have natural variation (tremor, finger muscle fatigue) with stdDev > 6ms
+        // Require at least 14 samples clicking rapidly (< 160ms mean -> > 6.25 CPS)
+        if (clickTimestamps.length >= 14) {
+            const recent = clickTimestamps.slice(-14);
+            const intervals = [];
+            for (let i = 1; i < recent.length; i++) {
+                intervals.push(recent[i] - recent[i - 1]);
+            }
+            const mean = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+            if (mean < 160) {
+                const variance = intervals.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / (intervals.length - 1);
+                const stdDev = Math.sqrt(variance);
+                if (stdDev < 2.0) { // Robotic precision
+                    console.warn(`[Anticheat] Robotic zero-jitter macro flagged (stdDev: ${stdDev.toFixed(2)}ms, mean: ${mean.toFixed(1)}ms)`);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     function spawnParticle(cardX, cardY) {
@@ -7103,7 +7143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleEvilaClick(e) {
-        if (isFrozen) {
+        if (checkAndSyncFreezeState()) {
             e.preventDefault();
             return;
         }
@@ -7150,8 +7190,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const target = document.getElementById('evila-click-target');
         if (!target) return;
 
+        // Restore freeze cooldown if page was refreshed during freeze
+        checkAndSyncFreezeState();
+
         target.addEventListener('click', handleEvilaClick);
         target.addEventListener('keydown', (e) => {
+            if (e.repeat) {
+                e.preventDefault();
+                return;
+            }
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 handleEvilaClick(e);
