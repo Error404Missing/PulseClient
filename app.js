@@ -1653,6 +1653,36 @@ async function bindLicenseKey(e) {
     }
 }
 
+// Global Floating Toast Helper
+function showFloatingToast(message, type = "info", iconSvg = '') {
+    const container = document.getElementById('global-toast-container');
+    if (!container) return;
+    
+    const toast = document.createElement('div');
+    toast.className = `cyber-floating-toast toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-glow-pill"></div>
+        <div class="toast-icon">${iconSvg || '🔔'}</div>
+        <div class="toast-body">${message}</div>
+    `;
+    container.appendChild(toast);
+    
+    // Animation in
+    requestAnimationFrame(() => {
+        toast.classList.add('toast-visible');
+    });
+    
+    // Auto remove after 4.2 seconds
+    setTimeout(() => {
+        toast.classList.remove('toast-visible');
+        toast.classList.add('toast-exit');
+        setTimeout(() => {
+            if (container.contains(toast)) container.removeChild(toast);
+        }, 400);
+    }, 4200);
+}
+window.showFloatingToast = showFloatingToast;
+
 // Alert Banner helper functions
 function showBanner(message, type = "info") {
     // Select icon based on type
@@ -1666,21 +1696,26 @@ function showBanner(message, type = "info") {
     }
 
     // Set structure
-    dashMessageBanner.innerHTML = `
-        <div class="alert-banner-content">
-            <div class="alert-banner-icon">${iconSvg}</div>
-            <span id="banner-text">${message}</span>
-        </div>
-        <button onclick="hideBanner()" class="close-banner" aria-label="Close">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
-    `;
+    if (dashMessageBanner) {
+        dashMessageBanner.innerHTML = `
+            <div class="alert-banner-content">
+                <div class="alert-banner-icon">${iconSvg}</div>
+                <span id="banner-text">${message}</span>
+            </div>
+            <button onclick="hideBanner()" class="close-banner" aria-label="Close">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        `;
 
-    dashMessageBanner.className = `alert-banner ${type}`;
-    dashMessageBanner.classList.remove('hidden', 'banner-hide');
+        dashMessageBanner.className = `alert-banner ${type}`;
+        dashMessageBanner.classList.remove('hidden', 'banner-hide');
+    }
+
+    // Also trigger floating cyber toast for high visibility everywhere
+    showFloatingToast(message, type, iconSvg);
 
     // Auto hide after 5 seconds
     if (window.bannerTimeout) clearTimeout(window.bannerTimeout);
@@ -1799,7 +1834,22 @@ window.scrollToElement = scrollToElement;
 // Client Download Modal Actions
 function openDownloadModal() {
     const modal = document.getElementById('client-download-modal');
-    if (modal) modal.classList.remove('hidden');
+    if (modal) {
+        modal.classList.remove('hidden');
+        // Update custom jar filename on cards
+        const customFilename = typeof getUserCustomJarFilename === 'function' ? getUserCustomJarFilename() : "PulseClient-Fabric-1.21.11.jar";
+        modal.querySelectorAll('.version-label').forEach(el => {
+            el.textContent = customFilename;
+        });
+        // Reset any card states
+        modal.querySelectorAll('.modal-download-card-item').forEach(card => {
+            card.classList.remove('is-downloading', 'download-success');
+            const arrowEl = card.querySelector('.download-arrow');
+            if (arrowEl) {
+                arrowEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+            }
+        });
+    }
     // Re-apply translations to modal elements
     if (typeof applyLanguage === 'function') applyLanguage(window.currentLang || 'ka');
 }
@@ -1809,6 +1859,13 @@ function closeDownloadModal() {
 }
 window.openDownloadModal = openDownloadModal;
 window.closeDownloadModal = closeDownloadModal;
+
+// Global Escape listener to cleanly close modal
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeDownloadModal();
+    }
+});
 
 // Toggle FAQ item expansion
 function toggleFaq(event) {
@@ -6362,9 +6419,6 @@ const downloadMacBtn = document.getElementById('download-mac-btn-modal');
     if (btn) {
         btn.href = GITHUB_BASEFIND_DOWNLOAD_URL;
         btn.setAttribute('download', GITHUB_BASEFIND_JAR_FILE);
-        btn.addEventListener('click', () => {
-            trackUserDownload();
-        });
     }
 });
 
@@ -6420,6 +6474,8 @@ window.resetDeviceSlotHwid = resetDeviceSlotHwid;
 
 
 // Custom User Discord Username JAR Download Handler
+let isClientDownloading = false;
+
 function getUserCustomJarFilename() {
     let username = "Guest";
     if (currentUser) {
@@ -6432,53 +6488,115 @@ function getUserCustomJarFilename() {
 }
 window.getUserCustomJarFilename = getUserCustomJarFilename;
 
-async function handleCustomClientDownload(e) {
+function handleCustomClientDownload(e, osType = 'windows') {
     if (e) {
         e.preventDefault();
         e.stopPropagation();
     }
     
+    // Concurrency / Debounce Lock: Prevent multiple rapid clicks from freezing or repeated downloads
+    if (isClientDownloading) {
+        showBanner("გადმოწერა უკვე მიმდინარეობს, გთხოვთ დაიცადოთ...", "info");
+        return;
+    }
+    isClientDownloading = true;
+
     const customFilename = getUserCustomJarFilename();
     const currentUsername = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Guest") : "Guest";
-    
-    sendDiscordAuditLog(
-        "📦 კლიენტის (.jar) გადმოწერა",
-        `მომხმარებელმა ჩამოტვირთა კლიენტის ფაილი **${customFilename}**.`,
-        0x38bdf8,
-        [
-            { name: "👤 მომხმარებელი", value: currentUsername, inline: true },
-            { name: "📄 ფაილი", value: customFilename, inline: true }
-        ]
-    );
-    showBanner(`ფაილის გადმოწერა დაიწყო: ${customFilename}`, "info");
-
     const jarLocalPath = `./${GITHUB_JAR_FILE}`;
-    try {
-        const response = await fetch(jarLocalPath, { cache: "no-store" });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
 
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = customFilename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
-        closeDownloadModal();
+    // Target the clicked card for rich visual animation
+    let targetCard = null;
+    if (e && e.currentTarget) {
+        targetCard = e.currentTarget.closest ? e.currentTarget.closest('.modal-download-card-item') : e.currentTarget;
+    }
+    if (!targetCard && osType) {
+        targetCard = document.querySelector(`.modal-download-card-item.${osType}-card`);
+    }
+
+    if (targetCard) {
+        targetCard.classList.add('is-downloading');
+        const arrowEl = targetCard.querySelector('.download-arrow');
+        if (arrowEl) {
+            arrowEl.innerHTML = `<svg class="spin-loader" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#ff003c" stroke-linecap="round"></path></svg>`;
+        }
+        const versionEl = targetCard.querySelector('.version-label');
+        if (versionEl) {
+            versionEl.textContent = `მზადდება: ${customFilename}`;
+        }
+    }
+
+    // Fire audit logs and download tracking asynchronously without blocking UI
+    try {
+        sendDiscordAuditLog(
+            "📦 კლიენტის (.jar) გადმოწერა",
+            `მომხმარებელმა ჩამოტვირთა კლიენტის ფაილი **${customFilename}** (${osType.toUpperCase()}).`,
+            0x38bdf8,
+            [
+                { name: "👤 მომხმარებელი", value: currentUsername, inline: true },
+                { name: "💻 OS", value: osType.toUpperCase(), inline: true },
+                { name: "📄 ფაილი", value: customFilename, inline: true }
+            ]
+        ).catch(() => {});
+        if (typeof trackUserDownload === 'function') {
+            trackUserDownload().catch(() => {});
+        }
     } catch (err) {
-        console.warn("Direct blob fetch failed, falling back to local static download anchor:", err);
+        console.warn("Download telemetry notice:", err);
+    }
+
+    showBanner(`🚀 PulseClient-ის გადმოწერა დაიწყო: ${customFilename}`, "success");
+
+    // Native immediate browser download (0ms delay, 0MB RAM heap allocation, zero freezing!)
+    try {
         const a = document.createElement('a');
+        a.style.display = 'none';
         a.href = jarLocalPath;
         a.download = customFilename;
         a.setAttribute('download', customFilename);
         document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
-        closeDownloadModal();
+        setTimeout(() => {
+            if (document.body.contains(a)) document.body.removeChild(a);
+        }, 400);
+    } catch (err) {
+        console.warn("Direct download link trigger failed, attempting window location:", err);
+        window.location.href = jarLocalPath;
     }
+
+    // Success feedback animation on card after 500ms
+    setTimeout(() => {
+        if (targetCard) {
+            targetCard.classList.remove('is-downloading');
+            targetCard.classList.add('download-success');
+            const arrowEl = targetCard.querySelector('.download-arrow');
+            if (arrowEl) {
+                arrowEl.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            }
+            const versionEl = targetCard.querySelector('.version-label');
+            if (versionEl) {
+                versionEl.textContent = `გადმოწერილია: ${customFilename}`;
+            }
+        }
+    }, 500);
+
+    // Smoothly close modal after showing success state
+    setTimeout(() => {
+        closeDownloadModal();
+        if (targetCard) {
+            targetCard.classList.remove('download-success');
+            const arrowEl = targetCard.querySelector('.download-arrow');
+            if (arrowEl) {
+                arrowEl.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+            }
+            const versionEl = targetCard.querySelector('.version-label');
+            if (versionEl) {
+                versionEl.textContent = customFilename;
+            }
+        }
+        // Unlock download cooldown after 2.5 seconds
+        isClientDownloading = false;
+    }, 1300);
 }
 window.handleCustomClientDownload = handleCustomClientDownload;
 

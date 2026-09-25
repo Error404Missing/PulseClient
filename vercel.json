@@ -15,5 +15,37 @@
       "source": "/logs",
       "destination": "/logs.html"
     }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.jar",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/java-archive"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/PulseCleaner\\.bat",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/x-bat"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"PulseCleaner.bat\""
+        }
+      ]
+    }
   ]
 }

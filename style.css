@@ -6571,6 +6571,514 @@ button.specs-chip:hover,
     color: var(--text-secondary, #94a3b8);
 }
 
+/* ==========================================
+   PULSECLIENT NEXT-GEN VISUAL & ANIMATION SYSTEM
+   ========================================== */
+
+/* 1. Global Floating Cyber Toast Notification */
+.global-toast-container {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+    width: auto;
+    max-width: 90vw;
+}
+
+.cyber-floating-toast {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 22px;
+    background: rgba(12, 12, 18, 0.94) !important;
+    border: 1px solid rgba(255, 0, 60, 0.4) !important;
+    border-radius: 99px !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 0, 60, 0.22) !important;
+    opacity: 0;
+    transform: translateY(-20px) scale(0.94);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    pointer-events: auto;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+.cyber-floating-toast.toast-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.cyber-floating-toast.toast-exit {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.92);
+}
+
+.cyber-floating-toast.toast-success {
+    border-color: rgba(34, 197, 94, 0.5) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(34, 197, 94, 0.22) !important;
+}
+
+.cyber-floating-toast.toast-error {
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(239, 68, 68, 0.22) !important;
+}
+
+.cyber-floating-toast .toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.cyber-floating-toast .toast-body {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 480px;
+}
+
+/* 2. Redesigned Futuristic OS Download Modal */
+#client-download-modal .download-modal-content {
+    background: rgba(11, 11, 15, 0.94) !important;
+    border: 1px solid rgba(255, 0, 60, 0.32) !important;
+    border-radius: 28px !important;
+    backdrop-filter: blur(40px) saturate(210%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
+    box-shadow: 0 40px 100px -15px rgba(0, 0, 0, 0.95), 0 0 60px rgba(255, 0, 60, 0.18) !important;
+    padding: 32px 36px !important;
+    animation: modalPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+#client-download-modal .download-modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff003c, #ff3366, transparent);
+    box-shadow: 0 0 15px #ff003c;
+    pointer-events: none;
+}
+
+@keyframes modalPopIn {
+    0% { opacity: 0; transform: scale(0.92) translateY(24px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.download-modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.download-modal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    background: rgba(255, 0, 60, 0.08);
+    border: 1px solid rgba(255, 0, 60, 0.28);
+    border-radius: 99px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #ff4d6d;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+}
+
+.live-dot-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite ease-in-out;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.download-modal-title {
+    font-size: 26px !important;
+    font-weight: 900 !important;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+}
+
+.download-version-pill {
+    font-size: 13px;
+    font-weight: 800;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, #ff003c 0%, #b3002d 100%);
+    color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+    vertical-align: middle;
+}
+
+.download-modal-subtitle {
+    color: var(--text-secondary, #94a3b8);
+    font-size: 13.5px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+/* OS Cards Inside Modal */
+.modal-download-options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.modal-download-card-item {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important;
+    padding: 16px 20px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    overflow: hidden;
+}
+
+.modal-download-card-item:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 60, 0.08) 0%, rgba(20, 20, 28, 0.95) 100%) !important;
+    border-color: rgba(255, 0, 60, 0.5) !important;
+    transform: translateY(-3px) scale(1.015) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 0, 60, 0.2) !important;
+}
+
+.modal-download-card-item.windows-card:hover {
+    border-color: rgba(0, 164, 239, 0.55) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 164, 239, 0.25) !important;
+}
+
+.modal-download-card-item.linux-card:hover {
+    border-color: rgba(245, 158, 11, 0.55) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(245, 158, 11, 0.25) !important;
+}
+
+.modal-download-card-item.mac-card:hover {
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 255, 255, 0.15) !important;
+}
+
+.modal-download-card-item .option-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-download-card-item .option-icon.icon-windows {
+    background: rgba(0, 164, 239, 0.12) !important;
+    color: #00a4ef !important;
+    border: 1px solid rgba(0, 164, 239, 0.25);
+}
+
+.modal-download-card-item .option-icon.icon-linux {
+    background: rgba(245, 158, 11, 0.12) !important;
+    color: #f59e0b !important;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.modal-download-card-item .option-icon.icon-macos {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-download-card-item:hover .option-icon {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+.modal-download-card-item .option-info {
+    flex: 1;
+    margin-left: 18px;
+    margin-right: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.option-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.option-title-row h4 {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #ffffff;
+}
+
+.option-title-row .badge-jar {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    background: #ff003c;
+    color: #ffffff;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+
+.option-title-row .badge-sub {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+    border-radius: 6px;
+}
+
+.modal-download-card-item .desc {
+    color: var(--text-secondary, #94a3b8);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.modal-download-card-item .version-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted, #64748b);
+    margin-top: 4px;
+}
+
+.modal-download-card-item .download-arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.modal-download-card-item:hover .download-arrow {
+    background: #ff003c;
+    color: #ffffff;
+    border-color: #ff003c;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.5);
+}
+
+/* Card States during Download */
+.modal-download-card-item.is-downloading {
+    border-color: rgba(255, 0, 60, 0.8) !important;
+    background: rgba(255, 0, 60, 0.08) !important;
+    box-shadow: 0 0 35px rgba(255, 0, 60, 0.3) !important;
+    pointer-events: none;
+}
+
+.modal-download-card-item.is-downloading .download-arrow {
+    background: transparent;
+    border-color: rgba(255, 0, 60, 0.5);
+}
+
+.modal-download-card-item.download-success {
+    border-color: rgba(34, 197, 94, 0.8) !important;
+    background: rgba(34, 197, 94, 0.08) !important;
+    box-shadow: 0 0 35px rgba(34, 197, 94, 0.3) !important;
+}
+
+.modal-download-card-item.download-success .download-arrow {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.6);
+}
+
+.spin-loader {
+    animation: ringSpin 0.75s linear infinite;
+}
+
+@keyframes ringSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.modal-download-footer-tip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.modal-download-footer-tip code {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(255, 0, 60, 0.12);
+    color: #ff4d6d;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 0, 60, 0.25);
+}
+
+/* 3. Hero Tech Ticker */
+.hero-tech-ticker {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+    padding: 10px 20px;
+    background: rgba(14, 14, 20, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 99px;
+    backdrop-filter: blur(20px);
+    width: fit-content;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    animation: tickerFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes tickerFadeUp {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tech-ticker .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--text-secondary, #94a3b8);
+}
+
+.hero-tech-ticker .ticker-item strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.hero-tech-ticker .ticker-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: livePulse 2s infinite ease-in-out;
+}
+
+.hero-tech-ticker .ticker-sep {
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 12px;
+}
+
+/* 4. Hero Title & Gradient Depth */
+.hero h1 {
+    background: linear-gradient(135deg, #ffffff 35%, #ff4d6d 75%, #ff003c 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 0 35px rgba(255, 0, 60, 0.35)) !important;
+}
+
+/* 5. Button Shimmer & Micro-Interactions */
+.btn-glow,
+.btn-krypton-download {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-glow::after,
+.btn-krypton-download::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+    transform: skewX(-22deg);
+    pointer-events: none;
+}
+
+.btn-glow:hover::after,
+.btn-krypton-download:hover::after {
+    left: 200%;
+    transition: left 0.85s ease-in-out;
+}
+
+/* 6. Feature Cards Enhanced Hover */
+.feature-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff003c, transparent);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card:hover .icon-wrapper {
+    transform: scale(1.12) rotate(-4deg);
+    box-shadow: 0 0 25px rgba(255, 0, 60, 0.4);
+}
+
+.anticheat-card:hover {
+    border-color: rgba(255, 0, 60, 0.55) !important;
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 0, 60, 0.18) !important;
+}
+
+/* 7. Modal Close Button Hover */
+.modal-close {
+    transition: transform 0.25s ease, background-color 0.25s ease !important;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg) scale(1.15) !important;
+    background: rgba(255, 0, 60, 0.2) !important;
+    color: #ff4d6d !important;
+}
+
 
 
 
