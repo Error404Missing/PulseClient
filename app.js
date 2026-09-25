@@ -608,42 +608,189 @@ window.goToFreeTrial = goToFreeTrial;
 
 let isVpnBlocked = false;
 
-async function checkVpnProxy() {
-    if (isAdmin()) return false;
+// Comprehensive Datacenter, Hosting, Cloud, and VPN Provider Signatures
+const HOSTING_DATACENTER_REGEX = /(?:vpn|proxy|tor|datacenter|hosting|cloud|colocation|dedicated|vps|m247|ovh|digitalocean|linode|hetzner|vultr|leaseweb|choopa|packetexchange|hydra|cloudflare|fastly|akamai|amazon|aws|google cloud|microsoft|azure|oracle|alibaba|datacamp|cogent|clouvider|datapacket|servers\.com|hostinger|contabo|scaleway|zenlayer|kamatera|selectel|cherry|creanova|tzulo|reliablesite|fdcservers|worldstream|smartdc|quadranet|gcore|packethub|serverius|i3d|equinix|intergrid|terrahost|buyvm|pureservers|latitude|hostroyale|hostwinds|colocrossing|internap|nord|expressvpn|surfshark|mullvad|proton|cyberghost|windscribe|purevpn|tunnelbear|ipvanish|shadowsocks|wireguard|openvpn|socks5|relay|anonymizer|tunnel|exitnode)/i;
 
+// WebRTC Candidate Public IP detector to catch VPN tunnel leaks
+function getWebRtcCandidateIp() {
+    return new Promise((resolve) => {
+        try {
+            const RTC = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+            if (!RTC) return resolve(null);
+            const pc = new RTC({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+            let done = false;
+            pc.createDataChannel('');
+            pc.createOffer().then(o => pc.setLocalDescription(o)).catch(() => {});
+            pc.onicecandidate = (e) => {
+                if (!e || !e.candidate || !e.candidate.candidate) return;
+                const match = /([0-9]{1,3}(\.[0-9]{1,3}){3})/.exec(e.candidate.candidate);
+                if (match) {
+                    const ip = match[1];
+                    if (!/^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|127\.|0\.)/.test(ip)) {
+                        if (!done) {
+                            done = true;
+                            try { pc.close(); } catch(err){}
+                            resolve(ip);
+                        }
+                    }
+                }
+            };
+            setTimeout(() => {
+                if (!done) {
+                    try { pc.close(); } catch(err){}
+                    resolve(null);
+                }
+            }, 1200);
+        } catch (e) {
+            resolve(null);
+        }
+    });
+}
+
+// Multi-layered Anti-VPN & Anti-Proxy Intelligence Engine
+async function checkVpnProxy() {
+    if (typeof isAdmin === 'function' && isAdmin()) return false;
+
+    // Check if previously flagged in this session
+    if (sessionStorage.getItem('pulse_vpn_blocked') === 'true') {
+        return true;
+    }
+
+    let detectedIp = null;
+    let isFlagged = false;
+    const reasons = [];
+
+    const fetchWithTimeout = (url, opts = {}, ms = 3000) => {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), ms);
+        return fetch(url, { ...opts, credentials: 'omit', signal: controller.signal })
+            .finally(() => clearTimeout(id));
+    };
+
+    // Layer 1: freeipapi.com (Fast client IP resolution + isProxy + ASN check)
     try {
-        const res = await fetch('https://ipapi.co/json/');
+        const res = await fetchWithTimeout('https://freeipapi.com/api/json/');
         if (res.ok) {
             const data = await res.json();
-            if (data.proxy || data.hosting || (data.org && /vpn|proxy|datacenter|hosting|m247|ovh|digitalocean|linode|hetzner|vultr|leaseweb|choopa|packetexchange|hydra/i.test(data.org))) {
-                return true;
+            detectedIp = data.ipAddress;
+            if (data.isProxy === true) {
+                isFlagged = true;
+                reasons.push('Proxy flagged by freeipapi');
+            }
+            const org = String(data.asnOrganization || '');
+            if (HOSTING_DATACENTER_REGEX.test(org)) {
+                isFlagged = true;
+                reasons.push(`Datacenter ASN matched: ${org}`);
             }
         }
-    } catch (e) {
+    } catch (e) {}
+
+    // Layer 2: Blackbox Threat Intelligence Lookup
+    if (detectedIp) {
         try {
-            const res2 = await fetch('https://ipwho.is/');
-            if (res2.ok) {
-                const data2 = await res2.json();
-                if (data2.security && (data2.security.vpn || data2.security.proxy || data2.security.tor || data2.security.hosting)) {
-                    return true;
+            const res = await fetchWithTimeout(`https://blackbox.ipinfo.app/lookup/${detectedIp}`);
+            if (res.ok) {
+                const text = (await res.text()).trim();
+                if (text === 'Y') {
+                    isFlagged = true;
+                    reasons.push('Flagged by Blackbox IP intelligence');
                 }
             }
-        } catch (e2) {}
+        } catch (e) {}
     }
+
+    // Layer 3: api.ipquery.io Dedicated Threat Engine
+    if (!isFlagged) {
+        try {
+            const targetUrl = detectedIp ? `https://api.ipquery.io/${detectedIp}` : 'https://api.ipquery.io/';
+            const res = await fetchWithTimeout(targetUrl);
+            if (res.ok) {
+                const data = await res.json();
+                if (!detectedIp && data.ip) detectedIp = data.ip;
+                const risk = data.risk || {};
+                const isp = data.isp || {};
+                if (risk.is_vpn || risk.is_tor || risk.is_proxy || risk.is_datacenter || (risk.risk_score && risk.risk_score >= 50)) {
+                    isFlagged = true;
+                    reasons.push(`IPQuery risk flag (VPN: ${risk.is_vpn}, Proxy: ${risk.is_proxy}, Datacenter: ${risk.is_datacenter})`);
+                }
+                const ispDetails = `${isp.org || ''} ${isp.isp || ''} ${isp.asn || ''}`;
+                if (HOSTING_DATACENTER_REGEX.test(ispDetails)) {
+                    isFlagged = true;
+                    reasons.push(`Datacenter provider matched: ${ispDetails}`);
+                }
+            }
+        } catch (e) {}
+    }
+
+    // Layer 4: ipwho.is Deep Provider & Security Analysis
+    if (!isFlagged) {
+        try {
+            const targetUrl = detectedIp ? `https://ipwho.is/${detectedIp}` : 'https://ipwho.is/';
+            const res = await fetchWithTimeout(targetUrl);
+            if (res.ok) {
+                const data = await res.json();
+                if (!detectedIp && data.ip) detectedIp = data.ip;
+                const conn = data.connection || {};
+                const sec = data.security || {};
+                if (sec.vpn || sec.proxy || sec.tor || sec.hosting) {
+                    isFlagged = true;
+                    reasons.push('ipwho.is security flag');
+                }
+                const connStr = `${conn.org || ''} ${conn.isp || ''} ${conn.domain || ''}`;
+                if (HOSTING_DATACENTER_REGEX.test(connStr)) {
+                    isFlagged = true;
+                    reasons.push(`Datacenter match: ${connStr}`);
+                }
+            }
+        } catch (e) {}
+    }
+
+    // Layer 5: WebRTC Tunnel Leak Detection
+    try {
+        const webrtcIp = await Promise.race([
+            getWebRtcCandidateIp(),
+            new Promise(r => setTimeout(() => r(null), 1200))
+        ]);
+        if (webrtcIp && detectedIp && webrtcIp !== detectedIp) {
+            isFlagged = true;
+            reasons.push(`WebRTC tunnel mismatch (WebRTC: ${webrtcIp}, HTTP: ${detectedIp})`);
+        }
+    } catch (e) {}
+
+    if (isFlagged) {
+        console.warn(`[PulseGuard] Anti-VPN / Anti-Proxy BLOCKED! Reasons:`, reasons);
+        sessionStorage.setItem('pulse_vpn_blocked', 'true');
+        return true;
+    }
+
+    sessionStorage.removeItem('pulse_vpn_blocked');
     return false;
 }
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
+    // Immediate pre-render barrier if flagged in current session
+    if (sessionStorage.getItem('pulse_vpn_blocked') === 'true' && !(typeof isAdmin === 'function' && isAdmin())) {
+        isVpnBlocked = true;
+        if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
+        if (authGatePage) authGatePage.classList.add('hidden');
+        if (landingPage) landingPage.classList.add('hidden');
+        if (dashboardPage) dashboardPage.classList.add('hidden');
+        if (navLinks) navLinks.classList.add('hidden');
+    }
+
     // Check for VPN / Proxy in background
     checkVpnProxy().then(isVpn => {
-        if (isVpn && !isAdmin()) {
+        if (isVpn && !(typeof isAdmin === 'function' && isAdmin())) {
             isVpnBlocked = true;
             if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
             if (authGatePage) authGatePage.classList.add('hidden');
-            landingPage.classList.add('hidden');
-            dashboardPage.classList.add('hidden');
+            if (landingPage) landingPage.classList.add('hidden');
+            if (dashboardPage) dashboardPage.classList.add('hidden');
             if (navLinks) navLinks.classList.add('hidden');
+        } else if (!isVpn) {
+            isVpnBlocked = false;
+            if (vpnBlockPage) vpnBlockPage.classList.add('hidden');
         }
     });
 
