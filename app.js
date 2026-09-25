@@ -6931,11 +6931,10 @@ document.addEventListener("DOMContentLoaded", () => {
             clickTimestamps.shift();
         }
 
-        // 2. Rolling CPS Check (over the last 1000ms)
-        // Legitimate humans can burst/butterfly click ~12-16 CPS; > 22 CPS in 1 second is definitely an autoclicker
+        // 2. Strict Rolling CPS Check (Max 10 CPS per second limit)
         const clicksInLastSecond = clickTimestamps.filter(t => (now - t) <= 1000).length;
-        if (clicksInLastSecond > 22) {
-            console.warn(`[Anticheat] Superhuman CPS flagged: ${clicksInLastSecond} clicks in 1000ms`);
+        if (clicksInLastSecond > 10) {
+            console.warn(`[Anticheat] Max 10 CPS limit exceeded: ${clicksInLastSecond} clicks in 1000ms`);
             return true;
         }
 
