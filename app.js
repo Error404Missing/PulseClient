@@ -7321,52 +7321,25 @@ document.addEventListener("DOMContentLoaded", () => {
             const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
             const discordId = typeof getDiscordId === 'function' ? getDiscordId(currentUser) : (metadata.sub || currentUser.id);
 
-            const queryDiscordId = `%DiscordID: ${discordId}%`;
-            const queryUsername = `%Buyer: ${username}%`;
+            // Server-side sync: minutes are validated, capped and traced by the backend.
+            // The browser can no longer write expires_at directly (that was exploitable).
+            const res = await pulseApiFetch('/clicker/sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ minutes: minsToSync, username, discord_id: discordId })
+            });
 
-            // Query existing user licenses
-            const { data: licenses, error } = await supabaseClient
-                .from('licenses')
-                .select('*')
-                .or(`note.like.${queryDiscordId},note.like.${queryUsername}`)
-                .order('expires_at', { ascending: false });
+            if (!res.ok) throw new Error(`clicker sync HTTP ${res.status}`);
 
-            if (error) throw error;
+            const result = await res.json().catch(() => ({}));
+            if (result.status !== 'success') throw new Error(result.message || 'clicker sync rejected');
 
-            if (licenses && licenses.length > 0) {
-                // Extend the most relevant active license
-                const lic = licenses[0];
-                const currentExpiry = new Date(lic.expires_at).getTime();
-                const baseTime = Math.max(Date.now(), currentExpiry);
-                const newExpiry = new Date(baseTime + minsToSync * 60 * 1000).toISOString();
-
-                const { error: updateErr } = await supabaseClient
-                    .from('licenses')
-                    .update({
-                        expires_at: newExpiry,
-                        is_active: true
-                    })
-                    .eq('id', lic.id);
-
-                if (updateErr) throw updateErr;
-                console.log(`[EvilaClicker] Extended license ${lic.license_key} by +${minsToSync} mins. New expiry:`, newExpiry);
-            } else {
-                // User has no license yet: generate a new trial key with the accumulated time!
-                const newKey = typeof generateLicenseKey === 'function' ? generateLicenseKey() : `PULSE-EVLA-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
-                const newExpiry = new Date(Date.now() + minsToSync * 60 * 1000).toISOString();
-                const note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Evila Clicker Reward)`;
-
-                const { error: insertErr } = await supabaseClient
-                    .from('licenses')
-                    .insert({
-                        license_key: newKey,
-                        expires_at: newExpiry,
-                        is_active: true,
-                        note: note
-                    });
-
-                if (insertErr) throw insertErr;
-                console.log(`[EvilaClicker] Generated new PulseClient license ${newKey} with +${minsToSync} mins!`);
+            const granted = result.granted_minutes || 0;
+            if (granted < minsToSync) {
+                console.log(`[EvilaClicker] Server granted ${granted}/${minsToSync} mins (daily cap).`);
+                if (granted === 0 && typeof showBanner === 'function') {
+                    showBanner('🚫 დღიური ლიმიტი ამოიწურა — ხვალ განაგრძე!', 'error');
+                }
             }
 
             // Silently refresh dashboard licenses if visible
@@ -7394,9 +7367,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Called on Discord login to claim any offline accumulated clicks
     async function claimPendingMinutesOnSignIn() {
-        const unclaimed = getUnclaimedMinutes();
+        const unclaimed = Math.min(getUnclaimedMinutes(), DAILY_LIMIT);
         if (unclaimed > 0) {
-            console.log(`[EvilaClicker] Claiming ${unclaimed} pending minutes on login...`);
+            console.log(`[EvilaClicker] Claiming ${unclaimed} pending minutes on login (offline pool capped at ${DAILY_LIMIT})...`);
             setUnclaimedMinutes(0);
             uncommittedMinutes += unclaimed;
             await syncToSupabase();
