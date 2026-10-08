@@ -774,6 +774,140 @@ h3 {
     width: 100%;
 }
 
+/* ========================================================
+   DQRKIS-STYLE TEAM / CREATOR SHOWCASE (THE TEAM)
+   ======================================================== */
+.hero-team-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 440px;
+}
+
+.team-heading-box {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.team-kicker {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.team-heading {
+    font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    margin: 0;
+    line-height: 1.15;
+}
+
+.dqrkis-team-card {
+    width: 100%;
+    max-width: 360px;
+    background: rgba(18, 20, 26, 0.75);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 38px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    cursor: default;
+}
+
+.dqrkis-team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    pointer-events: none;
+}
+
+.dqrkis-team-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.dqrkis-avatar-box {
+    width: 140px;
+    height: 140px;
+    border-radius: 26px;
+    overflow: hidden;
+    background: #090a0d;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.dqrkis-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dqrkis-team-card:hover .dqrkis-avatar-img {
+    transform: scale(1.05);
+}
+
+.dqrkis-role-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 18px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #94a3b8;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 24px;
+    margin-bottom: 14px;
+    transition: all 0.25s ease;
+}
+
+.dqrkis-team-card:hover .dqrkis-role-badge {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dqrkis-name {
+    font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.2;
+}
+
 .main-preview {
     width: 100%;
     max-width: 460px;
