@@ -240,83 +240,135 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <!-- Visual Sleek Telemetry GUI Preview -->
-                <div class="glass-panel main-preview hero-hud-card" style="padding: 24px; position: relative; overflow: hidden;">
+                <!-- Cyber Tactical HUD Preview Deck -->
+                <div class="glass-panel main-preview hero-hud-card">
                     <!-- HUD Top Bar -->
-                    <div class="preview-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.07); padding-bottom: 14px; margin-bottom: 18px;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <div class="preview-dots" style="display: flex; gap: 6px;">
-                                <span class="dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);"></span>
-                                <span class="dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);"></span>
-                                <span class="dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);"></span>
+                    <div class="hud-header">
+                        <div class="hud-title-box">
+                            <div class="hud-traffic-lights">
+                                <span class="hud-light red"></span>
+                                <span class="hud-light amber"></span>
+                                <span class="hud-light green"></span>
                             </div>
-                            <span style="font-family: var(--font-mono); font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.5px; margin-left: 6px;">PulseClient-Fabric-1.21.11.jar</span>
+                            <div class="hud-brand-pill">
+                                <span>PulseClient v2.0.6</span>
+                            </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25);">
-                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
-                            <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #10b981; letter-spacing: 0.3px;">BYPASS ACTIVE</span>
+                        <div class="hud-status-badge">
+                            <span class="hud-pulse-dot"></span>
+                            <span>GRIM 2.3.6 • BYPASS ACTIVE</span>
                         </div>
                     </div>
 
                     <!-- HUD Modules Matrix -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
-                        <div class="hud-module-card active" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">KillAura</span>
-                                <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e; font-weight: 600;">3.8m • Smooth</span>
+                    <div class="hud-modules-grid">
+                        <!-- Module 1: KillAura -->
+                        <div class="hud-card-item">
+                            <div class="hud-card-top">
+                                <div class="hud-mod-meta">
+                                    <span class="hud-mod-icon"></span>
+                                    <span class="hud-mod-name">KillAura</span>
+                                    <span class="hud-keybind">R</span>
+                                </div>
+                                <div class="hud-toggle-switch">
+                                    <div class="hud-toggle-knob"></div>
+                                </div>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Rotations: Grim-Safe</div>
+                            <div class="hud-card-params">
+                                <span class="hud-param-chip">3.8m Reach</span>
+                                <span class="hud-param-chip">Grim Raycast</span>
+                                <span class="hud-param-chip">Smooth Rots</span>
+                            </div>
                         </div>
-                        <div class="hud-module-card active" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">Velocity</span>
-                                <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e; font-weight: 600;">0% H • 100% V</span>
+
+                        <!-- Module 2: Velocity -->
+                        <div class="hud-card-item">
+                            <div class="hud-card-top">
+                                <div class="hud-mod-meta">
+                                    <span class="hud-mod-icon"></span>
+                                    <span class="hud-mod-name">Velocity</span>
+                                    <span class="hud-keybind">V</span>
+                                </div>
+                                <div class="hud-toggle-switch">
+                                    <div class="hud-toggle-knob"></div>
+                                </div>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">GrimAC 2.3.6 Bypass</div>
+                            <div class="hud-card-params">
+                                <span class="hud-param-chip">0% H / 100% V</span>
+                                <span class="hud-param-chip">Packet Buffer</span>
+                                <span class="hud-param-chip">Prediction</span>
+                            </div>
                         </div>
-                        <div class="hud-module-card active" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">AutoTotem</span>
-                                <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e; font-weight: 600;">0ms Swap</span>
+
+                        <!-- Module 3: AutoTotem -->
+                        <div class="hud-card-item">
+                            <div class="hud-card-top">
+                                <div class="hud-mod-meta">
+                                    <span class="hud-mod-icon"></span>
+                                    <span class="hud-mod-name">AutoTotem</span>
+                                    <span class="hud-keybind">X</span>
+                                </div>
+                                <div class="hud-toggle-switch">
+                                    <div class="hud-toggle-knob"></div>
+                                </div>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Inv-Sync • Anti-Desync</div>
+                            <div class="hud-card-params">
+                                <span class="hud-param-chip">0ms Hotkey</span>
+                                <span class="hud-param-chip">Inv Desync-Safe</span>
+                                <span class="hud-param-chip">Auto Refill</span>
+                            </div>
                         </div>
-                        <div class="hud-module-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">Storage ESP</span>
-                                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); font-weight: 600;">Tracer Mode</span>
+
+                        <!-- Module 4: Storage ESP -->
+                        <div class="hud-card-item">
+                            <div class="hud-card-top">
+                                <div class="hud-mod-meta">
+                                    <span class="hud-mod-icon"></span>
+                                    <span class="hud-mod-name">Storage ESP</span>
+                                    <span class="hud-keybind">B</span>
+                                </div>
+                                <div class="hud-toggle-switch">
+                                    <div class="hud-toggle-knob"></div>
+                                </div>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Chests • Shulkers • Hoppers</div>
+                            <div class="hud-card-params">
+                                <span class="hud-param-chip">Chests & Shulkers</span>
+                                <span class="hud-param-chip">Outline Glow</span>
+                                <span class="hud-param-chip">Tracers</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Live Telemetry Meters -->
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 12px 14px; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; margin-bottom: 14px;">
-                        <div style="text-align: center;">
-                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #f8fafc;">284</div>
-                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">FPS</div>
+                    <div class="hud-telemetry-strip">
+                        <div class="hud-telem-col">
+                            <span class="hud-telem-val">360+</span>
+                            <span class="hud-telem-lbl">FPS</span>
                         </div>
-                        <div style="text-align: center;">
-                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #10b981;">14ms</div>
-                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">LATENCY</div>
+                        <div class="hud-telem-col">
+                            <span class="hud-telem-val green">12ms</span>
+                            <span class="hud-telem-lbl">LATENCY</span>
                         </div>
-                        <div style="text-align: center;">
-                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #f8fafc;">0.00</div>
-                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">VL SCORE</div>
+                        <div class="hud-telem-col">
+                            <span class="hud-telem-val">0.00</span>
+                            <span class="hud-telem-lbl">VL SCORE</span>
                         </div>
-                        <div style="text-align: center;">
-                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #38bdf8;">1.21.11</div>
-                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">FABRIC</div>
+                        <div class="hud-telem-col">
+                            <span class="hud-telem-val">1.21.11</span>
+                            <span class="hud-telem-lbl">FABRIC</span>
                         </div>
                     </div>
 
                     <!-- Status Bar -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted); padding-top: 4px;">
-                        <div style="display: flex; align-items: center; gap: 6px;">
-                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #38bdf8;"></span>
-                            <span>Profile: <strong style="color: #cbd5e1;">Competitive Crystal PvP</strong></span>
+                    <div class="hud-footer-status">
+                        <div class="hud-profile-tag">
+                            <span class="hud-profile-dot"></span>
+                            <span>Profile: <strong style="color: #ffffff;">Ranked Crystal PvP</strong></span>
                         </div>
-                        <span style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted);">SECURE SESSION</span>
+                        <div class="hud-security-tag">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span>RING-0 SAFE</span>
+                        </div>
                     </div>
                 </div>
             </div>
