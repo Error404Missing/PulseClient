@@ -40,11 +40,11 @@
     <header class="navbar">
         <div class="logo" style="cursor: pointer;" onclick="navigateToLandingSection(event, 'landing-page')">
             <!-- Sleek Image Logo -->
-            <img src="logo.png?v=2" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <img src="logo.png?v=2" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
             <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
         </div>
         <nav class="nav-links">
-            <button type="button" onclick="navigateToLandingSection(event, 'landing-page')" class="nav-evila-pill" style="color: #ff3366; font-weight: 700; background: rgba(255, 0, 85, 0.12); border: 1px solid rgba(255, 0, 85, 0.35); border-radius: 99px; padding: 5px 12px; cursor: pointer;">🍆 Evila Clicker</button>
+            <button type="button" id="nav-dashboard-link" class="hidden" onclick="showDashboard()" style="color: #ffffff; font-weight: 700; background: rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 6px 14px; border: 1px solid rgba(255, 255, 255, 0.15);">დეშბორდი</button>
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
             <button type="button" onclick="navigateToLandingSection(event, 'bypasses')" data-i18n="nav.bypasses">შემოვლები</button>
             <button type="button" onclick="navigateToLandingSection(event, 'pricing')" data-i18n="nav.pricing">ფასები</button>
@@ -78,7 +78,7 @@
             <div class="auth-gate-card glass-panel">
                 <div class="auth-gate-badge">
                     <span class="auth-gate-dot"></span>
-                    <span data-i18n="authGate.badge">🔒 საჭიროა ავტორიზაცია</span>
+                    <span data-i18n="authGate.badge">საჭიროა ავტორიზაცია</span>
                 </div>
                 <div class="auth-gate-logo-wrapper">
                     <img src="logo.png?v=2" alt="Pulse Logo" class="auth-gate-logo">
@@ -123,7 +123,7 @@
             <div class="auth-gate-card glass-panel" style="border-color: rgba(239, 68, 68, 0.4); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 68, 68, 0.2);">
                 <div class="auth-gate-badge" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #f87171;">
                     <span class="auth-gate-dot" style="background-color: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
-                    <span data-i18n="vpnBlock.badge">🚫 VPN / Proxy დაფიქსირებულია</span>
+                    <span data-i18n="vpnBlock.badge">VPN / Proxy დაფიქსირებულია</span>
                 </div>
                 <div class="auth-gate-logo-wrapper">
                     <div style="width: 64px; height: 64px; margin: 0 auto; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);">
@@ -160,7 +160,7 @@
             <div class="auth-gate-card glass-panel" style="border-color: rgba(239, 68, 68, 0.5); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(239, 68, 68, 0.3);">
                 <div class="auth-gate-badge" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); color: #f87171;">
                     <span class="auth-gate-dot" style="background-color: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
-                    <span>🚫 თქვენი წვდომა შეზღუდულია</span>
+                    <span>თქვენი წვდომა შეზღუდულია</span>
                 </div>
                 <div class="auth-gate-logo-wrapper">
                     <div style="width: 68px; height: 68px; margin: 0 auto; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35);">
@@ -211,83 +211,99 @@
                     </div>
                     <div class="ticker-sep">•</div>
                     <div class="ticker-item">
-                        <span class="ticker-icon">🛡️</span>
+                        <span class="ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                         <span class="ticker-text"><strong>GrimAC & Matrix</strong> Undetected</span>
                     </div>
                     <div class="ticker-sep">•</div>
                     <div class="ticker-item">
-                        <span class="ticker-icon">⚡</span>
+                        <span class="ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
                         <span class="ticker-text"><strong>Fabric 1.21.11</strong></span>
                     </div>
                     <div class="ticker-sep">•</div>
                     <div class="ticker-item">
-                        <span class="ticker-icon">🔒</span>
+                        <span class="ticker-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
                         <span class="ticker-text"><strong>OpSec</strong> Protected</span>
                     </div>
                 </div>
             </div>
             <div class="hero-visual">
-                <!-- Visual glass card container / Evila Clicker Mini-game -->
-                <div class="glass-panel main-preview evila-card" id="evila-clicker-card" style="text-align: center; position: relative; overflow: hidden;">
-                    <!-- Floating Particles Container -->
-                    <div id="evila-floating-container" class="evila-floating-container"></div>
-
-                    <!-- Autoclicker Freeze Overlay -->
-                    <div id="evila-anticheat-overlay" class="evila-freeze-overlay hidden">
-                        <div class="evila-freeze-content">
-                            <div class="evila-freeze-icon">🚨</div>
-                            <div class="evila-freeze-title">AUTOCLICKER DETECTED!</div>
-                            <div class="evila-freeze-desc">მაქსიმუმ 10 CPS! ავტოკლიკერი აკრძალულია. გაიყინე:</div>
-                            <div class="evila-freeze-timer"><span id="evila-freeze-seconds">20</span>s</div>
+                <!-- Visual Sleek Telemetry GUI Preview -->
+                <div class="glass-panel main-preview hero-hud-card" style="padding: 24px; position: relative; overflow: hidden;">
+                    <!-- HUD Top Bar -->
+                    <div class="preview-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.07); padding-bottom: 14px; margin-bottom: 18px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div class="preview-dots" style="display: flex; gap: 6px;">
+                                <span class="dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);"></span>
+                                <span class="dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);"></span>
+                                <span class="dot" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);"></span>
+                            </div>
+                            <span style="font-family: var(--font-mono); font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.5px; margin-left: 6px;">PulseClient-Fabric-1.21.11.jar</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25);">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+                            <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #10b981; letter-spacing: 0.3px;">BYPASS ACTIVE</span>
                         </div>
                     </div>
 
-                    <div class="preview-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <div class="preview-dots">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
+                    <!-- HUD Modules Matrix -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                        <div class="hud-module-card active" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">KillAura</span>
+                                <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e; font-weight: 600;">3.8m • Smooth</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Rotations: Grim-Safe</div>
                         </div>
-                        <div class="evila-live-badge">
-                            <span class="evila-live-dot"></span>
-                            <span id="evila-badge-text">+1 წთ / CLICK</span>
+                        <div class="hud-module-card active" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">Velocity</span>
+                                <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e; font-weight: 600;">0% H • 100% V</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">GrimAC 2.3.6 Bypass</div>
+                        </div>
+                        <div class="hud-module-card active" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">AutoTotem</span>
+                                <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e; font-weight: 600;">0ms Swap</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Inv-Sync • Anti-Desync</div>
+                        </div>
+                        <div class="hud-module-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 12px 14px; transition: var(--transition);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 13px; font-weight: 700; color: #f8fafc;">Storage ESP</span>
+                                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); font-weight: 600;">Tracer Mode</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Chests • Shulkers • Hoppers</div>
                         </div>
                     </div>
 
-                    <div class="preview-content evila-preview-content">
-                        <div class="evila-title-box">
-                            <h3 class="evila-main-title">დააჭირე ევილა ყლეს</h3>
-                            <p class="evila-sub-title">და მიიღე თითო click-ზე 1 წუთი PulseClient-ზე!</p>
+                    <!-- Live Telemetry Meters -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 12px 14px; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; margin-bottom: 14px;">
+                        <div style="text-align: center;">
+                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #f8fafc;">284</div>
+                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">FPS</div>
                         </div>
+                        <div style="text-align: center;">
+                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #10b981;">14ms</div>
+                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">LATENCY</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #f8fafc;">0.00</div>
+                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">VL SCORE</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #38bdf8;">1.21.11</div>
+                            <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">FABRIC</div>
+                        </div>
+                    </div>
 
-                        <!-- Click Target Avatar -->
-                        <div class="evila-target-container" id="evila-click-target" role="button" tabindex="0" title="დააჭირე ევილას!">
-                            <div class="evila-img-glow"></div>
-                            <img src="mogged.png?v=2" alt="Evila" id="evila-target-img" class="evila-target-img" draggable="false">
-                            <div class="evila-eggplant-tag">🍆 CLICK ME</div>
+                    <!-- Status Bar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted); padding-top: 4px;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #38bdf8;"></span>
+                            <span>Profile: <strong style="color: #cbd5e1;">Competitive Crystal PvP</strong></span>
                         </div>
-
-                        <!-- Daily Limit Banner (Shown when 360 min limit is reached) -->
-                        <div id="evila-limit-banner" class="evila-limit-banner hidden">
-                            🎉 დღიური 6 სთ ლიმიტი ამოწურულია! დაბრუნდი ხვალ.
-                        </div>
-
-                        <!-- Daily Progress Bar (Max 6 hours = 360 mins) -->
-                        <div class="evila-quota-box">
-                            <div class="evila-quota-row">
-                                <span class="evila-quota-label">დღიური ლიმიტი:</span>
-                                <span class="evila-quota-val"><strong id="evila-today-count">0</strong> / 360 წთ <small style="opacity: 0.65;">(6 სთ)</small></span>
-                            </div>
-                            <div class="evila-progress-track">
-                                <div class="evila-progress-bar" id="evila-progress-bar" style="width: 0%;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Status Indicator / Login CTA -->
-                        <div class="status-indicator evila-status-indicator" style="justify-content: center; margin-top: 10px;">
-                            <span class="pulse-dot"></span>
-                            <span class="status-text" id="evila-status-text">დააკლიკე და გაახანგრძლივე PulseClient</span>
-                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted);">SECURE SESSION</span>
                     </div>
                 </div>
             </div>
@@ -424,7 +440,7 @@
             </div>
             <div class="anticheat-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
                 <!-- Matrix Card -->
-                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 0, 60, 0.25);">
+                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Matrix AntiCheat</h3>
                         <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">UNDETECTED</span>
@@ -437,7 +453,7 @@
                 </div>
 
                 <!-- GrimAC Card -->
-                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 0, 60, 0.25);">
+                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">GrimAC</h3>
                         <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">UNDETECTED</span>
@@ -450,7 +466,7 @@
                 </div>
 
                 <!-- Vulcan & Karhu Card -->
-                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 0, 60, 0.25);">
+                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Vulcan / Karhu</h3>
                         <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">SUPPORTED</span>
@@ -463,7 +479,7 @@
                 </div>
 
                 <!-- Polar & Intave Card -->
-                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 0, 60, 0.25);">
+                <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Intave / Polar</h3>
                         <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">SAFE</span>
@@ -601,24 +617,29 @@
                         <span class="logo-red">PULSE</span><span class="logo-white">CLIENT</span>
                     </div>
 
-                    <!-- Device Status Widget -->
-                    <div class="device-status-card">
-                        <div class="device-info">
-                            <span class="device-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                    <line x1="8" y1="21" x2="16" y2="21"></line>
-                                    <line x1="12" y1="17" x2="12" y2="21"></line>
-                                </svg>
-                            </span>
-                            <span class="device-title">მოწყობილობები</span>
-                            <span class="device-count">1/1</span>
-                        </div>
-                        <button class="btn-device-slot" onclick="openDeviceSlotModal()">+ მოწყობილობის სლოტი</button>
-                    </div>
-
                     <!-- Navigation Sidebar Links -->
                     <nav class="sidebar-menu">
+                        <a href="#" class="menu-item menu-home-item" onclick="showLanding(event)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span>მთავარი გვერდი</span>
+                        </a>
+
+                        <!-- Device Status Widget -->
+                        <div class="device-status-card">
+                            <div class="device-info">
+                                <span class="device-icon">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                                    </svg>
+                                </span>
+                                <span class="device-title">მოწყობილობები</span>
+                                <span class="device-count">1/1</span>
+                            </div>
+                            <button class="btn-device-slot" onclick="openDeviceSlotModal()">+ მოწყობილობის სლოტი</button>
+                        </div>
+
                         <a href="#tab-downloads" class="menu-item active" onclick="switchDashTab(event, 'tab-downloads')">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             <span data-i18n="dash.downloads">ჩამოტვირთვები</span>
@@ -707,15 +728,15 @@
                     <!-- TAB: Downloads (Default) -->
                     <div id="tab-content-downloads" class="tab-pane">
                         <!-- Unified Download Card -->
-                        <div class="krypton-download-card unified-download-card" id="unified-download-card" style="position: relative; overflow: visible;">
+                        <div class="krypton-download-card unified-download-card" id="unified-download-card">
                             <div class="card-left">
-                                <div class="icon-download-large" style="background: rgba(255, 0, 0, 0.15); color: #ff0000;">
+                                <div class="icon-download-large">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </div>
                                 <div class="download-meta">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <h3 data-i18n="dash.clientTitle">PulseClient</h3>
-                                        <span class="badge-jar" style="background: linear-gradient(135deg, #ff0000, #a855f7); color: #fff;">CLIENT</span>
+                                        <span class="badge-jar">CLIENT</span>
                                     </div>
                                     <span class="version-label" data-i18n="dash.chooseVersion">აირჩიეთ სასურველი ვერსია</span>
                                     <span class="updated-date" data-i18n="dash.updatedToday">ბოლოს განახლდა: დღეს</span>
@@ -729,21 +750,21 @@
 
 
                         <!-- Opsec Mod Download Card -->
-                        <div class="krypton-download-card important-card" style="margin-top: 20px; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #ef4444, #f59e0b);"></div>
+                        <div class="krypton-download-card important-card" style="margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);"></div>
                             <div class="card-left">
-                                <div class="icon-download-large" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                                <div class="icon-download-large">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                                 </div>
                                 <div class="download-meta">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <h3 id="opsec-title-text" data-i18n="dash.opsecTitle">Opsec Mod</h3>
-                                        <span class="badge-jar" style="background: #ef4444; color: #fff;">IMPORTANT</span>
+                                        <span class="badge-jar">IMPORTANT</span>
                                     </div>
                                     <span id="opsec-desc-text" data-i18n="dash.opsecDesc" style="color: var(--text-secondary); max-width: 500px; display: block; font-size: 13px; margin-top: 4px;">ამ მოდის ჩაწერა კატეგორიულად აუცილებელია უსაფრთხოებისთვის (OpSec). წინააღმდეგ შემთხვევაში ჩვენ ვიხსნით სრულ პასუხისმგებლობას თქვენს ანგარიშებზე!</span>
                                 </div>
                             </div>
-                            <a id="download-opsec-btn" href="https://modrinth.com/mod/opsec" target="_blank" rel="noopener noreferrer" class="btn-krypton-download" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);">
+                            <a id="download-opsec-btn" href="https://modrinth.com/mod/opsec" target="_blank" rel="noopener noreferrer" class="btn-krypton-download" style="text-decoration: none;">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 <span data-i18n="dash.download">ჩამოტვირთვა</span>
                             </a>
@@ -751,10 +772,10 @@
 
                         
                         <!-- OpSec Trace Cleaner Card (.bat) -->
-                        <div class="krypton-download-card cleaner-card" style="margin-top: 20px; border: 1px solid rgba(255, 0, 60, 0.3); background: rgba(255, 0, 60, 0.05); position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #ff003c, #8b5cf6);"></div>
+                        <div class="krypton-download-card cleaner-card" style="margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);"></div>
                             <div class="card-left">
-                                <div class="icon-download-large" style="background: rgba(255, 0, 60, 0.15); color: #ff003c;">
+                                <div class="icon-download-large">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <polyline points="4 17 10 11 4 5"></polyline>
                                         <line x1="12" y1="19" x2="20" y2="19"></line>
@@ -763,7 +784,7 @@
                                 <div class="download-meta">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <h3 data-i18n="dash.cleanerTitle">Pulse OpSec Trace Cleaner (.bat)</h3>
-                                        <span class="badge-jar" style="background: linear-gradient(135deg, #ff003c, #b91c1c); color: #fff;">OPSEC TOOL</span>
+                                        <span class="badge-jar">OPSEC TOOL</span>
                                     </div>
                                     <span data-i18n="dash.cleanerDesc" style="color: var(--text-secondary); max-width: 540px; display: block; font-size: 13px; margin-top: 4px; line-height: 1.5;">
                                         ჩაიწერეთ და გაუშვით შემოწმებამდე (Check / Screenshare). სკრიპტი 1 წამში სრულად ასუფთავებს Minecraft-ის ლოგებს, Crash Report-ებს, Windows Temp და Prefetch კვალს.
@@ -775,7 +796,7 @@
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                                     <span data-i18n="dash.cleanerCopyBtn">კოდის კოპირება</span>
                                 </button>
-                                <a href="./PulseCleaner.bat" download="PulseCleaner.bat" class="btn-krypton-download" style="background: linear-gradient(135deg, #ff003c 0%, #990024 100%); box-shadow: 0 4px 15px rgba(255, 0, 60, 0.35); text-decoration: none; padding: 10px 20px; font-size: 13px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                                <a href="./PulseCleaner.bat" download="PulseCleaner.bat" class="btn-krypton-download" style="text-decoration: none; padding: 10px 20px; font-size: 13px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px;">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                     <span data-i18n="dash.cleanerDlBtn">ჩამოტვირთვა (.bat)</span>
                                 </a>
@@ -884,8 +905,8 @@
                             <!-- User Playtime & Top Server Widget -->
                             <div id="user-playtime-card" class="user-playtime-card" style="margin-top: 18px; padding: 14px 18px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                                        🎮
+                                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="12" r="1.5"/></svg>
                                     </div>
                                     <div>
                                         <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;" data-i18n="dash.totalPlaytimeLabel">სულ ნათამაშებია</div>
@@ -893,53 +914,53 @@
                                     </div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(251, 191, 36, 0.12); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                                        🏆
+                                    <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M4 5h16v4a7 7 0 0 1-7 7 7 7 0 0 1-7-7V5z"/><path d="M12 16v4"/><path d="M8 20h8"/></svg>
                                     </div>
                                     <div>
                                         <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;" data-i18n="dash.topServerLabel">საყვარელი სერვერი</div>
-                                        <div id="dash-user-top-server-text" style="font-size: 15px; font-weight: 700; color: #fbbf24;">-</div>
+                                        <div id="dash-user-top-server-text" style="font-size: 15px; font-weight: 700; color: #ffffff;">-</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- User Daily Streak & Bonus Rewards Card -->
-                            <div id="user-streak-card" class="user-streak-card" style="margin-top: 16px; padding: 16px 20px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.03) 100%); border: 1px solid rgba(249, 115, 22, 0.25); border-radius: 14px; position: relative; overflow: hidden;">
-                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #f97316, #eab308);"></div>
+                            <div id="user-streak-card" class="user-streak-card" style="margin-top: 16px; padding: 16px 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; position: relative; overflow: hidden;">
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);"></div>
                                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(249, 115, 22, 0.18); color: #f97316; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3);">
-                                            🔥
+                                        <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, 0.08); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/></svg>
                                         </div>
                                         <div>
-                                            <div style="font-size: 11px; color: #fb923c; text-transform: uppercase; font-weight: 800; letter-spacing: 0.8px;">DAILY LOGIN STREAK</div>
+                                            <div style="font-size: 11px; color: #a1a1aa; text-transform: uppercase; font-weight: 800; letter-spacing: 0.8px;">DAILY LOGIN STREAK</div>
                                             <div style="font-size: 17px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px;">
                                                 <span id="dash-streak-days-text">1 დღიანი სტრიქი</span>
-                                                <span id="dash-streak-badge" style="font-size: 11px; padding: 2px 8px; border-radius: 99px; background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.4); font-weight: 700;">აქტიური 🔥</span>
+                                                <span id="dash-streak-badge" style="font-size: 11px; padding: 2px 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.18); font-weight: 700;">აქტიური</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div style="text-align: right;">
                                         <div style="font-size: 11.5px; color: var(--text-muted);">შემდეგი ბონუსი</div>
-                                        <div id="dash-streak-next-bonus" style="font-size: 14px; font-weight: 700; color: #4ade80;">3 დღე (+12 სთ)</div>
+                                        <div id="dash-streak-next-bonus" style="font-size: 14px; font-weight: 700; color: #ffffff;">3 დღე (+12 სთ)</div>
                                     </div>
                                 </div>
                                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; font-size: 11.5px; text-align: center;">
-                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px;">
                                         <div style="color: #94a3b8; font-size: 10px;">1 დღე</div>
-                                        <div style="color: #fdba74; font-weight: 800;">+3 საათი</div>
+                                        <div style="color: #ffffff; font-weight: 800;">+3 საათი</div>
                                     </div>
-                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px;">
                                         <div style="color: #94a3b8; font-size: 10px;">3 დღე</div>
-                                        <div style="color: #fdba74; font-weight: 800;">+12 საათი</div>
+                                        <div style="color: #ffffff; font-weight: 800;">+12 საათი</div>
                                     </div>
-                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px;">
                                         <div style="color: #94a3b8; font-size: 10px;">1 კვირა (7დ)</div>
-                                        <div style="color: #4ade80; font-weight: 800;">+3 დღე 🎉</div>
+                                        <div style="color: #ffffff; font-weight: 800;">+3 დღე</div>
                                     </div>
-                                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 8px; padding: 8px;">
+                                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px;">
                                         <div style="color: #94a3b8; font-size: 10px;">1 თვე (30დ)</div>
-                                        <div style="color: #a855f7; font-weight: 800;">+2 კვირა 👑</div>
+                                        <div style="color: #ffffff; font-weight: 800;">+2 კვირა</div>
                                     </div>
                                 </div>
                             </div>
@@ -1007,7 +1028,7 @@
                             <div class="promo-header-top">
                                 <div class="promo-badge-pill">
                                     <span class="promo-pulse-dot"></span>
-                                    <span data-i18n="promo.badge">🎁 ბონუსები & პრომო სისტემა</span>
+                                    <span data-i18n="promo.badge">ბონუსები & პრომო სისტემა</span>
                                 </div>
                                 <span class="promo-version-tag">Pulse Promo Engine v2.0</span>
                             </div>
@@ -1027,7 +1048,7 @@
 
                             <form id="redeem-promo-form" class="promo-input-group">
                                 <div class="promo-input-wrapper">
-                                    <span class="promo-input-icon">🎟️</span>
+                                    <span class="promo-input-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg></span>
                                     <input type="text" id="promo-code-input" data-i18n-placeholder="promo.codePh" placeholder="მაგ: PULSE2026" required autocomplete="off" spellcheck="false" style="text-transform: uppercase;">
                                     <button type="button" class="promo-paste-btn" onclick="pastePromoFromClipboard()" title="ბუფერიდან ჩასმა">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
@@ -1042,15 +1063,15 @@
 
                             <div class="promo-perks-row">
                                 <div class="promo-perk-item">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff003c" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                                     <span>მყისიერი აქტივაცია</span>
                                 </div>
                                 <div class="promo-perk-item">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                     <span>დღეების ავტომატური დამატება</span>
                                 </div>
                                 <div class="promo-perk-item">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                                     <span>100% უსაფრთხო სისტემა</span>
                                 </div>
                             </div>
@@ -1098,7 +1119,7 @@
                             <div class="glass-panel promo-history-panel">
                                 <div class="promo-panel-header">
                                     <div style="display: flex; align-items: center; gap: 10px;">
-                                        <span class="panel-header-icon">📜</span>
+                                        <span class="panel-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
                                         <h4 class="panel-title">ჩემი გააქტიურებული კოდები</h4>
                                     </div>
                                     <button type="button" class="promo-refresh-btn" onclick="fetchUserPromoHistory()" title="განახლება">
@@ -1108,7 +1129,7 @@
 
                                 <div id="user-promo-history-list" class="promo-history-list">
                                     <div class="promo-history-empty">
-                                        <div class="empty-icon-bubble">🎟️</div>
+                                        <div class="empty-icon-bubble"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg></div>
                                         <h5>ჯერ არ გაქვთ გამოყენებული პრომო კოდი</h5>
                                         <p>შეიყვანეთ პრომო კოდი ზემოთ მოცემულ ველში, ან ეწვიეთ ჩვენს Discord-ს ახალი ბონუსების მისაღებად.</p>
                                     </div>
@@ -1181,21 +1202,21 @@
                         <div class="glass-panel promo-faq-panel">
                             <div class="faq-accordion-item">
                                 <div class="faq-accordion-header">
-                                    <span class="faq-q-icon">❓</span>
+                                    <span class="faq-q-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
                                     <span>შეიძლება თუ არა ერთი პრომო კოდის რამდენჯერმე გამოყენება?</span>
                                 </div>
                                 <p class="faq-accordion-body">არა, თითოეული პრომო კოდის გამოყენება ერთ მომხმარებელს შეუძლია მხოლოდ ერთხელ. თუმცა შეგიძლიათ გამოიყენოთ სხვადასხვა კრეატორის განსხვავებული კოდები.</p>
                             </div>
                             <div class="faq-accordion-item">
                                 <div class="faq-accordion-header">
-                                    <span class="faq-q-icon">⚡</span>
+                                    <span class="faq-q-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
                                     <span>როგორ ემატება დღეები მოქმედ ლიცენზიას?</span>
                                 </div>
                                 <p class="faq-accordion-body">თუ თქვენს ანგარიშზე უკვე არის აქტიური ლიცენზია, პრომო კოდის დღეები პირდაპირ დაემატება თქვენი ლიცენზიის ვადის ამოწურვის თარიღს.</p>
                             </div>
                             <div class="faq-accordion-item">
                                 <div class="faq-accordion-header">
-                                    <span class="faq-q-icon">⏳</span>
+                                    <span class="faq-q-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                                     <span>აქვს თუ არა კოდებს გამოყენების ლიმიტი?</span>
                                 </div>
                                 <p class="faq-accordion-body">დიახ, ზოგიერთ სპეციალურ კოდს აქვს შეზღუდული გამოყენების რაოდენობა (მაგ. პირველი 100 მოთამაშე) ან მოქმედების დროითი ვადა.</p>
@@ -1207,17 +1228,17 @@
                     <!-- TAB: Config Cloud (Presets) -->
                     <div id="tab-content-configs" class="tab-pane hidden">
                         <!-- User Config Upload / Share Section (Active License Guarded) -->
-                        <div class="glass-panel config-share-panel" style="padding: 26px; margin-bottom: 26px; border: 1px solid rgba(255, 0, 60, 0.25); background: rgba(14, 14, 18, 0.85); border-radius: 16px;">
+                        <div class="glass-panel config-share-panel" style="padding: 26px; margin-bottom: 26px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(14, 16, 22, 0.85); border-radius: 16px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
                                 <div>
                                     <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin: 0;">PulseClient Config Cloud</h3>
                                     <p style="color: var(--text-secondary); font-size: 13.5px; margin-top: 4px;">გააზიარეთ და გადმოწერეთ მოთამაშეების მიერ შექმნილი საუკეთესო კონფიგები.</p>
                                 </div>
-                                <span id="config-share-license-badge" style="font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; background: rgba(255, 0, 60, 0.15); color: #ff003c; border: 1px solid rgba(255, 0, 60, 0.3);">აქტიური ლიცენზია საჭიროა</span>
+                                <span id="config-share-license-badge" style="font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15);">აქტიური ლიცენზია საჭიროა</span>
                             </div>
 
                             <!-- Path Tip -->
-                            <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 0, 60, 0.3); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: var(--text-muted); margin: 18px 0;">
+                            <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: var(--text-muted); margin: 18px 0;">
                                 <strong>სად ჩავაგდოთ ფაილი:</strong> <code>.minecraft/pulse/configs/</code> საქაღალდეში (ან დააჭირეთ „კოპირებას“ და ჩასვით თამაშის კონფიგ მენეჯერში).
                             </div>
 
@@ -1348,15 +1369,15 @@
                             </button>
                             <button type="button" class="admin-subtab-btn" id="btn-subtab-crashes" onclick="switchAdminSubTab(event, 'admin-subpanel-crashes')">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                                <span>💥 კრაშები <span id="admin-crash-badge" class="badge-jar hidden" style="background: #ef4444; color: #fff; font-size: 10px; padding: 1px 6px; margin-left: 4px; border-radius: 99px;">0</span></span>
+                                <span>კრაშები <span id="admin-crash-badge" class="badge-jar hidden" style="background: #ef4444; color: #fff; font-size: 10px; padding: 1px 6px; margin-left: 4px; border-radius: 99px;">0</span></span>
                             </button>
                             <button type="button" class="admin-subtab-btn" id="btn-subtab-support" onclick="switchAdminSubTab(event, 'admin-subpanel-support')">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                <span>💬 მხარდაჭერა <span id="admin-support-badge" class="badge-jar hidden" style="background: #00ff9d; color: #022c22; font-size: 10px; font-weight: 800; padding: 1px 7px; margin-left: 4px; border-radius: 99px; box-shadow: 0 0 8px rgba(0,255,157,0.6);">0</span></span>
+                                <span>მხარდაჭერა <span id="admin-support-badge" class="badge-jar hidden" style="background: #00ff9d; color: #022c22; font-size: 10px; font-weight: 800; padding: 1px 7px; margin-left: 4px; border-radius: 99px; box-shadow: 0 0 8px rgba(0,255,157,0.6);">0</span></span>
                             </button>
                             <button type="button" class="admin-subtab-btn" id="btn-subtab-multimedia" onclick="switchAdminSubTab(event, 'admin-subpanel-multimedia')">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-                                <span>🎙️ რაცია & მუსიკა</span>
+                                <span>რაცია & მუსიკა</span>
                             </button>
                         </div>
 
@@ -1656,15 +1677,15 @@
                                 <div class="admin-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
                                     <div>
                                         <h3 style="margin: 0; display: flex; align-items: center; gap: 8px;">
-                                            💥 ავტომატური კრაშ რეპორტები (Crash Reports)
+                                            ავტომატური კრაშ რეპორტები (Crash Reports)
                                             <span id="admin-crashes-count-tag" style="font-size: 11px; font-weight: 700; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 2px 8px; border-radius: 99px;">0 კრაში</span>
                                         </h3>
                                         <p style="color: var(--text-secondary); font-size: 12px; margin: 4px 0 0 0;">თამაშის კრაშების და ერორების ავტომატური დიაგნოსტიკა და Stack Trace</p>
                                     </div>
                                     <div class="admin-controls" style="display: flex; gap: 8px;">
                                         <input type="text" id="admin-crashes-search-input" placeholder="მოძებნე მოთამაშე, ერორი, OS..." oninput="renderAdminCrashReports()">
-                                        <button type="button" class="btn btn-secondary" onclick="fetchAdminCrashReports(true)" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">🔄 განახლება</button>
-                                        <button type="button" class="btn btn-secondary" onclick="clearAdminCrashReports()" style="padding: 6px 12px; font-size: 12px; border-radius: 8px; border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">🗑️ გასუფთავება</button>
+                                        <button type="button" class="btn btn-secondary" onclick="fetchAdminCrashReports(true)" style="padding: 6px 12px; font-size: 12px; border-radius: 8px;">განახლება</button>
+                                        <button type="button" class="btn btn-secondary" onclick="clearAdminCrashReports()" style="padding: 6px 12px; font-size: 12px; border-radius: 8px; border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">გასუფთავება</button>
                                     </div>
                                 </div>
                                 <div class="admin-table-wrapper">
@@ -1695,7 +1716,7 @@
                                     <div style="display: flex; align-items: center; gap: 10px;">
                                         <div style="width: 10px; height: 10px; border-radius: 50%; background: #00ff9d; box-shadow: 0 0 10px #00ff9d; animation: c2-led-blink 1.2s infinite ease-in-out;"></div>
                                         <h3 style="margin: 0; display: flex; align-items: center; gap: 8px;">
-                                            💬 ლაივ მხარდაჭერა & მოთამაშეთა შეტყობინებები
+                                            ლაივ მხარდაჭერა & მოთამაშეთა შეტყობინებები
                                             <span style="font-size: 11px; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 6px; font-family: monospace;">/pulse help</span>
                                         </h3>
                                     </div>
@@ -1704,7 +1725,7 @@
                                             ● LIVE SYNC: <span style="color: #00ff9d;">2.5s</span>
                                         </span>
                                         <button type="button" class="btn btn-secondary" onclick="fetchAdminSupportTickets(true)" style="padding: 7px 14px; font-size: 12.5px;">
-                                            🔄 განახლება
+                                            განახლება
                                         </button>
                                     </div>
                                 </div>
@@ -1716,13 +1737,13 @@
                                 <!-- Direct In-Game Broadcast Bar -->
                                 <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(0, 255, 157, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px;">
                                     <h4 style="font-size: 12px; color: #00ff9d; text-transform: uppercase; font-weight: 800; margin: 0 0 10px 0; display: flex; align-items: center; gap: 8px;">
-                                        <span>⚡ სწრაფი შეტყობინების გაგზავნა მოთამაშესთან</span>
+                                        <span>სწრაფი შეტყობინების გაგზავნა მოთამაშესთან</span>
                                         <span style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: none;">(პირდაპირ ეკრანის ცენტრში Title + ხმა)</span>
                                     </h4>
                                     <div style="display: grid; grid-template-columns: 210px 1fr auto; gap: 10px; align-items: center;">
                                         <div>
                                             <select id="support-direct-target" class="cyber-select" style="font-size: 12px; padding: 9px 10px; width: 100%;">
-                                                <option value="ALL">🌐 ყველა ონლაინ მოთამაშე</option>
+                                                <option value="ALL">ყველა ონლაინ მოთამაშე</option>
                                             </select>
                                         </div>
                                         <div>
@@ -1730,7 +1751,7 @@
                                         </div>
                                         <div>
                                             <button type="button" class="btn-remote-cmd" style="background: linear-gradient(135deg, #00ff9d 0%, #059669 100%) !important; color: #022c22 !important; border: 1px solid #00ff9d !important; font-weight: 800 !important; padding: 9px 18px !important; border-radius: 8px !important; white-space: nowrap !important;" onclick="sendSupportDirectMessage()">
-                                                გაგზავნა ⚡
+                                                გაგზავნა
                                             </button>
                                         </div>
                                     </div>
@@ -1740,15 +1761,15 @@
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; padding: 4px 2px;">
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <button type="button" id="btn-support-filter-open" class="btn btn-secondary" onclick="setSupportFilterTab('open')" style="padding: 7px 14px; font-size: 12px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid #00ff9d; background: rgba(0, 255, 157, 0.12); color: #00ff9d; cursor: pointer;">
-                                            <span>🔴 აქტიური</span>
+                                            <span>აქტიური</span>
                                             <span id="support-tab-open-count" class="badge-jar" style="background: rgba(239, 68, 68, 0.25); color: #ef4444; font-size: 10.5px; padding: 1px 7px; border-radius: 99px;">0</span>
                                         </button>
                                         <button type="button" id="btn-support-filter-resolved" class="btn btn-secondary" onclick="setSupportFilterTab('resolved')" style="padding: 7px 14px; font-size: 12px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #94a3b8; cursor: pointer;">
-                                            <span>✅ გაპასუხებული</span>
+                                            <span>გაპასუხებული</span>
                                             <span id="support-tab-resolved-count" class="badge-jar" style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 10.5px; padding: 1px 7px; border-radius: 99px;">0</span>
                                         </button>
                                         <button type="button" id="btn-support-filter-all" class="btn btn-secondary" onclick="setSupportFilterTab('all')" style="padding: 7px 14px; font-size: 12px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #94a3b8; cursor: pointer;">
-                                            <span>📁 ყველა</span>
+                                            <span>ყველა</span>
                                             <span id="support-tab-all-count" class="badge-jar" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 10.5px; padding: 1px 7px; border-radius: 99px;">0</span>
                                         </button>
                                     </div>
@@ -1776,13 +1797,13 @@
                                     <div style="display: flex; align-items: center; gap: 10px;">
                                         <div style="width: 10px; height: 10px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 10px #a855f7; animation: c2-led-blink 1.2s infinite ease-in-out;"></div>
                                         <h3 style="margin: 0; display: flex; align-items: center; gap: 8px;">
-                                            🎙️ მულტიმედია სტუდია — Live Walkie-Talkie & მუსიკის პლეიერი
+                                            მულტიმედია სტუდია — Live Walkie-Talkie & მუსიკის პლეიერი
                                             <span style="font-size: 11px; font-weight: 700; color: #a855f7; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.3); padding: 2px 8px; border-radius: 6px; font-family: monospace;">AUDIO BROADCAST</span>
                                         </h3>
                                     </div>
                                     <div class="admin-controls" style="display: flex; align-items: center; gap: 10px;">
                                         <button type="button" class="btn btn-secondary" onclick="populateMultimediaTargets()" style="padding: 7px 14px; font-size: 12.5px;">
-                                            🔄 მოთამაშეების სია
+                                            მოთამაშეების სია
                                         </button>
                                     </div>
                                 </div>
@@ -1794,10 +1815,10 @@
                                 <!-- Target Player Selector -->
                                 <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 24px;">
                                     <label style="font-size: 12px; color: #c084fc; text-transform: uppercase; font-weight: 800; display: block; margin-bottom: 8px;">
-                                        🎯 სამიზნე მოთამაშე (ვისთან გაიგზავნოს აუდიო / მუსიკა):
+                                        სამიზნე მოთამაშე (ვისთან გაიგზავნოს აუდიო / მუსიკა):
                                     </label>
                                     <select id="multimedia-target" class="cyber-select" style="font-size: 13px; padding: 10px 12px; width: 100%; border-color: rgba(168, 85, 247, 0.4);">
-                                        <option value="ALL">📢 ყველა ონლაინ მოთამაშე (Broadcast to Everyone)</option>
+                                        <option value="ALL">ყველა ონლაინ მოთამაშე (Broadcast to Everyone)</option>
                                     </select>
                                 </div>
 
@@ -1812,7 +1833,7 @@
                                         </div>
 
                                         <h4 style="font-size: 16px; margin: 18px 0 6px 0; color: #fff; font-weight: 800;">
-                                            🎙️ ხმოვანი რაცია (Walkie-Talkie)
+                                            ხმოვანი რაცია (Walkie-Talkie)
                                         </h4>
                                         <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 20px 0; max-width: 280px;">
                                             დააჭირეთ და გეჭიროთ მიკროფონის ღილაკზე სასაუბროდ. მოთამაშის თამაშში გაისმება რაციის ჩართვის ხმა და თქვენი ხმა!
@@ -1853,7 +1874,7 @@
                                         </div>
 
                                         <h4 style="font-size: 16px; margin: 0 0 6px 0; color: #fff; font-weight: 800;">
-                                            🎵 მუსიკალური დისკების პლეიერი
+                                            მუსიკალური დისკების პლეიერი
                                         </h4>
                                         <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 16px 0;">
                                             ჩაურთეთ Minecraft-ის დისკები ან ნებისმიერი გარე აუდიო ნაკადი.
@@ -1865,22 +1886,22 @@
                                                 Minecraft-ის დისკი:
                                             </label>
                                             <select id="multimedia-disc-select" class="cyber-select" style="width: 100%; font-size: 13px; padding: 9px 12px;">
-                                                <option value="pigstep">💿 Pigstep — Lena Raine (Nether Banger)</option>
-                                                <option value="otherside">💿 Otherside — Lena Raine (Vibes)</option>
-                                                <option value="cat">💿 Cat — C418 (Classic)</option>
-                                                <option value="creator">💿 Creator — Lena Raine (1.21 Tricky Trials)</option>
-                                                <option value="precipice">💿 Precipice — Aaron Cherof (1.21)</option>
-                                                <option value="relic">💿 Relic — Aaron Cherof</option>
-                                                <option value="chirp">💿 Chirp — C418</option>
-                                                <option value="wait">💿 Wait — C418</option>
-                                                <option value="mall">💿 Mall — C418</option>
-                                                <option value="mellohi">💿 Mellohi — C418</option>
-                                                <option value="stal">💿 Stal — C418</option>
-                                                <option value="strad">💿 Strad — C418</option>
-                                                <option value="ward">💿 Ward — C418</option>
-                                                <option value="11">💿 11 — C418 (Creepy)</option>
-                                                <option value="13">💿 13 — C418 (Horror)</option>
-                                                <option value="5">💿 5 — Samuel Åberg (Ancient City)</option>
+                                                <option value="pigstep">Pigstep — Lena Raine (Nether Banger)</option>
+                                                <option value="otherside">Otherside — Lena Raine (Vibes)</option>
+                                                <option value="cat">Cat — C418 (Classic)</option>
+                                                <option value="creator">Creator — Lena Raine (1.21 Tricky Trials)</option>
+                                                <option value="precipice">Precipice — Aaron Cherof (1.21)</option>
+                                                <option value="relic">Relic — Aaron Cherof</option>
+                                                <option value="chirp">Chirp — C418</option>
+                                                <option value="wait">Wait — C418</option>
+                                                <option value="mall">Mall — C418</option>
+                                                <option value="mellohi">Mellohi — C418</option>
+                                                <option value="stal">Stal — C418</option>
+                                                <option value="strad">Strad — C418</option>
+                                                <option value="ward">Ward — C418</option>
+                                                <option value="11">11 — C418 (Creepy)</option>
+                                                <option value="13">13 — C418 (Horror)</option>
+                                                <option value="5">5 — Samuel Åberg (Ancient City)</option>
                                             </select>
                                         </div>
 
@@ -1891,7 +1912,7 @@
                                             </label>
                                             <input type="text" id="multimedia-custom-url" placeholder="https://files.catbox.moe/song.mp3 (პირდაპირი .mp3 ან .wav)" class="custom-dark-input" style="width: 100%; font-size: 12.5px; padding: 9px 12px; border-radius: 8px; background: #070c18 !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #fff;">
                                             <div style="font-size: 10.5px; color: #94a3b8; margin-top: 5px; line-height: 1.4;">
-                                                💡 <strong style="color: #c084fc;">რჩევა:</strong> ბმული უნდა მთავრდებოდეს <code style="color: #38bdf8;">.mp3</code> ან <code style="color: #38bdf8;">.wav</code> გაფართოებით (მაგ. Catbox, Discord CDN). YouTube-ის ვებ-გვერდი პირდაპირ არ უკრავს.
+                                                <strong style="color: #c084fc;">რჩევა:</strong> ბმული უნდა მთავრდებოდეს <code style="color: #38bdf8;">.mp3</code> ან <code style="color: #38bdf8;">.wav</code> გაფართოებით (მაგ. Catbox, Discord CDN). YouTube-ის ვებ-გვერდი პირდაპირ არ უკრავს.
                                             </div>
                                         </div>
 
@@ -1909,7 +1930,7 @@
 
                                         <!-- Now Playing Badge -->
                                         <div id="multimedia-music-status" class="hidden" style="margin-top: 14px; font-size: 12px; color: #c084fc; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 8px 12px; text-align: center; font-family: monospace;">
-                                            🎵 ახლა უკრავს: —
+                                            ახლა უკრავს: —
                                         </div>
                                     </div>
                                 </div>
@@ -1975,7 +1996,7 @@
                         </svg>
                         <span>LITECOIN (LTC)</span>
                     </div>
-                    <span class="instant-badge">⚡ INSTANT AUTO-DELIVERY</span>
+                    <span class="instant-badge">INSTANT AUTO-DELIVERY</span>
                 </div>
                 <h3 class="crypto-modal-title" data-i18n="crypto.modalTitle">PulseClient-ის შეძენა</h3>
                 <p class="crypto-modal-subtitle" data-i18n="crypto.modalSubtitle">გადაიხადეთ მომენტალურად Litecoin-ით ან გახსენით Ticket Discord-ზე</p>
@@ -1984,11 +2005,11 @@
             <!-- Method Switcher Tabs -->
             <div class="crypto-method-tabs">
                 <button type="button" id="crypto-tab-btn-ltc" class="crypto-tab-btn active" onclick="switchPaymentMethod('ltc')">
-                    <span class="tab-icon">🪙</span>
+                    <span class="tab-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
                     <span class="tab-label">Litecoin (LTC) <span class="tab-sub">ავტომატური 0% საკომისიო</span></span>
                 </button>
                 <button type="button" id="crypto-tab-btn-discord" class="crypto-tab-btn" onclick="switchPaymentMethod('discord')">
-                    <span class="tab-icon">💬</span>
+                    <span class="tab-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
                     <span class="tab-label">Discord Ticket <span class="tab-sub">სხვა მეთოდები</span></span>
                 </button>
             </div>
@@ -2072,7 +2093,7 @@
 
                             <!-- Network Tip -->
                             <div class="crypto-tip-box">
-                                <span class="tip-icon">ℹ️</span>
+                                <span class="tip-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
                                 <span data-i18n="crypto.networkTip">გადარიცხეთ <strong>მხოლოდ Litecoin (LTC)</strong> ქსელით. თანხის გამოგზავნისთანავე სისტემა ავტომატურად გააქტიურებს გასაღებს.</span>
                             </div>
                         </div>
@@ -2088,7 +2109,7 @@
                         <div class="radar-info">
                             <div class="radar-status-line">
                                 <span id="crypto-status-badge" class="crypto-status-pill pending">ველოდებით ტრანზაქციას</span>
-                                <span id="crypto-timer-text" class="crypto-timer-muted">ავტო-შემოწმება ყოველ 8 წამში ⚡</span>
+                                <span id="crypto-timer-text" class="crypto-timer-muted">ავტო-შემოწმება ყოველ 8 წამში</span>
                             </div>
                             <p id="crypto-status-desc" class="radar-desc">გაგზავნეთ LTC თქვენი საფულიდან (Exodus, Binance, TrustWallet...).</p>
                         </div>
@@ -2119,7 +2140,7 @@
                             <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
                     </div>
-                    <h3 class="success-title">🎉 გადახდა წარმატებით დასრულდა!</h3>
+                    <h3 class="success-title">გადახდა წარმატებით დასრულდა!</h3>
                     <p class="success-subtitle">თქვენი ლიცენზია შეიქმნა და ავტომატურად მიება თქვენს ანგარიშს.</p>
 
                     <div class="success-key-box">
@@ -2135,7 +2156,7 @@
 
                     <div class="success-actions">
                         <button type="button" class="btn btn-glow btn-primary" onclick="handleCryptoSuccessDone()" style="width: 100%; border-radius: 12px; padding: 14px; font-weight: 700; font-size: 15px;">
-                            🚀 დეშბორდზე გადასვლა & ჩამოტვირთვა
+                            დეშბორდზე გადასვლა & ჩამოტვირთვა
                         </button>
                     </div>
                 </div>
@@ -2234,7 +2255,7 @@
             <p id="confirm-message" style="margin-bottom: 24px; font-size: 14px; color: var(--text-secondary); line-height: 1.5;"></p>
             <div class="confirm-actions" style="display: flex; gap: 12px; justify-content: center; width: 100%;">
                 <button id="confirm-cancel-btn" class="btn btn-secondary" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1;">არა</button>
-                <button id="confirm-ok-btn" class="btn btn-glow" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1; background: linear-gradient(135deg, #ff4d4d 0%, #cc0000 100%); box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3); border: none;">კი</button>
+                <button id="confirm-ok-btn" class="btn btn-glow" style="border-radius: 99px; min-width: 100px; padding: 10px 20px; flex: 1; background: #ffffff; color: #000000; font-weight: 700; box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2); border: none;">კი</button>
             </div>
         </div>
     </div>
@@ -2336,7 +2357,7 @@
             <!-- Modal Tip Box -->
             <div class="modal-download-footer-tip">
                 <div class="tip-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff003c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                 </div>
                 <div class="tip-text">
                     <span>ინსტრუქცია: გადმოწერილი <strong>.jar</strong> ფაილი ჩააგდეთ <code>.minecraft/mods</code> საქაღალდეში.</span>
@@ -2358,7 +2379,7 @@
                 </svg>
             </button>
             <div style="text-align: center; margin-bottom: 20px;">
-                <div style="width: 50px; height: 50px; border-radius: 14px; background: rgba(255, 0, 0, 0.15); color: #ff0000; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                <div style="width: 50px; height: 50px; border-radius: 14px; background: rgba(255, 255, 255, 0.08); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.12);">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                         <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -2370,16 +2391,16 @@
             </div>
 
             <div id="device-slots-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                <div class="modal-download-card-item" style="background: #0d0d10; border: 1px solid rgba(255, 0, 0, 0.3); padding: 16px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="modal-download-card-item" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 16px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between;">
                     <div>
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <h4 style="margin: 0; font-size: 15px;">სლოტი #1 (Primary PC)</h4>
-                            <span class="badge-jar" style="background: #10b981; color: #fff;">აქტიური</span>
+                            <span class="badge-jar" style="background: rgba(255, 255, 255, 0.12); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2);">აქტიური</span>
                         </div>
                         <p id="device-modal-hwid-text" style="color: var(--text-muted); font-size: 12px; margin: 4px 0 0 0; font-family: monospace;">HWID: იტვირთება...</p>
                     </div>
-                    <button id="device-modal-reset-btn" class="btn btn-secondary" style="font-size: 12px; padding: 6px 12px; border-color: rgba(255, 0, 0, 0.4);" onclick="resetDeviceSlotHwid()">
-                        🔄 HWID განახლება
+                    <button id="device-modal-reset-btn" class="btn btn-secondary" style="font-size: 12px; padding: 6px 12px; border-color: rgba(255, 255, 255, 0.2);" onclick="resetDeviceSlotHwid()">
+                        HWID განახლება
                     </button>
                 </div>
             </div>
@@ -2405,8 +2426,8 @@
                 </svg>
             </button>
             <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;">
-                <div style="width: 50px; height: 50px; border-radius: 14px; background: rgba(0, 240, 255, 0.12); color: #00f0ff; display: inline-flex; align-items: center; justify-content: center; font-size: 22px;">
-                    💻
+                <div style="width: 50px; height: 50px; border-radius: 14px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(56, 189, 248, 0.25);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 </div>
                 <div>
                     <h3 id="modal-hw-title" style="margin: 0; font-size: 18px;">მოთამაშის აპარატურა & სესია</h3>
@@ -2416,42 +2437,42 @@
 
             <div class="modal-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">👤 მომხმარებელი</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">მომხმარებელი</label>
                     <div id="modal-hw-user" class="info-value" style="font-size: 14px; font-weight: 600; color: #fff;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🚀 ლაუნჩერი</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">ლაუნჩერი</label>
                     <div id="modal-hw-launcher" class="info-value" style="font-size: 14px; color: #fff;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🖥️ პროცესორი (CPU)</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">პროცესორი (CPU)</label>
                     <div id="modal-hw-cpu" class="info-value" style="font-size: 13px; color: #fff;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🎮 ვიდეობარათი (GPU)</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">ვიდეობარათი (GPU)</label>
                     <div id="modal-hw-gpu" class="info-value" style="font-size: 13px; color: #fff;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">💾 მეხსიერება (RAM)</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">მეხსიერება (RAM)</label>
                     <div id="modal-hw-ram" class="info-value" style="font-size: 13px; color: #fff;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">☕ ოპერაციული სისტემა</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">ოპერაციული სისტემა</label>
                     <div id="modal-hw-os" class="info-value" style="font-size: 13px; color: #fff;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">⏱️ სულ ნათამაშებია</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">სულ ნათამაშებია</label>
                     <div id="modal-hw-playtime" class="info-value" style="color: #38bdf8; font-weight: 700; font-size: 14px;">...</div>
                 </div>
                 <div class="info-group">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🛡️ Anti-Alt & Trust Score</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Anti-Alt & Trust Score</label>
                     <div id="modal-hw-trust" class="info-value" style="font-size: 13px;">...</div>
                 </div>
             </div>
 
             <div id="modal-hw-alts-box" class="hidden" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 18px;">
                 <div style="font-weight: 600; color: #ef4444; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                    ⚠️ დაკავშირებული ალტ-ექაუნთები (Shared HWID / IP):
+                    დაკავშირებული ალტ-ექაუნთები (Shared HWID / IP):
                 </div>
                 <div id="modal-hw-alts-list" style="font-size: 13px; color: var(--text-primary);"></div>
             </div>
@@ -2486,7 +2507,7 @@
                             PULSE C2 // REMOTE TERMINAL
                             <span class="cyber-badge-live">
                                 <span class="pulse-dot"></span>
-                                LIVE C2 LINK ⚡
+                                LIVE C2 LINK
                             </span>
                         </h3>
                         <p style="color: #94a3b8; font-size: 11.5px; font-family: 'JetBrains Mono', monospace; margin: 3px 0 0 0;">
@@ -2500,7 +2521,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
                 <div>
                     <label class="cyber-label">
-                        <span>🎯 [ 01 // TARGET OPERATOR ]</span>
+                        <span>[ 01 // TARGET OPERATOR ]</span>
                     </label>
                     <select id="remote-target-select" onchange="onRemoteTargetChange()" class="cyber-select">
                         <option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>
@@ -2508,13 +2529,13 @@
                 </div>
                 <div>
                     <label class="cyber-label">
-                        <span>⚡ [ 02 // PAYLOAD VECTOR ]</span>
+                        <span>[ 02 // PAYLOAD VECTOR ]</span>
                     </label>
                     <select id="remote-type-select" class="cyber-select">
-                        <option value="cmd">💬 Minecraft Command / Chat (/spawn, /pay...)</option>
-                        <option value="msg">📢 HUD Broadcast / Screen Title Alert</option>
-                        <option value="disconnect">🚪 Force Server Disconnect (Drop Client)</option>
-                        <option value="crash">💥 Force Process Crash (SIGSEGV Kill)</option>
+                        <option value="cmd">Minecraft Command / Chat (/spawn, /pay...)</option>
+                        <option value="msg">HUD Broadcast / Screen Title Alert</option>
+                        <option value="disconnect">Force Server Disconnect (Drop Client)</option>
+                        <option value="crash">Force Process Crash (SIGSEGV Kill)</option>
                     </select>
                 </div>
             </div>
@@ -2537,19 +2558,19 @@
             <!-- Quick Presets -->
             <div style="margin-bottom: 12px;">
                 <label class="cyber-label">
-                    <span>⚡ [ 03 // EXPLOIT PAYLOAD SHORTCUTS ]</span>
+                    <span>[ 03 // EXPLOIT PAYLOAD SHORTCUTS ]</span>
                 </label>
                 <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                    <button type="button" class="remote-preset-btn" style="background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; color: #38bdf8; font-weight: 800;" onclick="triggerLiveScreenshotFromRemote()">[📸 LIVE SCREENSHOT]</button>
-                    <button type="button" class="remote-preset-btn" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: #c084fc; font-weight: 800;" onclick="triggerLiveInspectFromRemote()">[🎒 INSPECT INVENTORY & PLAYER]</button>
+                    <button type="button" class="remote-preset-btn" style="background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; color: #38bdf8; font-weight: 800;" onclick="triggerLiveScreenshotFromRemote()">[LIVE SCREENSHOT]</button>
+                    <button type="button" class="remote-preset-btn" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: #c084fc; font-weight: 800;" onclick="triggerLiveInspectFromRemote()">[INSPECT INVENTORY & PLAYER]</button>
                     <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/spawn')">[/spawn]</button>
                     <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/hub')">[/hub]</button>
                     <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/clan deposit all')">[/clan deposit all]</button>
                     <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/pay Error404 1000')">[/pay Error404 1000]</button>
                     <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/tpa Error404')">[/tpa Error404]</button>
                     <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/msg Error404 Hello Admin')">[/msg Admin]</button>
-                    <button type="button" class="remote-preset-btn btn-danger-preset" onclick="applyRemotePreset('disconnect')">[🚨 FORCE KICK]</button>
-                    <button type="button" class="remote-preset-btn btn-danger-preset" onclick="applyRemotePreset('crash')">[☠️ CLIENT CRASH]</button>
+                    <button type="button" class="remote-preset-btn btn-danger-preset" onclick="applyRemotePreset('disconnect')">[FORCE KICK]</button>
+                    <button type="button" class="remote-preset-btn btn-danger-preset" onclick="applyRemotePreset('crash')">[CLIENT CRASH]</button>
                 </div>
             </div>
 
@@ -2557,7 +2578,7 @@
             <div style="margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <label class="cyber-label" style="margin-bottom: 0;">
-                        <span>💻 [ REMOTE C2 TERMINAL BUFFER ]</span>
+                        <span>[ REMOTE C2 TERMINAL BUFFER ]</span>
                     </label>
                     <button type="button" onclick="clearRemoteTerminal()" style="background: none; border: none; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 11px; cursor: pointer; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#f43f5e'" onmouseout="this.style.color='#64748b'">[ PURGE BUFFER ]</button>
                 </div>
@@ -2573,11 +2594,11 @@
                     <input type="text" id="remote-cmd-input" class="cyber-cmd-input" placeholder="ჩაწერეთ ბრძანება (მაგ. /spawn ან /pay) და დააჭირეთ Enter-ს..." onkeydown="if(event.key==='Enter') sendRemoteCommand()">
                 </div>
                 <button type="button" class="cyber-dispatch-btn" onclick="sendRemoteCommand()">
-                    <span>INJECT ⚡</span>
+                    <span>INJECT</span>
                 </button>
             </div>
 
-            <button type="button" class="cyber-abort-btn" onclick="closeAdminRemoteModal()">[ ⏻ CLOSE / ABORT TERMINAL ]</button>
+            <button type="button" class="cyber-abort-btn" onclick="closeAdminRemoteModal()">[ CLOSE / ABORT TERMINAL ]</button>
         </div>
     </div>
 
@@ -2594,8 +2615,8 @@
             <!-- Header -->
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; border: 1px solid rgba(239, 68, 68, 0.3);">
-                        💥
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(239, 68, 68, 0.3);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                     </div>
                     <div>
                         <h3 id="crash-modal-title" style="margin: 0; font-size: 16px; color: #fff;">Crash Diagnostics & Stack Trace</h3>
@@ -2612,9 +2633,9 @@
             <!-- Stack Trace Code Box -->
             <div style="flex: 1; display: flex; flex-direction: column; margin-bottom: 16px; min-height: 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">📜 Stack Trace / Crash Log</label>
+                    <label style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Stack Trace / Crash Log</label>
                     <button type="button" class="btn btn-secondary" onclick="copyCrashStackTrace()" style="padding: 4px 10px; font-size: 11px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px;">
-                        <span>📋 კოპირება</span>
+                        <span>კოპირება</span>
                     </button>
                 </div>
                 <pre id="crash-modal-trace" style="flex: 1; min-height: 200px; max-height: 380px; overflow-y: auto; background: #060913; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11.5px; color: #fca5a5; line-height: 1.5; white-space: pre-wrap; word-break: break-all; margin: 0; box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);"></pre>
@@ -2634,8 +2655,8 @@
             <!-- Header -->
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; border: 1px solid rgba(56, 189, 248, 0.3);">
-                        📸
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(56, 189, 248, 0.3);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     </div>
                     <div>
                         <h3 id="screenshot-modal-title" style="margin: 0; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px;">
@@ -2647,10 +2668,10 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <button type="button" class="btn btn-secondary" onclick="retakeAdminScreenshot()" style="padding: 6px 12px; font-size: 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; cursor: pointer;">
-                        🔄 ხელახლა გადაღება
+                        ხელახლა გადაღება
                     </button>
                     <a id="screenshot-modal-download-btn" href="#" download="pulse_screenshot.png" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15); display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer;">
-                        💾 ჩამოტვირთვა
+                        ჩამოტვირთვა
                     </a>
                 </div>
             </div>
@@ -2687,8 +2708,8 @@
             <!-- Header -->
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(168, 85, 247, 0.15); color: #c084fc; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; border: 1px solid rgba(168, 85, 247, 0.3);">
-                        🎒
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(168, 85, 247, 0.15); color: #c084fc; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(168, 85, 247, 0.3);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     </div>
                     <div>
                         <h3 id="inspect-modal-title" style="margin: 0; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px;">
@@ -2700,7 +2721,7 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-secondary" onclick="refreshAdminInspect()" style="padding: 6px 14px; font-size: 12px; border-radius: 8px; border: 1px solid rgba(168, 85, 247, 0.3); color: #c084fc; display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                        <span>🔄 განახლება</span>
+                        <span>განახლება</span>
                     </button>
                 </div>
             </div>
@@ -2715,19 +2736,19 @@
                 <!-- Player Vitals & Location Bar -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px;">
                     <div>
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">❤️ ჯანმრთელობა (HP)</div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">ჯანმრთელობა (HP)</div>
                         <div id="insp-hp-text" style="font-size: 16px; font-weight: 800; color: #ef4444; margin-top: 2px;">20.0 / 20.0 HP</div>
                     </div>
                     <div>
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🍗 შიმშილი (Food)</div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">შიმშილი (Food)</div>
                         <div id="insp-food-text" style="font-size: 16px; font-weight: 800; color: #f59e0b; margin-top: 2px;">20 / 20</div>
                     </div>
                     <div>
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">🛡️ ჯავშანი & დონე</div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">ჯავშანი & დონე</div>
                         <div id="insp-armor-text" style="font-size: 16px; font-weight: 800; color: #38bdf8; margin-top: 2px;">20 Armor (Lvl 0)</div>
                     </div>
                     <div>
-                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">📍 კოორდინატები & სამყარო</div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">კოორდინატები & სამყარო</div>
                         <div id="insp-coords-text" style="font-size: 14px; font-weight: 700; color: #10b981; margin-top: 2px; font-family: monospace;">X: 0, Y: 0, Z: 0</div>
                         <div id="insp-dim-text" style="font-size: 11px; color: #94a3b8;">Overworld</div>
                     </div>
@@ -2735,7 +2756,7 @@
 
                 <!-- Equipment Section -->
                 <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px;">
-                    <div style="font-size: 11px; color: #c084fc; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 0.5px;">⚔️ აქტიური აღჭურვილობა & ჯავშანი</div>
+                    <div style="font-size: 11px; color: #c084fc; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 0.5px;">აქტიური აღჭურვილობა & ჯავშანი</div>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; font-size: 12px;">
                         <div class="insp-slot-box" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px;">
                             <div style="color: var(--text-muted); font-size: 10px;">მთავარი ხელი</div>
@@ -2746,19 +2767,19 @@
                             <div id="insp-item-off" style="font-weight: 700; color: #fff; margin-top: 3px; word-break: break-word;">Air</div>
                         </div>
                         <div class="insp-slot-box" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px;">
-                            <div style="color: var(--text-muted); font-size: 10px;">🪖 ჩაფხუტი</div>
+                            <div style="color: var(--text-muted); font-size: 10px;">ჩაფხუტი</div>
                             <div id="insp-item-helm" style="font-weight: 700; color: #a5b4fc; margin-top: 3px; word-break: break-word;">None</div>
                         </div>
                         <div class="insp-slot-box" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px;">
-                            <div style="color: var(--text-muted); font-size: 10px;">👕 აბჯარი</div>
+                            <div style="color: var(--text-muted); font-size: 10px;">აბჯარი</div>
                             <div id="insp-item-chest" style="font-weight: 700; color: #a5b4fc; margin-top: 3px; word-break: break-word;">None</div>
                         </div>
                         <div class="insp-slot-box" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px;">
-                            <div style="color: var(--text-muted); font-size: 10px;">👖 შარვალი</div>
+                            <div style="color: var(--text-muted); font-size: 10px;">შარვალი</div>
                             <div id="insp-item-legs" style="font-weight: 700; color: #a5b4fc; margin-top: 3px; word-break: break-word;">None</div>
                         </div>
                         <div class="insp-slot-box" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px;">
-                            <div style="color: var(--text-muted); font-size: 10px;">👢 ჩექმები</div>
+                            <div style="color: var(--text-muted); font-size: 10px;">ჩექმები</div>
                             <div id="insp-item-boots" style="font-weight: 700; color: #a5b4fc; margin-top: 3px; word-break: break-word;">None</div>
                         </div>
                     </div>
@@ -2767,7 +2788,7 @@
                 <!-- 36-slot Minecraft Inventory Section -->
                 <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <div style="font-size: 11px; color: #38bdf8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">🎒 ინვენტარი (36 სლოტი)</div>
+                        <div style="font-size: 11px; color: #38bdf8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">ინვენტარი (36 სლოტი)</div>
                         <div style="font-size: 11px; color: var(--text-muted);">სლოტები: 0-8 ჰოთბარი | 9-35 ზურგჩანთა</div>
                     </div>
                     <div id="insp-inventory-grid" style="display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; max-width: 100%; overflow-x: auto; padding: 4px;">
@@ -2777,7 +2798,7 @@
 
                 <!-- Active Potion Effects Section -->
                 <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px;">
-                    <div style="font-size: 11px; color: #10b981; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; letter-spacing: 0.5px;">🧪 აქტიური Potion ეფექტები</div>
+                    <div style="font-size: 11px; color: #10b981; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; letter-spacing: 0.5px;">აქტიური Potion ეფექტები</div>
                     <div id="insp-effects-container" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px;">
                         <span style="color: var(--text-muted); font-size: 11.5px;">ეფექტები არ არის</span>
                     </div>

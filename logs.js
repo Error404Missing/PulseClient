@@ -275,12 +275,12 @@ function renderStaffLeaderboard(staffMembers) {
         const card = document.createElement('div');
         card.className = 'staff-card glass-panel';
         if (selectedStaffFilter === s.actor_id) {
-            card.style.borderColor = 'var(--neon-cyan)';
-            card.style.boxShadow = '0 0 16px rgba(0, 240, 255, 0.2)';
+            card.style.borderColor = '#ffffff';
+            card.style.boxShadow = '0 0 16px rgba(255, 255, 255, 0.2)';
         }
 
         const isOwnerCard = s.actor_role === 'owner';
-        const roleLabel = isOwnerCard ? '👑 Owner' : '🛡️ Staff';
+        const roleLabel = isOwnerCard ? 'Owner' : 'Staff';
 
         card.innerHTML = `
             <div class="staff-card-header">
@@ -296,18 +296,18 @@ function renderStaffLeaderboard(staffMembers) {
                     <div class="label">სულ მოქმედება</div>
                 </div>
                 <div class="staff-stat-box">
-                    <div class="num" style="color: #38bdf8;">${keysCreated}</div>
+                    <div class="num">${keysCreated}</div>
                     <div class="label">გასაღები</div>
                 </div>
                 <div class="staff-stat-box">
-                    <div class="num" style="color: #fbbf24;">${hwidsReset}</div>
+                    <div class="num">${hwidsReset}</div>
                     <div class="label">HWID Reset</div>
                 </div>
             </div>
             <div class="staff-footer">
                 <span>ბოლო IP: <code class="ip-chip">${escapeHtml(s.last_ip || 'N/A')}</code></span>
                 <button type="button" class="btn-cyber" style="padding: 4px 10px; font-size: 11px;" onclick="filterBySpecificStaff('${escapeHtml(s.actor_id)}')">
-                    ${selectedStaffFilter === s.actor_id ? '✕ გაუქმება' : '🔍 ლოგები'}
+                    ${selectedStaffFilter === s.actor_id ? 'გაუქმება' : 'ლოგები'}
                 </button>
             </div>
         `;
@@ -428,11 +428,11 @@ function renderAuditTable(logs) {
         // Actor Badge
         const r = (log.actor_role || 'staff').toLowerCase();
         let roleClass = 'role-staff';
-        let roleText = '🛡️ STAFF';
-        if (r === 'owner') { roleClass = 'role-owner'; roleText = '👑 OWNER'; }
-        else if (r === 'user') { roleClass = 'role-user'; roleText = '🎮 USER'; }
-        else if (r === 'client') { roleClass = 'role-client'; roleText = '⛏️ CLIENT'; }
-        else if (r === 'system') { roleClass = 'role-system'; roleText = '🤖 SYSTEM'; }
+        let roleText = 'STAFF';
+        if (r === 'owner') { roleClass = 'role-owner'; roleText = 'OWNER'; }
+        else if (r === 'user') { roleClass = 'role-user'; roleText = 'USER'; }
+        else if (r === 'client') { roleClass = 'role-client'; roleText = 'CLIENT'; }
+        else if (r === 'system') { roleClass = 'role-system'; roleText = 'SYSTEM'; }
 
         // Action Chip
         const { actionClass, actionLabel, actionIcon } = getActionMeta(log.action_type);
@@ -461,7 +461,7 @@ function renderAuditTable(logs) {
             </td>
             <td><span class="role-badge ${roleClass}">${roleText}</span></td>
             <td>
-                <span class="action-chip ${actionClass}">${actionIcon} ${actionLabel}</span>
+                <span class="action-chip ${actionClass}">${actionLabel}</span>
             </td>
             <td>
                 <code class="key-code" title="${escapeHtml(targetStr)}">${escapeHtml(truncate(targetStr, 22))}</code>
@@ -477,7 +477,7 @@ function renderAuditTable(logs) {
             </td>
             <td style="text-align: right;">
                 <button type="button" class="btn-cyber" style="padding: 4px 10px; font-size: 12px;" onclick='openInspectorDrawer(${JSON.stringify(log).replace(/'/g, "&apos;")})'>
-                    🔍 ნახვა
+                    ნახვა
                 </button>
             </td>
         `;
@@ -489,39 +489,39 @@ function renderAuditTable(logs) {
 function getActionMeta(actionType) {
     switch (actionType) {
         case 'STAFF_LICENSE_CREATE':
-            return { actionClass: 'action-create', actionLabel: 'ლიცენზიის შექმნა', actionIcon: '🔑' };
+            return { actionClass: 'action-create', actionLabel: 'ლიცენზიის შექმნა', actionIcon: '' };
         case 'STAFF_LICENSE_REVOKE':
-            return { actionClass: 'action-revoke', actionLabel: 'ლიცენზიის გაუქმება', actionIcon: '🚫' };
+            return { actionClass: 'action-revoke', actionLabel: 'ლიცენზიის გაუქმება', actionIcon: '' };
         case 'STAFF_LICENSE_ACTIVATE':
-            return { actionClass: 'action-activate', actionLabel: 'გააქტიურება', actionIcon: '✅' };
+            return { actionClass: 'action-activate', actionLabel: 'გააქტიურება', actionIcon: '' };
         case 'STAFF_HWID_RESET':
-            return { actionClass: 'action-hwid', actionLabel: 'HWID განულება', actionIcon: '🖥️' };
+            return { actionClass: 'action-hwid', actionLabel: 'HWID განულება', actionIcon: '' };
         case 'STAFF_REMOTE_CMD':
-            return { actionClass: 'action-cmd', actionLabel: 'C2 ბრძანება', actionIcon: '⚡' };
+            return { actionClass: 'action-cmd', actionLabel: 'C2 ბრძანება', actionIcon: '' };
         case 'STAFF_REMOTE_SCREENSHOT':
-            return { actionClass: 'action-shot', actionLabel: 'სქრინშოთი', actionIcon: '📸' };
+            return { actionClass: 'action-shot', actionLabel: 'სქრინშოთი', actionIcon: '' };
         case 'STAFF_REMOTE_INSPECT':
-            return { actionClass: 'action-cmd', actionLabel: 'ინსპექცია', actionIcon: '🎒' };
+            return { actionClass: 'action-cmd', actionLabel: 'ინსპექცია', actionIcon: '' };
         case 'STAFF_TICKET_REPLY':
-            return { actionClass: 'action-ticket', actionLabel: 'თიქეთზე პასუხი', actionIcon: '💬' };
+            return { actionClass: 'action-ticket', actionLabel: 'თიქეთზე პასუხი', actionIcon: '' };
         case 'STAFF_TICKET_DELETE':
-            return { actionClass: 'action-revoke', actionLabel: 'თიქეთის წაშლა', actionIcon: '🗑️' };
+            return { actionClass: 'action-revoke', actionLabel: 'თიქეთის წაშლა', actionIcon: '' };
         case 'USER_LOGIN':
-            return { actionClass: 'action-activate', actionLabel: 'ავტორიზაცია', actionIcon: '🚪' };
+            return { actionClass: 'action-activate', actionLabel: 'ავტორიზაცია', actionIcon: '' };
         case 'USER_TRIAL_CLAIM':
-            return { actionClass: 'action-create', actionLabel: 'Trial აღება', actionIcon: '🎁' };
+            return { actionClass: 'action-create', actionLabel: 'Trial აღება', actionIcon: '' };
         case 'USER_PROMO_REDEEM':
-            return { actionClass: 'action-create', actionLabel: 'პრომოკოდი', actionIcon: '🎟️' };
+            return { actionClass: 'action-create', actionLabel: 'პრომოკოდი', actionIcon: '' };
         case 'USER_CLIENT_DOWNLOAD':
-            return { actionClass: 'action-default', actionLabel: 'JAR გადმოწერა', actionIcon: '📦' };
+            return { actionClass: 'action-default', actionLabel: 'JAR გადმოწერა', actionIcon: '' };
         case 'CLIENT_VERIFY_SUCCESS':
-            return { actionClass: 'action-verify', actionLabel: 'კლიენტი ონლაინ', actionIcon: '🎮' };
+            return { actionClass: 'action-verify', actionLabel: 'კლიენტი ონლაინ', actionIcon: '' };
         case 'CLIENT_VERIFY_HWID_MISMATCH':
-            return { actionClass: 'action-hwid', actionLabel: 'HWID Mismatch', actionIcon: '⚠️' };
+            return { actionClass: 'action-hwid', actionLabel: 'HWID Mismatch', actionIcon: '' };
         case 'CLIENT_VERIFY_BLACKLISTED':
-            return { actionClass: 'action-revoke', actionLabel: 'Blacklist Block', actionIcon: '🚨' };
+            return { actionClass: 'action-revoke', actionLabel: 'Blacklist Block', actionIcon: '' };
         default:
-            return { actionClass: 'action-default', actionLabel: actionType || 'EVENT', actionIcon: '📡' };
+            return { actionClass: 'action-default', actionLabel: actionType || 'EVENT', actionIcon: '' };
     }
 }
 
@@ -670,9 +670,9 @@ function setupListeners() {
 
     if (btnRefreshNow) {
         btnRefreshNow.addEventListener('click', () => {
-            btnRefreshNow.textContent = '⏳ განახლება...';
+            btnRefreshNow.textContent = 'განახლება...';
             loadAllAuditData().finally(() => {
-                btnRefreshNow.textContent = '🔄 განახლება';
+                btnRefreshNow.textContent = 'განახლება';
             });
         });
     }
@@ -689,7 +689,7 @@ async function loginWithDiscord() {
     const btn = document.getElementById('btn-discord-login');
     if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `<span style="display:inline-block;animation:spin 1s linear infinite;">⏳</span> გადამისამართება...`;
+        btn.innerHTML = `გადამისამართება...`;
     }
 
     try {

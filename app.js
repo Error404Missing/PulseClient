@@ -495,7 +495,7 @@ function handleCryptoPaymentSuccess(data) {
         successKey.value = data.license_key;
     }
 
-    showBanner("🎉 გადახდა წარმატებით დადასტურდა! ლიცენზია შეიქმნა.", "success");
+    showBanner("გადახდა წარმატებით დადასტურდა! ლიცენზია შეიქმნა.", "success");
     if (typeof fetchUserLicenses === 'function') {
         fetchUserLicenses();
     }
@@ -508,7 +508,7 @@ function copyCryptoAddress(btn) {
         if (btn) {
             const orig = btn.innerHTML;
             btn.classList.add('copied');
-            btn.innerHTML = `<span>დაკოპირდა! ✅</span>`;
+            btn.innerHTML = `<span>დაკოპირდა!</span>`;
             setTimeout(() => {
                 btn.classList.remove('copied');
                 btn.innerHTML = orig;
@@ -525,7 +525,7 @@ function copyCryptoAmount(btn) {
         if (btn) {
             const orig = btn.innerHTML;
             btn.classList.add('copied');
-            btn.innerHTML = `<span>დაკოპირდა! ✅</span>`;
+            btn.innerHTML = `<span>დაკოპირდა!</span>`;
             setTimeout(() => {
                 btn.classList.remove('copied');
                 btn.innerHTML = orig;
@@ -542,7 +542,7 @@ function copyCryptoSuccessKey(btn) {
         if (btn) {
             const orig = btn.innerHTML;
             btn.classList.add('copied');
-            btn.innerHTML = `<span>დაკოპირდა! ✅</span>`;
+            btn.innerHTML = `<span>დაკოპირდა!</span>`;
             setTimeout(() => {
                 btn.classList.remove('copied');
                 btn.innerHTML = orig;
@@ -1117,6 +1117,8 @@ async function handleUserSignIn(user) {
     // Update Nav
     navLoginBtn.classList.add('hidden');
     navUserProfile.classList.remove('hidden');
+    const navDashLink = document.getElementById('nav-dashboard-link');
+    if (navDashLink) navDashLink.classList.remove('hidden');
     if (navAvatar) {
         navAvatar.setAttribute('data-discord-id', discordId || '');
         navAvatar.src = avatar;
@@ -1179,9 +1181,9 @@ async function handleUserSignIn(user) {
         `მომხმარებელმა **${auditUser}** წარმატებით გაიარა Discord ავტორიზაცია.`,
         0x10b981,
         [
-            { name: "👤 მომხმარებელი", value: auditUser, inline: true },
-            { name: "🆔 Discord ID", value: String(auditDiscordId), inline: true },
-            { name: "👑 როლი", value: isAdmin() ? "Admin / Owner ⚡" : "User 🎮", inline: true }
+            { name: "მომხმარებელი", value: auditUser, inline: true },
+            { name: "Discord ID", value: String(auditDiscordId), inline: true },
+            { name: "როლი", value: isAdmin() ? "Admin / Owner" : "User", inline: true }
         ]
     );
 
@@ -1239,6 +1241,8 @@ function handleUserSignOut() {
     // Update Nav
     navLoginBtn.classList.remove('hidden');
     navUserProfile.classList.add('hidden');
+    const navDashLink = document.getElementById('nav-dashboard-link');
+    if (navDashLink) navDashLink.classList.add('hidden');
     if (navLinks) navLinks.classList.remove('hidden');
 
     // Show Landing page to all visitors by default
@@ -1325,7 +1329,7 @@ function formatLicenseExpiryDisplay(lic) {
     if (diffDays > 365 * 10) {
         return t("status.lifetime");
     } else if (diffDays <= 2 && diffDays > 0) {
-        return `<span style="color: #fbbf24; font-weight: 700;">${t("status.daysLeft", { n: diffDays })} ⚠️</span>`;
+        return `<span style="color: #fbbf24; font-weight: 700;">${t("status.daysLeft", { n: diffDays })}</span>`;
     } else {
         return t("status.daysLeft", { n: diffDays });
     }
@@ -1495,19 +1499,19 @@ function updateDailyStreakUI(licenses) {
     if (maxStreak > 0) {
         streakDaysEl.textContent = `${maxStreak} დღიანი სტრიქი`;
         if (isActive) {
-            streakBadgeEl.textContent = 'აქტიური 🔥';
+            streakBadgeEl.textContent = 'აქტიური';
             streakBadgeEl.style.background = 'rgba(249, 115, 22, 0.2)';
             streakBadgeEl.style.color = '#fdba74';
             streakBadgeEl.style.borderColor = 'rgba(249, 115, 22, 0.4)';
         } else {
-            streakBadgeEl.textContent = 'შეწყდა ⚠️';
+            streakBadgeEl.textContent = 'შეწყდა';
             streakBadgeEl.style.background = 'rgba(239, 68, 68, 0.15)';
             streakBadgeEl.style.color = '#fca5a5';
             streakBadgeEl.style.borderColor = 'rgba(239, 68, 68, 0.3)';
         }
     } else {
         streakDaysEl.textContent = '0 დღე';
-        streakBadgeEl.textContent = 'დაიწყე დღეს ✨';
+        streakBadgeEl.textContent = 'დაიწყე დღეს';
         streakBadgeEl.style.background = 'rgba(59, 130, 246, 0.15)';
         streakBadgeEl.style.color = '#93c5fd';
         streakBadgeEl.style.borderColor = 'rgba(59, 130, 246, 0.3)';
@@ -1534,9 +1538,9 @@ function updateReferralRedeemUI(hasUsedReferral) {
     if (hasUsedReferral) {
         codeInput.value = '';
         codeInput.disabled = true;
-        codeInput.placeholder = "თქვენ უკვე გამოიყენეთ რეფერალური კოდი (1/1) ✅";
+        codeInput.placeholder = "თქვენ უკვე გამოიყენეთ რეფერალური კოდი (1/1)";
         submitBtn.disabled = true;
-        submitBtn.textContent = "გამოყენებულია ✅";
+        submitBtn.textContent = "გამოყენებულია";
         submitBtn.style.opacity = "0.5";
         submitBtn.style.cursor = "not-allowed";
     } else {
@@ -1662,7 +1666,7 @@ function showFloatingToast(message, type = "info", iconSvg = '') {
     toast.className = `cyber-floating-toast toast-${type}`;
     toast.innerHTML = `
         <div class="toast-glow-pill"></div>
-        <div class="toast-icon">${iconSvg || '🔔'}</div>
+        <div class="toast-icon">${iconSvg || ''}</div>
         <div class="toast-body">${message}</div>
     `;
     container.appendChild(toast);
@@ -2168,42 +2172,42 @@ function renderActiveSessions(sessions) {
         const launcherName = parts.length > 1 ? parts[1] : 'Fabric';
         
         let launcherClass = 'launcher-default';
-        let launcherIcon = '🎮';
+        let launcherIcon = '';
         const lnLower = launcherName.toLowerCase();
         let launcherStyle = 'background: rgba(147, 51, 234, 0.12) !important; border: 1px solid rgba(147, 51, 234, 0.28) !important; color: #c084fc !important;';
         if (lnLower.includes('tlauncher')) {
             launcherClass = 'launcher-tlauncher';
-            launcherIcon = '🚀';
+            launcherIcon = '';
             launcherStyle = 'background: rgba(56, 189, 248, 0.12) !important; border: 1px solid rgba(56, 189, 248, 0.3) !important; color: #38bdf8 !important;';
         } else if (lnLower.includes('prism')) {
             launcherClass = 'launcher-prism';
-            launcherIcon = '⚡';
+            launcherIcon = '';
             launcherStyle = 'background: rgba(168, 85, 247, 0.12) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important;';
         } else if (lnLower.includes('modrinth')) {
             launcherClass = 'launcher-modrinth';
-            launcherIcon = '🟢';
+            launcherIcon = '';
             launcherStyle = 'background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important;';
         } else if (lnLower.includes('official')) {
             launcherClass = 'launcher-official';
-            launcherIcon = '⛏️';
+            launcherIcon = '';
             launcherStyle = 'background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important;';
         } else if (lnLower.includes('feather')) {
             launcherClass = 'launcher-feather';
-            launcherIcon = '🪶';
+            launcherIcon = '';
             launcherStyle = 'background: rgba(244, 114, 182, 0.12) !important; border: 1px solid rgba(244, 114, 182, 0.3) !important; color: #f472b6 !important;';
         }
 
         const launcherBadge = `<span class="launcher-badge ${launcherClass}" style="${launcherStyle} display: inline-flex !important; align-items: center !important; gap: 6px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">${launcherIcon} ${launcherName}</span>`;
 
         // OS / Specs icon detection
-        let osIcon = '💻';
+        let osIcon = '';
         const osLower = osClean.toLowerCase();
         if (osLower.includes('windows 11') || osLower.includes('windows 10') || osLower.includes('win')) {
-            osIcon = '🪟';
+            osIcon = 'Win';
         } else if (osLower.includes('linux')) {
-            osIcon = '🐧';
+            osIcon = 'Linux';
         } else if (osLower.includes('mac') || osLower.includes('darwin') || osLower.includes('apple')) {
-            osIcon = '🍎';
+            osIcon = 'macOS';
         }
 
         // Specs summary chip
@@ -2214,16 +2218,16 @@ function renderActiveSessions(sessions) {
 
         // Trust & Anti-Alt Badge
         const isOwnerDevice = buyer === 'sticky._.1' || buyer === 'Error404Missing';
-        let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა" style="background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">🛡️ 100%</span>`;
+        let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა" style="background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">100%</span>`;
         if (isOwnerDevice) {
-            trustBadge = `<span class="trust-badge trust-owner" title="Owner / Developer Device" style="background: rgba(234, 179, 8, 0.15) !important; border: 1px solid rgba(234, 179, 8, 0.35) !important; color: #facc15 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">👑 Owner</span>`;
+            trustBadge = `<span class="trust-badge trust-owner" title="Owner / Developer Device" style="background: rgba(234, 179, 8, 0.15) !important; border: 1px solid rgba(234, 179, 8, 0.35) !important; color: #facc15 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">Owner</span>`;
         } else if (altInfo) {
             if (altInfo.trust_score <= 20) {
                 const altNames = (altInfo.shared_hwid_alts || []).join(', ');
-                trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}" style="background: rgba(239, 68, 68, 0.15) !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">🚨 ალტი (${altInfo.shared_hwid_alts.length})</span>`;
+                trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}" style="background: rgba(239, 68, 68, 0.15) !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">ალტი (${altInfo.shared_hwid_alts.length})</span>`;
             } else if (altInfo.trust_score <= 70) {
                 const ipNames = (altInfo.shared_ip_alts || []).join(', ');
-                trustBadge = `<span class="trust-badge trust-warn" title="საერთო IP: ${ipNames}" style="background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">⚠️ საერთო IP (${altInfo.shared_ip_alts.length})</span>`;
+                trustBadge = `<span class="trust-badge trust-warn" title="საერთო IP: ${ipNames}" style="background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">საერთო IP (${altInfo.shared_ip_alts.length})</span>`;
             }
         }
 
@@ -2241,9 +2245,9 @@ function renderActiveSessions(sessions) {
 
         let serverBadge = '';
         if (serverName.toLowerCase() === 'singleplayer') {
-            serverBadge = `<span class="server-badge singleplayer" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">🎮 Singleplayer</span>`;
+            serverBadge = `<span class="server-badge singleplayer" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">Singleplayer</span>`;
         } else if (serverName.toLowerCase() === 'main menu' || serverName.toLowerCase() === 'menu') {
-            serverBadge = `<span class="server-badge menu" style="background: rgba(107, 114, 128, 0.15); color: #9ca3af; border: 1px solid rgba(107, 114, 128, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">🏠 Main Menu</span>`;
+            serverBadge = `<span class="server-badge menu" style="background: rgba(107, 114, 128, 0.15); color: #9ca3af; border: 1px solid rgba(107, 114, 128, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">Main Menu</span>`;
         } else {
             serverBadge = `<span class="server-badge multiplayer" style="background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>${serverName}</span>`;
         }
@@ -2254,7 +2258,7 @@ function renderActiveSessions(sessions) {
             const userIp = session.ip_address && session.ip_address !== 'Hidden' && session.ip_address !== 'Unknown' ? session.ip_address : 'Hidden';
             userIpCell = `<code style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: #a5b4fc; white-space: nowrap;">${userIp}</code>`;
         } else {
-            userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">🔒 დაცულია</span>`;
+            userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">დაცულია</span>`;
         }
 
         // Playtime Display (Session + Lifetime)
@@ -2280,16 +2284,16 @@ function renderActiveSessions(sessions) {
             <td>${userIpCell}</td>
             <td style="text-align: right; white-space: nowrap;">
                 <div style="display: inline-flex; align-items: center; gap: 6px;">
-                    <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="⚡ C2 Remote Dispatch Terminal">
+                    <button type="button" class="btn-remote-cmd" data-id="${session.id || ''}" data-mc="${session.mc_username || ''}" data-key="${session.license_key || ''}" onclick="openAdminRemoteModal(this.getAttribute('data-id'), this.getAttribute('data-mc'), this.getAttribute('data-key'))" title="C2 Remote Dispatch Terminal">
                         <span class="c2-live-dot"></span>
                         <span class="c2-prompt-prefix">&gt;_</span>
                         <span>C2</span>
                     </button>
-                    <button type="button" class="btn-remote-cmd" style="background: rgba(56, 189, 248, 0.15) !important; border: 1px solid rgba(56, 189, 248, 0.35) !important; color: #38bdf8 !important; padding: 6px 10px !important; border-radius: 8px !important; cursor: pointer;" onclick="openAdminScreenshotModal('${session.license_key || ''}', '${session.mc_username || ''}')" title="📸 Live Game Screenshot">
-                        <span>📸</span>
+                    <button type="button" class="btn-remote-cmd" style="background: rgba(56, 189, 248, 0.15) !important; border: 1px solid rgba(56, 189, 248, 0.35) !important; color: #38bdf8 !important; padding: 6px 10px !important; border-radius: 8px !important; cursor: pointer;" onclick="openAdminScreenshotModal('${session.license_key || ''}', '${session.mc_username || ''}')" title="Live Game Screenshot">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     </button>
-                    <button type="button" class="btn-remote-cmd" style="background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.35) !important; color: #c084fc !important; padding: 6px 10px !important; border-radius: 8px !important; cursor: pointer;" onclick="openAdminInspectorModal('${session.license_key || ''}', '${session.mc_username || ''}')" title="🎒 Live Player & Inventory Inspector">
-                        <span>🎒</span>
+                    <button type="button" class="btn-remote-cmd" style="background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.35) !important; color: #c084fc !important; padding: 6px 10px !important; border-radius: 8px !important; cursor: pointer;" onclick="openAdminInspectorModal('${session.license_key || ''}', '${session.mc_username || ''}')" title="Live Player & Inventory Inspector">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
                     </button>
                 </div>
             </td>
@@ -2351,13 +2355,13 @@ function showAdminHardwareModal(sessionId) {
 
     const isOwnerDev = buyer === 'sticky._.1' || buyer === 'Error404Missing';
     if (isOwnerDev) {
-        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-owner">👑 Owner / Developer Device</span>';
+        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-owner">Owner / Developer Device</span>';
         if (altsBox) altsBox.classList.add('hidden');
     } else if (altInfo && altInfo.trust_score < 100) {
         if (trustEl) {
             trustEl.innerHTML = altInfo.trust_score <= 20
-                ? ('<span class="trust-badge trust-alt">🚨 ' + altInfo.trust_score + '% (მაღალი რისკი / ალტი)</span>')
-                : ('<span class="trust-badge trust-warn">⚠️ ' + altInfo.trust_score + '% (საერთო ქსელი / IP)</span>');
+                ? ('<span class="trust-badge trust-alt">' + altInfo.trust_score + '% (მაღალი რისკი / ალტი)</span>')
+                : ('<span class="trust-badge trust-warn">' + altInfo.trust_score + '% (საერთო ქსელი / IP)</span>');
         }
 
         const allAlts = (altInfo.shared_hwid_alts || []).concat(altInfo.shared_ip_alts || []);
@@ -2370,7 +2374,7 @@ function showAdminHardwareModal(sessionId) {
             altsBox.classList.add('hidden');
         }
     } else {
-        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-clean">🛡️ 100% (სანდო / უნიკალური)</span>';
+        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-clean">100% (სანდო / უნიკალური)</span>';
         if (altsBox) altsBox.classList.add('hidden');
     }
 
@@ -2590,11 +2594,11 @@ async function sendRemoteCommand() {
 
         const data = await res.json();
         if (res.ok && data.status === 'success') {
-            logToRemoteTerminal('SUCCESS: Command queued [ID: ' + data.command.id + ']. Dispatched to client queue! 🚀', 'success');
+            logToRemoteTerminal('SUCCESS: Command queued [ID: ' + data.command.id + ']. Dispatched to client queue! ', 'success');
             showBanner('ბრძანება წარმატებით გაიგზავნა მოთამაშესთან (@' + targetMc + ')!', 'success');
             logAuditEvent({
                 action_type: "STAFF_REMOTE_CMD",
-                title: `⚡ C2 ბრძანება (${cmdType.toUpperCase()})`,
+                title: `C2 ბრძანება (${cmdType.toUpperCase()})`, 
                 description: `Staff-მა **${adminUser}** გაუგზავნა ბრძანება მოთამაშეს **@${targetMc}**: \`${payload}\``,
                 target_id: targetKey,
                 target_name: targetMc,
@@ -2747,7 +2751,7 @@ async function requestScreenshotPayload() {
                 const loader = document.getElementById('screenshot-modal-loader');
                 if (loader) {
                     loader.innerHTML = `
-                        <div style="font-size: 28px; color: #f43f5e;">⚠️</div>
+                        <div style="font-size: 28px; color: #f43f5e;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
                         <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">მოთამაშისგან კადრი დროულად ვერ მივიღეთ.</div>
                         <div style="font-size: 11px; color: var(--text-muted);">შესაძლოა მოთამაშე გავიდა სერვერიდან ან მენიუშია.</div>
                     `;
@@ -2886,7 +2890,7 @@ async function requestInspectPayload() {
                 const loader = document.getElementById('inspect-modal-loader');
                 if (loader) {
                     loader.innerHTML = `
-                        <div style="font-size: 28px; color: #f43f5e;">⚠️</div>
+                        <div style="font-size: 28px; color: #f43f5e;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
                         <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">მოთამაშის ინსპექტირება ვერ მოხერხდა.</div>
                         <div style="font-size: 11px; color: var(--text-muted);">კლიენტმა არ უპასუხა დროულად.</div>
                     `;
@@ -2936,9 +2940,9 @@ function renderInspectDetails(data) {
     const dimEl = document.getElementById('insp-dim-text');
     if (dimEl) {
         let dimName = data.dimension || 'Overworld';
-        if (dimName.includes('nether')) dimName = '🔥 The Nether';
-        else if (dimName.includes('end')) dimName = '🔮 The End';
-        else dimName = '🌲 Overworld';
+        if (dimName.includes('nether')) dimName = 'The Nether';
+        else if (dimName.includes('end')) dimName = 'The End';
+        else dimName = 'Overworld';
         dimEl.textContent = `${dimName} • ${data.server || 'Main Menu'}`;
     }
 
@@ -3018,7 +3022,7 @@ function renderInspectDetails(data) {
                 const cleanName = (ef.name || 'Effect').replace('effect.minecraft.', '').replace('_', ' ').toUpperCase();
                 const mins = Math.floor((ef.duration_seconds || 0) / 60);
                 const secs = ((ef.duration_seconds || 0) % 60).toString().padStart(2, '0');
-                badge.innerHTML = `<span>🧪 ${cleanName} ${ef.amplifier > 0 ? (ef.amplifier + 1) : ''}</span><span style="color: #a7f3d0; font-family: monospace;">(${mins}:${secs})</span>`;
+                badge.innerHTML = `<span>${cleanName} ${ef.amplifier > 0 ? (ef.amplifier + 1) : ''}</span><span style="color: #a7f3d0; font-family: monospace;">(${mins}:${secs})</span>`;
                 effContainer.appendChild(badge);
             });
         }
@@ -3090,7 +3094,7 @@ function renderAdminCrashReports() {
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 32px;">
-                    <div style="font-size: 24px; margin-bottom: 8px;">🛡️</div>
+                    <div style="font-size: 24px; margin-bottom: 8px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                     <div>კრაშ რეპორტები ვერ მოიძებნა</div>
                 </td>
             </tr>
@@ -3134,7 +3138,7 @@ function renderAdminCrashReports() {
             </td>
             <td style="text-align: right;">
                 <button type="button" class="btn-remote-cmd" style="background: rgba(239, 68, 68, 0.12) !important; border-color: rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important;" data-id="${report.id}" onclick="openAdminCrashDetailModal(this.getAttribute('data-id'))">
-                    📜 Stack Trace
+                    Stack Trace
                 </button>
             </td>
         `;
@@ -3163,11 +3167,11 @@ function openAdminCrashDetailModal(reportId) {
 
     if (metaEl) {
         metaEl.innerHTML = `
-            <span class="badge-jar" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; padding: 4px 10px;">👤 ${(report.mc_username || 'Unknown')}</span>
-            <span class="badge-jar" style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #10b981; padding: 4px 10px;">🔑 ${(report.license_key || 'No Key')}</span>
-            <span class="badge-jar" style="background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; padding: 4px 10px;">💻 ${(report.os_name || 'OS Unknown')}</span>
-            <span class="badge-jar" style="background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #facc15; padding: 4px 10px;">⚡ Version: ${(report.mod_version || 'v1.0.6')}</span>
-            <span class="badge-jar" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; padding: 4px 10px;">🌐 IP: ${(report.ip_address || 'Unknown')}</span>
+            <span class="badge-jar" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; padding: 4px 10px;">${(report.mc_username || 'Unknown')}</span>
+            <span class="badge-jar" style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #10b981; padding: 4px 10px;">${(report.license_key || 'No Key')}</span>
+            <span class="badge-jar" style="background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; padding: 4px 10px;">${(report.os_name || 'OS Unknown')}</span>
+            <span class="badge-jar" style="background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #facc15; padding: 4px 10px;">Version: ${(report.mod_version || 'v1.0.6')}</span>
+            <span class="badge-jar" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; padding: 4px 10px;">IP: ${(report.ip_address || 'Unknown')}</span>
         `;
     }
 
@@ -3296,7 +3300,7 @@ async function fetchAdminSupportTickets(showFeedback = false) {
         if (hasNew) {
             playSupportChime();
             if (typeof showToast === 'function') {
-                showToast("💬 ახალი შეტყობინება მოთამაშისგან!", "info");
+                showToast("ახალი შეტყობინება მოთამაშისგან!", "info");
             }
         }
         adminSupportFirstLoad = false;
@@ -3378,12 +3382,12 @@ function renderAdminSupportTickets(force = false) {
 
     if (filtered.length === 0) {
         let emptyMsg = "შემოსული შეტყობინებები არ არის";
-        if (supportFilterTab === 'open') emptyMsg = "აქტიური შეტყობინებები არ არის (ყველაფერი გაპასუხებულია! 🎉)";
+        if (supportFilterTab === 'open') emptyMsg = "აქტიური შეტყობინებები არ არის (ყველაფერი გაპასუხებულია!)";
         else if (supportFilterTab === 'resolved') emptyMsg = "გაპასუხებული შეტყობინებების ისტორია ცარიელია";
 
         container.innerHTML = `
             <div style="text-align: center; color: var(--text-muted); padding: 42px 20px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 12px; background: rgba(0,0,0,0.2);">
-                <div style="font-size: 24px; margin-bottom: 8px;">💬</div>
+                <div style="font-size: 24px; margin-bottom: 8px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                 <div style="font-size: 13.5px; font-weight: 600;">${emptyMsg}</div>
                 <div style="font-size: 12px; color: #64748b; margin-top: 4px;">როდესაც მოთამაშე თამაშში ჩაწერს <code>/pulse help &lt;ტექსტი&gt;</code>, შეტყობინება მომენტალურად გამოჩნდება აქ.</div>
             </div>
@@ -3418,11 +3422,11 @@ function renderAdminSupportTickets(force = false) {
 
         let statusBadge = '';
         if (isOpen) {
-            statusBadge = `<span class="badge-jar" style="background: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">● ელოდება პასუხს (OPEN)</span>`;
+            statusBadge = `<span class="badge-jar" style="background: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">ელოდება პასუხს (OPEN)</span>`;
         } else if (isReplied) {
-            statusBadge = `<span class="badge-jar" style="background: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">✓ გაპასუხებულია (REPLIED)</span>`;
+            statusBadge = `<span class="badge-jar" style="background: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">გაპასუხებულია (REPLIED)</span>`;
         } else {
-            statusBadge = `<span class="badge-jar" style="background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">✓ დახურულია (CLOSED)</span>`;
+            statusBadge = `<span class="badge-jar" style="background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">დახურულია (CLOSED)</span>`;
         }
 
         card.innerHTML = `
@@ -3435,7 +3439,7 @@ function renderAdminSupportTickets(force = false) {
                         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                             <strong style="font-size: 14px; color: #fff;">${mcUser}</strong>
                             <span class="badge-jar" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px;">
-                                🌐 ${t.server_name || 'Singleplayer'}
+                                ${t.server_name || 'Singleplayer'}
                             </span>
                             <code style="font-size: 11px; color: #a5b4fc; font-family: monospace;">${maskedKey}</code>
                         </div>
@@ -3449,8 +3453,8 @@ function renderAdminSupportTickets(force = false) {
                             დახურვა
                         </button>
                     ` : ''}
-                    <button type="button" class="btn btn-secondary" onclick="deleteSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #ef4444; border-color: rgba(239,68,68,0.3);" title="შეტყობინების წაშლა">
-                        🗑️
+                    <button type="button" class="btn btn-secondary" onclick="deleteSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #ef4444; border-color: rgba(239,68,68,0.3); display: inline-flex; align-items: center;" title="შეტყობინების წაშლა">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                     </button>
                 </div>
             </div>
@@ -3458,14 +3462,14 @@ function renderAdminSupportTickets(force = false) {
             <!-- Question Quote -->
             <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
                 <div style="font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: #94a3b8; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-                    <span>📩 შეტყობინება თამაშიდან (/pulse help):</span>
+                    <span>შეტყობინება თამაშიდან (/pulse help):</span>
                 </div>
                 <div style="font-size: 13.5px; color: #f1f5f9; font-weight: 600; line-height: 1.5;">${msgEscaped}</div>
             </div>
 
             ${t.reply ? `
                 <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;">
-                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">⚡ ადმინისტრატორის პასუხი (${repliedDateStr}):</div>
+                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">ადმინისტრატორის პასუხი (${repliedDateStr}):</div>
                     <div style="font-size: 13px; color: #e2e8f0;">${replyEscaped}</div>
                 </div>
             ` : ''}
@@ -3480,7 +3484,7 @@ function renderAdminSupportTickets(force = false) {
                 <button type="button" class="btn-remote-cmd" 
                         style="background: linear-gradient(135deg, #00ff9d 0%, #059669 100%) !important; color: #022c22 !important; border: 1px solid #00ff9d !important; font-weight: 800 !important; padding: 8px 16px !important; border-radius: 8px !important; white-space: nowrap !important;"
                         onclick="handleSendSupportReply('${t.id}')">
-                    SEND REPLY ⚡
+                    SEND REPLY
                 </button>
             </div>
         `;
@@ -3593,7 +3597,7 @@ async function handleSendSupportReply(ticketId) {
         const data = await res.json();
         if (data.status === "success") {
             if (typeof showToast === 'function') {
-                showToast("⚡ პასუხი გაეგზავნა მოთამაშეს ეკრანის ცენტრში!", "success");
+                showToast("პასუხი გაეგზავნა მოთამაშეს ეკრანის ცენტრში!", "success");
             }
             input.value = '';
             const t = supportTicketsMap.get(ticketId);
@@ -3622,7 +3626,7 @@ function populateSupportDirectTargets() {
     const currentVal = selectEl.value;
 
     const options = [
-        { value: "ALL", text: "📢 ყველა ონლაინ მოთამაშე", mc: "ALL", key: "ALL" }
+        { value: "ALL", text: "ყველა ონლაინ მოთამაშე", mc: "ALL", key: "ALL" }
     ];
 
     const addedKeys = new Set();
@@ -3636,7 +3640,7 @@ function populateSupportDirectTargets() {
             addedKeys.add(idKey);
             options.push({
                 value: idKey,
-                text: `👤 ${mc} (${s.mc_server || s.country || 'Online'})`,
+                text: `${mc} (${s.mc_server || s.country || 'Online'})`,
                 mc: mc,
                 key: key
             });
@@ -3652,7 +3656,7 @@ function populateSupportDirectTargets() {
             addedKeys.add(idKey);
             options.push({
                 value: idKey,
-                text: `💬 ${mc || 'Player'} (Ticket #${t.id || ''})`,
+                text: `${mc || 'Player'} (Ticket #${t.id || ''})`,
                 mc: mc || '',
                 key: key || ''
             });
@@ -3704,7 +3708,7 @@ async function sendSupportDirectMessage() {
         const data = await res.json();
         if (res.ok && data.status === 'success') {
             if (typeof showToast === 'function') {
-                showToast(`⚡ შეტყობინება გაიგზავნა მოთამაშესთან (${targetMc})!`, "success");
+                showToast(`შეტყობინება გაიგზავნა მოთამაშესთან (${targetMc})!`, "success");
             }
             inputEl.value = '';
         } else {
@@ -3732,7 +3736,7 @@ function populateMultimediaTargets() {
     const currentVal = selectEl.value;
 
     const options = [
-        { value: "ALL", text: "📢 ყველა ონლაინ მოთამაშე (Broadcast to Everyone)", mc: "ALL", key: "ALL" }
+        { value: "ALL", text: "ყველა ონლაინ მოთამაშე (Broadcast to Everyone)", mc: "ALL", key: "ALL" }
     ];
 
     const addedKeys = new Set();
@@ -3745,7 +3749,7 @@ function populateMultimediaTargets() {
             addedKeys.add(idKey);
             options.push({
                 value: idKey,
-                text: `👤 ${mc} (${s.mc_server || s.country || 'Online'})`,
+                text: `${mc} (${s.mc_server || s.country || 'Online'})`,
                 mc: mc,
                 key: key
             });
@@ -3760,7 +3764,7 @@ function populateMultimediaTargets() {
             addedKeys.add(idKey);
             options.push({
                 value: idKey,
-                text: `💬 ${mc || 'Player'}`,
+                text: `${mc || 'Player'}`,
                 mc: mc || '',
                 key: key || ''
             });
@@ -3909,13 +3913,13 @@ function updateWalkieRecordingUI(recording, sending) {
         }
         if (btnTxt) btnTxt.textContent = "RECORDING...";
         walkieRecordStartTime = Date.now();
-        if (txt) txt.textContent = "🔴 იწერება... 00:00";
+        if (txt) txt.textContent = "იწერება... 00:00";
 
         walkieRecordTimer = setInterval(() => {
             const elapsed = Math.floor((Date.now() - walkieRecordStartTime) / 1000);
             const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
             const secs = String(elapsed % 60).padStart(2, '0');
-            if (txt) txt.textContent = `🔴 იწერება... ${mins}:${secs}`;
+            if (txt) txt.textContent = `იწერება... ${mins}:${secs}`;
             if (elapsed >= 30) {
                 stopWalkieTalkieRecording();
             }
@@ -3927,7 +3931,7 @@ function updateWalkieRecordingUI(recording, sending) {
             dot.style.boxShadow = '0 0 10px #eab308';
         }
         if (btnTxt) btnTxt.textContent = "SENDING...";
-        if (txt) txt.textContent = "⚡ იგზავნება მოთამაშის ყურსასმენებში...";
+        if (txt) txt.textContent = "იგზავნება მოთამაშის ყურსასმენებში...";
     } else {
         if (btn) btn.classList.remove('recording');
         if (dot) {
@@ -3935,7 +3939,7 @@ function updateWalkieRecordingUI(recording, sending) {
             dot.style.boxShadow = 'none';
         }
         if (btnTxt) btnTxt.textContent = "HOLD TO TALK";
-        if (txt) txt.textContent = "● STANDBY (მზადაა საუბრისთვის)";
+        if (txt) txt.textContent = "STANDBY (მზადაა საუბრისთვის)";
     }
 }
 
@@ -3992,7 +3996,7 @@ async function sendWalkieVoiceClip(base64Audio) {
         const data = await res.json();
         if (res.ok && data.status === 'success') {
             if (typeof showToast === 'function') {
-                showToast(`🎙️ ხმოვანი რაცია გადაეცა მოთამაშეს (@${targetMc})!`, "success");
+                showToast(`ხმოვანი რაცია გადაეცა მოთამაშეს (@${targetMc})!`, "success");
             }
         } else {
             throw new Error(data.message || 'ვერ მოხერხდა რაციის გადაცემა');
@@ -4043,11 +4047,11 @@ async function sendAdminPlayMusic() {
         const data = await res.json();
         if (res.ok && data.status === 'success') {
             if (typeof showToast === 'function') {
-                showToast(`🎵 მუსიკა ჩაირთო (@${targetMc}): ${track}`, "success");
+                showToast(`მუსიკა ჩაირთო (@${targetMc}): ${track}`, "success");
             }
             const statusEl = document.getElementById('multimedia-music-status');
             if (statusEl) {
-                statusEl.textContent = `🎵 ახლა უკრავს: ${track} (@${targetMc})`;
+                statusEl.textContent = `ახლა უკრავს: ${track} (@${targetMc})`;
                 statusEl.classList.remove('hidden');
             }
         } else {
@@ -4079,11 +4083,11 @@ async function sendAdminStopMusic() {
         const data = await res.json();
         if (res.ok && data.status === 'success') {
             if (typeof showToast === 'function') {
-                showToast(`⏹️ მუსიკა შეჩერებულია (@${targetMc})`, "info");
+                showToast(`მუსიკა შეჩერებულია (@${targetMc})`, "info");
             }
             const statusEl = document.getElementById('multimedia-music-status');
             if (statusEl) {
-                statusEl.textContent = `⏹️ მუსიკა შეჩერებულია`;
+                statusEl.textContent = `მუსიკა შეჩერებულია`;
             }
         } else {
             throw new Error(data.message || 'შეჩერება ვერ მოხერხდა');
@@ -4390,15 +4394,15 @@ async function createLicenseFromAdmin(e) {
 
         showBanner(t("msg.keyCreated"), "success");
         sendDiscordAuditLog(
-            "🆕 ახალი ლიცენზია შეიქმნა (Admin)",
+            "ახალი ლიცენზია შეიქმნა (Admin)",
             `ადმინმა **${adminName}** შექმნა ახალი ლიცენზია მომხმარებლისთვის **${buyer}**.`,
             0x3b82f6,
             [
-                { name: "👑 ადმინი", value: adminName, inline: true },
-                { name: "👤 მყიდველი", value: buyer, inline: true },
-                { name: "📦 პროდუქტი", value: product, inline: true },
+                { name: "ადმინი", value: adminName, inline: true },
+                { name: "მყიდველი", value: buyer, inline: true },
+                { name: "პროდუქტი", value: product, inline: true },
                 { name: "გასაღები", value: key, inline: false },
-                { name: "⏰ ხანგრძლივობა", value: durationDays === null ? "♾️ Lifetime" : `${durationDays} დღე`, inline: true }
+                { name: "ხანგრძლივობა", value: durationDays === null ? "Lifetime" : `${durationDays} დღე`, inline: true }
             ]
         );
         fetchAllLicenses();
@@ -4442,11 +4446,11 @@ async function revokeLicense(key) {
         showBanner(t("msg.revokeSuccess"), "success");
         const revokerName = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Admin") : "Admin";
         sendDiscordAuditLog(
-            "🚫 ლიცენზია გაუქმებულია",
+            "ლიცენზია გაუქმებულია",
             `ადმინმა **${revokerName}** გააუქმა ლიცენზია.`,
             0xff0000,
             [
-                { name: "👑 ადმინი", value: revokerName, inline: true },
+                { name: "ადმინი", value: revokerName, inline: true },
                 { name: "გასაღები", value: key, inline: false }
             ]
         );
@@ -4478,11 +4482,11 @@ async function activateLicense(key) {
         showBanner(t("msg.activateSuccess"), "success");
         const activatorName = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Admin") : "Admin";
         sendDiscordAuditLog(
-            "✅ ლიცენზია გააქტიურებულია",
+            "ლიცენზია გააქტიურებულია",
             `ადმინმა **${activatorName}** ხელახლა გაააქტიურა ლიცენზია.`,
             0x00ff88,
             [
-                { name: "👑 ადმინი", value: activatorName, inline: true },
+                { name: "ადმინი", value: activatorName, inline: true },
                 { name: "გასაღები", value: key, inline: false }
             ]
         );
@@ -4515,7 +4519,7 @@ async function resetLicenseHwid(key) {
         const adminHwidActor = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Admin") : "Admin";
         logAuditEvent({
             action_type: "STAFF_HWID_RESET",
-            title: "🖥️ Staff-მა გაანულა HWID",
+            title: "Staff-მა გაანულა HWID",
             description: `Staff-მა **${adminHwidActor}** გაანულა მოწყობილობის HWID ლიცენზიისთვის **${key}**.`,
             target_id: key,
             severity: "warning",
@@ -4641,7 +4645,7 @@ async function claimFreeTrial() {
                 if (ipProfiles && ipProfiles.length > 0) {
                     const otherProfile = ipProfiles.find(p => p.id !== currentUser.id && p.discord_id !== String(discordId));
                     if (otherProfile) {
-                        showBanner("🚫 ამ IP მისამართიდან უფასო საცდელი ვერსია უკვე აღებულია!", "error");
+                        showBanner("ამ IP მისამართიდან უფასო საცდელი ვერსია უკვე აღებულია!", "error");
                         return;
                     }
                 }
@@ -4722,15 +4726,15 @@ async function claimFreeTrial() {
 
         showBanner(t("msg.trialSuccess"), "success");
         sendDiscordAuditLog(
-            "🎮 უფასო Trial აღებულია",
+            "უფასო Trial აღებულია",
             `მომხმარებელმა **${username}** აიღო **${trialDays} დღიანი** უფასო საცდელი ვერსია.`,
             0x10b981,
             [
-                { name: "👤 მომხმარებელი", value: username || "Unknown", inline: true },
-                { name: "🆔 Discord ID", value: String(discordId || "N/A"), inline: true },
+                { name: "მომხმარებელი", value: username || "Unknown", inline: true },
+                { name: "Discord ID", value: String(discordId || "N/A"), inline: true },
                 { name: "გასაღები", value: key, inline: false },
-                { name: "⏰ ხანგრძლივობა", value: `${trialDays} დღე`, inline: true },
-                { name: "📝 რეფერალი", value: referrerName ? `კი (${referrerName})` : "არა", inline: true }
+                { name: "ხანგრძლივობა", value: `${trialDays} დღე`, inline: true },
+                { name: "რეფერალი", value: referrerName ? `კი (${referrerName})` : "არა", inline: true }
             ]
         );
         fetchUserLicenses();
@@ -4944,7 +4948,7 @@ async function redeemReferralCode() {
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "⏳";
+    submitBtn.textContent = "...";
 
     let codeToSend = code;
     let matchedReferrer = null;
@@ -5891,9 +5895,9 @@ async function redeemPromoCode(e) {
             `მომხმარებელმა **${username}** გამოიყენა პრომოკოდი **${code}**.`,
             0xa855f7,
             [
-                { name: "👤 მომხმარებელი", value: username || "Unknown", inline: true },
-                { name: "🎟️ კოდი", value: code, inline: true },
-                { name: "⏰ დამატებული", value: `${promo.duration_days} დღე`, inline: true }
+                { name: "მომხმარებელი", value: username || "Unknown", inline: true },
+                { name: "კოდი", value: code, inline: true },
+                { name: "დამატებული", value: `${promo.duration_days} დღე`, inline: true }
             ]
         );
         promoInput.value = '';
@@ -6015,7 +6019,7 @@ async function fetchUserPromoHistory() {
             if (redList.length === 0) {
                 historyList.innerHTML = `
                     <div class="promo-history-empty">
-                        <div class="empty-icon-bubble">🎟️</div>
+                        <div class="empty-icon-bubble"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg></div>
                         <h5>ჯერ არ გაქვთ გამოყენებული პრომო კოდი</h5>
                         <p>შეიყვანეთ პრომო კოდი ზემოთ მოცემულ ველში, ან ეწვიეთ ჩვენს Discord-ს ახალი ბონუსების მისაღებად.</p>
                     </div>
@@ -6302,9 +6306,9 @@ function generatePulseAIResponse(input) {
     // 1. Greetings / Conversational
     if (hasAny(['გამარჯობა', 'სალამი', 'ზდაროვა', 'გამარჯობათ', 'hello', 'hi', 'hey', 'sup', 'yo', 'როგორ ხარ', 'როგორ ხართ'])) {
         if (isGeorgian) {
-            return "გამარჯობა! 👋 მე ვარ <strong>Pulse AI</strong>, PulseClient-ის ოფიციალური ასისტენტი. რით შემიძლია დაგეხმარო?<br><br>• კლიენტის ჩამოტვირთვა & ინსტალაცია<br>• მენიუს ღილაკები (F12 / Shift)<br>• შეძენა & ლიცენზია<br>• HWID და პრობლემების მოგვარება";
+            return "გამარჯობა! მე ვარ <strong>Pulse AI</strong>, PulseClient-ის ოფიციალური ასისტენტი. რით შემიძლია დაგეხმარო?<br><br>• კლიენტის ჩამოტვირთვა & ინსტალაცია<br>• მენიუს ღილაკები (F12 / Shift)<br>• შეძენა & ლიცენზია<br>• HWID და პრობლემების მოგვარება";
         }
-        return "Hello! 👋 I am <strong>Pulse AI</strong>, the official PulseClient support bot. How can I help you today?<br><br>• Client Download & Installation<br>• Keybinds (F12 / Shift)<br>• Purchase & Licensing<br>• HWID & Troubleshooting";
+        return "Hello! I am <strong>Pulse AI</strong>, the official PulseClient support bot. How can I help you today?<br><br>• Client Download & Installation<br>• Keybinds (F12 / Shift)<br>• Purchase & Licensing<br>• HWID & Troubleshooting";
     }
 
     // 2. Identity / Capabilities
@@ -6318,17 +6322,17 @@ function generatePulseAIResponse(input) {
     // 3. Keybinds & Menu Triggers
     if (hasAny(['f12', 'shift', 'right shift', 'ღილაკ', 'მენიუ', 'გახსნა', 'როგორ გავხსნა', 'keybind', 'bind', 'menu', 'open', 'controls', 'რომელი ღილაკით'])) {
         if (isGeorgian) {
-            return "⌨️ <strong>PulseClient მენიუს ღილაკები:</strong><br>• <strong>Pulse PvP Client:</strong> მენიუ იხსნება <strong>F12</strong> ღილაკით (ოპტიმიზირებული FPS, Kill Trigger, Watermark fix).<br>• <strong>Pulse Base Find:</strong> მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით (Matrix/GrimAC bypass).";
+            return "<strong>PulseClient მენიუს ღილაკები:</strong><br>• <strong>Pulse PvP Client:</strong> მენიუ იხსნება <strong>F12</strong> ღილაკით (ოპტიმიზირებული FPS, Kill Trigger, Watermark fix).<br>• <strong>Pulse Base Find:</strong> მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით (Matrix/GrimAC bypass).";
         }
-        return "⌨️ <strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client:</strong> Menu opens with <strong>F12</strong> (Optimized FPS, Kill Trigger).<br>• <strong>Pulse Base Find:</strong> Menu opens with <strong>Right Shift</strong> (Matrix/GrimAC bypass).";
+        return "<strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client:</strong> Menu opens with <strong>F12</strong> (Optimized FPS, Kill Trigger).<br>• <strong>Pulse Base Find:</strong> Menu opens with <strong>Right Shift</strong> (Matrix/GrimAC bypass).";
     }
 
     // 4. Installation & Mods folder
     if (hasAny(['ინსტალაც', 'დაყენებ', 'ჩაგდება', 'როგორ ჩავაგდო', 'სად ჩავაგდო', 'install', 'setup', 'mods', 'folder', 'fabric', 'jar'])) {
         if (isGeorgian) {
-            return "💡 <strong>ინსტალაციის ნაბიჯები:</strong><br>1. ჩამოტვირთეთ `.jar` ფაილი საიტიდან (PvP ან Base Find).<br>2. გახსენით `%appdata%/.minecraft/mods` საქაღალდე.<br>3. ჩააგდეთ ნასროლი `.jar` ფაილი მოდების საქაღალდეში.<br>4. ჩართეთ Minecraft <strong>Fabric 1.21.11</strong> პროფილით (Java 21-ით).";
+            return "<strong>ინსტალაციის ნაბიჯები:</strong><br>1. ჩამოტვირთეთ `.jar` ფაილი საიტიდან (PvP ან Base Find).<br>2. გახსენით `%appdata%/.minecraft/mods` საქაღალდე.<br>3. ჩააგდეთ ნასროლი `.jar` ფაილი მოდების საქაღალდეში.<br>4. ჩართეთ Minecraft <strong>Fabric 1.21.11</strong> პროფილით (Java 21-ით).";
         }
-        return "💡 <strong>Installation Steps:</strong><br>1. Download the `.jar` file from our website.<br>2. Open `%appdata%/.minecraft/mods` folder.<br>3. Drop the downloaded `.jar` file into the mods directory.<br>4. Launch Minecraft using <strong>Fabric 1.21.11</strong> (Java 21 required).";
+        return "<strong>Installation Steps:</strong><br>1. Download the `.jar` file from our website.<br>2. Open `%appdata%/.minecraft/mods` folder.<br>3. Drop the downloaded `.jar` file into the mods directory.<br>4. Launch Minecraft using <strong>Fabric 1.21.11</strong> (Java 21 required).";
     }
 
     // 5. Version & Java Requirements
@@ -6350,17 +6354,17 @@ function generatePulseAIResponse(input) {
     // 7. PvP vs Base Finder differences
     if (hasAny(['განსხვავება', 'სხვაობა', 'pvp', 'basefind', 'base finder', 'difference', 'which one', 'რომელი გადმოვწერო'])) {
         if (isGeorgian) {
-            return "⚖️ <strong>რომელი ვერსია ავირჩიო?</strong><br>• <strong>Pulse PvP Client:</strong> საუკეთესოა PvP ბრძოლებისთვის, გაზრდილი FPS, Kill Trigger, OpSec უსაფრთხოება. (იხსნება <strong>F12</strong>-ით).<br>• <strong>Pulse Base Find:</strong> სპეციალურად ბაზების საპოვნელად და სათვალთვალოდ, Matrix & GrimAC შემოვლით. (იხსნება <strong>Right Shift</strong>-ით).";
+            return "<strong>რომელი ვერსია ავირჩიო?</strong><br>• <strong>Pulse PvP Client:</strong> საუკეთესოა PvP ბრძოლებისთვის, გაზრდილი FPS, Kill Trigger, OpSec უსაფრთხოება. (იხსნება <strong>F12</strong>-ით).<br>• <strong>Pulse Base Find:</strong> სპეციალურად ბაზების საპოვნელად და სათვალთვალოდ, Matrix & GrimAC შემოვლით. (იხსნება <strong>Right Shift</strong>-ით).";
         }
-        return "⚖️ <strong>Which version to pick?</strong><br>• <strong>Pulse PvP Client:</strong> Best for combat, max FPS, Kill Trigger & OpSec (Opens with <strong>F12</strong>).<br>• <strong>Pulse Base Find:</strong> Built for base tracking with Matrix & GrimAC bypasses (Opens with <strong>Right Shift</strong>).";
+        return "<strong>Which version to pick?</strong><br>• <strong>Pulse PvP Client:</strong> Best for combat, max FPS, Kill Trigger & OpSec (Opens with <strong>F12</strong>).<br>• <strong>Pulse Base Find:</strong> Built for base tracking with Matrix & GrimAC bypasses (Opens with <strong>Right Shift</strong>).";
     }
 
     // 8. Purchasing & Price
     if (hasAny(['ყიდვა', 'ყიდვ', 'ფასი', 'ღირს', 'რა ღირს', 'buy', 'price', 'cost', 'purchase', 'ticket', 'discord', 'paypal', 'card', 'crypto'])) {
         if (isGeorgian) {
-            return "🛒 <strong>როგორ შევიძინოთ ლიცენზია?</strong><br>1. შემობრძანდით ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით **Ticket** 'Buy / Purchase' არხში.<br>3. ადმინისტრაცია რამდენიმე წუთში დაგეხმარებათ გადახდასა და გასაღების აქტივაციაში!";
+            return "<strong>როგორ შევიძინოთ ლიცენზია?</strong><br>1. შემობრძანდით ჩვენს <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით **Ticket** 'Buy / Purchase' არხში.<br>3. ადმინისტრაცია რამდენიმე წუთში დაგეხმარებათ გადახდასა და გასაღების აქტივაციაში!";
         }
-        return "🛒 <strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a **Ticket** in the 'Buy / Purchase' channel.<br>3. Support will help you complete payment and activate your key in minutes!";
+        return "<strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/kAFr2Bpyxw' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a **Ticket** in the 'Buy / Purchase' channel.<br>3. Support will help you complete payment and activate your key in minutes!";
     }
 
     // 9. Promocodes & Referrals & Free trial
@@ -6460,11 +6464,11 @@ async function resetDeviceSlotHwid() {
     await resetUserHwid(activeLic.license_key);
     const resetUser = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "User") : "User";
     sendDiscordAuditLog(
-        "🖥️ HWID Reset-ის მოთხოვნა",
+        "HWID Reset-ის მოთხოვნა",
         `მომხმარებელმა **${resetUser}** გაასუფთავა მოწყობილობის სლოტი (HWID).`,
         0xf59e0b,
         [
-            { name: "👤 მომხმარებელი", value: resetUser, inline: true },
+            { name: "მომხმარებელი", value: resetUser, inline: true },
             { name: "გასაღები", value: activeLic.license_key, inline: true }
         ]
     );
@@ -6518,7 +6522,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
         targetCard.classList.add('is-downloading');
         const arrowEl = targetCard.querySelector('.download-arrow');
         if (arrowEl) {
-            arrowEl.innerHTML = `<svg class="spin-loader" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#ff003c" stroke-linecap="round"></path></svg>`;
+            arrowEl.innerHTML = `<svg class="spin-loader" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke="#ffffff" stroke-linecap="round"></path></svg>`;
         }
         const versionEl = targetCard.querySelector('.version-label');
         if (versionEl) {
@@ -6529,13 +6533,13 @@ function handleCustomClientDownload(e, osType = 'windows') {
     // Fire audit logs and download tracking asynchronously without blocking UI
     try {
         sendDiscordAuditLog(
-            "📦 კლიენტის (.jar) გადმოწერა",
+            "კლიენტის (.jar) გადმოწერა",
             `მომხმარებელმა ჩამოტვირთა კლიენტის ფაილი **${customFilename}** (${osType.toUpperCase()}).`,
             0x38bdf8,
             [
-                { name: "👤 მომხმარებელი", value: currentUsername, inline: true },
-                { name: "💻 OS", value: osType.toUpperCase(), inline: true },
-                { name: "📄 ფაილი", value: customFilename, inline: true }
+                { name: "მომხმარებელი", value: currentUsername, inline: true },
+                { name: "OS", value: osType.toUpperCase(), inline: true },
+                { name: "ფაილი", value: customFilename, inline: true }
             ]
         ).catch(() => {});
         if (typeof trackUserDownload === 'function') {
@@ -6545,7 +6549,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
         console.warn("Download telemetry notice:", err);
     }
 
-    showBanner(`🚀 PulseClient-ის გადმოწერა დაიწყო: ${customFilename}`, "success");
+    showBanner(`PulseClient-ის გადმოწერა დაიწყო: ${customFilename}`, "success");
 
     // Native immediate browser download (0ms delay, 0MB RAM heap allocation, zero freezing!)
     try {
@@ -6627,7 +6631,7 @@ const PULSE_PRESETS = {
             "Reach": { "enabled": true, "distance": 3.12 },
             "Velocity": { "enabled": true, "horizontal": 85, "vertical": 100 },
             "AutoClicker": { "enabled": true, "minCps": 12, "maxCps": 16, "jitter": true },
-            "PlayerChams": { "enabled": true, "color": "#ff003c" },
+            "PlayerChams": { "enabled": true, "color": "#ffffff" },
             "OpSecGuard": { "enabled": true }
         }
     },
@@ -6640,7 +6644,7 @@ const PULSE_PRESETS = {
             "AutoTotem": { "enabled": true, "slot": "Offhand", "fastSwitch": true },
             "CrystalAura": { "enabled": true, "placeSpeed": 20, "breakSpeed": 20 },
             "Velocity": { "enabled": true, "horizontal": 0, "vertical": 0 },
-            "Tracers": { "enabled": true, "color": "#ff003c" }
+            "Tracers": { "enabled": true, "color": "#ffffff" }
         }
     },
     "hypixel_duel": {
@@ -6804,13 +6808,13 @@ async function handleShareConfigSubmit(event) {
 
         // 3. Discord Audit Log Notification
         sendDiscordAuditLog(
-            "☁️ ახალი კონფიგი გაზიარდა",
+            "ახალი კონფიგი გაზიარდა",
             `მომხმარებელმა **${username}** გააზიარა ახალი კონფიგი: **${configName}**.`,
             0x38bdf8,
             [
-                { name: "👤 ავტორი", value: username, inline: true },
-                { name: "📝 სახელი", value: configName, inline: true },
-                { name: "📋 აღწერა", value: configDesc || "N/A", inline: false }
+                { name: "ავტორი", value: username, inline: true },
+                { name: "სახელი", value: configName, inline: true },
+                { name: "აღწერა", value: configDesc || "N/A", inline: false }
             ]
         );
 
@@ -6846,13 +6850,13 @@ function renderCommunityConfigs() {
     }
 
     container.innerHTML = configs.map(c => `
-        <div class="glass-panel preset-card" style="padding: 20px; border: 1px solid rgba(255, 0, 60, 0.2); background: rgba(14, 14, 18, 0.7);">
+        <div class="glass-panel preset-card" style="padding: 20px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(14, 16, 22, 0.85); border-radius: 14px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                 <h4 style="font-size: 1.05rem; color: #fff; font-weight: 700;">${c.name}</h4>
-                <span style="background: rgba(255, 0, 60, 0.15); color: #ff003c; border: 1px solid rgba(255, 0, 60, 0.3); font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">USER</span>
+                <span style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">USER</span>
             </div>
             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4;">${c.description}</p>
-            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;">ავტორი: <strong style="color: #ff3366;">${c.author}</strong></div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;">ავტორი: <strong style="color: #ffffff;">${c.author}</strong></div>
             <div style="display: flex; gap: 8px;">
                 <button type="button" class="btn btn-primary" onclick="downloadCustomConfigById('${c.id}')" style="flex: 1; padding: 6px 10px; font-size: 11px;">ჩამოტვირთვა</button>
                 <button type="button" class="btn btn-secondary" onclick="copyCustomConfigById('${c.id}', this)" style="padding: 6px 12px; font-size: 11px;">კოპირება</button>
@@ -7005,11 +7009,11 @@ function initLiquidCanvas() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            // Liquid droplet specular glow
+            // Liquid droplet specular pearl glow
             const grad = ctx.createRadialGradient(this.x - this.size * 0.3, this.y - this.size * 0.3, this.size * 0.1, this.x, this.y, this.size);
-            grad.addColorStop(0, `rgba(255, 120, 140, ${this.opacity + 0.2})`);
-            grad.addColorStop(0.5, `rgba(255, 0, 60, ${this.opacity})`);
-            grad.addColorStop(1, `rgba(180, 0, 30, 0)`);
+            grad.addColorStop(0, `rgba(255, 255, 255, ${this.opacity + 0.25})`);
+            grad.addColorStop(0.5, `rgba(210, 215, 225, ${this.opacity * 0.6})`);
+            grad.addColorStop(1, `rgba(255, 255, 255, 0)`);
             ctx.fillStyle = grad;
             ctx.fill();
         }
@@ -7024,10 +7028,10 @@ function initLiquidCanvas() {
     function render() {
         ctx.clearRect(0, 0, width, height);
 
-        // Ambient liquid cursor spotlight
+        // Ambient liquid cursor spotlight (subtle white luminescence)
         const spotGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 320);
-        spotGrad.addColorStop(0, "rgba(255, 0, 50, 0.06)");
-        spotGrad.addColorStop(0.6, "rgba(255, 0, 50, 0.02)");
+        spotGrad.addColorStop(0, "rgba(255, 255, 255, 0.04)");
+        spotGrad.addColorStop(0.6, "rgba(255, 255, 255, 0.01)");
         spotGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
         ctx.fillStyle = spotGrad;
         ctx.fillRect(0, 0, width, height);
@@ -7248,7 +7252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const particle = document.createElement('div');
         particle.className = 'evila-particle';
         
-        const badges = ['+1 წთ 🍆', '+1 წთ ⚡', '+1 წუთი! 🍆', '+1 წთ 🔥'];
+        const badges = ['+1 წთ', '+1 წთ', '+1 წუთი', '+1 წთ'];
         particle.textContent = badges[Math.floor(Math.random() * badges.length)];
         
         // Random slight horizontal wobble
@@ -7290,11 +7294,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (statusText) {
                 if (typeof currentUser !== 'undefined' && currentUser) {
-                    statusText.textContent = `⚡ PulseClient-ის ვადა გაიზარდა (+${count} წთ დღეს)`;
+                    statusText.textContent = `PulseClient-ის ვადა გაიზარდა (+${count} წთ დღეს)`;
                 } else {
                     const unclaimed = getUnclaimedMinutes();
                     if (unclaimed > 0) {
-                        statusText.innerHTML = `💡 დაგროვილია <strong>${unclaimed} წთ</strong> — შედი Discord-ით გასააქტიურებლად!`;
+                        statusText.innerHTML = `დაგროვილია <strong>${unclaimed} წთ</strong> — შედი Discord-ით გასააქტიურებლად!`;
                     } else {
                         statusText.textContent = "დააკლიკე და გაახანგრძლივე PulseClient";
                     }
@@ -7338,7 +7342,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (granted < minsToSync) {
                 console.log(`[EvilaClicker] Server granted ${granted}/${minsToSync} mins (daily cap).`);
                 if (granted === 0 && typeof showBanner === 'function') {
-                    showBanner('🚫 დღიური ლიმიტი ამოიწურა — ხვალ განაგრძე!', 'error');
+                    showBanner('დღიური ლიმიტი ამოიწურა — ხვალ განაგრძე!', 'error');
                 }
             }
 
@@ -7374,7 +7378,7 @@ document.addEventListener("DOMContentLoaded", () => {
             uncommittedMinutes += unclaimed;
             await syncToSupabase();
             if (typeof showBanner === 'function') {
-                showBanner(`🎉 შენ მიიღე +${unclaimed} წუთი PulseClient-ზე ევილას დაკლიკვისთვის!`, 'success');
+                showBanner(`შენ მიიღე +${unclaimed} წუთი PulseClient-ზე!`, 'success');
             }
         }
     }
