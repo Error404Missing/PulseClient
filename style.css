@@ -63,13 +63,21 @@ a:visited {
 }
 
 a.btn-primary,
-a.btn-primary:visited {
-    color: #fff;
+a.btn-primary:visited,
+button.btn-primary,
+.btn-primary {
+    color: #000000 !important;
 }
 
 a.btn-glow,
-a.btn-glow:visited {
-    color: #fff;
+a.btn-glow:visited,
+button.btn-glow,
+.btn-glow,
+a.btn-krypton-download,
+a.btn-krypton-download:visited,
+button.btn-krypton-download,
+.btn-krypton-download {
+    color: #000000 !important;
 }
 
 a.btn-secondary,
@@ -346,19 +354,19 @@ h3 {
 }
 
 .btn-glow {
-    background: #ffffff;
-    color: #000000;
-    font-weight: 700;
-    border: 1px solid #ffffff;
-    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    border: 1px solid #ffffff !important;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15) !important;
 }
 
 .btn-glow:hover {
-    background: #e4e4e7;
-    color: #000000;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
-    filter: none;
+    background: #e4e4e7 !important;
+    color: #000000 !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25) !important;
+    filter: none !important;
 }
 
 .btn-secondary {
@@ -1263,18 +1271,20 @@ h3 {
     color: #ffffff;
 }
 
-.menu-item.active {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
-    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
-    font-weight: 700;
+.menu-item.active,
+.menu-item.active:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15) !important;
+    font-weight: 700 !important;
 }
 
-.menu-item.active svg {
-    color: #000000;
-    stroke: #000000;
-    opacity: 1;
+.menu-item.active svg,
+.menu-item.active:hover svg {
+    color: #000000 !important;
+    stroke: #000000 !important;
+    opacity: 1 !important;
 }
 
 .menu-item.menu-home-item {
@@ -4490,6 +4500,8 @@ h3 {
 }
 
 .modal-download-card-item:hover .download-arrow svg {
+    stroke: #000000 !important;
+    color: #000000 !important;
     animation: bounceArrow 1.2s infinite alternate ease-in-out;
 }
 
@@ -5978,289 +5990,329 @@ button.specs-chip:hover,
     50% { opacity: 0.3; transform: scale(0.75); box-shadow: 0 0 2px #00ff9d; }
 }
 
-/* Modal Window Cyber Styling */
+/* Realistic Terminal Modal Styling */
 .cyber-c2-window {
-    background: radial-gradient(circle at 50% 0%, rgba(0, 255, 157, 0.08), transparent 60%), #040711 !important;
-    border: 1px solid rgba(0, 255, 157, 0.4) !important;
-    border-radius: 14px !important;
-    box-shadow: 0 0 50px rgba(0, 255, 157, 0.18), 0 30px 80px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(0, 255, 157, 0.3) !important;
+    background: #08090d !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 1px rgba(255, 255, 255, 0.2) !important;
     position: relative !important;
     overflow: hidden !important;
-    max-width: 720px !important;
+    max-width: 760px !important;
     width: 96% !important;
     padding: 22px 24px !important;
 }
 
-/* Cyber Window Header */
-.cyber-header-bar {
+/* Realistic Terminal Window Header */
+.terminal-header-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16px;
-    border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding-bottom: 14px;
-    position: relative;
+}
+
+.terminal-titlebar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .terminal-traffic-lights {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-right: 4px;
 }
 
 .t-light {
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     display: inline-block;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
 }
-.t-red { background: #ff4757; box-shadow: 0 0 6px #ff4757; }
-.t-amber { background: #ffa502; box-shadow: 0 0 6px #ffa502; }
-.t-green { background: #2ed573; box-shadow: 0 0 6px #2ed573; }
+.t-light:hover { opacity: 0.8; }
+.t-red { background: #ff5f56; }
+.t-amber { background: #ffbd2e; }
+.t-green { background: #27c93f; }
 
-.cyber-badge-live {
+.terminal-title-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: #e4e4e7;
+    font-weight: 600;
+}
+.terminal-host { color: #ffffff; font-weight: 700; }
+.terminal-path { color: #a1a1aa; }
+
+.terminal-badge-live {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
-    background: rgba(0, 255, 157, 0.12);
-    color: #00ff9d;
-    border: 1px solid rgba(0, 255, 157, 0.4);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #a1a1aa;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 3px 10px;
     border-radius: 99px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
 }
-
-.cyber-badge-live .pulse-dot {
+.terminal-badge-live .pulse-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #00ff9d;
-    box-shadow: 0 0 6px #00ff9d;
-    animation: c2-led-blink 1s infinite ease-in-out;
+    background: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
-/* Labels & Selectors */
-.cyber-label {
+/* Terminal Labels */
+.terminal-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: #38bdf8;
+    color: #a1a1aa;
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display: block;
     letter-spacing: 0.5px;
 }
 
+/* OVAL PLAYER SELECTION & VECTOR DROPDOWNS */
+.oval-select-box {
+    position: relative;
+    width: 100%;
+}
+
+.oval-select,
 .cyber-select {
     width: 100%;
-    background: #070c18 !important;
-    border: 1px solid rgba(0, 255, 157, 0.3) !important;
-    border-radius: 8px !important;
-    padding: 9px 12px !important;
-    color: #f1f5f9 !important;
+    background: #11131a !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 9999px !important;
+    padding: 10px 38px 10px 18px !important;
+    color: #ffffff !important;
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 12.5px !important;
     outline: none !important;
-    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
+.oval-select option,
+.cyber-select option {
+    background: #11131a !important;
+    color: #ffffff !important;
+    padding: 8px 14px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+.oval-select:focus,
 .cyber-select:focus {
-    border-color: #00ff9d !important;
-    box-shadow: 0 0 12px rgba(0, 255, 157, 0.35) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Target Live Card HUD */
-.cyber-target-hud {
-    background: linear-gradient(135deg, rgba(0, 255, 157, 0.04) 0%, rgba(6, 11, 22, 0.6) 100%) !important;
-    border: 1px solid rgba(0, 255, 157, 0.25) !important;
-    border-left: 3px solid #00ff9d !important;
-    border-radius: 10px !important;
-    padding: 10px 14px !important;
+.select-chevron {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #71717a;
+    transition: color 0.2s ease;
+}
+.oval-select-box:hover .select-chevron {
+    color: #ffffff;
+}
+
+/* Target Live Card HUD Preview */
+.terminal-target-hud {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    padding: 10px 16px !important;
     margin-bottom: 14px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 255, 157, 0.03) !important;
 }
 
-.cyber-target-avatar {
+.terminal-target-avatar {
     width: 36px;
     height: 36px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 255, 157, 0.4);
-    box-shadow: 0 0 10px rgba(0, 255, 157, 0.25);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     background: #090d16;
 }
 
-.cyber-key-badge {
+.target-key-badge {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 11px !important;
     font-weight: 700 !important;
-    background: rgba(0, 255, 157, 0.1) !important;
-    color: #00ff9d !important;
-    border: 1px solid rgba(0, 255, 157, 0.3) !important;
-    padding: 4px 10px !important;
-    border-radius: 6px !important;
-    box-shadow: 0 0 8px rgba(0, 255, 157, 0.15) !important;
-}
-
-/* Payload Injection Chips */
-.remote-preset-btn {
-    background: rgba(0, 255, 157, 0.06) !important;
-    border: 1px solid rgba(0, 255, 157, 0.3) !important;
-    border-radius: 6px !important;
-    padding: 5px 11px !important;
-    font-size: 11.5px !important;
-    font-family: 'JetBrains Mono', monospace !important;
-    font-weight: 700 !important;
-    color: #38bdf8 !important;
-    cursor: pointer !important;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    outline: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-}
-
-.remote-preset-btn:hover {
-    background: rgba(0, 255, 157, 0.18) !important;
-    border-color: #00ff9d !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 14px rgba(0, 255, 157, 0.4) !important;
-    transform: translateY(-1px) !important;
-    text-shadow: 0 0 6px #00ff9d !important;
-}
-
-.remote-preset-btn.btn-danger-preset {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
-}
-
-.remote-preset-btn.btn-danger-preset:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: #ffffff !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Terminal Screen (Hacker CRT Monitor Look) */
-.cyber-terminal-screen {
-    height: 145px !important;
-    background: 
-        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
-        #040508 !important;
-    background-size: 100% 3px, auto !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #e4e4e7 !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 8px !important;
-    padding: 10px 14px !important;
+    padding: 3px 10px !important;
+    border-radius: 99px !important;
+}
+
+/* Terminal Quick Commands Pills */
+.term-preset-pill {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 9999px !important;
+    padding: 5px 12px !important;
+    font-size: 11px !important;
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    color: #d4d4d8 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    outline: none !important;
+}
+
+.term-preset-pill:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+}
+
+.term-preset-pill.term-preset-danger {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #a1a1aa !important;
+}
+.term-preset-pill.term-preset-danger:hover {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+/* Realistic Terminal Screen */
+.realistic-terminal-screen {
+    height: 155px !important;
+    background: #020306 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
     color: #e4e4e7 !important;
     overflow-y: auto !important;
-    line-height: 1.55 !important;
-    box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 255, 255, 0.04) !important;
+    line-height: 1.6 !important;
+    box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.9) !important;
 }
 
-.cyber-terminal-screen::-webkit-scrollbar {
+.realistic-terminal-screen::-webkit-scrollbar {
     width: 6px;
 }
-.cyber-terminal-screen::-webkit-scrollbar-thumb {
-    background: rgba(0, 255, 157, 0.35);
+.realistic-terminal-screen::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 3px;
-    box-shadow: 0 0 6px rgba(0, 255, 157, 0.4);
 }
 
-/* Command Input Bar */
-.cyber-cmd-bar {
+.term-clear-btn {
+    background: none;
+    border: none;
+    color: #71717a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.15s ease;
+}
+.term-clear-btn:hover {
+    color: #ffffff;
+}
+
+/* Realistic Command Prompt Bar */
+.realistic-cmd-bar {
     display: flex;
+    align-items: center;
     gap: 8px;
     margin-bottom: 14px;
-    position: relative;
 }
 
-.cyber-prompt-prefix {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
+.term-prompt-label {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 800;
-    color: #00ff9d;
-    font-size: 12px;
-    pointer-events: none;
-    letter-spacing: -0.5px;
+    font-weight: 700;
+    color: #71717a;
+    font-size: 12.5px;
+    user-select: none;
+    white-space: nowrap;
 }
 
-.cyber-cmd-input {
-    width: 100%;
-    background: #040813 !important;
-    border: 1px solid rgba(0, 255, 157, 0.35) !important;
-    border-radius: 8px !important;
-    padding: 10px 12px 10px 120px !important;
-    color: #f8fafc !important;
+.realistic-cmd-input {
+    flex: 1;
+    background: #0e1017 !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 9999px !important;
+    padding: 9px 18px !important;
+    color: #ffffff !important;
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 12.5px !important;
     outline: none !important;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6) !important;
-    transition: all 0.2s ease !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.cyber-cmd-input:focus {
-    border-color: #00ff9d !important;
-    box-shadow: 0 0 16px rgba(0, 255, 157, 0.35), inset 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+.realistic-cmd-input:focus {
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Dispatch Button */
-.cyber-dispatch-btn {
-    padding: 0 20px !important;
-    border-radius: 8px !important;
+.realistic-dispatch-btn {
+    padding: 9px 20px !important;
+    border-radius: 9999px !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 6px !important;
     font-family: 'JetBrains Mono', monospace !important;
     font-weight: 800 !important;
     font-size: 12px !important;
-    letter-spacing: 0.8px !important;
-    text-transform: uppercase !important;
-    background: linear-gradient(135deg, #00ff9d 0%, #059669 100%) !important;
-    color: #022c22 !important;
-    border: 1px solid #00ff9d !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
     cursor: pointer !important;
-    box-shadow: 0 0 20px rgba(0, 255, 157, 0.4) !important;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15) !important;
     transition: all 0.2s ease !important;
     flex-shrink: 0 !important;
 }
 
-.cyber-dispatch-btn:hover {
-    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
-    box-shadow: 0 0 30px rgba(0, 255, 157, 0.65) !important;
+.realistic-dispatch-btn:hover {
+    background: #e4e4e7 !important;
     transform: translateY(-1px) !important;
-    color: #011d17 !important;
 }
 
-/* Abort Button */
-.cyber-abort-btn {
+.terminal-close-btn {
     width: 100% !important;
-    border-radius: 8px !important;
+    border-radius: 9999px !important;
     padding: 9px !important;
-    background: #080d1a !important;
+    background: rgba(255, 255, 255, 0.04) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #94a3b8 !important;
+    color: #a1a1aa !important;
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 11.5px !important;
     font-weight: 700 !important;
     letter-spacing: 0.5px !important;
-    text-transform: uppercase !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
+}
+
+.terminal-close-btn:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .cyber-abort-btn:hover {
@@ -6607,6 +6659,11 @@ button.specs-chip:hover,
     border-color: #ffffff;
     transform: scale(1.08);
     box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+}
+
+.modal-download-card-item:hover .download-arrow svg {
+    stroke: #000000 !important;
+    color: #000000 !important;
 }
 
 /* Card States during Download */
