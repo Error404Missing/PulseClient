@@ -648,7 +648,7 @@
     [".quick-start-grid .step-card:nth-child(3) h4", "dash.step3.title"],
     [".quick-start-grid .step-card:nth-child(3) p", "dash.step3.desc"],
     [".launchers-section .section-title", "dash.launchers"],
-    [".launcher-card .launcher-meta span", "dash.compatible"],
+    [".launcher-card .launcher-meta [data-i18n='dash.compatible']", "dash.compatible"],
     [".launcher-footer-note", "dash.launchersNote"],
     [".licenses-card .panel-header h3", "dash.myLicenses"],
     ["#refresh-licenses-btn", "dash.refresh", "textLast"],

@@ -2171,33 +2171,11 @@ function renderActiveSessions(sessions) {
         const osClean = parts[0] || 'Windows';
         const launcherName = parts.length > 1 ? parts[1] : 'Fabric';
         
-        let launcherClass = 'launcher-default';
+        let launcherClass = 'launcher-badge-clean';
         let launcherIcon = '';
-        const lnLower = launcherName.toLowerCase();
-        let launcherStyle = 'background: rgba(147, 51, 234, 0.12) !important; border: 1px solid rgba(147, 51, 234, 0.28) !important; color: #c084fc !important;';
-        if (lnLower.includes('tlauncher')) {
-            launcherClass = 'launcher-tlauncher';
-            launcherIcon = '';
-            launcherStyle = 'background: rgba(56, 189, 248, 0.12) !important; border: 1px solid rgba(56, 189, 248, 0.3) !important; color: #38bdf8 !important;';
-        } else if (lnLower.includes('prism')) {
-            launcherClass = 'launcher-prism';
-            launcherIcon = '';
-            launcherStyle = 'background: rgba(168, 85, 247, 0.12) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important;';
-        } else if (lnLower.includes('modrinth')) {
-            launcherClass = 'launcher-modrinth';
-            launcherIcon = '';
-            launcherStyle = 'background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important;';
-        } else if (lnLower.includes('official')) {
-            launcherClass = 'launcher-official';
-            launcherIcon = '';
-            launcherStyle = 'background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important;';
-        } else if (lnLower.includes('feather')) {
-            launcherClass = 'launcher-feather';
-            launcherIcon = '';
-            launcherStyle = 'background: rgba(244, 114, 182, 0.12) !important; border: 1px solid rgba(244, 114, 182, 0.3) !important; color: #f472b6 !important;';
-        }
+        let launcherStyle = 'background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important; color: #f4f4f5 !important;';
 
-        const launcherBadge = `<span class="launcher-badge ${launcherClass}" style="${launcherStyle} display: inline-flex !important; align-items: center !important; gap: 6px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">${launcherIcon} ${launcherName}</span>`;
+        const launcherBadge = `<span class="launcher-badge ${launcherClass}" style="${launcherStyle} display: inline-flex !important; align-items: center !important; gap: 6px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">${launcherName}</span>`;
 
         // OS / Specs icon detection
         let osIcon = '';
