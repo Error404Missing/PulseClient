@@ -4389,6 +4389,30 @@ async function createLicenseFromAdmin(e) {
         adminGeneratedKey.textContent = key;
         adminKeyResult.classList.remove('hidden');
 
+        // Dispatch Official Digital Invoice to user's Discord Gmail
+        const buyerProfile = Array.isArray(allUserProfiles) ? allUserProfiles.find(p => p.username === buyer) : null;
+        const buyerEmail = buyerProfile ? (buyerProfile.email || null) : null;
+        const buyerDiscordId = buyerProfile ? (buyerProfile.discord_id || null) : null;
+
+        pulseApiFetch('/admin/send-license-invoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                buyer_email: buyerEmail,
+                buyer_username: buyer,
+                buyer_discord_id: buyerDiscordId,
+                license_key: key,
+                duration: durationDays === null ? "Lifetime" : `${durationDays} Days`,
+                product: product
+            })
+        }).then(res => res.json()).then(invoiceRes => {
+            if (invoiceRes && invoiceRes.sent) {
+                showToast(`📧 Invoice delivered to ${invoiceRes.recipient}`, "success");
+            }
+        }).catch(emailErr => {
+            console.warn("Invoice email delivery skipped:", emailErr);
+        });
+
         // Reset input
         adminBuyerInput.value = '';
         const options = adminUserOptionsList.querySelectorAll('.user-option');
@@ -5324,6 +5348,7 @@ async function saveUserProfile(user) {
         preferred_language: currentLang
     };
 
+    if (user.email) payload.email = user.email;
     if (userIp) payload.last_ip = userIp;
     if (refCode) payload.referred_by = refCode;
 
