@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,6 +11,18 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+
+[assembly: AssemblyTitle("PulseCleaner")]
+[assembly: AssemblyDescription("PulseClient OpSec System & Trace Cleaner Utility")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("PulseClient Development Team")]
+[assembly: AssemblyProduct("PulseCleaner v2.0")]
+[assembly: AssemblyCopyright("Copyright © 2026 PulseClient")]
+[assembly: AssemblyTrademark("PulseClient")]
+[assembly: AssemblyCulture("")]
+[assembly: ComVisible(false)]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 
 namespace PulseClient.OpSec
 {
