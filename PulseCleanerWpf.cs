@@ -28,9 +28,6 @@ namespace PulseClient.OpSec
 {
     public class PulseCleanerWindow : Window
     {
-        [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
-        public static extern bool DnsFlushResolverCache();
-
         // Theme Brushes
         private readonly SolidColorBrush bgOuter = new SolidColorBrush(Color.FromRgb(11, 12, 16));
         private readonly SolidColorBrush bgTitle = new SolidColorBrush(Color.FromRgb(14, 15, 22));
@@ -731,21 +728,17 @@ namespace PulseClient.OpSec
 
         private void FlushDns()
         {
-            try { DnsFlushResolverCache(); }
-            catch
+            try
             {
-                try
+                ProcessStartInfo psi = new ProcessStartInfo("ipconfig", "/flushdns")
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo("ipconfig", "/flushdns")
-                    {
-                        CreateNoWindow = true,
-                        UseShellExecute = false
-                    };
-                    Process p = Process.Start(psi);
-                    if (p != null) p.WaitForExit(1000);
-                }
-                catch { }
+                    CreateNoWindow = true,
+                    UseShellExecute = false
+                };
+                Process p = Process.Start(psi);
+                if (p != null) p.WaitForExit(1000);
             }
+            catch { }
         }
 
         [STAThread]
