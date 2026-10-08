@@ -4390,8 +4390,10 @@ async function createLicenseFromAdmin(e) {
         adminKeyResult.classList.remove('hidden');
 
         // Dispatch Official Digital Invoice to user's Discord Gmail
+        const adminEmailInput = document.getElementById('admin-buyer-email-input');
+        const typedEmail = adminEmailInput ? adminEmailInput.value.trim() : '';
         const buyerProfile = Array.isArray(allUserProfiles) ? allUserProfiles.find(p => p.username === buyer) : null;
-        const buyerEmail = buyerProfile ? (buyerProfile.email || null) : null;
+        const buyerEmail = typedEmail || (buyerProfile ? (buyerProfile.email || null) : null);
         const buyerDiscordId = buyerProfile ? (buyerProfile.discord_id || null) : null;
 
         pulseApiFetch('/admin/send-license-invoice', {
@@ -4407,7 +4409,9 @@ async function createLicenseFromAdmin(e) {
             })
         }).then(res => res.json()).then(invoiceRes => {
             if (invoiceRes && invoiceRes.sent) {
-                showToast(`📧 Invoice delivered to ${invoiceRes.recipient}`, "success");
+                showBanner(`📧 ინვოისი გაიგზავნა: ${invoiceRes.recipient}`, "success");
+            } else if (invoiceRes && invoiceRes.status === "warning") {
+                console.info("Invoice skipped:", invoiceRes.message);
             }
         }).catch(emailErr => {
             console.warn("Invoice email delivery skipped:", emailErr);
@@ -4415,6 +4419,7 @@ async function createLicenseFromAdmin(e) {
 
         // Reset input
         adminBuyerInput.value = '';
+        if (adminEmailInput) adminEmailInput.value = '';
         const options = adminUserOptionsList.querySelectorAll('.user-option');
         options.forEach(opt => opt.classList.remove('selected'));
 
@@ -5444,6 +5449,11 @@ function selectDropdownUser(username) {
         if (did) fetchLiveDiscordAvatar(did);
     }
     
+    const adminEmailInput = document.getElementById('admin-buyer-email-input');
+    if (adminEmailInput) {
+        adminEmailInput.value = profile.email || '';
+    }
+
     closeUserSelectionModal();
 }
 
