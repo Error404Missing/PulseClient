@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PulseClient - პრემიუმ Minecraft მოდიფიკაცია</title>
+    <title>PulseClient &mdash; Official Minecraft Client &amp; Utility Suite</title>
+    <!-- SEO & Search Engine Optimization -->
+    <meta name="description" content="PulseClient - The official website for PulseClient. Premium Minecraft client, utility suite, high-speed optimization, and instant license activation.">
+    <meta name="keywords" content="PulseClient, pulse client, pulseclient xyz, minecraft pulse client, pulse client official, pulse client download">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://pulseclient.xyz/">
+    <!-- OpenGraph Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PulseClient">
+    <meta property="og:title" content="PulseClient — Official Minecraft Client &amp; Utility Suite">
+    <meta property="og:description" content="PulseClient - Premium Minecraft client, utility suite, and instant license activation.">
+    <meta property="og:url" content="https://pulseclient.xyz/">
+    <meta property="og:image" content="https://pulseclient.xyz/logo.png">
+    <!-- Twitter Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PulseClient — Official Minecraft Client">
+    <meta name="twitter:description" content="PulseClient - Premium Minecraft client, utility suite, and instant license activation.">
+    <meta name="twitter:image" content="https://pulseclient.xyz/logo.png">
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="icon-48.png" type="image/png" sizes="48x48">
@@ -14,10 +31,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
-    <!-- Anti-Cache Meta Headers -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <link rel="stylesheet" href="style.css?v=718.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -43,7 +56,7 @@
             <img src="logo.png?v=2" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
             <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
         </div>
-        <nav class="nav-links">
+        <nav class="nav-links hidden">
             <button type="button" id="nav-dashboard-link" class="hidden" onclick="showDashboard()" style="color: #ffffff; font-weight: 700; background: rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 6px 14px; border: 1px solid rgba(255, 255, 255, 0.15);">დეშბორდი</button>
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
             <button type="button" onclick="navigateToLandingSection(event, 'bypasses')" data-i18n="nav.bypasses">შემოვლები</button>
@@ -73,7 +86,7 @@
     </header>
 
     <!-- Auth Gate / Required Discord Login Barrier -->
-    <main id="auth-gate-page" class="view auth-gate-view hidden">
+    <main id="auth-gate-page" class="view auth-gate-view">
         <div class="auth-gate-container">
             <div class="auth-gate-card glass-panel">
                 <div class="auth-gate-badge">

@@ -791,6 +791,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else if (!isVpn) {
             isVpnBlocked = false;
             if (vpnBlockPage) vpnBlockPage.classList.add('hidden');
+            if (!currentUser) {
+                if (authGatePage) authGatePage.classList.remove('hidden');
+                if (landingPage) landingPage.classList.add('hidden');
+                if (dashboardPage) dashboardPage.classList.add('hidden');
+                if (navLinks) navLinks.classList.add('hidden');
+            }
         }
     });
 
@@ -1243,12 +1249,12 @@ function handleUserSignOut() {
     navUserProfile.classList.add('hidden');
     const navDashLink = document.getElementById('nav-dashboard-link');
     if (navDashLink) navDashLink.classList.add('hidden');
-    if (navLinks) navLinks.classList.remove('hidden');
+    if (navLinks) navLinks.classList.add('hidden');
 
-    // Show Landing page to all visitors by default
-    if (authGatePage) authGatePage.classList.add('hidden');
-    landingPage.classList.remove('hidden');
-    dashboardPage.classList.add('hidden');
+    // Strictly enforce Discord Auth Gate barrier for unauthenticated visitors
+    if (authGatePage) authGatePage.classList.remove('hidden');
+    if (landingPage) landingPage.classList.add('hidden');
+    if (dashboardPage) dashboardPage.classList.add('hidden');
 
     // Hide Admin menu item
     if (adminMenuItem) {
@@ -1895,6 +1901,14 @@ window.toggleFaq = toggleFaq;
 function navigateToLandingSection(event, sectionId) {
     if (event && event.preventDefault) event.preventDefault();
     
+    if (!currentUser) {
+        if (authGatePage) authGatePage.classList.remove('hidden');
+        if (landingPage) landingPage.classList.add('hidden');
+        if (dashboardPage) dashboardPage.classList.add('hidden');
+        if (navLinks) navLinks.classList.add('hidden');
+        return;
+    }
+    
     if (authGatePage) authGatePage.classList.add('hidden');
     landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
@@ -1917,6 +1931,13 @@ function navigateToLandingSection(event, sectionId) {
 window.navigateToLandingSection = navigateToLandingSection;
 
 function showLanding() {
+    if (!currentUser) {
+        if (authGatePage) authGatePage.classList.remove('hidden');
+        if (landingPage) landingPage.classList.add('hidden');
+        if (dashboardPage) dashboardPage.classList.add('hidden');
+        if (navLinks) navLinks.classList.add('hidden');
+        return;
+    }
     if (authGatePage) authGatePage.classList.add('hidden');
     if (landingPage) landingPage.classList.remove('hidden');
     if (dashboardPage) dashboardPage.classList.add('hidden');
@@ -1931,6 +1952,7 @@ function showDashboard() {
         if (authGatePage) authGatePage.classList.remove('hidden');
         landingPage.classList.add('hidden');
         dashboardPage.classList.add('hidden');
+        if (navLinks) navLinks.classList.add('hidden');
         return;
     }
     if (authGatePage) authGatePage.classList.add('hidden');
