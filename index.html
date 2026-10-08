@@ -2750,9 +2750,77 @@
         </div>
     </div>
 
+    <!-- User License Activated Live Alert Modal -->
+    <div id="user-license-activated-modal" class="modal-overlay hidden" style="z-index: 10010; backdrop-filter: blur(14px); background: rgba(5, 7, 12, 0.88);">
+        <div class="modal-content glass-modal" style="max-width: 520px; width: 92%; padding: 28px; background: #0c0e16; border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 24px; box-shadow: 0 0 50px rgba(16, 185, 129, 0.18), 0 25px 60px rgba(0, 0, 0, 0.85); text-align: center; position: relative;">
+            <button class="modal-close" onclick="closeLicenseActivatedModal()" aria-label="Close" style="position: absolute; top: 18px; right: 18px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: #94a3b8; cursor: pointer; transition: all 0.2s;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <!-- Glow Icon & Badge -->
+            <div style="display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 20px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); margin-bottom: 16px; box-shadow: 0 0 30px rgba(16, 185, 129, 0.25);">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+            </div>
+
+            <div style="margin-bottom: 6px;">
+                <span style="display: inline-block; padding: 4px 12px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 99px; font-size: 11px; font-weight: 800; color: #34d399; letter-spacing: 1px; text-transform: uppercase;">
+                    &bull; ლიცენზია გააქტიურებულია
+                </span>
+            </div>
+
+            <h3 style="margin: 8px 0 6px; font-size: 21px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px;">
+                გილოცავთ! თქვენი Key გააქტიურდა 🎉
+            </h3>
+            <p style="color: #94a3b8; font-size: 13.5px; line-height: 1.5; margin: 0 0 20px;">
+                ადმინისტრატორმა მოგანიჭათ <strong>PulseClient</strong>-ის ოფიციალური წვდომა.
+            </p>
+
+            <!-- Key Box -->
+            <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 16px; margin-bottom: 18px; text-align: center;">
+                <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #64748b; font-weight: 700; margin-bottom: 8px;">
+                    თქვენი აქტივაციის გასაღები
+                </div>
+                <div id="user-popup-key-display" style="font-family: 'JetBrains Mono', Consolas, monospace; font-size: 17px; font-weight: 800; color: #ffffff; letter-spacing: 2px; word-break: break-all; user-select: all; padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px dashed rgba(255,255,255,0.2);">
+                    XXXX-XXXX-XXXX-XXXX
+                </div>
+                <div id="user-popup-duration-display" style="font-size: 12px; color: #34d399; font-weight: 700; margin-top: 8px;">
+                    ვადა: 1 დღე
+                </div>
+            </div>
+
+            <!-- Email / Gmail Alert Box -->
+            <div style="background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(56, 189, 248, 0.03) 100%); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 14px 16px; margin-bottom: 20px; text-align: left; display: flex; gap: 12px; align-items: flex-start;">
+                <div style="font-size: 22px; line-height: 1;">📧</div>
+                <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
+                    <strong style="color: #38bdf8;">შეამოწმეთ თქვენი Gmail!</strong><br>
+                    ოფიციალური ინვოისი და ინსტრუქცია გამოგეგზავნათ ელფოსტაზე. თუ შემოსულებში (Inbox) არ დაგხვდათ, <strong style="color: #f59e0b;">აუცილებლად შეამოწმეთ Spam (სპამი) საქაღალდე</strong>!
+                </div>
+            </div>
+
+            <!-- In-game reminder -->
+            <div style="font-size: 12px; color: #64748b; margin-bottom: 22px; line-height: 1.5;">
+                🎮 <strong>როგორ ჩავრთოთ:</strong> ჩააგდეთ <code>PulseClient-Fabric.jar</code> საქაღალდეში <code>.minecraft/mods</code> და თამაშის ჩართვისას გამოსულ PulseClient-ის GUI ფანჯარაში ჩაწერეთ ეს Key.
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button type="button" id="user-popup-copy-btn" onclick="copyUserPopupKey()" style="flex: 1; min-width: 140px; padding: 12px 18px; background: #ffffff; color: #07080b; font-weight: 800; font-size: 13px; border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform 0.15s;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>გასაღების კოპირება</span>
+                </button>
+                <a href="https://mail.google.com/" target="_blank" style="padding: 12px 18px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 700; font-size: 13px; border-radius: 12px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    📧 Gmail-ის გახსნა
+                </a>
+                <button type="button" onclick="closeLicenseActivatedModal()" style="padding: 12px 18px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #94a3b8; font-weight: 600; font-size: 13px; border-radius: 12px; cursor: pointer;">
+                    დახურვა
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- App Configuration and Logic script -->
     <script src="i18n.js?v=373.0.0"></script>
-    <script src="app.js?v=718.0.0"></script>
+    <script src="app.js?v=719.0.0"></script>
 </body>
 </html>
 <!-- Deploy trigger timestamp: 1790350000 -->

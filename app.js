@@ -1369,6 +1369,9 @@ async function fetchUserLicenses() {
             updateDailyStreakUI([]);
         } else {
             renderLicenses(data);
+            if (typeof checkNewLicensesFromList === 'function') {
+                checkNewLicensesFromList(data);
+            }
         }
 
         // Calculate and render user's lifetime total playtime and top server
@@ -4388,6 +4391,16 @@ async function createLicenseFromAdmin(e) {
         // Show result card
         adminGeneratedKey.textContent = key;
         adminKeyResult.classList.remove('hidden');
+
+        // If created for self or currently logged in user, trigger live activation modal
+        const currentAlertUser = typeof getCurrentUsernameForAlert === 'function' ? getCurrentUsernameForAlert() : null;
+        if (currentAlertUser && buyer === currentAlertUser && typeof showLicenseActivatedModal === 'function') {
+            showLicenseActivatedModal({
+                license_key: key,
+                note: note,
+                expires_at: expiresAt
+            });
+        }
 
         // Dispatch Official Digital Invoice to user's Discord Gmail
         const adminEmailInput = document.getElementById('admin-buyer-email-input');
@@ -7500,3 +7513,168 @@ document.addEventListener("DOMContentLoaded", () => {
     window.initEvilaClicker = initEvilaClicker;
     window.claimPendingMinutesOnSignIn = claimPendingMinutesOnSignIn;
 })();
+
+/* ==========================================================================
+   LIVE LICENSE ACTIVATION NOTIFICATION SYSTEM
+   Shows real-time obsidian popup when admin issues a key:
+   - Instant live alert if user is currently browsing the site
+   - Offline catch-up alert when user enters the site later
+   - Reminds user to check Gmail (Inbox and Spam folder)
+   ========================================================================== */
+
+function getCurrentUsernameForAlert() {
+    if (typeof currentUser === 'undefined' || !currentUser) return null;
+    const metadata = currentUser.user_metadata || {};
+    return metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || null;
+}
+window.getCurrentUsernameForAlert = getCurrentUsernameForAlert;
+
+function showLicenseActivatedModal(license) {
+    if (!license || !license.license_key) return;
+    const modal = document.getElementById('user-license-activated-modal');
+    if (!modal) return;
+
+    const keyDisplay = document.getElementById('user-popup-key-display');
+    const durDisplay = document.getElementById('user-popup-duration-display');
+
+    if (keyDisplay) keyDisplay.textContent = license.license_key;
+
+    // Parse duration
+    let durText = "სტატუსი: აქტიური";
+    if (license.note && license.note.includes("Duration:")) {
+        const match = license.note.match(/Duration:\s*([^\s|]+)/);
+        if (match && match[1]) {
+            durText = `ვადა: ${match[1]} დღე`;
+        }
+    } else if (license.expires_at) {
+        if (String(license.expires_at).startsWith("2099")) {
+            durText = "ვადა: Lifetime (სამუდამო)";
+        } else {
+            const expDate = new Date(license.expires_at);
+            if (!isNaN(expDate.getTime())) {
+                const daysLeft = Math.max(0, Math.ceil((expDate - new Date()) / (1000 * 60 * 60 * 24)));
+                durText = daysLeft > 0 ? `ვადა: ${daysLeft} დღე` : "ვადა: 1 დღე";
+            }
+        }
+    }
+    if (durDisplay) durDisplay.textContent = durText;
+
+    modal.classList.remove('hidden');
+
+    // Mark as seen in localStorage immediately so it won't repeat on refresh
+    try {
+        localStorage.setItem('pulse_notified_key_' + license.license_key, 'seen');
+    } catch (_) {}
+}
+window.showLicenseActivatedModal = showLicenseActivatedModal;
+
+function closeLicenseActivatedModal() {
+    const modal = document.getElementById('user-license-activated-modal');
+    if (modal) modal.classList.add('hidden');
+}
+window.closeLicenseActivatedModal = closeLicenseActivatedModal;
+
+function copyUserPopupKey() {
+    const keyDisplay = document.getElementById('user-popup-key-display');
+    const btn = document.getElementById('user-popup-copy-btn');
+    if (!keyDisplay) return;
+
+    const keyText = keyDisplay.textContent.trim();
+    if (!keyText || keyText.includes('XXXX')) return;
+
+    navigator.clipboard.writeText(keyText).then(() => {
+        if (btn) {
+            const origHtml = btn.innerHTML;
+            btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>✔ კოპირებულია!</span>`;
+            btn.style.background = '#10b981';
+            btn.style.color = '#ffffff';
+            setTimeout(() => {
+                btn.innerHTML = origHtml;
+                btn.style.background = '#ffffff';
+                btn.style.color = '#07080b';
+            }, 2000);
+        }
+    }).catch(() => {
+        if (typeof showBanner === 'function') showBanner("კოპირება ვერ მოხერხდა", "error");
+    });
+}
+window.copyUserPopupKey = copyUserPopupKey;
+
+// Checks a list of user licenses and displays popup for any unseen one
+function checkNewLicensesFromList(licenses) {
+    if (!Array.isArray(licenses) || licenses.length === 0) return;
+    const username = getCurrentUsernameForAlert();
+    if (!username) return;
+
+    // Look for the latest active license
+    const latest = licenses[0];
+    if (!latest || !latest.license_key) return;
+
+    const storageKey = 'pulse_notified_key_' + latest.license_key;
+    if (!localStorage.getItem(storageKey)) {
+        showLicenseActivatedModal(latest);
+    }
+}
+window.checkNewLicensesFromList = checkNewLicensesFromList;
+
+// Background poller for live active tabs
+async function pollLiveLicenseAlerts() {
+    try {
+        const username = getCurrentUsernameForAlert();
+        if (!username || typeof supabaseClient === 'undefined') return;
+
+        const { data: userLics, error } = await supabaseClient
+            .from('licenses')
+            .select('*')
+            .like('note', `%Buyer: ${username}%`)
+            .order('id', { ascending: false })
+            .limit(1);
+
+        if (!error && userLics && userLics.length > 0) {
+            checkNewLicensesFromList(userLics);
+        }
+    } catch (_) {
+        // silent polling catch
+    }
+}
+window.pollLiveLicenseAlerts = pollLiveLicenseAlerts;
+
+// Initialize Realtime & Poller
+function initLicenseAlertListener() {
+    // 1. Supabase Realtime WebSocket listener
+    try {
+        if (typeof supabaseClient !== 'undefined' && typeof supabaseClient.channel === 'function') {
+            supabaseClient
+                .channel('realtime:pulse_license_live_alerts')
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'licenses'
+                }, (payload) => {
+                    if (payload && payload.new) {
+                        const newLic = payload.new;
+                        const username = getCurrentUsernameForAlert();
+                        if (username && newLic.note && newLic.note.includes(`Buyer: ${username}`)) {
+                            showLicenseActivatedModal(newLic);
+                        }
+                    }
+                })
+                .subscribe();
+        }
+    } catch (rtErr) {
+        console.warn("[LiveAlerts] Realtime subscription init notice:", rtErr);
+    }
+
+    // 2. Poll every 12 seconds for tabs that are active
+    setInterval(pollLiveLicenseAlerts, 12000);
+
+    // 3. Initial check after boot
+    setTimeout(pollLiveLicenseAlerts, 2000);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLicenseAlertListener);
+} else {
+    initLicenseAlertListener();
+}
+
