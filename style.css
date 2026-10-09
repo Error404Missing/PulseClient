@@ -1848,6 +1848,137 @@ h3 {
     box-shadow: 0 6px 22px rgba(255, 255, 255, 0.25);
 }
 
+/* ==========================================================================
+   Pulse OpSec Trace Cleaner Card & Actions
+   ========================================================================== */
+.cleaner-card {
+    margin-top: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 20px !important;
+    padding: 22px 24px !important;
+    border-radius: 16px !important;
+}
+
+.cleaner-card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    pointer-events: none;
+}
+
+.cleaner-logo-wrap {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 14px !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    padding: 4px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.cleaner-logo-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 10px !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+.cleaner-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cleaner-desc-text {
+    color: var(--text-secondary, #a1a1aa);
+    max-width: 480px;
+    display: block;
+    font-size: 13px;
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+.cleaner-actions-group {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+.cleaner-btn-exe {
+    text-decoration: none !important;
+    padding: 9px 18px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15) !important;
+}
+
+.cleaner-btn-bat,
+.cleaner-btn-copy {
+    text-decoration: none !important;
+    padding: 9px 14px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+}
+
+@media (max-width: 980px) {
+    .cleaner-card {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px !important;
+    }
+    .cleaner-card .card-left {
+        width: 100% !important;
+    }
+    .cleaner-actions-group {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    .cleaner-actions-group > * {
+        flex: 1 1 auto !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .cleaner-actions-group {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    .cleaner-actions-group > * {
+        width: 100% !important;
+    }
+}
+
 /* Sections */
 .quick-start-section, .launchers-section {
     background: var(--krypton-bg-card);
