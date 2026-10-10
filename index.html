@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=718.0.0">
+    <link rel="stylesheet" href="style.css?v=720.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1883,33 +1883,33 @@
                 </div>
             </div>
         </section>
+        
+        <!-- FAQ Section (Landing Page Only) -->
+        <section id="faq" class="faq view">
+            <div class="section-header">
+                <h2>ხშირად დასმული კითხვები</h2>
+            </div>
+            <div class="faq-list">
+                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                    <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები? <span class="faq-toggle-icon">+</span></h4>
+                    <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშირეთ ის აქ, დეშბორდზე.</p>
+                </div>
+                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                    <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ? <span class="faq-toggle-icon">+</span></h4>
+                    <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
+                </div>
+                <div class="glass-panel faq-item" onclick="toggleFaq(event)">
+                    <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო? <span class="faq-toggle-icon">+</span></h4>
+                    <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 PulseClient. ყველა უფლება დაცულია. არ არის აფილირებული Mojang AB-თან.</p>
+        </footer>
     </main>
-
-    <!-- FAQ Section (Landing Page Only) -->
-    <section id="faq" class="faq view">
-        <div class="section-header">
-            <h2>ხშირად დასმული კითხვები</h2>
-        </div>
-        <div class="faq-list">
-            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                <h4>როგორ მივიღო ჩემი ლიცენზიის გასაღები? <span class="faq-toggle-icon">+</span></h4>
-                <p>ტარიფის შეძენის შემდეგ, თქვენ შეგიძლიათ გასაღები პირდაპირ ჩვენს Discord სერვერზე ბოტის ბრძანებებით შექმნათ, ან დააკავშირეთ ის აქ, დეშბორდზე.</p>
-            </div>
-            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                <h4>სად უნდა ჩავწერო გასაღები სათამაშოდ? <span class="faq-toggle-icon">+</span></h4>
-                <p>როდესაც Minecraft-ს მოდით ჩართავთ, გამოჩნდება სპეციალური მუქი ფანჯარა, რომელიც მოგთხოვთ გასაღებს. ჩაწერეთ ის იქ და დააჭირეთ Activate! გასაღები ავტომატურად დაემატება და შეინახება.</p>
-            </div>
-            <div class="glass-panel faq-item" onclick="toggleFaq(event)">
-                <h4>შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო? <span class="faq-toggle-icon">+</span></h4>
-                <p>გასაღების გაზიარების თავიდან ასაცილებლად, ყოველი გასაღები ებმება პირველივე კომპიუტერის HWID კოდს, რომელზეც გააქტიურდება. HWID-ის განულება შეგიძლიათ ჩვენს Discord სერვერზე მხარდაჭერის ჯგუფთან დაკავშირებით.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 PulseClient. ყველა უფლება დაცულია. არ არის აფილირებული Mojang AB-თან.</p>
-    </footer>
 
     <!-- Floating Discord Button -->
     <a href="https://discord.gg/kAFr2Bpyxw" target="_blank" rel="noopener noreferrer" class="discord-float" aria-label="PulseClient Discord სერვერი">
@@ -2820,7 +2820,7 @@
 
     <!-- App Configuration and Logic script -->
     <script src="i18n.js?v=373.0.0"></script>
-    <script src="app.js?v=719.0.0"></script>
+    <script src="app.js?v=720.0.0"></script>
 </body>
 </html>
 <!-- Deploy trigger timestamp: 1790350000 -->

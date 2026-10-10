@@ -613,9 +613,9 @@ window.goToFreeTrial = goToFreeTrial;
 let isVpnBlocked = false;
 
 // Comprehensive Datacenter, Hosting, Cloud, and VPN Provider Signatures
-const HOSTING_DATACENTER_REGEX = /(?:vpn|proxy|tor|datacenter|hosting|cloud|colocation|dedicated|vps|m247|ovh|digitalocean|linode|hetzner|vultr|leaseweb|choopa|packetexchange|hydra|cloudflare|fastly|akamai|amazon|aws|google cloud|microsoft|azure|oracle|alibaba|datacamp|cogent|clouvider|datapacket|servers\.com|hostinger|contabo|scaleway|zenlayer|kamatera|selectel|cherry|creanova|tzulo|reliablesite|fdcservers|worldstream|smartdc|quadranet|gcore|packethub|serverius|i3d|equinix|intergrid|terrahost|buyvm|pureservers|latitude|hostroyale|hostwinds|colocrossing|internap|nord|expressvpn|surfshark|mullvad|proton|cyberghost|windscribe|purevpn|tunnelbear|ipvanish|shadowsocks|wireguard|openvpn|socks5|relay|anonymizer|tunnel|exitnode)/i;
+const HOSTING_DATACENTER_REGEX = /\b(?:vpn|proxy|tor|datacenter|vps|m247|ovh|digitalocean|linode|hetzner|vultr|leaseweb|choopa|datacamp|cogent|clouvider|datapacket|hostinger|contabo|scaleway|zenlayer|kamatera|reliablesite|fdcservers|worldstream|smartdc|quadranet|serverius|buyvm|hostwinds|colocrossing|internap|nord|expressvpn|surfshark|mullvad|proton|cyberghost|windscribe|purevpn|tunnelbear|ipvanish|shadowsocks|wireguard|openvpn|socks5|exitnode)\b/i;
 
-// WebRTC Candidate Public IP detector to catch VPN tunnel leaks
+// WebRTC Candidate Public IP detector
 function getWebRtcCandidateIp() {
     return new Promise((resolve) => {
         try {
@@ -678,7 +678,7 @@ async function checkVpnProxy() {
             .finally(() => clearTimeout(id));
     };
 
-    // Layer 1: freeipapi.com (Fast client IP resolution + isProxy + ASN check)
+    // Layer 1: freeipapi.com (Client IP resolution + isProxy + ASN check)
     try {
         const res = await fetchWithTimeout('https://freeipapi.com/api/json/');
         if (res.ok) {
@@ -720,9 +720,9 @@ async function checkVpnProxy() {
                 if (!detectedIp && data.ip) detectedIp = data.ip;
                 const risk = data.risk || {};
                 const isp = data.isp || {};
-                if (risk.is_vpn || risk.is_tor || risk.is_proxy || risk.is_datacenter || (risk.risk_score && risk.risk_score >= 50)) {
+                if (risk.is_vpn || risk.is_tor || risk.is_proxy || (risk.risk_score && risk.risk_score >= 80)) {
                     isFlagged = true;
-                    reasons.push(`IPQuery risk flag (VPN: ${risk.is_vpn}, Proxy: ${risk.is_proxy}, Datacenter: ${risk.is_datacenter})`);
+                    reasons.push(`IPQuery risk flag (VPN: ${risk.is_vpn}, Proxy: ${risk.is_proxy})`);
                 }
                 const ispDetails = `${isp.org || ''} ${isp.isp || ''} ${isp.asn || ''}`;
                 if (HOSTING_DATACENTER_REGEX.test(ispDetails)) {
@@ -743,9 +743,9 @@ async function checkVpnProxy() {
                 if (!detectedIp && data.ip) detectedIp = data.ip;
                 const conn = data.connection || {};
                 const sec = data.security || {};
-                if (sec.vpn || sec.proxy || sec.tor || sec.hosting) {
+                if (sec.vpn || sec.proxy || sec.tor) {
                     isFlagged = true;
-                    reasons.push('ipwho.is security flag');
+                    reasons.push('ipwho.is security flag (vpn/proxy/tor)');
                 }
                 const connStr = `${conn.org || ''} ${conn.isp || ''} ${conn.domain || ''}`;
                 if (HOSTING_DATACENTER_REGEX.test(connStr)) {
@@ -755,18 +755,6 @@ async function checkVpnProxy() {
             }
         } catch (e) {}
     }
-
-    // Layer 5: WebRTC Tunnel Leak Detection
-    try {
-        const webrtcIp = await Promise.race([
-            getWebRtcCandidateIp(),
-            new Promise(r => setTimeout(() => r(null), 1200))
-        ]);
-        if (webrtcIp && detectedIp && webrtcIp !== detectedIp) {
-            isFlagged = true;
-            reasons.push(`WebRTC tunnel mismatch (WebRTC: ${webrtcIp}, HTTP: ${detectedIp})`);
-        }
-    } catch (e) {}
 
     if (isFlagged) {
         console.warn(`[PulseGuard] Anti-VPN / Anti-Proxy BLOCKED! Reasons:`, reasons);
@@ -794,6 +782,10 @@ function enforceVpnLock() {
     if (navProfile) navProfile.classList.add('hidden');
     const navDashBtn = document.getElementById('nav-dashboard-link');
     if (navDashBtn) navDashBtn.classList.add('hidden');
+    const faqSec = document.getElementById('faq');
+    if (faqSec) faqSec.classList.add('hidden');
+    const footerEl = document.querySelector('footer');
+    if (footerEl) footerEl.classList.add('hidden');
 }
 
 function releaseVpnLock() {
@@ -801,6 +793,10 @@ function releaseVpnLock() {
     document.body.classList.remove('vpn-locked');
     if (vpnBlockPage) vpnBlockPage.classList.add('hidden');
     sessionStorage.removeItem('pulse_vpn_blocked');
+    const faqSec = document.getElementById('faq');
+    if (faqSec) faqSec.classList.remove('hidden');
+    const footerEl = document.querySelector('footer');
+    if (footerEl) footerEl.classList.remove('hidden');
 }
 window.enforceVpnLock = enforceVpnLock;
 window.releaseVpnLock = releaseVpnLock;
