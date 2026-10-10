@@ -136,6 +136,10 @@ const PULSE_API_PRIMARY = 'https://api.pulseclient.xyz';
 const PULSE_API_FALLBACK = 'https://errormissing-pulse-bot.hf.space';
 
 async function pulseApiFetch(urlOrPath, options = {}) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+        console.warn("[PulseGuard] Outgoing API request blocked due to active VPN barrier:", urlOrPath);
+        throw new Error("Action blocked by Anti-VPN Protection");
+    }
     let path = urlOrPath;
     if (path.startsWith('https://errormissing-pulse-bot.hf.space')) {
         path = path.replace('https://errormissing-pulse-bot.hf.space', '');
@@ -649,10 +653,17 @@ function getWebRtcCandidateIp() {
 
 // Multi-layered Anti-VPN & Anti-Proxy Intelligence Engine
 async function checkVpnProxy() {
-    if (typeof isAdmin === 'function' && isAdmin()) return false;
+    if (typeof isAdmin === 'function' && isAdmin()) {
+        if (typeof releaseVpnLock === 'function') releaseVpnLock();
+        return false;
+    }
 
     // Check if previously flagged in this session
     if (sessionStorage.getItem('pulse_vpn_blocked') === 'true') {
+        if (typeof isAdmin === 'function' && isAdmin()) {
+            if (typeof releaseVpnLock === 'function') releaseVpnLock();
+            return false;
+        }
         return true;
     }
 
@@ -767,30 +778,46 @@ async function checkVpnProxy() {
     return false;
 }
 
+function enforceVpnLock() {
+    if (typeof isAdmin === 'function' && isAdmin()) {
+        releaseVpnLock();
+        return;
+    }
+    isVpnBlocked = true;
+    document.body.classList.add('vpn-locked');
+    if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
+    if (authGatePage) authGatePage.classList.add('hidden');
+    if (landingPage) landingPage.classList.add('hidden');
+    if (dashboardPage) dashboardPage.classList.add('hidden');
+    if (navLinks) navLinks.classList.add('hidden');
+    const navProfile = document.getElementById('nav-user-profile');
+    if (navProfile) navProfile.classList.add('hidden');
+    const navDashBtn = document.getElementById('nav-dashboard-link');
+    if (navDashBtn) navDashBtn.classList.add('hidden');
+}
+
+function releaseVpnLock() {
+    isVpnBlocked = false;
+    document.body.classList.remove('vpn-locked');
+    if (vpnBlockPage) vpnBlockPage.classList.add('hidden');
+    sessionStorage.removeItem('pulse_vpn_blocked');
+}
+window.enforceVpnLock = enforceVpnLock;
+window.releaseVpnLock = releaseVpnLock;
+
 // App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     // Immediate pre-render barrier if flagged in current session
     if (sessionStorage.getItem('pulse_vpn_blocked') === 'true' && !(typeof isAdmin === 'function' && isAdmin())) {
-        isVpnBlocked = true;
-        if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
-        if (authGatePage) authGatePage.classList.add('hidden');
-        if (landingPage) landingPage.classList.add('hidden');
-        if (dashboardPage) dashboardPage.classList.add('hidden');
-        if (navLinks) navLinks.classList.add('hidden');
+        enforceVpnLock();
     }
 
     // Check for VPN / Proxy in background
     checkVpnProxy().then(isVpn => {
         if (isVpn && !(typeof isAdmin === 'function' && isAdmin())) {
-            isVpnBlocked = true;
-            if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
-            if (authGatePage) authGatePage.classList.add('hidden');
-            if (landingPage) landingPage.classList.add('hidden');
-            if (dashboardPage) dashboardPage.classList.add('hidden');
-            if (navLinks) navLinks.classList.add('hidden');
-        } else if (!isVpn) {
-            isVpnBlocked = false;
-            if (vpnBlockPage) vpnBlockPage.classList.add('hidden');
+            enforceVpnLock();
+        } else if (!isVpn || (typeof isAdmin === 'function' && isAdmin())) {
+            releaseVpnLock();
             if (!currentUser) {
                 if (authGatePage) authGatePage.classList.remove('hidden');
                 if (landingPage) landingPage.classList.add('hidden');
@@ -1105,14 +1132,22 @@ function handleAvatarError(img, discordId = null) {
 window.handleAvatarError = handleAvatarError;
 
 async function handleUserSignIn(user) {
+    currentUser = user;
+
+    // Admin & Owner bypass Anti-VPN barrier completely
+    if (isAdmin()) {
+        releaseVpnLock();
+    } else if (isVpnBlocked || sessionStorage.getItem('pulse_vpn_blocked') === 'true') {
+        enforceVpnLock();
+        return;
+    }
+
     // Check Blacklist first
     const banRecord = await checkUserBlacklist(user);
     if (banRecord) {
         handleUserBanEnforcement(banRecord);
         return;
     }
-
-    currentUser = user;
     
     // Get Discord Profile Details
     const metadata = user.user_metadata || {};
@@ -1755,6 +1790,10 @@ function scrollToAuth() {
 window.scrollToAuth = scrollToAuth;
 // Sidebar Dashboard Tab Switcher
 function switchDashTab(event, tabId, shouldScroll = true) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+        if (typeof enforceVpnLock === 'function') enforceVpnLock();
+        return;
+    }
     if (event && event.preventDefault) event.preventDefault();
     if (!tabId) tabId = 'tab-downloads';
     
@@ -1903,6 +1942,10 @@ window.toggleFaq = toggleFaq;
 // Navigate to landing page sections from navbar/logo
 function navigateToLandingSection(event, sectionId) {
     if (event && event.preventDefault) event.preventDefault();
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+        if (typeof enforceVpnLock === 'function') enforceVpnLock();
+        return;
+    }
     
     if (!currentUser) {
         if (authGatePage) authGatePage.classList.remove('hidden');
@@ -1934,6 +1977,10 @@ function navigateToLandingSection(event, sectionId) {
 window.navigateToLandingSection = navigateToLandingSection;
 
 function showLanding() {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+        if (typeof enforceVpnLock === 'function') enforceVpnLock();
+        return;
+    }
     if (!currentUser) {
         if (authGatePage) authGatePage.classList.remove('hidden');
         if (landingPage) landingPage.classList.add('hidden');
@@ -1951,6 +1998,10 @@ window.showLanding = showLanding;
 
 // Show dashboard view
 function showDashboard() {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+        if (typeof enforceVpnLock === 'function') enforceVpnLock();
+        return;
+    }
     if (!currentUser) {
         if (authGatePage) authGatePage.classList.remove('hidden');
         landingPage.classList.add('hidden');
@@ -1977,7 +2028,7 @@ function isOwner() {
     const discordId = String(getDiscordId(currentUser) || "");
     const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
     if (OWNER_DISCORD_IDS.includes(discordId)) return true;
-    if (username === "sticky._.1" || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
     return false;
 }
 
@@ -1987,7 +2038,7 @@ function isAdmin() {
     const discordId = String(getDiscordId(currentUser) || "");
     const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
     if (ADMIN_DISCORD_IDS.includes(discordId)) return true;
-    if (username === "sticky._.1" || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
     return false;
 }
 
@@ -2220,7 +2271,7 @@ function renderActiveSessions(sessions) {
         const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="სრული აპარატურის ნახვა" style="background: rgba(0, 240, 255, 0.08) !important; color: #00f0ff !important; border: 1px solid rgba(0, 240, 255, 0.28) !important; padding: 4px 10px !important; border-radius: 8px !important; font-size: 11.5px !important; font-weight: 600 !important; cursor: pointer !important; outline: none !important; display: inline-flex !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important; text-shadow: none !important; font-family: inherit !important; box-shadow: none !important;">${osIcon} ${specsLabel}</button>`;
 
         // Trust & Anti-Alt Badge
-        const isOwnerDevice = buyer === 'sticky._.1' || buyer === 'Error404Missing';
+        const isOwnerDevice = (buyer && buyer.toLowerCase().includes('sticky')) || buyer === 'Error404Missing';
         let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა" style="background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">100%</span>`;
         if (isOwnerDevice) {
             trustBadge = `<span class="trust-badge trust-owner" title="Owner / Developer Device" style="background: rgba(234, 179, 8, 0.15) !important; border: 1px solid rgba(234, 179, 8, 0.35) !important; color: #facc15 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">Owner</span>`;
@@ -2356,7 +2407,7 @@ function showAdminHardwareModal(sessionId) {
     const altsBox = document.getElementById('modal-hw-alts-box');
     const altsList = document.getElementById('modal-hw-alts-list');
 
-    const isOwnerDev = buyer === 'sticky._.1' || buyer === 'Error404Missing';
+    const isOwnerDev = (buyer && buyer.toLowerCase().includes('sticky')) || buyer === 'Error404Missing';
     if (isOwnerDev) {
         if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-owner">Owner / Developer Device</span>';
         if (altsBox) altsBox.classList.add('hidden');
@@ -5553,6 +5604,7 @@ async function checkUserBlacklist(user) {
 }
 
 function handleUserBanEnforcement(ban) {
+    document.body.classList.add('banned-locked');
     const bannedPage = document.getElementById('banned-page');
     const banReasonText = document.getElementById('ban-reason-text');
     if (banReasonText && ban.reason) {

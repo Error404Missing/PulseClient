@@ -5549,6 +5549,56 @@ body, html {
     padding: 40px 20px;
 }
 
+/* ==========================================================================
+   Hard Lockdown Fullscreen Barriers (Anti-VPN & Permanent Blacklist)
+   ========================================================================== */
+#vpn-block-page,
+#banned-page {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999999 !important;
+    background: radial-gradient(circle at 50% 25%, rgba(239, 68, 68, 0.15), transparent 75%), #050508 !important;
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+    pointer-events: auto !important;
+}
+
+#vpn-block-page.hidden,
+#banned-page.hidden {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+body.vpn-locked,
+body.banned-locked {
+    overflow: hidden !important;
+}
+
+body.vpn-locked .navbar,
+body.vpn-locked .discord-float,
+body.vpn-locked #landing-page,
+body.vpn-locked #dashboard-page,
+body.vpn-locked #auth-gate-page,
+body.banned-locked .navbar,
+body.banned-locked .discord-float,
+body.banned-locked #landing-page,
+body.banned-locked #dashboard-page,
+body.banned-locked #auth-gate-page {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 .auth-gate-container {
     width: 100%;
     max-width: 500px;
