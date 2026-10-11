@@ -7477,6 +7477,601 @@ button.specs-chip:hover,
     color: #ffffff !important;
 }
 
+/* ==========================================================================
+   NEXT-GEN LIVING CYBER VISUALS & ANIMATION ENGINE (MAXIMUM IMMERSION)
+   ========================================================================== */
+
+/* 1. Dynamic Background Aurora & Scanlines */
+.bg-aurora-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.aurora-beam {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.65;
+    will-change: transform, opacity;
+    mix-blend-mode: screen;
+}
+
+.aurora-1 {
+    width: 650px;
+    height: 650px;
+    top: -100px;
+    left: 15%;
+    background: radial-gradient(circle, rgba(225, 29, 72, 0.12) 0%, rgba(244, 63, 94, 0.04) 45%, transparent 70%);
+    animation: auroraBreathe1 15s ease-in-out infinite alternate;
+}
+
+.aurora-2 {
+    width: 750px;
+    height: 750px;
+    top: 35%;
+    right: -50px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(225, 29, 72, 0.03) 50%, transparent 75%);
+    animation: auroraBreathe2 19s ease-in-out infinite alternate;
+}
+
+.aurora-3 {
+    width: 620px;
+    height: 620px;
+    bottom: -80px;
+    left: 20%;
+    background: radial-gradient(circle, rgba(244, 63, 94, 0.09) 0%, rgba(255, 45, 85, 0.02) 40%, transparent 70%);
+    animation: auroraBreathe3 17s ease-in-out infinite alternate;
+}
+
+.bg-scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 26, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+    background-size: 100% 4px;
+    opacity: 0.28;
+}
+
+/* 2. Hero Title Chromatic Shimmer & Sonar Radar */
+.highlight {
+    background: linear-gradient(115deg, #ffffff 0%, #ff2a5f 22%, #ff6b8b 42%, #ffffff 62%, #ff2a5f 82%, #ffffff 100%) !important;
+    background-size: 260% auto !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: textShimmerSweep 5s linear infinite !important;
+    font-weight: 800 !important;
+    filter: drop-shadow(0 0 18px rgba(255, 42, 95, 0.38)) !important;
+}
+
+.badge-radar-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff2a5f;
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 0 10px #ff2a5f;
+    position: relative;
+}
+
+.badge-radar-dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid #ff2a5f;
+    animation: sonarPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* 3. Global Spotlight Border System (Tracks --mouse-x, --mouse-y) */
+.glass-panel::after,
+.dqrkis-team-card::after,
+.feature-card::after,
+.pricing-card::after,
+.anticheat-card::after,
+.setup-card::after,
+.krypton-download-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(244, 63, 94, 0.5), transparent 70%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.glass-panel:hover::after,
+.dqrkis-team-card:hover::after,
+.feature-card:hover::after,
+.pricing-card:hover::after,
+.anticheat-card:hover::after,
+.setup-card:hover::after,
+.krypton-download-card:hover::after {
+    opacity: 1;
+}
+
+/* 4. Creator Showcase Card 3D Depth & Holographic Sheen */
+.dqrkis-team-card {
+    transform-style: preserve-3d;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 35px rgba(244, 63, 94, 0.1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.dqrkis-team-card:hover {
+    box-shadow: 0 40px 95px rgba(0, 0, 0, 0.88), 0 0 50px rgba(244, 63, 94, 0.25) !important;
+    border-color: rgba(244, 63, 94, 0.35) !important;
+}
+
+.team-live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 14px;
+    border-radius: 99px;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: #4ade80;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.2);
+    transform: translateZ(12px);
+}
+
+.live-dot-ping {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    position: relative;
+    display: inline-block;
+}
+
+.live-dot-ping::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid #22c55e;
+    animation: sonarPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.dqrkis-avatar-box {
+    position: relative;
+    transform: translateZ(15px);
+}
+
+.avatar-orbit-ring {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 30px;
+}
+
+.avatar-orbit-ring.ring-a {
+    inset: -5px;
+    border: 1px dashed rgba(244, 63, 94, 0.45);
+    animation: rotateOrbit 16s linear infinite;
+}
+
+.avatar-orbit-ring.ring-b {
+    inset: -10px;
+    border-radius: 34px;
+    border: 1px dashed rgba(255, 255, 255, 0.16);
+    animation: rotateOrbitRev 24s linear infinite;
+}
+
+.card-foil-reflection {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(130deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    transform: translate(-130%, -130%);
+    pointer-events: none;
+    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+.dqrkis-team-card:hover .card-foil-reflection {
+    transform: translate(130%, 130%);
+}
+
+/* 5. Setup Flow 3-Step Interactive Dynamics */
+.setup-chevron {
+    position: relative;
+    overflow: visible;
+}
+
+.chevron-laser-pulse {
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 10px #ffffff, 0 0 16px #f43f5e;
+    transform: translateY(-50%);
+    animation: laserTravel 2.4s infinite ease-in-out;
+}
+
+.setup-flow-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.flow-item-glow {
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.setup-flow-item:hover .flow-item-glow {
+    opacity: 1;
+}
+
+.setup-minecraft {
+    animation: floatIsometric 4.5s ease-in-out infinite;
+}
+
+.setup-minecraft:hover {
+    transform: translateY(-8px) scale(1.08) !important;
+    box-shadow: 0 20px 45px rgba(61, 155, 47, 0.6) !important;
+}
+
+.setup-discord:hover {
+    transform: translateY(-7px) scale(1.06) !important;
+    box-shadow: 0 20px 45px rgba(88, 101, 242, 0.6) !important;
+}
+
+.setup-windows:hover {
+    transform: translateY(-7px) scale(1.06) !important;
+    box-shadow: 0 20px 45px rgba(0, 120, 212, 0.6) !important;
+}
+
+/* 6. Features Grid Futuristic HUD Corners & Icon Levitation */
+.feature-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px) scale(1.015) !important;
+    border-color: rgba(244, 63, 94, 0.35) !important;
+    box-shadow: 0 26px 55px rgba(0, 0, 0, 0.75), 0 0 35px rgba(244, 63, 94, 0.16) !important;
+}
+
+.hud-corner-tl {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 12px;
+    height: 12px;
+    border-top: 1.5px solid rgba(244, 63, 94, 0.4);
+    border-left: 1.5px solid rgba(244, 63, 94, 0.4);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.hud-corner-br {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    border-bottom: 1.5px solid rgba(244, 63, 94, 0.4);
+    border-right: 1.5px solid rgba(244, 63, 94, 0.4);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .hud-corner-tl {
+    width: 20px;
+    height: 20px;
+    border-color: #f43f5e;
+}
+
+.feature-card:hover .hud-corner-br {
+    width: 20px;
+    height: 20px;
+    border-color: #f43f5e;
+}
+
+.feature-card .icon-wrapper {
+    position: relative;
+    animation: levitateIcon 4.5s ease-in-out infinite;
+}
+
+.icon-orbit-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background: radial-gradient(circle, rgba(244, 63, 94, 0.3) 0%, transparent 70%);
+    filter: blur(8px);
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+/* 7. Anticheat Scanner HUD: Laser Scanline & Live Signals */
+.anticheat-grid {
+    position: relative;
+    overflow: hidden;
+}
+
+.radar-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.8), #ffffff, rgba(0, 255, 136, 0.8), transparent);
+    box-shadow: 0 0 14px rgba(0, 255, 136, 0.8), 0 0 28px rgba(0, 255, 136, 0.4);
+    pointer-events: none;
+    z-index: 2;
+    animation: sweepRadarScan 5.5s infinite linear;
+}
+
+.live-status-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: rgba(0, 255, 136, 0.12) !important;
+    color: #00ff88 !important;
+    border: 1px solid rgba(0, 255, 136, 0.45) !important;
+    box-shadow: 0 0 16px rgba(0, 255, 136, 0.22) !important;
+}
+
+.badge-dot-ping {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff88;
+    position: relative;
+    display: inline-block;
+}
+
+.badge-dot-ping::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1px solid #00ff88;
+    animation: sonarPing 1.8s infinite;
+}
+
+.signal-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 11px;
+    margin-left: 3px;
+}
+
+.signal-bars .bar {
+    width: 2.5px;
+    background: #00ff88;
+    border-radius: 1px;
+}
+
+.signal-bars .b1 {
+    height: 5px;
+    animation: signalBounce 1.2s infinite ease-in-out;
+}
+
+.signal-bars .b2 {
+    height: 8px;
+    animation: signalBounce 1.2s infinite ease-in-out 0.2s;
+}
+
+.signal-bars .b3 {
+    height: 11px;
+    animation: signalBounce 1.2s infinite ease-in-out 0.4s;
+}
+
+/* 8. Pricing Lifetime Rotating Conic Laser Border */
+.pricing-card.popular {
+    position: relative;
+    border: 1px solid transparent !important;
+    background-clip: padding-box !important;
+}
+
+.conic-border-glow {
+    position: absolute;
+    inset: -2px;
+    border-radius: 30px;
+    background: conic-gradient(from 0deg, #f43f5e, #ffffff, #ff1e56, #00f5d4, #f43f5e);
+    z-index: -1;
+    animation: rotateConic 4s linear infinite;
+    filter: blur(3px);
+    opacity: 0.85;
+}
+
+.popular-ribbon-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(-25deg);
+    animation: ribbonSweep 3.5s infinite;
+    pointer-events: none;
+}
+
+/* 9. Auth Gate Page Cyber Orbit Rings */
+.auth-gate-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-gate-orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(244, 63, 94, 0.22);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.auth-gate-orbit-ring.ring-1 {
+    width: 480px;
+    height: 480px;
+    top: -140px;
+    right: -140px;
+    animation: rotateOrbit 30s linear infinite;
+}
+
+.auth-gate-orbit-ring.ring-2 {
+    width: 620px;
+    height: 620px;
+    bottom: -200px;
+    left: -200px;
+    animation: rotateOrbitRev 40s linear infinite;
+}
+
+.auth-gate-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.auth-gate-btn:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 12px 35px rgba(88, 101, 242, 0.5) !important;
+}
+
+/* 10. Dashboard Streak Card Fiery Flame Ambient */
+.user-streak-card {
+    position: relative;
+}
+
+.streak-flame-ambient {
+    position: absolute;
+    top: -45px;
+    right: -45px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(239, 68, 68, 0.15) 45%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(25px);
+    pointer-events: none;
+    animation: flamePulse 3s infinite alternate;
+}
+
+/* 11. Scroll Reveal Engine Classes */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+}
+
+.reveal-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* 12. Master Keyframe Animations */
+@keyframes textShimmerSweep {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes sonarPing {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes auroraBreathe1 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+    50% { transform: translate(40px, 30px) scale(1.15); opacity: 0.75; }
+    100% { transform: translate(-30px, -20px) scale(0.95); opacity: 0.5; }
+}
+
+@keyframes auroraBreathe2 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    50% { transform: translate(-35px, 35px) scale(1.12); opacity: 0.7; }
+    100% { transform: translate(25px, -30px) scale(0.92); opacity: 0.45; }
+}
+
+@keyframes auroraBreathe3 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    50% { transform: translate(30px, -25px) scale(1.1); opacity: 0.72; }
+    100% { transform: translate(-25px, 35px) scale(0.96); opacity: 0.48; }
+}
+
+@keyframes rotateOrbit {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateOrbitRev {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes laserTravel {
+    0% { left: -10px; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { left: 24px; opacity: 0; }
+}
+
+@keyframes floatIsometric {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(-1.5deg); }
+}
+
+@keyframes levitateIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes sweepRadarScan {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+@keyframes signalBounce {
+    0%, 100% { transform: scaleY(0.7); }
+    50% { transform: scaleY(1.3); }
+}
+
+@keyframes rotateConic {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes ribbonSweep {
+    0% { left: -100%; }
+    50%, 100% { left: 200%; }
+}
+
+@keyframes flamePulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.25); opacity: 0.9; }
+}
+
+
 
 
 

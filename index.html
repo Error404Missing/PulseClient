@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=721.0.0">
+    <link rel="stylesheet" href="style.css?v=800.0.0">
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -43,6 +43,12 @@
         <div class="blob blob-3"></div>
         <div class="blob blob-4"></div>
     </div>
+    <div class="bg-aurora-glow">
+        <div class="aurora-beam aurora-1"></div>
+        <div class="aurora-beam aurora-2"></div>
+        <div class="aurora-beam aurora-3"></div>
+    </div>
+    <div class="bg-scanlines"></div>
     <div class="bg-grid-overlay"></div>
     <canvas id="liquid-canvas"></canvas>
 
@@ -89,8 +95,10 @@
     <main id="auth-gate-page" class="view auth-gate-view">
         <div class="auth-gate-container">
             <div class="auth-gate-card glass-panel">
+                <div class="auth-gate-orbit-ring ring-1"></div>
+                <div class="auth-gate-orbit-ring ring-2"></div>
                 <div class="auth-gate-badge">
-                    <span class="auth-gate-dot"></span>
+                    <span class="auth-gate-dot"><span class="badge-dot-ping"></span></span>
                     <span data-i18n="authGate.badge">საჭიროა ავტორიზაცია</span>
                 </div>
                 <div class="auth-gate-logo-wrapper">
@@ -209,7 +217,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <div class="badge" data-i18n="hero.badge">V1.04 ახალი ვერსია</div>
+                <div class="badge" data-i18n="hero.badge"><span class="badge-radar-dot"></span>V1.04 ახალი ვერსია</div>
                 <h1 data-i18n-html="hero.title">იპოვე ნებისმიერი ბაზა <br><span class="highlight">Matrix & GrimAC Bypass</span></h1>
                 <p class="hero-desc" data-i18n="hero.desc">მოიპოვეთ სრული უპირატესობა Chunk Radar, Hole ESP, Storage Inspector და უსწრაფესი ბაზების ამოცნობით. შექმნილია ექსკლუზიურად ბაზების საპოვნელად.</p>
                 <div class="hero-actions">
@@ -248,11 +256,18 @@
                     </div>
 
                     <div class="dqrkis-team-card">
+                        <div class="team-live-pill">
+                            <span class="live-dot-ping"></span>
+                            <span class="live-text">ONLINE • DEV ACTIVE</span>
+                        </div>
                         <div class="dqrkis-avatar-box">
+                            <div class="avatar-orbit-ring ring-a"></div>
+                            <div class="avatar-orbit-ring ring-b"></div>
                             <img src="error404missing.png" alt="Error404Missing" class="dqrkis-avatar-img" onerror="this.src='https://static.wikia.nocookie.net/characterprofile/images/a/ad/L%28Death_Note%29.png/revision/latest?cb=20200502162511'">
                         </div>
                         <div class="dqrkis-role-badge">FOUNDER &amp; DEVELOPER</div>
                         <div class="dqrkis-name">Error404Missing</div>
+                        <div class="card-foil-reflection"></div>
                     </div>
                 </div>
             </div>
@@ -274,26 +289,31 @@
 
                     <div class="setup-flow">
                         <div class="setup-flow-item setup-discord" data-i18n-title="setup.discordTip" title="Discord-ით გასაღები">
+                            <div class="flow-item-glow"></div>
                             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
                             </svg>
                         </div>
 
                         <span class="setup-chevron" aria-hidden="true">
+                            <span class="chevron-laser-pulse"></span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
 
                         <div class="setup-flow-item setup-windows" data-i18n-title="setup.windowsTip" title="mods საქაღალდეში ჩაგდება">
+                            <div class="flow-item-glow"></div>
                             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M3 5.5 10.5 4.2v7.6H3V5.5zm0 8.1h7.5v7.6L3 19.9V13.6zm9-9.3L21 3v8.5h-9V4.3zm0 9.2H21V21l-9-1.4v-6.1z"/>
                             </svg>
                         </div>
 
                         <span class="setup-chevron" aria-hidden="true">
+                            <span class="chevron-laser-pulse"></span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
 
-                                                <div class="setup-flow-item setup-minecraft" data-i18n-title="setup.mcTip" title="Minecraft-ში თამაში">
+                        <div class="setup-flow-item setup-minecraft" data-i18n-title="setup.mcTip" title="Minecraft-ში თამაში">
+                            <div class="flow-item-glow"></div>
                             <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 38px; height: 38px;">
                                 <!-- Top isometric face (Grass/Emerald Top) -->
                                 <polygon points="16,2 30,9 16,16 2,9" fill="#5cb85c" stroke="#3d8b3d" stroke-width="0.8"/>
@@ -327,7 +347,10 @@
             <div class="features-grid">
                 <!-- Card 1 -->
                 <div class="glass-panel feature-card">
+                    <span class="hud-corner-tl"></span>
+                    <span class="hud-corner-br"></span>
                     <div class="icon-wrapper">
+                        <div class="icon-orbit-glow"></div>
                         <!-- Swords SVG -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline>
@@ -341,7 +364,10 @@
                 </div>
                 <!-- Card 2 -->
                 <div class="glass-panel feature-card">
+                    <span class="hud-corner-tl"></span>
+                    <span class="hud-corner-br"></span>
                     <div class="icon-wrapper">
+                        <div class="icon-orbit-glow"></div>
                         <!-- Eye SVG -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -353,7 +379,10 @@
                 </div>
                 <!-- Card 3 -->
                 <div class="glass-panel feature-card">
+                    <span class="hud-corner-tl"></span>
+                    <span class="hud-corner-br"></span>
                     <div class="icon-wrapper">
+                        <div class="icon-orbit-glow"></div>
                         <!-- Shield Lock SVG -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
@@ -366,7 +395,10 @@
                 </div>
                 <!-- Card 4 -->
                 <div class="glass-panel feature-card">
+                    <span class="hud-corner-tl"></span>
+                    <span class="hud-corner-br"></span>
                     <div class="icon-wrapper">
+                        <div class="icon-orbit-glow"></div>
                         <!-- Discord Icon SVG -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 9a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v5a5 5 0 0 0 5 5h1a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3h1a5 5 0 0 0 5-5V9z"></path>
@@ -387,12 +419,17 @@
                 <h2>Anti-Cheat შემოვლების სტატუსი</h2>
                 <p>ჩვენი სისტემა 24/7 რეჟიმში აკონტროლებს სერვერების ანტი-ჩითებს უსაფრთხო თამაშისთვის.</p>
             </div>
-            <div class="anticheat-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+            <div class="anticheat-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; position: relative;">
+                <div class="radar-scanline"></div>
                 <!-- Matrix Card -->
                 <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Matrix AntiCheat</h3>
-                        <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">UNDETECTED</span>
+                        <span class="status-badge live-status-badge">
+                            <span class="badge-dot-ping"></span>
+                            <span>UNDETECTED</span>
+                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
+                        </span>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; line-height: 1.5;">Matrix v6.8 Bypass: Reach, Velocity (0-80%), Timer, Speed & Scaffold სრულიად ამოუცნობია.</p>
                     <div style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
@@ -405,7 +442,11 @@
                 <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">GrimAC</h3>
-                        <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">UNDETECTED</span>
+                        <span class="status-badge live-status-badge">
+                            <span class="badge-dot-ping"></span>
+                            <span>UNDETECTED</span>
+                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
+                        </span>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; line-height: 1.5;">GrimAC Simulation Engine Bypass: Rotation Smoothness, Vector Prediction, Legit Reach (3.25).</p>
                     <div style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
@@ -418,7 +459,11 @@
                 <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Vulcan / Karhu</h3>
-                        <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">SUPPORTED</span>
+                        <span class="status-badge live-status-badge">
+                            <span class="badge-dot-ping"></span>
+                            <span>SUPPORTED</span>
+                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
+                        </span>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; line-height: 1.5;">FastBreak, AutoClicker (16-20 CPS), AimAssist და Movement მოდულები სრულად თავსებადია.</p>
                     <div style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
@@ -431,7 +476,11 @@
                 <div class="glass-panel anticheat-card" style="padding: 24px; border: 1px solid rgba(255, 255, 255, 0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                         <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Intave / Polar</h3>
-                        <span class="status-badge" style="background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;">SAFE</span>
+                        <span class="status-badge live-status-badge">
+                            <span class="badge-dot-ping"></span>
+                            <span>SAFE</span>
+                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
+                        </span>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; line-height: 1.5;">Legit Mode-ით თამაშისას სრულიად უსაფრთხოა მკაცრი შემოწმების მქონე სერვერებზეც.</p>
                     <div style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
@@ -498,6 +547,8 @@
                 </div>
                 <!-- Lifetime (Recommended) -->
                 <div class="glass-panel pricing-card popular">
+                    <div class="conic-border-glow"></div>
+                    <div class="popular-ribbon-shine"></div>
                     <div class="popular-badge">რეკომენდებული</div>
                     <h3>სამუდამო ტარიფი</h3>
                     <div class="price">$9,99 <span>/ ერთჯერადი</span></div>
@@ -862,6 +913,7 @@
 
                             <!-- User Daily Streak & Bonus Rewards Card -->
                             <div id="user-streak-card" class="user-streak-card" style="margin-top: 16px; padding: 16px 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; position: relative; overflow: hidden;">
+                                <div class="streak-flame-ambient"></div>
                                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);"></div>
                                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
                                     <div style="display: flex; align-items: center; gap: 12px;">
@@ -2827,7 +2879,7 @@
 
     <!-- App Configuration and Logic script -->
     <script src="i18n.js?v=374.0.0"></script>
-    <script src="app.js?v=721.0.0"></script>
+    <script src="app.js?v=800.0.0"></script>
 </body>
 </html>
 <!-- Deploy trigger timestamp: 1790350000 -->

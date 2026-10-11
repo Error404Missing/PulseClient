@@ -7223,100 +7223,399 @@ function copyOpSecCleaner(btnEl) {
 window.copyOpSecCleaner = copyOpSecCleaner;
 
 // ==========================================
-// LIQUID WATER DROPLET & AMBIENT CANVAS
+// NEXT-GEN LIVING CYBER CANVAS & PARTICLES
 // ==========================================
 function initLiquidCanvas() {
     const canvas = document.getElementById("liquid-canvas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-    let mouse = { x: width / 2, y: height / 2, radius: 180 };
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.scale(dpr, dpr);
+    }
+    resize();
+
+    let mouse = { x: width / 2, y: height / 2, radius: 190, active: false };
+    const ripples = [];
 
     window.addEventListener("resize", () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
+        resize();
     });
 
     window.addEventListener("mousemove", (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
+        mouse.active = true;
     });
 
-    class Droplet {
+    window.addEventListener("mouseleave", () => {
+        mouse.active = false;
+    });
+
+    // Dynamic Shockwave on Click / Tap
+    window.addEventListener("pointerdown", (e) => {
+        // Only trigger on main body canvas or interactive targets
+        ripples.push({
+            x: e.clientX,
+            y: e.clientY,
+            radius: 2,
+            maxRadius: Math.min(width, 360),
+            speed: 7.5,
+            strength: 1.0,
+            color: Math.random() > 0.4 ? "244, 63, 94" : "255, 45, 85"
+        });
+        if (ripples.length > 8) ripples.shift();
+    });
+
+    const COLOR_PALETTES = [
+        { r: 244, g: 63, b: 94, name: "crimson" },     // Crimson Rose
+        { r: 255, g: 45, b: 85, name: "electric" },    // Electric Rose
+        { r: 255, g: 255, b: 255, name: "pearl" },     // Specular Pearl
+        { r: 0, g: 245, b: 212, name: "cyan" },        // Neon Cyber Cyan spark
+        { r: 255, g: 190, b: 11, name: "amber" }       // Warm Spark
+    ];
+
+    class CyberParticle {
         constructor() {
+            this.palette = COLOR_PALETTES[Math.floor(Math.random() * COLOR_PALETTES.length)];
             this.reset();
             this.y = Math.random() * height;
         }
+
         reset() {
             this.x = Math.random() * width;
-            this.y = height + 10 + Math.random() * 50;
-            this.size = Math.random() * 3.0 + 1.2;
-            this.speedY = Math.random() * 0.45 + 0.2;
-            this.speedX = (Math.random() - 0.5) * 0.25;
-            this.opacity = Math.random() * 0.35 + 0.15;
-            this.pulse = Math.random() * Math.PI;
+            this.y = height + 15 + Math.random() * 40;
+            this.size = Math.random() * 2.8 + 1.2;
+            this.baseSize = this.size;
+            this.speedY = Math.random() * 0.45 + 0.22;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.45 + 0.2;
+            this.pulse = Math.random() * Math.PI * 2;
+            this.pulseSpeed = Math.random() * 0.025 + 0.015;
+            this.waveAmp = Math.random() * 0.5 + 0.2;
+            this.vx = 0;
+            this.vy = 0;
         }
-        update() {
-            this.y -= this.speedY;
-            this.x += this.speedX + Math.sin(this.pulse) * 0.2;
-            this.pulse += 0.02;
 
-            // Mouse repulsion/attraction
-            const dx = mouse.x - this.x;
-            const dy = mouse.y - this.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < mouse.radius) {
-                const angle = Math.atan2(dy, dx);
-                this.x -= Math.cos(angle) * 1.2;
-                this.y -= Math.sin(angle) * 1.2;
+        update() {
+            // Apply residual physics impulse
+            this.vx *= 0.93;
+            this.vy *= 0.93;
+
+            this.y -= this.speedY - this.vy;
+            this.x += this.speedX + Math.sin(this.pulse) * this.waveAmp + this.vx;
+            this.pulse += this.pulseSpeed;
+
+            // Mouse proximity interactive physics (elastic deflection)
+            if (mouse.active) {
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouse.radius && dist > 1) {
+                    const force = (1 - dist / mouse.radius) * 1.8;
+                    const angle = Math.atan2(dy, dx);
+                    this.x -= Math.cos(angle) * force;
+                    this.y -= Math.sin(angle) * force;
+                }
             }
 
-            if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+            // Shockwave impulse interaction
+            for (let i = 0; i < ripples.length; i++) {
+                const rip = ripples[i];
+                const rdx = this.x - rip.x;
+                const rdy = this.y - rip.y;
+                const rDist = Math.sqrt(rdx * rdx + rdy * rdy);
+                const diff = Math.abs(rDist - rip.radius);
+                if (diff < 32 && rDist > 1) {
+                    const pushFactor = (1 - diff / 32) * rip.strength * 2.4;
+                    const angle = Math.atan2(rdy, rdx);
+                    this.vx += Math.cos(angle) * pushFactor;
+                    this.vy += Math.sin(angle) * pushFactor;
+                }
+            }
+
+            if (this.y < -30 || this.x < -30 || this.x > width + 30) {
                 this.reset();
             }
         }
+
         draw() {
+            const glowAlpha = Math.max(0.08, this.opacity * (0.8 + Math.sin(this.pulse) * 0.25));
+            const p = this.palette;
+
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            // Liquid droplet specular pearl glow
-            const grad = ctx.createRadialGradient(this.x - this.size * 0.3, this.y - this.size * 0.3, this.size * 0.1, this.x, this.y, this.size);
-            grad.addColorStop(0, `rgba(255, 255, 255, ${this.opacity + 0.25})`);
-            grad.addColorStop(0.5, `rgba(210, 215, 225, ${this.opacity * 0.6})`);
-            grad.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+            const grad = ctx.createRadialGradient(
+                this.x - this.size * 0.25,
+                this.y - this.size * 0.25,
+                0,
+                this.x,
+                this.y,
+                this.size * 1.8
+            );
+            grad.addColorStop(0, `rgba(${p.r}, ${p.g}, ${p.b}, ${glowAlpha})`);
+            grad.addColorStop(0.5, `rgba(${p.r}, ${p.g}, ${p.b}, ${glowAlpha * 0.45})`);
+            grad.addColorStop(1, `rgba(${p.r}, ${p.g}, ${p.b}, 0)`);
             ctx.fillStyle = grad;
             ctx.fill();
         }
     }
 
-    const count = Math.min(Math.floor(width / 28), 40);
-    const droplets = [];
+    const count = Math.min(Math.floor(width / 24), 48);
+    const particles = [];
     for (let i = 0; i < count; i++) {
-        droplets.push(new Droplet());
+        particles.push(new CyberParticle());
     }
 
     function render() {
         ctx.clearRect(0, 0, width, height);
 
-        // Ambient liquid cursor spotlight (subtle white luminescence)
-        const spotGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 320);
-        spotGrad.addColorStop(0, "rgba(255, 255, 255, 0.04)");
-        spotGrad.addColorStop(0.6, "rgba(255, 255, 255, 0.01)");
-        spotGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-        ctx.fillStyle = spotGrad;
-        ctx.fillRect(0, 0, width, height);
-
-        // Render floating droplets
-        for (let i = 0; i < droplets.length; i++) {
-            droplets[i].update();
-            droplets[i].draw();
+        // 1. Ambient mouse spotlight glow
+        if (mouse.active) {
+            const spotGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 340);
+            spotGrad.addColorStop(0, "rgba(244, 63, 94, 0.05)");
+            spotGrad.addColorStop(0.35, "rgba(225, 29, 72, 0.02)");
+            spotGrad.addColorStop(0.8, "rgba(255, 255, 255, 0.005)");
+            spotGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+            ctx.fillStyle = spotGrad;
+            ctx.fillRect(0, 0, width, height);
         }
+
+        // 2. Render expanding shockwave ripples
+        for (let i = ripples.length - 1; i >= 0; i--) {
+            const rip = ripples[i];
+            rip.radius += rip.speed;
+            rip.strength = Math.max(0, 1 - rip.radius / rip.maxRadius);
+
+            if (rip.strength <= 0 || rip.radius >= rip.maxRadius) {
+                ripples.splice(i, 1);
+                continue;
+            }
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(rip.x, rip.y, rip.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(${rip.color}, ${rip.strength * 0.35})`;
+            ctx.lineWidth = Math.max(1, 3.5 * rip.strength);
+            ctx.shadowColor = `rgba(${rip.color}, ${rip.strength * 0.8})`;
+            ctx.shadowBlur = 16;
+            ctx.stroke();
+
+            // Inner subtle specular ripple
+            if (rip.radius > 15) {
+                ctx.beginPath();
+                ctx.arc(rip.x, rip.y, Math.max(0, rip.radius - 8), 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${rip.strength * 0.18})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        // 3. Constellation connection lines between nearby particles
+        ctx.lineWidth = 0.55;
+        for (let i = 0; i < particles.length; i++) {
+            const pi = particles[i];
+            for (let j = i + 1; j < particles.length; j++) {
+                const pj = particles[j];
+                const dx = pi.x - pj.x;
+                const dy = pi.y - pj.y;
+                const distSq = dx * dx + dy * dy;
+                if (distSq < 7200) { // < ~85px
+                    const dist = Math.sqrt(distSq);
+                    const alpha = (1 - dist / 85) * 0.18;
+                    ctx.strokeStyle = `rgba(244, 63, 94, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.moveTo(pi.x, pi.y);
+                    ctx.lineTo(pj.x, pj.y);
+                    ctx.stroke();
+                }
+            }
+
+            // Connect particles to mouse cursor when close
+            if (mouse.active) {
+                const mdx = pi.x - mouse.x;
+                const mdy = pi.y - mouse.y;
+                const mDistSq = mdx * mdx + mdy * mdy;
+                if (mDistSq < 19600) { // < 140px
+                    const mDist = Math.sqrt(mDistSq);
+                    const mAlpha = (1 - mDist / 140) * 0.24;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${mAlpha})`;
+                    ctx.beginPath();
+                    ctx.moveTo(pi.x, pi.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // 4. Update and draw particles
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+
         requestAnimationFrame(render);
     }
     render();
 }
+
+// ==========================================
+// INTERACTIVE CARDS: SPOTLIGHT BORDERS & 3D TILT
+// ==========================================
+function initInteractiveCardEffects() {
+    const cardSelectors = [
+        '.glass-panel',
+        '.dqrkis-team-card',
+        '.feature-card',
+        '.pricing-card',
+        '.anticheat-card',
+        '.setup-card',
+        '.krypton-download-card',
+        '.step-card',
+        '.launcher-card',
+        '.user-streak-card',
+        '.user-playtime-card',
+        '.auth-gate-card'
+    ];
+
+    const cards = document.querySelectorAll(cardSelectors.join(', '));
+    cards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            // Apply 3D Perspective Tilt on Creator Showcase Card
+            if (card.classList.contains('dqrkis-team-card')) {
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -9;
+                const rotateY = ((x - centerX) / centerX) * 9;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(6px)`;
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.removeProperty('--mouse-x');
+            card.style.removeProperty('--mouse-y');
+            if (card.classList.contains('dqrkis-team-card')) {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+            }
+        });
+    });
+}
+
+// ==========================================
+// TACTILE CLICK SPARKS MICRO-BURST SYSTEM
+// ==========================================
+function initClickSparks() {
+    const SPARKS_COLORS = ['#f43f5e', '#ff1e56', '#ffffff', '#00f5d4', '#ffd166'];
+
+    window.addEventListener('pointerdown', (e) => {
+        // Target interactive elements like buttons, links, cards, pills
+        const target = e.target.closest('button, a, .glass-panel, .dqrkis-team-card, .btn, .lang-btn, .menu-item, input, select');
+        if (!target) return;
+
+        const count = 9;
+        const container = document.body;
+        const clickX = e.clientX;
+        const clickY = e.clientY;
+
+        for (let i = 0; i < count; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'click-spark-particle';
+            const color = SPARKS_COLORS[Math.floor(Math.random() * SPARKS_COLORS.length)];
+            const size = Math.random() * 4 + 2.5;
+            const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+            const distance = Math.random() * 38 + 18;
+            const destX = Math.cos(angle) * distance;
+            const destY = Math.sin(angle) * distance;
+
+            spark.style.cssText = `
+                position: fixed;
+                left: ${clickX}px;
+                top: ${clickY}px;
+                width: ${size}px;
+                height: ${size}px;
+                background-color: ${color};
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99999;
+                box-shadow: 0 0 8px ${color};
+                transform: translate(-50%, -50%) scale(1);
+                transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.55s ease-out;
+            `;
+
+            container.appendChild(spark);
+
+            requestAnimationFrame(() => {
+                spark.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
+                spark.style.opacity = '0';
+            });
+
+            setTimeout(() => {
+                if (spark.parentNode) spark.parentNode.removeChild(spark);
+            }, 600);
+        }
+    });
+}
+
+// ==========================================
+// SCROLL-TRIGGERED CINEMATIC REVEAL ENGINE
+// ==========================================
+function initScrollReveals() {
+    if (!('IntersectionObserver' in window)) return;
+
+    const revealSelectors = [
+        '.section-header',
+        '.feature-card',
+        '.anticheat-card',
+        '.pricing-card',
+        '.setup-card',
+        '.hero-tech-ticker',
+        '.dqrkis-team-card',
+        '.krypton-download-card'
+    ];
+
+    const elements = document.querySelectorAll(revealSelectors.join(', '));
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        },
+        { rootMargin: '0px 0px -50px 0px', threshold: 0.12 }
+    );
+
+    elements.forEach((el, index) => {
+        el.classList.add('reveal-on-scroll');
+        el.style.setProperty('--reveal-delay', `${(index % 4) * 0.08}s`);
+        observer.observe(el);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initLiquidCanvas();
+    initInteractiveCardEffects();
+    initClickSparks();
+    initScrollReveals();
     initEvilaClicker();
 });
 
