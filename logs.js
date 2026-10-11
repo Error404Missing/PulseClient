@@ -491,9 +491,11 @@ function getActionMeta(actionType) {
         case 'STAFF_LICENSE_CREATE':
             return { actionClass: 'action-create', actionLabel: 'ლიცენზიის შექმნა', actionIcon: '' };
         case 'STAFF_LICENSE_REVOKE':
-            return { actionClass: 'action-revoke', actionLabel: 'ლიცენზიის გაუქმება', actionIcon: '' };
+            return { actionClass: 'action-revoke', actionLabel: 'ლიცენზიის გაუქმება', actionIcon: '🚫' };
         case 'STAFF_LICENSE_ACTIVATE':
-            return { actionClass: 'action-activate', actionLabel: 'გააქტიურება', actionIcon: '' };
+            return { actionClass: 'action-activate', actionLabel: 'გააქტიურება', actionIcon: '✅' };
+        case 'OWNER_LICENSE_PERMANENT_DELETE':
+            return { actionClass: 'action-revoke', actionLabel: 'სამუდამოდ წაშლა', actionIcon: '🗑️' };
         case 'STAFF_HWID_RESET':
             return { actionClass: 'action-hwid', actionLabel: 'HWID განულება', actionIcon: '' };
         case 'STAFF_REMOTE_CMD':

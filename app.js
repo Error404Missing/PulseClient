@@ -97,6 +97,9 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
     } else if (tLower.includes("გაუქმებულია") || tLower.includes("revoke")) {
         actionType = "STAFF_LICENSE_REVOKE";
         severity = "warning";
+    } else if (tLower.includes("სამუდამოდ წაიშალა") || tLower.includes("purge") || tLower.includes("permanent delete")) {
+        actionType = "OWNER_LICENSE_PERMANENT_DELETE";
+        severity = "critical";
     } else if (tLower.includes("გააქტიურებულია") || tLower.includes("activate")) {
         actionType = "STAFF_LICENSE_ACTIVATE";
         severity = "info";
@@ -2021,19 +2024,70 @@ window.showDashboard = showDashboard;
 
 function isOwner() {
     if (!currentUser) return false;
-    const discordId = String(getDiscordId(currentUser) || "");
-    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
-    if (OWNER_DISCORD_IDS.includes(discordId)) return true;
+    
+    // 1. Direct Supabase User Auth ID check
+    if (currentUser.id === "5eb75030-bfff-4b1e-baa6-c8db8530ed70") return true;
+
+    const meta = currentUser.user_metadata || {};
+    const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
+    if (discordId && OWNER_DISCORD_IDS.includes(discordId)) return true;
+
+    // 2. Email verification
+    const email = String(currentUser.email || meta.email || "").toLowerCase();
+    if (email === "genksnow@gmail.com" || email.includes("error404") || email.includes("sticky")) return true;
+
+    // 3. Username extraction across Discord OAuth attributes
+    const username = String(
+        meta.user_name || 
+        meta.custom_claims?.username || 
+        meta.custom_claims?.global_name ||
+        meta.full_name || 
+        meta.name || 
+        meta.username || 
+        ""
+    ).toLowerCase();
+
     if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+
+    // 4. Fallback: Check navbar username text
+    const navUserEl = document.getElementById('nav-username');
+    if (navUserEl && navUserEl.textContent) {
+        const navText = navUserEl.textContent.trim().toLowerCase();
+        if (navText.includes("sticky") || navText === "errora" || navText.includes("error404") || navText.includes("udzlieresi")) return true;
+    }
+
+    // 5. Fallback: Check profile from allUserProfiles
+    if (Array.isArray(allUserProfiles) && allUserProfiles.length > 0) {
+        const prof = allUserProfiles.find(p => p.id === currentUser.id || (p.email && p.email === currentUser.email));
+        if (prof) {
+            const pDid = String(prof.discord_id || "");
+            const pUser = String(prof.username || "").toLowerCase();
+            if (OWNER_DISCORD_IDS.includes(pDid)) return true;
+            if (pUser.includes("sticky") || pUser.includes("error404")) return true;
+        }
+    }
+
     return false;
 }
 
 function isAdmin() {
     if (!currentUser) return false;
     if (isOwner()) return true;
-    const discordId = String(getDiscordId(currentUser) || "");
-    const username = String(currentUser.user_metadata?.user_name || currentUser.user_metadata?.username || currentUser.user_metadata?.name || "").toLowerCase();
+
+    const meta = currentUser.user_metadata || {};
+    const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
     if (ADMIN_DISCORD_IDS.includes(discordId)) return true;
+
+    const username = String(
+        meta.user_name || 
+        meta.custom_claims?.username || 
+        meta.custom_claims?.global_name ||
+        meta.full_name || 
+        meta.name || 
+        meta.username || 
+        ""
+    ).toLowerCase();
+
     if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
     return false;
 }
@@ -4181,6 +4235,11 @@ function renderAdminLicenses(licenses) {
             ? '<button type="button" class="btn-action btn-revoke" onclick="revokeLicense(\'' + lic.license_key + '\')" title="' + t('admin.actionRevoke') + '" aria-label="' + t('admin.actionRevoke') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></button>'
             : '<button type="button" class="btn-action btn-activate" onclick="activateLicense(\'' + lic.license_key + '\')" title="' + t('admin.actionActivate') + '" aria-label="' + t('admin.actionActivate') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></button>';
 
+        const isUserOwner = typeof isOwner === 'function' && isOwner();
+        const actionDeleteBtn = isUserOwner
+            ? '<button type="button" class="btn-action btn-delete" onclick="deleteLicensePermanently(\'' + lic.license_key + '\')" title="' + (t('admin.actionDelete') || 'სამუდამოდ წაშლა') + '" aria-label="' + (t('admin.actionDelete') || 'სამუდამოდ წაშლა') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>'
+            : '';
+
         const hwidDisabled = lic.hwid ? '' : 'disabled';
         const tr = document.createElement('tr');
         tr.innerHTML = [
@@ -4201,6 +4260,7 @@ function renderAdminLicenses(licenses) {
             '            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>',
             '        </button>',
             '        ' + actionRevokeBtn,
+            '        ' + actionDeleteBtn,
             '    </div>',
             '</td>'
         ].join('');
@@ -4585,6 +4645,103 @@ async function activateLicense(key) {
     } catch (err) {
         console.error("Error activating license:", err.message);
         showBanner(t("msg.activateFail") + err.message, "error");
+    }
+}
+
+async function deleteLicensePermanently(key) {
+    if (typeof isOwner !== 'function' || !isOwner()) {
+        showBanner("წვდომა შეზღუდულია: ეს ფუნქცია მხოლოდ მთავარი მფლობელისთვისაა ხელმისაწვდომი", "error");
+        return;
+    }
+
+    const confirmMsg = `${t("msg.deleteConfirm") || "ნამდვილად გსურთ ამ ლიცენზიის სამუდამოდ წაშლა Supabase მონაცემებიდან? ეს ქმედება შეუქცევადია და ლიცენზია ვეღარ აღდგება!\n\nგასაღები: "}${key}`;
+    const confirmed = await showCustomConfirm(t("confirm.title") || "დადასტურება", confirmMsg);
+    if (!confirmed) return;
+
+    try {
+        // 1. Delete associated client_sessions first to prevent orphaned records in Supabase
+        try {
+            await fetch(`${supabaseUrl}/rest/v1/client_sessions?license_key=eq.${encodeURIComponent(key)}`, {
+                method: "DELETE",
+                headers: {
+                    "apikey": supabaseKey,
+                    "Authorization": `Bearer ${supabaseKey}`
+                }
+            });
+        } catch (sessErr) {
+            console.warn("Could not delete associated client_sessions:", sessErr);
+        }
+
+        // 2. Delete license from Supabase licenses table
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${encodeURIComponent(key)}`, {
+            method: "DELETE",
+            headers: {
+                "apikey": supabaseKey,
+                "Authorization": `Bearer ${supabaseKey}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!res.ok) {
+            const errBody = await res.text();
+            throw new Error(errBody || `HTTP ${res.status}`);
+        }
+
+        // 3. Extra safeguard: run delete via supabaseClient if initialized
+        try {
+            if (window.supabaseClient) {
+                await window.supabaseClient.from('licenses').delete().eq('license_key', key);
+            }
+        } catch (scErr) {
+            console.warn("Supabase client delete safeguard:", scErr);
+        }
+
+        // 4. Update local state
+        adminLicenses = adminLicenses.filter(l => l.license_key !== key);
+        renderAdminLicenses(adminLicenses);
+        renderAdminLogs(adminLicenses);
+
+        // 5. Close info modal if opened for this license
+        const modalKeyEl = document.getElementById('modal-key');
+        if (modalKeyEl && modalKeyEl.textContent === key) {
+            closeLicenseModal();
+        }
+
+        // 6. Show success feedback
+        showBanner(t("msg.deleteSuccess") || "ლიცენზია წარმატებით წაიშალა Supabase ბაზიდან", "success");
+
+        // 7. Discord & Surveillance Audit Logs
+        const ownerName = currentUser ? (currentUser.user_metadata?.user_name || currentUser.user_metadata?.name || "Owner") : "Owner";
+        if (typeof sendDiscordAuditLog === 'function') {
+            sendDiscordAuditLog(
+                "ლიცენზია სამუდამოდ წაიშალა (Supabase Database Purge)",
+                `მფლობელმა **${ownerName}** სამუდამოდ წაშალა ლიცენზია Supabase მონაცემებიდან.`,
+                0xef4444,
+                [
+                    { name: "მფლობელი (Owner)", value: ownerName, inline: true },
+                    { name: "წაშლილი გასაღები", value: key, inline: false }
+                ]
+            );
+        }
+
+        if (typeof logAuditEvent === 'function') {
+            logAuditEvent({
+                action_type: "OWNER_LICENSE_PERMANENT_DELETE",
+                title: "ლიცენზიის სამუდამო წაშლა",
+                description: `ლიცენზია ${key} სამუდამოდ წაიშალა Supabase ბაზიდან მფლობელის მიერ`,
+                target_id: key,
+                target_name: key,
+                severity: "warning",
+                actor_role: "owner",
+                details: { license_key: key }
+            });
+        }
+
+        // 8. Re-fetch all licenses to stay completely in sync with database
+        fetchAllLicenses();
+    } catch (err) {
+        console.error("Error permanently deleting license:", err);
+        showBanner((t("msg.deleteFail") || "ლიცენზიის წაშლა ვერ მოხერხდა: ") + err.message, "error");
     }
 }
 
@@ -5262,6 +5419,20 @@ function showLicenseDetails(key) {
         }
     }
 
+    const ownerActions = document.getElementById('modal-owner-actions');
+    const modalDeleteBtn = document.getElementById('modal-delete-lic-btn');
+    if (ownerActions && modalDeleteBtn) {
+        if (typeof isOwner === 'function' && isOwner()) {
+            ownerActions.style.display = 'flex';
+            modalDeleteBtn.onclick = () => {
+                deleteLicensePermanently(lic.license_key);
+            };
+        } else {
+            ownerActions.style.display = 'none';
+            modalDeleteBtn.onclick = null;
+        }
+    }
+
     licenseInfoModal.classList.remove('hidden');
 }
 
@@ -5275,6 +5446,7 @@ window.resetLicenseHwid = resetLicenseHwid;
 window.resetUserHwid = resetUserHwid;
 window.revokeLicense = revokeLicense;
 window.activateLicense = activateLicense;
+window.deleteLicensePermanently = deleteLicensePermanently;
 window.closeLicenseModal = closeLicenseModal;
 window.copyCreatedKey = copyCreatedKey;
 window.filterAdminLicenses = filterAdminLicenses;
