@@ -981,18 +981,20 @@
                             <h3 data-i18n="dash.referralTitle">მოიწვიე მეგობარი</h3>
                             <p class="desc" data-i18n="dash.referralDesc">გაუზიარე შენი რეფერალური ლინკი ან კოდი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!</p>
                             
-                            <!-- Referral Link -->
-                            <label class="referral-section-label" data-i18n="dash.referralLinkLabel">რეფერალური ლინკი</label>
-                            <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
-                                <input type="text" id="referral-link-input" readonly style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="Loading link...">
-                                <button type="button" id="copy-referral-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralLinkCopyBtn">ლინკის კოპირება</button>
-                            </div>
-
                             <!-- Referral Code -->
-                            <label class="referral-section-label" style="margin-top: 20px;" data-i18n="dash.referralCodeLabel">რეფერალური კოდი</label>
-                            <div class="referral-link-wrapper" style="display: flex; gap: 10px; width: 100%;">
-                                <input type="text" id="referral-code-display" readonly style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; letter-spacing: 2px; font-weight: 600; text-transform: uppercase;" placeholder="Loading code...">
-                                <button type="button" id="copy-referral-code-btn" class="btn btn-glow" style="border-radius: 12px; white-space: nowrap; padding: 12px 20px;" data-i18n="dash.referralCodeCopyBtn">კოდის კოპირება</button>
+                            <label class="referral-section-label" data-i18n="dash.referralCodeLabel">რეფერალური კოდი</label>
+                            <div class="referral_code-hero">
+                                <div class="referral-code-display-wrap">
+                                    <input type="text" id="referral-code-display" readonly placeholder="Loading code...">
+                                    <button type="button" id="copy-referral-code-btn" class="btn btn-glow referral-copy-btn" data-i18n="dash.referralCodeCopyBtn">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                        <span data-i18n="dash.referralCodeCopyBtn">კოდის კოპირება</span>
+                                    </button>
+                                </div>
+                                <p class="referral-code-hint">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                    <span data-i18n="dash.referralCodeHint">გაუზიარე ეს კოდი მეგობარს — როდესაც ის გაააქტიურებს პირველ გასაღებს, ორივეს დაგემატებათ 3 დღე!</span>
+                                </p>
                             </div>
                         </div>
 

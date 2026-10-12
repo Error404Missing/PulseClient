@@ -826,18 +826,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Capture referral ID from URL query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const refId = urlParams.get('ref');
-    if (refId && refId.trim() !== "") {
-        localStorage.setItem('pulse_referral_discord_id', refId.trim());
-        // Clean URL to keep it neat
-        if (window.history.replaceState) {
-            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
-        }
-    }
-
     // Check active session
     const { data: { session }, error } = await supabaseClient.auth.getSession();
     if (session) {
@@ -1226,22 +1214,6 @@ async function handleUserSignIn(user) {
             { name: "როლი", value: isAdmin() ? "Admin / Owner" : "User", inline: true }
         ]
     );
-
-    // Set up referral link for the logged in user
-    const refLinkInput = document.getElementById('referral-link-input');
-    if (refLinkInput && discordId) {
-        refLinkInput.value = `${window.location.origin}${window.location.pathname}?ref=${discordId}`;
-    }
-    const copyRefBtn = document.getElementById('copy-referral-btn');
-    if (copyRefBtn && refLinkInput) {
-        copyRefBtn.onclick = () => {
-            navigator.clipboard.writeText(refLinkInput.value).then(() => {
-                const origText = copyRefBtn.textContent;
-                copyRefBtn.textContent = t("msg.copied");
-                setTimeout(() => { copyRefBtn.textContent = origText; }, 2000);
-            });
-        };
-    }
 
     // Set up referral code display for the logged in user
     const refCodeDisplay = document.getElementById('referral-code-display');
@@ -5161,18 +5133,6 @@ async function redeemReferralCode() {
 
     let inputVal = codeInput.value.trim();
     if (!inputVal) return;
-
-    // Handle full URL or ref parameter if pasted
-    if (inputVal.includes('ref=')) {
-        try {
-            const urlObj = new URL(inputVal.startsWith('http') ? inputVal : `https://pulseclient.com/${inputVal.startsWith('?') ? inputVal : '?' + inputVal}`);
-            const refParam = urlObj.searchParams.get('ref');
-            if (refParam) inputVal = refParam.trim();
-        } catch (e) {
-            const m = inputVal.match(/[?&]ref=([a-zA-Z0-9_-]+)/);
-            if (m) inputVal = m[1].trim();
-        }
-    }
 
     const code = inputVal.toUpperCase();
     const discordId = getDiscordId(currentUser);
