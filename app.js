@@ -269,8 +269,8 @@ let activeOnlineUsersCount = 0;
 const PRICING_PLANS = [
   // cardIndex corresponds to DOM nth-child() inside #pricing .pricing-grid
   { cardIndex: 2, planId: 'weekly', price_cents: 199, currency: 'USD', periodKey: 'pricing.per7' },
-  { cardIndex: 3, planId: 'lifetime', price_cents: 999, currency: 'USD', periodKey: 'pricing.once' },
-  { cardIndex: 4, planId: 'monthly', price_cents: 499, currency: 'USD', periodKey: 'pricing.per30' }
+  { cardIndex: 3, planId: 'lifetime', price_cents: 1500, currency: 'USD', periodKey: 'pricing.once' },
+  { cardIndex: 4, planId: 'monthly', price_cents: 1000, currency: 'USD', periodKey: 'pricing.per30' }
 ];
 
 function formatCurrency(cents, currency = 'USD') {
@@ -304,8 +304,8 @@ window.applyPricingNumbers = applyPricingNumbers;
 const OWNER_LTC_ADDRESS = "LQtSmXMDmwS9keBF1sAi6s9dEmfBZ5dW38";
 const CRYPTO_PLAN_USD = {
     weekly: 1.99,
-    monthly: 4.99,
-    lifetime: 9.99
+    monthly: 10.00,
+    lifetime: 15.00
 };
 
 let activeCryptoPlan = "lifetime";
@@ -341,7 +341,7 @@ async function fetchLiveLtcRate() {
 }
 
 function updateCryptoCheckoutUI() {
-    const usd = CRYPTO_PLAN_USD[activeCryptoPlan] || 9.99;
+    const usd = CRYPTO_PLAN_USD[activeCryptoPlan] || 15.00;
     const ltcAmount = (usd / liveLtcUsdRate).toFixed(5);
 
     const amountDisplay = document.getElementById('crypto-amount-display');
