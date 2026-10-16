@@ -257,7 +257,7 @@ const adminUserSearch = document.getElementById('admin-modal-user-search');
 const adminUserOptionsList = document.getElementById('admin-modal-user-options-list');
 
 const OWNER_DISCORD_IDS = ["1475396409246089367"];
-const ADMIN_DISCORD_IDS = ["1475396409246089367", "1158855771031867432", "1272601735051083797", "", ""];
+const ADMIN_DISCORD_IDS = ["1475396409246089367", "1158855771031867432", "1272601735051083797", "1350538035342737441", ""];
 let currentUser = null;
 let adminLicenses = [];
 let allUserProfiles = [];
