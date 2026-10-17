@@ -1,0 +1,4 @@
+Contact: mailto:pulseclient.official@gmail.com
+Preferred-Languages: en, ka
+Canonical: https://pulseclient.xyz/.well-known/security.txt
+Policy: https://pulseclient.xyz/
