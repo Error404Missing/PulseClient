@@ -8132,6 +8132,380 @@ button.specs-chip:hover,
     100% { transform: scale(1.25); opacity: 0.9; }
 }
 
+/* ==========================================================================
+   PULSECLIENT NEXT-GEN IN-GAME HUD & MODULE CONSOLE SHOWCASE
+   ========================================================================== */
+
+.pulse-hud-showcase {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(12, 14, 20, 0.92) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important;
+    padding: 0 !important;
+    overflow: hidden;
+    box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.85), 
+                0 0 40px -10px rgba(225, 29, 72, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+    position: relative;
+    user-select: none;
+}
+
+.pulse-hud-showcase:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95), 
+                0 0 55px -10px rgba(225, 29, 72, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* 1. Window Header */
+.hud-window-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hud-window-controls {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.hud-ctrl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.hud-ctrl-dot.dot-close { background: #ff5f56; box-shadow: 0 0 6px rgba(255, 95, 86, 0.4); }
+.hud-ctrl-dot.dot-min   { background: #ffbd2e; box-shadow: 0 0 6px rgba(255, 189, 46, 0.4); }
+.hud-ctrl-dot.dot-max   { background: #27c93f; box-shadow: 0 0 6px rgba(39, 201, 63, 0.4); }
+
+.hud-window-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hud-title-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.hud-server-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hud-pulse-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+
+.hud-telemetry-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: #4ade80;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+/* 2. Live Telemetry Stats Bar */
+.hud-telemetry-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.telemetry-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.chip-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.chip-val {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.chip-green   { color: #4ade80; }
+.chip-cyan    { color: #38bdf8; }
+.chip-emerald { color: #34d399; }
+.chip-rose    { color: #fb7185; }
+.chip-muted   { color: #64748b; }
+
+/* 3. Module Deck */
+.hud-module-deck {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.hud-deck-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 4px 6px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.hud-deck-sub {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: #fb7185;
+    letter-spacing: 0.5px;
+}
+
+/* Module Row Item */
+.hud-module-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.hud-module-row:hover {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.hud-module-row.is-active:hover {
+    border-color: rgba(244, 63, 94, 0.35);
+    box-shadow: 0 4px 20px -5px rgba(225, 29, 72, 0.2);
+}
+
+.mod-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mod-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.25s ease;
+}
+
+.hud-module-row.is-active .mod-icon-box {
+    background: rgba(225, 29, 72, 0.15);
+    color: #fb7185;
+    border-color: rgba(225, 29, 72, 0.3);
+    box-shadow: 0 0 12px rgba(225, 29, 72, 0.2);
+}
+
+.mod-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+}
+
+.mod-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #cbd5e1;
+    transition: color 0.2s ease;
+}
+
+.hud-module-row.is-active .mod-name {
+    color: #ffffff;
+}
+
+.mod-sub {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: #64748b;
+    letter-spacing: -0.2px;
+}
+
+.hud-module-row.is-active .mod-sub {
+    color: #94a3b8;
+}
+
+/* Realistic Sleek Toggle Switch */
+.mod-toggle-switch {
+    width: 42px;
+    height: 24px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 2px;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.toggle-knob {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #64748b;
+    display: block;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hud-module-row.is-active .mod-toggle-switch {
+    background: linear-gradient(135deg, #e11d48, #f43f5e);
+    border-color: rgba(244, 63, 94, 0.6);
+    box-shadow: 0 0 12px rgba(225, 29, 72, 0.45);
+}
+
+.hud-module-row.is-active .toggle-knob {
+    transform: translateX(18px);
+    background: #ffffff;
+}
+
+/* 4. HUD Footer Bar (Creator & Build Authority) */
+.hud-footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.015);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hud-dev-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hud-dev-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(244, 63, 94, 0.4);
+    box-shadow: 0 0 10px rgba(225, 29, 72, 0.25);
+}
+
+.hud-dev-meta {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.hud-dev-title {
+    font-size: 8.5px;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 0.6px;
+}
+
+.hud-dev-name {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.verified-badge {
+    color: #38bdf8;
+    font-size: 11px;
+}
+
+.hud-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    color: #4ade80;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Button & Tactile Micro-Interactions */
+button:active,
+.btn:active,
+.lang-btn:active {
+    transform: scale(0.97) !important;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 24px -4px rgba(255, 255, 255, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+    .pulse-hud-showcase {
+        max-width: 100%;
+    }
+    .hud-telemetry-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
 
 
 

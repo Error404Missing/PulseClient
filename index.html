@@ -48,7 +48,6 @@
         <div class="aurora-beam aurora-2"></div>
         <div class="aurora-beam aurora-3"></div>
     </div>
-    <div class="bg-scanlines"></div>
     <div class="bg-grid-overlay"></div>
     <canvas id="liquid-canvas"></canvas>
 
@@ -62,7 +61,7 @@
             <img src="logo.png?v=2" alt="Pulse Logo" style="height: 32px; border-radius: 8px; vertical-align: middle; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
             <span class="pulse-logo-text" style="margin-left: 8px;">PULSE</span><span class="logo-sub">CLIENT</span>
         </div>
-        <nav class="nav-links hidden">
+        <nav class="nav-links">
             <button type="button" id="nav-dashboard-link" class="hidden" onclick="showDashboard()" style="color: #ffffff; font-weight: 700; background: rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 6px 14px; border: 1px solid rgba(255, 255, 255, 0.15);">დეშბორდი</button>
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
             <button type="button" onclick="navigateToLandingSection(event, 'bypasses')" data-i18n="nav.bypasses">შემოვლები</button>
@@ -92,7 +91,7 @@
     </header>
 
     <!-- Auth Gate / Required Discord Login Barrier -->
-    <main id="auth-gate-page" class="view auth-gate-view">
+    <main id="auth-gate-page" class="view auth-gate-view hidden">
         <div class="auth-gate-container">
             <div class="auth-gate-card glass-panel">
                 <div class="auth-gate-orbit-ring ring-1"></div>
@@ -213,7 +212,7 @@
     </main>
 
     <!-- Landing Page Content -->
-    <main id="landing-page" class="view hidden">
+    <main id="landing-page" class="view">
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
@@ -248,26 +247,129 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <!-- Who's Behind Pulse / Dqrkis-Style Creator Showcase -->
-                <div class="hero-team-container">
-                    <div class="team-heading-box">
-                        <span class="team-kicker">THE TEAM</span>
-                        <h2 class="team-heading">Who's behind Pulse</h2>
+                <!-- PulseClient Next-Gen In-Game HUD & Module Console Showcase -->
+                <div class="pulse-hud-showcase glass-panel">
+                    <!-- HUD Top Titlebar -->
+                    <div class="hud-window-header">
+                        <div class="hud-window-controls">
+                            <span class="hud-ctrl-dot dot-close"></span>
+                            <span class="hud-ctrl-dot dot-min"></span>
+                            <span class="hud-ctrl-dot dot-max"></span>
+                        </div>
+                        <div class="hud-window-title">
+                            <span class="hud-title-badge">PULSE // CLIENT v4.0.0</span>
+                            <span class="hud-server-tag"><span class="hud-pulse-dot"></span>DonutSMP • 1.21.11</span>
+                        </div>
+                        <div class="hud-telemetry-badge">
+                            <span class="hud-tps-val">20.0 TPS</span>
+                        </div>
                     </div>
 
-                    <div class="dqrkis-team-card">
-                        <div class="team-live-pill">
+                    <!-- Live Telemetry Stats Bar -->
+                    <div class="hud-telemetry-row">
+                        <div class="telemetry-chip">
+                            <span class="chip-label">LATENCY</span>
+                            <span class="chip-val chip-green"><span class="live-dot-ping"></span>14ms</span>
+                        </div>
+                        <div class="telemetry-chip">
+                            <span class="chip-label">SPEED</span>
+                            <span class="chip-val chip-cyan" id="hud-cps-counter">19.8 CPS</span>
+                        </div>
+                        <div class="telemetry-chip">
+                            <span class="chip-label">ANTICHEAT</span>
+                            <span class="chip-val chip-emerald">UNDETECTED</span>
+                        </div>
+                        <div class="telemetry-chip">
+                            <span class="chip-label">OPSEC</span>
+                            <span class="chip-val chip-rose">PROTECTED</span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Module Deck -->
+                    <div class="hud-module-deck">
+                        <div class="hud-deck-heading">
+                            <span>MODULE CONFIGURATION</span>
+                            <span class="hud-deck-sub">CLICK TO TOGGLE</span>
+                        </div>
+
+                        <!-- Module 1: Crystal Optimizer -->
+                        <div class="hud-module-row is-active" data-module="crystal" onclick="toggleHeroModule(this)">
+                            <div class="mod-info">
+                                <div class="mod-icon-box">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                </div>
+                                <div class="mod-details">
+                                    <span class="mod-name">Crystal Optimizer</span>
+                                    <span class="mod-sub">20.0 CPS • Zero-Delay Break • Fast Anchor</span>
+                                </div>
+                            </div>
+                            <div class="mod-toggle-switch">
+                                <span class="toggle-knob"></span>
+                            </div>
+                        </div>
+
+                        <!-- Module 2: Matrix & GrimAC Bypass -->
+                        <div class="hud-module-row is-active" data-module="bypass" onclick="toggleHeroModule(this)">
+                            <div class="mod-info">
+                                <div class="mod-icon-box">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="mod-details">
+                                    <span class="mod-name">Matrix &amp; GrimAC Bypass</span>
+                                    <span class="mod-sub">Packet Desync • Silent Velocity Reduction</span>
+                                </div>
+                            </div>
+                            <div class="mod-toggle-switch">
+                                <span class="toggle-knob"></span>
+                            </div>
+                        </div>
+
+                        <!-- Module 3: Hole ESP & Chunk Radar -->
+                        <div class="hud-module-row is-active" data-module="radar" onclick="toggleHeroModule(this)">
+                            <div class="mod-info">
+                                <div class="mod-icon-box">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                                </div>
+                                <div class="mod-details">
+                                    <span class="mod-name">Hole ESP &amp; Chunk Radar</span>
+                                    <span class="mod-sub">3D Obsidian Box Chams • Storage Inspector</span>
+                                </div>
+                            </div>
+                            <div class="mod-toggle-switch">
+                                <span class="toggle-knob"></span>
+                            </div>
+                        </div>
+
+                        <!-- Module 4: OpSec Memory Cleaner -->
+                        <div class="hud-module-row" data-module="opsec" onclick="toggleHeroModule(this)">
+                            <div class="mod-info">
+                                <div class="mod-icon-box">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                </div>
+                                <div class="mod-details">
+                                    <span class="mod-name">OpSec Memory Cleaner</span>
+                                    <span class="mod-sub">Auto String Sanitizer • Zero JVM Artifacts</span>
+                                </div>
+                            </div>
+                            <div class="mod-toggle-switch">
+                                <span class="toggle-knob"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Developer Authenticity & Verified Build Footer -->
+                    <div class="hud-footer-bar">
+                        <div class="hud-dev-info">
+                            <img src="error404missing.png" alt="Error404Missing" class="hud-dev-avatar" onerror="this.src='logo.png?v=2'">
+                            <div class="hud-dev-meta">
+                                <span class="hud-dev-title">ARCHITECTED &amp; DEVELOPED BY</span>
+                                <span class="hud-dev-name">Error404Missing <span class="verified-badge">✓</span></span>
+                            </div>
+                        </div>
+                        <div class="hud-status-chip">
                             <span class="live-dot-ping"></span>
-                            <span class="live-text">ONLINE • DEV ACTIVE</span>
+                            <span>OFFICIAL BUILD</span>
                         </div>
-                        <div class="dqrkis-avatar-box">
-                            <div class="avatar-orbit-ring ring-a"></div>
-                            <div class="avatar-orbit-ring ring-b"></div>
-                            <img src="error404missing.png" alt="Error404Missing" class="dqrkis-avatar-img" onerror="this.src='https://static.wikia.nocookie.net/characterprofile/images/a/ad/L%28Death_Note%29.png/revision/latest?cb=20200502162511'">
-                        </div>
-                        <div class="dqrkis-role-badge">FOUNDER &amp; DEVELOPER</div>
-                        <div class="dqrkis-name">Error404Missing</div>
-                        <div class="card-foil-reflection"></div>
                     </div>
                 </div>
             </div>

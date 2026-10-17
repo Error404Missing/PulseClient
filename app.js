@@ -818,10 +818,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else if (!isVpn || (typeof isAdmin === 'function' && isAdmin())) {
             releaseVpnLock();
             if (!currentUser) {
-                if (authGatePage) authGatePage.classList.remove('hidden');
-                if (landingPage) landingPage.classList.add('hidden');
+                if (authGatePage) authGatePage.classList.add('hidden');
+                if (landingPage) landingPage.classList.remove('hidden');
                 if (dashboardPage) dashboardPage.classList.add('hidden');
-                if (navLinks) navLinks.classList.add('hidden');
+                if (navLinks) navLinks.classList.remove('hidden');
             }
         }
     });
@@ -1255,11 +1255,11 @@ function handleUserSignOut() {
     navUserProfile.classList.add('hidden');
     const navDashLink = document.getElementById('nav-dashboard-link');
     if (navDashLink) navDashLink.classList.add('hidden');
-    if (navLinks) navLinks.classList.add('hidden');
+    if (navLinks) navLinks.classList.remove('hidden');
 
-    // Strictly enforce Discord Auth Gate barrier for unauthenticated visitors
-    if (authGatePage) authGatePage.classList.remove('hidden');
-    if (landingPage) landingPage.classList.add('hidden');
+    // Show landing page for visitors upon sign out
+    if (authGatePage) authGatePage.classList.add('hidden');
+    if (landingPage) landingPage.classList.remove('hidden');
     if (dashboardPage) dashboardPage.classList.add('hidden');
 
     // Hide Admin menu item
@@ -1918,14 +1918,6 @@ function navigateToLandingSection(event, sectionId) {
         return;
     }
     
-    if (!currentUser) {
-        if (authGatePage) authGatePage.classList.remove('hidden');
-        if (landingPage) landingPage.classList.add('hidden');
-        if (dashboardPage) dashboardPage.classList.add('hidden');
-        if (navLinks) navLinks.classList.add('hidden');
-        return;
-    }
-    
     if (authGatePage) authGatePage.classList.add('hidden');
     landingPage.classList.remove('hidden');
     dashboardPage.classList.add('hidden');
@@ -1950,13 +1942,6 @@ window.navigateToLandingSection = navigateToLandingSection;
 function showLanding() {
     if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
         if (typeof enforceVpnLock === 'function') enforceVpnLock();
-        return;
-    }
-    if (!currentUser) {
-        if (authGatePage) authGatePage.classList.remove('hidden');
-        if (landingPage) landingPage.classList.add('hidden');
-        if (dashboardPage) dashboardPage.classList.add('hidden');
-        if (navLinks) navLinks.classList.add('hidden');
         return;
     }
     if (authGatePage) authGatePage.classList.add('hidden');
@@ -7383,44 +7368,7 @@ function initLiquidCanvas() {
             ctx.restore();
         }
 
-        // 3. Constellation connection lines between nearby particles
-        ctx.lineWidth = 0.55;
-        for (let i = 0; i < particles.length; i++) {
-            const pi = particles[i];
-            for (let j = i + 1; j < particles.length; j++) {
-                const pj = particles[j];
-                const dx = pi.x - pj.x;
-                const dy = pi.y - pj.y;
-                const distSq = dx * dx + dy * dy;
-                if (distSq < 7200) { // < ~85px
-                    const dist = Math.sqrt(distSq);
-                    const alpha = (1 - dist / 85) * 0.18;
-                    ctx.strokeStyle = `rgba(244, 63, 94, ${alpha})`;
-                    ctx.beginPath();
-                    ctx.moveTo(pi.x, pi.y);
-                    ctx.lineTo(pj.x, pj.y);
-                    ctx.stroke();
-                }
-            }
-
-            // Connect particles to mouse cursor when close
-            if (mouse.active) {
-                const mdx = pi.x - mouse.x;
-                const mdy = pi.y - mouse.y;
-                const mDistSq = mdx * mdx + mdy * mdy;
-                if (mDistSq < 19600) { // < 140px
-                    const mDist = Math.sqrt(mDistSq);
-                    const mAlpha = (1 - mDist / 140) * 0.24;
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${mAlpha})`;
-                    ctx.beginPath();
-                    ctx.moveTo(pi.x, pi.y);
-                    ctx.lineTo(mouse.x, mouse.y);
-                    ctx.stroke();
-                }
-            }
-        }
-
-        // 4. Update and draw particles
+        // 3. Update and draw particles (Clean ambient dust motes without messy spiderweb lines)
         for (let i = 0; i < particles.length; i++) {
             particles[i].update();
             particles[i].draw();
@@ -7432,11 +7380,41 @@ function initLiquidCanvas() {
 }
 
 // ==========================================
+// HERO INTERACTIVE HUD MODULE TOGGLE ENGINE
+// ==========================================
+function toggleHeroModule(rowEl) {
+    if (!rowEl) return;
+    const isActive = rowEl.classList.toggle('is-active');
+    
+    // Smooth haptic micro-bounce
+    rowEl.style.transform = 'scale(0.97)';
+    setTimeout(() => {
+        rowEl.style.transform = '';
+    }, 120);
+
+    // Update live CPS counter dynamically if Crystal Optimizer was toggled
+    const cpsEl = document.getElementById('hud-cps-counter');
+    if (cpsEl) {
+        const anyActive = document.querySelector('.hud-module-row.is-active[data-module="crystal"]');
+        if (anyActive) {
+            cpsEl.textContent = '19.8 CPS';
+            cpsEl.className = 'chip-val chip-cyan';
+        } else {
+            cpsEl.textContent = 'STANDBY';
+            cpsEl.className = 'chip-val chip-muted';
+        }
+    }
+}
+window.toggleHeroModule = toggleHeroModule;
+
+// ==========================================
 // INTERACTIVE CARDS: SPOTLIGHT BORDERS & 3D TILT
 // ==========================================
 function initInteractiveCardEffects() {
     const cardSelectors = [
         '.glass-panel',
+        '.pulse-hud-showcase',
+        '.hud-module-row',
         '.dqrkis-team-card',
         '.feature-card',
         '.pricing-card',
@@ -7480,58 +7458,11 @@ function initInteractiveCardEffects() {
 }
 
 // ==========================================
-// TACTILE CLICK SPARKS MICRO-BURST SYSTEM
+// TACTILE INTERACTION SYSTEM
 // ==========================================
 function initClickSparks() {
-    const SPARKS_COLORS = ['#f43f5e', '#ff1e56', '#ffffff', '#00f5d4', '#ffd166'];
-
-    window.addEventListener('pointerdown', (e) => {
-        // Target interactive elements like buttons, links, cards, pills
-        const target = e.target.closest('button, a, .glass-panel, .dqrkis-team-card, .btn, .lang-btn, .menu-item, input, select');
-        if (!target) return;
-
-        const count = 9;
-        const container = document.body;
-        const clickX = e.clientX;
-        const clickY = e.clientY;
-
-        for (let i = 0; i < count; i++) {
-            const spark = document.createElement('div');
-            spark.className = 'click-spark-particle';
-            const color = SPARKS_COLORS[Math.floor(Math.random() * SPARKS_COLORS.length)];
-            const size = Math.random() * 4 + 2.5;
-            const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
-            const distance = Math.random() * 38 + 18;
-            const destX = Math.cos(angle) * distance;
-            const destY = Math.sin(angle) * distance;
-
-            spark.style.cssText = `
-                position: fixed;
-                left: ${clickX}px;
-                top: ${clickY}px;
-                width: ${size}px;
-                height: ${size}px;
-                background-color: ${color};
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 99999;
-                box-shadow: 0 0 8px ${color};
-                transform: translate(-50%, -50%) scale(1);
-                transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.55s ease-out;
-            `;
-
-            container.appendChild(spark);
-
-            requestAnimationFrame(() => {
-                spark.style.transform = `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`;
-                spark.style.opacity = '0';
-            });
-
-            setTimeout(() => {
-                if (spark.parentNode) spark.parentNode.removeChild(spark);
-            }, 600);
-        }
-    });
+    // Replaced loud confetti sparks with refined tactile feedback to eliminate "vibe coded" feel
+    return;
 }
 
 // ==========================================
@@ -7547,6 +7478,7 @@ function initScrollReveals() {
         '.pricing-card',
         '.setup-card',
         '.hero-tech-ticker',
+        '.pulse-hud-showcase',
         '.dqrkis-team-card',
         '.krypton-download-card'
     ];
