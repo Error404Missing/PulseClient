@@ -4512,13 +4512,9 @@ async function createLicenseFromAdmin(e) {
     if (durationDays === null) {
         expiresAt = "2099-12-31T23:59:59.000Z"; // Lifetime indicator
     }
-    const isMedia = document.getElementById('admin-media-tier-toggle')?.checked || adminProductSelect.value.includes('Media');
     const adminMetadata = currentUser.user_metadata;
     const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
     let note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
-    if (isMedia) {
-        note += ` | Tier: Media`;
-    }
     if (durationDays !== null) {
         note += ` | Duration: ${durationDays}`;
     }
@@ -4587,8 +4583,6 @@ async function createLicenseFromAdmin(e) {
         // Reset input
         adminBuyerInput.value = '';
         if (adminEmailInput) adminEmailInput.value = '';
-        const mediaToggle = document.getElementById('admin-media-tier-toggle');
-        if (mediaToggle) mediaToggle.checked = false;
         const options = adminUserOptionsList.querySelectorAll('.user-option');
         options.forEach(opt => opt.classList.remove('selected'));
 
@@ -4600,8 +4594,7 @@ async function createLicenseFromAdmin(e) {
             [
                 { name: "ადმინი", value: adminName, inline: true },
                 { name: "მყიდველი", value: buyer, inline: true },
-                { name: "პროდუქტი", value: product + (isMedia ? " (Media Partner)" : ""), inline: true },
-                { name: "ტიპი / Tier", value: isMedia ? "⭐ Media Partner" : "Standard", inline: true },
+                { name: "პროდუქტი", value: product, inline: true },
                 { name: "გასაღები", value: key, inline: false },
                 { name: "ხანგრძლივობა", value: durationDays === null ? "Lifetime" : `${durationDays} დღე`, inline: true }
             ]
