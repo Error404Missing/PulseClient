@@ -256,11 +256,11 @@ const downloadBasefindBtn = document.getElementById('download-basefind-btn-modal
 
 const GITHUB_REPO_OWNER = 'Error404Missing';
 const GITHUB_REPO_NAME = 'PulseClient';
-const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11.jar';
+const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11-v4.jar';
 const GITHUB_PVP_JAR_FILE = GITHUB_JAR_FILE;
 const GITHUB_BASEFIND_JAR_FILE = GITHUB_JAR_FILE;
 
-const GITHUB_CLIENT_DOWNLOAD_URL = "./PulseClient-Fabric-1.21.11.jar";
+const GITHUB_CLIENT_DOWNLOAD_URL = "./PulseClient-Fabric-1.21.11-v4.jar";
 const GITHUB_PVP_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 const GITHUB_BASEFIND_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 
