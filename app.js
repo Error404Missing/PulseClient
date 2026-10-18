@@ -138,6 +138,41 @@ window.sendDiscordAuditLog = sendDiscordAuditLog;
 const PULSE_API_PRIMARY = 'https://api.pulseclient.xyz';
 const PULSE_API_FALLBACK = 'https://errormissing-pulse-bot.hf.space';
 
+// Server Clock Synchronization & Drift Compensation
+let serverClockOffset = 0; // serverTime - Date.now()
+let hasServerTimeSync = false;
+
+function recordServerTime(serverMs) {
+    if (!serverMs || isNaN(serverMs) || serverMs <= 0) return;
+    serverClockOffset = serverMs - Date.now();
+    hasServerTimeSync = true;
+}
+
+function extractServerTimeFromResponse(res) {
+    if (!res || !res.headers) return;
+    try {
+        const sTime = res.headers.get('x-server-time');
+        if (sTime) {
+            const parsed = parseInt(sTime, 10);
+            if (!isNaN(parsed) && parsed > 0) {
+                recordServerTime(parsed);
+                return;
+            }
+        }
+        const dateHeader = res.headers.get('date');
+        if (dateHeader) {
+            const d = new Date(dateHeader).getTime();
+            if (!isNaN(d) && d > 0) {
+                recordServerTime(d);
+            }
+        }
+    } catch (e) {}
+}
+
+function getServerNow() {
+    return Date.now() + serverClockOffset;
+}
+
 async function pulseApiFetch(urlOrPath, options = {}) {
     if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
         console.warn("[PulseGuard] Outgoing API request blocked due to active VPN barrier:", urlOrPath);
@@ -158,6 +193,7 @@ async function pulseApiFetch(urlOrPath, options = {}) {
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
         const res = await fetch(primaryUrl, { ...options, signal: controller.signal });
         clearTimeout(timeoutId);
+        extractServerTimeFromResponse(res);
         if (res.ok || (res.status >= 400 && res.status < 500)) {
             return res;
         }
@@ -165,9 +201,19 @@ async function pulseApiFetch(urlOrPath, options = {}) {
     } catch (err) {
         console.warn(`[PulseAPI] Primary failed (${path}), falling back to HF:`, err.message);
         const fallbackUrl = `${PULSE_API_FALLBACK}${path}`;
-        return fetch(fallbackUrl, options);
+        const fallbackRes = await fetch(fallbackUrl, options);
+        extractServerTimeFromResponse(fallbackRes);
+        return fallbackRes;
     }
 }
+
+// Proactively sync server time on page load
+(async function initServerTimeSync() {
+    try {
+        const res = await pulseApiFetch('/status');
+        extractServerTimeFromResponse(res);
+    } catch (e) {}
+})();
 
 
 // Initialize Supabase Client
@@ -2159,32 +2205,37 @@ window.lastFetchedSessions = [];
 async function fetchActiveSessions() {
     if (!isAdmin()) return;
 
-    if (adminSessionsLoading) adminSessionsLoading.classList.remove('hidden');
-    if (adminSessionsTableBody) adminSessionsTableBody.innerHTML = '';
+    const isFirstLoad = !adminSessionsTableBody || adminSessionsTableBody.children.length === 0;
+    if (isFirstLoad && adminSessionsLoading) adminSessionsLoading.classList.remove('hidden');
 
     try {
-        // Parallel fetch for sessions and alts/playtime intelligence
+        // Parallel fetch for sessions and alts/playtime intelligence with anti-cache query
         const [sessRes, altsRes] = await Promise.allSettled([
-            fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100`, {
+            fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100&_t=${Date.now()}`, {
                 headers: {
                     "apikey": supabaseKey,
                     "Authorization": `Bearer ${supabaseKey}`,
                     "Content-Type": "application/json"
-                }
+                },
+                cache: "no-store"
             }),
             pulseApiFetch('https://api.pulseclient.xyz/admin/alts-detect')
         ]);
 
-        if (altsRes.status === 'fulfilled' && altsRes.value.ok) {
+        if (altsRes.status === 'fulfilled' && altsRes.value && altsRes.value.ok) {
             try {
+                extractServerTimeFromResponse(altsRes.value);
                 const altsJson = await altsRes.value.json();
+                if (altsJson && altsJson.server_time) {
+                    recordServerTime(altsJson.server_time);
+                }
                 if (altsJson && altsJson.status === 'success') {
                     adminAltsData = altsJson.users || {};
                 }
             } catch (e) {}
         }
 
-        if (sessRes.status === 'fulfilled' && sessRes.value.ok) {
+        if (sessRes.status === 'fulfilled' && sessRes.value && sessRes.value.ok) {
             const data = await sessRes.value.json();
             window.lastFetchedSessions = data || [];
             renderActiveSessions(data || []);
@@ -2198,16 +2249,29 @@ async function fetchActiveSessions() {
 
 function renderActiveSessions(sessions) {
     if (!adminSessionsTableBody) return;
-    adminSessionsTableBody.innerHTML = '';
 
-    const now = Date.now();
+    // Detect and compensate for local machine clock skew if authoritative sync hasn't arrived:
+    if (sessions && sessions.length > 0) {
+        const maxHb = Math.max(...sessions.map(s => new Date(s.last_heartbeat || s.started_at || 0).getTime()));
+        if (maxHb > 0) {
+            const localSkew = Date.now() - maxHb;
+            // If local machine clock is ahead of database's max heartbeat by more than 45 seconds and no authoritative server sync yet:
+            if (!hasServerTimeSync && localSkew > 45 * 1000) {
+                serverClockOffset = maxHb - Date.now();
+            }
+        }
+    }
+
+    const now = getServerNow();
     let onlineCount = 0;
 
     if (sessions.length === 0) {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td>`;
-        adminSessionsTableBody.appendChild(row);
+        adminSessionsTableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td></tr>`;
         if (adminSessionsCount) adminSessionsCount.textContent = '0';
+        const onlineKpiEl = document.getElementById('admin-stat-online');
+        if (onlineKpiEl) onlineKpiEl.textContent = '0';
+        activeOnlineUsersCount = 0;
+        updateAdminKpiStats();
         return;
     }
 
@@ -2239,11 +2303,11 @@ function renderActiveSessions(sessions) {
     });
     const uniqueSessions = Array.from(uniqueSessionsMap.values());
 
-    // Prepare sessions with online status (90 seconds threshold)
+    // Prepare sessions with online status (120 seconds threshold, with tolerance for network jitter)
     const enrichedSessions = uniqueSessions.map(session => {
         const lastHb = new Date(session.last_heartbeat || session.started_at);
         const diffMs = now - lastHb.getTime();
-        const isOnline = diffMs < 90 * 1000;
+        const isOnline = diffMs >= -30000 && diffMs < 120 * 1000;
         if (isOnline) onlineCount++;
 
         let totalMinutes = session.duration_minutes || 0;
@@ -2267,6 +2331,8 @@ function renderActiveSessions(sessions) {
         if (!a.isOnline && b.isOnline) return 1;
         return new Date(b.last_heartbeat || 0).getTime() - new Date(a.last_heartbeat || 0).getTime();
     });
+
+    adminSessionsTableBody.innerHTML = '';
 
     enrichedSessions.forEach(session => {
         const totalMinutes = session.totalMinutes;
@@ -6043,13 +6109,13 @@ function onLanguageChanged() {
     }
 }
 
-// Auto-refresh active sessions, telemetry, and crash reports every 20 seconds
+// Auto-refresh active sessions, telemetry, and crash reports every 10 seconds
 setInterval(() => {
     if (typeof isAdmin === "function" && isAdmin() && currentUser) {
         fetchActiveSessions();
         fetchAdminCrashReports();
     }
-}, 20000);
+}, 10000);
 
 // Auto-refresh live support tickets every 2.5 seconds for instant two-way communication
 setInterval(() => {
