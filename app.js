@@ -1428,12 +1428,21 @@ async function fetchUserLicenses() {
     }
 }
 
+function isMediaLicense(lic) {
+    if (!lic) return false;
+    const note = (lic.note || '').toLowerCase();
+    const product = (lic.product || '').toLowerCase();
+    return note.includes('tier: media') || note.includes('product: media') || note.includes('media partner') || note.includes('(media)') || product.includes('media');
+}
+window.isMediaLicense = isMediaLicense;
+
 function renderLicenses(licenses) {
     licensesList.innerHTML = '';
     
     licenses.forEach(lic => {
+        const isMedia = isMediaLicense(lic);
         const item = document.createElement('div');
-        item.className = 'license-item';
+        item.className = 'license-item' + (isMedia ? ' license-item-media' : '');
 
         const { status, text: statusText, isExpired } = getLicenseStatus(lic);
         const expiryDisplay = formatLicenseExpiryDisplay(lic);
@@ -1444,8 +1453,13 @@ function renderLicenses(licenses) {
 
         item.innerHTML = `
             <div class="lic-key-info">
-                <h4>${t('lic.keyLabel')}</h4>
-                <code>${lic.license_key}</code>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                    <h4 style="margin-bottom: 0;">${t('lic.keyLabel')}</h4>
+                    ${isMedia ? `<span class="badge-media-partner"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> MEDIA</span>` : ''}
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <code>${lic.license_key}</code>
+                </div>
             </div>
             <div class="lic-status-badge ${status}">
                 ${statusText}
@@ -4190,6 +4204,7 @@ function renderAdminLicenses(licenses) {
     licenses.forEach(lic => {
         const { product, buyer, createdBy } = parseLicenseNote(lic.note);
         const { status, text: statusText } = getLicenseStatus(lic);
+        const isMedia = isMediaLicense(lic);
 
         let expiryDisplay = t("status.lifetime");
         if (lic.expires_at) {
@@ -4214,15 +4229,25 @@ function renderAdminLicenses(licenses) {
 
         const hwidDisabled = lic.hwid ? '' : 'disabled';
         const tr = document.createElement('tr');
+        if (isMedia) tr.className = 'admin-row-media';
+
+        const productHtml = isMedia 
+            ? '<span class="badge-media-partner" style="font-size: 10px; padding: 2px 7px; margin-right: 6px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> MEDIA</span>' + product
+            : product;
+
+        const keyHtml = '<span class="key-cell" title="' + lic.license_key + '">' + lic.license_key + '</span>' + 
+            (isMedia ? ' <span class="badge-media-pill">MEDIA</span>' : '');
+
         tr.innerHTML = [
-            '<td class="product-cell">' + product + '</td>',
+            '<td class="product-cell">' + productHtml + '</td>',
             '<td class="buyer-cell">' + buyer + '</td>',
             '<td class="creator-cell">' + createdBy + '</td>',
-            '<td><span class="key-cell" title="' + lic.license_key + '">' + lic.license_key + '</span></td>',
+            '<td>' + keyHtml + '</td>',
             '<td><span class="admin-status ' + status + '">' + statusText + '</span></td>',
             '<td>' + expiryDisplay + '</td>',
             '<td>',
             '    <div class="admin-actions" style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">',
+            '        <button type="button" class="btn-action btn-media-toggle ' + (isMedia ? 'is-media-active' : '') + '" onclick="toggleAdminLicenseMedia(\'' + lic.license_key + '\')" title="' + (isMedia ? 'Media სტატუსის მოხსნა' : 'Media სტატუსის მინიჭება') + '" aria-label="Media"><svg width="13" height="13" viewBox="0 0 24 24" fill="' + (isMedia ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>',
             '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 7)" title="+7 დღის დამატება">+7d</button>',
             '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 30)" title="+30 დღის დამატება">+30d</button>',
             '        <button type="button" class="btn-action btn-info" onclick="showLicenseDetails(\'' + lic.license_key + '\')" title="' + t('admin.actionInfo') + '" aria-label="' + t('admin.actionInfo') + '">',
@@ -4240,6 +4265,49 @@ function renderAdminLicenses(licenses) {
     });
 }
 
+async function toggleAdminLicenseMedia(key) {
+    if (!isAdmin()) return;
+    const lic = adminLicenses.find(l => l.license_key === key);
+    if (!lic) return;
+    
+    let currentNote = lic.note || '';
+    let newNote = '';
+    const currentlyMedia = isMediaLicense(lic);
+    
+    if (currentlyMedia) {
+        // Remove Media marker
+        newNote = currentNote.replace(/\|\s*Tier:\s*Media/gi, '')
+                             .replace(/Product:\s*PulseClient\s*\(Media\)/gi, 'Product: PulseClient')
+                             .replace(/\|\s*Media/gi, '')
+                             .replace(/\|\s*\|/g, '|')
+                             .trim();
+    } else {
+        // Add Media marker
+        newNote = currentNote ? `${currentNote} | Tier: Media` : `Tier: Media`;
+    }
+    
+    try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/licenses?license_key=eq.${encodeURIComponent(key)}`, {
+            method: 'PATCH',
+            headers: {
+                'apikey': supabaseKey,
+                'Authorization': `Bearer ${supabaseKey}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({ note: newNote })
+        });
+        
+        if (!res.ok) throw new Error(await res.text());
+        lic.note = newNote;
+        renderAdminLicenses(adminLicenses);
+        showBanner(currentlyMedia ? "Media სტატუსი მოიხსნა" : "✨ ლიცენზიას მიენიჭა Media პარტნიორის სტატუსი!", "success");
+    } catch (err) {
+        showBanner("შეცდომა Media სტატუსის შეცვლისას: " + err.message, "error");
+    }
+}
+window.toggleAdminLicenseMedia = toggleAdminLicenseMedia;
+
 function filterAdminLicenses() {
     const query = adminSearchInput.value.toLowerCase().trim();
     const filter = adminFilterSelect.value;
@@ -4253,12 +4321,15 @@ function filterAdminLicenses() {
             buyer.toLowerCase().includes(query) ||
             createdBy.toLowerCase().includes(query) ||
             product.toLowerCase().includes(query) ||
+            (query === 'media' && isMediaLicense(lic)) ||
             (lic.note && lic.note.toLowerCase().includes(query))
         );
 
         let matchesFilter = true;
         if (filter === 'active') {
             matchesFilter = (status === 'active');
+        } else if (filter === 'media') {
+            matchesFilter = isMediaLicense(lic);
         } else if (filter === 'revoked') {
             matchesFilter = (status === 'revoked');
         } else if (filter === 'expired') {
@@ -4441,9 +4512,13 @@ async function createLicenseFromAdmin(e) {
     if (durationDays === null) {
         expiresAt = "2099-12-31T23:59:59.000Z"; // Lifetime indicator
     }
+    const isMedia = document.getElementById('admin-media-tier-toggle')?.checked || adminProductSelect.value.includes('Media');
     const adminMetadata = currentUser.user_metadata;
     const adminName = adminMetadata.user_name || adminMetadata.custom_claims?.username || adminMetadata.full_name || "Admin";
     let note = `Product: ${product} | Buyer: ${buyer} (by ${adminName})`;
+    if (isMedia) {
+        note += ` | Tier: Media`;
+    }
     if (durationDays !== null) {
         note += ` | Duration: ${durationDays}`;
     }
@@ -4512,6 +4587,8 @@ async function createLicenseFromAdmin(e) {
         // Reset input
         adminBuyerInput.value = '';
         if (adminEmailInput) adminEmailInput.value = '';
+        const mediaToggle = document.getElementById('admin-media-tier-toggle');
+        if (mediaToggle) mediaToggle.checked = false;
         const options = adminUserOptionsList.querySelectorAll('.user-option');
         options.forEach(opt => opt.classList.remove('selected'));
 
@@ -4523,7 +4600,8 @@ async function createLicenseFromAdmin(e) {
             [
                 { name: "ადმინი", value: adminName, inline: true },
                 { name: "მყიდველი", value: buyer, inline: true },
-                { name: "პროდუქტი", value: product, inline: true },
+                { name: "პროდუქტი", value: product + (isMedia ? " (Media Partner)" : ""), inline: true },
+                { name: "ტიპი / Tier", value: isMedia ? "⭐ Media Partner" : "Standard", inline: true },
                 { name: "გასაღები", value: key, inline: false },
                 { name: "ხანგრძლივობა", value: durationDays === null ? "Lifetime" : `${durationDays} დღე`, inline: true }
             ]
@@ -5281,8 +5359,9 @@ function showLicenseDetails(key) {
 
     const { product, buyer, createdBy } = parseLicenseNote(lic.note);
     const { status, text: statusText } = getLicenseStatus(lic);
+    const isMedia = isMediaLicense(lic);
 
-    modalKey.textContent = lic.license_key;
+    modalKey.innerHTML = `${lic.license_key}` + (isMedia ? ` <span class="badge-media-partner" style="font-size: 10px; padding: 2px 8px; margin-left: 8px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> MEDIA</span>` : '');
     modalBuyer.textContent = buyer;
     if (modalCreator) modalCreator.textContent = createdBy;
     modalStatus.textContent = statusText;
