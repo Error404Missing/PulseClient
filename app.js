@@ -2209,13 +2209,14 @@ async function fetchActiveSessions() {
     if (isFirstLoad && adminSessionsLoading) adminSessionsLoading.classList.remove('hidden');
 
     try {
-        // Parallel fetch for sessions and alts/playtime intelligence with anti-cache query
+        // Parallel fetch for sessions and alts/playtime intelligence
         const [sessRes, altsRes] = await Promise.allSettled([
-            fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100&_t=${Date.now()}`, {
+            fetch(`${supabaseUrl}/rest/v1/client_sessions?select=*&order=last_heartbeat.desc&limit=100`, {
                 headers: {
                     "apikey": supabaseKey,
                     "Authorization": `Bearer ${supabaseKey}`,
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Cache-Control": "no-cache, no-store"
                 },
                 cache: "no-store"
             }),
