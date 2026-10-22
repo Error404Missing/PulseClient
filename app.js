@@ -549,8 +549,11 @@ function handleCryptoPaymentSuccess(data) {
     }
 
     showBanner("გადახდა წარმატებით დადასტურდა! ლიცენზია შეიქმნა.", "success");
-    if (typeof fetchUserLicenses === 'function') {
-        fetchUserLicenses();
+    // Update dashboard license count without full re-fetch
+    const dashLicenseCount = document.getElementById('dash-license-count');
+    if (dashLicenseCount) {
+        const current = parseInt(dashLicenseCount.textContent) || 0;
+        dashLicenseCount.textContent = current + 1;
     }
 }
 
@@ -7674,6 +7677,18 @@ function initClickSparks() {
 }
 
 // ==========================================
+// NAVBAR SCROLL STATE
+// ==========================================
+function initNavbarScroll() {
+    const navbar = document.getElementById('main-navbar');
+    if (!navbar) return;
+
+    const update = () => navbar.classList.toggle('is-scrolled', window.scrollY > 24);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+}
+
+// ==========================================
 // SCROLL-TRIGGERED CINEMATIC REVEAL ENGINE
 // ==========================================
 function initScrollReveals() {
@@ -7703,9 +7718,13 @@ function initScrollReveals() {
         { rootMargin: '0px 0px -50px 0px', threshold: 0.12 }
     );
 
-    elements.forEach((el, index) => {
+    elements.forEach((el) => {
+        const siblings = el.parentElement
+            ? Array.from(el.parentElement.children).filter((node) => node.classList.contains('reveal-on-scroll') || revealSelectors.some((selector) => node.matches(selector)))
+            : [el];
+        const order = Math.max(0, siblings.indexOf(el));
         el.classList.add('reveal-on-scroll');
-        el.style.setProperty('--reveal-delay', `${(index % 4) * 0.08}s`);
+        el.style.setProperty('--reveal-delay', `${Math.min(order, 5) * 0.07}s`);
         observer.observe(el);
     });
 }
@@ -7714,6 +7733,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initLiquidCanvas();
     initInteractiveCardEffects();
     initClickSparks();
+    initNavbarScroll();
     initScrollReveals();
     initEvilaClicker();
 });
