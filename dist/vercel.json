@@ -1,0 +1,72 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "logs.pulseclient.xyz"
+        }
+      ],
+      "destination": "/logs.html"
+    },
+    {
+      "source": "/logs",
+      "destination": "/logs.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.jar",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/java-archive"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.exe",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/PulseCleaner\\.bat",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/x-bat"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"PulseCleaner.bat\""
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ]
+}

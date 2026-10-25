@@ -1,0 +1,7 @@
+# PulseClient Official robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://pulseclient.xyz/sitemap.xml

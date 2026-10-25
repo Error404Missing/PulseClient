@@ -6,8 +6,11 @@
   "observability": {
     "enabled": true
   },
+  "build": {
+    "command": "node build.js"
+  },
   "assets": {
-    "directory": ".",
+    "directory": "dist",
     "binding": "ASSETS"
   }
 }
