@@ -1,0 +1,6 @@
+# Ignore large client jar files so Cloudflare does not fail the 25MB asset limit
+*.jar
+**/*.jar
+PulseClient/**
+.freebuff/**
+.well-known/**
