@@ -256,11 +256,11 @@ const downloadBasefindBtn = document.getElementById('download-basefind-btn-modal
 
 const GITHUB_REPO_OWNER = 'Error404Missing';
 const GITHUB_REPO_NAME = 'PulseClient';
-const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11-v5.jar';
+const GITHUB_JAR_FILE = 'PulseClient-Fabric-1.21.11-v6.jar';
 const GITHUB_PVP_JAR_FILE = GITHUB_JAR_FILE;
 const GITHUB_BASEFIND_JAR_FILE = GITHUB_JAR_FILE;
 
-const GITHUB_CLIENT_DOWNLOAD_URL = "./PulseClient-Fabric-1.21.11-v5.jar";
+const GITHUB_CLIENT_DOWNLOAD_URL = "./PulseClient-Fabric-1.21.11-v6.jar";
 const GITHUB_PVP_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 const GITHUB_BASEFIND_DOWNLOAD_URL = GITHUB_CLIENT_DOWNLOAD_URL;
 
@@ -3274,7 +3274,7 @@ function renderAdminCrashReports() {
         const titleEscaped = (report.error_title || 'Unknown Error').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         const mcUser = (report.mc_username || 'Unknown').replace(/</g, "&lt;").replace(/>/g, "&gt;");
         const osName = (report.os_name || 'Windows (x64)').replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        const modVer = (report.mod_version || 'v5.0.0').replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const modVer = (report.mod_version || 'v6.0.0').replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
         row.innerHTML = `
             <td>
@@ -3332,7 +3332,7 @@ function openAdminCrashDetailModal(reportId) {
             <span class="badge-jar" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; padding: 4px 10px;">${(report.mc_username || 'Unknown')}</span>
             <span class="badge-jar" style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #10b981; padding: 4px 10px;">${(report.license_key || 'No Key')}</span>
             <span class="badge-jar" style="background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; padding: 4px 10px;">${(report.os_name || 'OS Unknown')}</span>
-            <span class="badge-jar" style="background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #facc15; padding: 4px 10px;">Version: ${(report.mod_version || 'v5.0.0')}</span>
+            <span class="badge-jar" style="background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #facc15; padding: 4px 10px;">Version: ${(report.mod_version || 'v6.0.0')}</span>
             <span class="badge-jar" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; padding: 4px 10px;">IP: ${(report.ip_address || 'Unknown')}</span>
         `;
     }

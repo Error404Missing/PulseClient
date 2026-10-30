@@ -18,7 +18,8 @@ const IGNORE_PATTERNS = [
   'build.js',
   'dist',
   'worker.js',
-  'wrangler.jsonc'
+  'wrangler.jsonc',
+  'design-concepts'
 ];
 
 function shouldCopy(filename) {
