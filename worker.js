@@ -11,11 +11,15 @@ export default {
 
     // 2. Direct streaming for .jar files (bypasses 25MB Cloudflare asset limit by fetching directly from GitHub Raw)
     if (url.pathname.endsWith('.jar')) {
-      const jarTargetUrl = 'https://raw.githubusercontent.com/Error404Missing/PulseClient/main/PulseClient-Fabric-1.21.11.jar';
+      const jarTargetUrl = 'https://raw.githubusercontent.com/Error404Missing/PulseClient/main/PulseClient-Fabric-1.21.11.jar?t=' + Math.floor(Date.now() / 60000);
       
       const upstream = await fetch(jarTargetUrl, {
         headers: {
           'User-Agent': request.headers.get('User-Agent') || 'PulseClient-Download-Proxy'
+        },
+        cf: {
+          cacheEverything: false,
+          cacheTtl: 0
         }
       });
 
