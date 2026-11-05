@@ -345,304 +345,164 @@ function applyPricingNumbers() {
 window.applyPricingNumbers = applyPricingNumbers;
 
 // ==========================================
-// LTC CRYPTO CHECKOUT SYSTEM
+// PURCHASE FLOW — KISA.GE DONATION
 // ==========================================
-const OWNER_LTC_ADDRESS = "LQtSmXMDmwS9keBF1sAi6s9dEmfBZ5dW38";
-const CRYPTO_PLAN_USD = {
-    weekly: 1.99,
-    monthly: 10.00,
-    lifetime: 15.00
+const KISA_DONATE_URL = "https://www.kisa.ge/donate/av4d6186h6";
+const USD_GEL_FALLBACK_RATE = 2.60;
+const PURCHASE_PLANS = {
+    weekly: { name: "Weekly", priceUsd: 1.99, durationKey: "pay.dur7" },
+    monthly: { name: "Monthly", priceUsd: 10.00, durationKey: "pay.dur30" },
+    lifetime: { name: "Lifetime", priceUsd: 15.00, durationKey: "pay.durLifetime" }
 };
 
-let activeCryptoPlan = "lifetime";
-let liveLtcUsdRate = 90.0;
-let cryptoPollInterval = null;
-let isCheckingCryptoPayment = false;
+let activePurchasePlan = "lifetime";
+let usdGelRate = USD_GEL_FALLBACK_RATE;
 
-async function fetchLiveLtcRate() {
+function purchaseT(key, vars = {}) {
+    return (typeof window.t === "function") ? window.t(key, vars) : key;
+}
+
+async function fetchUsdGelRate() {
     try {
-        const res = await pulseApiFetch('https://api.pulseclient.xyz/crypto/ltc-rate');
-        if (res.ok) {
-            const data = await res.json();
-            if (data && data.rate_usd > 10) {
-                liveLtcUsdRate = data.rate_usd;
-                return;
-            }
-        }
+        const res = await fetch("https://open.er-api.com/v6/latest/USD", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        const rate = data && data.rates && Number(data.rates.GEL);
+        if (rate > 0.5 && rate < 20) usdGelRate = rate;
     } catch (e) {
-        console.warn("Backend LTC rate fetch fallback:", e);
-    }
-
-    try {
-        const res2 = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd');
-        if (res2.ok) {
-            const d2 = await res2.json();
-            if (d2 && d2.litecoin && d2.litecoin.usd > 10) {
-                liveLtcUsdRate = d2.litecoin.usd;
-            }
-        }
-    } catch (e2) {
-        console.warn("CoinGecko LTC rate fallback:", e2);
+        console.warn("GEL rate fetch fallback:", e);
     }
 }
 
-function updateCryptoCheckoutUI() {
-    const usd = CRYPTO_PLAN_USD[activeCryptoPlan] || 15.00;
-    const ltcAmount = (usd / liveLtcUsdRate).toFixed(5);
+function getPurchaseGelAmount(planKey) {
+    const plan = PURCHASE_PLANS[planKey] || PURCHASE_PLANS.lifetime;
+    return Math.ceil(plan.priceUsd * usdGelRate).toFixed(0);
+}
 
-    const amountDisplay = document.getElementById('crypto-amount-display');
-    const usdApprox = document.getElementById('crypto-usd-approx');
-    const qrImg = document.getElementById('crypto-qr-img');
-    const walletLink = document.getElementById('crypto-wallet-deep-link');
-
-    if (amountDisplay) amountDisplay.textContent = ltcAmount;
-    if (usdApprox) usdApprox.textContent = `~$${usd} USD (1 LTC ≈ $${liveLtcUsdRate.toFixed(2)})`;
-
-    const uri = `litecoin:${OWNER_LTC_ADDRESS}?amount=${ltcAmount}`;
-    if (qrImg) {
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(uri)}&margin=1`;
-    }
-    if (walletLink) {
-        walletLink.href = uri;
-    }
-
-    // Update active plan card highlight
-    ['weekly', 'lifetime', 'monthly'].forEach(p => {
-        const card = document.getElementById(`crypto-card-${p}`);
-        if (card) {
-            if (p === activeCryptoPlan) card.classList.add('active');
-            else card.classList.remove('active');
-        }
+function buildDonationMessage(planKey) {
+    const plan = PURCHASE_PLANS[planKey] || PURCHASE_PLANS.lifetime;
+    const discordId = currentUser ? (getDiscordId(currentUser) || currentUser.id || "-") : "-";
+    return purchaseT("pay.msgTemplate", {
+        id: String(discordId),
+        duration: purchaseT(plan.durationKey)
     });
 }
 
-function selectCryptoPlan(plan) {
-    activeCryptoPlan = plan;
-    updateCryptoCheckoutUI();
+function updatePurchaseModalUI() {
+    const plan = PURCHASE_PLANS[activePurchasePlan] || PURCHASE_PLANS.lifetime;
+
+    const gelEl = document.getElementById("pay-gel-amount");
+    if (gelEl) gelEl.textContent = `₾${getPurchaseGelAmount(activePurchasePlan)}`;
+
+    const usdEl = document.getElementById("pay-usd-amount");
+    if (usdEl) usdEl.textContent = `$${plan.priceUsd.toFixed(2)} USD`;
+
+    const nameEl = document.getElementById("pay-plan-name");
+    if (nameEl) nameEl.textContent = plan.name;
+
+    const durationEl = document.getElementById("pay-plan-duration");
+    if (durationEl) durationEl.textContent = purchaseT(plan.durationKey);
+
+    const rateEl = document.getElementById("pay-rate-note");
+    if (rateEl) rateEl.textContent = purchaseT("pay.rate", { rate: usdGelRate.toFixed(4) });
+
+    const messageEl = document.getElementById("pay-message");
+    if (messageEl) messageEl.value = buildDonationMessage(activePurchasePlan);
+
+    document.querySelectorAll(".crypto-plan-card[data-purchase-plan]").forEach((card) => {
+        card.classList.toggle("active", card.getAttribute("data-purchase-plan") === activePurchasePlan);
+    });
 }
-window.selectCryptoPlan = selectCryptoPlan;
+window.updatePurchaseModalUI = updatePurchaseModalUI;
 
-function switchPaymentMethod(method) {
-    const btnLtc = document.getElementById('crypto-tab-btn-ltc');
-    const btnDiscord = document.getElementById('crypto-tab-btn-discord');
-    const viewLtc = document.getElementById('crypto-view-ltc');
-    const viewDiscord = document.getElementById('crypto-view-discord');
-
-    if (method === 'ltc') {
-        if (btnLtc) btnLtc.classList.add('active');
-        if (btnDiscord) btnDiscord.classList.remove('active');
-        if (viewLtc) viewLtc.classList.remove('hidden');
-        if (viewDiscord) viewDiscord.classList.add('hidden');
-    } else {
-        if (btnDiscord) btnDiscord.classList.add('active');
-        if (btnLtc) btnLtc.classList.remove('active');
-        if (viewDiscord) viewDiscord.classList.remove('hidden');
-        if (viewLtc) viewLtc.classList.add('hidden');
-    }
+function selectPurchasePlan(plan) {
+    if (!PURCHASE_PLANS[plan]) return;
+    activePurchasePlan = plan;
+    updatePurchaseModalUI();
 }
-window.switchPaymentMethod = switchPaymentMethod;
+window.selectPurchasePlan = selectPurchasePlan;
 
-async function showCryptoPurchaseModal(plan = 'lifetime', event) {
+async function showPurchaseModal(plan = "lifetime", event) {
     if (event) event.preventDefault();
 
     if (!currentUser) {
-        showBanner("გთხოვთ გაიაროთ ავტორიზაცია Discord-ით, რომ გასაღები თქვენს ანგარიშს მიებას!", "info");
+        showBanner("გთხოვთ გაიაროთ ავტორიზაცია Discord-ით, რომ შეტყობინებაში თქვენი Discord ID ჩაიწეროს!", "info");
         signInWithDiscord();
         return;
     }
 
-    activeCryptoPlan = plan;
-    const modal = document.getElementById('crypto-purchase-modal');
-    const payBox = document.getElementById('crypto-payment-box');
-    const successScreen = document.getElementById('crypto-success-screen');
+    activePurchasePlan = PURCHASE_PLANS[plan] ? plan : "lifetime";
+    updatePurchaseModalUI();
 
-    if (payBox) payBox.classList.remove('hidden');
-    if (successScreen) successScreen.classList.add('hidden');
-    switchPaymentMethod('ltc');
+    const modal = document.getElementById("crypto-purchase-modal");
+    if (modal) modal.classList.remove("hidden");
 
-    if (modal) modal.classList.remove('hidden');
-
-    await fetchLiveLtcRate();
-    updateCryptoCheckoutUI();
-    startCryptoPaymentPolling();
+    await fetchUsdGelRate();
+    updatePurchaseModalUI();
 }
-window.showCryptoPurchaseModal = showCryptoPurchaseModal;
-window.showPurchaseModal = (e) => showCryptoPurchaseModal('lifetime', e);
+window.showPurchaseModal = showPurchaseModal;
 
-function closeCryptoPurchaseModal() {
-    const modal = document.getElementById('crypto-purchase-modal');
-    if (modal) modal.classList.add('hidden');
-    stopCryptoPaymentPolling();
+function closePurchaseModal() {
+    const modal = document.getElementById("crypto-purchase-modal");
+    if (modal) modal.classList.add("hidden");
 }
-window.closeCryptoPurchaseModal = closeCryptoPurchaseModal;
+window.closePurchaseModal = closePurchaseModal;
 
-function startCryptoPaymentPolling() {
-    stopCryptoPaymentPolling();
-    // Poll every 8 seconds
-    cryptoPollInterval = setInterval(() => {
-        checkCryptoPayment();
-    }, 8000);
-}
-
-function stopCryptoPaymentPolling() {
-    if (cryptoPollInterval) {
-        clearInterval(cryptoPollInterval);
-        cryptoPollInterval = null;
-    }
-}
-
-async function checkCryptoPayment(manualTxid = null) {
-    if (isCheckingCryptoPayment) return;
-    if (!currentUser) return;
-
-    isCheckingCryptoPayment = true;
-    const metadata = currentUser.user_metadata || {};
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
-    const discordId = getDiscordId(currentUser);
-
-    const statusBadge = document.getElementById('crypto-status-badge');
-    const statusDesc = document.getElementById('crypto-status-desc');
-
-    try {
-        const res = await pulseApiFetch('https://api.pulseclient.xyz/crypto/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                plan: activeCryptoPlan,
-                discord_id: String(discordId),
-                username: username,
-                txid: manualTxid || ''
-            })
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            if (data.status === 'success') {
-                stopCryptoPaymentPolling();
-                handleCryptoPaymentSuccess(data);
-            } else if (data.status === 'pending') {
-                if (statusBadge) {
-                    statusBadge.className = 'crypto-status-pill pending';
-                    statusBadge.textContent = 'ველოდებით ტრანზაქციას';
-                }
-                if (statusDesc) {
-                    statusDesc.textContent = 'გაგზავნეთ LTC თქვენი საფულიდან. ბლოკჩეინი მოწმდება ავტომატურად.';
-                }
-            }
-        }
-    } catch (e) {
-        console.warn("Crypto payment poll error:", e);
-    } finally {
-        isCheckingCryptoPayment = false;
-    }
-}
-
-function handleCryptoPaymentSuccess(data) {
-    const payBox = document.getElementById('crypto-payment-box');
-    const successScreen = document.getElementById('crypto-success-screen');
-    const successKey = document.getElementById('crypto-success-key');
-
-    if (payBox) payBox.classList.add('hidden');
-    if (successScreen) successScreen.classList.remove('hidden');
-    if (successKey && data.license_key) {
-        successKey.value = data.license_key;
-    }
-
-    showBanner("გადახდა წარმატებით დადასტურდა! ლიცენზია შეიქმნა.", "success");
-    // Update dashboard license count without full re-fetch
-    const dashLicenseCount = document.getElementById('dash-license-count');
-    if (dashLicenseCount) {
-        const current = parseInt(dashLicenseCount.textContent) || 0;
-        dashLicenseCount.textContent = current + 1;
-    }
-}
-
-function copyCryptoAddress(btn) {
-    const input = document.getElementById('crypto-address-input');
+function copyDonationMessage(btn) {
+    const input = document.getElementById("pay-message");
     if (!input) return;
-    navigator.clipboard.writeText(input.value.trim()).then(() => {
-        if (btn) {
-            const orig = btn.innerHTML;
-            btn.classList.add('copied');
-            btn.innerHTML = `<span>დაკოპირდა!</span>`;
-            setTimeout(() => {
-                btn.classList.remove('copied');
-                btn.innerHTML = orig;
-            }, 2000);
+
+    const showCopied = () => {
+        if (!btn) return;
+        const original = btn.innerHTML;
+        btn.classList.add("copied");
+        btn.innerHTML = `<span>${purchaseT("pay.copied")}</span>`;
+        setTimeout(() => {
+            btn.classList.remove("copied");
+            btn.innerHTML = original;
+        }, 2000);
+    };
+
+    const fallbackCopy = () => {
+        input.select();
+        try {
+            document.execCommand("copy");
+            showCopied();
+        } catch (e) {
+            // Clipboard is unavailable; the message stays selectable.
         }
-    });
-}
-window.copyCryptoAddress = copyCryptoAddress;
+    };
 
-function copyCryptoAmount(btn) {
-    const amountEl = document.getElementById('crypto-amount-display');
-    if (!amountEl) return;
-    navigator.clipboard.writeText(amountEl.textContent.trim()).then(() => {
-        if (btn) {
-            const orig = btn.innerHTML;
-            btn.classList.add('copied');
-            btn.innerHTML = `<span>დაკოპირდა!</span>`;
-            setTimeout(() => {
-                btn.classList.remove('copied');
-                btn.innerHTML = orig;
-            }, 2000);
-        }
-    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(input.value).then(showCopied).catch(fallbackCopy);
+    } else {
+        fallbackCopy();
+    }
 }
-window.copyCryptoAmount = copyCryptoAmount;
+window.copyDonationMessage = copyDonationMessage;
 
-function copyCryptoSuccessKey(btn) {
-    const input = document.getElementById('crypto-success-key');
-    if (!input) return;
-    navigator.clipboard.writeText(input.value.trim()).then(() => {
-        if (btn) {
-            const orig = btn.innerHTML;
-            btn.classList.add('copied');
-            btn.innerHTML = `<span>დაკოპირდა!</span>`;
-            setTimeout(() => {
-                btn.classList.remove('copied');
-                btn.innerHTML = orig;
-            }, 2000);
-        }
-    });
-}
-window.copyCryptoSuccessKey = copyCryptoSuccessKey;
+function goToKisaDonation(event) {
+    if (event) event.preventDefault();
 
-function toggleManualTxidInput() {
-    const form = document.getElementById('crypto-manual-txid-form');
-    if (form) form.classList.toggle('hidden');
-}
-window.toggleManualTxidInput = toggleManualTxidInput;
+    const input = document.getElementById("pay-message");
+    const message = input ? input.value : "";
+    const go = () => { window.location.href = KISA_DONATE_URL; };
 
-async function verifyManualTxid() {
-    const input = document.getElementById('crypto-txid-input');
-    const btn = document.getElementById('crypto-txid-verify-btn');
-    if (!input) return;
-    const txid = input.value.trim();
-    if (!txid) {
-        showBanner("გთხოვთ ჩაწეროთ LTC Transaction Hash (TXID)", "error");
+    if (!message) {
+        go();
         return;
     }
-    if (btn) {
-        btn.disabled = true;
-        btn.textContent = "მოწმდება...";
-    }
-    await checkCryptoPayment(txid);
-    if (btn) {
-        btn.disabled = false;
-        btn.textContent = "შემოწმება";
-    }
-}
-window.verifyManualTxid = verifyManualTxid;
 
-function handleCryptoSuccessDone() {
-    closeCryptoPurchaseModal();
-    if (typeof showDashboard === 'function') {
-        showDashboard();
-        switchDashTab(null, 'tab-downloads');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(message).then(() => {
+            showBanner("შეტყობინება დაკოპირებულია! ქისაზე ჩასვით „შეტყობინება“ ველში.", "info");
+            setTimeout(go, 700);
+        }).catch(go);
+    } else {
+        go();
     }
 }
-window.handleCryptoSuccessDone = handleCryptoSuccessDone;
+window.goToKisaDonation = goToKisaDonation;
 
 function goToFreeTrial(event) {
     if (event) event.preventDefault();
@@ -6111,6 +5971,7 @@ function onLanguageChanged() {
     } catch (err) {
         console.warn("applyPricingNumbers failed:", err);
     }
+    if (typeof updatePurchaseModalUI === "function") updatePurchaseModalUI();
 }
 
 // Auto-refresh active sessions, telemetry, and crash reports every 10 seconds
