@@ -424,7 +424,7 @@ function setPayCopiedState(done) {
     if (!step2 || !step3) return;
 
     step2.classList.toggle("completed", done);
-    step3.classList.toggle("highlight", done);
+    step3.classList.toggle("is-next", done);
 
     const num = step2.querySelector(".pay-step-num");
     if (num) num.textContent = done ? "✓" : "2";
