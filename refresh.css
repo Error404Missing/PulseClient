@@ -1686,8 +1686,8 @@ p {
 }
 
 .crypto-modal-header {
-    margin-bottom: 20px;
-    padding: 0 24px;
+    margin-bottom: 18px;
+    padding: 0;
 }
 
 .crypto-badge-wrap {
@@ -1718,15 +1718,15 @@ p {
 }
 
 .crypto-modal-title {
-    font-size: 22px !important;
+    font-size: 24px !important;
     font-weight: 700 !important;
     letter-spacing: -0.025em !important;
     margin-bottom: 6px !important;
 }
 
 .crypto-modal-subtitle {
-    font-size: 12.5px;
-    color: var(--text-muted);
+    font-size: 13.5px;
+    color: #aeb6c4;
     line-height: 1.6;
 }
 
@@ -3991,11 +3991,11 @@ p {
     background: #08090d;
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 9px;
-    padding: 10px 12px;
+    padding: 11px 13px;
     color: #e0e7ff;
     font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 1.55;
+    font-size: 13px;
+    line-height: 1.6;
     resize: vertical;
     outline: none;
 }
@@ -4047,4 +4047,255 @@ p {
     font-size: 9.5px;
     color: var(--text-muted);
     line-height: 1.4;
+}
+
+/* Step-by-step purchase flow */
+.pay-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    counter-reset: pay-step;
+}
+
+.pay-step {
+    display: flex;
+    gap: 15px;
+    padding: 16px 16px 17px;
+    background: rgba(255, 255, 255, 0.022);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pay-step-num {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    margin-top: 0;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffffff 0%, #d9dee7 100%);
+    color: #08090d;
+    font-family: var(--font-mono);
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.9);
+}
+
+.pay-step.completed {
+    background: rgba(52, 211, 153, 0.05);
+    border-color: rgba(52, 211, 153, 0.32);
+}
+
+.pay-step.completed .pay-step-num {
+    background: linear-gradient(180deg, #6ee7b7 0%, #34d399 100%);
+    color: #04170f;
+    font-size: 19px;
+}
+
+.pay-step.highlight {
+    border-color: rgba(52, 211, 153, 0.5);
+    box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.18) inset, 0 0 28px -12px rgba(52, 211, 153, 0.55);
+    animation: payStepGlow 1.4s ease-out 1;
+}
+
+@keyframes payStepGlow {
+    0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45) inset, 0 0 0 0 rgba(52, 211, 153, 0.35); }
+    100% { box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.18) inset, 0 0 28px -12px rgba(52, 211, 153, 0.55); }
+}
+
+.pay-step-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.pay-step-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: #fff;
+}
+
+.pay-step-desc {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #aeb6c4;
+}
+
+.pay-plan-cards {
+    margin-top: 2px;
+}
+
+.pay-plan-cards .crypto-plan-card {
+    padding: 13px 10px 12px;
+}
+
+.pay-plan-cards .plan-name {
+    font-size: 12.5px;
+}
+
+.pay-plan-cards .plan-price {
+    font-size: 12.5px;
+}
+
+.pay-plan-cards .plan-dur {
+    font-size: 11px;
+}
+
+.pay-step .pay-summary {
+    margin-top: 2px;
+}
+
+.pay-step .pay-rate-row {
+    margin-top: 0;
+}
+
+.pay-copy-big {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 15px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(52, 211, 153, 0.45);
+    background: rgba(52, 211, 153, 0.14);
+    color: #6ee7b7;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.pay-copy-big:active {
+    transform: scale(0.985);
+}
+
+.pay-copy-hint {
+    margin-top: -2px;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.pay-copy-big:hover {
+    background: rgba(52, 211, 153, 0.18);
+    border-color: rgba(52, 211, 153, 0.55);
+    color: #a7f3d0;
+}
+
+.pay-copy-big.copied {
+    background: rgba(52, 211, 153, 0.22);
+    border-color: rgba(52, 211, 153, 0.7);
+    color: #fff;
+}
+
+.pay-copy-status {
+    display: none;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.55;
+    color: #6ee7b7;
+}
+
+.pay-copy-status.visible {
+    display: block;
+}
+
+.pay-copy-status.error {
+    font-weight: 500;
+    color: #fca5a5;
+}
+
+.pay-checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.pay-checklist li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #aeb6c4;
+}
+
+.pay-checklist li::before {
+    content: "";
+    flex: 0 0 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #34d399;
+    opacity: 0.9;
+}
+
+.pay-checklist li > span:first-child {
+    color: #fff;
+    font-weight: 600;
+}
+
+.pay-checklist b {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: #6ee7b7;
+}
+
+.pay-after-pay {
+    margin: 2px 0 0;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8fa3c4;
+}
+
+@media (max-width: 620px) {
+    .pay-step {
+        padding: 14px 13px;
+        gap: 11px;
+    }
+
+    .pay-step-num {
+        flex-basis: 30px;
+        width: 30px;
+        height: 30px;
+        font-size: 15px;
+    }
+
+    .pay-step.completed .pay-step-num {
+        font-size: 17px;
+    }
+
+    .pay-step-title {
+        font-size: 15px;
+    }
+
+    .pay-step-desc,
+    .pay-checklist li {
+        font-size: 13px;
+    }
+
+    .pay-copy-big {
+        font-size: 14px;
+        padding: 14px 12px;
+    }
+
+    .pay-gel-amount {
+        font-size: 27px;
+    }
 }

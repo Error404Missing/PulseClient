@@ -2096,79 +2096,97 @@
                 <p class="crypto-modal-subtitle" data-i18n="crypto.modalSubtitle">აირჩიეთ ტარიფი, გადაიხადეთ ქისაზე და შეტყობინებაში მიუთითეთ Discord ID.</p>
             </div>
 
-            <!-- Plan Selector -->
-            <div class="crypto-plan-selector">
-                <label class="crypto-field-label" data-i18n="crypto.choosePlan">აირჩიეთ ტარიფი:</label>
-                <div class="crypto-plan-cards">
-                    <div class="crypto-plan-card" data-purchase-plan="weekly" onclick="selectPurchasePlan('weekly')">
-                        <div class="plan-card-top">
-                            <span class="plan-name">Weekly</span>
-                            <span class="plan-price">$1.99</span>
+            <!-- Step-by-step checkout -->
+            <div class="pay-steps">
+                <!-- STEP 1: Plan & amount -->
+                <div class="pay-step" id="pay-step-1">
+                    <div class="pay-step-num">1</div>
+                    <div class="pay-step-body">
+                        <div class="pay-step-title" data-i18n="pay.step1Title">აირჩიე ტარიფი</div>
+                        <p class="pay-step-desc" data-i18n="pay.step1Desc">აირჩიე ტარიფი და ნახე რამდენი ლარი უნდა ჩარიცხო.</p>
+
+                        <div class="crypto-plan-cards pay-plan-cards">
+                            <div class="crypto-plan-card" data-purchase-plan="weekly" onclick="selectPurchasePlan('weekly')">
+                                <div class="plan-card-top">
+                                    <span class="plan-name">Weekly</span>
+                                    <span class="plan-price">$1.99</span>
+                                </div>
+                                <span class="plan-dur" data-i18n="pay.dur7">7 დღე</span>
+                            </div>
+                            <div class="crypto-plan-card active popular" data-purchase-plan="lifetime" onclick="selectPurchasePlan('lifetime')">
+                                <span class="plan-popular-tag" data-i18n="pricing.popular">რეკომენდებული</span>
+                                <div class="plan-card-top">
+                                    <span class="plan-name">Lifetime</span>
+                                    <span class="plan-price">$15.00</span>
+                                </div>
+                                <span class="plan-dur" data-i18n="pay.durLifetime">სამუდამო</span>
+                            </div>
+                            <div class="crypto-plan-card" data-purchase-plan="monthly" onclick="selectPurchasePlan('monthly')">
+                                <div class="plan-card-top">
+                                    <span class="plan-name">Monthly</span>
+                                    <span class="plan-price">$10.00</span>
+                                </div>
+                                <span class="plan-dur" data-i18n="pay.dur30">30 დღე</span>
+                            </div>
                         </div>
-                        <span class="plan-dur" data-i18n="pay.dur7">7 დღე</span>
+
+                        <div class="pay-summary">
+                            <div class="pay-summary-card">
+                                <span class="crypto-label" data-i18n="pay.amountLabel">გადასახდელი თანხა</span>
+                                <div id="pay-gel-amount" class="pay-gel-amount">₾39</div>
+                                <span id="pay-usd-amount" class="pay-usd-equiv">$15.00 USD</span>
+                                <span class="pay-round-hint" data-i18n="pay.roundHint">მთელი ლარით</span>
+                            </div>
+                            <div class="pay-summary-card">
+                                <span class="crypto-label" data-i18n="pay.planLabel">ტარიფი</span>
+                                <div id="pay-plan-name" class="pay-plan-name">Lifetime</div>
+                                <span id="pay-plan-duration" class="pay-plan-duration">სამუდამო</span>
+                            </div>
+                        </div>
+
+                        <div class="pay-rate-row">
+                            <span id="pay-rate-note" class="pay-rate-note">1 USD ≈ ₾2.6000</span>
+                            <span class="pay-rate-live" data-i18n="pay.rateLive">live კურსი</span>
+                        </div>
                     </div>
-                    <div class="crypto-plan-card active popular" data-purchase-plan="lifetime" onclick="selectPurchasePlan('lifetime')">
-                        <span class="plan-popular-tag" data-i18n="pricing.popular">რეკომენდებული</span>
-                        <div class="plan-card-top">
-                            <span class="plan-name">Lifetime</span>
-                            <span class="plan-price">$15.00</span>
-                        </div>
-                        <span class="plan-dur" data-i18n="pay.durLifetime">სამუდამო</span>
+                </div>
+
+                <!-- STEP 2: Copy message -->
+                <div class="pay-step" id="pay-step-2">
+                    <div class="pay-step-num">2</div>
+                    <div class="pay-step-body">
+                        <div class="pay-step-title" data-i18n="pay.step2Title">დააკოპირე შეტყობინება</div>
+                        <p class="pay-step-desc" data-i18n="pay.step2Desc">ეს ტექსტი შეიცავს შენს Discord ID-ს და ტარიფს. ქისაზე სწორედ ეს ტექსტი უნდა ჩასვა.</p>
+                        <textarea id="pay-message" class="pay-message-box mono" readonly rows="2">Discord ID: - | ლიცენზია: სამუდამო</textarea>
+                        <button type="button" class="pay-copy-big" onclick="copyDonationMessage(this)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span data-i18n="pay.copy">დააჭირე და დააკოპირე</span>
+                        </button>
+                        <div class="pay-copy-hint" data-i18n="pay.copyHint">ტექსტი ავტომატურად დაკოპირდება.</div>
+                        <div id="pay-copy-status" class="pay-copy-status" aria-live="polite"></div>
                     </div>
-                    <div class="crypto-plan-card" data-purchase-plan="monthly" onclick="selectPurchasePlan('monthly')">
-                        <div class="plan-card-top">
-                            <span class="plan-name">Monthly</span>
-                            <span class="plan-price">$10.00</span>
-                        </div>
-                        <span class="plan-dur" data-i18n="pay.dur30">30 დღე</span>
+                </div>
+
+                <!-- STEP 3: Go & pay -->
+                <div class="pay-step" id="pay-step-3">
+                    <div class="pay-step-num">3</div>
+                    <div class="pay-step-body">
+                        <div class="pay-step-title" data-i18n="pay.step3Title">გადადი ქისაზე და გადაიხადე</div>
+                        <p class="pay-step-desc" data-i18n="pay.step3Desc">ქისას გვერდზე შეავსე ეს ველები:</p>
+                        <ul class="pay-checklist">
+                            <li><span data-i18n="pay.fieldName">სახელი</span> — <span data-i18n="pay.fieldNameHint">შენი სახელი ან ნიკი</span></li>
+                            <li><span data-i18n="pay.fieldAmount">თანხა</span> — <b id="pay-step-amount">₾39</b></li>
+                            <li><span data-i18n="pay.fieldMessage">შეტყობინება</span> — <span data-i18n="pay.fieldMessageHint">ჩასვი დაკოპირებული ტექსტი (Ctrl+V)</span></li>
+                        </ul>
+                        <button type="button" class="btn btn-glow btn-primary pay-go-btn" onclick="goToKisaDonation(event)">
+                            <span data-i18n="pay.go">ქისაზე გადასვლა</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </button>
+                        <p class="pay-note" data-i18n="pay.note">ღილაკზე დაჭერისას შეტყობინება ავტომატურად დაკოპირდება და ქისას გვერდი გაიხსნება.</p>
+                        <p class="pay-after-pay" data-i18n="pay.afterPay">გადახდის შემდეგ license key მიიღებ Discord-ზე.</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Amount & Message -->
-            <div class="crypto-payment-box">
-                <div class="pay-summary">
-                    <div class="pay-summary-card">
-                        <span class="crypto-label" data-i18n="pay.amountLabel">გადასახდელი თანხა</span>
-                        <div id="pay-gel-amount" class="pay-gel-amount">₾39</div>
-                        <span id="pay-usd-amount" class="pay-usd-equiv">$15.00 USD</span>
-                        <span class="pay-round-hint" data-i18n="pay.roundHint">მთელი ლარით</span>
-                    </div>
-                    <div class="pay-summary-card">
-                        <span class="crypto-label" data-i18n="pay.planLabel">ტარიფი</span>
-                        <div id="pay-plan-name" class="pay-plan-name">Lifetime</div>
-                        <span id="pay-plan-duration" class="pay-plan-duration">სამუდამო</span>
-                    </div>
-                </div>
-
-                <div class="pay-rate-row">
-                    <span id="pay-rate-note" class="pay-rate-note">1 USD ≈ ₾2.6000</span>
-                    <span class="pay-rate-live" data-i18n="pay.rateLive">live კურსი</span>
-                </div>
-
-                <div class="crypto-info-group pay-message-group">
-                    <div class="crypto-label-row">
-                        <span class="crypto-label" data-i18n="pay.messageLabel">შეტყობინება ქისაზე</span>
-                        <span class="crypto-usd-approx" data-i18n="pay.messageHint">დააკოპირეთ და ჩასვით</span>
-                    </div>
-                    <textarea id="pay-message" class="pay-message-box mono" readonly rows="2">Discord ID: - | ლიცენზია: სამუდამო</textarea>
-                    <button type="button" class="btn-crypto-copy pay-copy-btn" onclick="copyDonationMessage(this)">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        <span data-i18n="pay.copy">შეტყობინების კოპირება</span>
-                    </button>
-                </div>
-
-                <div class="crypto-tip-box">
-                    <span class="tip-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
-                    <span data-i18n="pay.tip">ქისაზე შეავსეთ სახელი, თანხა (₾) და ჩასვით ზემოთ მოცემული შეტყობინება — ამის მიხედვით გაიცემა license key.</span>
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-glow btn-primary pay-go-btn" onclick="goToKisaDonation(event)">
-                <span data-i18n="pay.go">ქისაზე გადასვლა</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            </button>
-            <p class="pay-note" data-i18n="pay.note">გადასვლამდე შეტყობინება ავტომატურად დაკოპირდება.</p>
         </div>
     </div>
 

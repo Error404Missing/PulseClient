@@ -406,6 +406,9 @@ function updatePurchaseModalUI() {
     const rateEl = document.getElementById("pay-rate-note");
     if (rateEl) rateEl.textContent = purchaseT("pay.rate", { rate: usdGelRate.toFixed(4) });
 
+    const stepAmountEl = document.getElementById("pay-step-amount");
+    if (stepAmountEl) stepAmountEl.textContent = `₾${getPurchaseGelAmount(activePurchasePlan)}`;
+
     const messageEl = document.getElementById("pay-message");
     if (messageEl) messageEl.value = buildDonationMessage(activePurchasePlan);
 
@@ -415,9 +418,32 @@ function updatePurchaseModalUI() {
 }
 window.updatePurchaseModalUI = updatePurchaseModalUI;
 
+function setPayCopiedState(done) {
+    const step2 = document.getElementById("pay-step-2");
+    const step3 = document.getElementById("pay-step-3");
+    if (!step2 || !step3) return;
+
+    step2.classList.toggle("completed", done);
+    step3.classList.toggle("highlight", done);
+
+    const num = step2.querySelector(".pay-step-num");
+    if (num) num.textContent = done ? "✓" : "2";
+}
+
+function resetPayCopyState() {
+    setPayCopiedState(false);
+    const statusEl = document.getElementById("pay-copy-status");
+    if (statusEl) {
+        statusEl.textContent = "";
+        statusEl.className = "pay-copy-status";
+    }
+}
+window.resetPayCopyState = resetPayCopyState;
+
 function selectPurchasePlan(plan) {
     if (!PURCHASE_PLANS[plan]) return;
     activePurchasePlan = plan;
+    resetPayCopyState();
     updatePurchaseModalUI();
 }
 window.selectPurchasePlan = selectPurchasePlan;
@@ -432,6 +458,7 @@ async function showPurchaseModal(plan = "lifetime", event) {
     }
 
     activePurchasePlan = PURCHASE_PLANS[plan] ? plan : "lifetime";
+    resetPayCopyState();
     updatePurchaseModalUI();
 
     const modal = document.getElementById("crypto-purchase-modal");
@@ -452,7 +479,23 @@ function copyDonationMessage(btn) {
     const input = document.getElementById("pay-message");
     if (!input) return;
 
+    const statusEl = document.getElementById("pay-copy-status");
+
+    const setStatus = (message, isError) => {
+        if (!statusEl) return;
+        statusEl.textContent = message;
+        statusEl.className = isError ? "pay-copy-status visible error" : "pay-copy-status visible";
+    };
+
     const showCopied = () => {
+        setStatus(purchaseT("pay.copySuccess"), false);
+        setPayCopiedState(true);
+        input.blur();
+
+        const step3 = document.getElementById("pay-step-3");
+        if (step3 && step3.scrollIntoView) {
+            step3.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
         if (!btn) return;
         const original = btn.innerHTML;
         btn.classList.add("copied");
@@ -460,16 +503,25 @@ function copyDonationMessage(btn) {
         setTimeout(() => {
             btn.classList.remove("copied");
             btn.innerHTML = original;
-        }, 2000);
+        }, 2400);
+    };
+
+    const showFailed = () => {
+        setStatus(purchaseT("pay.copyFail"), true);
+        if (statusEl) statusEl.classList.add("visible", "error");
     };
 
     const fallbackCopy = () => {
+        input.focus();
         input.select();
+        input.setSelectionRange(0, input.value.length);
         try {
-            document.execCommand("copy");
-            showCopied();
+            const ok = document.execCommand("copy");
+            if (ok) showCopied();
+            else showFailed();
         } catch (e) {
             // Clipboard is unavailable; the message stays selectable.
+            showFailed();
         }
     };
 
