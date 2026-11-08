@@ -732,6 +732,41 @@ h3 {
     font-weight: 700;
 }
 
+
+/* Floating Telegram Support Button */
+.telegram-float {
+    position: fixed;
+    bottom: 96px;
+    right: 28px;
+    z-index: 9999;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #2AABEE 0%, #229ED9 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 36px rgba(42, 171, 238, 0.45);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+}
+
+.telegram-float svg {
+    width: 30px;
+    height: 30px;
+}
+
+.telegram-float:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 16px 44px rgba(42, 171, 238, 0.65);
+    color: #fff;
+}
+
+.telegram-float:active {
+    transform: translateY(-1px) scale(1.01);
+}
+
 /* Floating Discord Button */
 .discord-float {
     position: fixed;
