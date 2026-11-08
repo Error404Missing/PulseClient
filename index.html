@@ -3014,6 +3014,11 @@
 
                             </button>
 
+                        
+                            <button type="button" class="admin-subtab-btn" id="btn-subtab-staff" onclick="switchAdminSubTab(event, 'admin-subpanel-staff')">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>ადმინები & Staff</span>
+                            </button>
                         </div>
 
 
@@ -4143,6 +4148,68 @@
                             </div>
 
                         </div>
+
+                        <!-- SUBPANEL: Staff / Admins (Supabase) -->
+                        <div id="admin-subpanel-staff" class="admin-subpanel hidden">
+                            <div class="glass-panel admin-create-card" style="margin-bottom: 28px;">
+                                <h3>ახალი ადმინისტრატორის დამატება (Supabase)</h3>
+                                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">
+                                    დაამატეთ ადმინისტრატორი Discord ID-ით. როლი ავტომატურად შეინახება Supabase-ში და მომხმარებელი მყისიერად მიიღებს ადმინ პანელზე წვდომას.
+                                </p>
+                                <form id="admin-staff-create-form" class="admin-form" onsubmit="handleCreateAdminStaff(event)">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Discord ID *</label>
+                                            <input type="text" id="admin-staff-discord-id" placeholder="მაგ: 1158855771031867432" required class="custom-dark-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>სახელი / შენიშვნა</label>
+                                            <input type="text" id="admin-staff-username" placeholder="მაგ: Gio (Staff)" class="custom-dark-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>როლი</label>
+                                            <select id="admin-staff-role" class="custom-dark-select">
+                                                <option value="admin">Admin (ადმინისტრატორი)</option>
+                                                <option value="owner">Owner (მფლობელი)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 14px;">
+                                        ადმინისტრატორის დამატება
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Staff List Table -->
+                            <div class="glass-panel" style="padding: 24px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                                    <div>
+                                        <h3 style="margin: 0; font-size: 1.15rem;">ადმინისტრატორების სია (Supabase & Config)</h3>
+                                        <span style="font-size: 12px; color: var(--text-muted);">სინქრონიზებულია Supabase მონაცემთა ბაზასთან რეალურ დროში</span>
+                                    </div>
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="fetchSupabaseAdminsList()" style="padding: 6px 14px; font-size: 12px;">
+                                        განახლება
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="admin-table">
+                                        <thead>
+                                            <tr>
+                                                <th>ადმინისტრატორი</th>
+                                                <th>Discord ID</th>
+                                                <th>როლი</th>
+                                                <th>წყარო</th>
+                                                <th style="text-align: right;">მოქმედება</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="admin-staff-table-body">
+                                            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 18px;">იტვირთება...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
 

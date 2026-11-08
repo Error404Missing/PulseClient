@@ -350,7 +350,7 @@ function getServerNow() {
 
 async function pulseApiFetch(urlOrPath, options = {}) {
 
-    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isOwner === 'function' && isOwner())) {
 
         console.warn("[PulseGuard] Outgoing API request blocked due to active VPN barrier:", urlOrPath);
 
@@ -610,7 +610,9 @@ const OWNER_DISCORD_IDS = ["1475396409246089367"];
 
 const ADMIN_DISCORD_IDS = ["1475396409246089367", "1158855771031867432", "1272601735051083797", "1350538035342737441", ""];
 
-let currentUser = null;
+let currentUser = null;
+let currentUserProfile = null;
+let supabaseAdminRecords = [];
 
 let adminLicenses = [];
 
@@ -1236,7 +1238,7 @@ function getWebRtcCandidateIp() {
 
 async function checkVpnProxy() {
 
-    if (typeof isAdmin === 'function' && isAdmin()) {
+    if (typeof isOwner === 'function' && isOwner()) {
 
         if (typeof releaseVpnLock === 'function') releaseVpnLock();
 
@@ -1250,7 +1252,7 @@ async function checkVpnProxy() {
 
     if (sessionStorage.getItem('pulse_vpn_blocked') === 'true') {
 
-        if (typeof isAdmin === 'function' && isAdmin()) {
+        if (typeof isOwner === 'function' && isOwner()) {
 
             if (typeof releaseVpnLock === 'function') releaseVpnLock();
 
@@ -1464,7 +1466,7 @@ async function checkVpnProxy() {
 
 function enforceVpnLock() {
 
-    if (typeof isAdmin === 'function' && isAdmin()) {
+    if (typeof isOwner === 'function' && isOwner()) {
 
         releaseVpnLock();
 
@@ -1538,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Immediate pre-render barrier if flagged in current session
 
-    if (sessionStorage.getItem('pulse_vpn_blocked') === 'true' && !(typeof isAdmin === 'function' && isAdmin())) {
+    if (sessionStorage.getItem('pulse_vpn_blocked') === 'true' && !(typeof isOwner === 'function' && isOwner())) {
 
         enforceVpnLock();
 
@@ -1550,11 +1552,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     checkVpnProxy().then(isVpn => {
 
-        if (isVpn && !(typeof isAdmin === 'function' && isAdmin())) {
+        if (isVpn && !(typeof isOwner === 'function' && isOwner())) {
 
             enforceVpnLock();
 
-        } else if (!isVpn || (typeof isAdmin === 'function' && isAdmin())) {
+        } else if (!isVpn || (typeof isOwner === 'function' && isOwner())) {
 
             releaseVpnLock();
 
@@ -1582,7 +1584,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (session) {
 
-        handleUserSignIn(session.user);
+        await handleUserSignIn(session.user);
 
     } else {
 
@@ -1594,13 +1596,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Set up OAuth redirect listener
 
-    supabaseClient.auth.onAuthStateChange((event, session) => {
-
-        if (event === 'SIGNED_IN' && session) {
-
-            if (!currentUser || currentUser.id !== session.user.id) {
-
-                handleUserSignIn(session.user);
+    supabaseClient.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+            if (!currentUser || currentUser.id !== session.user.id) {
+                await handleUserSignIn(session.user);
 
             }
 
@@ -2160,18 +2159,48 @@ window.handleAvatarError = handleAvatarError;
 
 
 
+
+async function fetchAdminDataFromSupabase(user) {
+    if (!user) return;
+    try {
+        const discordId = String(getDiscordId(user) || user.user_metadata?.provider_id || '').trim();
+
+        const profilePromise = supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .maybeSingle();
+
+        const adminsPromise = supabaseClient
+            .from('admins')
+            .select('*');
+
+        const [pRes, aRes] = await Promise.allSettled([profilePromise, adminsPromise]);
+
+        if (pRes.status === 'fulfilled' && pRes.value && pRes.value.data) {
+            currentUserProfile = pRes.value.data;
+        }
+
+        if (aRes.status === 'fulfilled' && aRes.value && Array.isArray(aRes.value.data)) {
+            supabaseAdminRecords = aRes.value.data;
+        }
+    } catch (e) {
+        console.warn("[PulseAdmin] Could not load Supabase admin info:", e);
+    }
+}
+
 async function handleUserSignIn(user) {
 
-    currentUser = user;
+    currentUser = user;
+
+    // Pre-load admin role & profile from Supabase
+    await fetchAdminDataFromSupabase(user);
 
 
 
-    // Admin & Owner bypass Anti-VPN barrier completely
-
-    if (isAdmin()) {
-
-        releaseVpnLock();
-
+    // ONLY Owner bypasses Anti-VPN barrier completely
+    if (isOwner()) {
+        releaseVpnLock();
     } else if (isVpnBlocked || sessionStorage.getItem('pulse_vpn_blocked') === 'true') {
 
         enforceVpnLock();
@@ -2310,7 +2339,8 @@ async function handleUserSignIn(user) {
 
         fetchProfilesForAdmin();
 
-        fetchBlacklistEntries();
+        fetchBlacklistEntries();
+        fetchSupabaseAdminsList();
 
     } else {
 
@@ -3512,7 +3542,7 @@ window.scrollToAuth = scrollToAuth;
 
 function switchDashTab(event, tabId, shouldScroll = true) {
 
-    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isOwner === 'function' && isOwner())) {
 
         if (typeof enforceVpnLock === 'function') enforceVpnLock();
 
@@ -3816,7 +3846,7 @@ function navigateToLandingSection(event, sectionId) {
 
     if (event && event.preventDefault) event.preventDefault();
 
-    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isOwner === 'function' && isOwner())) {
 
         if (typeof enforceVpnLock === 'function') enforceVpnLock();
 
@@ -3886,7 +3916,7 @@ window.navigateToLandingSection = navigateToLandingSection;
 
 function showLanding() {
 
-    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isOwner === 'function' && isOwner())) {
 
         if (typeof enforceVpnLock === 'function') enforceVpnLock();
 
@@ -3928,7 +3958,7 @@ window.showLanding = showLanding;
 
 function showDashboard() {
 
-    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isAdmin === 'function' && isAdmin())) {
+    if (typeof isVpnBlocked !== 'undefined' && isVpnBlocked && !(typeof isOwner === 'function' && isOwner())) {
 
         if (typeof enforceVpnLock === 'function') enforceVpnLock();
 
@@ -3978,142 +4008,136 @@ window.showDashboard = showDashboard;
 
 
 
-function isOwner() {
-
-    if (!currentUser) return false;
-
-    
-
-    // 1. Direct Supabase User Auth ID check
-
-    if (currentUser.id === "5eb75030-bfff-4b1e-baa6-c8db8530ed70") return true;
-
-
-
-    const meta = currentUser.user_metadata || {};
-
-    const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
-
-    if (discordId && OWNER_DISCORD_IDS.includes(discordId)) return true;
-
-
-
-    // 2. Email verification
-
-    const email = String(currentUser.email || meta.email || "").toLowerCase();
-
-    if (email === "genksnow@gmail.com" || email.includes("error404") || email.includes("sticky")) return true;
-
-
-
-    // 3. Username extraction across Discord OAuth attributes
-
-    const username = String(
-
-        meta.user_name || 
-
-        meta.custom_claims?.username || 
-
-        meta.custom_claims?.global_name ||
-
-        meta.full_name || 
-
-        meta.name || 
-
-        meta.username || 
-
-        ""
-
-    ).toLowerCase();
-
-
-
-    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
-
-
-
-    // 4. Fallback: Check navbar username text
-
-    const navUserEl = document.getElementById('nav-username');
-
-    if (navUserEl && navUserEl.textContent) {
-
-        const navText = navUserEl.textContent.trim().toLowerCase();
-
-        if (navText.includes("sticky") || navText === "errora" || navText.includes("error404") || navText.includes("udzlieresi")) return true;
-
-    }
-
-
-
-    // 5. Fallback: Check profile from allUserProfiles
-
-    if (Array.isArray(allUserProfiles) && allUserProfiles.length > 0) {
-
-        const prof = allUserProfiles.find(p => p.id === currentUser.id || (p.email && p.email === currentUser.email));
-
-        if (prof) {
-
-            const pDid = String(prof.discord_id || "");
-
-            const pUser = String(prof.username || "").toLowerCase();
-
-            if (OWNER_DISCORD_IDS.includes(pDid)) return true;
-
-            if (pUser.includes("sticky") || pUser.includes("error404")) return true;
-
-        }
-
-    }
-
-
-
-    return false;
-
-}
-
-
-
-function isAdmin() {
-
-    if (!currentUser) return false;
-
-    if (isOwner()) return true;
-
-
-
-    const meta = currentUser.user_metadata || {};
-
-    const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
-
-    if (ADMIN_DISCORD_IDS.includes(discordId)) return true;
-
-
-
-    const username = String(
-
-        meta.user_name || 
-
-        meta.custom_claims?.username || 
-
-        meta.custom_claims?.global_name ||
-
-        meta.full_name || 
-
-        meta.name || 
-
-        meta.username || 
-
-        ""
-
-    ).toLowerCase();
-
-
-
-    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
-
-    return false;
-
+function isOwner() {
+    if (!currentUser) return false;
+    
+    // 1. Direct Supabase User Auth ID check
+    if (currentUser.id === "5eb75030-bfff-4b1e-baa6-c8db8530ed70") return true;
+
+    const meta = currentUser.user_metadata || {};
+    const appMeta = currentUser.app_metadata || {};
+    const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
+    if (discordId && OWNER_DISCORD_IDS.includes(discordId)) return true;
+
+    // 2. Supabase Auth Role Metadata check
+    const authRole = String(appMeta.role || meta.role || "").toLowerCase();
+    if (authRole === "owner") return true;
+
+    // 3. Supabase Profile check (from profiles table)
+    if (currentUserProfile) {
+        const pRole = String(currentUserProfile.role || "").toLowerCase();
+        if (pRole === "owner") return true;
+    }
+
+    // 4. Supabase admins table check
+    if (Array.isArray(supabaseAdminRecords) && supabaseAdminRecords.length > 0) {
+        const isOwnerAdmin = supabaseAdminRecords.some(a => {
+            const aDid = String(a.discord_id || "").trim();
+            const aUid = String(a.user_id || a.id || "").trim();
+            const aRole = String(a.role || "").toLowerCase();
+            return (aDid === discordId || aUid === currentUser.id) && aRole === "owner";
+        });
+        if (isOwnerAdmin) return true;
+    }
+
+    // 5. Email verification
+    const email = String(currentUser.email || meta.email || "").toLowerCase();
+    if (email === "genksnow@gmail.com" || email.includes("error404") || email.includes("sticky")) return true;
+
+    // 6. Username extraction across Discord OAuth attributes
+    const username = String(
+        meta.user_name || 
+        meta.custom_claims?.username || 
+        meta.custom_claims?.global_name ||
+        meta.full_name || 
+        meta.name || 
+        meta.username || 
+        ""
+    ).toLowerCase();
+
+    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+
+    // 7. Fallback: Check navbar username text
+    const navUserEl = document.getElementById('nav-username');
+    if (navUserEl && navUserEl.textContent) {
+        const navText = navUserEl.textContent.trim().toLowerCase();
+        if (navText.includes("sticky") || navText === "errora" || navText.includes("error404") || navText.includes("udzlieresi")) return true;
+    }
+
+    // 8. Fallback: Check profile from allUserProfiles
+    if (Array.isArray(allUserProfiles) && allUserProfiles.length > 0) {
+        const prof = allUserProfiles.find(p => p.id === currentUser.id || (p.email && p.email === currentUser.email) || (discordId && String(p.discord_id) === discordId));
+        if (prof) {
+            const pDid = String(prof.discord_id || "");
+            const pUser = String(prof.username || "").toLowerCase();
+            const pRole = String(prof.role || "").toLowerCase();
+            if (pRole === "owner") return true;
+            if (OWNER_DISCORD_IDS.includes(pDid)) return true;
+            if (pUser.includes("sticky") || pUser.includes("error404")) return true;
+        }
+    }
+
+    return false;
+}
+
+function isAdmin() {
+    if (!currentUser) return false;
+    if (isOwner()) return true;
+
+    const meta = currentUser.user_metadata || {};
+    const appMeta = currentUser.app_metadata || {};
+    const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
+
+    // 1. Supabase Auth Role Metadata check
+    const authRole = String(appMeta.role || meta.role || "").toLowerCase();
+    if (authRole === "admin" || authRole === "owner" || authRole === "staff" || meta.is_admin === true || appMeta.is_admin === true) return true;
+
+    // 2. Supabase Profile check (from profiles table: role column or is_admin boolean)
+    if (currentUserProfile) {
+        const pRole = String(currentUserProfile.role || "").toLowerCase();
+        if (pRole === "admin" || pRole === "owner" || pRole === "staff" || pRole === "mod" || pRole === "moderator") return true;
+        if (currentUserProfile.is_admin === true || currentUserProfile.is_staff === true) return true;
+    }
+
+    // 3. Supabase 'admins' table records check
+    if (Array.isArray(supabaseAdminRecords) && supabaseAdminRecords.length > 0) {
+        const isAdminRecord = supabaseAdminRecords.some(a => {
+            const aDid = String(a.discord_id || "").trim();
+            const aUid = String(a.user_id || a.id || "").trim();
+            const aRole = String(a.role || "admin").toLowerCase();
+            const matchDid = (discordId && aDid && aDid === discordId);
+            const matchUid = (currentUser.id && aUid && aUid === currentUser.id);
+            return (matchDid || matchUid) && (aRole === "admin" || aRole === "owner" || aRole === "staff");
+        });
+        if (isAdminRecord) return true;
+    }
+
+    // 4. Fallback: allUserProfiles check
+    if (Array.isArray(allUserProfiles) && allUserProfiles.length > 0) {
+        const prof = allUserProfiles.find(p => p.id === currentUser.id || (discordId && String(p.discord_id) === discordId));
+        if (prof) {
+            const pRole = String(prof.role || "").toLowerCase();
+            if (pRole === "admin" || pRole === "owner" || pRole === "staff") return true;
+            if (prof.is_admin === true || prof.is_staff === true) return true;
+        }
+    }
+
+    // 5. Hardcoded Discord IDs check
+    if (ADMIN_DISCORD_IDS.includes(discordId)) return true;
+
+    // 6. Hardcoded username check fallback
+    const username = String(
+        meta.user_name || 
+        meta.custom_claims?.username || 
+        meta.custom_claims?.global_name ||
+        meta.full_name || 
+        meta.name || 
+        meta.username || 
+        ""
+    ).toLowerCase();
+
+    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
+    return false;
 }
 
 
@@ -11044,7 +11068,16 @@ async function fetchLatestProfile(userId) {
 
         if (error) throw error;
 
-        if (data) {
+        if (data) {
+            currentUserProfile = data;
+            if (isAdmin() && adminMenuItem && adminMenuItem.classList.contains("hidden")) {
+                adminMenuItem.classList.remove("hidden");
+                fetchAdminLicenses();
+                fetchActiveSessions();
+                fetchProfilesForAdmin();
+                fetchBlacklistEntries();
+                fetchSupabaseAdminsList();
+            }
 
             const did = data.discord_id || (currentUser ? getDiscordId(currentUser) : null);
 
@@ -11248,7 +11281,8 @@ async function saveUserProfile(user) {
 
             .maybeSingle();
 
-        existingProfile = data;
+        existingProfile = data;
+        if (existingProfile) currentUserProfile = existingProfile;
 
     } catch (err) {
 
@@ -16585,3 +16619,220 @@ window.closeTelegramBonusModal = closeTelegramBonusModal;
 document.addEventListener('DOMContentLoaded', () => {
     initTelegramBonusPopup();
 });
+
+
+// ==========================================
+// DYNAMIC SUPABASE ADMIN MANAGEMENT
+// ==========================================
+
+async function fetchSupabaseAdminsList() {
+    if (!isAdmin()) return;
+    try {
+        const { data: admins, error } = await supabaseClient
+            .from('admins')
+            .select('*')
+            .order('created_at', { ascending: false });
+        if (!error && Array.isArray(admins)) {
+            supabaseAdminRecords = admins;
+        }
+    } catch (e) {
+        console.warn("[AdminStaff] Could not fetch admins table:", e);
+    }
+    renderAdminStaffPanel();
+}
+
+function renderAdminStaffPanel() {
+    const tableBody = document.getElementById('admin-staff-table-body');
+    if (!tableBody) return;
+
+    const adminMap = new Map();
+
+    const recordAdmin = (did, username, role, source, createdAt = null) => {
+        if (!did) return;
+        const cleanDid = String(did).trim();
+        if (!cleanDid) return;
+        const existing = adminMap.get(cleanDid);
+        if (!existing || role === 'owner') {
+            adminMap.set(cleanDid, {
+                discord_id: cleanDid,
+                username: username || existing?.username || cleanDid,
+                role: role || existing?.role || 'admin',
+                source: source,
+                created_at: createdAt || existing?.created_at || null
+            });
+        }
+    };
+
+    if (Array.isArray(supabaseAdminRecords)) {
+        supabaseAdminRecords.forEach(a => {
+            recordAdmin(a.discord_id, a.username, a.role, 'Supabase (admins)', a.created_at);
+        });
+    }
+
+    if (Array.isArray(allUserProfiles)) {
+        allUserProfiles.forEach(p => {
+            const r = String(p.role || '').toLowerCase();
+            if (r === 'admin' || r === 'owner' || r === 'staff') {
+                recordAdmin(p.discord_id, p.username, r, 'Supabase (profiles)');
+            }
+        });
+    }
+
+    OWNER_DISCORD_IDS.forEach(did => {
+        if (did) recordAdmin(did, 'Owner (Permanent)', 'owner', 'Config (Hardcoded)');
+    });
+    ADMIN_DISCORD_IDS.forEach(did => {
+        if (did && !adminMap.has(did)) recordAdmin(did, 'Admin', 'admin', 'Config (Hardcoded)');
+    });
+
+    const adminsList = Array.from(adminMap.values());
+
+    if (adminsList.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 18px;">ადმინისტრატორები არ მოიძებნა</td></tr>';
+        return;
+    }
+
+    tableBody.innerHTML = '';
+    adminsList.forEach(admin => {
+        const tr = document.createElement('tr');
+        const isOwnerRole = admin.role === 'owner';
+        const roleBadge = isOwnerRole 
+            ? '<span style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;">OWNER</span>'
+            : '<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 11px;">ADMIN</span>';
+
+        const matchingProfile = Array.isArray(allUserProfiles) ? allUserProfiles.find(p => String(p.discord_id) === admin.discord_id) : null;
+        const avatarUrl = matchingProfile ? cleanAvatarUrl(matchingProfile.avatar_url, admin.discord_id) : 'https://cdn.discordapp.com/embed/avatars/0.png';
+        const displayName = (matchingProfile && matchingProfile.username) ? matchingProfile.username : admin.username;
+
+        const isProtectedOwner = OWNER_DISCORD_IDS.includes(admin.discord_id) || (currentUser && currentUser.id === '5eb75030-bfff-4b1e-baa6-c8db8530ed70' && admin.discord_id === '1475396409246089367');
+        const canDelete = isOwner() && !isProtectedOwner;
+
+        tr.innerHTML = `
+            <td>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="${avatarUrl}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" onerror="this.onerror=null; this.src='https://cdn.discordapp.com/embed/avatars/0.png';">
+                    <span style="font-weight: 600; color: #fff;">${escapeHtml(displayName)}</span>
+                </div>
+            </td>
+            <td><code style="background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #94a3b8;">${escapeHtml(admin.discord_id)}</code></td>
+            <td>${roleBadge}</td>
+            <td><span style="font-size: 12px; color: #94a3b8;">${escapeHtml(admin.source)}</span></td>
+            <td style="text-align: right;">
+                ${canDelete ? `
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="handleRemoveAdminStaff('${admin.discord_id}', '${escapeHtml(displayName)}')" style="padding: 4px 10px; font-size: 11.5px; color: #f87171; border-color: rgba(239, 68, 68, 0.3);">
+                        წაშლა
+                    </button>
+                ` : '<span style="font-size: 11px; color: var(--text-muted);">—</span>'}
+            </td>
+        `;
+        tableBody.appendChild(tr);
+    });
+}
+
+async function handleCreateAdminStaff(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!isAdmin()) return;
+
+    const idInput = document.getElementById('admin-staff-discord-id');
+    const nameInput = document.getElementById('admin-staff-username');
+    const roleSelect = document.getElementById('admin-staff-role');
+
+    const discordId = idInput ? idInput.value.trim() : '';
+    const username = nameInput ? nameInput.value.trim() : '';
+    const role = roleSelect ? roleSelect.value : 'admin';
+
+    if (!discordId) {
+        showBanner("გთხოვთ შეიყვანოთ Discord ID", "warning");
+        return;
+    }
+
+    try {
+        // 1. Insert or update in Supabase 'admins' table
+        const { error: adminError } = await supabaseClient
+            .from('admins')
+            .upsert({
+                discord_id: discordId,
+                username: username || 'Admin',
+                role: role,
+                created_by: currentUser ? (currentUser.user_metadata?.user_name || currentUser.email || 'Admin') : 'Admin'
+            }, { onConflict: 'discord_id' });
+
+        if (adminError && !adminError.message.includes('Could not find')) {
+            console.warn("Could not upsert into admins table:", adminError.message);
+        }
+
+        // 2. Also update 'profiles' table if user exists there
+        try {
+            await supabaseClient
+                .from('profiles')
+                .update({ role: role })
+                .eq('discord_id', discordId);
+        } catch(ignored) {}
+
+        if (idInput) idInput.value = '';
+        if (nameInput) nameInput.value = '';
+
+        showBanner(`ადმინისტრატორი (${discordId}) წარმატებით დაემატა!`, "success");
+
+        sendDiscordAuditLog(
+            "ადმინისტრატორი დაემატა (Staff)",
+            `ადმინისტრატორმა **${currentUser?.user_metadata?.user_name || 'Admin'}** დაამატა ახალი ადმინი: **${username || discordId}** (Discord ID: \`${discordId}\`, როლი: \`${role}\`).`,
+            0x22c55e,
+            [
+                { name: "Discord ID", value: discordId, inline: true },
+                { name: "როლი", value: role, inline: true },
+                { name: "შემსრულებელი", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
+            ]
+        );
+
+        await fetchSupabaseAdminsList();
+        if (typeof fetchProfilesForAdmin === 'function') fetchProfilesForAdmin();
+
+    } catch (err) {
+        console.error("Error adding admin:", err);
+        showBanner("შეცდომა ადმინის დამატებისას: " + err.message, "error");
+    }
+}
+
+async function handleRemoveAdminStaff(discordId, displayName) {
+    if (!isAdmin()) return;
+    if (!confirm(`დარწმუნებული ხართ რომ გსურთ ადმინისტრატორის უფლებების ჩამორთმევა მომხმარებლისთვის (${displayName || discordId})?`)) {
+        return;
+    }
+
+    try {
+        await supabaseClient
+            .from('admins')
+            .delete()
+            .eq('discord_id', discordId);
+
+        try {
+            await supabaseClient
+                .from('profiles')
+                .update({ role: 'user' })
+                .eq('discord_id', discordId);
+        } catch(ignored) {}
+
+        showBanner(`ადმინისტრატორი (${displayName || discordId}) წარმატებით წაიშალა!`, "success");
+
+        sendDiscordAuditLog(
+            "ადმინისტრატორი წაიშალა (Staff)",
+            `ადმინისტრატორმა **${currentUser?.user_metadata?.user_name || 'Admin'}** ჩამოართვა ადმინის უფლებები: **${displayName || discordId}** (\`${discordId}\`).`,
+            0xef4444,
+            [
+                { name: "Discord ID", value: discordId, inline: true },
+                { name: "შემსრულებელი", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
+            ]
+        );
+
+        await fetchSupabaseAdminsList();
+        if (typeof fetchProfilesForAdmin === 'function') fetchProfilesForAdmin();
+
+    } catch (err) {
+        console.error("Error removing admin:", err);
+        showBanner("შეცდომა ადმინის წაშლისას: " + err.message, "error");
+    }
+}
+window.handleCreateAdminStaff = handleCreateAdminStaff;
+window.handleRemoveAdminStaff = handleRemoveAdminStaff;
+window.fetchSupabaseAdminsList = fetchSupabaseAdminsList;
