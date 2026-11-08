@@ -2350,7 +2350,22 @@ async function handleUserSignIn(user) {
 
     // Save/Update user profile
 
-    saveUserProfile(user);
+    saveUserProfile(user);
+
+    // Set up Telegram linking deep-link
+    const tgLinkBtn = document.getElementById('btn-link-telegram');
+    const tgStatusSpan = document.getElementById('tg-sync-status');
+    if (tgLinkBtn && currentUser) {
+        tgLinkBtn.href = 'https://t.me/PulseClientOfficialBot?start=sync_' + currentUser.id;
+        if (currentUserProfile && (currentUserProfile.telegram_id || currentUserProfile.telegram_username)) {
+            const tgName = currentUserProfile.telegram_username ? ('@' + currentUserProfile.telegram_username) : 'მიბმულია ✅';
+            if (tgStatusSpan) tgStatusSpan.textContent = 'Telegram: ' + tgName;
+            tgLinkBtn.style.color = '#4ade80';
+            tgLinkBtn.style.borderColor = 'rgba(74, 222, 128, 0.4)';
+            tgLinkBtn.style.background = 'rgba(74, 222, 128, 0.15)';
+        }
+    }
+
 
 
 
