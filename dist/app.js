@@ -14943,9 +14943,9 @@ function initLiquidCanvas() {
 
             const spotGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 340);
 
-            spotGrad.addColorStop(0, "rgba(244, 63, 94, 0.05)");
+            spotGrad.addColorStop(0, "rgba(192, 132, 252, 0.06)");
 
-            spotGrad.addColorStop(0.35, "rgba(225, 29, 72, 0.02)");
+            spotGrad.addColorStop(0.35, "rgba(168, 85, 247, 0.03)");
 
             spotGrad.addColorStop(0.8, "rgba(255, 255, 255, 0.005)");
 
