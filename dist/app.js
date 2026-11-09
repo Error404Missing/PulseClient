@@ -16649,6 +16649,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ==========================================
+const removedAdminDiscordIds = new Set();
+window.removedAdminDiscordIds = removedAdminDiscordIds;
+
 // DYNAMIC SUPABASE ADMIN MANAGEMENT
 // ==========================================
 
@@ -16677,7 +16680,7 @@ function renderAdminStaffPanel() {
     const recordAdmin = (did, username, role, source, createdAt = null) => {
         if (!did) return;
         const cleanDid = String(did).trim();
-        if (!cleanDid) return;
+        if (!cleanDid || removedAdminDiscordIds.has(cleanDid)) return;
         const existing = adminMap.get(cleanDid);
         if (!existing || role === 'owner') {
             adminMap.set(cleanDid, {
@@ -16732,7 +16735,7 @@ function renderAdminStaffPanel() {
         const displayName = (matchingProfile && matchingProfile.username) ? matchingProfile.username : admin.username;
 
         const isProtectedOwner = OWNER_DISCORD_IDS.includes(admin.discord_id) || (currentUser && currentUser.id === '5eb75030-bfff-4b1e-baa6-c8db8530ed70' && admin.discord_id === '1475396409246089367');
-        const canDelete = isOwner() && !isProtectedOwner;
+        const canDelete = (isOwner() || isAdmin()) && !isProtectedOwner;
 
         tr.innerHTML = `
             <td>
@@ -16805,6 +16808,7 @@ async function handleCreateAdminStaff(e) {
         if (idInput) idInput.value = '';
         if (nameInput) nameInput.value = '';
 
+        removedAdminDiscordIds.delete(discordId.trim());
         showBanner(`ადმინისტრატორი (${discordId}) წარმატებით დაემატა!`, "success");
 
         sendDiscordAuditLog(
@@ -16828,36 +16832,81 @@ async function handleCreateAdminStaff(e) {
 }
 
 async function handleRemoveAdminStaff(discordId, displayName) {
-    if (!isAdmin()) return;
-    if (!confirm(`დარწმუნებული ხართ რომ გსურთ ადმინისტრატორის უფლებების ჩამორთმევა მომხმარებლისთვის (${displayName || discordId})?`)) {
+    if (!isAdmin() && !isOwner()) {
+        showBanner("თქვენ არ გაქვთ ადმინისტრატორის წაშლის უფლება", "error");
         return;
     }
 
+    const didStr = String(discordId || '').trim();
+    if (!didStr) {
+        showBanner("Discord ID არ არის მითითებული", "warning");
+        return;
+    }
+
+    const nameStr = displayName || didStr;
+    const confirmMessage = `დარწმუნებული ხართ რომ გსურთ ადმინისტრატორის უფლებების ჩამორთმევა მომხმარებლისთვის (${nameStr})?`;
+    
+    let confirmed = false;
+    if (typeof showCustomConfirm === 'function') {
+        confirmed = await showCustomConfirm("ადმინისტრატორის წაშლა", confirmMessage);
+    } else {
+        confirmed = window.confirm(confirmMessage);
+    }
+    if (!confirmed) return;
+
     try {
-        await supabaseClient
+        // 1. Add to in-memory blacklist immediately so it won't resurrect
+        removedAdminDiscordIds.add(didStr);
+
+        // 2. Remove from Supabase 'admins' table
+        const { error: adminDelError } = await supabaseClient
             .from('admins')
             .delete()
-            .eq('discord_id', discordId);
+            .eq('discord_id', didStr);
 
+        if (adminDelError && !adminDelError.message.includes('Could not find')) {
+            console.warn("[AdminStaff] admins table delete notice:", adminDelError.message);
+        }
+
+        // 3. Update 'profiles' table role to 'user'
         try {
-            await supabaseClient
+            const { error: profUpdateError } = await supabaseClient
                 .from('profiles')
-                .update({ role: 'user' })
-                .eq('discord_id', discordId);
+                .update({ role: 'user', is_admin: false, is_staff: false })
+                .eq('discord_id', didStr);
+            if (profUpdateError) {
+                console.warn("[AdminStaff] profiles update notice:", profUpdateError.message);
+            }
         } catch(ignored) {}
 
-        showBanner(`ადმინისტრატორი (${displayName || discordId}) წარმატებით წაიშალა!`, "success");
+        // 4. Update in-memory collections
+        if (Array.isArray(supabaseAdminRecords)) {
+            supabaseAdminRecords = supabaseAdminRecords.filter(a => String(a.discord_id).trim() !== didStr);
+        }
+        if (Array.isArray(allUserProfiles)) {
+            allUserProfiles.forEach(p => {
+                if (String(p.discord_id).trim() === didStr) {
+                    p.role = 'user';
+                    p.is_admin = false;
+                    p.is_staff = false;
+                }
+            });
+        }
+
+        showBanner(`ადმინისტრატორი (${nameStr}) წარმატებით წაიშალა!`, "success");
 
         sendDiscordAuditLog(
             "ადმინისტრატორი წაიშალა (Staff)",
-            `ადმინისტრატორმა **${currentUser?.user_metadata?.user_name || 'Admin'}** ჩამოართვა ადმინის უფლებები: **${displayName || discordId}** (\`${discordId}\`).`,
+            `ადმინისტრატორმა **${currentUser?.user_metadata?.user_name || 'Admin'}** ჩამოართვა ადმინის უფლებები: **${nameStr}** (\`${didStr}\`).`,
             0xef4444,
             [
-                { name: "Discord ID", value: discordId, inline: true },
+                { name: "Discord ID", value: didStr, inline: true },
                 { name: "შემსრულებელი", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
             ]
         );
 
+        // 5. Re-render UI immediately
+        renderAdminStaffPanel();
         await fetchSupabaseAdminsList();
         if (typeof fetchProfilesForAdmin === 'function') fetchProfilesForAdmin();
 
