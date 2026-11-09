@@ -859,3 +859,242 @@
         border-top: 0;
     }
 }
+
+
+/* ==========================================================================
+   ENHANCED ANIMATIONS & VISUAL POLISH FOR HERO (v2)
+   ========================================================================== */
+
+/* 1. Hero Entrance & Ambient Glow */
+.hero-v2 {
+    animation: heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 2. Hero Primary CTA Button Polish */
+.hv-btn-primary {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    animation: btnPulseGlow 4s ease-in-out infinite alternate;
+}
+
+.hv-btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%
+    );
+    transform: skewX(-25deg);
+    animation: btnShine 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    pointer-events: none;
+}
+
+@keyframes btnShine {
+    0%, 45% {
+        left: -120%;
+    }
+    65%, 100% {
+        left: 180%;
+    }
+}
+
+@keyframes btnPulseGlow {
+    0% {
+        box-shadow: 0 14px 34px -14px rgba(168, 85, 247, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    100% {
+        box-shadow: 0 18px 46px -10px rgba(168, 85, 247, 1), 0 0 24px rgba(192, 132, 252, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+}
+
+/* 3. Hero Logo Showcase Polish & 3D Floating */
+.hv-logo-showcase {
+    position: relative;
+    overflow: hidden;
+}
+
+.hv-logo-showcase::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.25) 0%, transparent 68%);
+    opacity: 0.7;
+    animation: auraBreath 4s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hv-logo-showcase::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        115deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.05) 45%,
+        rgba(192, 132, 252, 0.16) 50%,
+        rgba(255, 255, 255, 0.05) 55%,
+        transparent 65%
+    );
+    transform: rotate(25deg) translateY(-140%);
+    animation: cardShimmer 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes auraBreath {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.94);
+    }
+    100% {
+        opacity: 0.9;
+        transform: scale(1.08);
+    }
+}
+
+@keyframes cardShimmer {
+    0%, 35% {
+        transform: rotate(25deg) translateY(-140%);
+    }
+    60%, 100% {
+        transform: rotate(25deg) translateY(140%);
+    }
+}
+
+.hv-hero-logo {
+    position: relative;
+    z-index: 2;
+    animation: heroLogoFloat 5s ease-in-out infinite alternate;
+}
+
+@keyframes heroLogoFloat {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 12px 28px rgba(168, 85, 247, 0.4)) drop-shadow(0 2px 6px rgba(192, 132, 252, 0.3));
+    }
+    50% {
+        transform: translateY(-8px) rotate(0.8deg) scale(1.02);
+        filter: drop-shadow(0 20px 42px rgba(168, 85, 247, 0.65)) drop-shadow(0 4px 14px rgba(192, 132, 252, 0.55));
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 12px 28px rgba(168, 85, 247, 0.4)) drop-shadow(0 2px 6px rgba(192, 132, 252, 0.3));
+    }
+}
+
+/* 4. Live Radar Sonar Rings on Status Dots */
+.hv-team .hv-online i,
+.hv-avatar-wrap .hv-dot {
+    position: relative;
+}
+
+.hv-team .hv-online i::after,
+.hv-avatar-wrap .hv-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid #10b981;
+    opacity: 0.8;
+    animation: radarRing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    pointer-events: none;
+}
+
+@keyframes radarRing {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.9;
+    }
+    70%, 100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
+/* 5. Founder & Dev Royal Aura */
+.hv-member-item.is-founder {
+    animation: founderGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes founderGlow {
+    0% {
+        border-color: rgba(168, 85, 247, 0.2);
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.1);
+    }
+    100% {
+        border-color: rgba(192, 132, 252, 0.45);
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.22), inset 0 0 8px rgba(168, 85, 247, 0.06);
+    }
+}
+
+/* 6. Hero Stats Hover Feedback */
+.hv-stat {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hv-stat:hover {
+    transform: translateY(-2px);
+}
+
+.hv-stat:hover .hv-stat-ic {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(192, 132, 252, 0.5);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+    transform: scale(1.08) rotate(3deg);
+}
+
+.hv-stat-ic {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* 7. Hero Features Row Polish */
+.hv-feature {
+    transition: background 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hv-feature:hover {
+    background: rgba(168, 85, 247, 0.04);
+}
+
+.hv-feature-ic {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hv-feature:hover .hv-feature-ic {
+    transform: scale(1.1) rotate(-4deg);
+    background: rgba(168, 85, 247, 0.18);
+    border-color: rgba(192, 132, 252, 0.45);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+}
+
+/* 8. Ghost Button Glow on Hover */
+.hv-btn-ghost {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.hv-btn-ghost:hover {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    border-color: rgba(192, 132, 252, 0.4) !important;
+}
