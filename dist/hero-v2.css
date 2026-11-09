@@ -456,6 +456,45 @@
 }
 
 /* ==========================================================================
+   Hero Logo Showcase
+   ========================================================================== */
+.hv-logo-showcase {
+    width: 100%;
+    max-width: 416px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: radial-gradient(ellipse 80% 120px at 50% 50%, rgba(168, 85, 247, 0.15) 0%, rgba(20, 14, 26, 0.65) 60%, rgba(8, 5, 10, 0.85) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hv-logo-showcase:hover {
+    border-color: rgba(168, 85, 247, 0.35);
+    box-shadow: 0 16px 45px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.hv-hero-logo {
+    width: 100%;
+    max-width: 290px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 25px rgba(168, 85, 247, 0.35));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.hv-logo-showcase:hover .hv-hero-logo {
+    transform: scale(1.04);
+    filter: drop-shadow(0 14px 35px rgba(168, 85, 247, 0.55));
+}
+
+/* ==========================================================================
    Hero Team Card (Error404Missing, ItzRealOdika, dataaa)
    ========================================================================== */
 .hv-team {
