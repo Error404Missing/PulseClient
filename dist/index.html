@@ -70,8 +70,6 @@
 
     <link rel="stylesheet" href="hero-v2.css?v=1.0.0">
 
-    <link rel="stylesheet" href="team.css?v=1.0.0">
-
     <!-- Supabase JS CDN -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -137,8 +135,6 @@
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
 
             <button type="button" onclick="navigateToLandingSection(event, 'bypasses')" data-i18n="nav.bypasses">შემოვლები</button>
-
-            <button type="button" onclick="navigateToLandingSection(event, 'team')" data-i18n="nav.team">გუნდი</button>
 
             <button type="button" onclick="navigateToLandingSection(event, 'pricing')" data-i18n="nav.pricing">ფასები</button>
 
@@ -588,6 +584,64 @@
 
                         </div>
 
+                    </div>
+
+                    <!-- The Team Card (Error404Missing, ItzRealOdika, dataaa) -->
+                    <div class="hv-team">
+                        <div class="hv-team-head">
+                            <div class="hv-team-title">
+                                <small>The Team</small>
+                                <b>Who's behind Pulse</b>
+                            </div>
+                            <span class="hv-online"><i></i>3 ONLINE</span>
+                        </div>
+
+                        <div class="hv-team-list">
+                            <!-- 1. Founder & Developer: Error404Missing -->
+                            <div class="hv-member-item is-founder">
+                                <div class="hv-avatar-wrap">
+                                    <img src="assets/avatars/Error404Missing_bust.png" alt="Error404Missing" class="hv-avatar">
+                                    <span class="hv-dot"></span>
+                                </div>
+                                <div class="hv-member-meta">
+                                    <div class="hv-member-name-row">
+                                        <b class="hv-member-name">Error404Missing</b>
+                                        <span class="hv-role-tag tag-founder">FOUNDER &amp; DEV</span>
+                                    </div>
+                                    <small class="hv-member-role">Founder &amp; Developer</small>
+                                </div>
+                            </div>
+
+                            <!-- 2. Client Manager - Financial Assistant: ItzRealOdika -->
+                            <div class="hv-member-item">
+                                <div class="hv-avatar-wrap">
+                                    <img src="assets/avatars/ItzRealOdika_bust.png" alt="ItzRealOdika" class="hv-avatar">
+                                    <span class="hv-dot"></span>
+                                </div>
+                                <div class="hv-member-meta">
+                                    <div class="hv-member-name-row">
+                                        <b class="hv-member-name">ItzRealOdika</b>
+                                        <span class="hv-role-tag tag-manager">CLIENT MANAGER</span>
+                                    </div>
+                                    <small class="hv-member-role">Client Manager - Financial Assistant</small>
+                                </div>
+                            </div>
+
+                            <!-- 3. Head-Administrator: dataaa -->
+                            <div class="hv-member-item">
+                                <div class="hv-avatar-wrap">
+                                    <img src="assets/avatars/dataaa_bust.png" alt="dataaa" class="hv-avatar">
+                                    <span class="hv-dot"></span>
+                                </div>
+                                <div class="hv-member-meta">
+                                    <div class="hv-member-name-row">
+                                        <b class="hv-member-name">dataaa</b>
+                                        <span class="hv-role-tag tag-admin">HEAD-ADMIN</span>
+                                    </div>
+                                    <small class="hv-member-role">Head-Administrator</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -1099,68 +1153,7 @@
         <!-- ========================================== -->
         <!-- The Team Section (Corz Style)             -->
         <!-- ========================================== -->
-        <section id="team" class="team-section">
-            <div class="team-container">
-                <div class="team-header">
-                    <span class="team-badge" data-i18n="team.badge">The Team</span>
-                    <h2 class="team-title" data-i18n="team.title">Who's behind Pulse.</h2>
-                    <p class="team-subtitle" data-i18n="team.subtitle">სამი მოთამაშე, რომლებმაც შექმნეს ისეთი კლიენტი, როგორიც სურდათ.</p>
-                </div>
-
-                <!-- 3D Minecraft Character Stage -->
-                <div class="team-stage">
-                    <div class="team-stage-ground"></div>
-
-                    <!-- Client Manager - Financial Assistant: ItzRealOdika -->
-                    <div class="team-figure figure-odika" title="ItzRealOdika - Client Manager - Financial Assistant">
-                        <canvas id="canvas-odika" class="team-canvas" width="250" height="380"></canvas>
-                        <img id="img-odika" src="assets/skins/ItzRealOdika_3d.png" class="team-fallback-img" alt="ItzRealOdika">
-                        <div class="team-figure-shadow"></div>
-                    </div>
-
-                    <!-- Founder & Developer: Error404Missing (Center Hero) -->
-                    <div class="team-figure figure-founder" title="Error404Missing - Founder & Developer">
-                        <canvas id="canvas-error404" class="team-canvas" width="280" height="410"></canvas>
-                        <img id="img-error404" src="assets/skins/Error404Missing_3d.png" class="team-fallback-img" alt="Error404Missing">
-                        <div class="team-figure-shadow"></div>
-                    </div>
-
-                    <!-- Head-Administrator: dataaa (Gorilla in suit) -->
-                    <div class="team-figure figure-dataaa" title="dataaa - Head-Administrator">
-                        <canvas id="canvas-dataaa" class="team-canvas" width="250" height="380"></canvas>
-                        <img id="img-dataaa" src="assets/skins/dataaa_3d.png" class="team-fallback-img" alt="dataaa">
-                        <div class="team-figure-shadow"></div>
-                    </div>
-                </div>
-
-                <!-- Ground Divider -->
-                <div class="team-divider"></div>
-
-                <!-- Member Info Cards (3 Columns) -->
-                <div class="team-grid">
-                    <!-- Member 1: Founder & Developer -->
-                    <div class="team-card card-founder">
-                        <span class="team-role-pill role-founder" data-i18n="team.m1.role">FOUNDER & DEVELOPER</span>
-                        <h3 class="team-name">Error404Missing</h3>
-                        <p class="team-desc" data-i18n="team.m1.desc">ყველა მოდული და ძრავის არქიტექტურა კაპოტის ქვეშ.</p>
-                    </div>
-
-                    <!-- Member 2: Client Manager - Financial Assistant -->
-                    <div class="team-card card-odika">
-                        <span class="team-role-pill" data-i18n="team.m2.role">CLIENT MANAGER - FINANCIAL ASSISTANT</span>
-                        <h3 class="team-name">ItzRealOdika</h3>
-                        <p class="team-desc" data-i18n="team.m2.desc">კლიენტთა მენეჯმენტი, მხარდაჭერა და ფინანსური ოპერაციები.</p>
-                    </div>
-
-                    <!-- Member 3: Head-Administrator -->
-                    <div class="team-card card-dataaa">
-                        <span class="team-role-pill" data-i18n="team.m3.role">HEAD-ADMINISTRATOR</span>
-                        <h3 class="team-name">dataaa</h3>
-                        <p class="team-desc" data-i18n="team.m3.desc">სერვერის ადმინისტრირება, მოდერაცია და უსაფრთხოება.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
         <!-- Pricing Section -->
 
@@ -5999,10 +5992,6 @@
     <script src="i18n.js?v=376.0.0"></script>
 
     <script src="app.js?v=804.0.0"></script>
-
-    <!-- 3D Minecraft Skin Viewer for Team -->
-    <script src="assets/js/skinview3d.bundle.js"></script>
-    <script src="team.js?v=1.0.0"></script>
 </body>
 
 </html>
