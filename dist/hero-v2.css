@@ -631,17 +631,7 @@
     transform: scale(1.06);
 }
 
-.hv-avatar-wrap .hv-dot {
-    position: absolute;
-    bottom: -1px;
-    right: -1px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #10b981;
-    border: 1.5px solid #0d0a11;
-    box-shadow: 0 0 6px #10b981;
-}
+.hv-avatar-wrap .hv-dot { display: none !important; }
 
 .hv-member-meta {
     flex: 1;
@@ -1004,34 +994,7 @@
     }
 }
 
-/* 4. Live Radar Sonar Rings on Status Dots */
-.hv-team .hv-online i,
-.hv-avatar-wrap .hv-dot {
-    position: relative;
-}
-
-.hv-team .hv-online i::after,
-.hv-avatar-wrap .hv-dot::after {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 1.5px solid #10b981;
-    opacity: 0.8;
-    animation: radarRing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
-    pointer-events: none;
-}
-
-@keyframes radarRing {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.9;
-    }
-    70%, 100% {
-        transform: scale(2.8);
-        opacity: 0;
-    }
-}
+/* 4. Status Dots (Clean static indicator) */
 
 /* 5. Founder & Dev Royal Aura */
 .hv-member-item.is-founder {
