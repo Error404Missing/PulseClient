@@ -1,3 +1,15 @@
+// Global HTML Sanitizer
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+window.escapeHtml = escapeHtml;
+
 
 
 // ==========================================
@@ -16732,14 +16744,20 @@ function renderAdminStaffPanel() {
             <td><code style="background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #94a3b8;">${escapeHtml(admin.discord_id)}</code></td>
             <td>${roleBadge}</td>
             <td><span style="font-size: 12px; color: #94a3b8;">${escapeHtml(admin.source)}</span></td>
-            <td style="text-align: right;">
-                ${canDelete ? `
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="handleRemoveAdminStaff('${admin.discord_id}', '${escapeHtml(displayName)}')" style="padding: 4px 10px; font-size: 11.5px; color: #f87171; border-color: rgba(239, 68, 68, 0.3);">
-                        წაშლა
-                    </button>
-                ` : '<span style="font-size: 11px; color: var(--text-muted);">—</span>'}
+            <td style="text-align: right;" class="admin-del-cell">
+                ${!canDelete ? '<span style="font-size: 11px; color: var(--text-muted);">—</span>' : ''}
             </td>
         `;
+        if (canDelete) {
+            const delCell = tr.querySelector('.admin-del-cell');
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button';
+            delBtn.className = 'btn btn-secondary btn-sm';
+            delBtn.style.cssText = 'padding: 4px 10px; font-size: 11.5px; color: #f87171; border-color: rgba(239, 68, 68, 0.3);';
+            delBtn.textContent = 'წაშლა';
+            delBtn.addEventListener('click', () => handleRemoveAdminStaff(admin.discord_id, displayName));
+            delCell.appendChild(delBtn);
+        }
         tableBody.appendChild(tr);
     });
 }
