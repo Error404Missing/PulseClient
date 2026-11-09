@@ -62,13 +62,15 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css?v=800.0.0">
 
     <link rel="stylesheet" href="refresh.css?v=1.0.7">
 
     <link rel="stylesheet" href="hero-v2.css?v=1.0.0">
+
+    <link rel="stylesheet" href="team.css?v=1.0.0">
 
     <!-- Supabase JS CDN -->
 
@@ -135,6 +137,8 @@
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
 
             <button type="button" onclick="navigateToLandingSection(event, 'bypasses')" data-i18n="nav.bypasses">შემოვლები</button>
+
+            <button type="button" onclick="navigateToLandingSection(event, 'team')" data-i18n="nav.team">გუნდი</button>
 
             <button type="button" onclick="navigateToLandingSection(event, 'pricing')" data-i18n="nav.pricing">ფასები</button>
 
@@ -583,26 +587,6 @@
                             <span class="ok"><i></i>GRIMAC CLEAN</span>
 
                         </div>
-
-                    </div>
-
-
-
-                    <div class="hv-creator">
-
-                        <img src="error404missing.png" alt="Error404Missing">
-
-                        <div>
-
-                            <small>The Team</small>
-
-                            <b>Error404Missing</b>
-
-                            <small>Founder &amp; Developer</small>
-
-                        </div>
-
-                        <span class="hv-online"><i></i>ONLINE</span>
 
                     </div>
 
@@ -1112,7 +1096,71 @@
 
         </section>
 
+        <!-- ========================================== -->
+        <!-- The Team Section (Corz Style)             -->
+        <!-- ========================================== -->
+        <section id="team" class="team-section">
+            <div class="team-container">
+                <div class="team-header">
+                    <span class="team-badge" data-i18n="team.badge">The Team</span>
+                    <h2 class="team-title" data-i18n="team.title">Who's behind Pulse.</h2>
+                    <p class="team-subtitle" data-i18n="team.subtitle">სამი მოთამაშე, რომლებმაც შექმნეს ისეთი კლიენტი, როგორიც სურდათ.</p>
+                </div>
 
+                <!-- 3D Minecraft Character Stage -->
+                <div class="team-stage">
+                    <div class="team-stage-ground"></div>
+
+                    <!-- Client Manager - Financial Assistant: ItzRealOdika -->
+                    <div class="team-figure figure-odika" title="ItzRealOdika - Client Manager - Financial Assistant">
+                        <canvas id="canvas-odika" class="team-canvas" width="250" height="380"></canvas>
+                        <img id="img-odika" src="assets/skins/ItzRealOdika_3d.png" class="team-fallback-img" alt="ItzRealOdika">
+                        <div class="team-figure-shadow"></div>
+                    </div>
+
+                    <!-- Founder & Developer: Error404Missing (Center Hero) -->
+                    <div class="team-figure figure-founder" title="Error404Missing - Founder & Developer">
+                        <canvas id="canvas-error404" class="team-canvas" width="280" height="410"></canvas>
+                        <img id="img-error404" src="assets/skins/Error404Missing_3d.png" class="team-fallback-img" alt="Error404Missing">
+                        <div class="team-figure-shadow"></div>
+                    </div>
+
+                    <!-- Head-Administrator: dataaa (Gorilla in suit) -->
+                    <div class="team-figure figure-dataaa" title="dataaa - Head-Administrator">
+                        <canvas id="canvas-dataaa" class="team-canvas" width="250" height="380"></canvas>
+                        <img id="img-dataaa" src="assets/skins/dataaa_3d.png" class="team-fallback-img" alt="dataaa">
+                        <div class="team-figure-shadow"></div>
+                    </div>
+                </div>
+
+                <!-- Ground Divider -->
+                <div class="team-divider"></div>
+
+                <!-- Member Info Cards (3 Columns) -->
+                <div class="team-grid">
+                    <!-- Member 1: Founder & Developer -->
+                    <div class="team-card card-founder">
+                        <span class="team-role-pill role-founder" data-i18n="team.m1.role">FOUNDER & DEVELOPER</span>
+                        <h3 class="team-name">Error404Missing</h3>
+                        <p class="team-desc" data-i18n="team.m1.desc">ყველა მოდული და ძრავის არქიტექტურა კაპოტის ქვეშ.</p>
+                    </div>
+
+                    <!-- Member 2: Client Manager - Financial Assistant -->
+                    <div class="team-card card-odika">
+                        <span class="team-role-pill" data-i18n="team.m2.role">CLIENT MANAGER - FINANCIAL ASSISTANT</span>
+                        <h3 class="team-name">ItzRealOdika</h3>
+                        <p class="team-desc" data-i18n="team.m2.desc">კლიენტთა მენეჯმენტი, მხარდაჭერა და ფინანსური ოპერაციები.</p>
+                    </div>
+
+                    <!-- Member 3: Head-Administrator -->
+                    <div class="team-card card-dataaa">
+                        <span class="team-role-pill" data-i18n="team.m3.role">HEAD-ADMINISTRATOR</span>
+                        <h3 class="team-name">dataaa</h3>
+                        <p class="team-desc" data-i18n="team.m3.desc">სერვერის ადმინისტრირება, მოდერაცია და უსაფრთხოება.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Pricing Section -->
 
@@ -5952,6 +6000,9 @@
 
     <script src="app.js?v=804.0.0"></script>
 
+    <!-- 3D Minecraft Skin Viewer for Team -->
+    <script src="assets/js/skinview3d.bundle.js"></script>
+    <script src="team.js?v=1.0.0"></script>
 </body>
 
 </html>
