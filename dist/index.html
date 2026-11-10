@@ -69,6 +69,7 @@
     <link rel="stylesheet" href="refresh.css?v=1.0.9">
 
     <link rel="stylesheet" href="hero-v2.css?v=1.0.3">
+    <link rel="stylesheet" href="bots-showcase.css?v=1.0.0">
 
     <!-- Supabase JS CDN -->
 
@@ -134,7 +135,7 @@
 
             <button type="button" onclick="navigateToLandingSection(event, 'features')" data-i18n="nav.features">მახასიათებლები</button>
 
-            <button type="button" onclick="navigateToLandingSection(event, 'bypasses')" data-i18n="nav.bypasses">შემოვლები</button>
+            <button type="button" onclick="navigateToLandingSection(event, 'modules')" data-i18n="nav.modules">მოდულები</button>
 
             <button type="button" onclick="navigateToLandingSection(event, 'pricing')" data-i18n="nav.pricing">ფასები</button>
 
@@ -495,7 +496,7 @@
 
                             </span>
 
-                            <div><b>Undetected</b><small>GrimAC &amp; Matrix</small></div>
+                            <div><b>14+ Bots</b><small>PvP &amp; Utility</small></div>
 
                         </div>
 
@@ -804,7 +805,7 @@
 
                 <h2>რატომ უნდა აირჩიოთ PulseClient?</h2>
 
-                <p>შექმნილია ნულიდან მაქსიმალური საბრძოლო ეფექტურობისთვის, სუფთა ვიზუალისთვის და სტაბილური შემოვლებისთვის.</p>
+                <p>შექმნილია ნულიდან მაქსიმალური საბრძოლო ეფექტურობისთვის, სუფთა ვიზუალისთვის და ავტომატიზებული ბოტებისთვის.</p>
 
             </div>
 
@@ -906,7 +907,7 @@
 
                     </div>
 
-                    <h3>გაფართოებული შემოვლები</h3>
+                    <h3>საბრძოლო და Utility მოდულები</h3>
 
                     <p>ფარული პაკეტების მანიპულაცია Matrix, GrimAC, Vulcan და სხვა თანამედროვე ანტი-ჩითების გვერდის ასავლელად.</p>
 
@@ -954,134 +955,61 @@
 
         
 
-        <!-- Live Anti-Cheat Status Section -->
+                <!-- Bots & Modules Showcase Section (Corz Style) -->
+        <section id="modules" class="bots-section">
+            <div class="bots-container">
+                <div class="bots-header">
+                    <h2 class="bots-title" data-i18n="bots.title">Meet the bots.</h2>
+                    <p class="bots-subtitle">
+                        <span class="bots-subtitle-highlight" data-i18n="bots.sub1">Six that fight for you.</span> 
+                        <span data-i18n="bots.sub2">Eight that work for you.</span>
+                    </p>
+                </div>
 
-        <section id="bypasses" class="features anticheat-section">
+                <div class="bots-grid">
+                    <!-- Left: PvP Column -->
+                    <div class="bots-col bots-col-pvp">
+                        <div class="bots-col-label">PvP</div>
+                        <div class="bots-list" id="bots-pvp-list">
+                            <!-- Populated dynamically via bots-showcase.js -->
+                        </div>
+                    </div>
 
-            <div class="section-header">
+                    <!-- Center: 3D Stage Column -->
+                    <div class="bots-col bots-col-stage">
+                        <div class="bots-stage-wrapper">
+                            <div class="bots-stage-glow"></div>
+                            <div class="bots-pedestal-platform">
+                                <div class="ring-1"></div>
+                                <div class="ring-2"></div>
+                                <div class="ring-3"></div>
+                            </div>
+                            <canvas id="bot-skin-canvas" class="bots-canvas" width="340" height="420"></canvas>
+                        </div>
 
-                <span class="section-kicker">Anti-Cheat</span>
+                        <!-- Held Items Bar -->
+                        <div class="bots-held-items" id="bot-held-items">
+                            <!-- Populated dynamically via bots-showcase.js -->
+                        </div>
+                    </div>
 
-                <h2>Anti-Cheat შემოვლების სტატუსი</h2>
+                    <!-- Right: Utility Column -->
+                    <div class="bots-col bots-col-utility">
+                        <div class="bots-col-label">Utility</div>
+                        <div class="bots-list" id="bots-util-list">
+                            <!-- Populated dynamically via bots-showcase.js -->
+                        </div>
+                    </div>
+                </div>
 
-                <p>ჩვენი სისტემა 24/7 რეჟიმში აკონტროლებს სერვერების ანტი-ჩითებს უსაფრთხო თამაშისთვის.</p>
-
+                <!-- Bottom CTA Button -->
+                <div class="bots-cta">
+                    <button type="button" onclick="openFreeClientModal()" class="bots-cta-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span data-i18n="bots.cta">Get all 14 bots</span>
+                    </button>
+                </div>
             </div>
-
-            <div class="anticheat-grid">
-
-                <!-- Matrix Card -->
-
-                <article class="glass-panel anticheat-card">
-
-                    <div class="ac-head">
-
-                        <h3>Matrix AntiCheat</h3>
-
-                        <span class="status-badge live-status-badge">
-
-                            <span class="badge-dot-ping"></span>
-
-                            <span>UNDETECTED</span>
-
-                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
-
-                        </span>
-
-                    </div>
-
-                    <p class="ac-desc">Matrix v6.8 Bypass: Reach, Velocity (0-80%), Timer, Speed &amp; Scaffold სრულიად ამოუცნობია.</p>
-
-                    <div class="ac-foot"><span class="ac-dot"></span>ბოლო შემოწმება: დღეს</div>
-
-                </article>
-
-
-
-                <!-- GrimAC Card -->
-
-                <article class="glass-panel anticheat-card">
-
-                    <div class="ac-head">
-
-                        <h3>GrimAC</h3>
-
-                        <span class="status-badge live-status-badge">
-
-                            <span class="badge-dot-ping"></span>
-
-                            <span>UNDETECTED</span>
-
-                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
-
-                        </span>
-
-                    </div>
-
-                    <p class="ac-desc">GrimAC Simulation Engine Bypass: Rotation Smoothness, Vector Prediction, Legit Reach (3.25).</p>
-
-                    <div class="ac-foot"><span class="ac-dot"></span>ბოლო შემოწმება: დღეს</div>
-
-                </article>
-
-
-
-                <!-- Vulcan & Karhu Card -->
-
-                <article class="glass-panel anticheat-card">
-
-                    <div class="ac-head">
-
-                        <h3>Vulcan / Karhu</h3>
-
-                        <span class="status-badge live-status-badge">
-
-                            <span class="badge-dot-ping"></span>
-
-                            <span>SUPPORTED</span>
-
-                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
-
-                        </span>
-
-                    </div>
-
-                    <p class="ac-desc">FastBreak, AutoClicker (16-20 CPS), AimAssist და Movement მოდულები სრულად თავსებადია.</p>
-
-                    <div class="ac-foot"><span class="ac-dot"></span>ბოლო შემოწმება: დღეს</div>
-
-                </article>
-
-
-
-                <!-- Polar & Intave Card -->
-
-                <article class="glass-panel anticheat-card">
-
-                    <div class="ac-head">
-
-                        <h3>Intave / Polar</h3>
-
-                        <span class="status-badge live-status-badge">
-
-                            <span class="badge-dot-ping"></span>
-
-                            <span>SAFE</span>
-
-                            <span class="signal-bars"><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span></span>
-
-                        </span>
-
-                    </div>
-
-                    <p class="ac-desc">Legit Mode-ით თამაშისას სრულიად უსაფრთხოა მკაცრი შემოწმების მქონე სერვერებზეც.</p>
-
-                    <div class="ac-foot"><span class="ac-dot"></span>ბოლო შემოწმება: დღეს</div>
-
-                </article>
-
-            </div>
-
         </section>
 
         <!-- ========================================== -->
@@ -1184,7 +1112,7 @@
 
                     <button type="button" data-i18n="footer.features" onclick="navigateToLandingSection(event, 'features')">მახასიათებლები</button>
 
-                    <button type="button" data-i18n="footer.bypasses" onclick="navigateToLandingSection(event, 'bypasses')">შემოვლები</button>
+                    <button type="button" data-i18n="footer.modules" onclick="navigateToLandingSection(event, 'modules')">მოდულები</button>
 
                     <button type="button" data-i18n="footer.pricing" onclick="navigateToLandingSection(event, 'pricing')">ფასები</button>
 
@@ -5722,6 +5650,8 @@
 
     <script src="i18n.js?v=376.0.0"></script>
 
+    <script src="assets/js/skinview3d.bundle.js"></script>
+    <script src="bots-showcase.js?v=1.0.0"></script>
     <script src="app.js?v=804.0.2"></script>
 
     <!-- Free Client Instruction Modal (Popup) -->

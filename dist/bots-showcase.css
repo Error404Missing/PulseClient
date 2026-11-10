@@ -1,0 +1,409 @@
+/* ========================================================
+   PulseClient - Bots & Modules Showcase (Corz Style)
+   ======================================================== */
+
+.bots-section {
+    position: relative;
+    padding: 90px 20px 100px 20px;
+    background: radial-gradient(ellipse at 50% 30%, rgba(147, 51, 234, 0.08) 0%, #07080c 70%);
+    overflow: hidden;
+}
+
+.bots-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+}
+
+.bots-container {
+    max-width: 1220px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Header */
+.bots-header {
+    text-align: center;
+    margin-bottom: 44px;
+}
+
+.bots-title {
+    font-family: 'Silkscreen', monospace;
+    font-size: clamp(2rem, 3.8vw, 2.85rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    text-shadow: 0 0 35px rgba(168, 85, 247, 0.4);
+}
+
+.bots-subtitle {
+    font-size: clamp(14px, 1.8vw, 17px);
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.bots-subtitle-highlight {
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+/* 3-Column Grid */
+.bots-grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 320px) 1fr minmax(250px, 320px);
+    align-items: center;
+    gap: 18px;
+}
+
+.bots-col {
+    min-width: 0;
+}
+
+.bots-col-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #64748b;
+    margin-bottom: 8px;
+    padding: 0 12px;
+}
+
+.bots-col-pvp .bots-col-label {
+    text-align: right;
+}
+
+.bots-col-utility .bots-col-label {
+    text-align: left;
+}
+
+.bots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Bot Button Row */
+.bots-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    font-family: inherit;
+    color: inherit;
+    outline: none;
+    user-select: none;
+}
+
+.bots-col-pvp .bots-row {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.bots-row:hover {
+    background: rgba(255, 255, 255, 0.035);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.bots-row.active {
+    background: rgba(147, 51, 234, 0.14);
+    border-color: rgba(168, 85, 247, 0.65);
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.22), inset 0 0 15px rgba(168, 85, 247, 0.08);
+}
+
+/* Avatar Head */
+.bot-head-wrapper {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+}
+
+.bots-row.active .bot-head-wrapper {
+    background: rgba(168, 85, 247, 0.25);
+    border-color: rgba(168, 85, 247, 0.8);
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
+}
+
+.bot-head-canvas-box {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    image-rendering: pixelated;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bot-head-layer {
+    position: absolute;
+    inset: 0;
+    background-size: 800% 800%;
+    image-rendering: pixelated;
+}
+
+.bot-head-base {
+    background-position: 14.2857% 14.2857%;
+}
+
+.bot-head-hat {
+    background-position: 71.4286% 14.2857%;
+}
+
+/* Text inside card */
+.bot-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.bot-title-line {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.bots-col-pvp .bot-title-line {
+    justify-content: flex-end;
+}
+
+.bot-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #e2e8f0;
+    line-height: 1.2;
+    transition: color 0.2s;
+}
+
+.bots-row.active .bot-name {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
+
+.bot-badge-new {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: rgba(168, 85, 247, 0.28);
+    border: 1px solid rgba(168, 85, 247, 0.55);
+    color: #e9d5ff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+}
+
+.bot-tagline {
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.35;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s;
+}
+
+.bots-row.active .bot-tagline {
+    color: #cbd5e1;
+}
+
+/* Center Column (3D Stage) */
+.bots-col-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.bots-stage-wrapper {
+    position: relative;
+    width: 340px;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bots-stage-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(147, 51, 234, 0.06) 50%, transparent 70%);
+    pointer-events: none;
+    filter: blur(28px);
+}
+
+/* Concentric Pedestal Platform */
+.bots-pedestal-platform {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%) rotateX(68deg);
+    width: 270px;
+    height: 160px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bots-pedestal-platform .ring-1 {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid rgba(168, 85, 247, 0.55);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.4), inset 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.bots-pedestal-platform .ring-2 {
+    position: absolute;
+    inset: 22px;
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 50%;
+}
+
+.bots-pedestal-platform .ring-3 {
+    position: absolute;
+    inset: 46px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+/* 3D Canvas */
+.bots-canvas {
+    position: relative;
+    z-index: 2;
+    width: 340px;
+    height: 420px;
+    cursor: grab;
+    outline: none;
+    touch-action: none;
+    user-select: none;
+}
+
+.bots-canvas:active {
+    cursor: grabbing;
+}
+
+/* Held Items Bar */
+.bots-held-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: #cbd5e1;
+    min-height: 26px;
+    position: relative;
+    z-index: 3;
+}
+
+.bot-held-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.bot-held-item img {
+    width: 17px;
+    height: 17px;
+    image-rendering: pixelated;
+    object-fit: contain;
+    filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.4));
+}
+
+.bot-held-dot {
+    color: #475569;
+    font-size: 14px;
+}
+
+/* Bottom CTA */
+.bots-cta {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.bots-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 34px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 32px rgba(147, 51, 234, 0.5);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+    text-decoration: none;
+}
+
+.bots-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 48px rgba(168, 85, 247, 0.7);
+}
+
+.bots-cta-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 1023px) {
+    .bots-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .bots-col-stage {
+        order: -1;
+    }
+
+    .bots-col-pvp .bots-col-label,
+    .bots-col-utility .bots-col-label {
+        text-align: left;
+    }
+
+    .bots-col-pvp .bots-row {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .bots-col-pvp .bot-title-line {
+        justify-content: flex-start;
+    }
+
+    .bots-stage-wrapper {
+        width: 300px;
+        height: 380px;
+    }
+
+    .bots-canvas {
+        width: 300px;
+        height: 380px;
+    }
+}
