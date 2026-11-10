@@ -28,7 +28,7 @@
       "hero.badge": "V1.05 ახალი ვერსია",
       "hero.title": "დომინირება Minecraft <br><span class=\"highlight\">საბრძოლო & მოძრაობა</span>",
       "hero.desc": "მოიპოვეთ უპირატესობა თამაშში კონფიგურირებადი Combat მოდიფიკაციებით, პერსონალური ვიზუალით და მოწინავე ბაიპასებით.",
-      "hero.buy": "შეიძინე PulseClient",
+      "hero.buy": "მიიღე უფასოდ",
       "hero.explore": "გაეცანი ფუნქციებს",
       "hero.f1.title": "Full Anti-Cheat Bypass",
       "hero.f1.desc": "GrimAC, Matrix და Vulcan — სუფთა პაკეტები.",
@@ -140,7 +140,7 @@
       "dash.refresh": "განახლება",
       "dash.licensesLoading": "ლიცენზიები იტვირთება...",
       "dash.noLicenses": "თქვენს Discord ანგარიშზე ჯერ არცერთი ლიცენზია არ არის მიბმული.",
-      "dash.noLicensesSub": "შეიძინეთ გასაღები ან დააკავშირეთ არსებული ქვემოთ!",
+      "dash.noLicensesSub": "გახსენით Ticket Discord-ზე ან Telegram-ზე ჩეთის მისაღებად!",
       "dash.bindTitle": "არსებული ლიცენზიის გასაღების დაკავშირება",
       "dash.bindDesc": "თუ გაქვთ Discord ბოტიდან გენერირებული გასაღები, რომელიც ჯერ არ არის დაკავშირებული, შეიყვანეთ იგი ქვემოთ.",
       "dash.bindBtn": "დაკავშირება",
@@ -404,7 +404,7 @@
       "hero.badge": "V1.05 New Version",
       "hero.title": "Dominate Minecraft <br><span class=\"highlight\">Combat & Movement</span>",
       "hero.desc": "Gain the edge with fully configurable combat mods, premium visual ESP, and powerful anti-cheat bypasses. Built for high-level players.",
-      "hero.buy": "Get PulseClient",
+      "hero.buy": "Get for Free",
       "hero.explore": "Explore Features",
       "hero.f1.title": "Full Anti-Cheat Bypass",
       "hero.f1.desc": "Clean packets against GrimAC, Matrix and Vulcan.",
@@ -435,7 +435,7 @@
       "features.f4.title": "Discord Integration",
       "features.f4.desc": "Activate keys, view details, and manage roles easily through our automated Discord bot.",
       "pricing.title": "PulseClient is now 100% Free!",
-      "pricing.subtitle": "To get the client, join our Discord or Telegram and open a ticket.",
+      "pricing.subtitle": "No payments or licenses required — click the button below and open a ticket to get the client.",
       "pricing.weekly": "Weekly Plan",
       "pricing.monthly": "Monthly Plan",
       "pricing.lifetime": "Lifetime Plan",
@@ -739,19 +739,7 @@
     ["#features .feature-card:nth-child(3) p", "features.f3.desc"],
     ["#features .feature-card:nth-child(4) h3", "features.f4.title"],
     ["#features .feature-card:nth-child(4) p", "features.f4.desc"],
-    ["#pricing .section-header h2", "pricing.title"],
-    ["#pricing .section-header p", "pricing.subtitle"],
-    ["#pricing .pricing-card:nth-child(2) h3", "pricing.weekly"],
-    ["#pricing .pricing-card:nth-child(2) .desc", "pricing.weeklyDesc"],
-    ["#pricing .pricing-card:nth-child(2) .price span", "pricing.per7"],
-    ["#pricing .pricing-card:nth-child(3) .popular-badge", "pricing.popular"],
-    ["#pricing .pricing-card:nth-child(3) h3", "pricing.lifetime"],
-    ["#pricing .pricing-card:nth-child(3) .desc", "pricing.lifetimeDesc"],
-    ["#pricing .pricing-card:nth-child(3) .price span", "pricing.once"],
-    ["#pricing .pricing-card:nth-child(4) h3", "pricing.monthly"],
-    ["#pricing .pricing-card:nth-child(4) .desc", "pricing.monthlyDesc"],
-    ["#pricing .pricing-card:nth-child(4) .price span", "pricing.per30"],
-    [".device-title", "dash.devices"],
+                                                    [".device-title", "dash.devices"],
     [".btn-device-slot", "dash.deviceSlot"],
     [".role-text", "dash.licensesLabel", "prefix"],
     ["#update-notification .update-text strong", "dash.updateTitle"],
@@ -798,17 +786,9 @@
     ["faq.q3", "faq.a3"]
   ];
 
-  const PRICING_PERKS = [
-    ["#pricing .pricing-card:nth-child(2) li", ["pricing.perk1", "pricing.perk2", "pricing.perk3", "pricing.perk4"]],
-    ["#pricing .pricing-card:nth-child(3) li", ["pricing.perk5", "pricing.perk1", "pricing.perk2", "pricing.perk6", "pricing.perk7", "pricing.perk8"]],
-    ["#pricing .pricing-card:nth-child(4) li", ["pricing.perk1", "pricing.perk2", "pricing.perk3", "pricing.perk4"]]
-  ];
+  const PRICING_PERKS = [];
 
-  const PRICING_BTNS = [
-    ["#pricing .pricing-card:nth-child(2) .buy-btn", "pricing.buy"],
-    ["#pricing .pricing-card:nth-child(3) .buy-btn", "pricing.buyLifetime"],
-    ["#pricing .pricing-card:nth-child(4) .buy-btn", "pricing.buy"]
-  ];
+  const PRICING_BTNS = [];
 
 
 

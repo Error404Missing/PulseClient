@@ -33358,3 +33358,41 @@ async function handleRemoveAdminStaff(discordId, displayName) {
 window.handleCreateAdminStaff = handleCreateAdminStaff;
 window.handleRemoveAdminStaff = handleRemoveAdminStaff;
 window.fetchSupabaseAdminsList = fetchSupabaseAdminsList;
+
+
+// ==========================================
+// FREE CLIENT INSTRUCTION MODAL
+// ==========================================
+function openFreeClientModal() {
+    const modal = document.getElementById('free-client-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeFreeClientModal() {
+    const modal = document.getElementById('free-client-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+function closeFreeClientModalOnBackdrop(e) {
+    if (e && e.target && e.target.id === 'free-client-modal') {
+        closeFreeClientModal();
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeFreeClientModal();
+    }
+});
+
+window.openFreeClientModal = openFreeClientModal;
+window.closeFreeClientModal = closeFreeClientModal;
+window.closeFreeClientModalOnBackdrop = closeFreeClientModalOnBackdrop;
