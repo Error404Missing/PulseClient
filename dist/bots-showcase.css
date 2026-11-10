@@ -1,409 +1,466 @@
-/* ========================================================
-   PulseClient - Bots & Modules Showcase (Corz Style)
-   ======================================================== */
+/* ==========================================================================
+   Meet the Bots — Exact Corz.gg 3D Showcase Styles
+   ========================================================================== */
 
-.bots-section {
-    position: relative;
-    padding: 90px 20px 100px 20px;
-    background: radial-gradient(ellipse at 50% 30%, rgba(147, 51, 234, 0.08) 0%, #07080c 70%);
-    overflow: hidden;
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/_next/static/media/9550377e98abc48f-s.p.otf') format('opentype');
+  font-display: swap;
 }
 
-.bots-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+.font-pixel {
+  font-family: 'Minecraft', monospace;
+  letter-spacing: 0.02em;
+}
+
+.bots-section {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0 100px;
+  background-color: transparent;
 }
 
 .bots-container {
-    max-width: 1220px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
 }
 
-/* Header */
 .bots-header {
-    text-align: center;
-    margin-bottom: 44px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .bots-title {
-    font-family: 'Silkscreen', monospace;
-    font-size: clamp(2rem, 3.8vw, 2.85rem);
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 10px 0;
-    letter-spacing: -0.5px;
-    line-height: 1.15;
-    text-shadow: 0 0 35px rgba(168, 85, 247, 0.4);
+  font-size: 2.75rem;
+  line-height: 1.2;
+  color: #f1f3f5;
+  margin: 0;
+  font-weight: normal;
+}
+
+@media (max-width: 640px) {
+  .bots-title {
+    font-size: 2rem;
+  }
 }
 
 .bots-subtitle {
-    font-size: clamp(14px, 1.8vw, 17px);
-    color: #94a3b8;
-    margin: 0;
-    line-height: 1.5;
+  margin-top: 14px;
+  font-size: 1.125rem;
+  color: #878787;
+  line-height: 1.6;
 }
 
 .bots-subtitle-highlight {
-    color: #f1f5f9;
-    font-weight: 600;
+  color: #f1f3f5;
 }
 
-/* 3-Column Grid */
+/* 3-Column Grid matching Corz */
 .bots-grid {
-    display: grid;
-    grid-template-columns: minmax(250px, 320px) 1fr minmax(250px, 320px);
-    align-items: center;
-    gap: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "stage stage" "detail detail" "pvp util" "buy buy";
+  column-gap: 8px;
+  margin-top: 36px;
 }
 
-.bots-col {
-    min-width: 0;
+.bots-pvp { grid-area: pvp; min-width: 0; }
+.bots-util { grid-area: util; min-width: 0; }
+.bots-stage { grid-area: stage; }
+.bots-detail { grid-area: detail; margin-bottom: 16px; }
+.bots-buy { grid-area: buy; margin-top: 44px; }
+
+@media (min-width: 640px) {
+  .bots-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px) minmax(0, 300px) minmax(0, 1fr);
+    grid-template-areas: "stage stage stage stage" "detail detail detail detail" ". pvp util ." "buy buy buy buy";
+    column-gap: 20px;
+  }
+  .bots-detail { margin-bottom: 24px; }
+  .bots-buy { margin-top: 56px; }
+}
+
+@media (min-width: 1280px) {
+  .bots-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas: "pvp stage util" ". detail ." ". buy .";
+    column-gap: 36px;
+  }
+  .bots-pvp, .bots-util { align-self: center; }
+  .bots-detail { margin: 0; }
+  .bots-buy { margin-top: 24px; }
 }
 
 .bots-col-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: #64748b;
-    margin-bottom: 8px;
-    padding: 0 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #5c5c5c;
+  margin-bottom: 8px;
+  padding: 0 12px;
 }
 
-.bots-col-pvp .bots-col-label {
-    text-align: right;
-}
-
-.bots-col-utility .bots-col-label {
-    text-align: left;
+@media (min-width: 1280px) {
+  .bots-pvp .bots-col-label { text-align: right; }
 }
 
 .bots-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-/* Bot Button Row */
+/* Individual Bot Row Item */
 .bots-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    border-radius: 12px;
-    border: 1px solid transparent;
-    background: transparent;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 100%;
-    font-family: inherit;
-    color: inherit;
-    outline: none;
-    user-select: none;
-}
-
-.bots-col-pvp .bots-row {
-    flex-direction: row-reverse;
-    text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  outline: none;
 }
 
 .bots-row:hover {
-    background: rgba(255, 255, 255, 0.035);
-    border-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
-.bots-row.active {
-    background: rgba(147, 51, 234, 0.14);
-    border-color: rgba(168, 85, 247, 0.65);
-    box-shadow: 0 0 25px rgba(168, 85, 247, 0.22), inset 0 0 15px rgba(168, 85, 247, 0.08);
+@media (min-width: 1280px) {
+  .bots-pvp .bots-row {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
 }
 
-/* Avatar Head */
-.bot-head-wrapper {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    flex-shrink: 0;
-    padding: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.2s ease;
+.bots-row[aria-pressed="true"] {
+  background-color: rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 0 0 1px rgba(126, 46, 214, 0.55);
 }
 
-.bots-row.active .bot-head-wrapper {
-    background: rgba(168, 85, 247, 0.25);
-    border-color: rgba(168, 85, 247, 0.8);
-    box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
+@media (min-width: 1280px) {
+  .bots-pvp .bots-row[aria-pressed="true"] {
+    background: linear-gradient(270deg, rgba(126, 46, 214, 0.22), rgba(126, 46, 214, 0.06) 55%, rgba(255, 255, 255, 0.015));
+    box-shadow: inset 0 0 0 1px rgba(158, 98, 224, 0.34);
+  }
+  .bots-util .bots-row[aria-pressed="true"] {
+    background: linear-gradient(90deg, rgba(126, 46, 214, 0.22), rgba(126, 46, 214, 0.06) 55%, rgba(255, 255, 255, 0.015));
+    box-shadow: inset 0 0 0 1px rgba(158, 98, 224, 0.34);
+  }
 }
 
-.bot-head-canvas-box {
-    position: relative;
-    width: 26px;
-    height: 26px;
-    image-rendering: pixelated;
-    border-radius: 4px;
-    overflow: hidden;
+.bots-row-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  box-sizing: border-box;
 }
 
-.bot-head-layer {
-    position: absolute;
-    inset: 0;
-    background-size: 800% 800%;
-    image-rendering: pixelated;
+.bots-row:hover .bots-row-icon {
+  opacity: 1;
 }
 
-.bot-head-base {
-    background-position: 14.2857% 14.2857%;
+.bots-row[aria-pressed="true"] .bots-row-icon {
+  background: rgba(126, 46, 214, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(126, 46, 214, 0.7);
+  opacity: 1;
 }
 
-.bot-head-hat {
-    background-position: 71.4286% 14.2857%;
+.bots-head-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  image-rendering: pixelated;
 }
 
-/* Text inside card */
-.bot-meta {
-    flex: 1;
-    min-width: 0;
+.bots-row-info {
+  min-width: 0;
+  flex: 1;
 }
 
-.bot-title-line {
-    display: flex;
-    align-items: center;
-    gap: 7px;
+.bots-row-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.bots-col-pvp .bot-title-line {
-    justify-content: flex-end;
+@media (min-width: 1280px) {
+  .bots-pvp .bots-row-header {
+    flex-direction: row-reverse;
+  }
 }
 
-.bot-name {
-    font-size: 14.5px;
-    font-weight: 600;
-    color: #e2e8f0;
-    line-height: 1.2;
-    transition: color 0.2s;
+.bots-row-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #cfcece;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.bots-row.active .bot-name {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+.bots-row[aria-pressed="true"] .bots-row-name {
+  color: #fff;
 }
 
-.bot-badge-new {
-    font-size: 9px;
-    font-weight: 800;
-    padding: 1px 5px;
-    border-radius: 4px;
-    background: rgba(168, 85, 247, 0.28);
-    border: 1px solid rgba(168, 85, 247, 0.55);
-    color: #e9d5ff;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    line-height: 1.2;
+.bots-badge-new {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #7e2ed6;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
 }
 
-.bot-tagline {
-    font-size: 12.5px;
-    color: #64748b;
-    line-height: 1.35;
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color 0.2s;
+.bots-row-tagline {
+  font-size: 13px;
+  color: #7d7878;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
 }
 
-.bots-row.active .bot-tagline {
-    color: #cbd5e1;
+@media (max-width: 1279px) {
+  .bots-row-tagline { display: none; }
 }
 
-/* Center Column (3D Stage) */
-.bots-col-stage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.bots-row[aria-pressed="true"] .bots-row-tagline {
+  color: #c3c3c3;
 }
 
-.bots-stage-wrapper {
-    position: relative;
-    width: 340px;
-    height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.bots-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: rgba(168, 85, 247, 0.75);
+  border-radius: 2px;
+  transform-origin: left;
+  animation: botsProgress 7s linear infinite;
 }
 
-.bots-stage-glow {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(147, 51, 234, 0.06) 50%, transparent 70%);
-    pointer-events: none;
-    filter: blur(28px);
+@media (min-width: 1280px) {
+  .bots-pvp .bots-progress-bar {
+    transform-origin: right;
+  }
 }
 
-/* Concentric Pedestal Platform */
-.bots-pedestal-platform {
-    position: absolute;
-    bottom: 22px;
-    left: 50%;
-    transform: translateX(-50%) rotateX(68deg);
-    width: 270px;
-    height: 160px;
-    pointer-events: none;
-    z-index: 1;
+@keyframes botsProgress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
-.bots-pedestal-platform .ring-1 {
-    position: absolute;
-    inset: 0;
-    border: 1.5px solid rgba(168, 85, 247, 0.55);
-    border-radius: 50%;
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.4), inset 0 0 20px rgba(168, 85, 247, 0.2);
+/* 3D Stage Section */
+.bots-stage {
+  position: relative;
+  height: 480px;
+  user-select: none;
 }
 
-.bots-pedestal-platform .ring-2 {
-    position: absolute;
-    inset: 22px;
-    border: 1px solid rgba(168, 85, 247, 0.35);
-    border-radius: 50%;
+@media (max-width: 640px) {
+  .bots-stage {
+    height: 340px;
+  }
 }
 
-.bots-pedestal-platform .ring-3 {
-    position: absolute;
-    inset: 46px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 70%);
-    border-radius: 50%;
+.bots-stage-effects {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-/* 3D Canvas */
-.bots-canvas {
-    position: relative;
-    z-index: 2;
-    width: 340px;
-    height: 420px;
-    cursor: grab;
-    outline: none;
-    touch-action: none;
-    user-select: none;
+.bots-grid-bg {
+  position: absolute;
+  inset: -4% -18% 0;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center bottom;
+  -webkit-mask-image: radial-gradient(ellipse 44% 42% at 50% 62%, #000, transparent 78%);
+  mask-image: radial-gradient(ellipse 44% 42% at 50% 62%, #000, transparent 78%);
 }
 
-.bots-canvas:active {
-    cursor: grabbing;
+.bots-floor {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(32% 15% at 50% 89%, rgba(126,46,214,0.32), transparent 75%), radial-gradient(40% 46% at 50% 30%, rgba(126,46,214,0.08), transparent 72%);
 }
 
-/* Held Items Bar */
-.bots-held-items {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    margin-top: 14px;
-    font-size: 13.5px;
-    color: #cbd5e1;
-    min-height: 26px;
-    position: relative;
-    z-index: 3;
+.bots-beam {
+  position: absolute;
+  inset: 0;
+  filter: blur(24px);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 82%, transparent 100%);
 }
 
-.bot-held-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
+.bots-beam > div {
+  position: absolute;
+  inset: 0 0 8% 0;
+  clip-path: polygon(45% 0, 55% 0, 86% 100%, 14% 100%);
+  background: linear-gradient(180deg, rgba(196,170,255,0.16), rgba(126,46,214,0.07) 65%, rgba(126,46,214,0.02));
 }
 
-.bot-held-item img {
-    width: 17px;
-    height: 17px;
-    image-rendering: pixelated;
-    object-fit: contain;
-    filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.4));
+.bots-pad-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-.bot-held-dot {
-    color: #475569;
-    font-size: 14px;
+/* 3D Scene Viewport */
+.bots-viewport {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-/* Bottom CTA */
-.bots-cta {
-    margin-top: 40px;
-    text-align: center;
+.bots-camera-rotator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
 }
 
-.bots-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 13px 34px;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    color: #ffffff;
-    background: linear-gradient(135deg, #7c3aed, #9333ea);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 32px rgba(147, 51, 234, 0.5);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
-    text-decoration: none;
+.bots-model-yaw {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
 }
 
-.bots-cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 48px rgba(168, 85, 247, 0.7);
+.bots-limb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
 }
 
-.bots-cta-btn:active {
-    transform: translateY(0);
+.bots-cube-face {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* Mobile & Tablet Responsiveness */
-@media (max-width: 1023px) {
-    .bots-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
+.bots-drag-overlay {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;
+}
 
-    .bots-col-stage {
-        order: -1;
-    }
+.bots-drag-overlay:active {
+  cursor: grabbing;
+}
 
-    .bots-col-pvp .bots-col-label,
-    .bots-col-utility .bots-col-label {
-        text-align: left;
-    }
+.bots-laser-wipe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(158,98,224,0.95) 16%, rgba(158,98,224,0.95) 84%, transparent);
+  box-shadow: 0 0 8px rgba(126,46,214,0.7);
+  display: none;
+}
 
-    .bots-col-pvp .bots-row {
-        flex-direction: row;
-        text-align: left;
-    }
+/* Detail & Held items */
+.bots-detail {
+  text-align: center;
+}
 
-    .bots-col-pvp .bot-title-line {
-        justify-content: flex-start;
-    }
+.bots-held-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #c3c3c3;
+  margin-top: 10px;
+}
 
-    .bots-stage-wrapper {
-        width: 300px;
-        height: 380px;
-    }
+.bots-held-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 
-    .bots-canvas {
-        width: 300px;
-        height: 380px;
-    }
+.bots-held-item img {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+.bots-dot {
+  color: #5c5c5c;
+}
+
+/* CTA */
+.bots-buy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bots-buy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: #7e2ed6;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -4px rgba(126,46,214,0.5);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.bots-buy-btn:hover {
+  background: #6c22c0;
+  transform: translateY(-1px);
 }

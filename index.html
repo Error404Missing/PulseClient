@@ -69,7 +69,7 @@
     <link rel="stylesheet" href="refresh.css?v=1.0.9">
 
     <link rel="stylesheet" href="hero-v2.css?v=1.0.3">
-    <link rel="stylesheet" href="bots-showcase.css?v=1.0.0">
+    <link rel="stylesheet" href="bots-showcase.css?v=2.0.0">
 
     <!-- Supabase JS CDN -->
 
@@ -955,11 +955,11 @@
 
         
 
-                <!-- Bots & Modules Showcase Section (Corz Style) -->
+        <!-- Bots & Modules Showcase Section (Exact Corz 3D Style) -->
         <section id="modules" class="bots-section">
             <div class="bots-container">
                 <div class="bots-header">
-                    <h2 class="bots-title" data-i18n="bots.title">Meet the bots.</h2>
+                    <h2 class="bots-title font-pixel" data-i18n="bots.title">Meet the bots.</h2>
                     <p class="bots-subtitle">
                         <span class="bots-subtitle-highlight" data-i18n="bots.sub1">Six that fight for you.</span> 
                         <span data-i18n="bots.sub2">Eight that work for you.</span>
@@ -968,46 +968,26 @@
 
                 <div class="bots-grid">
                     <!-- Left: PvP Column -->
-                    <div class="bots-col bots-col-pvp">
+                    <div class="bots-pvp">
                         <div class="bots-col-label">PvP</div>
-                        <div class="bots-list" id="bots-pvp-list">
-                            <!-- Populated dynamically via bots-showcase.js -->
-                        </div>
+                        <div class="bots-list" id="bots-pvp-list"></div>
                     </div>
 
                     <!-- Center: 3D Stage Column -->
-                    <div class="bots-col bots-col-stage">
-                        <div class="bots-stage-wrapper">
-                            <div class="bots-stage-glow"></div>
-                            <div class="bots-pedestal-platform">
-                                <div class="ring-1"></div>
-                                <div class="ring-2"></div>
-                                <div class="ring-3"></div>
-                            </div>
-                            <canvas id="bot-skin-canvas" class="bots-canvas" width="340" height="420"></canvas>
-                        </div>
-
-                        <!-- Held Items Bar -->
-                        <div class="bots-held-items" id="bot-held-items">
-                            <!-- Populated dynamically via bots-showcase.js -->
-                        </div>
-                    </div>
+                    <div class="bots-stage" id="bots-stage-container"></div>
 
                     <!-- Right: Utility Column -->
-                    <div class="bots-col bots-col-utility">
+                    <div class="bots-util">
                         <div class="bots-col-label">Utility</div>
-                        <div class="bots-list" id="bots-util-list">
-                            <!-- Populated dynamically via bots-showcase.js -->
-                        </div>
+                        <div class="bots-list" id="bots-util-list"></div>
                     </div>
-                </div>
 
-                <!-- Bottom CTA Button -->
-                <div class="bots-cta">
-                    <button type="button" onclick="openFreeClientModal()" class="bots-cta-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        <span data-i18n="bots.cta">Get all 14 bots</span>
-                    </button>
+                    <!-- Bottom CTA Button -->
+                    <div class="bots-buy">
+                        <button type="button" onclick="openFreeClientModal()" class="bots-buy-btn">
+                            <span data-i18n="bots.cta">Get all 14 bots</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -5650,8 +5630,7 @@
 
     <script src="i18n.js?v=376.0.0"></script>
 
-    <script src="assets/js/skinview3d.bundle.js"></script>
-    <script src="bots-showcase.js?v=1.0.0"></script>
+    <script src="bots-showcase.js?v=2.0.0"></script>
     <script src="app.js?v=804.0.2"></script>
 
     <!-- Free Client Instruction Modal (Popup) -->
