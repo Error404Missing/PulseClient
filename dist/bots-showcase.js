@@ -1,183 +1,500 @@
 /**
  * PulseClient — "Meet the bots" 3D Interactive Showcase
- * Replicated exactly from Corz.gg using CSS 3D Transforms & Canvas Pedestal
+ * Reverse-Engineered from Corz.gg using Exact 4x4 Matrix Mathematics (Module 87782),
+ * 3D Pedestal Canvas Projection (Module 85801), and Minecraft Skin Mesh (Module 9565).
  */
 
 (function () {
   'use strict';
 
-  // BOT CATALOG (14 BOTS)
-  const BOTS = [
-    { code: "CPX-01", name: "Crystal PvP", kind: "PvP", tagline: "Crystal fights, start to finish.", skin: "cpx01", eyeRow: 3, holds: [{name:"End Crystal", icon:"/corz-gui/bots/end_crystal.png"}, {name:"Totem of Undying", icon:"/corz-gui/bots/totem_of_undying.png"}] },
-    { code: "SBX-02", name: "Sword PvP", kind: "PvP", tagline: "Perfect W-taps and strafes.", skin: "sbx02", eyeRow: 4, holds: [{name:"Diamond Sword", icon:"/corz-gui/bots/diamond_sword.png"}] },
-    { code: "MCX-03", name: "Mace PvP", kind: "PvP", tagline: "Mace fights for SMP servers.", skin: "mcx03", eyeRow: 4, eyeLayer: "hat", holds: [{name:"Mace", icon:"/corz-gui/bots/mace.png"}, {name:"Totem of Undying", icon:"/corz-gui/bots/totem_of_undying.png"}] },
-    { code: "DNQ-06", name: "DonutQUE", kind: "PvP", tagline: "Queues /rtpq, banks the loot.", skin: "dnq06", eyeRow: 4, isNew: true, holds: [{name:"End Crystal", icon:"/corz-gui/bots/end_crystal.png"}, {name:"Totem of Undying", icon:"/corz-gui/bots/totem_of_undying.png"}] },
-    { code: "UHC-07", name: "UHC PvP", kind: "PvP", tagline: "Traps, healing and bows.", skin: "uhc07", eyeRow: 3, isNew: true, holds: [{name:"Bow", icon:"/corz-gui/bots/bow.png"}, {name:"Golden Apple", icon:"/corz-gui/bots/golden_apple.png"}] },
-    { code: "SMP-05", name: "SMP PvP", kind: "PvP", tagline: "DiaSMP PvP, full utility kit.", skin: "smp05", eyeRow: 4, eyeLayer: "hat", isNew: true, holds: [{name:"Diamond Sword", icon:"/corz-gui/bots/diamond_sword.png"}, {name:"Totem of Undying", icon:"/corz-gui/bots/totem_of_undying.png"}] },
-    { code: "BLD-01", name: "Auto Builder", kind: "Utility", tagline: "Builds schematics block by block.", skin: "bld01", eyeRow: 4, holds: [{name:"Scaffolding", icon:"/corz-gui/bots/scaffolding_icon.png"}] },
-    { code: "MIN-02", name: "Area Miner", kind: "Utility", tagline: "Mines out the area you pick.", skin: "min02", eyeRow: 4, holds: [{name:"Netherite Pickaxe", icon:"/corz-gui/bots/netherite_pickaxe.png"}] },
-    { code: "ORE-11", name: "Auto Ore Miner", kind: "Utility", tagline: "Mines your ores on safe routes.", skin: "ore11", eyeRow: 4, isNew: true, holds: [{name:"Diamond Pickaxe", icon:"/corz-gui/bots/diamond_pickaxe.png"}] },
-    { code: "TFM-12", name: "Tree Farmer", kind: "Utility", tagline: "Plants, chops and sells the wood.", skin: "tfm12", eyeRow: 4, isNew: true, holds: [{name:"Netherite Axe", icon:"/corz-gui/bots/netherite_axe.png"}] },
-    { code: "PLT-09", name: "Elytra Pilot", kind: "Utility", tagline: "Flies you to your coords.", skin: "plt09", eyeRow: 4, holds: [{name:"Firework Rocket", icon:"/corz-gui/bots/firework_rocket.png"}] },
-    { code: "RTP-07", name: "Base Alert", kind: "Utility", tagline: "Scouts and alerts you to bases.", skin: "rtp07", eyeRow: 4, holds: [{name:"Recovery Compass", icon:"/corz-gui/bots/recovery_compass.png"}] },
-    { code: "ANC-10", name: "Anchor Hunter", kind: "Utility", tagline: "RTPs and mines respawn anchors.", skin: "anc10", eyeRow: 4, holds: [{name:"Diamond Pickaxe", icon:"/corz-gui/bots/diamond_pickaxe.png"}] },
-    { code: "TPA-08", name: "Auto TPA", kind: "Utility", tagline: "Sends /tpahere from your trap.", skin: "tpa08", eyeRow: 3, holds: [{name:"Ender Pearl", icon:"/corz-gui/bots/ender_pearl.png"}] }
-  ];
+  // =========================================================================
+  // 1. 4x4 MATRIX MATH LIBRARY (Corz.gg Module 87782)
+  // =========================================================================
+  const DEG2RAD = Math.PI / 180;
 
-  // GEOMETRY HELPERS
-  function createBoxDef(x, y, z, w, h, d, u, v, g, base) {
-    return { x, y, z, w, h, d, u, v, g: g || 0, base: base !== false };
+  function matIdentity() {
+    const m = new Float64Array(16);
+    m[0] = m[5] = m[10] = m[15] = 1;
+    return m;
   }
 
-  function getModelParts(isSlim) {
-    let t = isSlim ? 3 : 4;
-    let armY = isSlim ? -23.5 : -24;
-    return [
-      {
-        key: "rleg",
-        boxes: [
-          createBoxDef(-4, -12, -2, 4, 12, 4, 0, 16, 0, true),
-          createBoxDef(-4, -12, -2, 4, 12, 4, 0, 32, 0.25, false)
-        ]
-      },
-      {
-        key: "lleg",
-        boxes: [
-          createBoxDef(0, -12, -2, 4, 12, 4, 16, 48, 0, true),
-          createBoxDef(0, -12, -2, 4, 12, 4, 0, 48, 0.25, false)
-        ]
-      },
-      {
-        key: "body",
-        boxes: [
-          createBoxDef(-4, -24, -2, 8, 12, 4, 16, 16, 0, true),
-          createBoxDef(-4, -24, -2, 8, 12, 4, 16, 32, 0.25, false)
-        ]
-      },
-      {
-        key: "rarm",
-        boxes: [
-          createBoxDef(-4 - t, armY, -2, t, 12, 4, 40, 16, 0, true),
-          createBoxDef(-4 - t, armY, -2, t, 12, 4, 40, 32, 0.25, false)
-        ]
-      },
-      {
-        key: "larm",
-        boxes: [
-          createBoxDef(4, armY, -2, t, 12, 4, 32, 48, 0, true),
-          createBoxDef(4, armY, -2, t, 12, 4, 48, 48, 0.25, false)
-        ]
-      },
-      {
-        key: "head",
-        boxes: [
-          createBoxDef(-4, -32, -4, 8, 8, 8, 0, 0, 0, true),
-          createBoxDef(-4, -32, -4, 8, 8, 8, 32, 0, 0.5, false)
-        ]
+  function matMul(a, b) {
+    const out = new Float64Array(16);
+    for (let col = 0; col < 4; col++) {
+      for (let row = 0; row < 4; row++) {
+        let sum = 0;
+        for (let k = 0; k < 4; k++) {
+          sum += a[4 * k + row] * b[4 * col + k];
+        }
+        out[4 * col + row] = sum;
       }
+    }
+    return out;
+  }
+
+  function matCompose(...mats) {
+    let res = matIdentity();
+    for (const m of mats) res = matMul(res, m);
+    return res;
+  }
+
+  function matTranslate(x, y, z) {
+    const m = matIdentity();
+    m[12] = x; m[13] = y; m[14] = z;
+    return m;
+  }
+
+  function matScale(x, y = x, z = x) {
+    const m = matIdentity();
+    m[0] = x; m[5] = y; m[10] = z;
+    return m;
+  }
+
+  function matRotateX(rad) {
+    const m = matIdentity(), c = Math.cos(rad), s = Math.sin(rad);
+    m[5] = c; m[6] = s; m[9] = -s; m[10] = c;
+    return m;
+  }
+
+  function matRotateY(rad) {
+    const m = matIdentity(), c = Math.cos(rad), s = Math.sin(rad);
+    m[0] = c; m[2] = -s; m[8] = s; m[10] = c;
+    return m;
+  }
+
+  function matRotateZ(rad) {
+    const m = matIdentity(), c = Math.cos(rad), s = Math.sin(rad);
+    m[0] = c; m[1] = s; m[4] = -s; m[5] = c;
+    return m;
+  }
+
+  function matEuler(roll, yaw, pitch) {
+    return matMul(matMul(matRotateZ(roll), matRotateY(yaw)), matRotateX(pitch));
+  }
+
+  function matEulerXYZ(rx, ry, rz) {
+    return matMul(matMul(matRotateX(rx), matRotateY(ry)), matRotateZ(rz));
+  }
+
+  function matRotateAxis(angle, x, y, z) {
+    const len = Math.hypot(x, y, z) || 1;
+    x /= len; y /= len; z /= len;
+    const c = Math.cos(angle), s = Math.sin(angle), omc = 1 - c;
+    const m = matIdentity();
+    m[0] = omc * x * x + c;     m[1] = omc * x * y + s * z; m[2] = omc * x * z - s * y;
+    m[4] = omc * x * y - s * z; m[5] = omc * y * y + c;     m[6] = omc * y * z + s * x;
+    m[8] = omc * x * z + s * y; m[9] = omc * y * z - s * x; m[10] = omc * z * z + c;
+    return m;
+  }
+
+  function matTranspose3x3(m) {
+    const t = matIdentity();
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) {
+        t[4 * c + r] = m[4 * r + c];
+      }
+    }
+    return t;
+  }
+
+  function matPoint(m, x, y, z) {
+    return [
+      m[0] * x + m[4] * y + m[8] * z + m[12],
+      m[1] * x + m[5] * y + m[9] * z + m[13],
+      m[2] * x + m[6] * y + m[10] * z + m[14]
     ];
   }
 
-  function getFaceRect(box, face) {
-    let { u, v, w, h, d } = box;
+  function matToCss(m) {
+    let s = 'matrix3d(';
+    for (let i = 0; i < 16; i++) {
+      s += (i ? ',' : '') + (Math.abs(m[i]) < 1e-9 ? 0 : +m[i].toFixed(6));
+    }
+    return s + ')';
+  }
+
+  // =========================================================================
+  // 2. CAMERA CALCULATION & CANVAS PEDESTAL (Corz.gg Module 85801)
+  // =========================================================================
+  const PEDESTAL_Y_OFFSET = 0.94;
+
+  function calcCamera(w, h) {
+    const safeW = Math.max(10, w);
+    const safeH = Math.max(10, h);
+    const a = Math.tan(24 * Math.PI / 360);
+    const distance = Math.max(1.1 / a, 0.8 / (a * Math.max(0.001, safeW / safeH))) / 0.92;
+    const focal = (safeH / 2) / a;
+    const U = focal / distance;
+    return { distance, focal, U };
+  }
+
+  function project3DTo2D(cam, w, h, pitchDeg, x, y, z) {
+    const r = pitchDeg * DEG2RAD;
+    const s = y - PEDESTAL_Y_OFFSET;
+    const u = s * Math.cos(r) - z * Math.sin(r);
+    const d = s * Math.sin(r) + z * Math.cos(r) - cam.distance;
+    const m = -(cam.focal / d);
+    return [w / 2 + x * m, h / 2 - u * m];
+  }
+
+  function renderPedestal(ctx, cam, w, h, pitchDeg, hexColor, power, hover, progress, dpr) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const prog = Math.max(0, Math.min(1, progress));
+    if (prog <= 0) return;
+
+    const rCol = (hexColor >> 16) & 255;
+    const gCol = (hexColor >> 8) & 255;
+    const bCol = hexColor & 255;
+    const rgbStr = `${rCol},${gCol},${bCol}`;
+    const pow = Math.max(0, Math.min(1, power));
+    const hov = Math.max(0, Math.min(1, hover));
+
+    // Radial floor glow
+    const drawRadialGlow = (radius, colorStr, alpha) => {
+      if (alpha <= 0.002) return;
+      const [oX, oY] = project3DTo2D(cam, w, h, pitchDeg, 0, 0, radius);
+      const [, iY] = project3DTo2D(cam, w, h, pitchDeg, 0, 0, -radius);
+      const [rX] = project3DTo2D(cam, w, h, pitchDeg, radius, 0, 0);
+      const [sX, sY] = project3DTo2D(cam, w, h, pitchDeg, 0, 0, 0);
+      const dX = rX - sX;
+      const mY = (oY - iY) / 2;
+      const pY = (oY + iY) / 2;
+      if (dX <= 0.01 || Math.abs(mY) <= 0.01) return;
+
+      ctx.save();
+      ctx.translate(sX, pY);
+      ctx.scale(1, mY / dX);
+      const grad = ctx.createRadialGradient(0, (dX / mY) * (sY - pY), 0, 0, 0, dX);
+      grad.addColorStop(0, `rgba(${colorStr},${alpha})`);
+      grad.addColorStop(1, `rgba(${colorStr},0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(0, 0, dX, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.restore();
+    };
+
+    drawRadialGlow(0.58, rgbStr, (0.05 + 0.09 * pow) * prog);
+    drawRadialGlow(0.42, "0,0,0", 0.4 * prog);
+
+    // Glowing 3D projected ring arcs
+    const drawRingArc = (radius, thickness, alpha) => {
+      if (alpha <= 0.002) return;
+      const maxAngle = prog * Math.PI;
+      const angles = [];
+      const steps = 96;
+      for (let i = 0; i <= steps; i++) {
+        const ang = -Math.PI + (i * 2 * Math.PI) / steps;
+        if (prog < 1 && (ang < -maxAngle || ang > maxAngle)) continue;
+        angles.push(ang);
+      }
+      if (angles.length < 2) return;
+
+      for (let step = 0; step < 4; step++) {
+        const iRad = (thickness * step) / 4;
+        const oRad = (thickness * (step + 1)) / 4;
+        const aStep = Math.min(1, 1.1 * alpha * (1 - (step + 0.5) / 4));
+        ctx.fillStyle = `rgba(${rgbStr},${aStep.toFixed(4)})`;
+        ctx.beginPath();
+        angles.forEach((ang, idx) => {
+          const pt = project3DTo2D(cam, w, h, pitchDeg, Math.sin(ang) * radius, iRad, Math.cos(ang) * radius);
+          if (idx === 0) ctx.moveTo(pt[0], pt[1]);
+          else ctx.lineTo(pt[0], pt[1]);
+        });
+        for (let idx = angles.length - 1; idx >= 0; idx--) {
+          const pt = project3DTo2D(cam, w, h, pitchDeg, Math.sin(angles[idx]) * radius, oRad, Math.cos(angles[idx]) * radius);
+          ctx.lineTo(pt[0], pt[1]);
+        }
+        ctx.closePath();
+        ctx.fill();
+      }
+    };
+
+    const calcAlpha = (base, max) => Math.min(1, base + (max - base) * pow + 0.1 * hov);
+    drawRingArc(0.58, 0.01, calcAlpha(0.4, 0.75));
+    drawRingArc(0.72, 0.007, calcAlpha(0.25, 0.55));
+  }
+
+  // =========================================================================
+  // 3. MINECRAFT SKIN GEOMETRY & SHADING (Corz.gg Module 9565)
+  // =========================================================================
+  const MODEL_PARTS = {
+    head: [
+      { x: -4, y: -8, z: -4, w: 8, h: 8, d: 8, u: 0, v: 0, opaque: true },
+      { x: -4, y: -8, z: -4, w: 8, h: 8, d: 8, u: 32, v: 0, g: 0.5 }
+    ],
+    body: [
+      { x: -4, y: 0, z: -2, w: 8, h: 12, d: 4, u: 16, v: 16, opaque: true },
+      { x: -4, y: 0, z: -2, w: 8, h: 12, d: 4, u: 16, v: 32, g: 0.25 }
+    ],
+    rarm: [
+      { x: -3, y: -2, z: -2, w: 4, h: 12, d: 4, u: 40, v: 16, opaque: true },
+      { x: -3, y: -2, z: -2, w: 4, h: 12, d: 4, u: 40, v: 32, g: 0.25 }
+    ],
+    larm: [
+      { x: -1, y: -2, z: -2, w: 4, h: 12, d: 4, u: 32, v: 48, opaque: true },
+      { x: -1, y: -2, z: -2, w: 4, h: 12, d: 4, u: 48, v: 48, g: 0.25 }
+    ],
+    rleg: [
+      { x: -2, y: 0, z: -2, w: 4, h: 12, d: 4, u: 0, v: 16, opaque: true },
+      { x: -2, y: 0, z: -2, w: 4, h: 12, d: 4, u: 0, v: 32, g: 0.25 }
+    ],
+    lleg: [
+      { x: -2, y: 0, z: -2, w: 4, h: 12, d: 4, u: 16, v: 48, opaque: true },
+      { x: -2, y: 0, z: -2, w: 4, h: 12, d: 4, u: 0, v: 48, g: 0.25 }
+    ]
+  };
+
+  const LIMB_PIVOTS = {
+    head: [0, 0, 0],
+    body: [0, 0, 0],
+    rarm: [-5, 2, 0],
+    larm: [5, 2, 0],
+    rleg: [-1.9, 12, 0],
+    lleg: [1.9, 12, 0]
+  };
+
+  const FACES = ["front", "back", "right", "left", "top", "bottom"];
+
+  function getFaceDefinition(box, face) {
+    const g = box.g || 0;
+    const { u, v, w, h, d } = box;
+    const x0 = box.x - g;
+    const y0 = box.y - g;
+    const z0 = -(box.z + d) - g;
+    const cw = w + 2 * g;
+    const ch = h + 2 * g;
+    const cd = d + 2 * g;
+    const x1 = x0 + cw;
+    const y1 = y0 + ch;
+    const z1 = z0 + cd;
+
+    let rectMap = {
+      front:  [u + d, v + d, w, h],
+      back:   [u + 2 * d + w, v + d, w, h],
+      right:  [u, v + d, d, h],
+      left:   [u + d + w, v + d, d, h],
+      top:    [u + d, v, w, d],
+      bottom: [u + d + w, v, w, d]
+    };
+
+    if (box.mirror) {
+      rectMap = { ...rectMap, right: rectMap.left, left: rectMap.right };
+    }
+
     switch (face) {
-      case "front":  return [u + d, v + d, w, h];
-      case "back":   return [u + 2 * d + w, v + d, w, h];
-      case "right":  return [u, v + d, d, h];
-      case "left":   return [u + d + w, v + d, d, h];
-      case "top":    return [u + d, v, w, d];
-      case "bottom": return [u + d + w, v, w, d];
+      case "front":
+        return { rect: rectMap.front, w: cw, h: ch, place: matTranslate(x0, y0, z1) };
+      case "back":
+        return { rect: rectMap.back, w: cw, h: ch, place: matCompose(matTranslate(x1, y0, z0), matRotateY(Math.PI)) };
+      case "right":
+        return { rect: rectMap.right, w: cd, h: ch, place: matCompose(matTranslate(x0, y0, z0), matRotateY(-Math.PI / 2)) };
+      case "left":
+        return { rect: rectMap.left, w: cd, h: ch, place: matCompose(matTranslate(x1, y0, z1), matRotateY(Math.PI / 2)) };
+      case "top":
+        return { rect: rectMap.top, w: cw, h: cd, place: matCompose(matTranslate(x0, y0, z0), matRotateX(Math.PI / 2)) };
+      case "bottom":
+        return { rect: rectMap.bottom, w: cw, h: cd, place: matCompose(matTranslate(x0, y1, z1), matRotateX(-Math.PI / 2)) };
     }
   }
 
-  function getFaceTransform(box, face, k) {
-    let s = (box.x - box.g) * k;
-    let n = (box.y - box.g) * k;
-    let r = (box.z - box.g) * k;
-    let w = (box.w + 2 * box.g) * k;
-    let h = (box.h + 2 * box.g) * k;
-    let d = (box.d + 2 * box.g) * k;
-    let d_w = s + w;
-    let d_h = n + h;
-    let d_d = r + d;
-    switch (face) {
-      case "front":  return { w, h, transform: `translate3d(${s.toFixed(2)}px, ${n.toFixed(2)}px, ${d_d.toFixed(2)}px)` };
-      case "back":   return { w, h, transform: `translate3d(${d_w.toFixed(2)}px, ${n.toFixed(2)}px, ${r.toFixed(2)}px) rotateY(180deg)` };
-      case "right":  return { w: d, h, transform: `translate3d(${s.toFixed(2)}px, ${n.toFixed(2)}px, ${r.toFixed(2)}px) rotateY(-90deg)` };
-      case "left":   return { w: d, h, transform: `translate3d(${d_w.toFixed(2)}px, ${n.toFixed(2)}px, ${d_d.toFixed(2)}px) rotateY(90deg)` };
-      case "top":    return { w, h: d, transform: `translate3d(${s.toFixed(2)}px, ${n.toFixed(2)}px, ${r.toFixed(2)}px) rotateX(90deg)` };
-      case "bottom": return { w, h: d, transform: `translate3d(${s.toFixed(2)}px, ${d_h.toFixed(2)}px, ${d_d.toFixed(2)}px) rotateX(-90deg)` };
-    }
-  }
+  // Texture slicing and caching
+  const textureSliceCache = new Map();
+  function sliceSkinTexture(img, rect, isOpaque) {
+    const [u, v, w, h] = rect;
+    const key = `${img.src}|${u},${v},${w},${h}|${isOpaque ? '1' : '0'}`;
+    if (textureSliceCache.has(key)) return textureSliceCache.get(key);
 
-  // TEXTURE SLICING CACHE
-  const textureCache = new Map();
-
-  function sliceTexture(img, rect, isOpaque) {
-    let [u, v, w, h] = rect;
-    let key = `${img.src}|${u},${v},${w},${h}|${isOpaque ? 'o' : 't'}`;
-    if (textureCache.has(key)) return textureCache.get(key);
-
-    let canvas = document.createElement("canvas");
+    const canvas = document.createElement("canvas");
     canvas.width = Math.max(1, w);
     canvas.height = Math.max(1, h);
-    let ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(img, u, v, w, h, 0, 0, w, h);
 
     if (isOpaque) {
-      let id = ctx.getImageData(0, 0, w, h);
-      for (let i = 3; i < id.data.length; i += 4) {
-        id.data[i] = 255;
+      const imgData = ctx.getImageData(0, 0, w, h);
+      for (let i = 3; i < imgData.data.length; i += 4) {
+        imgData.data[i] = 255;
       }
-      ctx.putImageData(id, 0, 0);
+      ctx.putImageData(imgData, 0, 0);
     }
 
-    let dataUrl = canvas.toDataURL("image/png");
-    textureCache.set(key, dataUrl);
+    const dataUrl = canvas.toDataURL("image/png");
+    textureSliceCache.set(key, dataUrl);
     return dataUrl;
   }
 
-  // SHADING LIGHT CALCULATION
-  const faceNormals = {
-    front:  [0, 0, 1],
-    back:   [0, 0, -1],
-    right:  [-1, 0, 0],
-    left:   [1, 0, 0],
-    top:    [0, -1, 0],
-    bottom: [0, 1, 0]
-  };
+  // Directional lighting
+  function calcLighting(faceMatrix, yawDeg, pitchDeg) {
+    const p0 = matPoint(faceMatrix, 0, 0, 0);
+    const p1 = matPoint(faceMatrix, 0, 0, 1);
+    const nx0 = p1[0] - p0[0], ny0 = p1[1] - p0[1], nz0 = p1[2] - p0[2];
 
-  function normalizeVec([x, y, z]) {
-    let len = Math.hypot(x, y, z) || 1;
-    return [x / len, y / len, z / len];
-  }
+    const rotMat = matCompose(matRotateX(pitchDeg * DEG2RAD), matRotateY(yawDeg * DEG2RAD));
+    const [nx, ny, nz] = matPoint(rotMat, nx0, ny0, nz0);
 
-  const light1 = normalizeVec([0.2, -1, 1]);
-  const light2 = normalizeVec([-0.2, -1, 0]);
+    const len = Math.hypot(nx, ny, nz) || 1;
+    let a = nx / len, n = ny / len, o = nz / len;
+    if (o < 0) { a = -a; n = -n; o = -o; }
 
-  function calcBrightness(face, yawDeg, pitchDeg) {
-    let [nx, ny, nz] = faceNormals[face];
-    let yawRad = yawDeg * Math.PI / 180;
-    let lx = nx * Math.cos(yawRad) + nz * Math.sin(yawRad);
-    let lz = -nx * Math.sin(yawRad) + nz * Math.cos(yawRad);
-    let pitchRad = pitchDeg * Math.PI / 180;
-    let ly = ny * Math.cos(pitchRad) - lz * Math.sin(pitchRad);
-    let lz2 = ny * Math.sin(pitchRad) + lz * Math.cos(pitchRad);
-
-    let dot1 = Math.max(0, lx * light1[0] + ly * light1[1] + lz2 * light1[2]);
-    let dot2 = Math.max(0, lx * light2[0] + ly * light2[1] + lz2 * light2[2]);
+    const dot1 = Math.max(0, -0.42 * a - 0.78 * n + 0.62 * o);
+    const dot2 = Math.max(0, 0.52 * a - 0.08 * n + 0.3 * o);
     return Math.min(1, 0.4 + 0.6 * (dot1 + dot2));
   }
 
-  // MAIN CONTROLLER
+  // Held item poses (Corz.gg Module 9565)
+  const ITEM_POSES = {
+    ground: matMul(matTranslate(0, 2, 0), matScale(0.5)),
+    generatedRight: matMul(matTranslate(0, 3, 1), matScale(0.55)),
+    generatedLeft: matMul(matTranslate(0, 3, 1), matScale(0.55)),
+    handheldRight: matCompose(matTranslate(0, 4, 0.5), matEulerXYZ(0, -90 * DEG2RAD, 55 * DEG2RAD), matScale(0.85)),
+    handheldLeft: matCompose(matTranslate(0, 4, 0.5), matEulerXYZ(0, 90 * DEG2RAD, -55 * DEG2RAD), matScale(0.85)),
+    blockRight: matCompose(matTranslate(0, 2.5, 0), matEulerXYZ(75 * DEG2RAD, 45 * DEG2RAD, 0), matScale(0.375)),
+    blockLeft: matCompose(matTranslate(0, 2.5, 0), matEulerXYZ(75 * DEG2RAD, 45 * DEG2RAD, 0), matScale(0.375)),
+    bowRight: matCompose(matTranslate(-1, -2, 2.5), matEulerXYZ(-80 * DEG2RAD, 260 * DEG2RAD, -40 * DEG2RAD), matScale(0.9)),
+    bowLeft: matCompose(matTranslate(1, -2, 2.5), matEulerXYZ(-80 * DEG2RAD, 280 * DEG2RAD, -40 * DEG2RAD), matScale(0.9))
+  };
+
+  function crystalBounce(time) {
+    const s = Math.sin(0.2 * time) / 2 + 0.5;
+    return (s * s + s) * 0.4 - 1.4;
+  }
+
+  // =========================================================================
+  // 4. BOT CATALOG & HELD ITEMS DATA
+  // =========================================================================
+  const BOTS = [
+    {
+      code: "CPX-01", name: "Crystal PvP", kind: "PvP",
+      tagline: "Crystal fights, start to finish.",
+      skin: "cpx01", eyeRow: 3,
+      holds: [
+        { name: "End Crystal", icon: "/corz-gui/bots/end_crystal.png", model: "crystal" },
+        { name: "Totem of Undying", icon: "/corz-gui/bots/totem_of_undying.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "SBX-02", name: "Sword PvP", kind: "PvP",
+      tagline: "Perfect W-taps and strafes.",
+      skin: "sbx02", eyeRow: 4,
+      holds: [
+        { name: "Diamond Sword", icon: "/corz-gui/bots/diamond_sword.png", model: "handheld" }
+      ]
+    },
+    {
+      code: "MCX-03", name: "Mace PvP", kind: "PvP",
+      tagline: "Mace fights for SMP servers.",
+      skin: "mcx03", eyeRow: 4, eyeLayer: "hat",
+      holds: [
+        { name: "Mace", icon: "/corz-gui/bots/mace.png", model: "handheld" },
+        { name: "Totem of Undying", icon: "/corz-gui/bots/totem_of_undying.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "DNQ-06", name: "DonutQUE", kind: "PvP",
+      tagline: "Queues /rtpq, banks the loot.",
+      skin: "dnq06", eyeRow: 4, isNew: true,
+      holds: [
+        { name: "End Crystal", icon: "/corz-gui/bots/end_crystal.png", model: "crystal" },
+        { name: "Totem of Undying", icon: "/corz-gui/bots/totem_of_undying.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "UHC-07", name: "UHC PvP", kind: "PvP",
+      tagline: "Traps, healing and bows.",
+      skin: "uhc07", eyeRow: 3, isNew: true,
+      holds: [
+        { name: "Bow", icon: "/corz-gui/bots/bow.png", model: "bow" },
+        { name: "Golden Apple", icon: "/corz-gui/bots/golden_apple.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "SMP-05", name: "SMP PvP", kind: "PvP",
+      tagline: "DiaSMP PvP, full utility kit.",
+      skin: "smp05", eyeRow: 4, eyeLayer: "hat", isNew: true,
+      holds: [
+        { name: "Diamond Sword", icon: "/corz-gui/bots/diamond_sword.png", model: "handheld" },
+        { name: "Totem of Undying", icon: "/corz-gui/bots/totem_of_undying.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "BLD-01", name: "Auto Builder", kind: "Utility",
+      tagline: "Builds schematics block by block.",
+      skin: "bld01", eyeRow: 4,
+      holds: [
+        { name: "Scaffolding", icon: "/corz-gui/bots/scaffolding_icon.png", model: "block" }
+      ]
+    },
+    {
+      code: "MIN-02", name: "Area Miner", kind: "Utility",
+      tagline: "Mines out the area you pick.",
+      skin: "min02", eyeRow: 4,
+      holds: [
+        { name: "Netherite Pickaxe", icon: "/corz-gui/bots/netherite_pickaxe.png", model: "handheld" }
+      ]
+    },
+    {
+      code: "ORE-11", name: "Auto Ore Miner", kind: "Utility",
+      tagline: "Mines your ores on safe routes.",
+      skin: "ore11", eyeRow: 4, isNew: true,
+      holds: [
+        { name: "Diamond Pickaxe", icon: "/corz-gui/bots/diamond_pickaxe.png", model: "handheld" }
+      ]
+    },
+    {
+      code: "TFM-12", name: "Tree Farmer", kind: "Utility",
+      tagline: "Plants, chops and sells the wood.",
+      skin: "tfm12", eyeRow: 4, isNew: true,
+      holds: [
+        { name: "Netherite Axe", icon: "/corz-gui/bots/netherite_axe.png", model: "handheld" }
+      ]
+    },
+    {
+      code: "PLT-09", name: "Elytra Pilot", kind: "Utility",
+      tagline: "Flies you to your coords.",
+      skin: "plt09", eyeRow: 4,
+      holds: [
+        { name: "Firework Rocket", icon: "/corz-gui/bots/firework_rocket.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "RTP-07", name: "Base Alert", kind: "Utility",
+      tagline: "Scouts and alerts you to bases.",
+      skin: "rtp07", eyeRow: 4,
+      holds: [
+        { name: "Recovery Compass", icon: "/corz-gui/bots/recovery_compass.png", model: "sprite" }
+      ]
+    },
+    {
+      code: "ANC-10", name: "Anchor Hunter", kind: "Utility",
+      tagline: "RTPs and mines respawn anchors.",
+      skin: "anc10", eyeRow: 4,
+      holds: [
+        { name: "Diamond Pickaxe", icon: "/corz-gui/bots/diamond_pickaxe.png", model: "handheld" }
+      ]
+    },
+    {
+      code: "TPA-08", name: "Auto TPA", kind: "Utility",
+      tagline: "Sends /tpahere from your trap.",
+      skin: "tpa08", eyeRow: 3,
+      holds: [
+        { name: "Ender Pearl", icon: "/corz-gui/bots/ender_pearl.png", model: "sprite" }
+      ]
+    }
+  ];
+
+  // =========================================================================
+  // 5. MAIN SHOWCASE CONTROLLER
+  // =========================================================================
   class CorzBotsShowcase {
     constructor() {
       this.currentIndex = 0;
-      this.stage = document.getElementById("bots-stage-container") || document.querySelector(".bots-col-stage") || document.querySelector(".bots-stage");
-      if (!this.stage) return;
-
-      this.setupStageDOM();
+      this.stageContainer = document.getElementById("bots-stage-container") || document.querySelector(".bots-stage");
+      if (!this.stageContainer) return;
 
       this.yaw = -16;
       this.yawTarget = -16;
@@ -185,13 +502,15 @@
       this.pitchTarget = 10;
       this.headYaw = 0;
       this.headPitch = 0;
-      this.vel = 0;
       this.time = 0;
+      this.vel = 0;
       this.isDragging = false;
       this.lastPointerX = 0;
       this.lastPointerY = 0;
+      this.manualPaused = false;
 
-      this.buildBotLists();
+      this.setupDOM();
+      this.buildLists();
       this.setupInteraction();
       this.setupAutoCycle();
 
@@ -202,84 +521,83 @@
       this.animate();
     }
 
-    setupStageDOM() {
-      let stageCol = this.stage;
-      stageCol.innerHTML = `
-        <div class="bots-stage" id="bot-stage-inner">
-          <div class="bots-stage-effects">
+    setupDOM() {
+      this.stageContainer.innerHTML = `
+        <div class="bots-stage-effects">
+          <div class="bots-stage-effects-inner">
             <div class="bots-grid-bg"></div>
             <div class="bots-floor"></div>
             <div class="bots-beam"><div></div></div>
           </div>
-          <canvas class="bots-pad-canvas" id="bot-pad-canvas"></canvas>
-          <div class="bots-viewport" id="bot-viewport">
-            <div class="bots-camera-rotator" id="bot-camera-rotator">
-              <div class="bots-model-yaw" id="bot-model-yaw"></div>
-            </div>
+        </div>
+        <canvas class="bots-pad-canvas" id="bot-pad-canvas"></canvas>
+        <div class="bots-viewport" id="bot-viewport">
+          <div class="bots-camera-rotator" id="bot-camera-rotator">
+            <div class="bots-model-yaw" id="bot-model-yaw"></div>
           </div>
-          <div class="bots-laser-wipe" id="bot-laser-wipe"></div>
-          <div class="bots-drag-overlay" id="bot-drag-overlay"></div>
         </div>
-        <div class="bots-detail">
-          <div class="bots-held-list" id="bot-held-items"></div>
-        </div>
+        <div class="bots-laser-wipe" id="bot-laser-wipe"></div>
+        <div class="bots-drag-overlay" id="bot-drag-overlay"></div>
       `;
 
-      this.innerStage = document.getElementById("bot-stage-inner");
       this.viewport = document.getElementById("bot-viewport");
       this.cameraRotator = document.getElementById("bot-camera-rotator");
       this.modelYaw = document.getElementById("bot-model-yaw");
       this.padCanvas = document.getElementById("bot-pad-canvas");
       this.padCtx = this.padCanvas.getContext("2d");
       this.laserWipe = document.getElementById("bot-laser-wipe");
-      this.heldItemsEl = document.getElementById("bot-held-items");
       this.dragOverlay = document.getElementById("bot-drag-overlay");
+      this.heldItemsEl = document.getElementById("bot-held-items");
     }
 
     handleResize() {
-      if (!this.innerStage) return;
-      let w = this.innerStage.clientWidth;
-      let h = this.innerStage.clientHeight;
+      if (!this.stageContainer) return;
+      const w = Math.max(300, Math.round(this.stageContainer.clientWidth || 400));
+      const h = Math.max(300, Math.round(this.stageContainer.clientHeight || 480));
       this.width = w;
       this.height = h;
 
-      let dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
       this.padCanvas.width = Math.round(w * dpr);
       this.padCanvas.height = Math.round(h * dpr);
       this.dpr = dpr;
 
-      let a = Math.tan(24 * Math.PI / 360);
-      let n = Math.max(1.1 / a, 0.8 / (a * Math.max(0.001, w / h))) / 0.92;
-      let o = (h / 2) / a;
-      this.cam = { distance: n, focal: o, U: o / n };
+      this.cam = calcCamera(w, h);
 
-      this.viewport.style.perspective = `${o.toFixed(2)}px`;
+      this.viewport.style.perspective = `${this.cam.focal.toFixed(3)}px`;
       this.viewport.style.perspectiveOrigin = `${(w / 2).toFixed(2)}px ${(h / 2).toFixed(2)}px`;
 
-      this.modelScale = 8.8;
+      this.cameraRotator.style.left = `${(w / 2).toFixed(2)}px`;
+      this.cameraRotator.style.top = `${(h / 2).toFixed(2)}px`;
+
+      this.k = 16;
+      this.rootScale = 0.9375 * this.cam.U / 16;
     }
 
-    buildBotLists() {
-      let pvpList = document.getElementById("bots-pvp-list");
-      let utilList = document.getElementById("bots-util-list");
+    buildLists() {
+      const pvpList = document.getElementById("bots-pvp-list");
+      const utilList = document.getElementById("bots-util-list");
       if (!pvpList || !utilList) return;
 
       pvpList.innerHTML = "";
       utilList.innerHTML = "";
 
       BOTS.forEach((bot, index) => {
-        let isPvP = bot.kind === "PvP";
-        let container = isPvP ? pvpList : utilList;
+        const isPvP = bot.kind === "PvP";
+        const container = isPvP ? pvpList : utilList;
 
-        let btn = document.createElement("button");
+        const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "bots-row";
         btn.setAttribute("aria-pressed", index === 0 ? "true" : "false");
-        btn.onclick = () => this.switchBot(index);
+        btn.onclick = () => {
+          this.manualPaused = true;
+          this.switchBot(index);
+        };
 
-        let iconBox = document.createElement("span");
+        const iconBox = document.createElement("span");
         iconBox.className = "bots-row-icon";
-        let head = document.createElement("span");
+        const head = document.createElement("span");
         head.className = "bots-head-icon";
         head.innerHTML = `
           <span style="position:absolute;inset:0;background-image:url('/images/bots/${bot.skin}.png');background-size:800% 800%;background-position:14.2857% 14.2857%;background-repeat:no-repeat;image-rendering:pixelated"></span>
@@ -288,25 +606,25 @@
         iconBox.appendChild(head);
         btn.appendChild(iconBox);
 
-        let info = document.createElement("span");
+        const info = document.createElement("span");
         info.className = "bots-row-info";
-        let header = document.createElement("span");
+        const header = document.createElement("span");
         header.className = "bots-row-header";
 
-        let name = document.createElement("span");
+        const name = document.createElement("span");
         name.className = "bots-row-name";
         name.textContent = bot.name;
         header.appendChild(name);
 
         if (bot.isNew) {
-          let badge = document.createElement("span");
+          const badge = document.createElement("span");
           badge.className = "bots-badge-new";
           badge.textContent = "New";
           header.appendChild(badge);
         }
         info.appendChild(header);
 
-        let tagline = document.createElement("span");
+        const tagline = document.createElement("span");
         tagline.className = "bots-row-tagline";
         tagline.textContent = bot.tagline;
         info.appendChild(tagline);
@@ -314,7 +632,7 @@
         btn.appendChild(info);
 
         if (index === 0) {
-          let prog = document.createElement("span");
+          const prog = document.createElement("span");
           prog.className = "bots-progress-bar";
           btn.appendChild(prog);
         }
@@ -324,7 +642,7 @@
     }
 
     setupInteraction() {
-      let overlay = this.dragOverlay;
+      const overlay = this.dragOverlay;
       if (!overlay) return;
 
       overlay.addEventListener("pointerdown", (e) => {
@@ -333,22 +651,22 @@
         this.lastPointerY = e.clientY;
         this.vel = 0;
         try { overlay.setPointerCapture(e.pointerId); } catch (_) {}
-        this.stopAutoCycle();
+        this.manualPaused = true;
       });
 
       overlay.addEventListener("pointermove", (e) => {
         if (this.isDragging) {
-          let dx = e.clientX - this.lastPointerX;
-          let dy = e.clientY - this.lastPointerY;
+          const dx = e.clientX - this.lastPointerX;
+          const dy = e.clientY - this.lastPointerY;
           this.yawTarget -= dx * 0.5;
           this.vel = -dx * 0.5;
           this.pitchTarget = Math.max(-14, Math.min(14, this.pitchTarget + dy * 0.2));
           this.lastPointerX = e.clientX;
           this.lastPointerY = e.clientY;
         } else {
-          let rect = this.innerStage.getBoundingClientRect();
-          let nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-          let ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+          const rect = this.stageContainer.getBoundingClientRect();
+          const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
           this.headYaw = Math.max(-20, Math.min(20, nx * 24));
           this.headPitch = Math.max(-12, Math.min(12, ny * 15));
         }
@@ -372,27 +690,23 @@
     setupAutoCycle() {
       this.autoTimer = setInterval(() => {
         if (!this.isDragging && !this.manualPaused) {
-          let next = (this.currentIndex + 1) % BOTS.length;
+          const next = (this.currentIndex + 1) % BOTS.length;
           this.switchBot(next);
         }
       }, 7000);
     }
 
-    stopAutoCycle() {
-      this.manualPaused = true;
-    }
-
     switchBot(index) {
       this.currentIndex = index;
-      let bot = BOTS[index];
+      const bot = BOTS[index];
 
       document.querySelectorAll(".bots-row").forEach((btn, i) => {
-        let isCur = i === index;
+        const isCur = i === index;
         btn.setAttribute("aria-pressed", isCur ? "true" : "false");
-        let oldBar = btn.querySelector(".bots-progress-bar");
+        const oldBar = btn.querySelector(".bots-progress-bar");
         if (oldBar) oldBar.remove();
         if (isCur && !this.manualPaused) {
-          let bar = document.createElement("span");
+          const bar = document.createElement("span");
           bar.className = "bots-progress-bar";
           btn.appendChild(bar);
         }
@@ -401,7 +715,7 @@
       if (this.heldItemsEl) {
         this.heldItemsEl.innerHTML = bot.holds.map(h => `
           <span class="bots-held-item">
-            <img src="${h.icon}" alt="">
+            <img src="${h.icon}" alt="" style="image-rendering:pixelated">
             <span>${h.name}</span>
           </span>
         `).join('<span class="bots-dot">·</span>');
@@ -409,26 +723,25 @@
 
       this.triggerLaserWipe();
 
-      let skinImg = new Image();
+      const skinImg = new Image();
       skinImg.crossOrigin = "anonymous";
       skinImg.onload = () => {
-        this.currentSkinImg = skinImg;
-        this.renderModel(skinImg, bot);
+        this.renderBotModel(skinImg, bot);
       };
       skinImg.src = `/images/bots/${bot.skin}.png`;
     }
 
     triggerLaserWipe() {
-      let laser = this.laserWipe;
+      const laser = this.laserWipe;
       if (!laser) return;
       laser.style.display = "block";
-      let startTime = performance.now();
-      let duration = 360;
+      const startTime = performance.now();
+      const duration = 360;
 
-      let animateWipe = (now) => {
-        let elapsed = now - startTime;
-        let progress = Math.min(1, elapsed / duration);
-        let y = progress * (this.height || 480);
+      const animateWipe = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const y = progress * (this.height || 480);
         laser.style.transform = `translateY(${y}px)`;
         laser.style.opacity = progress < 0.8 ? "1" : String((1 - progress) / 0.2);
 
@@ -441,159 +754,158 @@
       requestAnimationFrame(animateWipe);
     }
 
-    renderModel(skinImg, bot) {
+    renderBotModel(skinImg, bot) {
       if (!this.modelYaw) return;
       this.modelYaw.innerHTML = "";
-      let isSlim = false;
-      let parts = getModelParts(isSlim);
-      let k = this.modelScale;
 
-      this.limbElements = {};
-      this.faceElements = [];
+      const k = this.k || 16;
+      this.faceRegistry = [];
 
-      parts.forEach(part => {
-        let limbDiv = document.createElement("div");
-        limbDiv.className = "bots-limb";
-        limbDiv.setAttribute("data-limb", part.key);
+      // Create cube face divs directly under modelYaw
+      Object.entries(MODEL_PARTS).forEach(([partKey, boxes]) => {
+        boxes.forEach((box) => {
+          FACES.forEach((face) => {
+            const faceDef = getFaceDefinition(box, face);
+            if (faceDef.w <= 0 || faceDef.h <= 0) return;
 
-        part.boxes.forEach(box => {
-          const faces = ["front", "back", "right", "left", "top", "bottom"];
-          faces.forEach(face => {
-            let rect = getFaceRect(box, face);
-            let faceTrans = getFaceTransform(box, face, k);
+            const sliceUrl = sliceSkinTexture(skinImg, faceDef.rect, !!box.opaque);
 
-            let faceDiv = document.createElement("div");
-            faceDiv.className = "bots-cube-face";
-            faceDiv.style.width = `${faceTrans.w.toFixed(1)}px`;
-            faceDiv.style.height = `${faceTrans.h.toFixed(1)}px`;
-            faceDiv.style.transform = faceTrans.transform;
-            faceDiv.style.backgroundImage = `url("${sliceTexture(skinImg, rect, box.base)}")`;
+            const div = document.createElement("div");
+            div.className = "bots-cube-face";
+            div.style.position = "absolute";
+            div.style.left = "0";
+            div.style.top = "0";
+            div.style.transformOrigin = "0 0";
+            div.style.width = `${(faceDef.w * k).toFixed(2)}px`;
+            div.style.height = `${(faceDef.h * k).toFixed(2)}px`;
+            div.style.backgroundImage = `url("${sliceUrl}")`;
+            div.style.backgroundSize = "100% 100%";
+            div.style.backgroundRepeat = "no-repeat";
+            div.style.imageRendering = "pixelated";
+            div.style.backfaceVisibility = "hidden";
+            div.style.webkitBackfaceVisibility = "hidden";
 
-            this.faceElements.push({
-              el: faceDiv,
+            this.faceRegistry.push({
+              el: div,
+              part: partKey,
+              box: box,
               face: face,
-              part: part.key
+              place: faceDef.place
             });
 
-            limbDiv.appendChild(faceDiv);
+            this.modelYaw.appendChild(div);
           });
         });
-
-        this.limbElements[part.key] = limbDiv;
-        this.modelYaw.appendChild(limbDiv);
       });
 
+      // Add Glowing Eyes
+      this.eyeRegistry = [];
       if (bot.eyeRow) {
-        this.addGlowingEyes(bot);
+        const eyeY = 8 + bot.eyeRow;
+        [9, 13].forEach((eyeX) => {
+          const eyeDiv = document.createElement("div");
+          eyeDiv.className = "bots-glow-eye";
+          eyeDiv.style.position = "absolute";
+          eyeDiv.style.left = "0";
+          eyeDiv.style.top = "0";
+          eyeDiv.style.width = `${(2 * k).toFixed(2)}px`;
+          eyeDiv.style.height = `${(1 * k).toFixed(2)}px`;
+          eyeDiv.style.borderRadius = `${(k / 2).toFixed(2)}px`;
+          eyeDiv.style.transformOrigin = "0 0";
+          eyeDiv.style.backgroundColor = "#ff2a2a";
+          eyeDiv.style.boxShadow = "0 0 12px #ff0033, 0 0 24px #ff0033";
+          eyeDiv.style.backfaceVisibility = "hidden";
+          eyeDiv.style.pointerEvents = "none";
+
+          const eyePlace = matTranslate(-4 + (eyeX - 8), -8 + (eyeY - 8), 4.02);
+
+          this.eyeRegistry.push({
+            el: eyeDiv,
+            place: eyePlace
+          });
+
+          this.modelYaw.appendChild(eyeDiv);
+        });
       }
 
-      this.addHeldItems(bot);
-    }
-
-    addGlowingEyes(bot) {
-      let head = this.limbElements["head"];
-      if (!head) return;
-
-      let k = this.modelScale;
-      let eyeRowY = (-32 + bot.eyeRow) * k;
-      let zFront = (4 + 0.52) * k;
-
-      [-3, 1].forEach(xOffset => {
-        let eye = document.createElement("div");
-        eye.style.position = "absolute";
-        eye.style.left = "0";
-        eye.style.top = "0";
-        eye.style.width = `${2 * k}px`;
-        eye.style.height = `${1 * k}px`;
-        eye.style.borderRadius = `${k / 2}px`;
-        eye.style.transformOrigin = "0 0";
-        eye.style.transform = `translate3d(${(xOffset * k).toFixed(1)}px, ${eyeRowY.toFixed(1)}px, ${zFront.toFixed(1)}px)`;
-        eye.style.backgroundColor = "#ff2a2a";
-        eye.style.boxShadow = "0 0 10px #ff0033, 0 0 20px #ff0033";
-        head.appendChild(eye);
-      });
-    }
-
-    addHeldItems(bot) {
-      let k = this.modelScale;
-      let rarm = this.limbElements["rarm"];
-      let larm = this.limbElements["larm"];
-
-      if (bot.holds && bot.holds[0] && rarm) {
-        let item = document.createElement("div");
-        item.style.position = "absolute";
-        item.style.width = `44px`;
-        item.style.height = `44px`;
-        item.style.backgroundImage = `url("${bot.holds[0].icon}")`;
-        item.style.backgroundSize = "contain";
-        item.style.backgroundRepeat = "no-repeat";
-        item.style.backgroundPosition = "center";
-        item.style.imageRendering = "pixelated";
-        item.style.backfaceVisibility = "visible";
-        item.style.transform = `translate3d(${-6 * k}px, ${-10 * k}px, ${2 * k}px) rotateY(-10deg) rotateX(-20deg)`;
-        rarm.appendChild(item);
+      // Add Held Items
+      this.heldItemRegistry = [];
+      if (bot.holds && bot.holds[0]) {
+        this.addHeldItem(bot.holds[0], "right", k);
       }
-
-      if (bot.holds && bot.holds[1] && larm) {
-        let item = document.createElement("div");
-        item.style.position = "absolute";
-        item.style.width = `38px`;
-        item.style.height = `38px`;
-        item.style.backgroundImage = `url("${bot.holds[1].icon}")`;
-        item.style.backgroundSize = "contain";
-        item.style.backgroundRepeat = "no-repeat";
-        item.style.backgroundPosition = "center";
-        item.style.imageRendering = "pixelated";
-        item.style.backfaceVisibility = "visible";
-        item.style.transform = `translate3d(${5.5 * k}px, ${-12 * k}px, ${3 * k}px) rotateY(20deg) rotateZ(-10deg)`;
-        larm.appendChild(item);
+      if (bot.holds && bot.holds[1]) {
+        this.addHeldItem(bot.holds[1], "left", k);
       }
     }
 
-    drawPedestal() {
-      let ctx = this.padCtx;
-      if (!ctx) return;
-      let w = this.width;
-      let h = this.height;
-      let dpr = this.dpr || 1;
+    addHeldItem(itemDef, hand, k) {
+      const isRight = hand === "right";
+      const partKey = isRight ? "rarm" : "larm";
 
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (itemDef.model === "crystal") {
+        const crystalImg = new Image();
+        crystalImg.crossOrigin = "anonymous";
+        crystalImg.onload = () => {
+          const crystalBoxes = [
+            { x: -4, y: -4, z: -4, w: 8, h: 8, d: 8, u: 0, v: 0 },
+            { x: -4, y: -4, z: -4, w: 8, h: 8, d: 8, u: 0, v: 0 },
+            { x: -4, y: -4, z: -4, w: 8, h: 8, d: 8, u: 32, v: 0 }
+          ];
+          const crystalFaces = [];
+          crystalBoxes.forEach((cBox, bIdx) => {
+            FACES.forEach((face) => {
+              const fDef = getFaceDefinition(cBox, face);
+              const slice = sliceSkinTexture(crystalImg, [fDef.rect[0] * 2, fDef.rect[1] * 2, fDef.rect[2] * 2, fDef.rect[3] * 2], false);
 
-      let centerX = w / 2;
-      let centerY = h * 0.88;
+              const div = document.createElement("div");
+              div.style.position = "absolute";
+              div.style.left = "0";
+              div.style.top = "0";
+              div.style.transformOrigin = "0 0";
+              div.style.width = `${(fDef.w * k).toFixed(2)}px`;
+              div.style.height = `${(fDef.h * k).toFixed(2)}px`;
+              div.style.backgroundImage = `url("${slice}")`;
+              div.style.backgroundSize = "100% 100%";
+              div.style.imageRendering = "pixelated";
+              div.style.backfaceVisibility = "visible";
 
-      let grad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, 180);
-      grad.addColorStop(0, "rgba(126, 46, 214, 0.45)");
-      grad.addColorStop(0.5, "rgba(126, 46, 214, 0.15)");
-      grad.addColorStop(1, "rgba(126, 46, 214, 0)");
+              crystalFaces.push({ el: div, boxIdx: bIdx, box: cBox, face: face, place: fDef.place });
+              this.modelYaw.appendChild(div);
+            });
+          });
+          this.heldItemRegistry.push({ type: "crystal", faces: crystalFaces, part: partKey, hand });
+        };
+        crystalImg.src = "/corz-gui/bots/end_crystal_entity.png";
+      } else {
+        const count = itemDef.model === "handheld" || itemDef.model === "bow" ? 5 : 1;
+        const slices = [];
+        for (let i = 0; i < count; i++) {
+          const div = document.createElement("div");
+          div.style.position = "absolute";
+          div.style.left = "0";
+          div.style.top = "0";
+          div.style.transformOrigin = "0 0";
+          div.style.width = `${(16 * k).toFixed(2)}px`;
+          div.style.height = `${(16 * k).toFixed(2)}px`;
+          div.style.backgroundImage = `url("${itemDef.icon}")`;
+          div.style.backgroundSize = "100% 100%";
+          div.style.imageRendering = "pixelated";
+          div.style.backfaceVisibility = "visible";
 
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.scale(1, 0.32);
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(0, 0, 180, 0, 2 * Math.PI);
-      ctx.fill();
-
-      [130, 95].forEach((radius, idx) => {
-        ctx.beginPath();
-        ctx.arc(0, 0, radius, 0, 2 * Math.PI);
-        ctx.strokeStyle = idx === 0 ? "rgba(158, 98, 224, 0.6)" : "rgba(196, 170, 255, 0.85)";
-        ctx.lineWidth = idx === 0 ? 2 : 2.5;
-        ctx.stroke();
-      });
-
-      ctx.restore();
+          slices.push({ el: div, sliceIdx: i, total: count });
+          this.modelYaw.appendChild(div);
+        }
+        this.heldItemRegistry.push({ type: "item", model: itemDef.model, slices, part: partKey, hand });
+      }
     }
 
     animate() {
       requestAnimationFrame(() => this.animate());
 
-      this.time += 0.016;
-      let dt = 0.016;
+      const dt = 0.016;
+      this.time += dt;
 
+      // Yaw inertia & smooth damping
       if (!this.isDragging) {
         if (Math.abs(this.vel) > 0.01) {
           this.yawTarget += this.vel;
@@ -604,50 +916,203 @@
       this.yaw += (this.yawTarget - this.yaw) * (1 - Math.exp(-18 * dt));
       this.pitch += (this.pitchTarget - this.pitch) * (1 - Math.exp(-18 * dt));
 
-      let sway = Math.sin(0.42 * this.time * 2) * 8;
-      let currentYaw = this.yaw + sway;
+      const sway = Math.sin(0.42 * this.time * 2) * 8;
+      const currentYaw = this.yaw + sway;
 
-      if (this.cameraRotator) {
-        let translateY = this.cam ? 0.94 * this.cam.U : 140;
-        this.cameraRotator.style.transform = `rotateX(${-this.pitch.toFixed(3)}deg) translateY(${translateY.toFixed(1)}px)`;
+      // 1. Camera Rotator Transform
+      if (this.cameraRotator && this.cam) {
+        const translateY = PEDESTAL_Y_OFFSET * this.cam.U;
+        this.cameraRotator.style.transform = `rotateX(${-this.pitch.toFixed(3)}deg) translateY(${translateY.toFixed(2)}px)`;
       }
 
+      // 2. Model Yaw Transform
       if (this.modelYaw) {
         this.modelYaw.style.transform = `rotateY(${-currentYaw.toFixed(3)}deg)`;
       }
 
-      let breath = Math.sin(this.time * 2) * 0.03;
-      let rarm = this.limbElements?.["rarm"];
-      let larm = this.limbElements?.["larm"];
-      let head = this.limbElements?.["head"];
-      let k = this.modelScale;
-      let rarmY = -24 * k;
+      // 3. Animated Limb Poses
+      const aTime = 20 * this.time;
+      const breath = 0.05 * Math.cos(0.09 * aTime) + 0.05;
+      const rBreath = 0.05 * Math.sin(0.067 * aTime);
 
-      if (rarm) {
-        rarm.style.transformOrigin = `center ${rarmY}px 0px`;
-        rarm.style.transform = `rotateX(${(36 + breath * 15).toFixed(2)}deg) rotateY(-16deg) rotateZ(8deg)`;
-      }
-      if (larm) {
-        larm.style.transformOrigin = `center ${rarmY}px 0px`;
-        larm.style.transform = `rotateX(${(24 - breath * 15).toFixed(2)}deg) rotateY(16deg) rotateZ(-8deg)`;
-      }
-      if (head) {
-        head.style.transformOrigin = `center ${-24 * k}px 0px`;
-        head.style.transform = `rotateY(${this.headYaw.toFixed(2)}deg) rotateX(${this.headPitch.toFixed(2)}deg)`;
-      }
+      const limbPoses = {
+        head: [this.headPitch * DEG2RAD, this.headYaw * DEG2RAD, 0],
+        body: [0, 0, 0],
+        rarm: [-Math.PI / 10 + rBreath - 0.32, 0, 0.22 + breath],
+        larm: [-Math.PI / 10 - rBreath + 0.06, 0, -breath],
+        rleg: [0, 0.07, 0],
+        lleg: [0, -0.07, 0]
+      };
 
-      if (this.faceElements) {
-        this.faceElements.forEach(f => {
-          let b = calcBrightness(f.face, -currentYaw, -this.pitch);
-          f.el.style.filter = b < 0.99 ? `brightness(${b.toFixed(3)})` : "";
+      // Limb 4x4 Matrices
+      const limbMatrices = {};
+      Object.keys(LIMB_PIVOTS).forEach((partKey) => {
+        const pivot = LIMB_PIVOTS[partKey];
+        const rot = limbPoses[partKey];
+        limbMatrices[partKey] = matCompose(
+          matTranslate(pivot[0], pivot[1], pivot[2]),
+          matEuler(rot[2], rot[1], rot[0])
+        );
+      });
+
+      // 4. Update Cube Faces via Matrix Math (Module 9565)
+      const p = this.rootScale || (0.9375 * (this.cam ? this.cam.U : 200) / 16);
+      const rootTransform = matMul(matScale(p, p, -p), matTranslate(0, -24, 0));
+      const invertZ = matScale(1, 1, -1);
+      const scale1_16 = matScale(1 / (this.k || 16));
+
+      if (this.faceRegistry) {
+        this.faceRegistry.forEach((item) => {
+          const limbMat = limbMatrices[item.part];
+          const fullMatrix = matCompose(
+            rootTransform,
+            limbMat,
+            invertZ,
+            item.place,
+            scale1_16
+          );
+
+          item.el.style.transform = matToCss(fullMatrix);
+
+          const brightness = calcLighting(fullMatrix, -currentYaw, -this.pitch);
+          item.el.style.filter = brightness < 0.999 ? `brightness(${brightness.toFixed(3)})` : "";
         });
       }
 
-      this.drawPedestal();
+      // 5. Update Glowing Eyes
+      if (this.eyeRegistry) {
+        const headMat = limbMatrices["head"];
+        this.eyeRegistry.forEach((eye) => {
+          const eyeMatrix = matCompose(
+            rootTransform,
+            headMat,
+            invertZ,
+            eye.place,
+            scale1_16
+          );
+          eye.el.style.transform = matToCss(eyeMatrix);
+        });
+      }
+
+      // 6. Update Held Items with Corz.gg Exact Math
+      const sqrtHalf = Math.SQRT1_2;
+      const crystalAxisRot = matRotateAxis(Math.PI / 3, sqrtHalf, 0, sqrtHalf);
+      const crystalAnimTime = 20 * this.time * 0.5;
+      const crystalBounceY = crystalBounce(crystalAnimTime);
+      const crystalAngle = 3 * crystalAnimTime * DEG2RAD;
+
+      const crystalBoxRotations = [
+        matCompose(matTranslate(0, 24 + 16 * crystalBounceY / 2, 0), matMul(matRotateY(crystalAngle), crystalAxisRot)),
+        matCompose(matTranslate(0, 24 + 16 * crystalBounceY / 2, 0), matMul(matRotateY(crystalAngle), crystalAxisRot), matMul(crystalAxisRot, matRotateY(crystalAngle)), matScale(0.875)),
+        matCompose(matTranslate(0, 24 + 16 * crystalBounceY / 2, 0), matMul(matRotateY(crystalAngle), crystalAxisRot), matMul(crystalAxisRot, matRotateY(crystalAngle)), matScale(0.875), matMul(crystalAxisRot, matRotateY(crystalAngle)), matScale(0.765625))
+      ];
+
+      const itemCenterFlipped = matCompose(matTranslate(-8, 8, 0), matScale(1, -1, 1));
+
+      if (this.heldItemRegistry) {
+        this.heldItemRegistry.forEach((held) => {
+          const limbMat = limbMatrices[held.part];
+          const isRight = held.hand === "right";
+          const handSign = isRight ? -1 : 1;
+          const rotAngles = limbPoses[held.part];
+
+          if (held.type === "crystal") {
+            const handBase = matCompose(
+              limbMat,
+              matTranslate(handSign, 9, 0),
+              matTranspose3x3(matEuler(rotAngles[2], rotAngles[1], rotAngles[0])),
+              matTranslate(isRight ? 2 : -2, isRight ? -0.5 : -1.5, -2.5),
+              matRotateX(Math.PI),
+              matScale(0.95),
+              matTranslate(0, 4.5, 0),
+              matScale(0.52),
+              matTranslate(0, (-1.5 - 0.5 * crystalBounceY + (0.5 * crystalBounceY - -0.525) * 0.35) * 16, 0)
+            );
+
+            held.faces.forEach((cf) => {
+              const fullMat = matCompose(
+                rootTransform,
+                handBase,
+                crystalBoxRotations[cf.boxIdx],
+                invertZ,
+                cf.place,
+                scale1_16
+              );
+              cf.el.style.transform = matToCss(fullMat);
+              const b = calcLighting(fullMat, -currentYaw, -this.pitch);
+              cf.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(3)})` : "";
+            });
+          } else {
+            // Handheld item, bow, block, or sprite
+            let itemPose;
+            if (held.model === "handheld") {
+              itemPose = isRight ? ITEM_POSES.handheldRight : ITEM_POSES.handheldLeft;
+            } else if (held.model === "block") {
+              itemPose = isRight ? ITEM_POSES.blockRight : ITEM_POSES.blockLeft;
+            } else if (held.model === "bow") {
+              itemPose = isRight ? ITEM_POSES.bowRight : ITEM_POSES.bowLeft;
+            } else {
+              itemPose = ITEM_POSES.ground;
+            }
+
+            let handBase;
+            if (held.model === "handheld" || held.model === "bow" || held.model === "block") {
+              handBase = matCompose(
+                limbMat,
+                matRotateX(-90 * DEG2RAD),
+                matRotateY(180 * DEG2RAD),
+                matTranslate(isRight ? 1 : -1, 2, -10),
+                itemPose
+              );
+            } else {
+              // Sprite (totem, pearl, apple)
+              handBase = matCompose(
+                limbMat,
+                matTranslate(handSign, 9, 0),
+                matTranspose3x3(matEuler(rotAngles[2], rotAngles[1], rotAngles[0])),
+                matTranslate(isRight ? 2 : -2, isRight ? -0.5 : -1.5, -2.5),
+                matRotateX(Math.PI),
+                matScale(0.95),
+                itemPose
+              );
+            }
+
+            held.slices.forEach((sl) => {
+              const zOffset = sl.total === 1 ? 0 : -0.5 + sl.sliceIdx / (sl.total - 1);
+              const fullMat = matCompose(
+                rootTransform,
+                handBase,
+                matTranslate(0, 0, zOffset),
+                itemCenterFlipped,
+                scale1_16
+              );
+              sl.el.style.transform = matToCss(fullMat);
+              const b = calcLighting(fullMat, -currentYaw, -this.pitch);
+              sl.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(3)})` : "";
+            });
+          }
+        });
+      }
+
+      // 7. Render Canvas Pedestal
+      if (this.padCtx && this.cam) {
+        renderPedestal(
+          this.padCtx,
+          this.cam,
+          this.width,
+          this.height,
+          this.pitch,
+          0x7e2ed6, // #7e2ed6 Corz Purple
+          1.0,
+          0.0,
+          1.0,
+          this.dpr || 1
+        );
+      }
     }
   }
 
-  // Auto initialize on DOM ready
+  // Initialization
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => new CorzBotsShowcase());
   } else {

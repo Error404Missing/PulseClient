@@ -70,8 +70,8 @@
 
 .bots-pvp { grid-area: pvp; min-width: 0; }
 .bots-util { grid-area: util; min-width: 0; }
-.bots-stage { grid-area: stage; }
-.bots-detail { grid-area: detail; margin-bottom: 16px; }
+.bots-stage { grid-area: stage; min-width: 0; }
+.bots-detail { grid-area: detail; min-height: 48px; margin-bottom: 16px; }
 .bots-buy { grid-area: buy; margin-top: 44px; }
 
 @media (min-width: 640px) {
@@ -281,6 +281,7 @@
   position: relative;
   height: 480px;
   user-select: none;
+  overflow: hidden;
 }
 
 @media (max-width: 640px) {
@@ -296,14 +297,30 @@
   overflow: hidden;
 }
 
+.bots-stage-effects-inner {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 100%;
+  max-width: 600px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .bots-grid-bg {
   position: absolute;
-  inset: -4% -18% 0;
+  inset: -4% 0 0;
   background-image: linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
   background-size: 40px 40px;
   background-position: center bottom;
   -webkit-mask-image: radial-gradient(ellipse 44% 42% at 50% 62%, #000, transparent 78%);
   mask-image: radial-gradient(ellipse 44% 42% at 50% 62%, #000, transparent 78%);
+}
+
+@media (min-width: 1280px) {
+  .bots-grid-bg {
+    inset: -4% -18% 0;
+  }
 }
 
 .bots-floor {
@@ -360,13 +377,6 @@
   transform-style: preserve-3d;
 }
 
-.bots-limb {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-style: preserve-3d;
-}
-
 .bots-cube-face {
   position: absolute;
   left: 0;
@@ -377,6 +387,15 @@
   image-rendering: pixelated;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+.bots-glow-eye {
+  position: absolute;
+  left: 0;
+  top: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
 }
 
 .bots-drag-overlay {
