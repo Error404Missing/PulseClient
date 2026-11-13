@@ -5158,11 +5158,45 @@ function formatLicenseExpiryDisplay(lic) {
 
 
 
+// --- Supabase session freshness -------------------------------------------
+// Access tokens (JWTs) expire after about an hour. A stale or cached session
+// makes PostgREST answer "JWT expired", so refresh it before querying and
+// retry once if a query still comes back with an expired token.
+async function ensureFreshSession(forceRefresh = false) {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error) throw error;
+        const session = data && data.session;
+        if (!session) return null;
+        const expiresAt = session.expires_at ? session.expires_at * 1000 : 0;
+        const expiringSoon = !expiresAt || Date.now() > expiresAt - 60000;
+        if (!forceRefresh && !expiringSoon) return session;
+        const refreshed = await supabaseClient.auth.refreshSession();
+        if (refreshed.error) throw refreshed.error;
+        return (refreshed.data && refreshed.data.session) || null;
+    } catch (e) {
+        console.warn('[PulseAuth] Could not refresh session:', (e && e.message) || e);
+        return null;
+    }
+}
+
+async function handleExpiredSession() {
+    try {
+        await supabaseClient.auth.signOut({ scope: 'local' });
+    } catch (e) { /* ignore */ }
+    showBanner(t("msg.sessionExpired"), "warning");
+    setTimeout(() => window.location.reload(), 1500);
+}
+// -------------------------------------------------------------------------
+
 async function fetchUserLicenses() {
 
 
 
     if (!currentUser) return;
+
+    // Make sure the access token is still valid before querying
+    await ensureFreshSession();
 
 
 
@@ -5446,11 +5480,22 @@ async function fetchUserLicenses() {
 
 
 
+        const _authMsg = String((err && err.message) || '');
+        if (/jwt|expired|invalid token/i.test(_authMsg) && Date.now() - (window.__pulseLicenseRetryAt || 0) > 15000) {
+            window.__pulseLicenseRetryAt = Date.now();
+            const _session = await ensureFreshSession(true);
+            if (_session) {
+                return fetchUserLicenses();
+            }
+            await handleExpiredSession();
+            licensesLoading.classList.add('hidden');
+            return;
+        }
         console.error("Error fetching licenses:", err.message);
 
 
 
-        showBanner(t("msg.licLoadFail") + err.message, "error");
+        showBanner(t("msg.licLoadFail") + " " + err.message, "error");
 
 
 

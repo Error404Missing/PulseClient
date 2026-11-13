@@ -435,6 +435,7 @@
     "msg.keyNotFound": "License key not found.",
     "msg.keyTaken": "This key is already in use.",
     "msg.licLoadFail": "Could not load licenses.",
+    "msg.sessionExpired": "Your session expired. Please sign in again.",
     "msg.loginFail": "Sign-in failed. Please try again.",
     "msg.promoCreateFail": "Could not create the promo code.",
     "msg.trialAccountTooNew": "Your Discord account is too new for a trial.",
