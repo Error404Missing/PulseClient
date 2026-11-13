@@ -13787,7 +13787,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                            closing
+Close
 
 
 
