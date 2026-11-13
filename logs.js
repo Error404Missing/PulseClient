@@ -144,7 +144,7 @@ async function checkAuthGate(passedUser) {
         if (authGateLogin) authGateLogin.classList.add('hidden');
         if (authGateDenied) authGateDenied.classList.remove('hidden');
         if (mainDashboard) mainDashboard.classList.add('hidden');
-        if (deniedUserInfo) deniedUserInfo.textContent = `მომხმარებელი: ${username} (Discord ID: ${discId})`;
+        if (deniedUserInfo) deniedUserInfo.textContent = `User: ${username} (Discord ID: ${discId})`;
         return;
     }
 
@@ -262,7 +262,7 @@ function renderStaffLeaderboard(staffMembers) {
     staffCardsContainer.innerHTML = '';
 
     if (!staffMembers || staffMembers.length === 0) {
-        staffCardsContainer.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--text-muted);">Staff წევრების აქტივობა ბოლო 24 საათში არ ფიქსირდება.</div>`;
+        staffCardsContainer.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--text-muted);">The activity of staff members in the last 24 hours is not recorded.</div>`;
         return;
     }
 
@@ -293,11 +293,11 @@ function renderStaffLeaderboard(staffMembers) {
             <div class="staff-stats-row">
                 <div class="staff-stat-box">
                     <div class="num">${s.total_actions || 0}</div>
-                    <div class="label">სულ მოქმედება</div>
+                    <div class="label">Total action</div>
                 </div>
                 <div class="staff-stat-box">
                     <div class="num">${keysCreated}</div>
-                    <div class="label">გასაღები</div>
+                    <div class="label">the key</div>
                 </div>
                 <div class="staff-stat-box">
                     <div class="num">${hwidsReset}</div>
@@ -305,9 +305,9 @@ function renderStaffLeaderboard(staffMembers) {
                 </div>
             </div>
             <div class="staff-footer">
-                <span>ბოლო IP: <code class="ip-chip">${escapeHtml(s.last_ip || 'N/A')}</code></span>
+                <span>Last IP: <code class="ip-chip">${escapeHtml(s.last_ip || 'N/A')}</code></span>
                 <button type="button" class="btn-cyber" style="padding: 4px 10px; font-size: 11px;" onclick="filterBySpecificStaff('${escapeHtml(s.actor_id)}')">
-                    ${selectedStaffFilter === s.actor_id ? 'გაუქმება' : 'ლოგები'}
+                    ${selectedStaffFilter === s.actor_id ? 'Cancellation' : 'logs'}
                 </button>
             </div>
         `;
@@ -413,11 +413,11 @@ function renderAuditTable(logs) {
 
         // Formatted Time (Tbilisi Asia/Tbilisi)
         const d = new Date(log.created_at);
-        const timeStr = d.toLocaleDateString('ka-GE', {
+        const timeStr = d.toLocaleDateString('en-US', {
             timeZone: 'Asia/Tbilisi',
             month: 'short',
             day: 'numeric'
-        }) + ' ' + d.toLocaleTimeString('ka-GE', {
+        }) + ' ' + d.toLocaleTimeString('en-US', {
             timeZone: 'Asia/Tbilisi',
             hour: '2-digit',
             minute: '2-digit',
@@ -441,7 +441,7 @@ function renderAuditTable(logs) {
         const details = log.details || {};
         let summary = details.description || details.title || log.action_type;
         if (details.cmd_type && details.payload) {
-            summary = `ბრძანება: [${details.cmd_type.toUpperCase()}] ${details.payload}`;
+            summary = `command: [${details.cmd_type.toUpperCase()}] ${details.payload}`;
         }
 
         // Severity
@@ -477,7 +477,7 @@ function renderAuditTable(logs) {
             </td>
             <td style="text-align: right;">
                 <button type="button" class="btn-cyber" style="padding: 4px 10px; font-size: 12px;" onclick='openInspectorDrawer(${JSON.stringify(log).replace(/'/g, "&apos;")})'>
-                    ნახვა
+                    View
                 </button>
             </td>
         `;
@@ -489,35 +489,35 @@ function renderAuditTable(logs) {
 function getActionMeta(actionType) {
     switch (actionType) {
         case 'STAFF_LICENSE_CREATE':
-            return { actionClass: 'action-create', actionLabel: 'ლიცენზიის შექმნა', actionIcon: '' };
+            return { actionClass: 'action-create', actionLabel: 'Create a license', actionIcon: '' };
         case 'STAFF_LICENSE_REVOKE':
-            return { actionClass: 'action-revoke', actionLabel: 'ლიცენზიის გაუქმება', actionIcon: '🚫' };
+            return { actionClass: 'action-revoke', actionLabel: 'Cancellation of license', actionIcon: '🚫' };
         case 'STAFF_LICENSE_ACTIVATE':
-            return { actionClass: 'action-activate', actionLabel: 'გააქტიურება', actionIcon: '✅' };
+            return { actionClass: 'action-activate', actionLabel: 'activation', actionIcon: '✅' };
         case 'OWNER_LICENSE_PERMANENT_DELETE':
-            return { actionClass: 'action-revoke', actionLabel: 'სამუდამოდ წაშლა', actionIcon: '🗑️' };
+            return { actionClass: 'action-revoke', actionLabel: 'Delete forever', actionIcon: '🗑️' };
         case 'STAFF_HWID_RESET':
-            return { actionClass: 'action-hwid', actionLabel: 'HWID განულება', actionIcon: '' };
+            return { actionClass: 'action-hwid', actionLabel: 'HWID analysis', actionIcon: '' };
         case 'STAFF_REMOTE_CMD':
-            return { actionClass: 'action-cmd', actionLabel: 'C2 ბრძანება', actionIcon: '' };
+            return { actionClass: 'action-cmd', actionLabel: 'C2 command', actionIcon: '' };
         case 'STAFF_REMOTE_SCREENSHOT':
-            return { actionClass: 'action-shot', actionLabel: 'სქრინშოთი', actionIcon: '' };
+            return { actionClass: 'action-shot', actionLabel: 'with a screenshot', actionIcon: '' };
         case 'STAFF_REMOTE_INSPECT':
-            return { actionClass: 'action-cmd', actionLabel: 'ინსპექცია', actionIcon: '' };
+            return { actionClass: 'action-cmd', actionLabel: 'inspection', actionIcon: '' };
         case 'STAFF_TICKET_REPLY':
-            return { actionClass: 'action-ticket', actionLabel: 'თიქეთზე პასუხი', actionIcon: '' };
+            return { actionClass: 'action-ticket', actionLabel: 'The answer to the question', actionIcon: '' };
         case 'STAFF_TICKET_DELETE':
-            return { actionClass: 'action-revoke', actionLabel: 'თიქეთის წაშლა', actionIcon: '' };
+            return { actionClass: 'action-revoke', actionLabel: 'Delete a post', actionIcon: '' };
         case 'USER_LOGIN':
-            return { actionClass: 'action-activate', actionLabel: 'ავტორიზაცია', actionIcon: '' };
+            return { actionClass: 'action-activate', actionLabel: 'Authorization', actionIcon: '' };
         case 'USER_TRIAL_CLAIM':
-            return { actionClass: 'action-create', actionLabel: 'Trial აღება', actionIcon: '' };
+            return { actionClass: 'action-create', actionLabel: 'Trial taking', actionIcon: '' };
         case 'USER_PROMO_REDEEM':
-            return { actionClass: 'action-create', actionLabel: 'პრომოკოდი', actionIcon: '' };
+            return { actionClass: 'action-create', actionLabel: 'promo code', actionIcon: '' };
         case 'USER_CLIENT_DOWNLOAD':
-            return { actionClass: 'action-default', actionLabel: 'JAR გადმოწერა', actionIcon: '' };
+            return { actionClass: 'action-default', actionLabel: 'JAR download', actionIcon: '' };
         case 'CLIENT_VERIFY_SUCCESS':
-            return { actionClass: 'action-verify', actionLabel: 'კლიენტი ონლაინ', actionIcon: '' };
+            return { actionClass: 'action-verify', actionLabel: 'Client online', actionIcon: '' };
         case 'CLIENT_VERIFY_HWID_MISMATCH':
             return { actionClass: 'action-hwid', actionLabel: 'HWID Mismatch', actionIcon: '' };
         case 'CLIENT_VERIFY_BLACKLISTED':
@@ -534,7 +534,7 @@ window.openInspectorDrawer = function(log) {
     drawerEventId.textContent = log.id || '-';
     
     const d = new Date(log.created_at);
-    drawerEventTime.textContent = d.toLocaleString('ka-GE', { timeZone: 'Asia/Tbilisi' });
+    drawerEventTime.textContent = d.toLocaleString('en-US', { timeZone: 'Asia/Tbilisi' });
 
     const sev = (log.severity || 'info').toLowerCase();
     drawerEventSeverity.textContent = sev.toUpperCase();
@@ -575,14 +575,14 @@ function setupAutoRefresh() {
 // Export to CSV
 function exportLogsToCsv() {
     if (filteredLogs.length === 0) {
-        alert("საექსპორტო ლოგები არ მოიძებნა!");
+        alert("No export logs found!");
         return;
     }
 
     const headers = ["ID", "Time (Tbilisi)", "Actor Name", "Actor ID", "Actor Role", "Action", "Target", "IP", "Severity", "Details JSON"];
     const rows = filteredLogs.map(l => {
         const d = new Date(l.created_at);
-        const timeStr = d.toLocaleString('ka-GE', { timeZone: 'Asia/Tbilisi' });
+        const timeStr = d.toLocaleString('en-US', { timeZone: 'Asia/Tbilisi' });
         return [
             `"${l.id}"`,
             `"${timeStr}"`,
@@ -672,9 +672,9 @@ function setupListeners() {
 
     if (btnRefreshNow) {
         btnRefreshNow.addEventListener('click', () => {
-            btnRefreshNow.textContent = 'განახლება...';
+            btnRefreshNow.textContent = 'update...';
             loadAllAuditData().finally(() => {
-                btnRefreshNow.textContent = 'განახლება';
+                btnRefreshNow.textContent = 'Update';
             });
         });
     }
@@ -691,7 +691,7 @@ async function loginWithDiscord() {
     const btn = document.getElementById('btn-discord-login');
     if (btn) {
         btn.disabled = true;
-        btn.innerHTML = `გადამისამართება...`;
+        btn.innerHTML = `Redirect...`;
     }
 
     try {

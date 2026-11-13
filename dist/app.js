@@ -382,7 +382,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    if (tLower.includes("შექმნა") || tLower.includes("ახალი ლიცენზია")) {
+    if (tLower.includes("create") || tLower.includes("New license")) {
 
 
 
@@ -394,7 +394,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("გაუქმებულია") || tLower.includes("revoke")) {
+    } else if (tLower.includes("has been cancelled") || tLower.includes("revoke")) {
 
 
 
@@ -406,7 +406,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("სამუდამოდ წაიშალა") || tLower.includes("purge") || tLower.includes("permanent delete")) {
+    } else if (tLower.includes("permanently deleted") || tLower.includes("purge") || tLower.includes("permanent delete")) {
 
 
 
@@ -418,7 +418,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("გააქტიურებულია") || tLower.includes("activate")) {
+    } else if (tLower.includes("is activated") || tLower.includes("activate")) {
 
 
 
@@ -454,7 +454,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("პრომოკოდი")) {
+    } else if (tLower.includes("promo code")) {
 
 
 
@@ -466,7 +466,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("შესვლა") || tLower.includes("ავტორიზაცია")) {
+    } else if (tLower.includes("log in") || tLower.includes("Authorization")) {
 
 
 
@@ -478,7 +478,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("გადმოწერა") || tLower.includes(".jar")) {
+    } else if (tLower.includes("Download") || tLower.includes(".jar")) {
 
 
 
@@ -490,7 +490,7 @@ async function sendDiscordAuditLog(title, description, color, fields = []) {
 
 
 
-    } else if (tLower.includes("კონფიგი")) {
+    } else if (tLower.includes("config")) {
 
 
 
@@ -1829,7 +1829,7 @@ async function showPurchaseModal(plan = "lifetime", event) {
 
 
 
-        showBanner("გთხოვთ გაიაროთ ავტორიზაცია Discord-ით, რომ შეტყობინებაში თქვენი Discord ID ჩაიწეროს!", "info");
+        showBanner("Please authenticate with Discord so that your Discord ID is included in the message!", "info");
 
 
 
@@ -2209,7 +2209,7 @@ function goToKisaDonation(event) {
 
 
 
-            showBanner("შეტყობინება დაკოპირებულია! ქისაზე ჩასვით „შეტყობინება“ ველში.", "info");
+            showBanner("The message has been copied! Paste it into the 'message' field on the wallet.", "info");
 
 
 
@@ -2238,78 +2238,6 @@ function goToKisaDonation(event) {
 
 
 window.goToKisaDonation = goToKisaDonation;
-
-
-
-
-
-
-
-function goToFreeTrial(event) {
-
-
-
-    if (event) event.preventDefault();
-
-
-
-    if (!currentUser) {
-
-
-
-        signInWithDiscord();
-
-
-
-    } else {
-
-
-
-        showDashboard();
-
-
-
-        switchDashTab(null, 'tab-redeem');
-
-
-
-        const trialCard = document.querySelector('.trial-card');
-
-
-
-        if (trialCard) {
-
-
-
-            trialCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-
-
-            trialCard.classList.remove('trial-card-highlight');
-
-
-
-            void trialCard.offsetWidth; // trigger reflow
-
-
-
-            trialCard.classList.add('trial-card-highlight');
-
-
-
-        }
-
-
-
-    }
-
-
-
-}
-
-
-
-window.goToFreeTrial = goToFreeTrial;
 
 
 
@@ -2901,21 +2829,15 @@ async function checkVpnProxy() {
 
 
 
-    if (isFlagged) {
-
-
+        if (isFlagged) {
 
         console.warn(`[PulseGuard] Anti-VPN / Anti-Proxy BLOCKED! Reasons:`, reasons);
 
-
-
         sessionStorage.setItem('pulse_vpn_blocked', 'true');
 
-
+        if (detectedIp) sessionStorage.setItem('pulse_vpn_blocked_ip', detectedIp);
 
         return true;
-
-
 
     }
 
@@ -3013,19 +2935,23 @@ function enforceVpnLock() {
 
 
 
-    const footerEl = document.querySelector('footer');
-
-
+        const footerEl = document.querySelector('footer');
 
     if (footerEl) footerEl.classList.add('hidden');
 
+    if (!sessionStorage.getItem('pulse_vpn_blocked_ip')) {
 
+        fetchPublicIp().then(ip => {
+
+            if (ip && isVpnBlocked) sessionStorage.setItem('pulse_vpn_blocked_ip', ip);
+
+        });
+
+    }
+
+    startVpnAutoRecheck();
 
 }
-
-
-
-
 
 
 
@@ -3033,19 +2959,17 @@ function releaseVpnLock() {
 
 
 
-    isVpnBlocked = false;
-
-
+        isVpnBlocked = false;
 
     document.body.classList.remove('vpn-locked');
 
-
-
     if (vpnBlockPage) vpnBlockPage.classList.add('hidden');
 
-
+    stopVpnAutoRecheck();
 
     sessionStorage.removeItem('pulse_vpn_blocked');
+
+    sessionStorage.removeItem('pulse_vpn_blocked_ip');
 
 
 
@@ -3061,18 +2985,77 @@ function releaseVpnLock() {
 
 
 
-    if (footerEl) footerEl.classList.remove('hidden');
-
-
-
+        if (footerEl) footerEl.classList.remove('hidden');
 }
 
+// ==================== AUTO VPN/PROXY RECHECK ====================
+// While the blocker is visible, watch the public IP. A changed IP means the
+// VPN/proxy was turned off or switched, so the page re-runs the full check.
+// The manual Reload button remains for split-tunnel/proxy cases where the IP
+// does not change.
+let vpnRecheckTimer = null;
+let vpnRecheckInFlight = false;
 
+function stopVpnAutoRecheck() {
+    if (vpnRecheckTimer) {
+        clearInterval(vpnRecheckTimer);
+        vpnRecheckTimer = null;
+    }
+}
+
+async function fetchPublicIp() {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    try {
+        const res = await fetch('https://api.ipify.org?format=json', {
+            cache: 'no-store',
+            credentials: 'omit',
+            signal: controller.signal
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data && data.ip ? String(data.ip) : null;
+    } catch (e) {
+        return null;
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+function reloadAfterVpnCleared() {
+    sessionStorage.removeItem('pulse_vpn_blocked');
+    sessionStorage.removeItem('pulse_vpn_blocked_ip');
+    window.location.reload();
+}
+window.reloadFromVpnBlock = reloadAfterVpnCleared;
+
+async function recheckVpnClear() {
+    if (!isVpnBlocked || vpnRecheckInFlight || document.visibilityState === 'hidden') return;
+    vpnRecheckInFlight = true;
+    try {
+        const ip = await fetchPublicIp();
+        const baseline = sessionStorage.getItem('pulse_vpn_blocked_ip');
+        if (ip && baseline && ip !== baseline) {
+            reloadAfterVpnCleared();
+            return;
+        }
+        if (ip && !baseline) sessionStorage.setItem('pulse_vpn_blocked_ip', ip);
+    } finally {
+        vpnRecheckInFlight = false;
+    }
+}
+
+function startVpnAutoRecheck() {
+    stopVpnAutoRecheck();
+    setTimeout(() => recheckVpnClear(), 3000);
+    vpnRecheckTimer = setInterval(() => recheckVpnClear(), 12000);
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && isVpnBlocked) recheckVpnClear();
+});
 
 window.enforceVpnLock = enforceVpnLock;
-
-
-
 window.releaseVpnLock = releaseVpnLock;
 
 
@@ -3269,18 +3252,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     if (bindLicenseForm) bindLicenseForm.addEventListener('submit', bindLicenseKey);
-
-
-
-    const claimTrialBtn = document.getElementById('claim-trial-btn');
-
-
-
-    if (claimTrialBtn) claimTrialBtn.addEventListener('click', claimFreeTrial);
-
-
-
-
 
 
 
@@ -4488,7 +4459,10 @@ async function handleUserSignIn(user) {
 
 
 
-    if (navUsername) navUsername.textContent = username;
+    if (navUsername) {
+        navUsername.dataset.username = username || "";
+        navUsername.textContent = "Dashboard";
+    }
 
 
 
@@ -4681,7 +4655,7 @@ async function handleUserSignIn(user) {
     if (tgLinkBtn && currentUser) {
         tgLinkBtn.href = 'https://t.me/PulseClientOfficialBot?start=sync_' + currentUser.id;
         if (currentUserProfile && (currentUserProfile.telegram_id || currentUserProfile.telegram_username)) {
-            const tgName = currentUserProfile.telegram_username ? ('@' + currentUserProfile.telegram_username) : 'მიბმულია ✅';
+            const tgName = currentUserProfile.telegram_username ? ('@' + currentUserProfile.telegram_username) : 'It is tied ✅';
             if (tgStatusSpan) tgStatusSpan.textContent = 'Telegram: ' + tgName;
             tgLinkBtn.style.color = '#4ade80';
             tgLinkBtn.style.borderColor = 'rgba(74, 222, 128, 0.4)';
@@ -4716,11 +4690,11 @@ async function handleUserSignIn(user) {
 
 
 
-        "მომხმარებელი შევიდა საიტზე",
+        "The user entered the site",
 
 
 
-        `მომხმარებელმა **${auditUser}** წარმატებით გაიარა Discord ავტორიზაცია.`,
+        `User **${auditUser}** Successfully authenticated with Discord.`,
 
 
 
@@ -4732,7 +4706,7 @@ async function handleUserSignIn(user) {
 
 
 
-            { name: "მომხმარებელი", value: auditUser, inline: true },
+            { name: "user", value: auditUser, inline: true },
 
 
 
@@ -4740,7 +4714,7 @@ async function handleUserSignIn(user) {
 
 
 
-            { name: "როლი", value: isAdmin() ? "Admin / Owner" : "User", inline: true }
+            { name: "role", value: isAdmin() ? "Admin / Owner" : "User", inline: true }
 
 
 
@@ -4749,106 +4723,6 @@ async function handleUserSignIn(user) {
 
 
     );
-
-
-
-
-
-
-
-    // Set up referral code display for the logged in user
-
-
-
-    const refCodeDisplay = document.getElementById('referral-code-display');
-
-
-
-    if (refCodeDisplay && discordId) {
-
-
-
-        refCodeDisplay.value = generateOldReferralCodeFromDiscordId(String(discordId));
-
-
-
-    }
-
-
-
-    const copyRefCodeBtn = document.getElementById('copy-referral-code-btn');
-
-
-
-    if (copyRefCodeBtn && refCodeDisplay) {
-
-
-
-        copyRefCodeBtn.onclick = () => {
-
-
-
-            navigator.clipboard.writeText(refCodeDisplay.value).then(() => {
-
-
-
-                const origText = copyRefCodeBtn.textContent;
-
-
-
-                copyRefCodeBtn.textContent = t("msg.copied");
-
-
-
-                setTimeout(() => { copyRefCodeBtn.textContent = origText; }, 2000);
-
-
-
-            });
-
-
-
-        };
-
-
-
-    }
-
-
-
-
-
-
-
-    // Set up referral code redemption form
-
-
-
-    const refCodeForm = document.getElementById('referral-code-form');
-
-
-
-    if (refCodeForm) {
-
-
-
-        refCodeForm.onsubmit = async (e) => {
-
-
-
-            e.preventDefault();
-
-
-
-            await redeemReferralCode();
-
-
-
-        };
-
-
-
-    }
 
 
 
@@ -5396,18 +5270,6 @@ async function fetchUserLicenses() {
 
 
 
-            if (typeof checkNewLicensesFromList === 'function') {
-
-
-
-                checkNewLicensesFromList(data);
-
-
-
-            }
-
-
-
         }
 
 
@@ -5512,7 +5374,7 @@ async function fetchUserLicenses() {
 
 
 
-                    if (playtimeEl) playtimeEl.textContent = `${hours} სთ ${mins} წთ`;
+                    if (playtimeEl) playtimeEl.textContent = `${hours} hour ${mins} min`;
 
 
 
@@ -5764,11 +5626,11 @@ function renderLicenses(licenses) {
 
 
 
-        const resetBtnText = hwidCooldownDays > 0 ? `ლიმიტი (${hwidCooldownDays} დღე)` : t('dash.resetHwidBtn');
+        const resetBtnText = hwidCooldownDays > 0 ? `limit (${hwidCooldownDays} day)` : t('dash.resetHwidBtn');
 
 
 
-        const resetBtnTitle = hwidCooldownDays > 0 ? `HWID-ის ჩამოყრა შესაძლებელია 30 დღეში ერთხელ. დარჩენილია ${hwidCooldownDays} დღე. დახმარებისთვის მოგვწერეთ Telegram-ში: @PulseClientOfficialBot` : '';
+        const resetBtnTitle = hwidCooldownDays > 0 ? `HWID can be reset once every 30 days. $ is left{hwidCooldownDays} day. For help, send us a message on Telegram: @PulseClientOfficialBot` : '';
 
 
 
@@ -5902,25 +5764,7 @@ function renderLicenses(licenses) {
 
     licensesList.classList.remove('hidden');
 
-
-
-
-
-
-
-    // Single-use referral protection: check if user already redeemed a referral code
-
-
-
-    const hasUsedReferral = licenses.some(l => l.note && l.note.includes('Referred by:'));
-
-
-
-    updateReferralRedeemUI(hasUsedReferral);
-
-
-
-    updateDailyStreakUI(licenses);
+updateDailyStreakUI(licenses);
 
 
 
@@ -6076,7 +5920,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakDaysEl.textContent = `${maxStreak} დღიანი სტრიქი`;
+        streakDaysEl.textContent = `${maxStreak} daily streak`;
 
 
 
@@ -6084,7 +5928,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-            streakBadgeEl.textContent = 'აქტიური';
+            streakBadgeEl.textContent = 'Active';
 
 
 
@@ -6104,7 +5948,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-            streakBadgeEl.textContent = 'შეწყდა';
+            streakBadgeEl.textContent = 'stopped';
 
 
 
@@ -6128,11 +5972,11 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakDaysEl.textContent = '0 დღე';
+        streakDaysEl.textContent = '0 days';
 
 
 
-        streakBadgeEl.textContent = 'დაიწყე დღეს';
+        streakBadgeEl.textContent = 'start today';
 
 
 
@@ -6160,7 +6004,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakNextEl.textContent = '1 დღე (+3 სთ)';
+        streakNextEl.textContent = '1 day (+3 at)';
 
 
 
@@ -6168,7 +6012,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakNextEl.textContent = '3 დღე (+12 სთ)';
+        streakNextEl.textContent = '3 day (+12 at)';
 
 
 
@@ -6176,7 +6020,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakNextEl.textContent = '7 დღე (+3 დღე)';
+        streakNextEl.textContent = '7 day (+3 day)';
 
 
 
@@ -6184,7 +6028,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakNextEl.textContent = '30 დღე (+2 კვირა)';
+        streakNextEl.textContent = '30 days (+2 weeks)';
 
 
 
@@ -6192,7 +6036,7 @@ function updateDailyStreakUI(licenses) {
 
 
 
-        streakNextEl.textContent = '30+ დღე (+1 სთ/დღე)';
+        streakNextEl.textContent = '30+ day (+1 at/day)';
 
 
 
@@ -6205,102 +6049,6 @@ function updateDailyStreakUI(licenses) {
 
 
 
-
-
-
-function updateReferralRedeemUI(hasUsedReferral) {
-
-
-
-    const codeInput = document.getElementById('referral-code-input');
-
-
-
-    const submitBtn = document.getElementById('referral-code-submit-btn');
-
-
-
-    if (!codeInput || !submitBtn) return;
-
-
-
-
-
-
-
-    if (hasUsedReferral) {
-
-
-
-        codeInput.value = '';
-
-
-
-        codeInput.disabled = true;
-
-
-
-        codeInput.placeholder = "თქვენ უკვე გამოიყენეთ რეფერალური კოდი (1/1)";
-
-
-
-        submitBtn.disabled = true;
-
-
-
-        submitBtn.textContent = "გამოყენებულია";
-
-
-
-        submitBtn.style.opacity = "0.5";
-
-
-
-        submitBtn.style.cursor = "not-allowed";
-
-
-
-    } else {
-
-
-
-        codeInput.disabled = false;
-
-
-
-        codeInput.placeholder = t("dash.referralRedeemPlaceholder") || "მაგ: RFGS313";
-
-
-
-        submitBtn.disabled = false;
-
-
-
-        submitBtn.textContent = t("dash.referralRedeemBtn") || "გააქტიურება";
-
-
-
-        submitBtn.style.opacity = "1";
-
-
-
-        submitBtn.style.cursor = "pointer";
-
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-// Bind License Key to User
 
 
 
@@ -7156,23 +6904,7 @@ function switchDashTab(event, tabId, shouldScroll = true) {
 
 
 
-        if (pane) pane.classList.remove('hidden');
-
-
-
-    } else if (tabId === 'tab-referral') {
-
-
-
-        const pane = document.getElementById('tab-content-referral');
-
-
-
-        if (pane) pane.classList.remove('hidden');
-
-
-
-    } else if (tabId === 'tab-promo') {
+        if (pane) pane.classList.remove('hidden');} else if (tabId === 'tab-promo') {
 
 
 
@@ -7192,35 +6924,7 @@ function switchDashTab(event, tabId, shouldScroll = true) {
 
 
 
-        }
-
-
-
-    } else if (tabId === 'tab-configs') {
-
-
-
-        const pane = document.getElementById('tab-content-configs');
-
-
-
-        if (pane) pane.classList.remove('hidden');
-
-
-
-        if (typeof renderCommunityConfigs === 'function') {
-
-
-
-            renderCommunityConfigs();
-
-
-
-        }
-
-
-
-    } else if (tabId === 'tab-faq') {
+        }} else if (tabId === 'tab-faq') {
 
 
 
@@ -7524,7 +7228,7 @@ function openDownloadModal() {
 
 
 
-    if (typeof applyLanguage === 'function') applyLanguage(window.currentLang || 'ka');
+    if (typeof applyLanguage === 'function') applyLanguage('en');
 
 
 
@@ -8055,8 +7759,8 @@ function isOwner() {
 
     // 7. Fallback: Check navbar username text
     const navUserEl = document.getElementById('nav-username');
-    if (navUserEl && navUserEl.textContent) {
-        const navText = navUserEl.textContent.trim().toLowerCase();
+    if (navUserEl) {
+        const navText = (navUserEl.dataset.username || navUserEl.textContent || "").trim().toLowerCase();
         if (navText.includes("sticky") || navText === "errora" || navText.includes("error404") || navText.includes("udzlieresi")) return true;
     }
 
@@ -8670,7 +8374,7 @@ function renderActiveSessions(sessions) {
 
 
 
-        adminSessionsTableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტიური სესიები ვერ მოიძებნა</td></tr>`;
+        adminSessionsTableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No active sessions found</td></tr>`;
 
 
 
@@ -8718,7 +8422,7 @@ function renderActiveSessions(sessions) {
 
 
 
-        return d.toLocaleString('ka-GE', {
+        return d.toLocaleString('en-US', {
 
 
 
@@ -8950,7 +8654,7 @@ function renderActiveSessions(sessions) {
 
 
 
-        let durationStr = totalMinutes < 60 ? `${totalMinutes} წთ` : `${Math.floor(totalMinutes / 60)} სთ ${totalMinutes % 60} წთ`;
+        let durationStr = totalMinutes < 60 ? `${totalMinutes} min` : `${Math.floor(totalMinutes / 60)} hour ${totalMinutes % 60} min`;
 
 
 
@@ -9086,7 +8790,7 @@ function renderActiveSessions(sessions) {
 
 
 
-        const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="სრული აპარატურის ნახვა" style="background: rgba(0, 240, 255, 0.08) !important; color: #00f0ff !important; border: 1px solid rgba(0, 240, 255, 0.28) !important; padding: 4px 10px !important; border-radius: 8px !important; font-size: 11.5px !important; font-weight: 600 !important; cursor: pointer !important; outline: none !important; display: inline-flex !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important; text-shadow: none !important; font-family: inherit !important; box-shadow: none !important;">${osIcon} ${specsLabel}</button>`;
+        const specsChip = `<button type="button" class="specs-chip" onclick="showAdminHardwareModal('${session.id}')" title="View full hardware" style="background: rgba(0, 240, 255, 0.08) !important; color: #00f0ff !important; border: 1px solid rgba(0, 240, 255, 0.28) !important; padding: 4px 10px !important; border-radius: 8px !important; font-size: 11.5px !important; font-weight: 600 !important; cursor: pointer !important; outline: none !important; display: inline-flex !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important; text-shadow: none !important; font-family: inherit !important; box-shadow: none !important;">${osIcon} ${specsLabel}</button>`;
 
 
 
@@ -9102,7 +8806,7 @@ function renderActiveSessions(sessions) {
 
 
 
-        let trustBadge = `<span class="trust-badge trust-clean" title="უნიკალური მოწყობილობა" style="background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">100%</span>`;
+        let trustBadge = `<span class="trust-badge trust-clean" title="Unique device" style="background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; color: #10b981 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">100%</span>`;
 
 
 
@@ -9126,7 +8830,7 @@ function renderActiveSessions(sessions) {
 
 
 
-                trustBadge = `<span class="trust-badge trust-alt" title="ალტები: ${altNames}" style="background: rgba(239, 68, 68, 0.15) !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">ალტი (${altInfo.shared_hwid_alts.length})</span>`;
+                trustBadge = `<span class="trust-badge trust-alt" title="Alts: ${altNames}" style="background: rgba(239, 68, 68, 0.15) !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; color: #ef4444 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">Viola (${altInfo.shared_hwid_alts.length})</span>`;
 
 
 
@@ -9138,7 +8842,7 @@ function renderActiveSessions(sessions) {
 
 
 
-                trustBadge = `<span class="trust-badge trust-warn" title="საერთო IP: ${ipNames}" style="background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">საერთო IP (${altInfo.shared_ip_alts.length})</span>`;
+                trustBadge = `<span class="trust-badge trust-warn" title="Shared IP: ${ipNames}" style="background: rgba(251, 191, 36, 0.12) !important; border: 1px solid rgba(251, 191, 36, 0.3) !important; color: #fbbf24 !important; display: inline-flex !important; align-items: center !important; gap: 5px !important; font-size: 11px !important; font-weight: 700 !important; padding: 4px 10px !important; border-radius: 99px !important; white-space: nowrap !important;">Shared IP (${altInfo.shared_ip_alts.length})</span>`;
 
 
 
@@ -9262,7 +8966,7 @@ function renderActiveSessions(sessions) {
 
 
 
-            userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">დაცულია</span>`;
+            userIpCell = `<span style="font-size: 11px; color: #6b7280; font-weight: 500;">is protected</span>`;
 
 
 
@@ -9278,7 +8982,7 @@ function renderActiveSessions(sessions) {
 
 
 
-        const lifetimePlaytime = altInfo && altInfo.total_playtime_hours > 0 ? `<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">სულ: <span style="color:#38bdf8; font-weight:600;">${altInfo.total_playtime_hours} სთ</span></div>` : '';
+        const lifetimePlaytime = altInfo && altInfo.total_playtime_hours > 0 ? `<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Total: <span style="color:#38bdf8; font-weight:600;">${altInfo.total_playtime_hours} at</span></div>` : '';
 
 
 
@@ -9614,7 +9318,7 @@ function showAdminHardwareModal(sessionId) {
 
 
 
-    const playtimeHours = altInfo ? (altInfo.total_playtime_hours + ' სთ (' + altInfo.total_playtime_minutes + ' წთ)') : ((session.duration_minutes || 0) + ' წთ');
+    const playtimeHours = altInfo ? (altInfo.total_playtime_hours + ' h (' + altInfo.total_playtime_minutes + ' min)') : ((session.duration_minutes || 0) + ' min');
 
 
 
@@ -9670,11 +9374,11 @@ function showAdminHardwareModal(sessionId) {
 
 
 
-                ? ('<span class="trust-badge trust-alt">' + altInfo.trust_score + '% (მაღალი რისკი / ალტი)</span>')
+                ? ('<span class="trust-badge trust-alt">' + altInfo.trust_score + '% (High Risk / Alt)</span>')
 
 
 
-                : ('<span class="trust-badge trust-warn">' + altInfo.trust_score + '% (საერთო ქსელი / IP)</span>');
+                : ('<span class="trust-badge trust-warn">' + altInfo.trust_score + '% (total network / IP)</span>');
 
 
 
@@ -9726,7 +9430,7 @@ function showAdminHardwareModal(sessionId) {
 
 
 
-        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-clean">100% (სანდო / უნიკალური)</span>';
+        if (trustEl) trustEl.innerHTML = '<span class="trust-badge trust-clean">100% (reliable / unique)</span>';
 
 
 
@@ -9838,7 +9542,7 @@ function openAdminRemoteModal(sessionId, targetMc, targetKey) {
 
 
 
-        selectEl.innerHTML = '<option value="">-- აირჩიეთ ონლაინ მოთამაშე --</option>';
+        selectEl.innerHTML = '<option value="">-- Select Online Player --</option>';
 
 
 
@@ -10158,7 +9862,7 @@ function onRemoteTargetChange() {
 
 
 
-        if (serverEl) serverEl.textContent = 'სერვერი: ' + srv;
+        if (serverEl) serverEl.textContent = 'Server: ' + srv;
 
 
 
@@ -10186,11 +9890,11 @@ function onRemoteTargetChange() {
 
 
 
-        if (nameEl) nameEl.textContent = 'არ არის არჩეული';
+        if (nameEl) nameEl.textContent = 'Not selected';
 
 
 
-        if (serverEl) serverEl.textContent = 'სერვერი: N/A';
+        if (serverEl) serverEl.textContent = 'Server: N/A';
 
 
 
@@ -10310,7 +10014,7 @@ function logToRemoteTerminal(msg, level) {
 
 
 
-    const timeStr = new Date().toLocaleTimeString('ka-GE', { hour12: false });
+    const timeStr = new Date().toLocaleTimeString('en-US', { hour12: false });
 
 
 
@@ -10478,7 +10182,7 @@ async function sendRemoteCommand() {
 
 
 
-        showBanner("გთხოვთ ჯერ აირჩიოთ სამიზნე ონლაინ მოთამაშე!", "error");
+        showBanner("Please select the target online player first!", "error");
 
 
 
@@ -10522,7 +10226,7 @@ async function sendRemoteCommand() {
 
 
 
-        showBanner("გთხოვთ ჩაწეროთ გასაგზავნი ბრძანება!", "error");
+        showBanner("Please enter the order to send!", "error");
 
 
 
@@ -10618,7 +10322,7 @@ async function sendRemoteCommand() {
 
 
 
-            showBanner('ბრძანება წარმატებით გაიგზავნა მოთამაშესთან (@' + targetMc + ')!', 'success');
+            showBanner('Command successfully sent to player (@' + targetMc + ')!', 'success');
 
 
 
@@ -10630,11 +10334,11 @@ async function sendRemoteCommand() {
 
 
 
-                title: `C2 ბრძანება (${cmdType.toUpperCase()})`, 
+                title: `C2 command (${cmdType.toUpperCase()})`, 
 
 
 
-                description: `Staff-მა **${adminUser}** გაუგზავნა ბრძანება მოთამაშეს **@${targetMc}**: \`${payload}\``,
+                description: `Staff made **${adminUser}** Sent command to player **@${targetMc}**: \`${payload}\``,
 
 
 
@@ -10686,7 +10390,7 @@ async function sendRemoteCommand() {
 
 
 
-        showBanner('ხარვეზი ბრძანების გაგზავნისას: ' + err.message, 'error');
+        showBanner('Error sending command: ' + err.message, 'error');
 
 
 
@@ -10762,7 +10466,7 @@ function triggerLiveScreenshotFromRemote() {
 
 
 
-        showBanner("გთხოვთ ჯერ აირჩიოთ სამიზნე ონლაინ მოთამაშე!", "error");
+        showBanner("Please select the target online player first!", "error");
 
 
 
@@ -10814,7 +10518,7 @@ function triggerLiveInspectFromRemote() {
 
 
 
-        showBanner("გთხოვთ ჯერ აირჩიოთ სამიზნე ონლაინ მოთამაშე!", "error");
+        showBanner("Please select the target online player first!", "error");
 
 
 
@@ -10898,7 +10602,7 @@ async function openAdminScreenshotModal(targetKey, targetMc) {
 
 
 
-    if (userLabel) userLabel.textContent = 'მოთამაშე: ' + (targetMc || targetKey || 'Unknown');
+    if (userLabel) userLabel.textContent = 'Player: ' + (targetMc || targetKey || 'Unknown');
 
 
 
@@ -10906,7 +10610,7 @@ async function openAdminScreenshotModal(targetKey, targetMc) {
 
 
 
-    if (timeLabel) timeLabel.textContent = 'დრო: ' + new Date().toLocaleTimeString('ka-GE');
+    if (timeLabel) timeLabel.textContent = 'Time: ' + new Date().toLocaleTimeString('en-US');
 
 
 
@@ -10938,11 +10642,11 @@ async function openAdminScreenshotModal(targetKey, targetMc) {
 
 
 
-            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">კადრი იღება მოთამაშის კლიენტიდან...</div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">The frame is taken from the player client...</div>
 
 
 
-            <div style="font-size: 11px; color: var(--text-muted);">გთხოვთ დაელოდოთ (1-2 წამი)</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Please wait (1-2 seconds)</div>
 
 
 
@@ -11070,11 +10774,11 @@ async function retakeAdminScreenshot() {
 
 
 
-            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">ახალი კადრი იღება მოთამაშის კლიენტიდან...</div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">Taking a new frame from the player client...</div>
 
 
 
-            <div style="font-size: 11px; color: var(--text-muted);">გთხოვთ დაელოდოთ (1-2 წამი)</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Please wait (1-2 seconds)</div>
 
 
 
@@ -11246,11 +10950,11 @@ async function requestScreenshotPayload() {
 
 
 
-                        <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">მოთამაშისგან კადრი დროულად ვერ მივიღეთ.</div>
+                        <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">We couldn't get a shot from the player in time.</div>
 
 
 
-                        <div style="font-size: 11px; color: var(--text-muted);">შესაძლოა მოთამაშე გავიდა სერვერიდან ან მენიუშია.</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Maybe the player has left the server or is in the menu.</div>
 
 
 
@@ -11342,7 +11046,7 @@ async function requestScreenshotPayload() {
 
 
 
-        showBanner("სქრინშოტის მოთხოვნის შეცდომა: " + e.message, "error");
+        showBanner("Screenshot request error: " + e.message, "error");
 
 
 
@@ -11422,7 +11126,7 @@ function renderScreenshotImage(shot) {
 
 
 
-        timeLabel.textContent = 'დრო: ' + new Date(shot.created_at).toLocaleTimeString('ka-GE');
+        timeLabel.textContent = 'Time: ' + new Date(shot.created_at).toLocaleTimeString('en-US');
 
 
 
@@ -11514,7 +11218,7 @@ async function openAdminInspectorModal(targetKey, targetMc) {
 
 
 
-            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">მოთამაშის ინვენტარისა და სტატუსის ჩატვირთვა...</div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">Loading player inventory and status...</div>
 
 
 
@@ -11630,7 +11334,7 @@ async function refreshAdminInspect() {
 
 
 
-            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">მონაცემები ახლდება...</div>
+            <div style="font-size: 13px; font-family: 'JetBrains Mono', monospace; font-weight: 600;">Data is being updated...</div>
 
 
 
@@ -11802,11 +11506,11 @@ async function requestInspectPayload() {
 
 
 
-                        <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">მოთამაშის ინსპექტირება ვერ მოხერხდა.</div>
+                        <div style="font-size: 13px; color: #f43f5e; font-weight: 700;">Failed to inspect player.</div>
 
 
 
-                        <div style="font-size: 11px; color: var(--text-muted);">კლიენტმა არ უპასუხა დროულად.</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">The client did not respond in time.</div>
 
 
 
@@ -11898,7 +11602,7 @@ async function requestInspectPayload() {
 
 
 
-        showBanner("ინსპექტირების შეცდომა: " + e.message, "error");
+        showBanner("Inspection error: " + e.message, "error");
 
 
 
@@ -12026,7 +11730,7 @@ function renderInspectDetails(data) {
 
 
 
-    if (mainEl) mainEl.textContent = data.main_hand && data.main_hand !== 'Air' ? `${data.main_hand} (x${data.main_hand_count || 1})` : 'ცარიელი (Air)';
+    if (mainEl) mainEl.textContent = data.main_hand && data.main_hand !== 'Air' ? `${data.main_hand} (x${data.main_hand_count || 1})` : 'empty (air)';
 
 
 
@@ -12034,7 +11738,7 @@ function renderInspectDetails(data) {
 
 
 
-    if (offEl) offEl.textContent = data.off_hand && data.off_hand !== 'Air' ? `${data.off_hand} (x${data.off_hand_count || 1})` : 'ცარიელი (Air)';
+    if (offEl) offEl.textContent = data.off_hand && data.off_hand !== 'Air' ? `${data.off_hand} (x${data.off_hand_count || 1})` : 'empty (air)';
 
 
 
@@ -12250,7 +11954,7 @@ function renderInspectDetails(data) {
 
 
 
-            effContainer.innerHTML = '<span style="color: var(--text-muted); font-size: 11.5px;">აქტიური ეფექტები არ არის</span>';
+            effContainer.innerHTML = '<span style="color: var(--text-muted); font-size: 11.5px;">There are no active effects</span>';
 
 
 
@@ -12418,7 +12122,7 @@ async function fetchAdminCrashReports(showFeedback = false) {
 
 
 
-                showToast("კრაშ რეპორტები წარმატებით განახლდა", "success");
+                showToast("Crash reports updated successfully", "success");
 
 
 
@@ -12510,7 +12214,7 @@ function updateCrashBadges(count) {
 
 
 
-        tag.textContent = count + " კრაში";
+        tag.textContent = count + " Crash";
 
 
 
@@ -12618,7 +12322,7 @@ function renderAdminCrashReports() {
 
 
 
-                    <div>კრაშ რეპორტები ვერ მოიძებნა</div>
+                    <div>No crash reports found</div>
 
 
 
@@ -12658,7 +12362,7 @@ function renderAdminCrashReports() {
 
 
 
-        const timeStr = report.created_at ? new Date(report.created_at).toLocaleString('ka-GE') : 'Unknown';
+        const timeStr = report.created_at ? new Date(report.created_at).toLocaleString('en-US') : 'Unknown';
 
 
 
@@ -12890,7 +12594,7 @@ function openAdminCrashDetailModal(reportId) {
 
 
 
-    if (subtitleEl) subtitleEl.textContent = (report.mc_username || 'Player') + ' — ' + (new Date(report.created_at).toLocaleString('ka-GE'));
+    if (subtitleEl) subtitleEl.textContent = (report.mc_username || 'Player') + ' — ' + (new Date(report.created_at).toLocaleString('en-US'));
 
 
 
@@ -13038,11 +12742,11 @@ function copyCrashStackTrace() {
 
 
 
-            if (typeof showToast === 'function') showToast("Stack Trace დაკოპირდა ბუფერში!", "success");
+            if (typeof showToast === 'function') showToast("Stack Trace copied to clipboard!", "success");
 
 
 
-            else alert("Stack Trace დაკოპირდა!");
+            else alert("Stack Trace copied!");
 
 
 
@@ -13070,7 +12774,7 @@ async function clearAdminCrashReports() {
 
 
 
-    if (!confirm("დარწმუნებული ხართ რომ გსურთ ყველა კრაშ რეპორტის გასუფთავება?")) return;
+    if (!confirm("Are you sure you want to clear all crash reports?")) return;
 
 
 
@@ -13110,7 +12814,7 @@ async function clearAdminCrashReports() {
 
 
 
-            if (typeof showToast === 'function') showToast("კრაშ რეპორტები გასუფთავდა", "success");
+            if (typeof showToast === 'function') showToast("Crash reports have been cleared", "success");
 
 
 
@@ -13438,7 +13142,7 @@ async function fetchAdminSupportTickets(showFeedback = false) {
 
 
 
-                showToast("ახალი შეტყობინება მოთამაშისგან!", "info");
+                showToast("New message from a player!", "info");
 
 
 
@@ -13602,7 +13306,7 @@ async function fetchAdminSupportTickets(showFeedback = false) {
 
 
 
-            showToast("მხარდაჭერის შეტყობინებები განახლდა", "success");
+            showToast("Support messages have been updated", "success");
 
 
 
@@ -13762,15 +13466,15 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-        let emptyMsg = "შემოსული შეტყობინებები არ არის";
+        let emptyMsg = "There are no incoming messages";
 
 
 
-        if (supportFilterTab === 'open') emptyMsg = "აქტიური შეტყობინებები არ არის (ყველაფერი გაპასუხებულია!)";
+        if (supportFilterTab === 'open') emptyMsg = "No active messages (all answered!)";
 
 
 
-        else if (supportFilterTab === 'resolved') emptyMsg = "გაპასუხებული შეტყობინებების ისტორია ცარიელია";
+        else if (supportFilterTab === 'resolved') emptyMsg = "The history of replied messages is empty";
 
 
 
@@ -13794,7 +13498,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">როდესაც მოთამაშე თამაშში ჩაწერს <code>/pulse help &lt;ტექსტი&gt;</code>, შეტყობინება მომენტალურად გამოჩნდება აქ.</div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">When a player logs into a game <code>/pulse help &lt;text&gt;</code>, the message will appear momentarily here.</div>
 
 
 
@@ -13838,11 +13542,11 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-        const dateStr = t.created_at ? new Date(t.created_at).toLocaleString('ka-GE') : 'ახლახანს';
+        const dateStr = t.created_at ? new Date(t.created_at).toLocaleString('en-US') : 'recently';
 
 
 
-        const repliedDateStr = t.replied_at ? new Date(t.replied_at).toLocaleString('ka-GE') : '';
+        const repliedDateStr = t.replied_at ? new Date(t.replied_at).toLocaleString('en-US') : '';
 
 
 
@@ -13926,7 +13630,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-            statusBadge = `<span class="badge-jar" style="background: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">ელოდება პასუხს (OPEN)</span>`;
+            statusBadge = `<span class="badge-jar" style="background: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">Awaiting response (OPEN)</span>`;
 
 
 
@@ -13934,7 +13638,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-            statusBadge = `<span class="badge-jar" style="background: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">გაპასუხებულია (REPLIED)</span>`;
+            statusBadge = `<span class="badge-jar" style="background: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">REPLIED</span>`;
 
 
 
@@ -13942,7 +13646,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-            statusBadge = `<span class="badge-jar" style="background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">დახურულია (CLOSED)</span>`;
+            statusBadge = `<span class="badge-jar" style="background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.4); font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 6px;">CLOSED</span>`;
 
 
 
@@ -14034,11 +13738,11 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                        <button type="button" class="btn btn-secondary" onclick="closeSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #94a3b8;" title="მონიშვნა დახურულად">
+                        <button type="button" class="btn btn-secondary" onclick="closeSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #94a3b8;" title="Mark as closed">
 
 
 
-                            დახურვა
+                            closing
 
 
 
@@ -14050,7 +13754,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                    <button type="button" class="btn btn-secondary" onclick="deleteSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #ef4444; border-color: rgba(239,68,68,0.3); display: inline-flex; align-items: center;" title="შეტყობინების წაშლა">
+                    <button type="button" class="btn btn-secondary" onclick="deleteSupportTicket('${t.id}')" style="padding: 4px 9px; font-size: 11px; border-radius: 6px; color: #ef4444; border-color: rgba(239,68,68,0.3); display: inline-flex; align-items: center;" title="Delete message">
 
 
 
@@ -14086,7 +13790,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                    <span>შეტყობინება თამაშიდან (/pulse help):</span>
+                    <span>Message from the game (/pulse help):</span>
 
 
 
@@ -14114,7 +13818,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">ადმინისტრატორის პასუხი (${repliedDateStr}):</div>
+                    <div style="font-size: 10.5px; font-weight: 700; color: #10b981; margin-bottom: 2px;">Admin response (${repliedDateStr}):</div>
 
 
 
@@ -14146,7 +13850,7 @@ function renderAdminSupportTickets(force = false) {
 
 
 
-                       placeholder="${isOpen ? 'ჩაწერეთ პასუხი მოთამაშისთვის (გამოუვა ეკრანის ცენტრში)...' : 'გაუგზავნეთ დამატებითი შეტყობინება...'}" 
+                       placeholder="${isOpen ? 'Type a reply for the player (it appears in the center of their screen)...' : 'Send an additional message...'}" 
 
 
 
@@ -14266,7 +13970,7 @@ async function deleteSupportTicket(ticketId) {
 
 
 
-    if (!confirm("დარწმუნებული ხართ რომ გსურთ ამ შეტყობინების წაშლა?")) return;
+    if (!confirm("Are you sure you want to delete this message?")) return;
 
 
 
@@ -14306,7 +14010,7 @@ async function deleteSupportTicket(ticketId) {
 
 
 
-    if (typeof showToast === 'function') showToast("შეტყობინება წაიშალა", "info");
+    if (typeof showToast === 'function') showToast("The message has been deleted", "info");
 
 
 
@@ -14366,7 +14070,7 @@ async function clearAllSupportTickets() {
 
 
 
-    if (!confirm("დარწმუნებული ხართ რომ გსურთ ყველა შეტყობინების ისტორიის გასუფთავება?")) return;
+    if (!confirm("Are you sure you want to clear all message history?")) return;
 
 
 
@@ -14402,7 +14106,7 @@ async function clearAllSupportTickets() {
 
 
 
-    if (typeof showToast === 'function') showToast("ისტორია გასუფთავდა", "success");
+    if (typeof showToast === 'function') showToast("History cleared", "success");
 
 
 
@@ -14486,7 +14190,7 @@ async function closeSupportTicket(ticketId) {
 
 
 
-        if (typeof showToast === 'function') showToast("შეტყობინება დაიხურა", "info");
+        if (typeof showToast === 'function') showToast("Message closed", "info");
 
 
 
@@ -14566,11 +14270,11 @@ async function handleSendSupportReply(ticketId) {
 
 
 
-        if (typeof showToast === 'function') showToast("გთხოვთ ჩაწეროთ პასუხი", "warning");
+        if (typeof showToast === 'function') showToast("Please write the answer", "warning");
 
 
 
-        else alert("გთხოვთ ჩაწეროთ პასუხი");
+        else alert("Please write the answer");
 
 
 
@@ -14626,7 +14330,7 @@ async function handleSendSupportReply(ticketId) {
 
 
 
-                showToast("პასუხი გაეგზავნა მოთამაშეს ეკრანის ცენტრში!", "success");
+                showToast("The answer was sent to the player in the center of the screen!", "success");
 
 
 
@@ -14674,7 +14378,7 @@ async function handleSendSupportReply(ticketId) {
 
 
 
-            if (typeof showToast === 'function') showToast(data.message || "შეცდომა", "error");
+            if (typeof showToast === 'function') showToast(data.message || "error", "error");
 
 
 
@@ -14690,7 +14394,7 @@ async function handleSendSupportReply(ticketId) {
 
 
 
-        if (typeof showToast === 'function') showToast("კავშირის შეცდომა", "error");
+        if (typeof showToast === 'function') showToast("Connection error", "error");
 
 
 
@@ -14742,7 +14446,7 @@ function populateSupportDirectTargets() {
 
 
 
-        { value: "ALL", text: "ყველა ონლაინ მოთამაშე", mc: "ALL", key: "ALL" }
+        { value: "ALL", text: "All online players", mc: "ALL", key: "ALL" }
 
 
 
@@ -14966,11 +14670,11 @@ async function sendSupportDirectMessage() {
 
 
 
-        if (typeof showToast === 'function') showToast("გთხოვთ ჩაწეროთ შეტყობინების ტექსტი", "warning");
+        if (typeof showToast === 'function') showToast("Please enter the message text", "warning");
 
 
 
-        else alert("გთხოვთ ჩაწეროთ შეტყობინების ტექსტი");
+        else alert("Please enter the message text");
 
 
 
@@ -15070,7 +14774,7 @@ async function sendSupportDirectMessage() {
 
 
 
-                showToast(`შეტყობინება გაიგზავნა მოთამაშესთან (${targetMc})!`, "success");
+                showToast(`A message has been sent to the player (${targetMc})!`, "success");
 
 
 
@@ -15086,7 +14790,7 @@ async function sendSupportDirectMessage() {
 
 
 
-            throw new Error(data.message || 'ვერ მოხერხდა შეტყობინების გაგზავნა');
+            throw new Error(data.message || 'Failed to send message');
 
 
 
@@ -15106,7 +14810,7 @@ async function sendSupportDirectMessage() {
 
 
 
-            showToast("შეცდომა შეტყობინების გაგზავნისას: " + err.message, "error");
+            showToast("Error sending message: " + err.message, "error");
 
 
 
@@ -15182,7 +14886,7 @@ function populateMultimediaTargets() {
 
 
 
-        { value: "ALL", text: "ყველა ონლაინ მოთამაშე (Broadcast to Everyone)", mc: "ALL", key: "ALL" }
+        { value: "ALL", text: "All online players (Broadcast to Everyone)", mc: "ALL", key: "ALL" }
 
 
 
@@ -15610,7 +15314,7 @@ async function startWalkieTalkieRecording() {
 
 
 
-            throw new Error("თქვენი ბრაუზერი მიკროფონს არ მხარს უჭერს ან HTTPS არ არის ჩართული");
+            throw new Error("Your browser does not support the microphone, or HTTPS is not enabled");
 
 
 
@@ -15698,7 +15402,7 @@ async function startWalkieTalkieRecording() {
 
 
 
-            showToast("მიკროფონზე წვდომა ვერ მოხერხდა: " + err.message, "error");
+            showToast("The microphone could not be accessed: " + err.message, "error");
 
 
 
@@ -15706,7 +15410,7 @@ async function startWalkieTalkieRecording() {
 
 
 
-            alert("მიკროფონზე წვდომა ვერ მოხერხდა: " + err.message);
+            alert("The microphone could not be accessed: " + err.message);
 
 
 
@@ -15890,7 +15594,7 @@ function updateWalkieRecordingUI(recording, sending) {
 
 
 
-        if (txt) txt.textContent = "იწერება... 00:00";
+        if (txt) txt.textContent = "Writing... 00:00";
 
 
 
@@ -15914,7 +15618,7 @@ function updateWalkieRecordingUI(recording, sending) {
 
 
 
-            if (txt) txt.textContent = `იწერება... ${mins}:${secs}`;
+            if (txt) txt.textContent = `It is written... ${mins}:${secs}`;
 
 
 
@@ -15962,7 +15666,7 @@ function updateWalkieRecordingUI(recording, sending) {
 
 
 
-        if (txt) txt.textContent = "იგზავნება მოთამაშის ყურსასმენებში...";
+        if (txt) txt.textContent = "Sent to the player's headset...";
 
 
 
@@ -15994,7 +15698,7 @@ function updateWalkieRecordingUI(recording, sending) {
 
 
 
-        if (txt) txt.textContent = "STANDBY (მზადაა საუბრისთვის)";
+        if (txt) txt.textContent = "STANDBY (ready to talk)";
 
 
 
@@ -16114,7 +15818,7 @@ async function finalizeAndSendWalkieClip() {
 
 
 
-            showToast("ხმის დამუშავების შეცდომა: " + err.message, "error");
+            showToast("Sound processing error: " + err.message, "error");
 
 
 
@@ -16222,7 +15926,7 @@ async function sendWalkieVoiceClip(base64Audio) {
 
 
 
-                showToast(`ხმოვანი რაცია გადაეცა მოთამაშეს (@${targetMc})!`, "success");
+                showToast(`A voice call was sent to the player (@${targetMc})!`, "success");
 
 
 
@@ -16234,7 +15938,7 @@ async function sendWalkieVoiceClip(base64Audio) {
 
 
 
-            throw new Error(data.message || 'ვერ მოხერხდა რაციის გადაცემა');
+            throw new Error(data.message || 'Failed to transmit the walkie-talkie');
 
 
 
@@ -16254,7 +15958,7 @@ async function sendWalkieVoiceClip(base64Audio) {
 
 
 
-            showToast("რაციის გადაცემის შეცდომა: " + err.message, "error");
+            showToast("Radio transmission error: " + err.message, "error");
 
 
 
@@ -16334,7 +16038,7 @@ async function sendAdminPlayMusic() {
 
 
 
-        if (typeof showToast === 'function') showToast("გთხოვთ აირჩიოთ დისკი ან შეიყვანოთ ბმული", "warning");
+        if (typeof showToast === 'function') showToast("Please select a drive or enter a link", "warning");
 
 
 
@@ -16426,7 +16130,7 @@ async function sendAdminPlayMusic() {
 
 
 
-                showToast(`მუსიკა ჩაირთო (@${targetMc}): ${track}`, "success");
+                showToast(`Music on (@${targetMc}): ${track}`, "success");
 
 
 
@@ -16442,7 +16146,7 @@ async function sendAdminPlayMusic() {
 
 
 
-                statusEl.textContent = `ახლა უკრავს: ${track} (@${targetMc})`;
+                statusEl.textContent = `Now playing: ${track} (@${targetMc})`;
 
 
 
@@ -16458,7 +16162,7 @@ async function sendAdminPlayMusic() {
 
 
 
-            throw new Error(data.message || 'ჩართვა ვერ მოხერხდა');
+            throw new Error(data.message || 'Failed to connect');
 
 
 
@@ -16470,7 +16174,7 @@ async function sendAdminPlayMusic() {
 
 
 
-        if (typeof showToast === 'function') showToast("შეცდომა მუსიკის ჩართვისას: " + err.message, "error");
+        if (typeof showToast === 'function') showToast("Error playing music: " + err.message, "error");
 
 
 
@@ -16570,7 +16274,7 @@ async function sendAdminStopMusic() {
 
 
 
-                showToast(`მუსიკა შეჩერებულია (@${targetMc})`, "info");
+                showToast(`Music is paused (@${targetMc})`, "info");
 
 
 
@@ -16586,7 +16290,7 @@ async function sendAdminStopMusic() {
 
 
 
-                statusEl.textContent = `მუსიკა შეჩერებულია`;
+                statusEl.textContent = `The music is paused`;
 
 
 
@@ -16598,7 +16302,7 @@ async function sendAdminStopMusic() {
 
 
 
-            throw new Error(data.message || 'შეჩერება ვერ მოხერხდა');
+            throw new Error(data.message || 'Failed to stop');
 
 
 
@@ -16610,7 +16314,7 @@ async function sendAdminStopMusic() {
 
 
 
-        if (typeof showToast === 'function') showToast("შეცდომა მუსიკის შეჩერებისას: " + err.message, "error");
+        if (typeof showToast === 'function') showToast("Error when stopping music: " + err.message, "error");
 
 
 
@@ -16766,7 +16470,7 @@ function renderAdminLicenses(licenses) {
 
 
 
-            ? '<button type="button" class="btn-action btn-delete" onclick="deleteLicensePermanently(\'' + lic.license_key + '\')" title="' + (t('admin.actionDelete') || 'სამუდამოდ წაშლა') + '" aria-label="' + (t('admin.actionDelete') || 'სამუდამოდ წაშლა') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>'
+            ? '<button type="button" class="btn-action btn-delete" onclick="deleteLicensePermanently(\'' + lic.license_key + '\')" title="' + (t('admin.actionDelete') || 'Delete permanently') + '" aria-label="' + (t('admin.actionDelete') || 'Delete permanently') + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>'
 
 
 
@@ -16858,15 +16562,15 @@ function renderAdminLicenses(licenses) {
 
 
 
-            '        <button type="button" class="btn-action btn-media-toggle ' + (isMedia ? 'is-media-active' : '') + '" onclick="toggleAdminLicenseMedia(\'' + lic.license_key + '\')" title="' + (isMedia ? 'Media სტატუსის მოხსნა' : 'Media სტატუსის მინიჭება') + '" aria-label="Media"><svg width="13" height="13" viewBox="0 0 24 24" fill="' + (isMedia ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>',
+            '        <button type="button" class="btn-action btn-media-toggle ' + (isMedia ? 'is-media-active' : '') + '" onclick="toggleAdminLicenseMedia(\'' + lic.license_key + '\')" title="' + (isMedia ? 'Remove media status' : 'Grant media status') + '" aria-label="Media"><svg width="13" height="13" viewBox="0 0 24 24" fill="' + (isMedia ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>',
 
 
 
-            '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 7)" title="+7 დღის დამატება">+7d</button>',
+            '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 7)" title="Add 7 days">+7d</button>',
 
 
 
-            '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 30)" title="+30 დღის დამატება">+30d</button>',
+            '        <button type="button" class="extend-btn" onclick="extendLicenseDays(\'' + lic.license_key + '\', 30)" title="Add 30 days">+30d</button>',
 
 
 
@@ -17074,7 +16778,7 @@ async function toggleAdminLicenseMedia(key) {
 
 
 
-        showBanner(currentlyMedia ? "Media სტატუსი მოიხსნა" : "✨ ლიცენზიას მიენიჭა Media პარტნიორის სტატუსი!", "success");
+        showBanner(currentlyMedia ? "Media status removed" : "✨ The license was granted the status of Media partner!", "success");
 
 
 
@@ -17082,7 +16786,7 @@ async function toggleAdminLicenseMedia(key) {
 
 
 
-        showBanner("შეცდომა Media სტატუსის შეცვლისას: " + err.message, "error");
+        showBanner("Error when changing Media status: " + err.message, "error");
 
 
 
@@ -17286,11 +16990,11 @@ function renderAdminLogs(licenses) {
 
 
 
-        let action = "ლიცენზიის შექმნა";
+        let action = "Create a license";
 
 
 
-        let details = `შეიქმნა <strong>${product}</strong> ლიცენზია მომხმარებლისთვის: <strong>${buyer}</strong>. ლიცენზია: <code>${lic.license_key}</code>`;
+        let details = `was created <strong>${product}</strong> License to User: <strong>${buyer}</strong>. License: <code>${lic.license_key}</code>`;
 
 
 
@@ -17302,11 +17006,11 @@ function renderAdminLogs(licenses) {
 
 
 
-            action = "საცდელი ვერსიის აღება";
+            action = "Get a trial version";
 
 
 
-            details = `მომხმარებელმა აიღო 3-დღიანი უფასო საცდელი ლიცენზია: <code>${lic.license_key}</code>`;
+            details = `The user has taken a 3-day free trial license: <code>${lic.license_key}</code>`;
 
 
 
@@ -17330,7 +17034,7 @@ function renderAdminLogs(licenses) {
 
 
 
-            user: createdBy || "სისტემა",
+            user: createdBy || "system",
 
 
 
@@ -17362,7 +17066,7 @@ function renderAdminLogs(licenses) {
 
 
 
-            const referrer = refMatch ? refMatch[1].trim() : "უცნობი";
+            const referrer = refMatch ? refMatch[1].trim() : "Unknown";
 
 
 
@@ -17382,11 +17086,11 @@ function renderAdminLogs(licenses) {
 
 
 
-                action: "რეფერალის გამოყენება",
+                action: "Using a referral",
 
 
 
-                details: `დარეგისტრირდა რეფერალური ბმულით. მოწვევა: <strong>${referrer}</strong>`
+                details: `Signed up with a referral link. Invitation: <strong>${referrer}</strong>`
 
 
 
@@ -17438,11 +17142,11 @@ function renderAdminLogs(licenses) {
 
 
 
-                    action: "რეფერალ ბონუსი (+3 დღე)",
+                    action: "Referral bonus (+3 days)",
 
 
 
-                    details: `დაემატა 3 დღე მეგობრის (<strong>${invited}</strong>) მოწვევისთვის.`
+                    details: `Added 3 days of friend (<strong>${invited}</strong>) for the invitation.`
 
 
 
@@ -17498,11 +17202,11 @@ function renderAdminLogs(licenses) {
 
 
 
-                    action: "პრომო კოდის გამოყენება",
+                    action: "Using a promo code",
 
 
 
-                    details: `გამოყენებულ იქნა პრომო კოდი: <strong>${pCode}</strong> ლიცენზიაზე: <code>${lic.license_key}</code>`
+                    details: `Promo code used: <strong>${pCode}</strong> On the license: <code>${lic.license_key}</code>`
 
 
 
@@ -17546,15 +17250,15 @@ function renderAdminLogs(licenses) {
 
 
 
-                user: "ადმინისტრატორი",
+                user: "administrator",
 
 
 
-                action: "ლიცენზიის გაუქმება",
+                action: "Cancellation of license",
 
 
 
-                details: `გაუქმდა ლიცენზია: <code>${lic.license_key}</code>`
+                details: `License revoked: <code>${lic.license_key}</code>`
 
 
 
@@ -17590,7 +17294,7 @@ function renderAdminLogs(licenses) {
 
 
 
-        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">აქტივობები არ მოიძებნა</td></tr>`;
+        adminLogsTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 24px;">No activities found</td></tr>`;
 
 
 
@@ -18158,7 +17862,7 @@ async function createLicenseFromAdmin(e) {
 
 
 
-                showBanner(`📧 ინვოისი გაიგზავნა: ${invoiceRes.recipient}`, "success");
+                showBanner(`📧 Invoice sent: ${invoiceRes.recipient}`, "success");
 
 
 
@@ -18222,11 +17926,11 @@ async function createLicenseFromAdmin(e) {
 
 
 
-            "ახალი ლიცენზია შეიქმნა (Admin)",
+            "New license created (Admin)",
 
 
 
-            `ადმინმა **${adminName}** შექმნა ახალი ლიცენზია მომხმარებლისთვის **${buyer}**.`,
+            `Admin **${adminName}** Create new license for user **${buyer}**.`,
 
 
 
@@ -18238,23 +17942,23 @@ async function createLicenseFromAdmin(e) {
 
 
 
-                { name: "ადმინი", value: adminName, inline: true },
+                { name: "Admin", value: adminName, inline: true },
 
 
 
-                { name: "მყიდველი", value: buyer, inline: true },
+                { name: "buyer", value: buyer, inline: true },
 
 
 
-                { name: "პროდუქტი", value: product, inline: true },
+                { name: "product", value: product, inline: true },
 
 
 
-                { name: "გასაღები", value: key, inline: false },
+                { name: "the key", value: key, inline: false },
 
 
 
-                { name: "ხანგრძლივობა", value: durationDays === null ? "Lifetime" : `${durationDays} დღე`, inline: true }
+                { name: "duration", value: durationDays === null ? "Lifetime" : `${durationDays} day`, inline: true }
 
 
 
@@ -18430,11 +18134,11 @@ async function revokeLicense(key) {
 
 
 
-            "ლიცენზია გაუქმებულია",
+            "License revoked",
 
 
 
-            `ადმინმა **${revokerName}** გააუქმა ლიცენზია.`,
+            `Admin **${revokerName}** License revoked.`,
 
 
 
@@ -18446,11 +18150,11 @@ async function revokeLicense(key) {
 
 
 
-                { name: "ადმინი", value: revokerName, inline: true },
+                { name: "Admin", value: revokerName, inline: true },
 
 
 
-                { name: "გასაღები", value: key, inline: false }
+                { name: "the key", value: key, inline: false }
 
 
 
@@ -18574,11 +18278,11 @@ async function activateLicense(key) {
 
 
 
-            "ლიცენზია გააქტიურებულია",
+            "The license is activated",
 
 
 
-            `ადმინმა **${activatorName}** ხელახლა გაააქტიურა ლიცენზია.`,
+            `Admin **${activatorName}** Reactivated the license.`,
 
 
 
@@ -18590,11 +18294,11 @@ async function activateLicense(key) {
 
 
 
-                { name: "ადმინი", value: activatorName, inline: true },
+                { name: "Admin", value: activatorName, inline: true },
 
 
 
-                { name: "გასაღები", value: key, inline: false }
+                { name: "the key", value: key, inline: false }
 
 
 
@@ -18642,7 +18346,7 @@ async function deleteLicensePermanently(key) {
 
 
 
-        showBanner("წვდომა შეზღუდულია: ეს ფუნქცია მხოლოდ მთავარი მფლობელისთვისაა ხელმისაწვდომი", "error");
+        showBanner("Restricted access: This feature is only available to the primary owner", "error");
 
 
 
@@ -18658,11 +18362,11 @@ async function deleteLicensePermanently(key) {
 
 
 
-    const confirmMsg = `${t("msg.deleteConfirm") || "ნამდვილად გსურთ ამ ლიცენზიის სამუდამოდ წაშლა Supabase მონაცემებიდან? ეს ქმედება შეუქცევადია და ლიცენზია ვეღარ აღდგება!\n\nგასაღები: "}${key}`;
+    const confirmMsg = `${t("msg.deleteConfirm") || "Are you sure you want to permanently remove this license from Supabase data? This action is irreversible and the license cannot be restored!\n\nKey: "}${key}`;
 
 
 
-    const confirmed = await showCustomConfirm(t("confirm.title") || "დადასტურება", confirmMsg);
+    const confirmed = await showCustomConfirm(t("confirm.title") || "Confirmation", confirmMsg);
 
 
 
@@ -18874,7 +18578,7 @@ async function deleteLicensePermanently(key) {
 
 
 
-        showBanner(t("msg.deleteSuccess") || "ლიცენზია წარმატებით წაიშალა Supabase ბაზიდან", "success");
+        showBanner(t("msg.deleteSuccess") || "The license has been successfully deleted from Supabase", "success");
 
 
 
@@ -18898,11 +18602,11 @@ async function deleteLicensePermanently(key) {
 
 
 
-                "ლიცენზია სამუდამოდ წაიშალა (Supabase Database Purge)",
+                "License permanently deleted (Supabase Database Purge)",
 
 
 
-                `მფლობელმა **${ownerName}** სამუდამოდ წაშალა ლიცენზია Supabase მონაცემებიდან.`,
+                `Owner **${ownerName}** Permanently removed license from Supabase data.`,
 
 
 
@@ -18914,11 +18618,11 @@ async function deleteLicensePermanently(key) {
 
 
 
-                    { name: "მფლობელი (Owner)", value: ownerName, inline: true },
+                    { name: "Owner", value: ownerName, inline: true },
 
 
 
-                    { name: "წაშლილი გასაღები", value: key, inline: false }
+                    { name: "Deleted key", value: key, inline: false }
 
 
 
@@ -18950,11 +18654,11 @@ async function deleteLicensePermanently(key) {
 
 
 
-                title: "ლიცენზიის სამუდამო წაშლა",
+                title: "Permanent cancellation of license",
 
 
 
-                description: `ლიცენზია ${key} სამუდამოდ წაიშალა Supabase ბაზიდან მფლობელის მიერ`,
+                description: `License ${key} Permanently removed from Supabase database by owner`,
 
 
 
@@ -19006,7 +18710,7 @@ async function deleteLicensePermanently(key) {
 
 
 
-        showBanner((t("msg.deleteFail") || "ლიცენზიის წაშლა ვერ მოხერხდა: ") + err.message, "error");
+        showBanner((t("msg.deleteFail") || "Failed to delete license: ") + err.message, "error");
 
 
 
@@ -19110,11 +18814,11 @@ async function resetLicenseHwid(key) {
 
 
 
-            title: "Staff-მა გაანულა HWID",
+            title: "Staff deleted HWID",
 
 
 
-            description: `Staff-მა **${adminHwidActor}** გაანულა მოწყობილობის HWID ლიცენზიისთვის **${key}**.`,
+            description: `Staff made **${adminHwidActor}** Omitted device HWID for license **${key}**.`,
 
 
 
@@ -19202,7 +18906,7 @@ async function resetUserHwid(key) {
 
 
 
-            showBanner("ლიცენზია ვერ მოიძებნა.", "error");
+            showBanner("License not found.", "error");
 
 
 
@@ -19254,7 +18958,7 @@ async function resetUserHwid(key) {
 
 
 
-                        showBanner(`⏳ HWID-ის ჩამოყრა შესაძლებელია 30 დღეში ერთხელ! დარჩენილია ${daysLeft} დღე. დახმარებისთვის გახსენით Ticket Telegram-ში: @PulseClientOfficialBot`, "error");
+                        showBanner(`HWID can only be reset once every 30 days. ${daysLeft} day(s) remaining. For help, open a ticket on Telegram: @PulseClientOfficialBot`, "error");
 
 
 
@@ -19286,11 +18990,11 @@ async function resetUserHwid(key) {
 
 
 
-            t("confirm.title") || "HWID ჩამოყრა",
+            t("confirm.title") || "HWID reset",
 
 
 
-            (t("msg.hwidResetConfirm") || "ნამდვილად გსურთ მოწყობილობის (HWID) განულება ამ ლიცენზიისთვის?") + "\n\n(გაითვალისწინეთ: შემდეგი ჩამოყრა შესაძლებელი იქნება 30 დღის შემდეგ)"
+            (t("msg.hwidResetConfirm") || "Are you sure you want to reset the HWID for this license?") + "\n\n(Note: the next reset will be available in 30 days)"
 
 
 
@@ -19366,7 +19070,7 @@ async function resetUserHwid(key) {
 
 
 
-        showBanner(t("msg.hwidSuccess") || "HWID წარმატებით განულდა!", "success");
+        showBanner(t("msg.hwidSuccess") || "HWID reset successfully!", "success");
 
 
 
@@ -19382,7 +19086,7 @@ async function resetUserHwid(key) {
 
 
 
-        showBanner((t("msg.hwidFail") || "შეცდომა: ") + err.message, "error");
+        showBanner((t("msg.hwidFail") || "Error: ") + err.message, "error");
 
 
 
@@ -19603,578 +19307,6 @@ function showCustomConfirm(title, message) {
 
 
     });
-
-
-
-}
-
-
-
-
-
-
-
-// Free Trial Claiming Logic
-
-
-
-async function claimFreeTrial() {
-
-
-
-    if (!currentUser) {
-
-
-
-        showBanner(t("msg.loginFail") + "Please log in first", "error");
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    const claimTrialBtn = document.getElementById('claim-trial-btn');
-
-
-
-    if (claimTrialBtn) {
-
-
-
-        claimTrialBtn.disabled = true;
-
-
-
-        claimTrialBtn.textContent = t("msg.creating");
-
-
-
-    }
-
-
-
-
-
-
-
-    const metadata = currentUser.user_metadata;
-
-
-
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-
-
-
-    const discordId = metadata.provider_id || (currentUser.identities && currentUser.identities[0]?.id);
-
-
-
-
-
-
-
-    try {
-
-
-
-        // 0. IP-based Multi-Account Trial Abuse check
-
-
-
-        let clientIp = null;
-
-
-
-        try {
-
-
-
-            const ipRes = await fetch('https://api.ipify.org?format=json');
-
-
-
-            if (ipRes.ok) {
-
-
-
-                const ipJson = await ipRes.json();
-
-
-
-                clientIp = ipJson.ip;
-
-
-
-            }
-
-
-
-        } catch (ignored) {}
-
-
-
-
-
-
-
-        if (clientIp) {
-
-
-
-            try {
-
-
-
-                const { data: ipProfiles } = await supabaseClient
-
-
-
-                    .from('profiles')
-
-
-
-                    .select('id, username, discord_id, trial_claimed_at')
-
-
-
-                    .eq('last_ip', clientIp)
-
-
-
-                    .not('trial_claimed_at', 'is', null);
-
-
-
-
-
-
-
-                if (ipProfiles && ipProfiles.length > 0) {
-
-
-
-                    const otherProfile = ipProfiles.find(p => p.id !== currentUser.id && p.discord_id !== String(discordId));
-
-
-
-                    if (otherProfile) {
-
-
-
-                        showBanner("ამ IP მისამართიდან უფასო საცდელი ვერსია უკვე აღებულია!", "error");
-
-
-
-                        return;
-
-
-
-                    }
-
-
-
-                }
-
-
-
-            } catch (ipCheckErr) {
-
-
-
-                console.warn("IP trial abuse check skipped:", ipCheckErr);
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-        // 1. Age check on Discord account using snowflake creation date
-
-
-
-        if (discordId) {
-
-
-
-            try {
-
-
-
-                const snowflake = BigInt(discordId);
-
-
-
-                const createdAtMs = Number((snowflake >> 22n) + 1420070400000n);
-
-
-
-                const diffDays = (Date.now() - createdAtMs) / (1000 * 60 * 60 * 24);
-
-
-
-                if (diffDays < 30) {
-
-
-
-                    showBanner(t("msg.trialAccountTooNew"), "error");
-
-
-
-                    return;
-
-
-
-                }
-
-
-
-            } catch (err) {
-
-
-
-                console.error("Failed to parse discord account age:", err);
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-        // 2. Check if user already has a key associated with their DiscordID or username in the licenses table
-
-
-
-        const queryDiscordId = `%DiscordID: ${discordId}%`;
-
-
-
-        const queryUsername = `%Buyer: ${username}%`;
-
-
-
-        
-
-
-
-        const { data: existingLicenses, error: queryError } = await supabaseClient
-
-
-
-            .from('licenses')
-
-
-
-            .select('*')
-
-
-
-            .or(`note.like.${queryDiscordId},note.like.${queryUsername}`);
-
-
-
-
-
-
-
-        if (queryError) throw queryError;
-
-
-
-
-
-
-
-        if (existingLicenses && existingLicenses.length > 0) {
-
-
-
-            const hasClaimedTrial = existingLicenses.some(l => l.note && l.note.includes("Free Trial"));
-
-
-
-            const hasOtherLicense = existingLicenses.some(l => l.note && !l.note.includes("Free Trial") && !l.note.includes("Referral Bonus"));
-
-
-
-            if (hasClaimedTrial || hasOtherLicense) {
-
-
-
-                showBanner(t("msg.trialAlreadyClaimed"), "error");
-
-
-
-                return;
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-        // 3. Process referral bonus if this is their first license
-
-
-
-        const hasTriggeredRef = existingLicenses && existingLicenses.some(l => l.note && l.note.includes("Referred by:"));
-
-
-
-        let referrerName = null;
-
-
-
-        if (!hasTriggeredRef) {
-
-
-
-            referrerName = await processReferralBonus(username);
-
-
-
-        }
-
-
-
-
-
-
-
-        // 4. Generate a key and save it (6 days if referred, 3 days standard)
-
-
-
-        const key = generateLicenseKey();
-
-
-
-        const trialDays = referrerName ? 6 : 3;
-
-
-
-        const expiresAt = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000).toISOString();
-
-
-
-        let note = `Product: PulseClient | Buyer: ${username} | DiscordID: ${discordId} (Free Trial)`;
-
-
-
-        if (referrerName) {
-
-
-
-            note += ` | Referred by: ${referrerName}`;
-
-
-
-        }
-
-
-
-
-
-
-
-        const { error: insertError } = await supabaseClient
-
-
-
-            .from('licenses')
-
-
-
-            .insert({
-
-
-
-                license_key: key,
-
-
-
-                expires_at: expiresAt,
-
-
-
-                is_active: true,
-
-
-
-                note: note
-
-
-
-            });
-
-
-
-
-
-
-
-        if (insertError) throw insertError;
-
-
-
-
-
-
-
-        // Silently record trial_claimed_at in profiles table
-
-
-
-        try {
-
-
-
-            await supabaseClient
-
-
-
-                .from('profiles')
-
-
-
-                .update({ trial_claimed_at: new Date().toISOString() })
-
-
-
-                .eq('id', currentUser.id);
-
-
-
-        } catch (ignored) {}
-
-
-
-
-
-
-
-        showBanner(t("msg.trialSuccess"), "success");
-
-
-
-        sendDiscordAuditLog(
-
-
-
-            "უფასო Trial აღებულია",
-
-
-
-            `მომხმარებელმა **${username}** აიღო **${trialDays} დღიანი** უფასო საცდელი ვერსია.`,
-
-
-
-            0x10b981,
-
-
-
-            [
-
-
-
-                { name: "მომხმარებელი", value: username || "Unknown", inline: true },
-
-
-
-                { name: "Discord ID", value: String(discordId || "N/A"), inline: true },
-
-
-
-                { name: "გასაღები", value: key, inline: false },
-
-
-
-                { name: "ხანგრძლივობა", value: `${trialDays} დღე`, inline: true },
-
-
-
-                { name: "რეფერალი", value: referrerName ? `კი (${referrerName})` : "არა", inline: true }
-
-
-
-            ]
-
-
-
-        );
-
-
-
-        fetchUserLicenses();
-
-
-
-    } catch (err) {
-
-
-
-        console.error("Error claiming trial key:", err.message);
-
-
-
-        showBanner(t("msg.keyCreateFail") + err.message, "error");
-
-
-
-    } finally {
-
-
-
-        if (claimTrialBtn) {
-
-
-
-            claimTrialBtn.disabled = false;
-
-
-
-            claimTrialBtn.textContent = t("dash.trialBtn");
-
-
-
-        }
-
-
-
-    }
 
 
 
@@ -20794,622 +19926,6 @@ function generateOldReferralCodeFromDiscordId(discordId) {
 
 
 
-async function redeemReferralCode() {
-
-
-
-    const codeInput = document.getElementById('referral-code-input');
-
-
-
-    const submitBtn = document.getElementById('referral-code-submit-btn');
-
-
-
-    if (!codeInput || !submitBtn) return;
-
-
-
-
-
-
-
-    if (!currentUser) {
-
-
-
-        showBanner(t("msg.loginFail") || "Please log in first", "error");
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    let inputVal = codeInput.value.trim();
-
-
-
-    if (!inputVal) return;
-
-
-
-
-
-
-
-    const code = inputVal.toUpperCase();
-
-
-
-    const discordId = getDiscordId(currentUser);
-
-
-
-    const metadata = currentUser.user_metadata || {};
-
-
-
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
-
-
-
-
-
-
-
-    // Check if user is trying to use their own Discord ID
-
-
-
-    if (discordId && (inputVal === String(discordId) || code === String(discordId))) {
-
-
-
-        showBanner(t("msg.refCodeSelf") || "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.", "error");
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    // Check if user is trying to use their own referral code
-
-
-
-    if (discordId) {
-
-
-
-        const ownCanonical = generateOldReferralCodeFromDiscordId(String(discordId));
-
-
-
-        const ownUnsigned = generateReferralCodeFromDiscordId(String(discordId));
-
-
-
-        if (code === ownCanonical || code === ownUnsigned) {
-
-
-
-            showBanner(t("msg.refCodeSelf") || "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.", "error");
-
-
-
-            return;
-
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-    submitBtn.disabled = true;
-
-
-
-    submitBtn.textContent = "...";
-
-
-
-
-
-
-
-    let codeToSend = code;
-
-
-
-    let matchedReferrer = null;
-
-
-
-
-
-
-
-    // 1. Dual-algorithm referral resolution across profiles
-
-
-
-    try {
-
-
-
-        const { data: profiles } = await supabaseClient
-
-
-
-            .from('profiles')
-
-
-
-            .select('discord_id, username');
-
-
-
-
-
-
-
-        if (profiles && profiles.length > 0) {
-
-
-
-            matchedReferrer = profiles.find(p => {
-
-
-
-                if (!p.discord_id) return false;
-
-
-
-                const dId = String(p.discord_id).trim();
-
-
-
-                const uName = String(p.username || '').trim().toLowerCase();
-
-
-
-                return (
-
-
-
-                    dId === inputVal ||
-
-
-
-                    generateReferralCodeFromDiscordId(dId) === code ||
-
-
-
-                    generateOldReferralCodeFromDiscordId(dId) === code ||
-
-
-
-                    (inputVal.length >= 3 && uName === inputVal.toLowerCase())
-
-
-
-                );
-
-
-
-            });
-
-
-
-        }
-
-
-
-    } catch (profileErr) {
-
-
-
-        console.warn("[Pulse Referral] Profile lookup warning:", profileErr.message);
-
-
-
-    }
-
-
-
-
-
-
-
-    // 2. Fallback: check licenses table if not found in profiles
-
-
-
-    if (!matchedReferrer) {
-
-
-
-        try {
-
-
-
-            const { data: licRows } = await supabaseClient
-
-
-
-                .from('licenses')
-
-
-
-                .select('note')
-
-
-
-                .limit(200);
-
-
-
-
-
-
-
-            if (licRows && licRows.length > 0) {
-
-
-
-                for (const row of licRows) {
-
-
-
-                    const note = row.note || '';
-
-
-
-                    const idMatch = note.match(/DiscordID:\s*(\d+)/i);
-
-
-
-                    const userMatch = note.match(/Buyer:\s*([^|)]+)/i);
-
-
-
-                    const dId = idMatch ? idMatch[1].trim() : '';
-
-
-
-                    const uName = userMatch ? userMatch[1].trim().toLowerCase() : '';
-
-
-
-
-
-
-
-                    if (dId) {
-
-
-
-                        if (
-
-
-
-                            dId === inputVal ||
-
-
-
-                            generateReferralCodeFromDiscordId(dId) === code ||
-
-
-
-                            generateOldReferralCodeFromDiscordId(dId) === code ||
-
-
-
-                            (inputVal.length >= 3 && uName && uName === inputVal.toLowerCase())
-
-
-
-                        ) {
-
-
-
-                            matchedReferrer = { discord_id: dId, username: userMatch ? userMatch[1].trim() : 'User' };
-
-
-
-                            break;
-
-
-
-                        }
-
-
-
-                    }
-
-
-
-                }
-
-
-
-            }
-
-
-
-        } catch (licErr) {
-
-
-
-            console.warn("[Pulse Referral] Licenses lookup warning:", licErr.message);
-
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-    if (matchedReferrer && matchedReferrer.discord_id) {
-
-
-
-        // Prevent self-referral
-
-
-
-        if (String(matchedReferrer.discord_id) === String(discordId)) {
-
-
-
-            submitBtn.disabled = false;
-
-
-
-            submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
-
-
-
-            showBanner(t("msg.refCodeSelf") || "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.", "error");
-
-
-
-            return;
-
-
-
-        }
-
-
-
-        // ALWAYS send server canonical code (abs algorithm) that Python backend evaluates!
-
-
-
-        codeToSend = generateOldReferralCodeFromDiscordId(matchedReferrer.discord_id);
-
-
-
-        console.log("[Pulse Referral] Matched referrer:", matchedReferrer.username, "sending server canonical code:", codeToSend);
-
-
-
-    } else {
-
-
-
-        // If neither profile nor license matched, check if it's a valid 7-char code format
-
-
-
-        const is7Char = code.length === 7 && /^[A-Z2-9]{7}$/.test(code);
-
-
-
-        if (!is7Char) {
-
-
-
-            submitBtn.disabled = false;
-
-
-
-            submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
-
-
-
-            showBanner(t("msg.refCodeNotFound") || "მოცემული რეფერალური კოდი ვერ მოიძებნა.", "error");
-
-
-
-            return;
-
-
-
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-    try {
-
-
-
-        // Call the backend endpoint — it uses the service_role key to bypass RLS
-
-
-
-        const response = await pulseApiFetch('https://api.pulseclient.xyz/referral/redeem', {
-
-
-
-            method: 'POST',
-
-
-
-            headers: { 'Content-Type': 'application/json' },
-
-
-
-            body: JSON.stringify({ code: codeToSend, discord_id: String(discordId), username })
-
-
-
-        });
-
-
-
-
-
-
-
-        console.log("[Pulse Referral] HTTP status:", response.status, "ok:", response.ok);
-
-
-
-        const result = await response.json();
-
-
-
-        console.log("[Pulse Referral] Server result:", JSON.stringify(result));
-
-
-
-
-
-
-
-        if (result.status === 'success') {
-
-
-
-            showBanner(t("msg.refCodeSuccess") || result.message, "success");
-
-
-
-            codeInput.value = '';
-
-
-
-            // Clean up localStorage if it contained this referral
-
-
-
-            localStorage.removeItem('pulse_referral_discord_id');
-
-
-
-            fetchUserLicenses();
-
-
-
-        } else {
-
-
-
-            // Map known Georgian/backend messages to i18n keys if available
-
-
-
-            const msg = result.message || '';
-
-
-
-            if (msg.includes('საკუთარი კოდის')) showBanner(t("msg.refCodeSelf"), "error");
-
-
-
-            else if (msg.includes('უკვე გამოიყენეთ') || msg.includes('უკვე გამოყენებული')) showBanner(t("msg.refCodeAlreadyUsed") || msg, "error");
-
-
-
-            else if (msg.includes('ვერ მოიძებნა')) showBanner(t("msg.refCodeNotFound"), "error");
-
-
-
-            else showBanner((t("msg.refCodeFail") || "შეცდომა: ") + msg, "error");
-
-
-
-        }
-
-
-
-    } catch (err) {
-
-
-
-        console.error("[Pulse Referral] CATCH error:", err);
-
-
-
-        showBanner((t("msg.refCodeFail") || "შეცდომა: ") + err.message, "error");
-
-
-
-    } finally {
-
-
-
-        submitBtn.disabled = false;
-
-
-
-        submitBtn.textContent = t("msg.refCodeBtn") || "გააქტიურება";
-
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
 function showLicenseDetails(key) {
 
 
@@ -21582,7 +20098,7 @@ function showLicenseDetails(key) {
 
 
 
-            modalIp.textContent = "იტვირთება...";
+            modalIp.textContent = "Loading...";
 
 
 
@@ -21802,7 +20318,7 @@ function showLicenseDetails(key) {
 
 
 
-                modalIp.textContent = foundIp || "N/A (არ არის ჩაწერილი)";
+                modalIp.textContent = foundIp || "N/A (not recorded)";
 
 
 
@@ -22444,7 +20960,7 @@ async function saveUserProfile(user) {
 
 
 
-    const currentLang = window.currentLang || localStorage.getItem('pulse_lang') || 'ka';
+    const currentLang = window.currentLang || localStorage.getItem('pulse_lang') || 'en';
 
 
 
@@ -23396,7 +21912,7 @@ async function fetchBlacklistEntries() {
 
 
 
-        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">შავი სია ცარიელია ან ცხრილი არ არსებობს</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">The blacklist is empty or the table does not exist</td></tr>`;
 
 
 
@@ -23436,7 +21952,7 @@ function renderBlacklistEntries(entries) {
 
 
 
-        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">დაბლოკილი ჩანაწერები არ მოიძებნა</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">No blocked records found</td></tr>`;
 
 
 
@@ -23460,7 +21976,7 @@ function renderBlacklistEntries(entries) {
 
 
 
-        let typeName = 'IP მისამართი';
+        let typeName = 'IP address';
 
 
 
@@ -23476,7 +21992,7 @@ function renderBlacklistEntries(entries) {
 
 
 
-        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('ka-GE') : 'N/A';
+        const dateStr = item.created_at ? new Date(item.created_at).toLocaleDateString('en-US') : 'N/A';
 
 
 
@@ -23496,7 +22012,7 @@ function renderBlacklistEntries(entries) {
 
 
 
-            <td style="color: #fca5a5; font-size: 13px;">${item.reason || 'წესების დარღვევა'}</td>
+            <td style="color: #fca5a5; font-size: 13px;">${item.reason || 'Violation of the rules'}</td>
 
 
 
@@ -23512,7 +22028,7 @@ function renderBlacklistEntries(entries) {
 
 
 
-                    განბლოკვა
+                    Unlock
 
 
 
@@ -23628,7 +22144,7 @@ async function handleAddBan(e) {
 
 
 
-        showBanner("მომხმარებელი წარმატებით დაიბლოკა!", "success");
+        showBanner("User successfully blocked!", "success");
 
 
 
@@ -23648,7 +22164,7 @@ async function handleAddBan(e) {
 
 
 
-        showBanner("ბლოკირების შეცდომა: " + err.message, "error");
+        showBanner("Blocking error: " + err.message, "error");
 
 
 
@@ -23700,7 +22216,7 @@ async function handleRemoveBan(id) {
 
 
 
-        showBanner("ბლოკი მოხსნილია!", "success");
+        showBanner("The block is removed!", "success");
 
 
 
@@ -23712,7 +22228,7 @@ async function handleRemoveBan(id) {
 
 
 
-        showBanner("განბლოკვის შეცდომა: " + err.message, "error");
+        showBanner("Unlock error: " + err.message, "error");
 
 
 
@@ -24016,7 +22532,7 @@ async function extendLicenseDays(key, days) {
 
 
 
-        showBanner(`ლიცენზიას წარმატებით დაემატა +${days} დღე!`, "success");
+        showBanner(`+$ was successfully added to the license{days} Day!`, "success");
 
 
 
@@ -24032,7 +22548,7 @@ async function extendLicenseDays(key, days) {
 
 
 
-        showBanner("შეცდომა ვადის გაგრძელებისას: " + err.message, "error");
+        showBanner("Error extending the term: " + err.message, "error");
 
 
 
@@ -24812,11 +23328,11 @@ async function redeemPromoCode(e) {
 
 
 
-            " პრომოკოდი გამოყენებულია",
+            " Promo code has been used",
 
 
 
-            `მომხმარებელმა **${username}** გამოიყენა პრომოკოდი **${code}**.`,
+            `User **${username}** Used promo code **${code}**.`,
 
 
 
@@ -24828,15 +23344,15 @@ async function redeemPromoCode(e) {
 
 
 
-                { name: "მომხმარებელი", value: username || "Unknown", inline: true },
+                { name: "user", value: username || "Unknown", inline: true },
 
 
 
-                { name: "კოდი", value: code, inline: true },
+                { name: "Code", value: code, inline: true },
 
 
 
-                { name: "დამატებული", value: `${promo.duration_days} დღე`, inline: true }
+                { name: "added", value: `${promo.duration_days} day`, inline: true }
 
 
 
@@ -24944,7 +23460,7 @@ async function pastePromoFromClipboard() {
 
 
 
-                showBanner(t("msg.promoPasted") || "კოდი ჩასმულია ბუფერიდან!", "success");
+                showBanner(t("msg.promoPasted") || "Code pasted from clipboard!", "success");
 
 
 
@@ -24976,7 +23492,7 @@ async function pastePromoFromClipboard() {
 
 
 
-            showBanner("გთხოვთ გამოიყენოთ Ctrl+V ჩასასმელად", "info");
+            showBanner("Please use Ctrl+V to paste", "info");
 
 
 
@@ -25168,7 +23684,7 @@ async function fetchUserPromoHistory() {
 
 
 
-        if (daysEl) daysEl.textContent = `+${totalDays} დღე`;
+        if (daysEl) daysEl.textContent = `+${totalDays} day`;
 
 
 
@@ -25220,7 +23736,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                    licStatusEl.textContent = "აქტიური";
+                    licStatusEl.textContent = "Active";
 
 
 
@@ -25240,7 +23756,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                            licSubEl.textContent = `${diffDays} დღე დარჩენილი`;
+                            licSubEl.textContent = `${diffDays} day left`;
 
 
 
@@ -25248,7 +23764,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                            licSubEl.textContent = "სამუდამო ლიცენზია";
+                            licSubEl.textContent = "Lifetime license";
 
 
 
@@ -25264,7 +23780,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                    licStatusEl.textContent = "არააქტიური";
+                    licStatusEl.textContent = "inactive";
 
 
 
@@ -25272,7 +23788,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                    if (licSubEl) licSubEl.textContent = "გაააქტიურეთ კოდი დღეების მისაღებად";
+                    if (licSubEl) licSubEl.textContent = "Activate the code to receive the days";
 
 
 
@@ -25328,11 +23844,11 @@ async function fetchUserPromoHistory() {
 
 
 
-                        <h5>ჯერ არ გაქვთ გამოყენებული პრომო კოდი</h5>
+                        <h5>You have not used a promo code yet</h5>
 
 
 
-                        <p>შეიყვანეთ პრომო კოდი ზემოთ მოცემულ ველში, ან ეწვიეთ ჩვენს Discord-ს ახალი ბონუსების მისაღებად.</p>
+                        <p>Enter the promo code in the box above, or visit our Discord to receive new bonuses.</p>
 
 
 
@@ -25384,7 +23900,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                    }) : "აქტივირებულია";
+                    }) : "is activated";
 
 
 
@@ -25412,7 +23928,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                            <span class="history-days-badge">+${days} დღე</span>
+                            <span class="history-days-badge">+${days} day</span>
 
 
 
@@ -25436,7 +23952,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                                გააქტიურებულია
+                                is activated
 
 
 
@@ -25488,7 +24004,7 @@ async function fetchUserPromoHistory() {
 
 
 
-                    <p style="color: var(--text-muted);">ისტორიის ჩატვირთვა ვერ მოხერხდა</p>
+                    <p style="color: var(--text-muted);">Failed to load history</p>
 
 
 
@@ -26464,7 +24980,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['გამარჯობა', 'სალამი', 'ზდაროვა', 'გამარჯობათ', 'hello', 'hi', 'hey', 'sup', 'yo', 'როგორ ხარ', 'როგორ ხართ'])) {
+    if (hasAny(['Hello', 'Hello', 'Zdarova', 'hello', 'hello', 'hi', 'hey', 'sup', 'yo', 'how are you', 'how are you'])) {
 
 
 
@@ -26472,7 +24988,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "გამარჯობა! მე ვარ <strong>Pulse AI</strong>, PulseClient-ის ოფიციალური ასისტენტი. რით შემიძლია დაგეხმარო?<br><br>• კლიენტის ჩამოტვირთვა & ინსტალაცია<br>• მენიუს ღილაკები (F12 / Shift)<br>• შეძენა & ლიცენზია<br>• HWID და პრობლემების მოგვარება";
+            return "Hello! I am <strong>Pulse AI</strong>, the official PulseClient Assistant. how can i help you<br><br>• Client download & installation<br>• Menu keys (Right Shift)<br>• Purchase & License<br>• HWID and troubleshooting";
 
 
 
@@ -26480,7 +24996,7 @@ function generatePulseAIResponse(input) {
 
 
 
-        return "Hello! I am <strong>Pulse AI</strong>, the official PulseClient support bot. How can I help you today?<br><br>• Client Download & Installation<br>• Keybinds (F12 / Shift)<br>• Purchase & Licensing<br>• HWID & Troubleshooting";
+        return "Hello! I am <strong>Pulse AI</strong>, the official PulseClient support bot. How can I help you today?<br><br>• Client Download & Installation<br>• Keybinds (Right Shift)<br>• Purchase & Licensing<br>• HWID & Troubleshooting";
 
 
 
@@ -26496,7 +25012,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['ვინ ხარ', 'რა ხარ', 'რა შეგიძლია', 'who are you', 'what are you', 'what can you do'])) {
+    if (hasAny(['who are you', 'what are you', 'what can you do', 'who are you', 'what are you', 'what can you do'])) {
 
 
 
@@ -26504,7 +25020,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "მე ვარ <strong>Pulse AI</strong> — ხელოვნური ინტელექტის ასისტენტი. შემიძლია პასუხი გავცე შენს ნებისმიერ კითხვას PulseClient-ის, ინსტალაციის, ღილაკების, ლიცენზიის, ანტიკლიენტის შემოვლებისა და ხარვეზების შესახებ!";
+            return "I am <strong>Pulse AI</strong> — Assistant of artificial intelligence. I can answer any questions you have about PulseClient, installation, buttons, license, anti-client workarounds and bugs!";
 
 
 
@@ -26528,7 +25044,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['f12', 'shift', 'right shift', 'ღილაკ', 'მენიუ', 'გახსნა', 'როგორ გავხსნა', 'keybind', 'bind', 'menu', 'open', 'controls', 'რომელი ღილაკით'])) {
+    if (hasAny(['f12', 'shift', 'right shift', 'button', 'menu', 'opening', 'How do I open it?', 'keybind', 'bind', 'menu', 'open', 'controls', 'Which button?'])) {
 
 
 
@@ -26536,7 +25052,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>PulseClient მენიუს ღილაკები:</strong><br>• <strong>Pulse PvP Client:</strong> მენიუ იხსნება <strong>F12</strong> ღილაკით (ოპტიმიზირებული FPS, Kill Trigger, Watermark fix).<br>• <strong>Pulse Base Find:</strong> მენიუ იხსნება <strong>Right Shift</strong> (მარჯვენა Shift) ღილაკით (Matrix/GrimAC bypass).";
+            return "<strong>PulseClient menu buttons:</strong><br>• <strong>Pulse PvP Client:</strong> The menu opens <strong>Right Shift</strong> Button (Optimized FPS, Kill Trigger, Watermark fix).<br>• <strong>Pulse Base Find:</strong> The menu opens <strong>Right Shift</strong> (Right Shift) button (Matrix/GrimAC bypass).";
 
 
 
@@ -26544,7 +25060,7 @@ function generatePulseAIResponse(input) {
 
 
 
-        return "<strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client:</strong> Menu opens with <strong>F12</strong> (Optimized FPS, Kill Trigger).<br>• <strong>Pulse Base Find:</strong> Menu opens with <strong>Right Shift</strong> (Matrix/GrimAC bypass).";
+        return "<strong>PulseClient Keybinds:</strong><br>• <strong>Pulse PvP Client:</strong> Menu opens with <strong>Right Shift</strong> (Optimized FPS, Kill Trigger).<br>• <strong>Pulse Base Find:</strong> Menu opens with <strong>Right Shift</strong> (Matrix/GrimAC bypass).";
 
 
 
@@ -26560,7 +25076,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['ინსტალაც', 'დაყენებ', 'ჩაგდება', 'როგორ ჩავაგდო', 'სად ჩავაგდო', 'install', 'setup', 'mods', 'folder', 'fabric', 'jar'])) {
+    if (hasAny(['Installation too', 'put', 'throw in', 'How did I drop it?', 'Where did I drop it?', 'install', 'setup', 'mods', 'folder', 'fabric', 'jar'])) {
 
 
 
@@ -26568,7 +25084,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>ინსტალაციის ნაბიჯები:</strong><br>1. ჩამოტვირთეთ `.jar` ფაილი საიტიდან (PvP ან Base Find).<br>2. გახსენით `%appdata%/.minecraft/mods` საქაღალდე.<br>3. ჩააგდეთ ნასროლი `.jar` ფაილი მოდების საქაღალდეში.<br>4. ჩართეთ Minecraft <strong>Fabric 1.21.11</strong> პროფილით (Java 21-ით).";
+            return "<strong>Installation steps:</strong><br>1. Download it `.jar` File from site (PvP or Base Find).<br>2. Open it `%appdata%/.minecraft/mods` folder.<br>3. Throw in a shot `.jar` file in the mods folder.<br>4. Start Minecraft <strong>Fabric 1.21.11</strong> profile (with Java 21).";
 
 
 
@@ -26592,7 +25108,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['1.21', '1.21.11', 'ვერსია', 'version', 'java', 'java 21', 'java21'])) {
+    if (hasAny(['1.21', '1.21.11', 'version', 'version', 'java', 'java 21', 'java21'])) {
 
 
 
@@ -26600,7 +25116,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>ვერსია და მოთხოვნები:</strong><br>• Minecraft ვერსია: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java ვერსია: <strong>Java 21</strong> (რეკომენდებულია Temurin Java 21 ან Oracle Java 21).";
+            return "<strong>Version and requirements:</strong><br>• Minecraft version: <strong>1.21.11</strong><br>• Mod Loader: <strong>Fabric Loader</strong> (0.16.0+)<br>• Java version: <strong>Java 21</strong> (Temurin Java 21 or Oracle Java 21 is recommended).";
 
 
 
@@ -26624,7 +25140,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['tlauncher', 'lunar', 'feather', 'prism', 'curseforge', 'modrinth', 'official launcher', 'ლაუნჩერ', 'launcher'])) {
+    if (hasAny(['tlauncher', 'lunar', 'feather', 'prism', 'curseforge', 'modrinth', 'official launcher', 'Launcher', 'launcher'])) {
 
 
 
@@ -26632,7 +25148,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return " <strong>თავსებადი ლაუნჩერები:</strong><br>PulseClient მუშაობს თითქმის ყველა ლაუნჩერზე, სადაც Fabric 1.21.11-ის ჩართვა შეიძლება:<br>• TLauncher (აირჩიეთ Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Lunar Client (Fabric-ის მოდულით)<br>• ოფიციალური Minecraft Launcher.";
+            return " <strong>Compatible Launchers:</strong><br>PulseClient works on almost all launchers where Fabric 1.21.11 can be enabled:<br>• TLauncher (select Fabric 1.21.11)<br>• Prism Launcher / MultiMC<br>• Feather Launcher<br>• Lunar Client (with Fabric module)<br>• Official Minecraft Launcher.";
 
 
 
@@ -26656,7 +25172,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['განსხვავება', 'სხვაობა', 'pvp', 'basefind', 'base finder', 'difference', 'which one', 'რომელი გადმოვწერო'])) {
+    if (hasAny(['the difference', 'difference', 'pvp', 'basefind', 'base finder', 'difference', 'which one', 'Which one should I download?'])) {
 
 
 
@@ -26664,7 +25180,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>რომელი ვერსია ავირჩიო?</strong><br>• <strong>Pulse PvP Client:</strong> საუკეთესოა PvP ბრძოლებისთვის, გაზრდილი FPS, Kill Trigger, OpSec უსაფრთხოება. (იხსნება <strong>F12</strong>-ით).<br>• <strong>Pulse Base Find:</strong> სპეციალურად ბაზების საპოვნელად და სათვალთვალოდ, Matrix & GrimAC შემოვლით. (იხსნება <strong>Right Shift</strong>-ით).";
+            return "<strong>Which version should I choose?</strong><br>• <strong>Pulse PvP Client:</strong> Best for PvP battles, increased FPS, Kill Trigger, OpSec security. (opens <strong>Right Shift</strong> with).<br>• <strong>Pulse Base Find:</strong> Specifically for finding and tracking bases, bypassing Matrix & GrimAC. (opens <strong>Right Shift</strong> with).";
 
 
 
@@ -26672,7 +25188,7 @@ function generatePulseAIResponse(input) {
 
 
 
-        return "<strong>Which version to pick?</strong><br>• <strong>Pulse PvP Client:</strong> Best for combat, max FPS, Kill Trigger & OpSec (Opens with <strong>F12</strong>).<br>• <strong>Pulse Base Find:</strong> Built for base tracking with Matrix & GrimAC bypasses (Opens with <strong>Right Shift</strong>).";
+        return "<strong>Which version to pick?</strong><br>• <strong>Pulse PvP Client:</strong> Best for combat, max FPS, Kill Trigger & OpSec (Opens with <strong>Right Shift</strong>).<br>• <strong>Pulse Base Find:</strong> Built for base tracking with Matrix & GrimAC bypasses (Opens with <strong>Right Shift</strong>).";
 
 
 
@@ -26688,7 +25204,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['ყიდვა', 'ყიდვ', 'ფასი', 'ღირს', 'რა ღირს', 'buy', 'price', 'cost', 'purchase', 'ticket', 'discord', 'paypal', 'card', 'crypto'])) {
+    if (hasAny(['buy', 'you buy', 'the price', 'worth it', 'what is it worth', 'buy', 'price', 'cost', 'purchase', 'ticket', 'discord', 'paypal', 'card', 'crypto'])) {
 
 
 
@@ -26696,7 +25212,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>როგორ შევიძინოთ ლიცენზია?</strong><br>1. შემობრძანდით ჩვენს <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord სერვერზე</a>.<br>2. გახსენით **Ticket** 'Buy / Purchase' არხში.<br>3. ადმინისტრაცია რამდენიმე წუთში დაგეხმარებათ გადახდასა და გასაღების აქტივაციაში!";
+            return "<strong>How to purchase a license?</strong><br>1. Come to us <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>on the Discord server</a>.<br>2. Open **Ticket** 'Buy / Purchase' in the channel.<br>3. The administration will help you with payment and key activation in a few minutes!";
 
 
 
@@ -26720,7 +25236,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['პრომო', 'პრომოკოდი', 'კოდი', 'რეფერალ', 'უფასო', 'free', 'promo', 'referral', 'bonus', 'trial', 'ტესტ'])) {
+    if (hasAny(['Promo', 'promo code', 'Code', 'Referral', 'free', 'free', 'promo', 'referral', 'bonus', 'trial', 'test'])) {
 
 
 
@@ -26728,7 +25244,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return " <strong>უფასო დღეები & პრომოკოდები:</strong><br>• <strong>რეფერალური სისტემა:</strong> შენი პირადი კოდი ნახე დეშბორდში. როცა მეგობარი შეიყვანს მას, <strong>ორივეს დაგემატებათ +3 უფასო დღე</strong>!<br>• <strong>პრომოკოდები:</strong> პრომოკოდის შესაყვანად გადადი დეშბორდში 'Redeem' ჩანართზე.";
+            return " <strong>Free Days & Promo Codes:</strong><br>• <strong>Referral System:</strong> See your personal code in the dashboard. When a friend takes him in, <strong>Both will add +3 free days</strong>!<br>• <strong>Promo codes:</strong> Go to the dashboard to enter the promo code 'Redeem' tab.";
 
 
 
@@ -26752,7 +25268,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['hwid', 'pc', 'კომპიუტერ', 'შეცვლა', 'reset', 'lock', 'device'])) {
+    if (hasAny(['hwid', 'pc', 'computer', 'to change', 'reset', 'lock', 'device'])) {
 
 
 
@@ -26760,7 +25276,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>HWID და მოწყობილობები:</strong><br>თქვენი ლიცენზია პირველივე ჩართვისას ავტომატურად უკავშირდება თქვენს PC-ს. თუ კომპიუტერი შეცვალეთ, დეშბორდიდან შეგიძლიათ მოითხოვოთ HWID Reset ან მოგვწეროთ Discord-ზე.";
+            return "<strong>HWID and devices:</strong><br>Your license is automatically linked to your PC the first time you turn it on. If you've changed your computer, you can request a HWID Reset from the dashboard or message us on Discord.";
 
 
 
@@ -26784,7 +25300,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['ქრაშავს', 'არ იხსნება', 'error', 'crash', 'problem', 'პრობლემა', 'ხარვეზი', 'არ რთავს', 'გათიშვა', 'შეცდომა'])) {
+    if (hasAny(['It fades', 'does not open', 'error', 'crash', 'problem', 'problem', 'fault', 'does not turn on', 'hang up', 'error'])) {
 
 
 
@@ -26792,7 +25308,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>პრობლემის მოგვარება (Troubleshooting):</strong><br>1. დარწმუნდით რომ გაქვთ <strong>Java 21</strong> დაყენებული.<br>2. შეამოწმეთ Fabric Loader-ის ვერსია (უნდა იყოს 0.16.0 ან ახალი).<br>3. თუ სხვა მოდებიც გაქვთ `.minecraft/mods`-ში, დროებით ამოიღეთ (მაგ: OptiFine / Iris).<br>4. თუ მაინც ქრაშავს, მოგვწერეთ Discord Ticket-ში და გამოგვიგზავნეთ `latest.log`.";
+            return "<strong>Troubleshooting:</strong><br>1. Make sure you have <strong>Java 21</strong> installed.<br>2. Check the Fabric Loader version (should be 0.16.0 or newer).<br>3. If you have other mods `.minecraft/mods`in , temporarily remove (eg: OptiFine / Iris).<br>4. If it still fades, write to us in Discord Ticket and send it to us `latest.log`.";
 
 
 
@@ -26816,7 +25332,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['ban', 'ბანი', 'დამბანენ', 'anticheat', 'safe', 'უსაფრთხო', 'undetected', 'opsec', 'grim', 'matrix'])) {
+    if (hasAny(['ban', 'Bunny', 'they wash me', 'anticheat', 'safe', 'safe', 'undetected', 'opsec', 'grim', 'matrix'])) {
 
 
 
@@ -26824,7 +25340,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>ანტიჩითები & OpSec:</strong><br>PulseClient აღჭურვილია სპეციალური <strong>OpSec Mod</strong>-ით და Matrix/GrimAC შემოვლითი ალგორითმებით. სწორი პარამეტრებით თამაშისას ბანის რისკი მინიმალურია!";
+            return "<strong>Anti-Birds & OpSec:</strong><br>PulseClient is equipped with a special <strong>OpSec Mod</strong>and Matrix/GrimAC bypass algorithms. Ban risk is minimal when playing with the right settings!";
 
 
 
@@ -26848,7 +25364,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    if (hasAny(['მადლობა', 'გმადლობ', 'thanks', 'thank you', 'thx', 'kk', 'კაი', 'კარგი'])) {
+    if (hasAny(['Thank you', 'thank you', 'thanks', 'thank you', 'thx', 'kk', 'Kai', 'ok'])) {
 
 
 
@@ -26856,7 +25372,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "არაფრის!  თუ რამე კითხვა გექნება, ნებისმიერ დროს მომწერე. წარმატებულ თამაშს გისურვებ PulseClient-თან ერთად! ";
+            return "Nothing!  If you have any questions, write me anytime. I wish you a successful game with PulseClient! ";
 
 
 
@@ -26884,7 +25400,7 @@ function generatePulseAIResponse(input) {
 
 
 
-        return "<strong>Pulse AI:</strong> ვერ მივხვდი ზუსტად რას გულისხმობ. შეგიძლია იკითხო მაგალითად:<br>• <em>\"რომელი ღილაკით იხსნება მენიუ?\"</em><br>• <em>\"როგორ დავაინსტალირო მოდი?\"</em><br>• <em>\"როგორ შევიძინო ლიცენზია?\"</em><br>• <em>\"როგორ გავასწორო ქრაში?\"</em><br><br>ან მოგვწერე <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord-ზე</a>!";
+        return "<strong>Pulse AI:</strong> I didn't quite understand that. Try asking something like:<br>• <em>Which key opens the menu?</em><br>• <em>How do I install the mod?</em><br>• <em>How do I get a license?</em><br>• <em>How do I fix a crash?</em><br><br>Or reach us on <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 
 
 
@@ -27040,7 +25556,7 @@ function updateDeviceSlotModalInfo() {
 
 
 
-        const hwid = activeLic.hwid && activeLic.hwid !== 'null' ? activeLic.hwid : 'არ არის მიბმული';
+        const hwid = activeLic.hwid && activeLic.hwid !== 'null' ? activeLic.hwid : 'not attached';
 
 
 
@@ -27052,7 +25568,7 @@ function updateDeviceSlotModalInfo() {
 
 
 
-        hwidEl.textContent = 'HWID: ლიცენზია არ მოიძებნა';
+        hwidEl.textContent = 'HWID: No license found';
 
 
 
@@ -27076,7 +25592,7 @@ async function resetDeviceSlotHwid() {
 
 
 
-        showBanner("აქტიური ლიცენზია არ მოიძებნა", "error");
+        showBanner("No active license found", "error");
 
 
 
@@ -27104,11 +25620,11 @@ async function resetDeviceSlotHwid() {
 
 
 
-        "HWID Reset-ის მოთხოვნა",
+        "HWID Reset Request",
 
 
 
-        `მომხმარებელმა **${resetUser}** გაასუფთავა მოწყობილობის სლოტი (HWID).`,
+        `User **${resetUser}** Cleared device slot (HWID).`,
 
 
 
@@ -27120,11 +25636,11 @@ async function resetDeviceSlotHwid() {
 
 
 
-            { name: "მომხმარებელი", value: resetUser, inline: true },
+            { name: "user", value: resetUser, inline: true },
 
 
 
-            { name: "გასაღები", value: activeLic.license_key, inline: true }
+            { name: "the key", value: activeLic.license_key, inline: true }
 
 
 
@@ -27248,7 +25764,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-        showBanner("გადმოწერა უკვე მიმდინარეობს, გთხოვთ დაიცადოთ...", "info");
+        showBanner("Downloading in progress, please wait...", "info");
 
 
 
@@ -27352,7 +25868,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-            versionEl.textContent = `მზადდება: ${customFilename}`;
+            versionEl.textContent = `Prepared: ${customFilename}`;
 
 
 
@@ -27380,11 +25896,11 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-            "კლიენტის (.jar) გადმოწერა",
+            "Download the client (.jar).",
 
 
 
-            `მომხმარებელმა ჩამოტვირთა კლიენტის ფაილი **${customFilename}** (${osType.toUpperCase()}).`,
+            `User downloaded client file **${customFilename}** (${osType.toUpperCase()}).`,
 
 
 
@@ -27396,7 +25912,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-                { name: "მომხმარებელი", value: currentUsername, inline: true },
+                { name: "user", value: currentUsername, inline: true },
 
 
 
@@ -27404,7 +25920,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-                { name: "ფაილი", value: customFilename, inline: true }
+                { name: "file", value: customFilename, inline: true }
 
 
 
@@ -27444,7 +25960,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-    showBanner(`PulseClient-ის გადმოწერა დაიწყო: ${customFilename}`, "success");
+    showBanner(`PulseClient download started: ${customFilename}`, "success");
 
 
 
@@ -27564,7 +26080,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-                versionEl.textContent = `გადმოწერილია: ${customFilename}`;
+                versionEl.textContent = `Downloaded from: ${customFilename}`;
 
 
 
@@ -27657,1230 +26173,6 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 window.handleCustomClientDownload = handleCustomClientDownload;
-
-
-
-
-
-
-
-
-
-
-
-// ==========================================
-
-
-
-// PULSECLIENT CONFIG CLOUD LOGIC
-
-
-
-// ==========================================
-
-
-
-const PULSE_PRESETS = {
-
-
-
-    "donutsmp_basefinder": {
-
-
-
-        "name": "DonutSMP BaseFinder",
-
-
-
-        "author": "Pulse Official",
-
-
-
-        "version": "1.21.11",
-
-
-
-        "modules": {
-
-
-
-            "ChunkRadar": { "enabled": true, "radius": 32, "highlightNewChunks": true },
-
-
-
-            "StorageInspector": { "enabled": true, "chests": true, "shulkers": true, "barrels": true, "minValuableCount": 1 },
-
-
-
-            "HoleESP": { "enabled": true, "mode": "CustomGradient", "opacity": 0.65 },
-
-
-
-            "AutoWebhook": { "enabled": true, "sendCoords": true, "sendItemSummary": true },
-
-
-
-            "Speed": { "enabled": false },
-
-
-
-            "OpSecGuard": { "enabled": true, "hidePlayerNames": true, "spoofLogs": true }
-
-
-
-        }
-
-
-
-    },
-
-
-
-    "grimac_safe_pvp": {
-
-
-
-        "name": "GrimAC / Matrix Safe PvP",
-
-
-
-        "author": "Pulse Official",
-
-
-
-        "version": "1.21.11",
-
-
-
-        "modules": {
-
-
-
-            "AimAssist": { "enabled": true, "smoothness": 4.5, "fov": 65.0 },
-
-
-
-            "Reach": { "enabled": true, "distance": 3.12 },
-
-
-
-            "Velocity": { "enabled": true, "horizontal": 85, "vertical": 100 },
-
-
-
-            "AutoClicker": { "enabled": true, "minCps": 12, "maxCps": 16, "jitter": true },
-
-
-
-            "PlayerChams": { "enabled": true, "color": "#ffffff" },
-
-
-
-            "OpSecGuard": { "enabled": true }
-
-
-
-        }
-
-
-
-    },
-
-
-
-    "blatant_anarchy": {
-
-
-
-        "name": "Blatant Anarchy PvP",
-
-
-
-        "author": "Pulse Official",
-
-
-
-        "version": "1.21.11",
-
-
-
-        "modules": {
-
-
-
-            "Killaura": { "enabled": true, "range": 4.8, "target": "Players", "autoBlock": true },
-
-
-
-            "AutoTotem": { "enabled": true, "slot": "Offhand", "fastSwitch": true },
-
-
-
-            "CrystalAura": { "enabled": true, "placeSpeed": 20, "breakSpeed": 20 },
-
-
-
-            "Velocity": { "enabled": true, "horizontal": 0, "vertical": 0 },
-
-
-
-            "Tracers": { "enabled": true, "color": "#ffffff" }
-
-
-
-        }
-
-
-
-    },
-
-
-
-    "hypixel_duel": {
-
-
-
-        "name": "Hypixel / Minemen Duel",
-
-
-
-        "author": "Pulse Official",
-
-
-
-        "version": "1.21.11",
-
-
-
-        "modules": {
-
-
-
-            "AutoClicker": { "enabled": true, "minCps": 11, "maxCps": 15, "rightClick": false },
-
-
-
-            "WTap": { "enabled": true, "mode": "Packet" },
-
-
-
-            "Eagle": { "enabled": true, "edgeDistance": 0.1 },
-
-
-
-            "Sprint": { "enabled": true, "omni": false },
-
-
-
-            "BoxESP": { "enabled": true, "lineWidth": 1.5 }
-
-
-
-        }
-
-
-
-    }
-
-
-
-};
-
-
-
-
-
-
-
-function downloadPresetConfig(presetKey) {
-
-
-
-    const config = PULSE_PRESETS[presetKey];
-
-
-
-    if (!config) return;
-
-
-
-
-
-
-
-    const filename = `PulseClient_${presetKey}.json`;
-
-
-
-    const jsonStr = JSON.stringify(config, null, 4);
-
-
-
-    const blob = new Blob([jsonStr], { type: "application/json" });
-
-
-
-    const url = URL.createObjectURL(blob);
-
-
-
-
-
-
-
-    const a = document.createElement('a');
-
-
-
-    a.href = url;
-
-
-
-    a.download = filename;
-
-
-
-    document.body.appendChild(a);
-
-
-
-    a.click();
-
-
-
-    document.body.removeChild(a);
-
-
-
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
-
-
-
-
-
-
-
-    showBanner(`კონფიგი გადმოწერილია: ${filename}`, "success");
-
-
-
-}
-
-
-
-window.downloadPresetConfig = downloadPresetConfig;
-
-
-
-
-
-
-
-function copyPresetConfig(presetKey, btnElement) {
-
-
-
-    const config = PULSE_PRESETS[presetKey];
-
-
-
-    if (!config) return;
-
-
-
-
-
-
-
-    const jsonStr = JSON.stringify(config, null, 4);
-
-
-
-    navigator.clipboard.writeText(jsonStr).then(() => {
-
-
-
-        if (btnElement) {
-
-
-
-            const originalText = btnElement.textContent;
-
-
-
-            btnElement.textContent = "კოპირებულია!";
-
-
-
-            setTimeout(() => { btnElement.textContent = originalText; }, 2000);
-
-
-
-        }
-
-
-
-        showBanner("კონფიგის JSON კოდი დაკოპირდა ბუფერში!", "success");
-
-
-
-    });
-
-
-
-}
-
-
-
-window.copyPresetConfig = copyPresetConfig;
-
-
-
-
-
-
-
-
-
-
-
-// ==========================================
-
-
-
-// COMMUNITY CONFIG SHARING & UPLOAD LOGIC
-
-
-
-// ==========================================
-
-
-
-
-
-
-
-function handleConfigFileSelect(event) {
-
-
-
-    const file = event.target.files && event.target.files[0];
-
-
-
-    if (!file) return;
-
-
-
-
-
-
-
-    const reader = new FileReader();
-
-
-
-    reader.onload = function(e) {
-
-
-
-        const content = e.target.result;
-
-
-
-        const textarea = document.getElementById('share-config-json');
-
-
-
-        if (textarea) {
-
-
-
-            textarea.value = content;
-
-
-
-        }
-
-
-
-    };
-
-
-
-    reader.readAsText(file);
-
-
-
-}
-
-
-
-window.handleConfigFileSelect = handleConfigFileSelect;
-
-
-
-
-
-
-
-async function handleShareConfigSubmit(event) {
-
-
-
-    if (event) event.preventDefault();
-
-
-
-
-
-
-
-    if (!currentUser) {
-
-
-
-        showBanner("გთხოვთ გაიაროთ ავტორიზაცია Discord-ით!", "error");
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    // Check if user has an active license
-
-
-
-    const metadata = currentUser.user_metadata || {};
-
-
-
-    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name || "User";
-
-
-
-    const discordId = getDiscordId(currentUser) || "N/A";
-
-
-
-
-
-
-
-    const nameInput = document.getElementById('share-config-name');
-
-
-
-    const descInput = document.getElementById('share-config-desc');
-
-
-
-    const jsonInput = document.getElementById('share-config-json');
-
-
-
-    const submitBtn = document.getElementById('share-config-btn');
-
-
-
-
-
-
-
-    const configName = (nameInput.value || '').trim();
-
-
-
-    const configDesc = (descInput.value || '').trim();
-
-
-
-    const jsonCode = (jsonInput.value || '').trim();
-
-
-
-
-
-
-
-    if (!configName || !jsonCode) {
-
-
-
-        showBanner("გთხოვთ შეავსოთ ყველა ველი!", "error");
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    // Validate JSON
-
-
-
-    let parsedJson = null;
-
-
-
-    try {
-
-
-
-        parsedJson = JSON.parse(jsonCode);
-
-
-
-    } catch (e) {
-
-
-
-        showBanner("JSON კოდის ფორმატი არასწორია!", "error");
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    if (submitBtn) {
-
-
-
-        submitBtn.disabled = true;
-
-
-
-        submitBtn.textContent = "მოწმდება ლიცენზია...";
-
-
-
-    }
-
-
-
-
-
-
-
-    try {
-
-
-
-        // Query user licenses to verify active license key
-
-
-
-        const { data: licenses, error: licErr } = await supabaseClient
-
-
-
-            .from('licenses')
-
-
-
-            .select('*')
-
-
-
-            .like('note', `%Buyer: ${username}%`);
-
-
-
-
-
-
-
-        const now = new Date();
-
-
-
-        const hasActiveLicense = licenses && licenses.some(l => {
-
-
-
-            if (!l.is_active) return false;
-
-
-
-            if (!l.expires_at) return true;
-
-
-
-            if (l.expires_at.startsWith("2000-01-01")) return false; // not activated yet
-
-
-
-            return new Date(l.expires_at) > now;
-
-
-
-        });
-
-
-
-
-
-
-
-        if (!hasActiveLicense && !isAdmin()) {
-
-
-
-            showBanner("კონფიგის გასაზიარებლად საჭიროა გქონდეთ აქტიური PulseClient ლიცენზია!", "error");
-
-
-
-            return;
-
-
-
-        }
-
-
-
-
-
-
-
-        // Save community config
-
-
-
-        const configItem = {
-
-
-
-            id: 'cfg_' + Date.now(),
-
-
-
-            name: configName,
-
-
-
-            description: configDesc || "Community preset",
-
-
-
-            author: username,
-
-
-
-            discord_id: discordId,
-
-
-
-            config_data: parsedJson,
-
-
-
-            created_at: new Date().toISOString()
-
-
-
-        };
-
-
-
-
-
-
-
-        // 1. Try Supabase insert
-
-
-
-        try {
-
-
-
-            await supabaseClient.from('community_configs').insert(configItem);
-
-
-
-        } catch (dbErr) {
-
-
-
-            console.warn("Supabase community_configs table fallback:", dbErr);
-
-
-
-        }
-
-
-
-
-
-
-
-        // 2. Cache in LocalStorage
-
-
-
-        let localConfigs = [];
-
-
-
-        try {
-
-
-
-            localConfigs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]');
-
-
-
-        } catch (e) {}
-
-
-
-        localConfigs.unshift(configItem);
-
-
-
-        localStorage.setItem('pulse_community_configs', JSON.stringify(localConfigs));
-
-
-
-
-
-
-
-        // 3. Discord Audit Log Notification
-
-
-
-        sendDiscordAuditLog(
-
-
-
-            "ახალი კონფიგი გაზიარდა",
-
-
-
-            `მომხმარებელმა **${username}** გააზიარა ახალი კონფიგი: **${configName}**.`,
-
-
-
-            0x38bdf8,
-
-
-
-            [
-
-
-
-                { name: "ავტორი", value: username, inline: true },
-
-
-
-                { name: "სახელი", value: configName, inline: true },
-
-
-
-                { name: "აღწერა", value: configDesc || "N/A", inline: false }
-
-
-
-            ]
-
-
-
-        );
-
-
-
-
-
-
-
-        showBanner("თქვენი კონფიგი წარმატებით გაზიარდა!", "success");
-
-
-
-        nameInput.value = '';
-
-
-
-        descInput.value = '';
-
-
-
-        jsonInput.value = '';
-
-
-
-        renderCommunityConfigs();
-
-
-
-    } catch (err) {
-
-
-
-        console.error("Config share error:", err);
-
-
-
-        showBanner("კონფიგის გაზიარებისას დაფიქსირდა შეცდომა: " + err.message, "error");
-
-
-
-    } finally {
-
-
-
-        if (submitBtn) {
-
-
-
-            submitBtn.disabled = false;
-
-
-
-            submitBtn.textContent = "კონფიგის გაზიარება";
-
-
-
-        }
-
-
-
-    }
-
-
-
-}
-
-
-
-window.handleShareConfigSubmit = handleShareConfigSubmit;
-
-
-
-
-
-
-
-function renderCommunityConfigs() {
-
-
-
-    const container = document.getElementById('community-configs-list');
-
-
-
-    if (!container) return;
-
-
-
-
-
-
-
-    let configs = [];
-
-
-
-    try {
-
-
-
-        configs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]');
-
-
-
-    } catch (e) {}
-
-
-
-
-
-
-
-    if (configs.length === 0) {
-
-
-
-        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">საზოგადოების მიერ გაზიარებული კონფიგები ჯერ არ არის. იყავით პირველი!</div>`;
-
-
-
-        return;
-
-
-
-    }
-
-
-
-
-
-
-
-    container.innerHTML = configs.map(c => `
-
-
-
-        <div class="glass-panel preset-card" style="padding: 20px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(14, 16, 22, 0.85); border-radius: 14px;">
-
-
-
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-
-
-
-                <h4 style="font-size: 1.05rem; color: #fff; font-weight: 700;">${c.name}</h4>
-
-
-
-                <span style="background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">USER</span>
-
-
-
-            </div>
-
-
-
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4;">${c.description}</p>
-
-
-
-            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px;">ავტორი: <strong style="color: #ffffff;">${c.author}</strong></div>
-
-
-
-            <div style="display: flex; gap: 8px;">
-
-
-
-                <button type="button" class="btn btn-primary" onclick="downloadCustomConfigById('${c.id}')" style="flex: 1; padding: 6px 10px; font-size: 11px;">ჩამოტვირთვა</button>
-
-
-
-                <button type="button" class="btn btn-secondary" onclick="copyCustomConfigById('${c.id}', this)" style="padding: 6px 12px; font-size: 11px;">კოპირება</button>
-
-
-
-            </div>
-
-
-
-        </div>
-
-
-
-    `).join('');
-
-
-
-}
-
-
-
-window.renderCommunityConfigs = renderCommunityConfigs;
-
-
-
-
-
-
-
-function downloadCustomConfigById(configId) {
-
-
-
-    let configs = [];
-
-
-
-    try { configs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]'); } catch (e) {}
-
-
-
-    const found = configs.find(c => c.id === configId);
-
-
-
-    if (!found) return;
-
-
-
-
-
-
-
-    const safeName = found.name.replace(/[^a-zA-Z0-9_\-]/g, '_');
-
-
-
-    const filename = `PulseClient_${safeName}.json`;
-
-
-
-    const jsonStr = JSON.stringify(found.config_data, null, 4);
-
-
-
-    const blob = new Blob([jsonStr], { type: "application/json" });
-
-
-
-    const url = URL.createObjectURL(blob);
-
-
-
-
-
-
-
-    const a = document.createElement('a');
-
-
-
-    a.href = url;
-
-
-
-    a.download = filename;
-
-
-
-    document.body.appendChild(a);
-
-
-
-    a.click();
-
-
-
-    document.body.removeChild(a);
-
-
-
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
-
-
-
-    showBanner(`კონფიგი გადმოწერილია: ${filename}`, "success");
-
-
-
-}
-
-
-
-window.downloadCustomConfigById = downloadCustomConfigById;
-
-
-
-
-
-
-
-function copyCustomConfigById(configId, btnEl) {
-
-
-
-    let configs = [];
-
-
-
-    try { configs = JSON.parse(localStorage.getItem('pulse_community_configs') || '[]'); } catch (e) {}
-
-
-
-    const found = configs.find(c => c.id === configId);
-
-
-
-    if (!found) return;
-
-
-
-
-
-
-
-    const jsonStr = JSON.stringify(found.config_data, null, 4);
-
-
-
-    navigator.clipboard.writeText(jsonStr).then(() => {
-
-
-
-        if (btnEl) {
-
-
-
-            const orig = btnEl.textContent;
-
-
-
-            btnEl.textContent = "კოპირებულია!";
-
-
-
-            setTimeout(() => { btnEl.textContent = orig; }, 2000);
-
-
-
-        }
-
-
-
-        showBanner("კონფიგის JSON კოდი დაკოპირდა ბუფერში!", "success");
-
-
-
-    });
-
-
-
-}
-
-
-
-window.copyCustomConfigById = copyCustomConfigById;
-
-
-
-
-
-
-
-// Call render on init
-
-
-
-setTimeout(renderCommunityConfigs, 500);
 
 
 
@@ -29024,7 +26316,7 @@ function copyOpSecCleaner(btnEl) {
 
 
 
-            span.textContent = "კოპირებულია!";
+            span.textContent = "Copied!";
 
 
 
@@ -29036,7 +26328,7 @@ function copyOpSecCleaner(btnEl) {
 
 
 
-        showBanner("OpSec Cleaner სკრიპტის კოდი დაკოპირდა ბუფერში!", "success");
+        showBanner("OpSec Cleaner script code copied to clipboard!", "success");
 
 
 
@@ -31520,7 +28812,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-        const badges = ['+1 წთ', '+1 წთ', '+1 წუთი', '+1 წთ'];
+        const badges = ['+1 min', '+1 min', '+1 min', '+1 min'];
 
 
 
@@ -31652,7 +28944,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-            if (statusText) statusText.textContent = "დღიური 6 საათიანი ლიმიტი ამოწურულია!";
+            if (statusText) statusText.textContent = "The daily limit of 6 hours has expired!";
 
 
 
@@ -31688,7 +28980,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                    statusText.textContent = `PulseClient-ის ვადა გაიზარდა (+${count} წთ დღეს)`;
+                    statusText.textContent = `PulseClient has expired (+${count} min today)`;
 
 
 
@@ -31704,7 +28996,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                        statusText.innerHTML = `დაგროვილია <strong>${unclaimed} წთ</strong> — შედი Discord-ით გასააქტიურებლად!`;
+                        statusText.innerHTML = `accumulated <strong>${unclaimed} min</strong> — Log in with Discord to activate!`;
 
 
 
@@ -31712,7 +29004,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                        statusText.textContent = "დააკლიკე და გაახანგრძლივე PulseClient";
+                        statusText.textContent = "Click and expand PulseClient";
 
 
 
@@ -31880,7 +29172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                    showBanner('დღიური ლიმიტი ამოიწურა — ხვალ განაგრძე!', 'error');
+                    showBanner('Daily limit reached — come back tomorrow!', 'error');
 
 
 
@@ -32024,7 +29316,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-                showBanner(`შენ მიიღე +${unclaimed} წუთი PulseClient-ზე!`, 'success');
+                showBanner(`You got +${unclaimed} Minutes on PulseClient!`, 'success');
 
 
 
@@ -32472,7 +29764,7 @@ function showLicenseActivatedModal(license) {
 
 
 
-    let durText = "სტატუსი: აქტიური";
+    let durText = "Status: Active";
 
 
 
@@ -32488,7 +29780,7 @@ function showLicenseActivatedModal(license) {
 
 
 
-            durText = `ვადა: ${match[1]} დღე`;
+            durText = `Term: ${match[1]} day`;
 
 
 
@@ -32504,7 +29796,7 @@ function showLicenseActivatedModal(license) {
 
 
 
-            durText = "ვადა: Lifetime (სამუდამო)";
+            durText = "Term: Lifetime";
 
 
 
@@ -32524,7 +29816,7 @@ function showLicenseActivatedModal(license) {
 
 
 
-                durText = daysLeft > 0 ? `ვადა: ${daysLeft} დღე` : "ვადა: 1 დღე";
+                durText = daysLeft > 0 ? `Term: ${daysLeft} day` : "Term: 1 day";
 
 
 
@@ -32652,7 +29944,7 @@ function copyUserPopupKey() {
 
 
 
-            btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>✔ კოპირებულია!</span>`;
+            btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>✔ Copied!</span>`;
 
 
 
@@ -32692,7 +29984,7 @@ function copyUserPopupKey() {
 
 
 
-        if (typeof showBanner === 'function') showBanner("კოპირება ვერ მოხერხდა", "error");
+        if (typeof showBanner === 'function') showBanner("Copying failed", "error");
 
 
 
@@ -32705,74 +29997,6 @@ function copyUserPopupKey() {
 
 
 window.copyUserPopupKey = copyUserPopupKey;
-
-
-
-
-
-
-
-// Checks a list of user licenses and displays popup for any unseen one
-
-
-
-function checkNewLicensesFromList(licenses) {
-
-
-
-    if (!Array.isArray(licenses) || licenses.length === 0) return;
-
-
-
-    const username = getCurrentUsernameForAlert();
-
-
-
-    if (!username) return;
-
-
-
-
-
-
-
-    // Look for the latest active license
-
-
-
-    const latest = licenses[0];
-
-
-
-    if (!latest || !latest.license_key) return;
-
-
-
-
-
-
-
-    const storageKey = 'pulse_notified_key_' + latest.license_key;
-
-
-
-    if (!localStorage.getItem(storageKey)) {
-
-
-
-        showLicenseActivatedModal(latest);
-
-
-
-    }
-
-
-
-}
-
-
-
-window.checkNewLicensesFromList = checkNewLicensesFromList;
 
 
 
@@ -32825,22 +30049,6 @@ async function pollLiveLicenseAlerts() {
 
 
             .limit(1);
-
-
-
-
-
-
-
-        if (!error && userLics && userLics.length > 0) {
-
-
-
-            checkNewLicensesFromList(userLics);
-
-
-
-        }
 
 
 
@@ -33028,67 +30236,6 @@ if (document.readyState === 'loading') {
 
 
 
-// ==================== ONE-TIME TELEGRAM BONUS POPUP ====================
-
-function initTelegramBonusPopup() {
-
-    try {
-
-        const seen = localStorage.getItem('pulse_tg_bonus_popup_seen');
-
-        if (!seen) {
-
-            setTimeout(() => {
-
-                const modal = document.getElementById('telegram-bonus-modal');
-
-                if (modal) {
-
-                    modal.classList.remove('hidden');
-
-                }
-
-            }, 1500);
-
-        }
-
-    } catch (e) {}
-
-}
-
-
-
-function closeTelegramBonusModal() {
-
-    try {
-
-        localStorage.setItem('pulse_tg_bonus_popup_seen', 'true');
-
-    } catch (e) {}
-
-    const modal = document.getElementById('telegram-bonus-modal');
-
-    if (modal) {
-
-        modal.classList.add('hidden');
-
-    }
-
-}
-
-window.closeTelegramBonusModal = closeTelegramBonusModal;
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-
-    initTelegramBonusPopup();
-
-});
-
-
-
-// ==========================================
 const removedAdminDiscordIds = new Set();
 window.removedAdminDiscordIds = removedAdminDiscordIds;
 
@@ -33158,7 +30305,7 @@ function renderAdminStaffPanel() {
     const adminsList = Array.from(adminMap.values());
 
     if (adminsList.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 18px;">ადმინისტრატორები არ მოიძებნა</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 18px;">No administrators found</td></tr>';
         return;
     }
 
@@ -33197,7 +30344,7 @@ function renderAdminStaffPanel() {
             delBtn.type = 'button';
             delBtn.className = 'btn btn-secondary btn-sm';
             delBtn.style.cssText = 'padding: 4px 10px; font-size: 11.5px; color: #f87171; border-color: rgba(239, 68, 68, 0.3);';
-            delBtn.textContent = 'წაშლა';
+            delBtn.textContent = 'Delete';
             delBtn.addEventListener('click', () => handleRemoveAdminStaff(admin.discord_id, displayName));
             delCell.appendChild(delBtn);
         }
@@ -33218,7 +30365,7 @@ async function handleCreateAdminStaff(e) {
     const role = roleSelect ? roleSelect.value : 'admin';
 
     if (!discordId) {
-        showBanner("გთხოვთ შეიყვანოთ Discord ID", "warning");
+        showBanner("Please enter your Discord ID", "warning");
         return;
     }
 
@@ -33249,16 +30396,16 @@ async function handleCreateAdminStaff(e) {
         if (nameInput) nameInput.value = '';
 
         removedAdminDiscordIds.delete(discordId.trim());
-        showBanner(`ადმინისტრატორი (${discordId}) წარმატებით დაემატა!`, "success");
+        showBanner(`Administrator (${discordId}) successfully added!`, "success");
 
         sendDiscordAuditLog(
-            "ადმინისტრატორი დაემატა (Staff)",
-            `ადმინისტრატორმა **${currentUser?.user_metadata?.user_name || 'Admin'}** დაამატა ახალი ადმინი: **${username || discordId}** (Discord ID: \`${discordId}\`, როლი: \`${role}\`).`,
+            "Admin added (Staff)",
+            `Admin **${currentUser?.user_metadata?.user_name || 'Admin'}** Added new admin: **${username || discordId}** (Discord ID: \`${discordId}\`, role: \`${role}\`).`,
             0x22c55e,
             [
                 { name: "Discord ID", value: discordId, inline: true },
-                { name: "როლი", value: role, inline: true },
-                { name: "შემსრულებელი", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
+                { name: "role", value: role, inline: true },
+                { name: "performer", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
             ]
         );
 
@@ -33267,28 +30414,28 @@ async function handleCreateAdminStaff(e) {
 
     } catch (err) {
         console.error("Error adding admin:", err);
-        showBanner("შეცდომა ადმინის დამატებისას: " + err.message, "error");
+        showBanner("Error adding admin: " + err.message, "error");
     }
 }
 
 async function handleRemoveAdminStaff(discordId, displayName) {
     if (!isAdmin() && !isOwner()) {
-        showBanner("თქვენ არ გაქვთ ადმინისტრატორის წაშლის უფლება", "error");
+        showBanner("You do not have permission to remove the administrator", "error");
         return;
     }
 
     const didStr = String(discordId || '').trim();
     if (!didStr) {
-        showBanner("Discord ID არ არის მითითებული", "warning");
+        showBanner("No Discord ID specified", "warning");
         return;
     }
 
     const nameStr = displayName || didStr;
-    const confirmMessage = `დარწმუნებული ხართ რომ გსურთ ადმინისტრატორის უფლებების ჩამორთმევა მომხმარებლისთვის (${nameStr})?`;
+    const confirmMessage = `Are you sure you want to remove the administrator rights for the user (${nameStr})?`;
     
     let confirmed = false;
     if (typeof showCustomConfirm === 'function') {
-        confirmed = await showCustomConfirm("ადმინისტრატორის წაშლა", confirmMessage);
+        confirmed = await showCustomConfirm("Delete the administrator", confirmMessage);
     } else {
         confirmed = window.confirm(confirmMessage);
     }
@@ -33333,15 +30480,15 @@ async function handleRemoveAdminStaff(discordId, displayName) {
             });
         }
 
-        showBanner(`ადმინისტრატორი (${nameStr}) წარმატებით წაიშალა!`, "success");
+        showBanner(`Administrator (${nameStr}) was successfully deleted!`, "success");
 
         sendDiscordAuditLog(
-            "ადმინისტრატორი წაიშალა (Staff)",
-            `ადმინისტრატორმა **${currentUser?.user_metadata?.user_name || 'Admin'}** ჩამოართვა ადმინის უფლებები: **${nameStr}** (\`${didStr}\`).`,
+            "Administrator deleted (Staff)",
+            `Admin **${currentUser?.user_metadata?.user_name || 'Admin'}** Admin rights revoked: **${nameStr}** (\`${didStr}\`).`,
             0xef4444,
             [
                 { name: "Discord ID", value: didStr, inline: true },
-                { name: "შემსრულებელი", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
+                { name: "performer", value: currentUser?.user_metadata?.user_name || 'Admin', inline: true }
             ]
         );
 
@@ -33352,7 +30499,7 @@ async function handleRemoveAdminStaff(discordId, displayName) {
 
     } catch (err) {
         console.error("Error removing admin:", err);
-        showBanner("შეცდომა ადმინის წაშლისას: " + err.message, "error");
+        showBanner("Error deleting admin: " + err.message, "error");
     }
 }
 window.handleCreateAdminStaff = handleCreateAdminStaff;

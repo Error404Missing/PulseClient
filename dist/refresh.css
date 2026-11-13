@@ -4043,7 +4043,7 @@ p {
     flex-shrink: 0;
 }
 
-/* style.css-ის button.btn-primary წესს მეტი სპეციფიკურობა აქვს, ამიტომ ფერს ID-ით ვამაგრებთ */
+/* style.css's button.btn-primary rule has higher specificity, so the colour is scoped by ID */
 #crypto-purchase-modal .pay-go-btn,
 #crypto-purchase-modal .pay-go-btn:hover,
 #crypto-purchase-modal .pay-go-btn:active {

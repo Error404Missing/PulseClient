@@ -755,6 +755,8 @@ h3 {
 .telegram-float svg {
     width: 30px;
     height: 30px;
+    display: block;
+    flex: 0 0 auto;
 }
 
 .telegram-float:hover {

@@ -1,395 +1,13 @@
-// i18n.js — merged translations loader (safe for multiple loads)
-// Paste entire file as project/i18n.js and hard-refresh the page.
-
+// ==========================================================================
+// i18n.js — English-only localization layer for PulseClient.
+// The site ships in English only; Georgian strings and the language switcher
+// were removed in the 2026 redesign.
+// ==========================================================================
 (function () {
-  // Ensure a single global translations container
-  window.TRANSLATIONS = window.TRANSLATIONS || {};
+  "use strict";
 
-  // New translations to merge (ka + en) — sanitized to avoid truncated tokens.
-  const NEW = {
-    ka: {
-      "meta.title": "PulseClient - პრემიუმ Minecraft საბრძოლო და სტელს უპირატესობა",
-      "nav.features": "მახასიათებლები",
-      "nav.bypasses": "მოდულები",
-      "nav.modules": "მოდულები",
-      "footer.modules": "მოდულები",
-      "bots.title": "Meet the bots.",
-      "bots.sub1": "Six that fight for you.",
-      "bots.sub2": "Eight that work for you.",
-      "bots.cta": "Get all 14 bots",
-      "nav.pricing": "ლიცენზია & Ticket",
-      "nav.faq": "კითხვები",
-      "nav.team": "გუნდი",
-      "team.badge": "The Team",
-      "team.title": "Who's behind Pulse.",
-      "team.subtitle": "სამი მოთამაშე, რომლებმაც შექმნეს ისეთი კლიენტი, როგორიც სურდათ.",
-      "team.m1.role": "FOUNDER & DEVELOPER",
-      "team.m1.desc": "ყველა მოდული და ძრავის არქიტექტურა კაპოტის ქვეშ.",
-      "team.m2.role": "CLIENT MANAGER - FINANCIAL ASSISTANT",
-      "team.m2.desc": "კლიენტთა მენეჯმენტი, მხარდაჭერა და ფინანსური ოპერაციები.",
-      "team.m3.role": "HEAD-ADMINISTRATOR",
-      "team.m3.desc": "სერვერის ადმინისტრირება, მოდერაცია და უსაფრთხოება.",
-      "nav.login": "შესვლა",
-      "nav.user": "მომხმარებელი",
-      "hero.badge": "V1.05 ახალი ვერსია",
-      "hero.title": "დომინირება Minecraft <br><span class=\"highlight\">საბრძოლო & მოძრაობა</span>",
-      "hero.desc": "მოიპოვეთ უპირატესობა თამაშში კონფიგურირებადი Combat მოდიფიკაციებით, პერსონალური ვიზუალით და მოწინავე ბაიპასებით.",
-      "hero.buy": "მიიღე უფასოდ",
-      "hero.explore": "გაეცანი ფუნქციებს",
-      "hero.f1.title": "Full Anti-Cheat Bypass",
-      "hero.f1.desc": "GrimAC, Matrix და Vulcan — სუფთა პაკეტები.",
-      "hero.f2.title": "High Performance",
-      "hero.f2.desc": "0ms input lag და სტაბილური FPS.",
-      "hero.f3.title": "Custom Features",
-      "hero.f3.desc": "სრულად კონფიგურირებადი მოდულები.",
-      "hero.f4.title": "Regular Updates",
-      "hero.f4.desc": "ახალი მოდულები ყოველ განახლებაზე.",
-      "hero.protection": "PulseClient დაცვა",
-      "hero.status": "სრულად დაცული და ამოუცნობი",
-      "setup.title": "სწრაფი ინსტალაცია",
-      "setup.subtitle": "გადმოწერე, ჩააგდე mods საქაღალდეში და ითამაშე.",
-      "setup.stepsTitle": "3 ნაბიჯი",
-      "setup.stepsSub": "გადმოწერა, ჩაგდება, თამაში",
-      "setup.footer": "თავსებადია Fabric <strong>1.21.11</strong>-თან out of the box.",
-      "setup.discordTip": "Discord-ით გასაღები",
-      "setup.windowsTip": "mods საქაღალდეში ჩაგდება",
-      "setup.mcTip": "Minecraft-ში თამაში",
-      "features.title": "რატომ უნდა აირჩიოთ PulseClient?",
-      "features.subtitle": "შექმნილია ნულიდან მაქსიმალური საბრძოლო ეფექტურობისთვის, სუფთა ვიზუალით და სტაბილური bypass-ებით.",
-      "features.f1.title": "Combat მოდифიკაციები",
-      "features.f1.desc": "სრულად კონფიგურირებადი AutoClicker, Reach, Velocity/Knockback შემცირება და AimAssist, მაღალი ხარისხით.",
-      "features.f2.title": "ვიზუალური ფუნქციები",
-      "features.f2.desc": "სუფთა Player Chams, Chest ESP, დეტალური HUD ოვერლეი და Tracers, რომლებიც არ ჩანან ჩანაწერებში.",
-      "features.f3.title": "საბრძოლო და Utility მოდულები",
-      "features.f3.desc": "ფარული პაკეტების მანიპულაცია Matrix, GrimAC, Vulcan და სხვა თანამედროვე ანტის სისტემებისათვის.",
-      "features.f4.title": "Discord ინტეგრაცია",
-      "features.f4.desc": "გააქტიურეთ გასაღები, ნახეთ დეტალები და მართეთ როლები მარტივად ჩვენი Discord ბოტით.",
-      "pricing.title": "PulseClient ახლა სრულიად უფასოა!",
-      "pricing.subtitle": "აირჩიეთ ტარიფი, რომელიც საუკეთესოდ შეესაბამება თქვენს სათამაშო განრიგს.",
-      "pricing.weekly": "ყოველკვირიული ტარიფი",
-      "pricing.monthly": "ყოველთვიური ტარიფი",
-      "pricing.lifetime": "სამუდამო ტარიფი",
-      "pricing.popular": "რეკომენდებული",
-      "pricing.per7": "/ 7 დღე",
-      "pricing.per30": "/ 30 დღე",
-      "pricing.once": "/ ერთჯერადი",
-      "pricing.trial": "ერთჯერადი საცდელი პერიოდი",
-      "pricing.trialBadge": "FREE",
-      "pricing.free": "უფასო",
-      "pricing.per3": "/ 3 დღე",
-      "pricing.trialDesc": "გამოსცადეთ კლიენტი სრულად, არანაირი გადახდის გარეშე, სანამ ტარიფს აირჩევთ.",
-      "pricing.trialPerk": "გადახდის გარეშე, დაუყოვნებლივ",
-      "pricing.tryFree": "სცადე უფასოდ",
-      "pricing.weeklyDesc": "იდეალური კლიენტის გასატესტად და ყოველკვირეული გამოყენებისთვის.",
-      "pricing.monthlyDesc": "სტანდარტული არჩევანი აქტიური მოთამაშეებისთვის.",
-      "pricing.lifetimeDesc": "გადაიხადე ერთხელ, ითამაშე სამუდამოდ. მიიღე პრიორიტეტული წვდომა განახლებებზე.",
-      "pricing.perk1": "კლიენტის სრული წვდომა",
-      "pricing.perk2": "ყველა 14+ ბოტი და მოდული",
-      "pricing.perk3": "Discord როლი და მხარდა რობა",
-      "pricing.perk4": "მუდმივი ფუნქციების განახლება",
-      "pricing.perk5": "კლიენტის მუდმივი წვდომა",
-      "pricing.perk6": "პრიორიტეტული Discord მხარდაჭერა",
-      "pricing.perk7": "ექსკლუზიური ბეტა ვერსიები",
-      "pricing.perk8": "სამუდამო წვდომა განახლებებზე",
-      "pricing.buy": "ყიდვა",
-      "pricing.buyLifetime": "სამუდამოს შეძენა",
-      "ai.subtitle": "24/7 ასისტენტი მხარდაჭერისთვის",
-      "ai.welcomeMsg": "გამარჯობა! მე ვარ <strong>Pulse AI</strong> . როგორ დაგეხმარო დღეს? (შეგიძლია დამისვა კითხვები ინსტალაციაზე, ღილაკებზე, ლიცენზიის მიღებაზე ან პრობლემებზე).",
-      "ai.inputPlaceholder": "დასვი კითხვა...",
-      "purchaseModal.title": "შეძენისთვის მოგვმართეთ Discord-ზე",
-      "purchaseModal.desc": "ამ ტარიფის შესაძენად, გადადით ჩვენს Discord სერვერზე და გახსენით ticket მხარდაჭერისთვის.",
-      "purchaseModal.step1": "დააჭირეთ ღილაკს და შეერთდით ჩვენს Discord სერვერზე",
-      "purchaseModal.step2": "გახსენით <strong>ticket</strong> არხში \"Buy / Purchase\" კატეგორიაში",
-      "purchaseModal.step3": "დაელოდეთ მხარდაჭერის გუნდს და მიჰყევით მითითებებს",
-      "purchaseModal.cta": "Discord სერვერზე გადასვლა",
-      "dash.devices": "მოწყობილობები",
-      "dash.deviceSlot": "+ მოწყობილობის სლოტი",
-      "dash.downloads": "ჩამოტვირთვები",
-      "dash.licenses": "ლიცენზიები & გასაღები",
-      "dash.faq": "კითხვები",
-      "dash.configs": "კონფიგები (Presets)",
-      "dash.admin": "ადმინ პანელი",
-      "dash.discordUser": "Discord მომხმარებელი",
-      "dash.licensesLabel": "ლიცენზიები:",
-      "dash.logout": "გამოსვლა",
-      "dash.updateTitle": "ხელმისაწვდომია ახალი განახლება!",
-      "dash.updateDefault": "PulseClient-ის ახალი ვერსია გამოვიდა. გადმოიწერეთ ბოლო ვერსია.",
-      "dash.updateBtn": "განახლება",
-      "dash.latestVersion": "PulseClient - ბოლო ვერსია",
-      "dash.clientTitle": "PulseClient",
-      "dash.chooseVersion": "აირჩიეთ სასურველი ვერსია",
-      "dash.pvpVersion": "Pulse PvP Client (PvP-სთვის)",
-      "dash.pvpDesc": "საუკეთესოა PvP ბრძოლებისთვის, ოპტიმიზირებული FPS-ითა და ქილებიგერით (მენიუ იხსნება F12 ღილაკით)",
-      "dash.basefindVersion": "Pulse Base Find (Base-ების საპოვნელად)",
-      "dash.basefindDesc": "ბაზების საპოვნელად და სათვალთვალოდ, Matrix / GrimAC შემოვლებით (მენიუ იხსნება Right Shift ღილაკით)",
-      "dash.versionLabel": "ბოლო ვერსია",
-      "dash.versionLabelHtml": "ბოლო ვერსია <span class=\"badge-jar\">.jar</span>",
-      "dash.updatedToday": "ბოლოს განახლდა: დღეს",
-      "dash.cleanerTitle": "Pulse OpSec Trace Cleaner",
-      "dash.cleanerDesc": "ჩაიწერეთ და გაუშვით შემოწმებამდე (Check / Screenshare). მომენტალურად ასუფთავებს Minecraft-ის ლოგებს, Prefetch-ს, Search History-ს, ბრაუზერის დროებით ქეშსა და DNS trace-ებს.",
-      "dash.cleanerDlBtn": "ჩამოტვირთვა (.exe)",
-      "dash.cleanerBatBtn": "სკრიპტი (.bat)",
-      "dash.cleanerCopyBtn": "კოდის კოპირება",
-      "dash.opsecTitle": "Opsec Mod",
-      "dash.opsecDesc": "ამ მოდის ინსტალაცია მნიშვნელოვან უსაფრთხოებრივ ფუნქციას უზრუნველყოფს (OpSec).",
-      "dash.quickStart": "სწრაფი დაწყება (Quick Start)",
-      "dash.step1.title": "ჩამოტვირთვა",
-      "dash.step1.desc": "გადმოწერეთ ბოლო .jar ფაილი ზემოდან.",
-      "dash.step2.title": "ინსტალაცია",
-      "dash.step2.desc": "ჩააგდეთ ფაილი თქვენს 1.21.11 mods საქაღალდეში.",
-      "dash.step3.title": "თამაში",
-      "dash.step3.desc": "ჩართეთ თამაში და დააჭირეთ Shift (Shift) ღილაკს მენიუსთვის.",
-      "dash.launchers": "თავსებადი ლაუნჩერები (Compatible Launchers)",
-      "dash.compatible": "თავსებადი",
-      "dash.launchersNote": "სხვა Fabric-თან თავსებადი ლაუნჩერებიც შეიძლება მუშაობდეს.",
-      "dash.myLicenses": "თქვენი აქტიური ლიცენზიები",
-      "dash.refresh": "განახლება",
-      "dash.licensesLoading": "ლიცენზიები იტვირთება...",
-      "dash.noLicenses": "თქვენს Discord ანგარიშზე ჯერ არცერთი ლიცენზია არ არის მიბმული.",
-      "dash.noLicensesSub": "გახსენით Ticket Discord-ზე ან Telegram-ზე ჩეთის მისაღებად!",
-      "dash.bindTitle": "არსებული ლიცენზიის გასაღების დაკავშირება",
-      "dash.bindDesc": "თუ გაქვთ Discord ბოტიდან გენერირებული გასაღები, რომელიც ჯერ არ არის დაკავშირებული, შეიყვანეთ იგი ქვემოთ.",
-      "dash.bindBtn": "დაკავშირება",
-      "dash.faqTitle": "ხშირად დასმული კითხვები (FAQ)",
-      "faq.title": "ხშირად დასმული კითხვები",
-      "faq.q1": "როგორ მივიღო ჩემი ლიცენზიის გასაღები?",
-      "faq.a1": "გახსენით Ticket ჩვენს Discord სერვერზე ან Telegram ბოტში, მოითხოვეთ ლიცენზია და ადმინისტრაცია უფასოდ გადმოგცემთ თქვენს გასაღებს.",
-      "faq.q2": "სად უნდა ჩავწერო გასაღები სათამაშოდ?",
-      "faq.a2": "Minecraft-ის დაწყებისას გამოჩნდება ფანჯარა გასაღების ჩასაწერად. ჩაწერეთ და დააჭირეთ Activate.",
-      "faq.q3": "შემიძლია ჩემი გასაღები რამდენიმე კომპიუტერზე გამოვიყენო?",
-      "faq.a3": "გასაღები ებმება პირველ კომპიუტერს HWID-ზე; ცვლილებისთვის მიმართეთ მხარდაჭერას.",
-      "admin.genTitle": "ლიცენზიის გასაღების გენერირება",
-      "admin.buyerLabel": "მყიდველის Discord User",
-      "admin.selectUser": "აირჩიეთ მომხმარებელი...",
-      "admin.product": "პროდუქტი",
-      "admin.duration": "ხანგრძლივობა",
-      "admin.d1": "1 დღე",
-      "admin.d3": "3 დღე",
-      "admin.d7": "7 დღე",
-      "admin.d30": "30 დღე",
-      "admin.d90": "90 დღე",
-      "admin.lifetime": "სამუდამო (Lifetime)",
-      "admin.custom": "ხელით (დღეები)",
-      "admin.customPh": "მაგ: 14 დღე",
-      "admin.createBtn": "გასაღების შექმნა",
-      "admin.createdKey": "შექმნილი გასაღები:",
-      "admin.copy": "კოპირება",
-      "admin.manageTitle": "ყველა ლიცენზიის მართვა",
-      "admin.searchPh": "ძებნა (key, buyer, admin...)",
-      "admin.filterAll": "ყველა სტატუსი",
-      "admin.filterActive": "აქტიური",
-      "admin.filterRevoked": "გაუქმებული",
-      "admin.filterExpired": "ვადაგასული",
-      "admin.loading": "მონაცემები იტვირთება...",
-      "admin.colProduct": "პროდუქტი",
-      "admin.colOwner": "მფლობელი",
-      "admin.colCreator": "შემქმნელი",
-      "admin.colKey": "ლიცენზიის გასაღები",
-      "admin.colStatus": "სტატუსი",
-      "admin.colExpiry": "მოქმედების ვადა",
-      "admin.colActions": "ქმედებები",
-      "admin.totalFound": "სულ ნაპოვნია:",
-      "admin.modalTitle": "ლიცენზიის დეტალური ინფორმაცია",
-      "admin.modalKey": "ლიცენზიის გასაღები",
-      "admin.modalOwner": "მფლობელი",
-      "admin.modalCreator": "შემქმნელი (ადმინი)",
-      "admin.modalStatus": "სტატუსი",
-      "admin.modalCreated": "შექმნის თარიღი",
-      "admin.modalExpires": "ვადამდე დარჩა",
-      "admin.modalHwid": "HWID (მოწყობილობის კოდი)",
-      "admin.modalNote": "შენიშვნა",
-      "admin.userModalTitle": "აირჩიეთ მომხმარებელი",
-      "admin.userSearchPh": "მოძებნე სახელით ან Discord ID-ით...",
-      "footer.text": "© 2026 PulseClient. ყველა უფლება დაცულია. არ არის აფილირებული Mojang AB-თან.",
-      "footer.note": "პრემიუმ Minecraft კლიენტი საბრძოლო, ვიზუალური და Anti-Cheat შემოვლის ფუნქციებით. შექმნილია Fabric 1.21.11-ისთვის.",
-      "footer.product": "პროდუქტი",
-      "footer.support": "მხარდაჭერა",
-      "footer.build": "ვერსია",
-      "footer.features": "მახასიათებლები",
-      "footer.bypasses": "შემოვლები",
-      "footer.pricing": "ფასები",
-      "footer.faq": "კითხვები",
-      "footer.discord": "Discord სერვერი",
-      "footer.dashboard": "დეშბორდი",
-      "footer.buildline": "v1.05 · Fabric 1.21.11",
-      "footer.platform": "Windows 10 / 11",
-      "footer.tagline": "BUILT FOR THE GRIND",
-      "discord.aria": "PulseClient Discord სერვერი",
-      "status.active": "აქტიური",
-      "status.revoked": "გაუქმებული",
-      "status.expired": "ვადაგასული",
-      "status.lifetime": "სამუდამო",
-      "status.expiredShort": "ვადა გასულია",
-      "status.notActivated": "გააქტიურებული არ არის",
-      "status.daysLeft": "{n} დღე დარჩა",
-      "status.days": "{n} დღე",
-      "lic.keyLabel": "ლიცენზიის გასაღები",
-      "lic.expiryLabel": "ვადა",
-      "creator.dashboard": "მომხმარებელი (Dashboard)",
-      "msg.loginFail": "შესვლა ვერ მოხერხდა: ",
-      "msg.licLoadFail": "ლიცენზიების ჩატვირთვის შეცდომა: ",
-      "msg.keyNotFound": "ლიცენზიის გასაღები ვერ მოიძებნა. გადამოწმეთ და სცადეთ თავიდან.",
-      "msg.keyTaken": "ეს გასაღები უკვე სხვა Discord მომხმარებელზეა მიბმული.",
-      "msg.bindSuccess": "ლიცენზიის გასაღები წარმატებით დაუკავშირდა თქვენს Discord ანგარიშს!",
-      "msg.bindFail": "გასაღების დაკავშირება ვერ მოხერხდა: ",
-      "msg.bindLoading": "მიმდინარეობს დაკავშირება...",
-      "msg.dataLoadFail": "მონაცემების ჩატვირთვა ვერ მოხერხდა: ",
-      "msg.noLicenses": "ლიცენზიები არ მოიძებნა",
-      "msg.invalidDays": "შეიყვანეთ ვალიდური დღეების რაოდენობა (1 და მეტი).",
-      "msg.creating": "მიმდინარეობს შექმნა...",
-      "msg.keyCreated": "ლიცენზიის გასაღები წარმატებით შეიქმნა!",
-      "msg.keyCreateFail": "გასაღების შექმნა ვერ მოხერხდა: ",
-      "msg.copied": "კოპირებულია!",
-      "msg.revokeConfirm": "ნამდვილად გსურთ გასაღების გაუქმება?\n",
-      "msg.revokeSuccess": "ლიცენზია გაუქმდა წარმატებით",
-      "msg.revokeFail": "გაუქმება ვერ მოხერხდა: ",
-      "msg.activateConfirm": "ნამდვილად გსურთ ლიცენზიის ხელახლა გააქტიურება?\n",
-      "msg.activateSuccess": "ლიცენზია გააქტიურდა წარმატებით",
-      "msg.activateFail": "გააქტიურება ვერ მოხერხდა: ",
-      "msg.hwidConfirm": "ნამდვილად გსურთ მოწყობილობის (HWID) განულება?\n",
-      "msg.hwidSuccess": "მოწყობილობა (HWID) განულდა წარმატებით",
-      "msg.hwidFail": "განულება ვერ მოხერხდა: ",
-      "msg.noUsers": "მომხმარებლები ვერ მოიძებნა",
-      "msg.updateAvailable": "გამოვიდა ახალი ვერსია ({date}). გთხოვთ გადმოწეროთ განახლებული ფაილი!",
-      "msg.lastUpdated": "ბოლოს განახლდა: ",
-      "admin.actionInfo": "ინფო",
-      "admin.actionHwid": "HWID განულება",
-      "admin.actionRevoke": "გაუქმება",
-      "admin.actionActivate": "გააქტიურება",
-      "admin.actionDelete": "სამუდამოდ წაშლა",
-      "msg.deleteConfirm": "ნამდვილად გსურთ ამ ლიცენზიის სამუდამოდ წაშლა Supabase მონაცემებიდან? ეს ქმედება შეუქცევადია და ლიცენზია ვეღარ აღდგება!\n\nგასაღები: ",
-      "msg.deleteSuccess": "ლიცენზია წარმატებით წაიშალა Supabase ბაზიდან",
-      "msg.deleteFail": "წაშლა ვერ მოხერხდა: ",
-      "authGate.badge": "საჭიროა ავტორიზაცია",
-      "authGate.title": "გაიარე ავტორიზაცია Discord-ით",
-      "authGate.desc": "საიტზე და PulseClient-ის ფუნქციებზე წვდომის მისაღებად, გთხოვთ გაიაროთ ავტორიზაცია თქვენი Discord ანგარიშით.",
-      "authGate.perk1": "3-დღიანი უფასო საცდელი ვერსია",
-      "authGate.perk2": "მყისიერი ლიცენზირება & მართვა",
-      "authGate.perk3": "დაცული Discord ავტორიზაცია",
-      "authGate.btn": "Discord-ით შესვლა",
-      "vpnBlock.badge": "VPN / Proxy დაფიქსირებულია",
-      "vpnBlock.title": "გთხოვთ გათიშოთ VPN / Proxy",
-      "vpnBlock.desc": "უსაფრთხოების წესებიდან გამომდინარე, PulseClient-ის საიტზე VPN-ის, Proxy-ის ან Datacenter IP-ის გამოყენება აკრძალულია. საიტზე წვდომის მისაღებად გთხოვთ გათიშოთ VPN და დააჭიროთ განახლებას.",
-      "vpnBlock.btn": "გადატვირთვა (გავთიშე VPN)",
-      "dash.trialTitle": "უფასო 3-დღიანი საცდელი პერიოდი",
-      "dash.trialDesc": "თუ ხართ ახალი მომხმარებელი და ჯერ არ გაქვთ არცერთი გასაღები, შეგიძლიათ მიიღოთ 3-დღიანი საცდელი გასაღები.",
-      "dash.trialBtn": "უფასო გასაღების აღება",
-      "msg.trialSuccess": "საცდელი გასაღები წარმატებით გენერირდა და დაემატა თქვენს ანგარიშს!",
-      "msg.referredSuccessNotice": "გილოცავთ! დარეგისტრირდით მოწვევის წყალობით; საცდელი განაკვეთი დაამატეს ორივეს.",
-      "msg.trialAlreadyClaimed": "თქვენ უკვე გაქვთ აქტიური ან ძველი ლიცენზია, ან საცდელი უკვე აღებულია.",
-      "msg.trialAccountTooNew": "თქვენი Discord ანგარიში ძალიან ახალია. საცდელი გასაღების ასაღებად ანგარიში უნდა იყოს მინიმუმ 30 დღე.",
-      "confirm.title": "დადასტურება",
-      "confirm.yes": "დიახ",
-      "confirm.no": "არა",
-      "dash.referral": "რეფერალები",
-      "dash.referralTitle": "მოიწვიე მეგობარი",
-      "dash.referralDesc": "გაუზიარე შენი პირადი რეფერალური კოდი მეგობარს. როდესაც ის დარეგისტრირდება და გაააქტიურებს თავის პირველ გასაღებს (ან აიღებს საცდელ ვერსიას), შენს აქტიურ ლიცენზიას ავტომატურად დაემატება 3 დღე!",
-      "dash.referralCodeLabel": "შენი რეფერალური კოდი",
-      "dash.referralCodeCopyBtn": "კოდის კოპირება",
-      "dash.referralCodeHint": "გაუზიარე ეს კოდი მეგობარს — როდესაც ის გაააქტიურებს პირველ გასაღებს, ორივეს დაგემატებათ 3 დღე!",
-      "dash.referralRedeemTitle": "რეფერალური კოდის გამოყენება",
-      "dash.referralRedeemDesc": "თუ მეგობარმა გაგიზიარა რეფერალური კოდი, ჩაწერე აქ — შენს პირველ გასაღების გააქტიურებაზე ან საცდელის აღებაზე მას დაემატება 3 დღე.",
-      "dash.referralRedeemPlaceholder": "მაგ: RFGS313",
-      "dash.referralRedeemBtn": "გააქტიურება",
-      "msg.refCodeInvalid": "არასწორი კოდის ფორმატი. კოდი უნდა შედგებოდეს 7 სიმბოლოსგან.",
-      "msg.refCodeSelf": "თქვენი საკუთარი კოდის გამოყენება არ შეგიძლიათ.",
-      "msg.refCodeNotFound": "მოცემული რეფერალური კოდი ვერ მოიძებნა.",
-      "msg.refCodeAlready": "თქვენ უკვე გაქვთ შენახული აქტიური რეფერალი.",
-      "msg.refCodeAlreadyUsed": "თქვენ უკვე გამოიყენეთ რეფერალური კოდი.",
-      "msg.refCodeSuccess": "რეფერალური კოდი წარმატებით გააქტიურდა!",
-      "msg.refCodeFail": "შეცდომა რეფერალური კოდის გააქტიურებისას: ",
-      "msg.refCodeBtn": "გააქტიურება",
-      "dash.promocodes": "პრომო კოდები",
-      "promo.badge": "ბონუსები & პრომო სისტემა",
-      "promo.title": "პრომო კოდის გააქტიურება",
-      "promo.desc": "შეიყვანეთ მედია კრეატორის, სტრიმერის ან სარეკლამო კამპანიის პრომო კოდი უფასო დღეების და ბონუსების მისაღებად.",
-      "promo.codePh": "მაგ: PULSE2026",
-      "promo.redeemBtn": "გააქტიურება",
-      "msg.promoPasted": "კოდი ჩასმულია ბუფერიდან!",
-      "admin.promoTitle": "პრომო კოდების შექმნა",
-      "admin.promoList": "პრომო კოდების მართვა",
-      "admin.colPromoCode": "პრომო კოდი",
-      "admin.colPromoDays": "დღეები",
-      "admin.colPromoUses": "გამოყენება (ლიმიტი)",
-      "admin.colPromoCreator": "შემქმნელი",
-      "admin.colPromoActions": "ქმედებები",
-      "admin.promoCodePh": "მაგ: PULSE100",
-      "admin.promoDaysPh": "დღეების რაოდენობა",
-      "admin.promoUsesPh": "ლიმიტი (ცარიელი = ულიმიტო)",
-      "admin.promoCreateBtn": "კოდის შექმნა",
-      "admin.promoRedemptionsTitle": "პრომო კოდების გამოყენების ჟურნალი",
-      "admin.colPromoUser": "მომხმარებელი",
-      "admin.colPromoDate": "თარიღი",
-      "msg.promoRedeemed": "პრომო კოდი წარმატებით გააქტიურდა! დაგემატათ {n} დღე.",
-      "msg.promoAlreadyUsed": "თქვენ უკვე გამოიყენეთ ეს პრომო კოდი.",
-      "msg.promoExpired": "ეს პრომო კოდი არააქტიურია ან ამოეწურა გამოყენების ლიმიტი.",
-      "msg.promoNotFound": "პრომო კოდი ვერ მოიძებნა.",
-      "msg.promoCreated": "პრომო კოდი წარმატებით შეიქმნა!",
-      "msg.promoRedeemFail": "პრომო კოდის გააქტიურება ვერ მოხერხდა: ",
-      "dash.resetHwidBtn": "HWID განულება",
-      "lic.hwidLabel": "მოწყობილობა (HWID)",
-      "msg.hwidResetConfirm": "ნამდვილად გსურთ მოწყობილობის (HWID) განულება ამ ლიცენზიისთვის?",
-      "admin.telemetryTitle": "აქტიური სესიები (Active Telemetry)",
-      "telemetry.mcUser": "მომხმარებელი / MC",
-      "telemetry.key": "გასაღები",
-      "telemetry.server": "სერვერი",
-      "telemetry.launcher": "ლაუნჩერი",
-      "telemetry.specs": "აპარატურა (Specs)",
-      "telemetry.antiAlt": "Anti-Alt / Trust",
-      "telemetry.ip": "IP მისამართი",
-      "telemetry.os": "OS",
-      "telemetry.country": "ქვეყანა",
-      "telemetry.started": "ჩაირთო",
-      "telemetry.duration": "ხანგრძლივობა",
-      "telemetry.ended": "დასრულდა",
-      "telemetry.actions": "მართვა",
-      "dash.totalPlaytimeLabel": "სულ ნათამაშებია",
-      "dash.topServerLabel": "საყვარელი სერვერი",
-      "admin.totalOnlineHtml": "სულ ონლაინშია: <span id=\"admin-sessions-count\">0</span>",
-      "admin.totalFoundHtml": "სულ ნაპოვნია: <span id=\"admin-total-count\">0</span>",
-      "admin.logTitle": "მოქმედებების ჟურნალი (Activity Log)",
-      "admin.logSearchPh": "მოძებნე მოქმედება, მომხმარებელი...",
-      "log.date": "თარიღი",
-      "log.user": "მომხმარებელი / ადმინი",
-      "log.action": "მოქმედება",
-      "log.details": "დეტალები",
-      "crypto.modalTitle": "PulseClient-ის შეძენა",
-      "crypto.modalSubtitle": "3 მარტივი ნაბიჯი: აირჩიე ტარიფი → დააკოპირე შეტყობინება → გადაიხადე ქისაზე.",
-      "crypto.choosePlan": "აირჩიეთ ტარიფი:",
-      "pay.badge": "KISA.GE",
-      "pay.manualBadge": "საბანკო გადარიცხვა",
-      "pay.amountLabel": "გადასახდელი თანხა",
-      "pay.planLabel": "ტარიფი",
-      "pay.rateLive": "live კურსი",
-      "pay.rate": "1 USD ≈ ₾{rate}",
-      "pay.roundHint": "მთელი ლარით",
-      "pay.step1Title": "აირჩიე ტარიფი",
-      "pay.step1Desc": "აირჩიე ტარიფი ქვემოთ — გადასახდელი თანხა ლარში ავტომატურად გამოითვლება.",
-      "pay.step2Title": "დააკოპირე შეტყობინება",
-      "pay.step2Desc": "დააჭირე დიდ მწვანე ღილაკს. შეტყობინება (Discord ID + ტარიფი) თავისით დაკოპირდება — ხელით მონიშვნა არ გჭირდება.",
-      "pay.step3Title": "გადადი ქისაზე და გადაიხადე",
-      "pay.step3Desc": "ქისას გვერდზე შეავსე ეს ველები:",
-      "pay.fieldName": "სახელი",
-      "pay.fieldNameHint": "შენი სახელი ან ნიკი",
-      "pay.fieldAmount": "თანხა",
-      "pay.fieldMessage": "შეტყობინება",
-      "pay.fieldMessageHint": "ჩასვი დაკოპირებული ტექსტი (Ctrl+V)",
-      "pay.copy": "დააჭირე და დააკოპირე",
-      "pay.copyHint": "ტექსტი ავტომატურად დაკოპირდება.",
-      "pay.copied": "✅ დაკოპირდა!",
-      "pay.copySuccess": "✅ დაკოპირდა! ახლა ნაბიჯი 3 — გადადი ქისაზე და ჩასვი შეტყობინებაში.",
-      "pay.copyFail": "ვერ დაკოპირდა — დააჭირე ტექსტს, მონიშნე ყველა (Ctrl+A) და დააკოპირე (Ctrl+C).",
-      "pay.go": "ქისაზე გადასვლა →",
-      "pay.note": "ღილაკზე დაჭერისას შეტყობინება ავტომატურად დაკოპირდება და ქისას გვერდი გაიხსნება.",
-      "pay.qrTitle": "ან დაასკანირე QR კოდი",
-      "pay.qrDesc": "გახსენი ტელეფონის კამერით და გადაიხადე იქიდან.",
-      "pay.afterPay": "გადახდის შემდეგ license key მიიღებ Discord-ზე.",
-      "pay.dur7": "7 დღე",
-      "pay.dur30": "30 დღე",
-      "pay.durLifetime": "სამუდამო",
-      "pay.msgTemplate": "Discord ID: {id} | ლიცენზია: {duration}"
-    },
-    en: {
+  window.TRANSLATIONS = window.TRANSLATIONS || {};
+  window.TRANSLATIONS.en = {
       "meta.title": "PulseClient - Premium Minecraft Combat & Stealth Advantage",
       "nav.features": "Features",
       "nav.bypasses": "Modules",
@@ -498,7 +116,7 @@
       "dash.clientTitle": "PulseClient",
       "dash.chooseVersion": "Choose your version",
       "dash.pvpVersion": "Pulse PvP Client (for PvP)",
-      "dash.pvpDesc": "Best for PvP combats, optimized with enhanced FPS and kill trigger (Menu opens with F12)",
+      "dash.pvpDesc": "Best for PvP combats, optimized with enhanced FPS and kill trigger (Menu opens with Right Shift)",
       "dash.basefindVersion": "Pulse Base Find (for Base Finding)",
       "dash.basefindDesc": "Designed for base finding and tracking, bypassing Matrix and GrimAC (Menu opens with Right Shift)",
       "dash.versionLabel": "Latest version",
@@ -518,7 +136,7 @@
       "dash.step2.title": "Install",
       "dash.step2.desc": "Drop the file into your 1.21.11 mods folder.",
       "dash.step3.title": "Play",
-      "dash.step3.desc": "Launch the game and press Shift (Shift) to open the menu.",
+      "dash.step3.desc": "Launch the game and press Right Shift to open the menu.",
       "dash.launchers": "Compatible Launchers",
       "dash.compatible": "Compatible",
       "dash.launchersNote": "Other Fabric-compatible launchers may work too.",
@@ -526,7 +144,7 @@
       "dash.refresh": "Refresh",
       "dash.licensesLoading": "Loading licenses...",
       "dash.noLicenses": "No licenses are linked to your Discord account yet.",
-      "dash.noLicensesSub": "Purchase a key or link an existing one below!",
+      "dash.noLicensesSub": "Request a free key through a ticket, or link an existing key below!",
       "dash.bindTitle": "Link an Existing License Key",
       "dash.bindDesc": "If you have a key from our Discord bot that isn't linked to the site yet, enter it below to attach it to your Discord profile.",
       "dash.bindBtn": "Link Key",
@@ -683,7 +301,7 @@
       "authGate.badge": "Authentication Required",
       "authGate.title": "Login with Discord",
       "authGate.desc": "To access the website features, dashboard, and licenses, please sign in with your Discord account.",
-      "authGate.perk1": "3-Day Free Trial Available",
+      "authGate.perk1": "Free access for every account",
       "authGate.perk2": "Instant Licensing & Dashboard",
       "authGate.perk3": "Secure Discord OAuth2 Login",
       "authGate.btn": "Sign in with Discord",
@@ -726,19 +344,159 @@
       "pay.dur30": "30 days",
       "pay.durLifetime": "Lifetime",
       "pay.msgTemplate": "Discord ID: {id} | License: {duration}"
-    }
-  };
+    };
 
-  // Merge NEW into window.TRANSLATIONS (always overwrite with latest)
-  Object.keys(NEW).forEach(lang => {
-    window.TRANSLATIONS[lang] = window.TRANSLATIONS[lang] || {};
-    Object.keys(NEW[lang]).forEach(k => {
-      window.TRANSLATIONS[lang][k] = NEW[lang][k];
-    });
+  // Refreshed copy for the redesigned surfaces.
+  Object.assign(window.TRANSLATIONS.en, {
+    "meta.title": "PulseClient — Precision Minecraft Client",
+    "nav.features": "Features",
+    "nav.modules": "Modules",
+    "nav.pricing": "Free license",
+    "nav.faq": "FAQ",
+    "nav.login": "Sign in",
+    "nav.user": "Player",
+    "hero.title": "Move faster. Hit harder. Stay unseen.",
+    "hero.desc": "PulseClient is a precision-built Minecraft client for players who refuse to lose. Silent combat modules, clean visuals and anti-cheat bypasses — all in one config, with zero input lag.",
+    "hero.buy": "Get your free key",
+    "hero.explore": "Explore modules",
+    "hero.f1.desc": "GrimAC, Matrix and Vulcan — clean packets.",
+    "hero.f2.desc": "0ms input lag and stable FPS.",
+    "hero.f3.desc": "Fully configurable modules.",
+    "hero.f4.desc": "New modules with every update.",
+    "setup.title": "Quick setup",
+    "setup.subtitle": "Download it, drop it in your mods folder, play.",
+    "setup.stepsTitle": "3 steps",
+    "setup.stepsSub": "Download, drop in, play",
+    "setup.footer": "Compatible with Fabric <strong>1.21.11</strong> out of the box.",
+    "setup.discordTip": "Get your key on Discord",
+    "setup.windowsTip": "Drop it into the mods folder",
+    "setup.mcTip": "Play Minecraft",
+    "features.title": "Why choose PulseClient?",
+    "features.subtitle": "Built from scratch for maximum combat performance, clean visuals and stable bypasses.",
+    "pricing.title": "PulseClient is free. All of it.",
+    "pricing.subtitle": "Every module, every bot and every future update. You only need a license key.",
+    "footer.note": "A precision Minecraft client with combat, visual and anti-cheat bypass modules. Built for Fabric 1.21.11.",
+    "footer.product": "Product",
+    "footer.support": "Support",
+    "footer.build": "Build",
+    "footer.features": "Features",
+    "footer.modules": "Modules",
+    "footer.pricing": "Free license",
+    "footer.faq": "FAQ",
+    "footer.discord": "Discord server",
+    "footer.dashboard": "Dashboard",
+    "footer.buildline": "v1.05 · Fabric 1.21.11",
+    "footer.platform": "Windows 10 / 11",
+    "footer.tagline": "BUILT FOR THE GRIND",
+    "authGate.badge": "Authentication required",
+    "authGate.title": "Sign in with Discord",
+    "authGate.desc": "Sign in with your Discord account to access the site and PulseClient features.",
+    "authGate.perk1": "Free access for every account",
+    "authGate.perk2": "Instant activation and HWID resets",
+    "authGate.perk3": "Secure Discord sign-in",
+    "authGate.btn": "Continue with Discord",
+    "vpnBlock.badge": "VPN / proxy detected",
+    "vpnBlock.title": "Please turn off your VPN",
+    "vpnBlock.desc": "For security reasons, VPNs, proxies and datacenter IPs are blocked. Disconnect your VPN and reload the page.",
+    "vpnBlock.btn": "Reload page",
+    "faq.title": "Frequently asked questions",
+    "faq.q1": "How do I get my license key?",
+    "faq.a1": "Open a ticket on our Discord server or message the Telegram bot and ask for a license. The team issues it free of charge.",
+    "faq.q2": "Where do I enter the key?",
+    "faq.a2": "When you launch Minecraft with the mod installed, an activation window appears. Paste your key and press Activate.",
+    "faq.q3": "Can I use one key on more than one PC?",
+    "faq.a3": "Each key is bound to the HWID of the first device that activates it. Ask support for a free reset.",
+    "status.active": "Active",
+    "status.lifetime": "Lifetime",
+    "status.expired": "Expired",
+    "status.expiredShort": "Expired",
+    "status.revoked": "Revoked",
+    "status.notActivated": "Not activated",
+    "status.days": "days",
+    "status.daysLeft": "days left",
+    "lic.keyLabel": "License key",
+    "lic.expiryLabel": "Expiry date",
+    "msg.lastUpdated": "Last updated: ",
+    "msg.updateAvailable": "Update available",
+    "msg.noLicenses": "You don't have any licenses yet.",
+    "msg.noUsers": "No users found.",
+    "msg.copied": "Copied!",
+    "msg.creating": "Creating...",
+    "msg.bindFail": "Could not connect the license.",
+    "msg.bindLoading": "Connecting...",
+    "msg.bindSuccess": "License connected.",
+    "msg.dataLoadFail": "Could not load data.",
+    "msg.hwidConfirm": "Reset the HWID for this license?",
+    "msg.hwidFail": "HWID reset failed.",
+    "msg.hwidSuccess": "HWID reset successfully.",
+    "msg.invalidDays": "Enter a valid number of days.",
+    "msg.keyCreateFail": "Could not create the license key.",
+    "msg.keyCreated": "License key created.",
+    "msg.keyNotFound": "License key not found.",
+    "msg.keyTaken": "This key is already in use.",
+    "msg.licLoadFail": "Could not load licenses.",
+    "msg.loginFail": "Sign-in failed. Please try again.",
+    "msg.promoCreateFail": "Could not create the promo code.",
+    "msg.trialAccountTooNew": "Your Discord account is too new for a trial.",
+    "msg.trialAlreadyClaimed": "You already claimed a trial.",
+    "msg.trialSuccess": "Trial activated.",
+    "msg.bindCopyFail": "Could not copy the key.",
+    "confirm.title": "Confirmation",
+    "confirm.yes": "Yes",
+    "confirm.no": "No",
+    "creator.dashboard": "Creator dashboard"
   });
 
-  // Local alias
   const TRANSLATIONS = window.TRANSLATIONS;
+  let currentLang = "en";
+  window.currentLang = "en";
+
+  if (!window.__missingI18nKeys) window.__missingI18nKeys = new Set();
+
+  function t(key, vars = {}) {
+    const str = (TRANSLATIONS.en && TRANSLATIONS.en[key]) ?? key;
+    const replaced = Object.entries(vars).reduce(
+      (acc, [k, v]) => acc.replace(new RegExp(`\\{${k}\\}`, "g"), v),
+      String(str)
+    );
+    if (replaced === key && !window.__missingI18nKeys.has(key)) {
+      console.warn(`Missing translation for key: "${key}"`);
+      window.__missingI18nKeys.add(key);
+    }
+    return replaced;
+  }
+
+  function setElementText(el, key, mode = "text") {
+    if (!el) return;
+    const val = t(key);
+    try {
+      if (mode === "html") el.innerHTML = val;
+      else if (mode === "prefix") {
+        const keep = el.querySelector("span");
+        el.textContent = val + " ";
+        if (keep) el.appendChild(keep);
+      } else if (mode === "textLast") {
+        const svg = el.querySelector("svg, .spinner");
+        el.childNodes.forEach((n) => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
+        el.append(document.createTextNode(svg ? " " + val : val));
+      } else if (mode === "menuText") {
+        const badge = el.querySelector(".admin-badge");
+        el.childNodes.forEach((n) => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
+        const textNode = document.createTextNode(val);
+        if (badge) el.insertBefore(textNode, badge); else el.appendChild(textNode);
+      } else if (mode === "text") {
+        const badge = el.querySelector(".admin-badge");
+        const svg = el.querySelector("svg");
+        el.childNodes.forEach((n) => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
+        const textNode = document.createTextNode(val);
+        if (badge) el.insertBefore(textNode, badge);
+        else if (svg) el.insertBefore(textNode, svg.nextSibling);
+        else el.textContent = val;
+      } else el.textContent = val;
+    } catch (e) {
+      try { el.textContent = val; } catch (ee) {}
+    }
+  }
 
   const SELECTOR_BINDINGS = [
     ["#features .section-header h2", "features.title"],
@@ -789,7 +547,7 @@
     [".admin-count", "admin.totalFound", "prefix"],
     ["#license-info-modal h3", "admin.modalTitle"],
     ["#user-selection-modal h3", "admin.userModalTitle"],
-    [".footer p", "footer.text"]
+    [".px-footer-bottom p", "footer.text"]
   ];
 
   const FAQ_BINDINGS = [
@@ -797,80 +555,6 @@
     ["faq.q2", "faq.a2"],
     ["faq.q3", "faq.a3"]
   ];
-
-  const PRICING_PERKS = [];
-
-  const PRICING_BTNS = [];
-
-
-
-  const MODAL_LABELS = [
-    ["admin.modalKey", "modal-key"],
-    ["admin.modalOwner", "modal-buyer"],
-    ["admin.modalCreator", "modal-creator"],
-    ["admin.modalStatus", "modal-status"],
-    ["admin.modalCreated", "modal-created"],
-    ["admin.modalExpires", "modal-expires"],
-    ["admin.modalHwid", "modal-hwid"],
-    ["admin.modalNote", "modal-note"]
-  ];
-
-  // Language state
-  let currentLang = window.currentLang || localStorage.getItem("pulse_lang") || "ka";
-  window.currentLang = currentLang;
-
-  // Helper: single-time missing keys set
-  if (!window.__missingI18nKeys) window.__missingI18nKeys = new Set();
-
-  // t() function (fallback: currentLang -> ka -> en -> key)
-  function t(key, vars = {}) {
-    const str =
-      (TRANSLATIONS && TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) ??
-      (TRANSLATIONS && TRANSLATIONS['ka'] && TRANSLATIONS['ka'][key]) ??
-      (TRANSLATIONS && TRANSLATIONS['en'] && TRANSLATIONS['en'][key]) ??
-      key;
-    const replaced = Object.entries(vars).reduce((acc, [k, v]) => acc.replace(new RegExp(`\\{${k}\\}`, 'g'), v), String(str));
-    if (replaced === key) {
-      if (!window.__missingI18nKeys.has(key)) {
-        console.warn(`Missing translation for key: "${key}" (lang: ${currentLang})`);
-        window.__missingI18nKeys.add(key);
-      }
-    }
-    return replaced;
-  }
-
-  // Minimal setElementText/apply functions copied for compatibility
-  function setElementText(el, key, mode = "text") {
-    if (!el) return;
-    const val = t(key);
-    try {
-      if (mode === "html") el.innerHTML = val;
-      else if (mode === "prefix") {
-        const keep = el.querySelector("span");
-        el.textContent = val + " ";
-        if (keep) el.appendChild(keep);
-      } else if (mode === "textLast") {
-        const svg = el.querySelector("svg, .spinner");
-        el.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
-        el.append(document.createTextNode(svg ? " " + val : val));
-      } else if (mode === "menuText") {
-        const badge = el.querySelector(".admin-badge");
-        el.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
-        const textNode = document.createTextNode(val);
-        if (badge) el.insertBefore(textNode, badge); else el.appendChild(textNode);
-      } else if (mode === "text") {
-        const badge = el.querySelector(".admin-badge");
-        const svg = el.querySelector("svg");
-        el.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
-        const textNode = document.createTextNode(val);
-        if (badge) el.insertBefore(textNode, badge);
-        else if (svg) el.insertBefore(textNode, svg.nextSibling);
-        else el.textContent = val;
-      } else el.textContent = val;
-    } catch (e) {
-      try { el.textContent = val; } catch (ee) {}
-    }
-  }
 
   function applyFaqItems() {
     document.querySelectorAll(".faq-list").forEach((list) => {
@@ -889,19 +573,6 @@
     });
   }
 
-  function applyPricingPerks() {
-    PRICING_PERKS.forEach(([selector, keys]) => {
-      document.querySelectorAll(selector).forEach((li, i) => {
-        const key = keys[i];
-        if (!key) return;
-        const svg = li.querySelector("svg");
-        li.textContent = "";
-        if (svg) li.appendChild(svg);
-        li.append(" " + t(key));
-      });
-    });
-  }
-
   function applyAdminStatic() {
     const buyerLabel = document.querySelector(".admin-form label:not([for])");
     if (buyerLabel) buyerLabel.textContent = t("admin.buyerLabel");
@@ -909,7 +580,7 @@
     const buyerInput = document.getElementById("admin-buyer-input");
     if (triggerSpan && !buyerInput?.value) triggerSpan.textContent = t("admin.selectUser");
     document.querySelectorAll("#admin-duration-select option").forEach((opt) => {
-      const durationMap = { "1":"admin.d1","3":"admin.d3","7":"admin.d7","30":"admin.d30","90":"admin.d90","lifetime":"admin.lifetime","custom":"admin.custom" };
+      const durationMap = { "1": "admin.d1", "3": "admin.d3", "7": "admin.d7", "30": "admin.d30", "90": "admin.d90", "lifetime": "admin.lifetime", "custom": "admin.custom" };
       const k = durationMap[opt.value];
       if (k) opt.textContent = t(k);
     });
@@ -918,89 +589,65 @@
       const k = filterMap[opt.value];
       if (k) opt.textContent = t(k);
     });
-    const adminSearch = document.getElementById("admin-search-input");
     const adminDurationCustomEl = document.getElementById("admin-duration-custom");
+    const adminSearch = document.getElementById("admin-search-input");
     if (adminDurationCustomEl) adminDurationCustomEl.placeholder = t("admin.customPh");
     if (adminSearch) adminSearch.placeholder = t("admin.searchPh");
     const userSearch = document.getElementById("admin-modal-user-search");
     if (userSearch) userSearch.placeholder = t("admin.userSearchPh");
-    MODAL_LABELS.forEach(([key, valueId]) => {
-      const valEl = document.getElementById(valueId);
-      const label = valEl?.closest(".modal-info-item")?.querySelector(".info-label");
-      if (label) label.textContent = t(key);
-    });
-    const discordFloat = document.querySelector(".discord-float");
-    if (discordFloat) discordFloat.setAttribute("aria-label", t("discord.aria"));
   }
 
-  // applyLanguage/getLocale/initLanguage/toggleLanguage implementations
-  function getLocale() { return currentLang === "en" ? "en-US" : "ka-GE"; }
+  function getLocale() { return "en-US"; }
 
-  function applyLanguage(lang) {
-    currentLang = (lang === "en") ? "en" : "ka";
-    try { localStorage.setItem("pulse_lang", currentLang); window.currentLang = currentLang; document.documentElement.lang = currentLang; } catch (e) {}
+  function applyLanguage() {
+    currentLang = "en";
+    window.currentLang = "en";
+    try {
+      localStorage.setItem("pulse_lang", "en");
+      document.documentElement.lang = "en";
+    } catch (e) {}
     try {
       document.querySelectorAll("[data-i18n]").forEach((el) => {
         const k = el.getAttribute("data-i18n");
-        if (k) el.textContent = t(k);
+        if (k && TRANSLATIONS.en[k]) el.textContent = t(k);
       });
       document.querySelectorAll("[data-i18n-html]").forEach((el) => {
         const k = el.getAttribute("data-i18n-html");
-        if (k) el.innerHTML = t(k);
+        if (k && TRANSLATIONS.en[k]) el.innerHTML = t(k);
       });
       document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
         const k = el.getAttribute("data-i18n-placeholder");
-        if (k) el.placeholder = t(k);
+        if (k && TRANSLATIONS.en[k]) el.placeholder = t(k);
       });
       document.querySelectorAll("[data-i18n-title]").forEach((el) => {
         const k = el.getAttribute("data-i18n-title");
-        if (k) el.title = t(k);
+        if (k && TRANSLATIONS.en[k]) el.title = t(k);
       });
       document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
         const k = el.getAttribute("data-i18n-aria");
-        if (k) el.setAttribute("aria-label", t(k));
+        if (k && TRANSLATIONS.en[k]) el.setAttribute("aria-label", t(k));
       });
       SELECTOR_BINDINGS.forEach(([selector, key, mode]) => {
         document.querySelectorAll(selector).forEach((el) => setElementText(el, key, mode || "text"));
       });
       applyFaqItems();
-      applyPricingPerks();
       applyAdminStatic();
     } catch (err) {
       console.error("Language apply error:", err);
     }
-    try { document.title = t("meta.title"); } catch (e) {}
-    updateLangSwitcherUI();
     if (typeof window.onLanguageChanged === "function") {
       try { window.onLanguageChanged(); } catch (e) {}
     }
   }
 
-  function toggleLanguage() { applyLanguage(currentLang === "ka" ? "en" : "ka"); }
-
-  function updateLangSwitcherUI() {
-    document.querySelectorAll(".lang-switcher .lang-btn").forEach((btn) => {
-      btn.classList.toggle("active", btn.dataset.lang === currentLang);
-    });
-  }
-
   function initLanguage() {
-    const switcher = document.getElementById("lang-switcher");
-    if (switcher) {
-      switcher.querySelectorAll(".lang-btn").forEach((btn) => {
-        btn.addEventListener("click", () => applyLanguage(btn.dataset.lang));
-      });
-    }
-    applyLanguage(currentLang);
+    applyLanguage("en");
   }
 
-  // Expose APIs
   window.t = t;
   window.getLocale = getLocale;
   window.applyLanguage = applyLanguage;
-  window.toggleLanguage = toggleLanguage;
+  window.toggleLanguage = function () {};
   window.initLanguage = initLanguage;
-
-  // Mark loaded
   window.__i18n_safe_loaded = true;
 })();
