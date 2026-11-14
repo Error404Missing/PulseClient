@@ -900,6 +900,9 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+// Cached licenses for the device-slot / HWID widgets.
+let userLicenses = [];
+
 
 
 
@@ -5267,6 +5270,8 @@ async function fetchUserLicenses() {
 
 
 
+
+        userLicenses = Array.isArray(data) ? data : [];
 
         licensesLoading.classList.add('hidden');
 

@@ -8,6 +8,10 @@
    1. PERFORMANCE — cheaper versions of the ambient effects
    ========================================================================== */
 
+/* Keep the 3D scene's paint work inside its own box. */
+.bots-stage { contain: layout paint; }
+.bots-beam { filter: blur(14px); }
+
 /* No blend mode over the whole viewport: compositing it on every scroll was
    the main source of stutter. */
 .px3-grain {

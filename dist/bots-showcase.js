@@ -517,6 +517,24 @@
       this.handleResize();
       window.addEventListener("resize", () => this.handleResize());
 
+      // Pause the scene when it is off-screen or the tab is hidden.
+      this.visible = false;
+      this.lastFrame = 0;
+      this.lastLight = 0;
+      this.lastPadPitch = null;
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          this.visible = entries[0].isIntersecting;
+          if (this.visible) this.lastFrame = 0;
+        }, { rootMargin: "140px" });
+        io.observe(this.stageContainer);
+      } else {
+        this.visible = true;
+      }
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) this.lastFrame = 0;
+      });
+
       this.switchBot(0);
       this.animate();
     }
@@ -557,7 +575,7 @@
       this.width = w;
       this.height = h;
 
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const dpr = Math.min(1.5, window.devicePixelRatio || 1);
       this.padCanvas.width = Math.round(w * dpr);
       this.padCanvas.height = Math.round(h * dpr);
       this.dpr = dpr;
@@ -689,6 +707,7 @@
 
     setupAutoCycle() {
       this.autoTimer = setInterval(() => {
+        if (!this.visible) return;
         if (!this.isDragging && !this.manualPaused) {
           const next = (this.currentIndex + 1) % BOTS.length;
           this.switchBot(next);
@@ -899,10 +918,14 @@
       }
     }
 
-    animate() {
-      requestAnimationFrame(() => this.animate());
+    animate(now) {
+      requestAnimationFrame((t) => this.animate(t || performance.now()));
 
-      const dt = 0.016;
+      if (!this.visible || document.hidden) return;
+      if (!now) now = performance.now();
+      if (this.lastFrame && now - this.lastFrame < 33) return; // ~30 fps
+      const dt = this.lastFrame ? Math.min(0.05, (now - this.lastFrame) / 1000) : 0.016;
+      this.lastFrame = now;
       this.time += dt;
 
       // Yaw inertia & smooth damping
@@ -955,6 +978,10 @@
         );
       });
 
+      // Shading repaints a face, so update it ~7 fps and quantise the value.
+      const updateLighting = !this.lastLight || now - this.lastLight >= 140;
+      if (updateLighting) this.lastLight = now;
+
       // 4. Update Cube Faces via Matrix Math (Module 9565)
       const p = this.rootScale || (0.9375 * (this.cam ? this.cam.U : 200) / 16);
       const rootTransform = matMul(matScale(p, p, -p), matTranslate(0, -24, 0));
@@ -974,8 +1001,10 @@
 
           item.el.style.transform = matToCss(fullMatrix);
 
-          const brightness = calcLighting(fullMatrix, -currentYaw, -this.pitch);
-          item.el.style.filter = brightness < 0.999 ? `brightness(${brightness.toFixed(3)})` : "";
+          if (updateLighting) {
+            const brightness = Math.round(calcLighting(fullMatrix, -currentYaw, -this.pitch) * 20) / 20;
+            item.el.style.filter = brightness < 0.999 ? `brightness(${brightness.toFixed(2)})` : "";
+          }
         });
       }
 
@@ -1039,8 +1068,10 @@
                 scale1_16
               );
               cf.el.style.transform = matToCss(fullMat);
-              const b = calcLighting(fullMat, -currentYaw, -this.pitch);
-              cf.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(3)})` : "";
+              if (updateLighting) {
+                const b = Math.round(calcLighting(fullMat, -currentYaw, -this.pitch) * 20) / 20;
+                cf.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(2)})` : "";
+              }
             });
           } else {
             // Handheld item, bow, block, or sprite
@@ -1087,15 +1118,18 @@
                 scale1_16
               );
               sl.el.style.transform = matToCss(fullMat);
-              const b = calcLighting(fullMat, -currentYaw, -this.pitch);
-              sl.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(3)})` : "";
+              if (updateLighting) {
+                const b = Math.round(calcLighting(fullMat, -currentYaw, -this.pitch) * 20) / 20;
+                sl.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(2)})` : "";
+              }
             });
           }
         });
       }
 
-      // 7. Render Canvas Pedestal
-      if (this.padCtx && this.cam) {
+      // 7. Render Canvas Pedestal — only when the camera pitch changes.
+      if (this.padCtx && this.cam && (this.lastPadPitch === null || Math.abs(this.pitch - this.lastPadPitch) > 0.15)) {
+        this.lastPadPitch = this.pitch;
         renderPedestal(
           this.padCtx,
           this.cam,
