@@ -60,7 +60,9 @@
   const nav = document.getElementById("main-navbar");
   const navToggle = document.getElementById("px-nav-toggle");
 
-  function onScroll() {
+  let scrollFrame = 0;
+  function updateScroll() {
+    scrollFrame = 0;
     const y = window.scrollY || window.pageYOffset;
     if (nav) nav.classList.toggle("px-scrolled", y > 12);
     const bar = document.querySelector(".px-progress");
@@ -70,6 +72,11 @@
     }
     const stage = document.querySelector(".px-hero-stage");
     if (stage && y < 1200) stage.style.translate = `0 ${Math.round(y * 0.12)}px`;
+  }
+  // Coalesce scroll work into one frame instead of running on every event.
+  function onScroll() {
+    if (scrollFrame) return;
+    scrollFrame = requestAnimationFrame(updateScroll);
   }
 
   if (navToggle && nav) {
@@ -274,13 +281,13 @@
 
       const resize = () => {
         const rect = hero.getBoundingClientRect();
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
+                  dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         w = Math.max(1, Math.round(rect.width));
         h = Math.max(1, Math.round(rect.height));
         canvas.width = Math.round(w * dpr);
         canvas.height = Math.round(h * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const count = w < 700 ? 26 : 56;
+        const count = w < 700 ? 18 : 40;
         dots = Array.from({ length: count }, () => {
           const c = colours[Math.floor(Math.random() * colours.length)];
           return {
@@ -312,20 +319,6 @@
           ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(${d.c[0]},${d.c[1]},${d.c[2]},${d.a})`;
           ctx.fill();
-          for (let j = i + 1; j < dots.length; j++) {
-            const o = dots[j];
-            const dx = d.x - o.x;
-            const dy = d.y - o.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 108) {
-              ctx.beginPath();
-              ctx.moveTo(d.x, d.y);
-              ctx.lineTo(o.x, o.y);
-              ctx.strokeStyle = `rgba(255,120,140,${(1 - dist / 108) * 0.07})`;
-              ctx.lineWidth = 1;
-              ctx.stroke();
-            }
-          }
         }
       };
 
