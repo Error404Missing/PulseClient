@@ -303,10 +303,12 @@
       };
 
       const frame = () => {
+        // Fully stop the loop when the hero is off-screen or the tab is hidden;
+        // the IntersectionObserver restarts it on return.
+        if (!visible || document.hidden) { raf = 0; return; }
         raf = requestAnimationFrame(frame);
         // Self-heal if the hero was measured while the landing view was hidden.
         if (w <= 1 && hero.offsetWidth > 0) resize();
-        if (!visible || document.hidden) return;
         ctx.clearRect(0, 0, w, h);
         for (let i = 0; i < dots.length; i++) {
           const d = dots[i];
@@ -341,13 +343,17 @@
           (entries) => {
             visible = entries[0].isIntersecting;
             if (visible && w <= 1) resize();
+            if (visible && !raf) frame();
           },
           { threshold: 0.02 }
         );
         hio.observe(hero);
       }
       document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) resize();
+        if (!document.hidden) {
+          resize();
+          if (!raf && visible) frame();
+        }
       });
     }
 
@@ -385,4 +391,66 @@
   window.addEventListener("resize", onScroll);
   document.addEventListener("DOMContentLoaded", onScroll);
   onScroll();
+
+  /* --------------------------------------------------- adaptive quality */
+  (() => {
+    const root = document.documentElement;
+    const lowPower =
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
+      (navigator.deviceMemory && navigator.deviceMemory <= 2);
+
+    // Very small machines start light; everyone else is measured first.
+    if (lowPower || reduceMotion) root.classList.add("px-perf");
+    if (root.classList.contains("px-perf")) return;
+
+    const measure = (done) => {
+      let frames = 0;
+      let start = 0;
+      requestAnimationFrame(function tick(now) {
+        if (!start) start = now;
+        frames += 1;
+        if (now - start < 1400) {
+          requestAnimationFrame(tick);
+          return;
+        }
+        done((frames * 1000) / (now - start));
+      });
+    };
+
+    // Demand two consecutive slow samples so a single loading spike does not
+    // downgrade a healthy machine for the rest of the session.
+    let sampling = false;
+    const run = (attemptsLeft) => {
+      if (sampling || document.hidden || !document.hasFocus() || root.classList.contains("px-perf")) return;
+      sampling = true;
+      measure((fps) => {
+        sampling = false;
+        if (fps >= 44) return;
+        if (attemptsLeft <= 1) {
+          root.classList.add("px-perf");
+          return;
+        }
+        window.setTimeout(() => run(attemptsLeft - 1), 1600);
+      });
+    };
+
+    window.setTimeout(() => run(2), 3000);
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && !root.classList.contains("px-perf")) {
+        window.setTimeout(() => run(2), 1200);
+      }
+    });
+
+    // The dashboard is the heaviest view; measure it once it is actually shown.
+    const dash = document.getElementById("dashboard-page");
+    if (dash) {
+      let wasHidden = dash.classList.contains("hidden");
+      new MutationObserver(() => {
+        const isHidden = dash.classList.contains("hidden");
+        if (wasHidden && !isHidden) window.setTimeout(() => run(2), 1800);
+        wasHidden = isHidden;
+      }).observe(dash, { attributes: true, attributeFilter: ["class"] });
+    }
+  })();
 })();

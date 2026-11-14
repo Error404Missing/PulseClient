@@ -70,8 +70,6 @@ body::after {
   opacity: 0;
   transform: translate3d(-1000px, -1000px, 0);
   background: radial-gradient(circle, rgba(255, 47, 79, 0.16), rgba(124, 92, 255, 0.07) 46%, transparent 70%);
-  filter: blur(34px);
-  mix-blend-mode: screen;
   transition: opacity 0.6s ease;
   will-change: transform;
 }
@@ -118,7 +116,6 @@ body::after {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: px3-hue 9s ease-in-out infinite;
 }
 @keyframes px3-hue {
   0%, 100% { background-position: 0% 50%; }
@@ -134,13 +131,11 @@ body::after {
 /* reveal — richer entrance (overrides the base reveal timing) */
 [data-reveal] {
   transform: translateY(36px) scale(0.985);
-  filter: blur(10px);
   transition:
     opacity 0.95s var(--px-ease),
-    transform 1s var(--px-ease),
-    filter 0.9s var(--px-ease);
+    transform 1s var(--px-ease);
 }
-[data-reveal].is-in { opacity: 1; transform: none; filter: blur(0); }
+[data-reveal].is-in { opacity: 1; transform: none; }
 
 /* ------------------------------------------------ buttons -------------- */
 .px-btn { overflow: hidden; isolation: isolate; }
@@ -182,7 +177,7 @@ body::after {
   transition: opacity 0.4s;
 }
 .navbar.px-scrolled::after { opacity: 1; }
-.navbar .logo img { animation: px3-logo 5.5s ease-in-out infinite; }
+.navbar .logo img { filter: drop-shadow(0 0 14px rgba(255, 47, 79, 0.6)); }
 @keyframes px3-logo {
   0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 47, 79, 0.45)); transform: translateY(0); }
   50% { filter: drop-shadow(0 0 22px rgba(255, 47, 79, 0.9)); transform: translateY(-1px); }
@@ -283,7 +278,7 @@ body::after {
   animation: px3-hue 10s ease-in-out infinite;
   filter: drop-shadow(0 8px 38px rgba(255, 47, 79, 0.28));
 }
-.px-eyebrow { animation: px3-eyebrow 5s ease-in-out infinite; }
+.px-eyebrow { border-color: rgba(255, 47, 79, 0.3); box-shadow: 0 0 24px -10px rgba(255, 47, 79, 0.55); }
 @keyframes px3-eyebrow {
   0%, 100% { border-color: rgba(255, 255, 255, 0.12); box-shadow: 0 0 0 rgba(255, 47, 79, 0); }
   50% { border-color: rgba(255, 47, 79, 0.4); box-shadow: 0 0 24px -6px rgba(255, 47, 79, 0.5); }
@@ -295,7 +290,6 @@ body::after {
 .px3-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(28px);
   opacity: 0.55;
   animation: px3-drift 18s ease-in-out infinite;
   will-change: transform;
@@ -316,16 +310,27 @@ body::after {
   height: 520px;
   transform: translateX(-50%) perspective(560px) rotateX(64deg);
   transform-origin: 50% 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
+  opacity: 0.55;
+}
+/* Scroll the grid with a composited layer instead of repainting a gradient. */
+.px3-floor::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -64px;
+  bottom: 0;
   background-image:
     linear-gradient(rgba(255, 47, 79, 0.22) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 47, 79, 0.18) 1px, transparent 1px);
   background-size: 64px 64px;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
-  mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
-  animation: px3-floor 9s linear infinite;
-  opacity: 0.55;
+  animation: px3-floor 2.8s linear infinite;
+  will-change: transform;
 }
-@keyframes px3-floor { to { background-position: 0 64px, 64px 0; } }
+@keyframes px3-floor { to { transform: translate3d(0, 64px, 0); } }
 .px3-particles {
   position: absolute;
   inset: 0;

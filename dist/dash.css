@@ -43,7 +43,6 @@
 .dash-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
   opacity: 0.5;
   will-change: transform;
 }

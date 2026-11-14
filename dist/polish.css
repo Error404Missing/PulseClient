@@ -19,20 +19,20 @@
   opacity: 0.018;
 }
 
-/* Smaller light with a shorter blur radius. */
+/* Smaller light; the radial gradient is already soft enough. */
 .px3-cursor {
   width: 420px;
   height: 420px;
   margin: -210px 0 0 -210px;
-  filter: blur(20px);
+  filter: none;
 }
 
 /* Radial gradients are already soft — the blur filter only cost GPU time. */
 .px3-orb { filter: none; opacity: 0.5; }
 
-/* Animate the grid with a transform instead of repainting background-position. */
+/* The grid now scrolls on its own composited pseudo-element (motion.css). */
 .px3-floor {
-  animation: px3-floor-scroll 11s linear infinite;
+  animation: none;
 }
 @keyframes px3-floor-scroll {
   from { transform: translateX(-50%) perspective(560px) rotateX(64deg) translateY(0); }
@@ -805,4 +805,81 @@
 @media (prefers-reduced-motion: reduce) {
   .modal-content, .modal-card { animation: none !important; }
   .px3-floor { animation: none !important; }
+}
+
+/* ==========================================================================
+   8. PERFORMANCE PASS — decorative layers that cost real frames
+   ========================================================================== */
+
+/* Four 650-700px blobs with a 100px blur and animated border-radius. The
+   motion layer already paints its own ambient light, so they are redundant. */
+.blob {
+  display: none !important;
+  animation: none !important;
+}
+
+/* Blurring the backdrop of large scrolling surfaces re-rasterises the strip
+   on every scroll frame. Solid translucency keeps the glass look for free. */
+.navbar,
+.footer,
+.glass-panel,
+.quick-start-section,
+.launchers-section,
+.hero-tech-ticker,
+.alert-banner,
+.auth-gate-card,
+.device-status-card,
+.krypton-download-card,
+.dqrkis-team-card,
+.main-preview,
+.badge,
+.px-stats,
+.px-hero-meta {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.navbar {
+  background: rgba(9, 8, 13, 0.92) !important;
+}
+
+/* Continuous gradient / filter / shadow animations re-raster large text and
+   logos every frame. Keep their look, drop the per-frame work. */
+.px-title .px-grad,
+.highlight,
+.footer::before,
+.hv-hero-logo,
+.hv-btn-primary {
+  animation: none !important;
+}
+
+.highlight {
+  background-position: 0% 50% !important;
+}
+
+.hv-hero-logo {
+  filter: drop-shadow(0 12px 28px rgba(168, 85, 247, 0.4));
+}
+
+/* Adaptive quality mode, set by the frame sampler in redesign.js. */
+html.px-perf .px3-grain,
+html.px-perf .px3-cursor,
+html.px-perf .streak-flame-ambient {
+  display: none !important;
+}
+
+/* Keep the ambient colour, drop the per-frame motion. */
+html.px-perf .px3-floor::before,
+html.px-perf .dash-orb,
+html.px-perf .px3-orb {
+  animation: none !important;
+}
+
+html.px-perf #dashboard-page .glass-panel,
+html.px-perf #dashboard-page .krypton-download-card {
+  box-shadow: 0 12px 26px -26px #000 !important;
+}
+
+html.px-perf [data-reveal] {
+  transition-duration: 0.4s;
 }

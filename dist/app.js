@@ -26419,6 +26419,9 @@ function initLiquidCanvas() {
 
 
     if (!canvas) return;
+    // The motion layer replaces this canvas; skipping it also stops its
+    // particle loop and pointer listeners from burning frames while hidden.
+    if (getComputedStyle(canvas).display === "none") return;
 
 
 
