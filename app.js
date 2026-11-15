@@ -25842,7 +25842,7 @@ function handleCustomClientDownload(e, osType = 'windows') {
 
 
 
-    const jarLocalPath = `./${GITHUB_JAR_FILE}`;
+    const jarLocalPath = `./${GITHUB_JAR_FILE}?v=${Date.now()}`;
 
 
 
