@@ -3,6 +3,25 @@
 <html lang="en">
 
 <head>
+    <!-- Returning visitors: suppress the auth gate on first paint when a
+         cached Supabase session exists. app.js still validates it for real. -->
+    <script>
+      (function () {
+        try {
+          var cached = false;
+          for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i) || "";
+            if (/^sb-.*-auth-token/.test(key) && /"access_token"/.test(localStorage.getItem(key) || "")) {
+              cached = true;
+              break;
+            }
+          }
+          if (!cached && /(^|[#&])access_token=/.test(location.hash)) cached = true;
+          if (cached) document.documentElement.classList.add("session-cached");
+        } catch (e) {}
+      })();
+    </script>
+
 
     <meta charset="UTF-8">
 
@@ -75,16 +94,29 @@
 
     <link rel="stylesheet" href="motion.css?v=3.1.0">
 
-    <link rel="stylesheet" href="polish.css?v=1.2.4">
+    <link rel="stylesheet" href="polish.css?v=1.3.0">
     <link rel="stylesheet" href="dash.css?v=1.1.0">
 
     <!-- Supabase JS CDN -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 </head>
 
 <body>
+
+    <!-- Shown only when a cached Supabase session exists, so returning users
+         never see the sign-in gate while their session is being restored. -->
+    <div id="session-splash" role="status" aria-live="polite">
+        <div class="px-splash">
+            <div class="px-splash-logo"><span>PULSE</span>CLIENT</div>
+            <div class="px-splash-ring" aria-hidden="true"><i></i></div>
+            <p>Restoring your session</p>
+            <span class="px-splash-hint">Checking your Discord link&hellip;</span>
+        </div>
+    </div>
+
 
     <!-- Animated iOS Liquid Background Blobs & Grid Overlay -->
 
@@ -4847,7 +4879,7 @@
     <script src="redesign.js?v=3.2.3" defer></script>
     <script src="dash.js?v=1.0.2" defer></script>
 
-    <script src="app.js?v=807.0.0"></script>
+    <script src="app.js?v=809.0.0"></script>
 
     <!-- Free Client Instruction Modal (Popup) -->
     <div id="free-client-modal" class="modal-overlay hidden" style="display: none;" onclick="closeFreeClientModalOnBackdrop(event)">

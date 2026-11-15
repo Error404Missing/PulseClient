@@ -2888,19 +2888,13 @@ function enforceVpnLock() {
 
     isVpnBlocked = true;
 
-
-
     document.body.classList.add('vpn-locked');
-
-
 
     if (vpnBlockPage) vpnBlockPage.classList.remove('hidden');
 
-
-
     if (authGatePage) authGatePage.classList.add('hidden');
 
-
+    document.documentElement.classList.remove('session-cached');
 
     if (landingPage) landingPage.classList.add('hidden');
 
@@ -3072,6 +3066,9 @@ window.releaseVpnLock = releaseVpnLock;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    // Safety: a stalled network must never keep the restore splash up.
+    setTimeout(() => document.documentElement.classList.remove('session-cached'), 9000);
 
 
 
@@ -4338,8 +4335,12 @@ async function handleUserSignIn(user) {
 
     currentUser = user;
 
-    // Pre-load admin role & profile from Supabase
-    await fetchAdminDataFromSupabase(user);
+    // Admin role and blacklist are independent reads; run them together so a
+    // returning visitor waits for one round trip, not two.
+    const [, banRecord] = await Promise.all([
+        fetchAdminDataFromSupabase(user),
+        checkUserBlacklist(user)
+    ]);
 
 
 
@@ -4363,20 +4364,6 @@ async function handleUserSignIn(user) {
 
 
     }
-
-
-
-
-
-
-
-    // Check Blacklist first
-
-
-
-    const banRecord = await checkUserBlacklist(user);
-
-
 
     if (banRecord) {
 
@@ -4527,11 +4514,9 @@ async function handleUserSignIn(user) {
 
     // Hide Auth Gate Barrier & Show Nav Links
 
-
-
     if (authGatePage) authGatePage.classList.add('hidden');
 
-
+    document.documentElement.classList.remove('session-cached');
 
     if (navLinks) navLinks.classList.remove('hidden');
 
@@ -4801,13 +4786,11 @@ function handleUserSignOut() {
 
 
 
-    // Strictly enforce Discord Auth Gate barrier for unauthenticated visitors
-
-
+        // Strictly enforce Discord Auth Gate barrier for unauthenticated visitors
 
     if (authGatePage) authGatePage.classList.remove('hidden');
 
-
+    document.documentElement.classList.remove('session-cached');
 
     if (landingPage) landingPage.classList.add('hidden');
 
@@ -21702,22 +21685,16 @@ async function checkUserBlacklist(user) {
 
 
 
-            const ipRes = await fetch('https://api.ipify.org?format=json');
-
-
-
-            if (ipRes.ok) {
-
-
-
-                const ipData = await ipRes.json();
-
-
-
-                userIp = ipData.ip;
-
-
-
+            const ipController = new AbortController();
+            const ipTimer = setTimeout(() => ipController.abort(), 1800);
+            try {
+                const ipRes = await fetch('https://api.ipify.org?format=json', { signal: ipController.signal });
+                if (ipRes.ok) {
+                    const ipData = await ipRes.json();
+                    userIp = ipData.ip;
+                }
+            } finally {
+                clearTimeout(ipTimer);
             }
 
 
@@ -21816,55 +21793,31 @@ async function checkUserBlacklist(user) {
 
 function handleUserBanEnforcement(ban) {
 
-
-
     document.body.classList.add('banned-locked');
-
-
 
     const bannedPage = document.getElementById('banned-page');
 
-
-
     const banReasonText = document.getElementById('ban-reason-text');
-
-
 
     if (banReasonText && ban.reason) {
 
-
-
         banReasonText.textContent = ban.reason;
 
-
-
     }
-
-
 
     if (bannedPage) {
 
-
-
         bannedPage.classList.remove('hidden');
-
-
 
     }
 
-
-
     if (landingPage) landingPage.classList.add('hidden');
-
-
 
     if (dashboardPage) dashboardPage.classList.add('hidden');
 
-
-
     if (authGatePage) authGatePage.classList.add('hidden');
 
-
+    document.documentElement.classList.remove('session-cached');
 
     if (navLinks) navLinks.classList.add('hidden');
 
