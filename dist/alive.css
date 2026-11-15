@@ -1,0 +1,357 @@
+/* ==========================================================================
+   PULSECLIENT — ALIVE LAYER
+   Continuous ambient motion, floating hero objects, animated edges and
+   pointer feedback. Transform/opacity only; heavy effects stay behind
+   px-perf and prefers-reduced-motion.
+   ========================================================================== */
+
+:root {
+  --alive-red: rgba(255, 47, 79, 0.55);
+  --alive-violet: rgba(124, 92, 255, 0.42);
+  --alive-mint: rgba(124, 240, 192, 0.5);
+}
+
+html { scroll-behavior: smooth; }
+
+/* --------------------------------------------------------------------------
+   1. AURORA — slow colour sheets behind everything
+   -------------------------------------------------------------------------- */
+.px-alive-aurora {
+  position: fixed;
+  inset: -25%;
+  z-index: -3;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.75;
+}
+.px-alive-aurora i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  will-change: transform;
+}
+.px-alive-aurora i:nth-child(1) {
+  width: 68vw; height: 68vw;
+  left: -12%; top: -14%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 47, 79, 0.16), transparent 64%);
+  animation: px-alive-drift-a 38s ease-in-out infinite alternate;
+}
+.px-alive-aurora i:nth-child(2) {
+  width: 62vw; height: 62vw;
+  right: -14%; top: 4%;
+  background: radial-gradient(circle at 50% 50%, rgba(124, 92, 255, 0.14), transparent 66%);
+  animation: px-alive-drift-b 46s ease-in-out infinite alternate;
+}
+.px-alive-aurora i:nth-child(3) {
+  width: 54vw; height: 54vw;
+  left: 22%; bottom: -22%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 178, 107, 0.08), transparent 68%);
+  animation: px-alive-drift-c 52s ease-in-out infinite alternate;
+}
+@keyframes px-alive-drift-a {
+  0%   { transform: translate3d(-4%, -2%, 0) scale(1); }
+  100% { transform: translate3d(8%, 5%, 0) scale(1.18); }
+}
+@keyframes px-alive-drift-b {
+  0%   { transform: translate3d(3%, -4%, 0) scale(1.08); }
+  100% { transform: translate3d(-7%, 6%, 0) scale(0.94); }
+}
+@keyframes px-alive-drift-c {
+  0%   { transform: translate3d(-3%, 3%, 0) scale(0.96); }
+  100% { transform: translate3d(5%, -5%, 0) scale(1.14); }
+}
+
+/* --------------------------------------------------------------------------
+   2. HERO — pointer-reactive copy + floating telemetry chips
+   -------------------------------------------------------------------------- */
+.px-hero-copy {
+  transform: perspective(1400px) rotateY(calc(var(--tilt-x, 0) * 1deg)) rotateX(calc(var(--tilt-y, 0) * -1deg));
+  transition: transform 0.6s var(--px-ease, cubic-bezier(0.16, 1, 0.3, 1));
+}
+.px-alive-chips {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.px-alive-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 13px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 20px 46px -30px #000, inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-family: var(--px-font-mono, ui-monospace, monospace);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(246, 241, 238, 0.72);
+  white-space: nowrap;
+  animation: px-alive-float 7.5s ease-in-out infinite;
+  translate: calc(var(--ax, 0) * 1px) calc(var(--ay, 0) * 1px);
+  transition: translate 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, translate;
+}
+.px-alive-chip::before {
+  content: "";
+  flex: 0 0 5px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #7cf0c0;
+  box-shadow: 0 0 9px rgba(124, 240, 192, 0.8);
+}
+.px-alive-chip b {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.px-alive-chip.c1 { left: 3.5%; top: 30%; animation-delay: -1.4s; }
+.px-alive-chip.c2 { right: 3%; top: 21%; animation-delay: -3.6s; }
+.px-alive-chip.c3 { right: 7%; top: 51%; animation-delay: -5.2s; }
+.px-alive-chip.c4 { left: 6%; top: 56%; animation-delay: -2.3s; }
+@keyframes px-alive-float {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50%      { transform: translateY(-11px) rotate(1.2deg); }
+}
+@media (max-width: 1280px) {
+  .px-alive-chips { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   3. MARQUEE — second counter-scrolling ribbon
+   -------------------------------------------------------------------------- */
+.px-marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 0;
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.px-marquee-track { animation-duration: 38s; }
+.px-marquee .px-alive-reverse {
+  animation-direction: reverse;
+  animation-duration: 54s;
+  opacity: 0.42;
+}
+.px-marquee:hover .px-marquee-track { animation-play-state: paused; }
+
+/* --------------------------------------------------------------------------
+   4. EDGES — light travelling around cards and panels
+   -------------------------------------------------------------------------- */
+.px-card::after {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 47, 79, 0.62) 24%,
+    rgba(255, 178, 107, 0.4) 38%,
+    rgba(124, 92, 255, 0.5) 52%,
+    transparent 76%
+  );
+  background-size: 280% 100%;
+  opacity: 0.4;
+  animation: px-alive-border 10s linear infinite;
+}
+.px-card:hover::after {
+  opacity: 1;
+  animation-duration: 4.5s;
+}
+
+.px-free-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 47, 79, 0.75) 26%,
+    rgba(255, 178, 107, 0.45) 40%,
+    rgba(124, 92, 255, 0.6) 56%,
+    transparent 80%
+  );
+  background-size: 300% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: px-alive-border 8s linear infinite;
+  opacity: 0.75;
+}
+@keyframes px-alive-border {
+  from { background-position: 0% 50%; }
+  to   { background-position: 280% 50%; }
+}
+
+/* stats panel light sweep */
+.px-stats { overflow: hidden; }
+.px-stats::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.075) 49%, transparent 60%);
+  transform: translateX(-120%);
+  animation: px-alive-sweep 11s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes px-alive-sweep {
+  0%, 55% { transform: translateX(-120%); }
+  85%, 100% { transform: translateX(120%); }
+}
+
+/* --------------------------------------------------------------------------
+   5. MICRO-MOTION — steps, badge, logo, footer
+   -------------------------------------------------------------------------- */
+.px-step-ic { animation: px-alive-bob 6.5s ease-in-out infinite; }
+.px-step:nth-child(2) .px-step-ic { animation-delay: -2.1s; }
+.px-step:nth-child(3) .px-step-ic { animation-delay: -4.2s; }
+@keyframes px-alive-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+.px-step-num { animation: px-alive-num 5s ease-in-out infinite; }
+.px-step:nth-child(2) .px-step-num { animation-delay: -1.6s; }
+.px-step:nth-child(3) .px-step-num { animation-delay: -3.2s; }
+@keyframes px-alive-num {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 47, 79, 0); }
+  50%      { box-shadow: 0 0 26px -6px rgba(255, 47, 79, 0.65); }
+}
+
+.navbar .logo img { animation: px-alive-logo 6s ease-in-out infinite; }
+@keyframes px-alive-logo {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-1.5px) scale(1.035); }
+}
+
+.px-footer-brand .logo img { animation: px-alive-logo 7s ease-in-out infinite; }
+
+/* free-panel sparkles injected by alive.js */
+.px-alive-spark {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(255, 122, 140, 0.9);
+  pointer-events: none;
+  animation: px-alive-twinkle 4.5s ease-in-out infinite;
+}
+@keyframes px-alive-twinkle {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.4); }
+  45%      { opacity: 0.9; transform: translateY(-9px) scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   6. POINTER — comet trail + click bursts (canvas)
+   -------------------------------------------------------------------------- */
+.px-alive-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 945;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. DASHBOARD — active rail, breathing status, panel sheen
+   -------------------------------------------------------------------------- */
+.dashboard-sidebar .menu-item { position: relative; }
+.dashboard-sidebar .menu-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 2px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, #ff2f4f, #ff9a6c, #7c5cff);
+  box-shadow: 0 0 14px rgba(255, 47, 79, 0.8);
+  animation: px-alive-rail 3.4s ease-in-out infinite;
+}
+@keyframes px-alive-rail {
+  0%, 100% { opacity: 0.55; transform: scaleY(0.75); }
+  50%      { opacity: 1; transform: scaleY(1); }
+}
+#dashboard-page .dashboard-main .glass-panel,
+#dashboard-page .dashboard-main .krypton-download-card {
+  position: relative;
+}
+#dashboard-page .dashboard-main .glass-panel::after,
+#dashboard-page .dashboard-main .krypton-download-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent 42%, rgba(255, 255, 255, 0.045) 50%, transparent 58%);
+  background-size: 260% 100%;
+  transform: none;
+  animation: px-alive-panel 12s ease-in-out infinite;
+  opacity: 0.8;
+}
+@keyframes px-alive-panel {
+  0%, 60% { background-position: 120% 0; }
+  100%    { background-position: -120% 0; }
+}
+#dashboard-page .dashboard-main .glass-panel > *,
+#dashboard-page .dashboard-main .krypton-download-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   8. PERFORMANCE + ACCESSIBILITY
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .px-alive-aurora,
+  .px-alive-chips,
+  .px-alive-spark,
+  .px-alive-trail { display: none !important; }
+  .px-marquee .px-alive-reverse { display: none !important; }
+  .px-hero-copy { transform: none !important; }
+  .px-card::after,
+  .px-free-panel::after,
+  .px-stats::before,
+  .px-step-ic,
+  .px-step-num,
+  .navbar .logo img,
+  .px-footer-brand .logo img,
+  .dashboard-sidebar .menu-item.active::before,
+  #dashboard-page .dashboard-main .glass-panel::after,
+  #dashboard-page .dashboard-main .krypton-download-card::after {
+    animation: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+html.px-perf .px-alive-aurora,
+html.px-perf .px-alive-chips,
+html.px-perf .px-alive-spark,
+html.px-perf .px-alive-trail {
+  display: none !important;
+}
+html.px-perf .px-marquee .px-alive-reverse { display: none !important; }
+html.px-perf .px-card::after,
+html.px-perf .px-free-panel::after,
+html.px-perf .px-stats::before,
+html.px-perf .px-step-ic,
+html.px-perf .px-step-num,
+html.px-perf .navbar .logo img,
+html.px-perf .px-footer-brand .logo img,
+html.px-perf .dashboard-sidebar .menu-item.active::before,
+html.px-perf #dashboard-page .dashboard-main .glass-panel::after,
+html.px-perf #dashboard-page .dashboard-main .krypton-download-card::after {
+  animation: none !important;
+}
