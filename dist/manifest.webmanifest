@@ -1,0 +1,35 @@
+{
+  "name": "PulseClient",
+  "short_name": "Pulse",
+  "description": "Precision Minecraft client, utility suite and OpSec trace cleaner. Free license.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07080b",
+  "theme_color": "#a855f7",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["games", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
