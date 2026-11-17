@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Policy — PulseClient</title>
+  <meta name="description" content="Every cookie and local-storage item PulseClient uses, why it exists, how long it lasts, and how to change your consent.">
+  <link rel="canonical" href="https://pulseclient.xyz/cookies">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#07080b">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/legal.css?v=1.0.0">
+</head>
+<body class="lg-body">
+
+<header class="lg-header">
+  <a class="lg-brand" href="/"><img src="/logo.png" alt="">PULSE<span>CLIENT</span></a>
+  <nav>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/cookies" class="is-active">Cookies</a>
+    <a href="/licenses">Licenses</a>
+  </nav>
+</header>
+
+<main class="lg-wrap">
+  <div class="lg-hero">
+    <span class="lg-eyebrow">Legal</span>
+    <h1>Cookie Policy</h1>
+    <p>Cookies, local storage and the handful of third-party requests that run when you use PulseClient — with no advertising trackers.</p>
+    <div class="lg-meta">Last updated: 17 November 2026 &nbsp;·&nbsp; Version 1.0</div>
+  </div>
+
+  <nav class="lg-toc" aria-label="Sections">
+    <a href="#what">1. Cookies vs. local storage</a>
+    <a href="#categories">2. Categories we use</a>
+    <a href="#table">3. Full list</a>
+    <a href="#third-party">4. Third-party requests</a>
+    <a href="#analytics">5. Analytics &amp; advertising</a>
+    <a href="#manage">6. Change your choice</a>
+    <a href="#contact">7. Contact</a>
+  </nav>
+
+  <section class="lg-card" id="what">
+    <h2><span class="lg-num">01</span>Cookies vs. local storage</h2>
+    <p>A <strong>cookie</strong> is a small file a site asks your browser to store and send back with later requests. <strong>Local storage</strong> and <strong>session storage</strong> work similarly but stay inside your browser and are not sent with every request. This policy covers all three, because the rules on consent apply to all of them.</p>
+  </section>
+
+  <section class="lg-card" id="categories">
+    <h2><span class="lg-num">02</span>Categories we use</h2>
+    <ul>
+      <li><strong>Strictly necessary</strong> — required to sign you in, keep your session secure, protect the site from bots and remember your cookie choice. These cannot be switched off without breaking the site.</li>
+      <li><strong>Preferences / functional</strong> — remember your last dashboard tab, language, dismissed notices and referral code so the interface does not reset itself.</li>
+      <li><strong>Analytics</strong> — none are set today. If we add a privacy-friendly analytics tool later, it will stay off until you opt in.</li>
+      <li><strong>Marketing</strong> — none. We do not run advertising pixels, retargeting or social trackers.</li>
+    </ul>
+  </section>
+
+  <section class="lg-card" id="table">
+    <h2><span class="lg-num">03</span>Full list of storage we set</h2>
+    <div class="lg-table-wrap">
+      <table class="lg-table">
+        <thead><tr><th>Name</th><th>Type</th><th>Purpose</th><th>Lifetime</th></tr></thead>
+        <tbody>
+          <tr><td><code>sb-&lt;project&gt;-auth-token</code></td><td>Local storage</td><td>Supabase session: access and refresh token that keep you signed in with Discord</td><td>Until sign-out or token expiry</td></tr>
+          <tr><td><code>pulse_consent_v1</code></td><td>Local storage</td><td>Records which cookie categories you accepted, so the banner is not shown again</td><td>Until you clear site data</td></tr>
+          <tr><td><code>pulse_lang</code>, <code>pulse_current_tab</code>, <code>pulse_current_view</code>, <code>pulse_admin_subtab</code></td><td>Local storage</td><td>Remembers the interface language, active dashboard tab and last view</td><td>Until you clear site data</td></tr>
+          <tr><td><code>pulse_dismissed_update_sha</code>, <code>pulse_tg_bonus_popup_seen</code>, <code>pulse_notified_key_*</code></td><td>Local storage</td><td>Stops already-read notices and popups from showing again</td><td>Until you clear site data</td></tr>
+          <tr><td><code>pulse_referral_code</code>, <code>pulse_referral_discord_id</code></td><td>Local storage</td><td>Keeps your referral code handy inside the dashboard</td><td>Until you clear site data</td></tr>
+          <tr><td><code>pulse_community_configs</code>, <code>pulse_deleted_tickets</code>, <code>pulse_evila_*</code></td><td>Local storage</td><td>Community section state, locally hidden tickets and an in-dashboard sound timer</td><td>Until you clear site data</td></tr>
+          <tr><td><code>pulse_vpn_blocked</code>, <code>pulse_vpn_blocked_ip</code></td><td>Session storage</td><td>Prevents a repeated VPN/proxy block screen during the same tab session</td><td>Until the tab is closed</td></tr>
+          <tr><td><code>__cf_bm</code>, <code>cf_clearance</code>, <code>_cfuvid</code></td><td>Cookies (Cloudflare)</td><td>Bot management, challenge clearance and rate-limit protection</td><td>Session to 30 minutes (clearance varies)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lg-note">Cloudflare cookies are set by our hosting provider for security and cannot be disabled while using the site. They contain no advertising identifiers.</p>
+  </section>
+
+  <section class="lg-card" id="third-party">
+    <h2><span class="lg-num">04</span>Third-party requests that receive your IP</h2>
+    <p>Even without cookies, loading a resource from another server reveals your IP address and user agent to that server. The public site makes these requests:</p>
+    <ul>
+      <li><strong>Google Fonts</strong> (<code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code>) — the typefaces used across the site.</li>
+      <li><strong>jsDelivr</strong> (<code>cdn.jsdelivr.net</code>) — serves the Supabase browser SDK.</li>
+      <li><strong>Discord CDN</strong> (<code>cdn.discordapp.com</code>) — profile avatars shown in the dashboard.</li>
+      <li><strong>mc-heads.net</strong> — Minecraft head and skin renders.</li>
+      <li><strong>Cloudflare</strong> — hosting, caching and security for the whole site.</li>
+    </ul>
+    <p>Signed-in users also reach our API (<code>api.pulseclient.xyz</code>, with a Hugging Face Spaces fallback) and, during security checks, IP intelligence services (freeipapi.com, ipify.org, IPinfo blackbox, ipquery.io, ipwho.is) that receive the IP being checked. The client download is streamed from GitHub. Details are in the <a href="/privacy#sharing">Privacy Policy</a>.</p>
+  </section>
+
+  <section class="lg-card" id="analytics">
+    <h2><span class="lg-num">05</span>Analytics, advertising and Do Not Track</h2>
+    <p>We do not load Google Analytics, ad pixels, session recorders, heatmaps or social plugins. Because there is nothing to opt out of, Do Not Track and Global Privacy Control signals do not change what the site loads. Optional analytics and marketing categories in our consent banner are off by default and currently have no scripts attached.</p>
+  </section>
+
+  <section class="lg-card" id="manage">
+    <h2><span class="lg-num">06</span>How to change or withdraw your choice</h2>
+    <ul>
+      <li>Use the <strong>Cookie settings</strong> button in the footer of any page to reopen the banner and choose again.</li>
+      <li>Clear site data in your browser to remove every item listed above; you will be signed out.</li>
+      <li>Block third-party cookies or fonts in your browser settings — the site still works, but icons and type may fall back to system defaults.</li>
+      <li>Blocking strictly necessary storage means you cannot stay signed in, and license features will not load.</li>
+    </ul>
+    <p>Withdrawing consent never affects processing that already happened, and it does not remove records we must keep for security or accounting reasons (see the Privacy Policy).</p>
+  </section>
+
+  <section class="lg-card" id="contact">
+    <h2><span class="lg-num">07</span>Contact</h2>
+    <p>Questions about this policy: <a href="mailto:pulseclient.official@gmail.com">pulseclient.official@gmail.com</a> or a ticket in our <a href="https://discord.gg/PEh8KP9hTE" target="_blank" rel="noopener noreferrer">Discord server</a>.</p>
+  </section>
+</main>
+
+<footer class="lg-footer">
+  <div class="lg-footer-inner">
+    <span>&copy; 2026 PulseClient. All rights reserved. Not affiliated with Mojang AB or Microsoft.</span>
+    <div class="lg-footer-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/cookies">Cookies</a>
+      <a href="/licenses">Licenses</a>
+      <button type="button" data-cookie-settings>Cookie settings</button>
+    </div>
+  </div>
+</footer>
+
+<script src="/consent.js?v=1.0.0" defer></script>
+</body>
+</html>

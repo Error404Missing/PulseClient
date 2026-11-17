@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Licenses &amp; Credits — PulseClient</title>
+  <meta name="description" content="Fonts, libraries, artwork and audio used by PulseClient, with their licenses and attribution.">
+  <link rel="canonical" href="https://pulseclient.xyz/licenses">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#07080b">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/legal.css?v=1.0.0">
+</head>
+<body class="lg-body">
+
+<header class="lg-header">
+  <a class="lg-brand" href="/"><img src="/logo.png" alt="">PULSE<span>CLIENT</span></a>
+  <nav>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/cookies">Cookies</a>
+    <a href="/licenses" class="is-active">Licenses</a>
+  </nav>
+</header>
+
+<main class="lg-wrap">
+  <div class="lg-hero">
+    <span class="lg-eyebrow">Credits</span>
+    <h1>Licenses &amp; Credits</h1>
+    <p>Who made what, and under which license PulseClient uses it.</p>
+    <div class="lg-meta">Last updated: 17 November 2026 &nbsp;·&nbsp; Version 1.0</div>
+  </div>
+
+  <nav class="lg-toc" aria-label="Sections">
+    <a href="#original">1. PulseClient originals</a>
+    <a href="#fonts">2. Fonts</a>
+    <a href="#libraries">3. Libraries</a>
+    <a href="#assets">4. Images &amp; audio</a>
+    <a href="#minecraft">5. Minecraft notice</a>
+    <a href="#report">6. Report an issue</a>
+  </nav>
+
+  <section class="lg-card" id="original">
+    <h2><span class="lg-num">01</span>PulseClient originals</h2>
+    <p>The PulseClient name and logo, this website’s layout, styles and scripts, the desktop client code, and the artwork created for the project are <strong>&copy; 2026 PulseClient, all rights reserved</strong>. You may view and use the site as a visitor; you may not copy the client, its assets or the brand into another product without written permission.</p>
+  </section>
+
+  <section class="lg-card" id="fonts">
+    <h2><span class="lg-num">02</span>Fonts</h2>
+    <p>The website loads these families from Google Fonts. All are licensed under the <a href="https://openfontlicense.org/" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a>, which allows free use, modification and embedding, including in commercial projects:</p>
+    <ul>
+      <li><strong>Plus Jakarta Sans</strong> — Tokotype</li>
+      <li><strong>Space Grotesk</strong> — Florian Karsten</li>
+      <li><strong>JetBrains Mono</strong> — JetBrains</li>
+      <li><strong>Silkscreen</strong> — Jason Kottke</li>
+      <li><strong>Syne</strong> — Bonjour Monde / Lucas Descroix</li>
+      <li><strong>Outfit</strong> — Smartsheet / Rodrigo Fuenzalida</li>
+    </ul>
+    <p class="lg-note">The desktop overlay GUI bundles <code>ProductSans-Medium.ttf</code>. Product Sans is a proprietary Google brand typeface and is <strong>not</strong> covered by the SIL Open Font License. It is not redistributed as part of the public website; if you reuse the client bundle, replace it with an open font such as Inter or Plus Jakarta Sans.</p>
+  </section>
+
+  <section class="lg-card" id="libraries">
+    <h2><span class="lg-num">03</span>Libraries</h2>
+    <div class="lg-table-wrap">
+      <table class="lg-table">
+        <thead><tr><th>Library</th><th>Used for</th><th>License</th></tr></thead>
+        <tbody>
+          <tr><td>Supabase JS</td><td>Discord sign-in and session handling</td><td>MIT</td></tr>
+          <tr><td>skinview3d</td><td>3D Minecraft skin previews</td><td>MIT</td></tr>
+          <tr><td>three.js (bundled in skinview3d)</td><td>WebGL renderer used by the previews</td><td>MIT</td></tr>
+          <tr><td>Fabric Loader / Fabric API</td><td>Mod loader the client targets</td><td>Apache-2.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>MIT-licensed components are used under their own terms, which require keeping the copyright and permission notice with the software. Their full texts are available in each project’s repository.</p>
+  </section>
+
+  <section class="lg-card" id="assets">
+    <h2><span class="lg-num">04</span>Images, icons and audio</h2>
+    <ul>
+      <li><strong>Logo, app icons, OG card</strong> (<code>logo.png</code>, <code>icon-48/96/192/512.png</code>, <code>icon-maskable-512.png</code>, <code>apple-touch-icon.png</code>, <code>og-cover.png</code>) — original PulseClient artwork, &copy; PulseClient.</li>
+      <li><strong>Illustrations</strong> (<code>error404missing.png/.webp</code>, <code>mogged.png</code>, <code>vpn-block-preview.png</code>) — created for PulseClient, &copy; PulseClient.</li>
+      <li><strong>Bot skins</strong> (<code>images/bots/*.png</code>) — original pixel art made for the PulseClient community bots, &copy; PulseClient.</li>
+      <li><strong>Minecraft skins and player avatars</strong> — each belongs to its creator or the player who uploaded it; rendered for display only.</li>
+      <li><strong>Sound effect</strong> (<code>evila.mp3</code>) — a short alert clip used inside the staff dashboard. Its provenance is not recorded in the repository; it is not part of the public marketing pages.</li>
+    </ul>
+    <p class="lg-note">Before shipping the repository as a product or template, confirm you own or license every media file you did not create — the internal <code>LICENSES.md</code> file tracks the ones that still need a written source.</p>
+  </section>
+
+  <section class="lg-card" id="minecraft">
+    <h2><span class="lg-num">05</span>Minecraft notice</h2>
+    <p>Minecraft, Mojang and related marks are trademarks of Microsoft Corporation. PulseClient is an independent project and is not affiliated with, endorsed by or sponsored by Mojang Studios or Microsoft. Skins, capes and head renders shown on the site remain the property of their respective owners.</p>
+  </section>
+
+  <section class="lg-card" id="report">
+    <h2><span class="lg-num">06</span>Report a licensing issue</h2>
+    <p>If you believe something on this site uses your work without the right permission, contact <a href="mailto:pulseclient.official@gmail.com">pulseclient.official@gmail.com</a> with the asset URL and proof of ownership. We remove or replace disputed assets while we review the claim.</p>
+  </section>
+</main>
+
+<footer class="lg-footer">
+  <div class="lg-footer-inner">
+    <span>&copy; 2026 PulseClient. All rights reserved. Not affiliated with Mojang AB or Microsoft.</span>
+    <div class="lg-footer-links">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/cookies">Cookies</a>
+      <a href="/licenses">Licenses</a>
+      <button type="button" data-cookie-settings>Cookie settings</button>
+    </div>
+  </div>
+</footer>
+
+<script src="/consent.js?v=1.0.0" defer></script>
+</body>
+</html>

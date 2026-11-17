@@ -16,14 +16,28 @@ export default {
       return Response.redirect(url.toString(), status);
     }
 
-    // 1. Logs routing rewrite (replaces vercel.json rewrite)
+    // 1. Clean URLs for the legal pages
+    const LEGAL_ROUTES = {
+      '/privacy': '/privacy.html',
+      '/terms': '/terms.html',
+      '/cookies': '/cookies.html',
+      '/licenses': '/licenses.html'
+    };
+    const cleanPath = url.pathname.replace(/\/+$/, '') || '/';
+    if (LEGAL_ROUTES[cleanPath]) {
+      const pageUrl = new URL(request.url);
+      pageUrl.pathname = LEGAL_ROUTES[cleanPath];
+      return env.ASSETS.fetch(new Request(pageUrl.toString(), request));
+    }
+
+    // 2. Logs routing rewrite (replaces vercel.json rewrite)
     if (url.hostname.startsWith('logs.') || url.pathname === '/logs') {
       const logsUrl = new URL(request.url);
       logsUrl.pathname = '/logs.html';
       return env.ASSETS.fetch(new Request(logsUrl.toString(), request));
     }
 
-    // 2. Direct streaming for .jar files (bypasses 25MB Cloudflare asset limit by fetching directly from GitHub Raw)
+    // 3. Direct streaming for .jar files (bypasses 25MB Cloudflare asset limit by fetching directly from GitHub Raw)
     if (url.pathname.endsWith('.jar')) {
       const jarTargetUrl = 'https://raw.githubusercontent.com/Error404Missing/PulseClient/main/PulseClient-Fabric-1.21.11.jar?t=' + Math.floor(Date.now() / 60000);
 
@@ -55,7 +69,7 @@ export default {
       });
     }
 
-    // 3. Serve all other static assets (HTML, CSS, JS, images) via native Cloudflare Static Assets
+    // 4. Serve all other static assets (HTML, CSS, JS, images) via native Cloudflare Static Assets
     const assetResponse = await env.ASSETS.fetch(request);
 
     const method = request.method;

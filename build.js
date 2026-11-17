@@ -25,6 +25,7 @@ const IGNORE_PATTERNS = [
 function shouldCopy(filename) {
   if (filename.endsWith('.jar')) return false;
   if (filename.endsWith('.bak') || filename.endsWith('.tmp')) return false;
+  if (filename.endsWith('.md')) return false; // internal docs, never public assets
   for (const ign of IGNORE_PATTERNS) {
     if (filename === ign || filename.startsWith(ign + '/')) return false;
   }

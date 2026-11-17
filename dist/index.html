@@ -165,6 +165,8 @@
     <link rel="stylesheet" href="dash.css?v=1.1.0">
     <link rel="stylesheet" href="alive.css?v=1.1.1">
 
+    <link rel="stylesheet" href="legal.css?v=1.0.0">
+
     <!-- Supabase JS CDN -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -676,6 +678,14 @@
             <div class="px-footer-bottom">
                 <span>&copy; 2026 PulseClient. All rights reserved. Not affiliated with Mojang AB.</span>
                 <span><span class="px-tag">BUILT FOR THE GRIND</span><a href="#landing-page" data-to-top style="color:inherit">Back to top ↑</a></span>
+            </div>
+
+            <div class="px-legal-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/cookies">Cookie Policy</a>
+                <a href="/licenses">Licenses</a>
+                <button type="button" data-cookie-settings>Cookie settings</button>
             </div>
         </div>
     </footer>
@@ -1428,6 +1438,11 @@
 
                                 <input type="text" id="bind-key-input" placeholder="XXXX-XXXX-XXXX-XXXX" required>
 
+                                <label class="pc-consent-field" for="bind-consent">
+                                    <input type="checkbox" id="bind-consent" required>
+                                    <span>I agree to the <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>, and to this key being linked to my Discord account and device.</span>
+                                </label>
+
                                 <button type="submit" id="bind-submit-btn" class="btn btn-glow" style="border-radius: 99px;">Connect</button>
 
                             </form>
@@ -2134,6 +2149,11 @@
                                         </label>
 
                                         <input type="email" id="admin-buyer-email-input" placeholder="e.g. buyer@gmail.com (an official invoice is sent instantly)" style="width: 100%; padding: 12px 16px; border-radius: 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); color: #fff; font-size: 13.5px; outline: none; transition: var(--transition);">
+
+                                        <label class="pc-consent-field" for="admin-buyer-consent">
+                                            <input type="checkbox" id="admin-buyer-consent" required>
+                                            <span>I confirm the buyer agreed to their email address being used to send this invoice, as described in the <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+                                        </label>
 
                                     </div>
 
@@ -4949,6 +4969,7 @@
 
     <script src="app.js?v=809.0.0"></script>
     <script src="alive.js?v=1.1.1" defer></script>
+    <script src="consent.js?v=1.0.0" defer></script>
 
     <!-- Free Client Instruction Modal (Popup) -->
     <div id="free-client-modal" class="modal-overlay hidden" style="display: none;" onclick="closeFreeClientModalOnBackdrop(event)">
