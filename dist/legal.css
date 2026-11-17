@@ -303,33 +303,6 @@ body.lg-body {
 .px-legal-links a:hover,
 .px-legal-links button:hover { color: #fff; }
 
-/* Consent checkbox inside existing forms */
-.pc-consent-field {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin: 12px 0 4px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--lg-muted);
-  text-align: left;
-}
-
-.pc-consent-field input[type="checkbox"] {
-  flex: 0 0 auto;
-  width: 16px;
-  height: 16px;
-  margin: 2px 0 0;
-  accent-color: var(--lg-accent);
-  cursor: pointer;
-}
-
-.bind-form .pc-consent-field,
-.admin-form .pc-consent-field { flex: 1 1 100%; width: 100%; }
-
-.pc-consent-field a { color: var(--lg-accent-light); text-decoration: none; }
-.pc-consent-field a:hover { text-decoration: underline; }
-
 /* ==========================================================================
    Cookie consent banner
    ========================================================================== */
