@@ -30516,14 +30516,67 @@ window.fetchSupabaseAdminsList = fetchSupabaseAdminsList;
 // ==========================================
 // FREE CLIENT INSTRUCTION MODAL
 // ==========================================
-function openFreeClientModal() {
-    const modal = document.getElementById('free-client-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+// Does the signed-in user already have a license bound to their Discord
+// account? Cached list first, then one targeted lookup, so returning users can
+// skip the "how to get a key" instructions entirely.
+async function userHasRegisteredLicense() {
+    if (!currentUser) return false;
+
+    if (Array.isArray(userLicenses) && userLicenses.length > 0) return true;
+
+    const metadata = currentUser.user_metadata || {};
+    const username = metadata.user_name || metadata.custom_claims?.username || metadata.full_name || metadata.name;
+    if (!username) return false;
+
+    try { await ensureFreshSession(); } catch (e) {}
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('licenses')
+            .select('license_key, is_active, expires_at, note')
+            .like('note', `%Buyer: ${username}%`)
+            .limit(1);
+        if (error) throw error;
+        return Array.isArray(data) && data.length > 0;
+    } catch (e) {
+        console.warn('License lookup failed, showing instructions:', e && e.message ? e.message : e);
+        return false;
     }
 }
+
+let freeKeyCheck = null;
+
+async function openFreeClientModal() {
+    // Guard against double clicks while the license lookup is in flight.
+    if (freeKeyCheck) return freeKeyCheck;
+
+    freeKeyCheck = (async () => {
+        let hasLicense = false;
+        try { hasLicense = await userHasRegisteredLicense(); } catch (e) { hasLicense = false; }
+
+        if (hasLicense) {
+            const openModal = document.getElementById('free-client-modal');
+            if (openModal) {
+                openModal.classList.add('hidden');
+                openModal.style.display = 'none';
+            }
+            document.body.style.overflow = '';
+            showDashboard();
+            return;
+        }
+
+        const modal = document.getElementById('free-client-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    })();
+
+    try { await freeKeyCheck; } finally { freeKeyCheck = null; }
+}
+
+window.openFreeClientModal = openFreeClientModal;
 
 function closeFreeClientModal() {
     const modal = document.getElementById('free-client-modal');
