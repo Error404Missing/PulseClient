@@ -1182,7 +1182,7 @@ h3 {
 .hud-telem-lbl {
     font-size: 9px;
     font-weight: 700;
-    color: #64748b;
+    color: #8b98aa;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -1216,7 +1216,7 @@ h3 {
     gap: 5px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: #64748b;
+    color: #8b98aa;
 }
 
 .widget-icon-btn {
@@ -1578,7 +1578,7 @@ h3 {
 }
 
 .logo-white {
-    color: #71717a;
+    color: #8a8a93;
     font-weight: 700;
 }
 
@@ -4235,7 +4235,7 @@ h3 {
 
 .discord-icon-bg {
     background: rgba(88, 101, 242, 0.15);
-    color: #5865f2;
+    color: #7d88f5;
     border: 1px solid rgba(88, 101, 242, 0.3);
 }
 
@@ -4253,7 +4253,7 @@ h3 {
     padding: 4px 10px;
     border-radius: 99px;
     background: rgba(88, 101, 242, 0.15);
-    color: #5865f2;
+    color: #7d88f5;
     border: 1px solid rgba(88, 101, 242, 0.3);
 }
 
@@ -6854,7 +6854,7 @@ button.specs-chip:hover,
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: #71717a;
+    color: #8a8a93;
     transition: color 0.2s ease;
 }
 .oval-select-box:hover .select-chevron {
@@ -6951,7 +6951,7 @@ button.specs-chip:hover,
 .term-clear-btn {
     background: none;
     border: none;
-    color: #71717a;
+    color: #8a8a93;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     cursor: pointer;
@@ -6973,7 +6973,7 @@ button.specs-chip:hover,
 .term-prompt-label {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    color: #71717a;
+    color: #8a8a93;
     font-size: 12.5px;
     user-select: none;
     white-space: nowrap;

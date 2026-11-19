@@ -916,7 +916,7 @@ html.session-cached #session-splash {
   font-size: 22px;
   font-weight: 900;
   letter-spacing: 0.06em;
-  color: #6f687d;
+  color: #8b8494;
 }
 
 .px-splash-logo span { color: #ffffff; }
@@ -954,7 +954,7 @@ html.session-cached #session-splash {
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #6f687d;
+  color: #8b8494;
 }
 
 @keyframes px-splash-spin { to { transform: rotate(360deg); } }

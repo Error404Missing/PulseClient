@@ -237,7 +237,7 @@
 #dashboard-page .logo-red { color: #ffffff; }
 
 #dashboard-page .logo-white {
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.62);
   font-weight: 600;
 }
 
@@ -1262,7 +1262,7 @@
 }
 
 #dashboard-page .bind-form input::placeholder {
-  color: #5f596d;
+  color: #8b8494;
   letter-spacing: 0.12em;
 }
 
