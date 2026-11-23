@@ -25215,7 +25215,7 @@ function generatePulseAIResponse(input) {
 
 
 
-            return "<strong>How to purchase a license?</strong><br>1. Come to us <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>on the Discord server</a>.<br>2. Open **Ticket** 'Buy / Purchase' in the channel.<br>3. The administration will help you with payment and key activation in a few minutes!";
+            return "<strong>How to purchase a license?</strong><br>1. Come to us <a href='https://discord.gg/GwuGAt3MY8' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>on the Discord server</a>.<br>2. Open **Ticket** 'Buy / Purchase' in the channel.<br>3. The administration will help you with payment and key activation in a few minutes!";
 
 
 
@@ -25223,7 +25223,7 @@ function generatePulseAIResponse(input) {
 
 
 
-        return "<strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a **Ticket** in the 'Buy / Purchase' channel.<br>3. Support will help you complete payment and activate your key in minutes!";
+        return "<strong>How to buy a license?</strong><br>1. Join our <a href='https://discord.gg/GwuGAt3MY8' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord Server</a>.<br>2. Open a **Ticket** in the 'Buy / Purchase' channel.<br>3. Support will help you complete payment and activate your key in minutes!";
 
 
 
@@ -25403,7 +25403,7 @@ function generatePulseAIResponse(input) {
 
 
 
-        return "<strong>Pulse AI:</strong> I didn't quite understand that. Try asking something like:<br>• <em>Which key opens the menu?</em><br>• <em>How do I install the mod?</em><br>• <em>How do I get a license?</em><br>• <em>How do I fix a crash?</em><br><br>Or reach us on <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
+        return "<strong>Pulse AI:</strong> I didn't quite understand that. Try asking something like:<br>• <em>Which key opens the menu?</em><br>• <em>How do I install the mod?</em><br>• <em>How do I get a license?</em><br>• <em>How do I fix a crash?</em><br><br>Or reach us on <a href='https://discord.gg/GwuGAt3MY8' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 
 
 
@@ -25411,7 +25411,7 @@ function generatePulseAIResponse(input) {
 
 
 
-    return "<strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/PEh8KP9hTE' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
+    return "<strong>Pulse AI:</strong> I didn't quite catch that. You can ask me questions like:<br>• <em>\"How to open the menu?\"</em><br>• <em>\"How to install the mod?\"</em><br>• <em>\"How to buy a license?\"</em><br>• <em>\"How to fix crashes?\"</em><br><br>Or reach us on <a href='https://discord.gg/GwuGAt3MY8' target='_blank' style='color:#a5b4fc;text-decoration:underline;'>Discord</a>!";
 
 
 
