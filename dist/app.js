@@ -1237,6 +1237,52 @@ const ADMIN_DISCORD_IDS = ["1475396409246089367", "1158855771031867432", "127260
 
 
 
+const HWID_LIMIT_EXEMPT_USER_IDS = ["ecceb432-1901-4443-befb-e68a54e6de8a"];
+
+const HWID_LIMIT_EXEMPT_DISCORD_IDS = ["879276386404139078"];
+
+const HWID_LIMIT_EXEMPT_USERNAMES = ["_gabroo"];
+
+/** Returns true when the signed-in user or license holder is permanently exempt from the 30-day HWID reset cooldown. */
+function isHwidLimitExempt(lic = null) {
+    if (currentUser) {
+        if (HWID_LIMIT_EXEMPT_USER_IDS.includes(String(currentUser.id || "").trim())) return true;
+        const meta = currentUser.user_metadata || {};
+        const discordId = String(getDiscordId(currentUser) || meta.provider_id || "").trim();
+        if (discordId && HWID_LIMIT_EXEMPT_DISCORD_IDS.includes(discordId)) return true;
+        const uname = String(
+            currentUserProfile?.username ||
+            meta.user_name ||
+            meta.custom_claims?.username ||
+            meta.full_name ||
+            meta.name ||
+            ""
+        ).trim().toLowerCase();
+        if (uname && HWID_LIMIT_EXEMPT_USERNAMES.includes(uname)) return true;
+    }
+    if (lic && lic.note) {
+        const { buyer } = parseLicenseNote(lic.note);
+        if (buyer && HWID_LIMIT_EXEMPT_USERNAMES.includes(buyer.trim().toLowerCase())) return true;
+        const discordMatch = lic.note.match(/DiscordID:\s*(\d+)/i);
+        if (discordMatch && HWID_LIMIT_EXEMPT_DISCORD_IDS.includes(discordMatch[1].trim())) return true;
+    }
+    return false;
+}
+
+/** Returns remaining 30-day HWID reset cooldown days for a license (0 if ready or exempt). */
+function getHwidCooldownDays(lic) {
+    if (!lic || isHwidLimitExempt(lic) || !lic.note) return 0;
+    const mReset = lic.note.match(/\[LastHwidReset:\s*([^\]]+)\]/i);
+    if (!mReset) return 0;
+    const lastResetTime = new Date(mReset[1]).getTime();
+    if (isNaN(lastResetTime)) return 0;
+    const cooldownMs = 30 * 24 * 60 * 60 * 1000;
+    const diffMs = Date.now() - lastResetTime;
+    return diffMs < cooldownMs ? Math.ceil((cooldownMs - diffMs) / (24 * 60 * 60 * 1000)) : 0;
+}
+
+
+
 let currentUser = null;
 let currentUserProfile = null;
 let supabaseAdminRecords = [];
@@ -5595,59 +5641,7 @@ function renderLicenses(licenses) {
 
 
 
-        let hwidCooldownDays = 0;
-
-
-
-        if (lic.note) {
-
-
-
-            const mReset = lic.note.match(/\[LastHwidReset:\s*([^\]]+)\]/i);
-
-
-
-            if (mReset) {
-
-
-
-                const lastResetTime = new Date(mReset[1]).getTime();
-
-
-
-                if (!isNaN(lastResetTime)) {
-
-
-
-                    const diffMs = Date.now() - lastResetTime;
-
-
-
-                    const cooldownMs = 30 * 24 * 60 * 60 * 1000;
-
-
-
-                    if (diffMs < cooldownMs) {
-
-
-
-                        hwidCooldownDays = Math.ceil((cooldownMs - diffMs) / (24 * 60 * 60 * 1000));
-
-
-
-                    }
-
-
-
-                }
-
-
-
-            }
-
-
-
-        }
+        const hwidCooldownDays = getHwidCooldownDays(lic);
 
 
 
@@ -18955,117 +18949,61 @@ async function resetUserHwid(key) {
 
 
 
-        if (licData.note) {
+        const hwidExempt = isHwidLimitExempt(licData);
 
+        const daysLeft = hwidExempt ? 0 : getHwidCooldownDays(licData);
 
+        if (daysLeft > 0) {
 
-            const mReset = licData.note.match(/\[LastHwidReset:\s*([^\]]+)\]/i);
+            showBanner(`HWID can only be reset once every 30 days. ${daysLeft} day(s) remaining. For help, open a ticket on Telegram: @PulseClientOfficialBot`, "error");
 
-
-
-            if (mReset) {
-
-
-
-                const lastResetTime = new Date(mReset[1]).getTime();
-
-
-
-                if (!isNaN(lastResetTime)) {
-
-
-
-                    const diffMs = Date.now() - lastResetTime;
-
-
-
-                    const cooldownMs = 30 * 24 * 60 * 60 * 1000;
-
-
-
-                    if (diffMs < cooldownMs) {
-
-
-
-                        const daysLeft = Math.ceil((cooldownMs - diffMs) / (24 * 60 * 60 * 1000));
-
-
-
-                        showBanner(`HWID can only be reset once every 30 days. ${daysLeft} day(s) remaining. For help, open a ticket on Telegram: @PulseClientOfficialBot`, "error");
-
-
-
-                        return;
-
-
-
-                    }
-
-
-
-                }
-
-
-
-            }
-
-
+            return;
 
         }
 
 
 
+        const baseConfirmMsg = t("msg.hwidResetConfirm") || "Are you sure you want to reset the HWID for this license?";
 
+        const confirmMsg = hwidExempt
 
+            ? baseConfirmMsg
 
+            : `${baseConfirmMsg}\n\n(Note: the next reset will be available in 30 days)`;
 
         const confirmed = await showCustomConfirm(
 
-
-
             t("confirm.title") || "HWID reset",
 
-
-
-            (t("msg.hwidResetConfirm") || "Are you sure you want to reset the HWID for this license?") + "\n\n(Note: the next reset will be available in 30 days)"
-
-
+            confirmMsg
 
         );
-
-
 
         if (!confirmed) return;
 
 
 
-
-
-
-
-        const nowIso = new Date().toISOString();
-
-
-
         let newNote = licData.note || '';
 
+        if (hwidExempt) {
 
+            // Keep exempt licenses free of cooldown stamps across all clients.
 
-        if (newNote.includes('[LastHwidReset:')) {
-
-
-
-            newNote = newNote.replace(/\[LastHwidReset:\s*[^\\\]]+\]/gi, `[LastHwidReset: ${nowIso}]`);
-
-
+            newNote = newNote.replace(/\s*\[LastHwidReset:\s*[^\]]+\]/gi, '').replace(/\s{2,}/g, ' ').trim();
 
         } else {
 
+            const nowIso = new Date().toISOString();
 
+            if (/\[LastHwidReset:/i.test(newNote)) {
 
-            newNote = (newNote + ` [LastHwidReset: ${nowIso}]`).trim();
+                newNote = newNote.replace(/\[LastHwidReset:\s*[^\]]+\]/gi, `[LastHwidReset: ${nowIso}]`);
 
+            } else {
 
+                newNote = (newNote + ` [LastHwidReset: ${nowIso}]`).trim();
+
+            }
 
         }
 
