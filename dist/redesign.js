@@ -267,10 +267,10 @@
 
     if (ctx && !reduceMotion) {
       const colours = [
-        [255, 70, 94],
-        [255, 178, 107],
-        [124, 92, 255],
-        [124, 240, 192]
+        [168, 85, 247],  // Electric Violet
+        [232, 121, 249], // Orchid Magenta
+        [34, 211, 238],  // Cryo Cyan
+        [52, 211, 153]   // Hyper Mint
       ];
       let dpr = 1;
       let w = 0;
@@ -377,6 +377,109 @@
     }
   }
 
+  /* --------------------------------------------------------- hero HUD */
+  function initHeroHud() {
+    const hud = document.getElementById("px-hero-hud");
+    const modsEl = document.getElementById("px-hud-mods");
+    const countEl = document.getElementById("px-hud-active-count");
+    const fpsEl = document.getElementById("px-hud-fps");
+    const pingEl = document.getElementById("px-hud-ping");
+    if (!hud || !modsEl) return;
+
+    const CATEGORIES = {
+      combat: [
+        { name: "KillAura", key: "R", on: true },
+        { name: "CrystalAura", key: "C", on: true },
+        { name: "AutoTotem", key: "T", on: true },
+        { name: "Reach", key: "3.1", on: true },
+        { name: "Velocity", key: "0%", on: false }
+      ],
+      render: [
+        { name: "PlayerESP", key: "ESP", on: true },
+        { name: "StorageESP", key: "CHEST", on: true },
+        { name: "BaseRadar", key: "MAP", on: true },
+        { name: "Nametags", key: "HUD", on: true },
+        { name: "Chams", key: "GLOW", on: false }
+      ],
+      movement: [
+        { name: "AutoSprint", key: "CTRL", on: true },
+        { name: "NoSlow", key: "USE", on: true },
+        { name: "ElytraBoost", key: "SPACE", on: true },
+        { name: "SafeWalk", key: "SHIFT", on: false },
+        { name: "Step", key: "1.0", on: false }
+      ],
+      bots: [
+        { name: "CrystalBot", key: "CPX-01", on: true },
+        { name: "MaceBot", key: "MCX-03", on: true },
+        { name: "AnchorHunt", key: "ANC-10", on: true },
+        { name: "ElytraPilot", key: "PLT-09", on: false },
+        { name: "BaseAlert", key: "RTP-07", on: true }
+      ]
+    };
+
+    let activeCat = "combat";
+
+    const updateCount = () => {
+      const list = CATEGORIES[activeCat] || [];
+      const active = list.filter((m) => m.on).length;
+      if (countEl) countEl.textContent = `${active} / ${list.length}`;
+    };
+
+    const renderCategory = (cat) => {
+      activeCat = cat;
+      const list = CATEGORIES[cat] || [];
+      modsEl.innerHTML = "";
+      list.forEach((mod) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "px-hud-mod" + (mod.on ? " is-on" : "");
+        btn.setAttribute("aria-pressed", mod.on ? "true" : "false");
+        btn.innerHTML =
+          `<span>${mod.name}</span>` +
+          `<span class="px-hud-mod-meta"><small>${mod.key}</small><i class="px-hud-sw"></i></span>`;
+        btn.addEventListener("click", () => {
+          mod.on = !mod.on;
+          btn.classList.toggle("is-on", mod.on);
+          btn.setAttribute("aria-pressed", mod.on ? "true" : "false");
+          updateCount();
+        });
+        modsEl.appendChild(btn);
+      });
+      updateCount();
+    };
+
+    hud.querySelectorAll("[data-hud-cat]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        hud.querySelectorAll("[data-hud-cat]").forEach((t) => {
+          t.classList.remove("is-active");
+          t.setAttribute("aria-selected", "false");
+        });
+        tab.classList.add("is-active");
+        tab.setAttribute("aria-selected", "true");
+        renderCategory(tab.getAttribute("data-hud-cat"));
+      });
+    });
+
+    renderCategory("combat");
+
+    // Live subtle telemetry shimmer while HUD is visible
+    if (!reduceMotion && (fpsEl || pingEl)) {
+      let hudVisible = false;
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver((entries) => {
+          hudVisible = entries[0].isIntersecting;
+        }, { threshold: 0.1 }).observe(hud);
+      } else {
+        hudVisible = true;
+      }
+      window.setInterval(() => {
+        if (!hudVisible || document.hidden) return;
+        if (fpsEl) fpsEl.textContent = String(238 + Math.floor(Math.random() * 7));
+        if (pingEl) pingEl.textContent = `${12 + Math.floor(Math.random() * 5)} ms`;
+      }, 1800);
+    }
+  }
+
   /* ----------------------------------------------------------- to top */
   const toTop = document.querySelector("[data-to-top]");
   if (toTop) {
@@ -387,6 +490,7 @@
   }
 
   ambient();
+  initHeroHud();
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   document.addEventListener("DOMContentLoaded", onScroll);

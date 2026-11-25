@@ -26320,7 +26320,7 @@ function initLiquidCanvas() {
 
 
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
 
 
@@ -26492,7 +26492,7 @@ function initLiquidCanvas() {
 
 
 
-            color: Math.random() > 0.4 ? "244, 63, 94" : "255, 45, 85"
+            color: Math.random() > 0.45 ? "168, 85, 247" : "34, 211, 238"
 
 
 
@@ -26516,23 +26516,23 @@ function initLiquidCanvas() {
 
 
 
-        { r: 244, g: 63, b: 94, name: "crimson" },     // Crimson Rose
+        { r: 168, g: 85, b: 247, name: "violet" },     // Electric Violet
 
 
 
-        { r: 255, g: 45, b: 85, name: "electric" },    // Electric Rose
+        { r: 34, g: 211, b: 238, name: "cyan" },       // Cryo Cyan
 
 
 
-        { r: 255, g: 255, b: 255, name: "pearl" },     // Specular Pearl
+        { r: 232, g: 121, b: 249, name: "orchid" },    // Orchid Magenta
 
 
 
-        { r: 0, g: 245, b: 212, name: "cyan" },        // Neon Cyber Cyan spark
+        { r: 52, g: 211, b: 153, name: "mint" },       // Hyper Mint
 
 
 
-        { r: 255, g: 190, b: 11, name: "amber" }       // Warm Spark
+        { r: 248, g: 250, b: 252, name: "pearl" }      // Specular Pearl
 
 
 
@@ -26916,9 +26916,13 @@ function initLiquidCanvas() {
 
 
 
+    let rafId = null;
+
     function render() {
-
-
+        if (document.hidden || document.documentElement.classList.contains("px-perf")) {
+            rafId = null;
+            return;
+        }
 
         ctx.clearRect(0, 0, width, height);
 
@@ -26940,15 +26944,15 @@ function initLiquidCanvas() {
 
 
 
-            spotGrad.addColorStop(0, "rgba(192, 132, 252, 0.06)");
+            spotGrad.addColorStop(0, "rgba(168, 85, 247, 0.08)");
 
 
 
-            spotGrad.addColorStop(0.35, "rgba(168, 85, 247, 0.03)");
+            spotGrad.addColorStop(0.38, "rgba(34, 211, 238, 0.035)");
 
 
 
-            spotGrad.addColorStop(0.8, "rgba(255, 255, 255, 0.005)");
+            spotGrad.addColorStop(0.8, "rgba(232, 121, 249, 0.01)");
 
 
 
@@ -27144,7 +27148,7 @@ function initLiquidCanvas() {
 
 
 
-                    ctx.strokeStyle = `rgba(244, 63, 94, ${alpha})`;
+                    ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`;
 
 
 
@@ -27268,7 +27272,7 @@ function initLiquidCanvas() {
 
 
 
-        requestAnimationFrame(render);
+        rafId = requestAnimationFrame(render);
 
 
 
@@ -27277,6 +27281,12 @@ function initLiquidCanvas() {
 
 
     render();
+
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && !rafId && !document.documentElement.classList.contains("px-perf")) {
+            rafId = requestAnimationFrame(render);
+        }
+    });
 
 
 
@@ -27493,10 +27503,12 @@ function initInteractiveCardEffects() {
 
 
 function initClickSparks() {
+    // Handled by unified Cosmic Obsidian canvas bursts in alive.js to prevent DOM particle churn.
+    return;
 
 
 
-    const SPARKS_COLORS = ['#f43f5e', '#ff1e56', '#ffffff', '#00f5d4', '#ffd166'];
+    const SPARKS_COLORS = ['#a855f7', '#22d3ee', '#f8fafc', '#e879f9', '#34d399'];
 
 
 

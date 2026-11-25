@@ -89,7 +89,7 @@
 
     <link rel="manifest" href="/manifest.webmanifest">
 
-    <meta name="theme-color" content="#07080b">
+    <meta name="theme-color" content="#04050b">
 
     <!-- Structured Data (JSON-LD) -->
 
@@ -155,19 +155,19 @@
     <link rel="stylesheet" href="refresh.css?v=1.0.10">
 
     
-    <link rel="stylesheet" href="bots-showcase.css?v=2.1.1">
+    <link rel="stylesheet" href="bots-showcase.css?v=2.2.0">
 
-    <link rel="stylesheet" href="redesign.css?v=1.0.1">
+    <link rel="stylesheet" href="redesign.css?v=2.0.1">
 
-    <link rel="stylesheet" href="motion.css?v=3.1.0">
+    <link rel="stylesheet" href="motion.css?v=4.0.0">
 
-    <link rel="stylesheet" href="polish.css?v=1.4.1">
-    <link rel="stylesheet" href="dash.css?v=1.1.1">
-    <link rel="stylesheet" href="alive.css?v=1.1.1">
+    <link rel="stylesheet" href="polish.css?v=2.0.0">
+    <link rel="stylesheet" href="dash.css?v=2.0.0">
+    <link rel="stylesheet" href="alive.css?v=2.0.0">
 
-    <link rel="stylesheet" href="legal.css?v=1.0.1">
+    <link rel="stylesheet" href="legal.css?v=2.0.1">
 
-    <link rel="stylesheet" href="glass2.css?v=1.0.0">
+    <link rel="stylesheet" href="glass2.css?v=2.0.0">
 
     <!-- Supabase JS CDN -->
 
@@ -271,8 +271,9 @@
     <div class="auth-gate-container">
         <div class="px-auth">
             <div class="px-auth-art">
-                <div>
+                <div class="px-auth-art-top">
                     <span class="px-kicker">PULSE CLIENT</span>
+                    <span class="px-auth-live-pill"><i></i>ONLINE • FABRIC 1.21.11</span>
                 </div>
                 <div class="px-auth-orbit" aria-hidden="true">
                     <span class="ring a"></span>
@@ -280,8 +281,13 @@
                     <img src="logo.png?v=3" alt="">
                 </div>
                 <div class="px-auth-copy">
-                    <h2>One account.<br>Every module.</h2>
-                    <p>Your dashboard, license keys, downloads and support — all tied to Discord, all in one place.</p>
+                    <h2>One account.<br><em>Every module.</em></h2>
+                    <p>Your dashboard, license keys, 14 automated bots, downloads and support — all tied to Discord, all in one place.</p>
+                    <div class="px-auth-telemetry">
+                        <div class="px-auth-stat"><b>0 ms</b><span>Input lag</span></div>
+                        <div class="px-auth-stat"><b>14+</b><span>PvP &amp; Utility bots</span></div>
+                        <div class="px-auth-stat"><b>100%</b><span>Free license</span></div>
+                    </div>
                 </div>
             </div>
 
@@ -406,11 +412,65 @@
 
                 <div class="px-team-line" data-reveal style="--d:300ms">
                     <div class="px-team-avatars">
-                        <img src="assets/avatars/Error404Missing_bust.png" alt="Error404Missing">
-                        <img src="assets/avatars/ItzRealOdika_bust.png" alt="ItzRealOdika">
-                        <img src="assets/avatars/dataaa_bust.png" alt="dataaa">
+                        <img src="assets/avatars/Error404Missing_bust.png" alt="Error404Missing" title="Error404Missing">
+                        <img src="assets/avatars/ItzRealOdika_bust.png" alt="ItzRealOdika" title="ItzRealOdika">
+                        <img src="assets/avatars/dataaa_bust.png" alt="dataaa" title="dataaa">
                     </div>
                     <span>Built by <b>Error404Missing</b>, <b>ItzRealOdika</b> &amp; <b>dataaa</b></span>
+                </div>
+            </div>
+
+            <!-- Interactive Live Client HUD Deck -->
+            <div class="px-hero-visual" data-reveal style="--d:160ms">
+                <div class="px-hud" id="px-hero-hud" aria-label="Interactive PulseClient module preview">
+                    <div class="px-hud-top">
+                        <div class="px-hud-brand">
+                            <img src="logo.png?v=3" alt="">
+                            <span>PULSE</span>
+                            <em>v1.05</em>
+                        </div>
+                        <span class="px-hud-status"><i></i>GRIMAC CLEAN</span>
+                    </div>
+
+                    <div class="px-hud-body">
+                        <div class="px-hud-tabs" role="tablist" aria-label="Module categories">
+                            <button type="button" class="px-hud-tab is-active" data-hud-cat="combat" role="tab" aria-selected="true">Combat</button>
+                            <button type="button" class="px-hud-tab" data-hud-cat="render" role="tab" aria-selected="false">Render</button>
+                            <button type="button" class="px-hud-tab" data-hud-cat="movement" role="tab" aria-selected="false">Movement</button>
+                            <button type="button" class="px-hud-tab" data-hud-cat="bots" role="tab" aria-selected="false">Bots</button>
+                        </div>
+
+                        <div class="px-hud-mods" id="px-hud-mods">
+                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>KillAura</span><span class="px-hud-mod-meta"><small>R</small><i class="px-hud-sw"></i></span></button>
+                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>CrystalAura</span><span class="px-hud-mod-meta"><small>C</small><i class="px-hud-sw"></i></span></button>
+                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>AutoTotem</span><span class="px-hud-mod-meta"><small>T</small><i class="px-hud-sw"></i></span></button>
+                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>Reach</span><span class="px-hud-mod-meta"><small>3.1</small><i class="px-hud-sw"></i></span></button>
+                            <button type="button" class="px-hud-mod" aria-pressed="false"><span>Velocity</span><span class="px-hud-mod-meta"><small>0%</small><i class="px-hud-sw"></i></span></button>
+                        </div>
+
+                        <div class="px-hud-radar" aria-hidden="true">
+                            <div class="px-hud-radar-head">
+                                <span>RADAR</span>
+                                <span style="color: var(--px-cyan)">LIVE</span>
+                            </div>
+                            <div class="px-hud-radar-scope">
+                                <div class="px-hud-radar-sweep"></div>
+                                <span class="px-hud-blip b1"></span>
+                                <span class="px-hud-blip b2"></span>
+                                <span class="px-hud-blip b3"></span>
+                            </div>
+                            <div class="px-hud-radar-stats">
+                                <div class="px-hud-radar-row"><span>FPS</span><b id="px-hud-fps">240</b></div>
+                                <div class="px-hud-radar-row"><span>PING</span><b id="px-hud-ping">14 ms</b></div>
+                                <div class="px-hud-radar-row"><span>ACTIVE</span><b id="px-hud-active-count">4 / 5</b></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-hud-foot">
+                        <span>FABRIC 1.21.11 • R-SHIFT MENU</span>
+                        <span class="px-live"><i></i>ZERO INPUT LAG</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1288,9 +1348,10 @@
 
                                 </div>
 
-                                <a href="https://t.me/PulseClientOfficialBot" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                <a href="https://t.me/PulseClientOfficialBot" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
 
-                                    💬 Ticket opening
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Open Ticket
 
                                 </a>
 
@@ -2142,7 +2203,7 @@
 
                                             <span>Buyer's Gmail / Email (to send invoice)</span>
 
-                                            <span style="font-size: 10.5px; color: #34d399; font-weight: 700; letter-spacing: 0.3px;">📧 Automatic invoice</span>
+                                            <span style="font-size: 10.5px; color: #34d399; font-weight: 700; letter-spacing: 0.3px;">Automatic invoice</span>
 
                                         </label>
 
@@ -4897,13 +4958,15 @@
 
             <div style="background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(56, 189, 248, 0.03) 100%); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 14px 16px; margin-bottom: 20px; text-align: left; display: flex; gap: 12px; align-items: flex-start;">
 
-                <div style="font-size: 22px; line-height: 1;">📧</div>
+                <div style="width: 32px; height: 32px; border-radius: 9px; background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.28); color: #38bdf8; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
 
                 <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5;">
 
                     <strong style="color: #38bdf8;">Check your Gmail!</strong><br>
 
-                    An official invoice and instructions will be sent to you by email. If you didn't find it in your inbox, <strong style="color: #f59e0b;">Be sure to check your Spam folder</strong>!
+                    An official invoice and instructions will be sent to you by email. If you didn't find it in your inbox, <strong style="color: #f59e0b;">be sure to check your Spam folder</strong>!
 
                 </div>
 
@@ -4913,9 +4976,9 @@
 
             <!-- In-game reminder -->
 
-            <div style="font-size: 12px; color: #64748b; margin-bottom: 22px; line-height: 1.5;">
+            <div style="font-size: 12px; color: #94a3b8; margin-bottom: 22px; line-height: 1.5;">
 
-                🎮 <strong>How to enable:</strong> throw it in <code>PulseClient-Fabric.jar</code> in the folder <code>.minecraft/mods</code> And write this Key in the GUI window of PulseClient that appears when you start the game.
+                <strong>How to enable:</strong> drop <code>PulseClient-Fabric.jar</code> into your <code>.minecraft/mods</code> folder and enter this key in the PulseClient activation window on launch.
 
             </div>
 
@@ -4925,7 +4988,7 @@
 
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
 
-                <button type="button" id="user-popup-copy-btn" onclick="copyUserPopupKey()" style="flex: 1; min-width: 140px; padding: 12px 18px; background: #ffffff; color: #07080b; font-weight: 800; font-size: 13px; border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform 0.15s;">
+                <button type="button" id="user-popup-copy-btn" onclick="copyUserPopupKey()" style="flex: 1; min-width: 140px; padding: 12px 18px; background: linear-gradient(135deg, #8b5cf6, #a855f7); color: #ffffff; font-weight: 800; font-size: 13px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: transform 0.15s;">
 
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
 
@@ -4935,7 +4998,8 @@
 
                 <a href="https://mail.google.com/" target="_blank" style="padding: 12px 18px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 700; font-size: 13px; border-radius: 12px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;">
 
-                    📧 Open Gmail
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Open Gmail
 
                 </a>
 
@@ -4957,12 +5021,12 @@
 
     <script src="i18n.js?v=400.0.0"></script>
 
-    <script src="bots-showcase.js?v=2.1.0"></script>
-    <script src="redesign.js?v=3.2.3" defer></script>
+    <script src="bots-showcase.js?v=2.2.0"></script>
+    <script src="redesign.js?v=4.0.0" defer></script>
     <script src="dash.js?v=1.0.2" defer></script>
 
-    <script src="app.js?v=809.1.1"></script>
-    <script src="alive.js?v=1.1.1" defer></script>
+    <script src="app.js?v=810.0.0"></script>
+    <script src="alive.js?v=2.0.0" defer></script>
     <script src="consent.js?v=1.0.0" defer></script>
 
     <!-- Free Client Instruction Modal (Popup) -->

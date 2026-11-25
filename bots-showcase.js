@@ -214,8 +214,11 @@
     };
 
     const calcAlpha = (base, max) => Math.min(1, base + (max - base) * pow + 0.1 * hov);
-    drawRingArc(0.58, 0.01, calcAlpha(0.4, 0.75));
-    drawRingArc(0.72, 0.007, calcAlpha(0.25, 0.55));
+    drawRingArc(0.58, 0.011, calcAlpha(0.45, 0.82));
+    // Secondary outer ring in Cryo Cyan for holographic depth
+    ctx.save();
+    drawRingArc(0.72, 0.008, calcAlpha(0.28, 0.6));
+    ctx.restore();
   }
 
   // =========================================================================
@@ -516,6 +519,15 @@
 
       this.handleResize();
       window.addEventListener("resize", () => this.handleResize());
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(() => {
+          const cw = this.stageContainer.clientWidth;
+          if (cw > 0 && Math.abs(cw - (this.width || 0)) > 2) {
+            this.handleResize();
+            this.lastPadPitch = null;
+          }
+        }).observe(this.stageContainer);
+      }
 
       // Pause the scene when it is off-screen or the tab is hidden.
       this.visible = false;
@@ -817,9 +829,12 @@
         });
       });
 
-      // Add Glowing Eyes
+      // Add Glowing Eyes (PvP: vivid magenta-violet, Utility: cryo-cyan)
       this.eyeRegistry = [];
       if (bot.eyeRow) {
+        const isPvP = bot.kind === "PvP";
+        const eyeColor = isPvP ? "#e879f9" : "#22d3ee";
+        const eyeGlow = isPvP ? "#a855f7" : "#06b6d4";
         const eyeY = 8 + bot.eyeRow;
         [9, 13].forEach((eyeX) => {
           const eyeDiv = document.createElement("div");
@@ -831,8 +846,8 @@
           eyeDiv.style.height = `${(1 * k).toFixed(2)}px`;
           eyeDiv.style.borderRadius = `${(k / 2).toFixed(2)}px`;
           eyeDiv.style.transformOrigin = "0 0";
-          eyeDiv.style.backgroundColor = "#ff2a2a";
-          eyeDiv.style.boxShadow = "0 0 12px #ff0033, 0 0 24px #ff0033";
+          eyeDiv.style.backgroundColor = eyeColor;
+          eyeDiv.style.boxShadow = `0 0 12px ${eyeColor}, 0 0 24px ${eyeGlow}`;
           eyeDiv.style.backfaceVisibility = "hidden";
           eyeDiv.style.pointerEvents = "none";
 
@@ -1136,7 +1151,7 @@
           this.width,
           this.height,
           this.pitch,
-          0x7e2ed6, // #7e2ed6 Corz Purple
+          0xa855f7, // Electric Pulse Violet
           1.0,
           0.0,
           1.0,
