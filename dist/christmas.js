@@ -219,7 +219,7 @@
     var elapsed = 0;
 
     function seed() {
-      var count = Math.round(Math.min(190, Math.max(45, (W * H) / 16000)));
+      var count = Math.round(Math.min(110, Math.max(32, (W * H) / 26000)));
       flakes = [];
       for (var i = 0; i < count; i++) {
         var depth = Math.random();
@@ -238,7 +238,7 @@
     }
 
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = 1; // snow is soft anyway — 1x keeps the fill cost low on HiDPI screens
       W = window.innerWidth;
       H = window.innerHeight;
       canvas.width = Math.max(1, Math.floor(W * dpr));

@@ -26320,7 +26320,7 @@ function initLiquidCanvas() {
 
 
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const dpr = 1; // full-rate rendering: keep the particle layer at 1x to halve fill cost
 
 
 
@@ -26543,6 +26543,28 @@ function initLiquidCanvas() {
 
 
 
+
+    /* Cached glow sprites: creating a radial gradient per particle per frame
+       forced a full canvas re-rasterisation dozens of times a second. */
+    const glowSprites = new Map();
+    function glowSprite(p) {
+        const key = p.r + "," + p.g + "," + p.b;
+        let sprite = glowSprites.get(key);
+        if (sprite) return sprite;
+        const size = 64;
+        sprite = document.createElement("canvas");
+        sprite.width = size;
+        sprite.height = size;
+        const g = sprite.getContext("2d");
+        const rg = g.createRadialGradient(size / 2 - size * 0.03, size / 2 - size * 0.03, 0, size / 2, size / 2, size / 2);
+        rg.addColorStop(0, "rgba(" + p.r + ", " + p.g + ", " + p.b + ", 1)");
+        rg.addColorStop(0.5, "rgba(" + p.r + ", " + p.g + ", " + p.b + ", 0.45)");
+        rg.addColorStop(1, "rgba(" + p.r + ", " + p.g + ", " + p.b + ", 0)");
+        g.fillStyle = rg;
+        g.fillRect(0, 0, size, size);
+        glowSprites.set(key, sprite);
+        return sprite;
+    }
 
     class CyberParticle {
 
@@ -26816,67 +26838,11 @@ function initLiquidCanvas() {
 
 
 
-            ctx.beginPath();
-
-
-
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-
-
-
-
-
-
-
-            const grad = ctx.createRadialGradient(
-
-
-
-                this.x - this.size * 0.25,
-
-
-
-                this.y - this.size * 0.25,
-
-
-
-                0,
-
-
-
-                this.x,
-
-
-
-                this.y,
-
-
-
-                this.size * 1.8
-
-
-
-            );
-
-
-
-            grad.addColorStop(0, `rgba(${p.r}, ${p.g}, ${p.b}, ${glowAlpha})`);
-
-
-
-            grad.addColorStop(0.5, `rgba(${p.r}, ${p.g}, ${p.b}, ${glowAlpha * 0.45})`);
-
-
-
-            grad.addColorStop(1, `rgba(${p.r}, ${p.g}, ${p.b}, 0)`);
-
-
-
-            ctx.fillStyle = grad;
-
-
-
-            ctx.fill();
+            const sprite = glowSprite(p);
+            const box = this.size * 4.4;
+            ctx.globalAlpha = Math.min(1, glowAlpha);
+            ctx.drawImage(sprite, this.x - box / 2, this.y - box / 2, box, box);
+            ctx.globalAlpha = 1;
 
 
 
@@ -26892,7 +26858,7 @@ function initLiquidCanvas() {
 
 
 
-    const count = Math.min(Math.floor(width / 24), 48);
+    const count = Math.min(Math.floor(width / 30), 36);
 
 
 

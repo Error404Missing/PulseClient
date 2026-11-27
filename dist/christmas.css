@@ -114,7 +114,6 @@ body.lg-body {
     radial-gradient(900px 620px at 96% 6%, rgba(224, 52, 75, 0.11), transparent 72%),
     radial-gradient(760px 520px at -6% 34%, rgba(246, 203, 122, 0.07), transparent 70%),
     linear-gradient(180deg, #030b09 0%, #061511 46%, #04100c 100%) !important;
-  background-attachment: fixed !important;
   color: #e6f2ed;
 }
 
@@ -124,10 +123,11 @@ body *::selection {
   color: #fff7e8;
 }
 
-/* The liquid canvas stays, it is simply winterised. */
+/* The liquid canvas stays, it is simply winterised.
+   No CSS filter: a full-screen filter pass on a canvas that redraws every
+   frame is one of the most expensive things a page can do. */
 #liquid-canvas {
-  opacity: 0.5 !important;
-  filter: hue-rotate(115deg) saturate(0.85) brightness(0.85) !important;
+  opacity: 0.45 !important;
 }
 
 .bg-grid-overlay,
@@ -157,7 +157,7 @@ body *::selection {
     radial-gradient(38% 30% at 24% 16%, rgba(96, 226, 178, 0.22), transparent 72%),
     radial-gradient(32% 26% at 78% 10%, rgba(224, 52, 75, 0.18), transparent 72%),
     radial-gradient(30% 24% at 54% 40%, rgba(246, 203, 122, 0.1), transparent 74%);
-  filter: blur(52px);
+  /* Soft radial falloff instead of a full-screen blur filter. */
   opacity: 0.85;
   animation: xms-aurora-drift 34s ease-in-out infinite alternate;
   will-change: transform;
@@ -176,6 +176,11 @@ body *::selection {
     0 0 70px 22px rgba(246, 203, 122, 0.2),
     0 0 220px 90px rgba(120, 226, 190, 0.08);
   animation: xms-moon-breathe 11s ease-in-out infinite;
+}
+
+@keyframes xms-moon-breathe {
+  0%, 100% { opacity: 0.92; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
 }
 
 .xms-moon::after {
@@ -299,10 +304,11 @@ body *::selection {
   --bulb-glow: rgba(134, 242, 198, 0.7);
 }
 
+/* Opacity only: a filter animation on 17 bulbs re-rasterises every one. */
 @keyframes xms-twinkle {
-  0%, 100% { opacity: 0.55; filter: brightness(0.85); }
-  42% { opacity: 1; filter: brightness(1.35); }
-  58% { opacity: 0.9; filter: brightness(1.1); }
+  0%, 100% { opacity: 0.5; }
+  42% { opacity: 1; }
+  58% { opacity: 0.82; }
 }
 
 /* Hanging baubles in the hero */
@@ -408,8 +414,8 @@ body *::selection {
 }
 
 @keyframes xms-sheen {
-  0%, 62% { left: -60%; }
-  86%, 100% { left: 120%; }
+  0%, 62% { transform: skewX(-18deg) translateX(0); }
+  86%, 100% { transform: skewX(-18deg) translateX(430%); }
 }
 
 /* Card snowflake corner */
@@ -602,8 +608,10 @@ html.lg2 .navbar .nav-links,
   background-clip: text !important;
   color: transparent !important;
   -webkit-text-fill-color: transparent !important;
-  animation: xms-gold-flow 12s ease-in-out infinite !important;
-  filter: drop-shadow(0 6px 30px rgba(246, 203, 122, 0.22));
+  /* Static gradient: animating a clipped background on a three-line headline
+     repaints the text every frame. */
+  animation: none !important;
+  filter: none;
 }
 
 @keyframes xms-gold-flow {
@@ -1727,7 +1735,6 @@ body:has(#auth-gate-modal) {
   height: auto;
   opacity: 0;
   color: #ffe9bd;
-  filter: drop-shadow(0 0 14px rgba(246, 203, 122, 0.5));
   animation: xms-sleigh-fly 46s linear infinite;
   animation-delay: 7s;
 }

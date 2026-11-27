@@ -938,8 +938,7 @@
 
       if (!this.visible || document.hidden) return;
       if (!now) now = performance.now();
-      if (this.lastFrame && now - this.lastFrame < 33) return; // ~30 fps
-      const dt = this.lastFrame ? Math.min(0.05, (now - this.lastFrame) / 1000) : 0.016;
+      const dt = this.lastFrame ? Math.min(0.1, (now - this.lastFrame) / 1000) : 0.016;
       this.lastFrame = now;
       this.time += dt;
 
@@ -993,9 +992,8 @@
         );
       });
 
-      // Shading repaints a face, so update it ~7 fps and quantise the value.
-      const updateLighting = !this.lastLight || now - this.lastLight >= 140;
-      if (updateLighting) this.lastLight = now;
+      // Shading is recalculated every frame — no throttle.
+      const updateLighting = true;
 
       // 4. Update Cube Faces via Matrix Math (Module 9565)
       const p = this.rootScale || (0.9375 * (this.cam ? this.cam.U : 200) / 16);
@@ -1017,7 +1015,7 @@
           item.el.style.transform = matToCss(fullMatrix);
 
           if (updateLighting) {
-            const brightness = Math.round(calcLighting(fullMatrix, -currentYaw, -this.pitch) * 20) / 20;
+            const brightness = Math.round(calcLighting(fullMatrix, -currentYaw, -this.pitch) * 100) / 100;
             item.el.style.filter = brightness < 0.999 ? `brightness(${brightness.toFixed(2)})` : "";
           }
         });
@@ -1084,7 +1082,7 @@
               );
               cf.el.style.transform = matToCss(fullMat);
               if (updateLighting) {
-                const b = Math.round(calcLighting(fullMat, -currentYaw, -this.pitch) * 20) / 20;
+                const b = Math.round(calcLighting(fullMat, -currentYaw, -this.pitch) * 100) / 100;
                 cf.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(2)})` : "";
               }
             });
@@ -1134,7 +1132,7 @@
               );
               sl.el.style.transform = matToCss(fullMat);
               if (updateLighting) {
-                const b = Math.round(calcLighting(fullMat, -currentYaw, -this.pitch) * 20) / 20;
+                const b = Math.round(calcLighting(fullMat, -currentYaw, -this.pitch) * 100) / 100;
                 sl.el.style.filter = b < 0.999 ? `brightness(${b.toFixed(2)})` : "";
               }
             });
