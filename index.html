@@ -169,6 +169,7 @@
 
     <link rel="stylesheet" href="glass2.css?v=2.0.0">
     <link rel="stylesheet" href="christmas.css?v=1.0.2">
+    <link rel="stylesheet" href="clickgui.css?v=2.0.2">
 
     <!-- Supabase JS CDN -->
 
@@ -423,55 +424,40 @@
 
             <!-- Interactive Live Client HUD Deck -->
             <div class="px-hero-visual" data-reveal style="--d:160ms">
-                <div class="px-hud" id="px-hero-hud" aria-label="Interactive PulseClient module preview">
-                    <div class="px-hud-top">
-                        <div class="px-hud-brand">
-                            <img src="logo.png?v=3" alt="">
-                            <span>PULSE</span>
-                            <em>v1.05</em>
+                                <div class="cg" id="cg-gui" aria-label="Pulse ClickGUI module preview">
+                  <div class="cg-frame" id="cg-frame">
+                    <div class="cg-stage" id="cg-stage">
+                      <div class="cg-window">
+                        <aside class="cg-side">
+                          <div class="cg-brand">
+                            <span class="cg-mark" aria-hidden="true">P</span>
+                            <span class="cg-brand-copy"><b class="cg-wordmark">PULSE</b><em class="cg-version">v1.05</em></span>
+                          </div>
+                          <span class="cg-rule" aria-hidden="true"></span>
+                          <span class="cg-side-label">Modules</span>
+                          <div class="cg-nav" id="cg-nav-modules"></div>
+                          <span class="cg-side-label cg-side-label--general">General</span>
+                          <div class="cg-nav" id="cg-nav-general"></div>
+                          <button type="button" class="cg-promo" onclick="openFreeClientModal()">
+                            <span class="cg-promo-art" aria-hidden="true">&#10022;</span>
+                            <span class="cg-promo-copy"><b>PULSE.GG</b><small>Lifetime</small></span>
+                          </button>
+                        </aside>
+                        <div class="cg-main">
+                          <div class="cg-head">
+                            <span class="cg-hello">Hello, <b>PULSE.GG</b></span>
+                            <span class="cg-clock" id="cg-clock">21:30</span>
+                            <label class="cg-search">
+                              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+                              <input id="cg-search" type="search" placeholder="Search modules..." autocomplete="off" spellcheck="false" aria-label="Search modules">
+                              <kbd>&#8984;K</kbd>
+                            </label>
+                          </div>
+                          <div class="cg-grid" id="cg-grid"></div>
                         </div>
-                        <span class="px-hud-status"><i></i>GRIMAC CLEAN</span>
+                      </div>
                     </div>
-
-                    <div class="px-hud-body">
-                        <div class="px-hud-tabs" role="tablist" aria-label="Module categories">
-                            <button type="button" class="px-hud-tab is-active" data-hud-cat="combat" role="tab" aria-selected="true">Combat</button>
-                            <button type="button" class="px-hud-tab" data-hud-cat="render" role="tab" aria-selected="false">Render</button>
-                            <button type="button" class="px-hud-tab" data-hud-cat="movement" role="tab" aria-selected="false">Movement</button>
-                            <button type="button" class="px-hud-tab" data-hud-cat="bots" role="tab" aria-selected="false">Bots</button>
-                        </div>
-
-                        <div class="px-hud-mods" id="px-hud-mods">
-                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>KillAura</span><span class="px-hud-mod-meta"><small>R</small><i class="px-hud-sw"></i></span></button>
-                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>CrystalAura</span><span class="px-hud-mod-meta"><small>C</small><i class="px-hud-sw"></i></span></button>
-                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>AutoTotem</span><span class="px-hud-mod-meta"><small>T</small><i class="px-hud-sw"></i></span></button>
-                            <button type="button" class="px-hud-mod is-on" aria-pressed="true"><span>Reach</span><span class="px-hud-mod-meta"><small>3.1</small><i class="px-hud-sw"></i></span></button>
-                            <button type="button" class="px-hud-mod" aria-pressed="false"><span>Velocity</span><span class="px-hud-mod-meta"><small>0%</small><i class="px-hud-sw"></i></span></button>
-                        </div>
-
-                        <div class="px-hud-radar" aria-hidden="true">
-                            <div class="px-hud-radar-head">
-                                <span>RADAR</span>
-                                <span style="color: var(--px-cyan)">LIVE</span>
-                            </div>
-                            <div class="px-hud-radar-scope">
-                                <div class="px-hud-radar-sweep"></div>
-                                <span class="px-hud-blip b1"></span>
-                                <span class="px-hud-blip b2"></span>
-                                <span class="px-hud-blip b3"></span>
-                            </div>
-                            <div class="px-hud-radar-stats">
-                                <div class="px-hud-radar-row"><span>FPS</span><b id="px-hud-fps">240</b></div>
-                                <div class="px-hud-radar-row"><span>PING</span><b id="px-hud-ping">14 ms</b></div>
-                                <div class="px-hud-radar-row"><span>ACTIVE</span><b id="px-hud-active-count">4 / 5</b></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="px-hud-foot">
-                        <span>FABRIC 1.21.11 • R-SHIFT MENU</span>
-                        <span class="px-live"><i></i>ZERO INPUT LAG</span>
-                    </div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -5083,6 +5069,7 @@
     </div>
 
     <script src="christmas.js?v=1.0.2" defer></script>
+    <script src="clickgui.js?v=2.0.2" defer></script>
 </body>
 
 </html>
