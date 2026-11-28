@@ -1946,3 +1946,70 @@ body:has(#auth-gate-modal) {
     height: 40px;
   }
 }
+
+/* ==========================================================================
+   16. SANTA HAT
+   --------------------------------------------------------------------------
+   A tiny pompom hat hung on the wordmark logo (navbar + footer) and on the
+   large mark on the sign-in screen. Drawn as a data-URI so there is no extra
+   request and nothing to lay out; purely decorative.
+   ========================================================================== */
+
+.logo {
+  position: relative;
+}
+
+.logo::after,
+.px-auth-orbit::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f4596e'/%3E%3Cstop offset='1' stop-color='%23970f24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M22 72C22 42 36 18 62 10c-2 18-6 40 8 62z' fill='url(%23g)'/%3E%3Ccircle cx='66' cy='14' r='11' fill='%23fff4e2'/%3E%3Crect x='12' y='67' width='66' height='19' rx='9.5' fill='%23fff4e2'/%3E%3Cpath d='M18 76h58' stroke='%23e6dac4' stroke-width='1.4' opacity='.55'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  filter: drop-shadow(0 3px 4px rgba(3, 11, 9, 0.55));
+  animation: xms-hat-bob 5.5s ease-in-out infinite;
+}
+
+.logo::after {
+  width: 24px;
+  height: 24px;
+  top: -13px;
+  left: -6px;
+  transform: rotate(-13deg);
+}
+
+.px-auth-orbit::after {
+  width: 58px;
+  height: 58px;
+  left: calc(50% + 2px);
+  top: calc(50% - 79px);
+  transform: rotate(10deg);
+  animation-duration: 6.5s;
+}
+
+@keyframes xms-hat-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -3px;
+  }
+}
+
+@media (max-width: 720px) {
+  .px-auth-orbit::after {
+    width: 46px;
+    height: 46px;
+    left: calc(50% + 2px);
+    top: calc(50% - 66px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo::after,
+  .px-auth-orbit::after {
+    animation: none !important;
+  }
+}
