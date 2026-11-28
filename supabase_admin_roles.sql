@@ -38,13 +38,10 @@ CREATE POLICY "Allow update admins" ON public.admins FOR UPDATE USING (true);
 DROP POLICY IF EXISTS "Allow delete admins" ON public.admins;
 CREATE POLICY "Allow delete admins" ON public.admins FOR DELETE USING (true);
 
--- 4. ავტომატურად ჩავწეროთ არსებული ადმინები admins ცხრილში
+-- 4. ავტომატურად ჩავწეროთ მხოლოდ owner (ადმინები პანელიდან ემატება)
 INSERT INTO public.admins (discord_id, username, role)
 VALUES 
-    ('1475396409246089367', 'Owner (Sticky/Error404)', 'owner'),
-    ('1158855771031867432', 'Admin', 'admin'),
-    ('1272601735051083797', 'Admin', 'admin'),
-    ('1350538035342737441', 'Admin', 'admin')
+    ('1475396409246089367', 'Owner (Sticky/Error404)', 'owner')
 ON CONFLICT (discord_id) DO UPDATE SET role = EXCLUDED.role;
 
 -- 5. განვაახლოთ არსებული პროფილები 'profiles' ცხრილშიც
@@ -55,6 +52,5 @@ WHERE discord_id = '1475396409246089367'
    OR username ILIKE '%sticky%';
 
 UPDATE public.profiles
-SET role = 'admin'
-WHERE discord_id IN ('1158855771031867432', '1272601735051083797', '1350538035342737441')
-  AND (role IS NULL OR role = 'user');
+SET role = 'user'
+WHERE lower(coalesce(role, '')) IN ('admin', 'staff', 'mod', 'moderator');

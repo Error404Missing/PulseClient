@@ -1233,7 +1233,7 @@ const OWNER_DISCORD_IDS = ["1475396409246089367"];
 
 
 
-const ADMIN_DISCORD_IDS = ["1475396409246089367", "1158855771031867432", "1272601735051083797", "1350538035342737441", ""];
+const ADMIN_DISCORD_IDS = [];
 
 
 
@@ -4645,6 +4645,8 @@ async function handleUserSignIn(user) {
 
 
         if (adminMenuItem) adminMenuItem.classList.remove('hidden');
+
+        applyAdminPanelPermissions();
 
 
 
@@ -8142,6 +8144,7 @@ window.lastFetchedSessions = [];
 
 
 async function fetchActiveSessions() {
+    if (typeof hasFullAdminPanelAccess === 'function' && !hasFullAdminPanelAccess()) return;
 
 
 
@@ -12110,6 +12113,7 @@ let adminCrashReportsLoading = false;
 
 
 async function fetchAdminCrashReports(showFeedback = false) {
+    if (typeof hasFullAdminPanelAccess === 'function' && !hasFullAdminPanelAccess()) return;
 
 
 
@@ -13066,6 +13070,7 @@ window.setSupportFilterTab = setSupportFilterTab;
 
 
 async function fetchAdminSupportTickets(showFeedback = false) {
+    if (typeof hasFullAdminPanelAccess === 'function' && !hasFullAdminPanelAccess()) return;
 
 
 
@@ -20485,6 +20490,7 @@ async function fetchLatestProfile(userId) {
             currentUserProfile = data;
             if (isAdmin() && adminMenuItem && adminMenuItem.classList.contains("hidden")) {
                 adminMenuItem.classList.remove("hidden");
+                applyAdminPanelPermissions();
                 fetchAdminLicenses();
                 fetchActiveSessions();
                 fetchProfilesForAdmin();
@@ -21786,6 +21792,7 @@ function handleUserBanEnforcement(ban) {
 
 
 async function fetchBlacklistEntries() {
+    if (typeof hasFullAdminPanelAccess === 'function' && !hasFullAdminPanelAccess()) return;
 
 
 
@@ -22217,6 +22224,28 @@ window.fetchBlacklistEntries = fetchBlacklistEntries;
 
 
 
+// Admins/staff get license management only; the owner keeps the full panel.
+const STAFF_ADMIN_SUBPANELS = ['admin-subpanel-licenses'];
+
+function hasFullAdminPanelAccess() {
+    return typeof isOwner === 'function' && isOwner();
+}
+
+// Hides owner-only sub-tabs, KPI cards and sub-panels for staff accounts.
+function applyAdminPanelPermissions() {
+    const fullAccess = hasFullAdminPanelAccess();
+
+    document.querySelectorAll('#tab-content-admin [data-owner-only="true"]').forEach(el => {
+        el.classList.toggle('hidden', !fullAccess);
+    });
+
+    if (!fullAccess) {
+        document.querySelectorAll('.admin-subpanel').forEach(panel => {
+            if (!STAFF_ADMIN_SUBPANELS.includes(panel.id)) panel.classList.add('hidden');
+        });
+    }
+}
+
 function switchAdminSubTab(e, panelId) {
 
 
@@ -22226,6 +22255,13 @@ function switchAdminSubTab(e, panelId) {
 
 
     if (!panelId) panelId = 'admin-subpanel-licenses';
+
+    // Staff accounts are confined to license management.
+    if (!hasFullAdminPanelAccess() && !STAFF_ADMIN_SUBPANELS.includes(panelId)) {
+        panelId = 'admin-subpanel-licenses';
+    }
+
+    applyAdminPanelPermissions();
 
 
 
@@ -24186,6 +24222,7 @@ window.createPromoCodeFromAdmin = createPromoCodeFromAdmin;
 
 
 async function fetchAdminPromocodes() {
+    if (typeof hasFullAdminPanelAccess === 'function' && !hasFullAdminPanelAccess()) return;
 
 
 
@@ -30165,6 +30202,7 @@ window.removedAdminDiscordIds = removedAdminDiscordIds;
 // ==========================================
 
 async function fetchSupabaseAdminsList() {
+    if (typeof hasFullAdminPanelAccess === 'function' && !hasFullAdminPanelAccess()) return;
     if (!isAdmin()) return;
     try {
         const { data: admins, error } = await supabaseClient
@@ -30381,7 +30419,7 @@ async function handleRemoveAdminStaff(discordId, displayName) {
         try {
             const { error: profUpdateError } = await supabaseClient
                 .from('profiles')
-                .update({ role: 'user', is_admin: false, is_staff: false })
+                .update({ role: 'user' })
                 .eq('discord_id', didStr);
             if (profUpdateError) {
                 console.warn("[AdminStaff] profiles update notice:", profUpdateError.message);
