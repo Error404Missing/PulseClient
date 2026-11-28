@@ -7769,40 +7769,21 @@ function isOwner() {
         if (isOwnerAdmin) return true;
     }
 
-    // 5. Email verification
+    // 5. Email verification (exact owner mailbox only)
     const email = String(currentUser.email || meta.email || "").toLowerCase();
-    if (email === "genksnow@gmail.com" || email.includes("error404") || email.includes("sticky")) return true;
+    if (email === "genksnow@gmail.com") return true;
 
-    // 6. Username extraction across Discord OAuth attributes
-    const username = String(
-        meta.user_name || 
-        meta.custom_claims?.username || 
-        meta.custom_claims?.global_name ||
-        meta.full_name || 
-        meta.name || 
-        meta.username || 
-        ""
-    ).toLowerCase();
-
-    if (username.includes("sticky") || username === "errora" || username.includes("error404") || username.includes("udzlieresi")) return true;
-
-    // 7. Fallback: Check navbar username text
-    const navUserEl = document.getElementById('nav-username');
-    if (navUserEl) {
-        const navText = (navUserEl.dataset.username || navUserEl.textContent || "").trim().toLowerCase();
-        if (navText.includes("sticky") || navText === "errora" || navText.includes("error404") || navText.includes("udzlieresi")) return true;
-    }
-
-    // 8. Fallback: Check profile from allUserProfiles
+    // 6. Fallback: owner row from the profiles table, matched by account id or Discord id
     if (Array.isArray(allUserProfiles) && allUserProfiles.length > 0) {
-        const prof = allUserProfiles.find(p => p.id === currentUser.id || (p.email && p.email === currentUser.email) || (discordId && String(p.discord_id) === discordId));
+        const prof = allUserProfiles.find(p =>
+            p.id === currentUser.id ||
+            (discordId && String(p.discord_id) === discordId)
+        );
         if (prof) {
             const pDid = String(prof.discord_id || "");
-            const pUser = String(prof.username || "").toLowerCase();
             const pRole = String(prof.role || "").toLowerCase();
             if (pRole === "owner") return true;
             if (OWNER_DISCORD_IDS.includes(pDid)) return true;
-            if (pUser.includes("sticky") || pUser.includes("error404")) return true;
         }
     }
 
