@@ -22226,12 +22226,23 @@ window.fetchBlacklistEntries = fetchBlacklistEntries;
 
 // Admins/staff get license management only; the owner keeps the full panel.
 const STAFF_ADMIN_SUBPANELS = ['admin-subpanel-licenses'];
+const OWNER_ONLY_ADMIN_SUBTAB_IDS = [
+    'btn-subtab-promos',
+    'btn-subtab-sessions',
+    'btn-subtab-blacklist',
+    'btn-subtab-logs',
+    'btn-subtab-crashes',
+    'btn-subtab-support',
+    'btn-subtab-multimedia',
+    'btn-subtab-staff'
+];
 
 function hasFullAdminPanelAccess() {
     return typeof isOwner === 'function' && isOwner();
 }
 
-// Hides owner-only sub-tabs, KPI cards and sub-panels for staff accounts.
+// Hides owner-only sub-tabs, KPI stats and sub-panels for staff accounts.
+// Works from element IDs, so it also holds for pages served from an older cache.
 function applyAdminPanelPermissions() {
     const fullAccess = hasFullAdminPanelAccess();
 
@@ -22239,10 +22250,21 @@ function applyAdminPanelPermissions() {
         el.classList.toggle('hidden', !fullAccess);
     });
 
+    OWNER_ONLY_ADMIN_SUBTAB_IDS.forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.toggle('hidden', !fullAccess);
+    });
+
+    const kpiGrid = document.querySelector('#tab-content-admin .admin-kpi-grid');
+    if (kpiGrid) kpiGrid.classList.toggle('hidden', !fullAccess);
+
     if (!fullAccess) {
         document.querySelectorAll('.admin-subpanel').forEach(panel => {
             if (!STAFF_ADMIN_SUBPANELS.includes(panel.id)) panel.classList.add('hidden');
         });
+
+        const licensesBtn = document.getElementById('btn-subtab-licenses');
+        if (licensesBtn) licensesBtn.classList.add('active');
     }
 }
 
